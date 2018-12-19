@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<link rel="apple-touch-icon" href="/resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="/resources/img/common/ico_favicon.ico"> 
+
+	<title>CODE GHOST</title>
+
+	<link rel="stylesheet" href="/resources/css/ui.base.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="/resources/js/ui.base.js"></script>
+</head>
+
+<body class="page-datepicker">
+	<div class="base-skip" id="baseSkip"></div>
+	<div class="base-layer" id="baseLayer"></div>
+	<div class="base-wrap" id="baseWrap">
+		<header class="base-header" id="baseHeader"></header>
+		<div class="base-body" id="baseBody">
+			<aside class="base-aside" id="baseAside"></aside>
+			<main class="base-main" id="baseMain" role="main">
+				<div class="tit-wrap">
+					<h1 class="h1" id="uiPageTit">달력</h1>
+				</div>
+
+				<h2 class="h2">달력</h2>
+				<p>접근성 달력 UI</p>
+				
+				<div class="ui-datepicker">
+					<input class="inp-base" type="tel" value="2018-05-20" data-min="2013-10-05" data-max="2020-12-01" title="시작일" id="lnd0060Cal1">
+					<button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal1" id="uiDatePck1" aria-expanded="false"><span>달력</span></button>
+					<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck1" id="uiDatePck1_pnl"></section>
+				</div>
+				<div class="ui-datepicker">
+					<input class="inp-base" type="tel" value="2018-08-20" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="lnd0060Cal2">
+					<button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal2" id="uiDatePck2" aria-expanded="false"><span>달력</span></button>
+					<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck2" id="uiDatePck2_pnl"></section>
+				</div>
+<div class="box-code">
+<pre>
+<code>
+&lt;div <span class="na">class=</span><span class="s">"ui-datepicker"</span>&gt;
+	&lt;input <span class="na">class=</span><span class="s">"inp-base"</span> <span class="na">type=</span><span class="s">"tel"</span> <span class="na">value=</span><span class="s">"2017-06-17"</span> <span class="na">data-min=</span><span class="s">"2013-10-05"</span> <span class="na">data-max=</span><span class="s">"2019-06-17"</span> <span class="na">title=</span><span class="s">"시작일"</span> <span class="na">id=</span><span class="s">"lnd0060Cal2"</span>&gt;
+	&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">type=</span><span class="s">"btn-base ui-drop ui-datepicker-btn"</span> <span class="na">data-inp=</span><span class="s">"lnd0060Cal2"</span> <span class="na">id=</span><span class="s">"uiDatePck1"</span>&gt;&lt;span&gt;달력&lt;/span&gt;&lt;/button&gt;
+	&lt;div <span class="na">class=</span><span class="s">"ui-drop-pnl ui-datepicker-wrap"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span> <span class="na">data-id=</span><span class="s">"uiDatePck1"</span> <span class="na">id=</span><span class="s">"uiDatePck1_pnl"</span>&gt;&lt;/div&gt;
+&lt;/div&gt;
+
+<span class="c">//ui.common.js 에서 실행</span>
+$plugins<span class="na">.uiDatePicker</span>();
+</code>
+</pre>
+</div>
+				<div class="tbl-wrap">
+					<table class="tbl-base type-option">
+						<caption>옵션 설명</caption>
+						<thead>
+							<tr>
+								<th scope="col">태그</th>
+								<th scope="col">속성</th>
+								<th scope="col">값</th>
+								<th scope="col">설명</th>
+							</tr>
+						</thead>
+						<tbody class="txt-l">
+							<tr>
+								<th scope="row" rowspan="3">input type="text"</th>
+								<th scope="row">data-min</th>
+								<td>2013-01-01</td>
+								<td>최소선택 년월일</td>
+							</tr>
+							<tr>
+								<th scope="row">data-max</th>
+								<td>2020-01-01</td>
+								<td>최대선택 년월일</td>
+							</tr>
+							<tr>
+								<th scope="row">id</th>
+								<td>유니크한 아이디이름 A</td>
+								<td>input의 id와 ui-datepicker-btn의 버튼의 data-inp과 동일한 이름 사용</td>
+							</tr>
+
+							<tr>
+								<th scope="row" rowspan="2">class="ui-drop ui-datepicker-btn"</th>
+								<th scope="row">data-inp</th>
+								<td>input의 id(A)와 동일한 이름</td>
+								<td>input과 버튼의 연결역활</td>
+							</tr>
+							<tr>
+								<th scope="row">id</th>
+								<td>유니크한 아이디이름 B</td>
+								<td>dropdown 사용을 위한 버튼 아이디</td>
+							</tr>
+
+							<tr>
+								<th scope="row" rowspan="2">class="ui-drop-pnl ui-datepickr-wrap"</th>
+								<th scope="row">data-id</th>
+								<td>button의 id(B)와 동일한 이름</td>
+								<td>페널과 버튼의 연결역활</td>
+							</tr>
+							<tr>
+								<th scope="row">id</th>
+								<td>button의 id(B) + '_pnl'</td>
+								<td>dropdown 사용을 위한 페널 아이디</td>
+							</tr>
+						</tbody>
+					</table>
+				
+				</div>
+
+
+			</main>
+		</div>
+		<footer class="base-footer" id="baseFooter"></footer>
+	</div>
+
+	<!-- only page script -->
+	<script>
+		;(function($, win, doc, undefined) {
+			console.log('page ready before')
+			$plugins.common.pageid = 'G_03_05_00_00';
+
+			$(doc).ready(function(){
+				
+				console.log('page ready after')
+				$plugins.page.datePicker();
+
+			});
+		})(jQuery, window, document);
+	</script>
+
+</body>
+</html>

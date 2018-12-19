@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<link rel="apple-touch-icon" href="/resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="/resources/img/common/ico_favicon.ico"> 
+
+	<title>CODE GHOST</title>
+
+	<link rel="stylesheet" href="/resources/css/ui.base.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="/resources/js/ui.base.js"></script>
+</head>
+
+<body class="page-scroll">
+	<div class="base-skip" id="baseSkip"></div>
+	<div class="base-layer" id="baseLayer"></div>
+	<div class="base-wrap" id="baseWrap">
+		<header class="base-header" id="baseHeader"></header>
+		<div class="base-body" id="baseBody">
+			<aside class="base-aside" id="baseAside"></aside>
+			<main class="base-main" id="baseMain" role="main">
+				<div class="tit-wrap">
+					<h1 class="h1" id="uiPageTit"></h1>
+				</div>
+					
+				<div class="box-base">
+					<div class="sample-tab" id="sampleTap">
+						<div>
+						<button type="button">1번탭</button>
+						<button type="button">2번탭</button>
+						<button type="button">3번탭</button>
+						<button type="button">4번탭</button>
+						<button type="button">5번탭</button>
+						<button type="button" id="sampleTap6">6번탭</button>
+						<button type="button">7번탭</button>
+						</div>
+					</div>
+					<div class="btn-wrap">
+						<button type="button" class="btn-base" id="uiScrollLeft"><span>6번탭으로 이동</span></button>
+					</div>
+					<button type="button" class="btn-base" id="scrolltop" style="position:fixed; bottom:20px; right:20px;"><span>상단</span></button>
+					<button type="button" class="btn-base" id="scrolltop2" style="position:fixed; top:120px; right:20px;"><span>하단</span></button>
+					<button type="button" class="btn-base" id="scrolltop3" style="position:fixed; top:50%; right:20px;"><span>중단</span></button>
+				</div>
+	
+				<h2 class="h2">$plugins.uiScroll</h2>
+<div class="box-code">
+<pre>
+<code>
+$plugins<span class="na">.uiScroll</span>({ <span class="s">value:0, speed:300, ps:'top', target:'html,body' focus:'baseHeader', callback:function(v){console.log(v)}</span> });
+</code>
+</pre>
+</div>	
+				<table class="tbl-base type-option">
+					<caption>옵션 설명</caption>
+					<colgroup>
+						<col class="n1">
+						<col class="n2">
+						<col class="n3">
+						<col class="n4">
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">옵션명</th>
+							<th scope="col">유형</th>
+							<th scope="col">기본</th>
+							<th scope="col">설명</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">value:</th>
+							<td>[number]</td>
+							<td>0</td>
+							<td>스크롤이 갈 위치값</td>
+						</tr>
+						<tr>
+							<th scope="row">target:</th>
+							<td>[string]</td>
+							<td>'html, body'</td>
+							<td>스크롤 영역으로 해당 아이디명 기입. 기본으로 html,body로 설정됨</td>
+						</tr>
+						<tr>
+							<th scope="row">ps:</th>
+							<td>[string]</td>
+							<td>'top'</td>
+							<td>스크롤 방향
+								<ul>
+								<li>'top' : 상하 이동 </li>
+								<li>'left' : 좌우 이동 </li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">speed:</th>
+							<td>[number]</td>
+							<td>300</td>
+							<td>스크롤속도</td>
+						</tr>
+						<tr>
+							<th scope="row">focus:</th>
+							<td>[string]</td>
+							<td>false</td>
+							<td>스크롤 완료 후 포커스 갈 위치의 아이디명</td>
+						</tr>
+						<tr>
+							<th scope="row">callback:</th>
+							<td>[function]</td>
+							<td></td>
+							<td>
+								<ul>
+								<li>이동 시 : 스크롤 좌표값, complete = false </li>
+								<li>완료 시 : 이동할 포커스 아이디명, complete = true </li>
+								</ul>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				
+
+			</main>
+		</div>
+		<footer class="base-footer" id="baseFooter"></footer>
+	</div>
+	
+	<!-- only page script -->
+	<script>
+		;(function($, win, doc, undefined) {
+			console.log('page ready before')
+			$plugins.common.pageid = 'G_03_15_00_00';
+
+			$(doc).ready(function(){
+				
+				console.log('page ready after')
+				$plugins.page.scrollmove();
+
+			});
+		})(jQuery, window, document);
+	</script>
+
+</body>
+</html>

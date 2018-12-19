@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<link rel="apple-touch-icon" href="/resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="/resources/img/common/ico_favicon.ico"> 
+
+	<title>CODE GHOST</title>
+
+	<link rel="stylesheet" href="/resources/css/ui.base.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="/resources/js/ui.base.js"></script>
+</head>
+
+<body class="page-select">
+	<div class="base-skip" id="baseSkip"></div>
+	<div class="base-layer" id="baseLayer"></div>
+	<div class="base-wrap" id="baseWrap">
+		<header class="base-header" id="baseHeader"></header>
+		<div class="base-body" id="baseBody">
+			<aside class="base-aside" id="baseAside"></aside>
+			<main class="base-main" id="baseMain" role="main">
+					
+				<div class="tit-wrap">
+					<h1 class="h1" id="uiPageTit"></h1>
+				</div>
+
+				<h2 class="h2">Select Design</h2>
+				
+				<h3 class="h3">CSS Design</h3>
+				<p>CSS로 스타일 표현하나 IE등 일부 브라우저에서는 지원을 안함.</p>
+				<fieldset>
+					<legend>기본 스타일</legend>
+					<select title="년도 선택" id="sel1">
+						<option value="1" selected>2018</option>
+						<option value="2">2017</option>
+						<option value="3">2016</option>
+						<option value="4">2015</option>
+					</select>
+				</fieldset>
+<div class="box-code" role="text">
+<pre>
+<code>
+&lt;select <span class="na">title=</span><span class="s">"고스트 선택"</span>&gt;
+	&lt;option <span class="na">value=</span><span class="s">"1"</span>&gt;먹깨비&lt;/option&gt;
+	&lt;option <span class="na">value=</span><span class="s">"2"</span>&gt;캐스퍼&lt;/option&gt;
+&lt;/select&gt;
+</code>
+</pre>
+</div>
+				<h3 class="h3">Script Select</h3>
+				<p>모든 브라우저에서 동일한 UI와 디자인으로 접근 가능. option도 디자인 표현이 가능 </p>			
+				
+				<fieldset>
+					<legend>지역선택</legend>
+					<label for="forSelLocal" class="lb-tit">지역</label>
+
+					<div class="ui-select type-tel">
+						<select title="시군 선택" id="forSelLocal">
+							<option value="1">서울시</option>
+							<option value="2">부천시</option>
+							<option value="3" selected>광명시</option>
+							<option value="4">고양시</option>
+						</select>
+					</div>
+
+					<div class="ui-select type-bank">
+						<select title="구 선택" id="sel3" onchange="console.log(this.value)">
+							<option value="1">강남구</option>
+							<option value="2">서초구</option>
+							<option value="3">영등포구</option>
+							<option value="4">종로구</option>
+							<option value="5">중구</option>
+							<option value="6" selected>마포구 합정동 말죽 마포구 합정동 말죽</option>
+							<option value="1">강남구</option>
+							<option value="2">서초구</option>
+							<option value="3">영등포구</option>
+							<option value="4">종로구</option>
+							<option value="5">중구</option>
+							<option value="6">마포구 합정동</option>
+						</select>
+					</div>
+				</fieldset>
+				
+<div class="box-code">
+<pre>
+<code>
+&lt;label <span class="na">for=</span><span class="s">"uiSel1"</span> <span class="na">class=</span><span class="s">"lb-tit"</span>&gt;레이블&lt;/label&gt;
+&lt;div <span class="na">class=</span><span class="s">"ui-select"</span>&gt;
+	&lt;select <span class="na">title=</span><span class="s">"선택"</span> <span class="na">id=</span><span class="s">"uiSel1"</span>&gt;
+		&lt;option <span class="na">value=</span><span class="s">"1"</span>&gt;고스트1&lt;/option&gt;
+		&lt;option <span class="na">value=</span><span class="s">"2"</span>&gt;고스트2&lt;/option&gt;
+	&lt;/select&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+			</main>
+		</div>
+		<footer class="base-footer" id="baseFooter"></footer>
+	</div>
+
+	<!-- only page script -->
+	<script>
+		;(function($, win, doc, undefined) {
+			console.log('page ready before')
+			$plugins.common.pageid = 'G_03_16_00_00';
+
+			$(doc).ready(function(){
+				
+				console.log('page ready after')
+				$plugins.page.select();
+
+			});
+		})(jQuery, window, document);
+	</script>
+
+</body>
+</html>

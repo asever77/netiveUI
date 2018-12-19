@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<link rel="apple-touch-icon" href="/resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="/resources/img/common/ico_favicon.ico"> 
+
+	<title>CODE GHOST</title>
+
+	<link rel="stylesheet" href="/resources/css/ui.base.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="/resources/js/ui.base.js"></script>
+</head>
+
+<body class="page-typography">
+	<div class="base-skip" id="baseSkip"></div>
+	<div class="base-layer" id="baseLayer"></div>
+	<div class="base-wrap" id="baseWrap">
+		<header class="base-header" id="baseHeader"></header>
+        <div class="base-body" id="baseBody">
+			<aside class="base-aside" id="baseAside"></aside>
+            <main class="base-main" id="baseMain" role="main">
+                <div class="tit-wrap">
+					<h1 class="h1" id="uiPageTit">Floating</h1>
+				</div>
+
+                    
+                <h2 class="h2">기본 입력 구성</h2>
+                <p>기본적인 입력란의 그룹 형성하여 여러가지 상황과 스타일에 대처한다.</p>
+
+                <h3 class="h3">a singular item</h3>
+                <div class="form-item">
+                    <input type="text" id="a1" class="inp-base" value="" placeholder="입력해주세요">
+                </div>
+                
+                <h3 class="h3">a plural item</h3>
+                <div class="form-item form-email">
+                    <input type="text" id="a2" class="inp-base form-email-id" value="" placeholder="이메일 아이디">
+                    <span class="txt-join">@</span>
+                    <input type="text" id="a3" class="inp-base form-email-adr" value="" placeholder="이메일 주소">
+                </div>
+                <div class="form-item form-tel mgl-s">
+                    <div class="ui-select form-tel-n1">
+                        <select title="통신사 선택" id="a4">
+                            <option>선택하세요</option>
+                            <option value="010">SKT</option>
+                            <option value="011">KT</option>
+                            <option value="017">LGT</option>
+                        </select>
+                    </div>
+                    <span class="txt-join">-</span>
+                    <div class="ui-select form-tel-n2">
+                        <select title="휴대폰 식별자" id="a4">
+                            <option>선택하세요</option>
+                            <option value="010">010</option>
+                            <option value="011">011</option>
+                            <option value="017">017</option>
+                            <option value="018">018</option>
+                        </select>
+                    </div>
+                    <span class="txt-join">-</span>
+                    <input type="text" id="a6" class="inp-base form-tel-n3" value="" placeholder="-없이 입력해주세요" title="휴대폰 뒷번호">
+                </div>
+                <div class="box-code">
+<pre>
+<code>
+&lt;div class="form-item type-email"&gt;
+    &lt;input type="text" class="inp-base" value="" placeholder="이메일 아이디"&gt;
+    &lt;span class="txt-join"&gt;@&lt;/span&gt;
+    &lt;input type="text" class="inp-base" value="" placeholder="이메일 주소"&gt;
+&lt;/div&gt;
+</code>
+</pre>
+                </div>
+
+                <h2 class="h2">$plugins.uiInputClear</h2>
+                <p>IE에서 input 태그의 text 속성을 가지는 입력폼을 사용하는 경우 자동으로 생성되는 X버튼 기능구현</p>
+                <div class="form-item">
+                    <input type="text" id="a7" class="inp-base ui-inpcancel w-m" value="" placeholder="입력해주세요">
+                </div>
+                <div class="form-item mgl-s">
+                    <input type="text" id="a8" class="inp-base ui-inpcancel w-m" value="" placeholder="입력해주세요">
+                </div>
+                <div class="box-code">
+<pre>
+<code>
+<span class="c">//.ui-inpcancel</span>
+&lt;input type="text" id="a7" class="inp-base ui-inpcancel" value="" placeholder="입력해주세요"&gt;
+</code>
+</pre>
+                </div>
+
+                <h2 class="h2">$plugins.uiError</h2>
+                <p>입력오류 및 미기입 시 에러메세지와 스타일 설정</p>
+                <div class="btn-wrap txt-l">
+                    <button type="button" class="btn-base" id="uiErrorOn"><span>에러메세지 ON</span></button>
+                    <button type="button" class="btn-base" id="uiErrorOff"><span>에러메세지 OFF</span></button>
+                </div>
+                
+                <div class="form-item form-tel">
+                    <div class="ui-select form-tel-n1">
+                        <select title="통신사 선택" id="a9">
+                            <option>선택하세요</option>
+                            <option value="010">SKT</option>
+                            <option value="011">KT</option>
+                            <option value="017">LGT</option>
+                        </select>
+                    </div>
+                    <span class="txt-join">-</span>
+                    <div class="ui-select form-tel-n2">
+                        <select title="휴대폰 식별자" id="a10">
+                            <option>선택하세요</option>
+                            <option value="010">010</option>
+                            <option value="011">011</option>
+                            <option value="017">017</option>
+                            <option value="018">018</option>
+                        </select>
+                    </div>
+                    <span class="txt-join">-</span>
+                    <input type="text" id="a11" class="inp-base form-tel-n3" value="" placeholder="-없이 입력해주세요" title="휴대폰 뒷번호">
+                </div>
+
+                <div class="box-code">
+<pre>
+<code>
+$plugins.uiError({ selector:'id' or $(...), error:true or flase, message:'오류메세지 내용' });
+</code>
+</pre>
+                </div>
+
+            </main>
+        </div>
+		<footer class="base-footer" id="baseFooter"></footer>
+	</div>
+	
+    <!-- only page script -->
+	<script>
+		;(function($, win, doc, undefined) {
+			console.log('page ready before')
+			$plugins.common.pageid = 'G_03_09_00_00';
+
+			$(doc).ready(function(){
+				
+				console.log('page ready after')
+				$plugins.page.inputformat();
+
+			});
+		})(jQuery, window, document);
+	</script>
+
+</body>
+</html>

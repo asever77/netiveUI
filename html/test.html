@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<link rel="apple-touch-icon" href="/resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="/resources/img/common/ico_favicon.ico"> 
+  
+	<title>CODE GHOST</title>
+
+	<link rel="stylesheet" href="/resources/css/ui.base.css">
+
+	
+	<script src="/resources/js/ui.base.js"></script>
+</head>
+
+<body class="page-main">
+	<div class="base-skip" id="baseSkip"></div>
+	<div class="base-layer" id="baseLayer">
+	
+	</div>
+	<div class="base-wrap" id="baseWrap">
+		<header class="base-header" id="baseHeader"></header>
+		<main class="base-main" id="baseMain" role="main">
+			<div class="base-content" id="baseContent">
+                <div class="btn-wrap mgt-l"> 
+                    최소:true 최대:true 값:true 
+                    <div class="ui-datepicker" id="uidatepicker1">
+                        <input class="inp-base" type="tel" value="2016.04.20" data-min="2013.10.05" data-max="2018.12.31" title="시작날짜" id="uiDatePckInp_1">
+
+                        <button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="uiDatePckInp_1" id="uiDatePck1" aria-expanded="false"><span>달력</span></button>
+                        <section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck1" id="uiDatePck1_pnl"></section>
+                    </div>
+                </div>
+                <div class="btn-wrap">
+                    최소:false 최대:false 값:false 
+                    <div class="ui-datepicker" id="uidatepicker2">
+                        <input class="inp-base" type="tel" value="" title="종료날짜" id="uiDatePckInp_2">
+
+                        <button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="uiDatePckInp_2" id="uiDatePck2" aria-expanded="false"><span>달력</span></button>
+                        <section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck2" id="uiDatePck2_pnl"></section>
+                    </div>
+                </div>
+			</div>
+		</main>
+		<footer class="base-footer" id="baseFooter"></footer>
+	</div>
+		
+	<script>
+	;(function($, win, doc, undefined) {
+		$(doc).ready(function(){
+			$plugins.uiDatePicker.option.datesplit = '.';
+			$plugins.uiDatePicker.option.callback = function(v){
+				console.log(v);
+			};
+            $plugins.uiDatePicker();
+			$plugins.uiDatePicker({ selector:'uidatepicker2', callback:aaa });
+			function aaa(v) {
+				console.log('aaa', v);
+			}
+		});
+	})(jQuery, window, document);
+	</script>
+</body>
+</html>

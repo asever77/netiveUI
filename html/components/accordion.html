@@ -1,0 +1,338 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<link rel="apple-touch-icon" href="/resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="/resources/img/common/ico_favicon.ico"> 
+
+	<title>CODE GHOST</title>
+
+	<link rel="stylesheet" href="/resources/css/ui.base.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="/resources/js/ui.base.js"></script>
+
+</head>
+
+<body class="page-accordion">
+	<div class="base-skip" id="baseSkip"></div>
+	<div class="base-layer" id="baseLayer"></div>
+	<div class="base-wrap" id="baseWrap">
+		<header class="base-header" id="baseHeader"></header>
+		<div class="base-body" id="baseBody">
+			<aside class="base-aside" id="baseAside"></aside>
+			
+			<main class="base-main" id="baseMain" role="main">
+
+				<div class="tit-wrap">
+					<h1 class="h1" id="uiPageTit">아코디언</h1>
+				</div>
+
+				<div class="ui-acco" role="group" id="exeAcco1">
+					<dl class="ui-acco-wrap">
+						<dt class="ui-acco-tit">
+							<button type="button" class="ui-acco-btn">acco1-1 <span class="ui-acco-txt">열기</span></button>
+						</dt>
+						<dd class="ui-acco-pnl">
+							<a href="#">aaaa</a>
+							<p>acco1-1 content</p>
+							<a href="#">bbbb</a>
+							<a href="#">cccc</a>
+						</dd>
+					</dl>
+					<dl class="ui-acco-wrap">
+						<dt class="ui-acco-tit">
+							<button type="button" class="ui-acco-btn">acco1-2 <span class="ui-acco-txt">열기</span></button>
+						</dt>
+						<dd class="ui-acco-pnl">
+							<a href="#">aaaa</a>
+							<p>acco1-2 content</p>
+							<a href="#">bbbb</a>
+							<a href="#">cccc</a>
+						</dd>
+					</dl>
+					<dl class="ui-acco-wrap">
+						<dt class="ui-acco-tit">
+							<button type="button" class="ui-acco-btn">acco1-3 <span class="ui-acco-txt">열기</span></button>
+						</dt>
+						<dd class="ui-acco-pnl">
+							<a href="#">aaaa</a>
+							<p>acco1-3 content</p>
+							<a href="#">bbbb</a>
+							<a href="#">cccc</a>
+						</dd>
+					</dl>
+				</div>
+					
+				<div class="btn-wrap txt-l mgt-xxl">
+					<button type="button" class="btn-base" onclick="$plugins.uiAccordionToggle({ id:'exeAcco2', current: 'all' })"><span>전체열고닫기</span></button>
+				</div>
+				<div class="ui-acco" role="group" id="exeAcco2">
+					<div class="ui-acco-wrap">
+						<div class="ui-acco-tit">
+							<button type="button" class="ui-acco-btn">acco2-1<span class="ui-acco-txt">열기</span></button>
+						</div>
+						<div class="ui-acco-pnl">
+							acco2-1 content
+
+							<div class="ui-acco" role="group" id="exeAcco3">
+								<dl class="ui-acco-wrap">
+									<dt class="ui-acco-tit">
+										<button type="button" class="ui-acco-btn">acco3-1<span class="ui-acco-txt">열기</span></button>
+									</dt>
+									<dd class="ui-acco-pnl">
+										acco3-1 content
+									</dd>
+								</dl>
+								<dl class="ui-acco-wrap">
+									<dt class="ui-acco-tit">
+										<button type="button" class="ui-acco-btn">acco3-2<span class="ui-acco-txt">열기</span></button>
+									</dt>
+									<dd class="ui-acco-pnl">
+										acco3-2 content
+									</dd>
+								</dl>
+								<dl class="ui-acco-wrap">
+									<dt class="ui-acco-tit">
+										<button type="button" class="ui-acco-btn">acco3-3<span class="ui-acco-txt">열기</span></button>
+									</dt>
+									<dd class="ui-acco-pnl">
+										acco3-3 content
+									</dd>
+								</dl>
+							</div>
+						</div>
+					</div>
+					<dl class="ui-acco-wrap">
+						<dt class="ui-acco-tit">
+							<button type="button" class="ui-acco-btn">acco2-2<span class="ui-acco-txt">열기</span></button>
+						</dt>
+						<dd class="ui-acco-pnl">
+							acco2-2 content
+						</dd>
+					</dl>
+					<dl class="ui-acco-wrap">
+						<dt class="ui-acco-tit">
+							<button type="button" class="ui-acco-btn">acco2-3<span class="ui-acco-txt">열기</span></button>
+						</dt>
+						<dd class="ui-acco-pnl">
+							acco2-3 content
+						</dd>
+					</dl>
+				</div>
+
+				<h2 class="h2">Base Html Markup</h2>
+<div class="box-code">
+<pre>
+<code>
+&lt;div <span class="na">class=</span><span class="s">"ui-acco"</span> <span class="na">role=</span><span class="s">"group"</span> <span class="na">id="</span><span class="s">exeAcco1"</span>&gt;
+	&lt;dl <span class="na">class=</span><span class="s">"ui-acco-wrap"</span>&gt;
+		&lt;dt <span class="na">class=</span><span class="s">"ui-acco-tit"</span>&gt;
+			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-acco-btn"</span>&gt;acco1
+			&lt;span <span class="na">class=</span><span class="s">"ui-acco-txt"</span>&gt;열기&lt;/span&gt;
+			&lt;/button&gt;
+		&lt;/dt&gt;
+		&lt;dd <span class="na">class=</span><span class="s">"ui-acco-pnl"</span>&gt;
+			acco1 content
+		&lt;/dd&gt;
+	&lt;/dl&gt;
+	...
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+
+				<h2 class="h2">$plugins.uiAccordion</h2>
+<div class="box-code">
+<pre>
+<code>
+$plugins<span class="na">.uiAccordion</span>({ 
+	<span class="s">id:'exeAcco1', 
+	current:[0,2], 
+	autoclose:true, 
+	callback:function(v){console.log(v)}</span> 
+});
+</code>
+</pre>
+</div>	
+				<table class="tbl-base type-option">
+					<caption>
+						<strong>$plugins.uiAccordion 옵션 설명</strong>
+						<p class="ui-caption"></p>
+					</caption>
+					<colgroup>
+						<col class="col-xs">
+						<col class="col-xs">
+						<col class="col-xs">
+						<col class="col-auto">
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">옵션명</th>
+							<th scope="col">유형</th>
+							<th scope="col">기본</th>
+							<th scope="col">설명</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="nec">
+							<th scope="row">id:</th>
+							<td>[string]</td>
+							<td>'name'</td>
+							<td>(필수) ui-acco의 아이디명 기입</td>
+						</tr>
+						<tr>
+							<th scope="row">current:</th>
+							<td>[null][array][string]</td>
+							<td>null</td>
+							<td>처음 열린패널 선택
+								<ul>
+								<li>null : 모두 닫힘</li>
+								<li>'all' : 모두 열림</li>
+								<li>[0,1] : 배열으로 열릴패널 선택</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">autoclose:</th>
+							<td>[boolean]</td>
+							<td>false</td>
+							<td>주변 패널 상태변화
+								<ul>
+								<li>true : 선택외의 다른 패널은 닫힘</li>
+								<li>false : 변화없음</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">callback:</th>
+							<td>[function]</td>
+							<td>function</td>
+							<td>콜백값으로 아이디와 현재선택 index값</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<h2 class="h2">$plugins.uiAccordionToggle</h2>
+<div class="box-code">
+<pre>
+<code>
+$plugins<span class="na">.uiAccordionToggle</span>({ <span class="s">
+	id:'exeAcco1', 
+	current:[0,2], 
+	motion:false, 
+	state:'open', 
+	callback:function(v){console.log(v)}</span> 
+});
+</code>
+</pre>
+</div>	
+				<table class="tbl-base type-option">
+					<caption>
+						<strong>$plugins.uiAccordionToggle 옵션 설명</strong>
+						<p class="ui-caption"></p>
+					</caption>
+					<colgroup>
+						<col class="col-xs">
+						<col class="col-xs">
+						<col class="col-xs">
+						<col class="col-auto">
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">옵션명</th>
+							<th scope="col">유형</th>
+							<th scope="col">기본</th>
+							<th scope="col">설명</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="nec">
+							<th scope="row">id:</th>
+							<td>[string]</td>
+							<td>'name'</td>
+							<td>(필수) ui-acco의 아이디명 기입</td>
+						</tr>
+						<tr>
+							<th scope="row">current:</th>
+							<td>[null][array][string]</td>
+							<td>null</td>
+							<td>처음 열린패널 선택
+								<ul>
+								<li>null : 모두 닫힘</li>
+								<li>'all' : 모두 열림</li>
+								<li>[0,1] : 배열으로 열릴패널 선택</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">autoclose:</th>
+							<td>[boolean]</td>
+							<td>false</td>
+							<td>주변 패널 상태변화
+								<ul>
+								<li>true : 선택외의 다른 패널은 닫힘</li>
+								<li>false : 변화없음</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">motion:</th>
+							<td>[boolean]</td>
+							<td>false</td>
+							<td>애니메이션 효과
+								<ul>
+								<li>true : 효과있음</li>
+								<li>false : 효과없음</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">state:</th>
+							<td>[string]</td>
+							<td>'toggle'</td>
+							<td>상태 설정
+								<ul>
+								<li>'toggle' : 토글방식</li>
+								<li>'open' : 무조건 열림</li>
+								<li>'close' : 무조건 닫힘</li>
+								</ul>
+							</td>
+						</tr>
+						<tr>
+							<th scope="row">callback:</th>
+							<td>[function]</td>
+							<td>function</td>
+							<td>콜백값으로 아이디와 현재선택 index값</td>
+						</tr>
+					</tbody>
+				</table>
+
+			</main>
+		</div>
+		<footer class="base-footer" id="baseFooter"></footer>
+	</div>
+
+	<!-- only page script -->
+	<script>
+		;(function($, win, doc, undefined) {
+			console.log('page ready before')
+			$plugins.common.pageid = 'G_03_01_00_00';
+
+			$(doc).ready(function(){
+				
+				console.log('page ready after')
+				$plugins.page.accordion();
+
+			});
+		})(jQuery, window, document);
+	</script>
+
+</body>
+</html>
