@@ -312,19 +312,19 @@
 .ui-modal.type-full{left:0; top:0; width:100%; height:100%;}
 .ui-modal .btn-close{position:absolute; top:12px; right:12px; z-index:3;}
 .ui-modal-wrap{width:100%; height:100%; background-color:#fff; box-shadow:0 0 10px rgba(0,0,0,0.2)}
-.ui-modal-head{width:100%;}
-.ui-modal-head h1{font-size:20px; color:#fff; text-align:center; height:100%; padding:10px; background-color:#333333;}
+.ui-modal-header{width:100%;}
+.ui-modal-header h1{font-size:20px; color:#fff; text-align:center; height:100%; padding:10px; background-color:#333333;}
 .ui-modal-cont{position:relative; overflow-y:auto; overflow-x:hidden; width:100%; margin:0; padding:0; background-color:#fff;}
-.ui-modal-foot{position:relative; text-align:center; margin:0; padding:20px 0}
-
+.ui-modal-footer{position:absolute; bottom:0; width:100%; z-index:1; text-align:center; margin:0; padding:20px 0; border-top: 1px solid #ccc; background: #fff;}
+    
 
     /* ui modal mobile */
     .ui-m .modal-open{padding:0}
     .ui-m .ui-modal{max-width:100%; padding:0;}
     .ui-m .ui-modal-wrap{height:100%;}
     .ui-m .ui-modal-cont{background:#fff; padding:15px; height:auto; overflow:auto; font-size:15px;}
-    .ui-m .ui-modal-head{position:relative; border:0; top:0; left:0; z-index:1; padding:0; min-height:50px; max-height:100%;}
-    .ui-m .ui-modal-head h1{font-size:20px; padding:15px 45px 10px; background-color:#333333; width:100%; min-height:50px; height:100%;}
+    .ui-m .ui-modal-header{position:relative; border:0; top:0; left:0; z-index:1; padding:0; min-height:50px; max-height:100%;}
+    .ui-m .ui-modal-header h1{font-size:20px; padding:15px 45px 10px; background-color:#333333; width:100%; min-height:50px; height:100%;}
     .ui-m .ui-modal-close{position:absolute; top:15px; right:10px; z-index:101; background-size:130px 130px; background-position:10px 10px;}
     .ui-m .ui-modal-full .ui-modal-head{padding:0;}
     .ui-m .ui-modal-full .ui-modal-close{right:0;}

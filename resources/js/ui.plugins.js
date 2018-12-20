@@ -1752,13 +1752,15 @@ var mConsole = (function(){
 		closecallback: false,
 		space: 10,
 
+		ajax_type: 'GET',
+
 		words: false,
 		btntxt1: false,
 		btntxt2: false,
 
 		sys_type: false,
-		termsTit: false,
-		termsUrl: false,
+		terms_tit: false,
+		terms_url: false,
 
 		iname: false,
 		ititle: '빈프레임',
@@ -1857,7 +1859,7 @@ var mConsole = (function(){
 			//모달코드가 이미 페이지안에 있을 경우
 			($('#' + opt.id).attr('aria-hidden') === 'true') ? uiModalOpen(opt) : '';
 		} else {
-			//aJax 모달 
+			// Ajax 모달 
 			!!$('#' + opt.id).length ?
 				uiModalOpen(opt) :
 				win[global].uiAjax({
@@ -1865,7 +1867,7 @@ var mConsole = (function(){
 					url: opt.link,
 					page: true,
 					prepend:true,
-					type: opt.type === 'post' ? opt.type : 'GET',
+					type: opt.ajax_type,
 					add: true,
 					callback: function () {
 						uiModalOpen(opt);
@@ -1876,39 +1878,46 @@ var mConsole = (function(){
 	function uiModalOpen(opt) {
 		var $modal = $('#' + opt.id),
 			$modalWrap = $modal.find('.ui-modal-wrap'),
-			$modalTit = $modal.find('.ui-modal-tit'),
+			$modalTit = $modal.find('.ui-modal-header'),
 			$modalCont = $modal.find('.ui-modal-cont'),
 			$modalFoot = $modal.find('.ui-modal-footer'),
+
 			autofocus = opt.autofocus,
 			born = opt.born,
 			endfocus = opt.endfocus === null ? document.activeElement : '#' + opt.endfocus,
-			w = (opt.width === undefined) ? Math.ceil($modal.outerWidth()) : opt.width,
-			h = (opt.height === undefined) ? Math.ceil($modal.outerHeight()) : opt.height,
-			titH,
-			titF,
+			w = opt.width === undefined ? Math.ceil($modal.outerWidth()) : opt.width,
+			h = opt.height === undefined ? Math.ceil($modal.outerHeight()) : opt.height,
+
 			full = opt.full,
 			remove = opt.remove,
 			ps = opt.ps, 
 			callback = opt.callback,
 			closecallback = opt.closecallback,
 			modalSpace = opt.space,
-			winH = $(win).outerHeight(),
-			winW = $(win).outerWidth(),
-			overH = winH <= h,
-			overW = winW <= w,
+
+			win_h = $(win).outerHeight(),
+			win_w = $(win).outerWidth(),
+			overH = win_h <= h,
+			overW = win_w <= w,
+			h_h,
+			f_h,
+
 			timer,
 			timer_resize,
 			layN,
 			re_num = 0,
 			re_timer,
+
 			//system
 			words = opt.words,
 			btntxt1 = opt.btntxt1,
 			btntxt2 = opt.btntxt2,
 			sys_type = opt.type,
+
 			//terms
-			termsTit = opt.termsTit,
-			termsUrl = opt.termsUrl,
+			terms_tit = opt.terms_tit,
+			terms_url = opt.terms_url,
+
 			//iframe
 			iname = opt.iname,
 			ititle = opt.ititle,
@@ -1916,6 +1925,7 @@ var mConsole = (function(){
 			iwidth = (opt.iwidth === undefined) ? $modal.find('iframe').attr('width') : opt.iwidth,
 			iheight = (opt.iheight === undefined) ? $modal.find('iframe').attr('height') : opt.iheight,
 			icallback = opt.icallback,
+			
 			//state
 			is_mobile = win[global].browser.mobile,
 			is_full_h,
@@ -1933,19 +1943,19 @@ var mConsole = (function(){
 		//MODAL TYPE -------------------------------------------------
 		function modalType(){
 			//type terms modal
-			if (termsUrl) {
+			if (terms_url) {
 				if (is_mobile) {
 					full = true;
 					modalSpace = 0;
 					$modal.addClass('type-full');
 				}	
-				win[global].uiAjax({ id: opt.id + '_cont', url: termsUrl, page: true });
-				$modalTit.find('.tit-h1').text(termsTit);
+				win[global].uiAjax({ id: opt.id + '_cont', url: terms_url, page: true });
+				$modalTit.find('.tit-h1').text(terms_tit);
 			}
 
 			//type alert & comfirm modal
 			if (words) {
-				words && is_mobile ? opt.width = winW > 400 ? 400 : winW - (modalSpace * 2) : '';
+				words && is_mobile ? opt.width = win_w > 400 ? 400 : win_w - (modalSpace * 2) : '';
 				$modal.find('#modalAlertTxt').append(words);
 				$modal.find('.ui-partial').removeClass('warning-type1 warning-type2 warning-type3').addClass(sys_type);
 				!!btntxt1 ? $modal.find('#__confirm').text(btntxt1) : '';
@@ -1965,8 +1975,9 @@ var mConsole = (function(){
 
 		//MODAL READY -------------------------------------------------
 		function modalReady(){
-			$('body').addClass('modal-open modal-ria');
+			$('body').addClass('modal-open');
 			$('#baseWrap').attr('aria-hidden', true);
+
 			$modal.attr('opened', true)
 				.data('opt', opt)
 				.data('endfocus', endfocus)
@@ -1976,6 +1987,7 @@ var mConsole = (function(){
 				.find('.tit-h1').eq(0).attr('id', opt.id + '-tit');
 
 			$modal.siblings('.ui-modal').attr('aria-hidden', true);
+			
 			//single or multi modal
 			layN = $('.ui-modal[opened="true"]').length;
 			opt.zindex !== undefined ? opt.zindex !== null ? zidx = opt.zindex : zidx = layN : zidx = layN;
@@ -1984,44 +1996,46 @@ var mConsole = (function(){
 				position: 'fixed'
 			}).attr('n', zidx).addClass('hide-scroll2');
 
-			//모달생성 설정
-			is_mobile ? $modal.css({ display: 'block', top: '100%', opacity: 0 }) : $modal.css({ display: 'block', top: '50%', opacity: 0 });
-
-			clearTimeout(timer);
+			//모달생성 설정 
+			console.log(ps);
+			$modal.css({ 
+				display: 'block', 
+				top: is_mobile ? '100%' : '50%', 
+				opacity: 0
+			});
 			
-			timer = setTimeout(function () {
-				modalApp({ resize: false  });
-			}, 50);
+			modalApp({ resize: false });
 		}
 
 		//MODAL APPLICATION -------------------------------------------------
 		//- resize: resize이벤트 일 경우 true, 아닌 경우 false
 		function modalApp(v) {
-			if ($(win).outerWidth() > $modal.outerWidth() && $(win).outerHeight() > $modal.outerHeight() && v.resize && !is_mobile) {
-				$('body').removeClass('modal-full');
-				return false; //리사이징으로 변화가 없을 시
-			} 
-
 			//초기화 및 세팅
-			winH = $(win).outerHeight();
-			winW = $(win).outerWidth();
+			win_h = $(win).outerHeight();
+			win_w = $(win).outerWidth();
+
+			//resize modal 크기 변화가 없을 시
+			if (win_w > $modal.outerWidth() && win_h > $modal.outerHeight() && v.resize && !is_mobile) {
+				$('body').removeClass('modal-full');
+				return false; 
+			} 
 			
 			if (v.resize) {
 				$('body').addClass('modal-full');
 				return false;
 			} 
+			
 			$modalCont.css({ 
-				height: 'auto' ,
+				height:  'auto',
 				maxHeight: 'none',
 				minHeight: 'none'
-			});
+			}).attr('tabindex', 0);
 
 			$modal.css({ height: 'auto' });
 			//!full ? $modal.css({ height: 'auto' }) : '';
 			//modal height 100 작거나 iframeload 전 일때 재 실행, resize 옵션 false 일경우
 	
 			if ($modalCont.outerHeight() < 20 && $modal.data('iframeload') === undefined && !v.resize ) {
-				//$plugins.page.formReset();
 				if (re_num === 0) {
 					win[global].uiLoading({ visible: true });
 					re_num = re_num + 1;
@@ -2035,15 +2049,20 @@ var mConsole = (function(){
 			} 
 
 			//modal content load ok!! 
-			titH = !!$modalTit.length ? $modalTit.outerHeight() : 0;
-			titF = !!$modalFoot.outerHeight() ? $modalFoot.outerHeight() : 0;
+			h_h = !!$modalTit.length ? $modalTit.outerHeight() : 0;
+			f_h = !!$modalFoot.outerHeight() ? $modalFoot.outerHeight() : 0;
+
+			var h_type_a = !!h_h && !!f_h,//title, footer
+				h_type_b = !!h_h && !f_h,//only title
+				h_type_c = !h_h && !!f_h,//only footer
+				h_type_d = !h_h && !f_h;//not title, footer
 
 			//$modalCont height setup
 			if (full) {
-				!!titH && !!titF ? __h = Math.ceil(winH - titH - titF - (modalSpace * 2)) : '';//title, footer
-				!!titH && !titF ? __h = Math.ceil(winH - titH - (modalSpace * 2)) : '';//only title
-				!titH && !!titF ? __h = Math.ceil(winH - titF - (modalSpace * 2)) : '';//only footer
-				!titH && !titF ? __h = Math.ceil(winH - (modalSpace * 2)) : '';//not title, footer
+				h_type_a ? __h = Math.ceil(win_h - h_h - f_h - (modalSpace * 2)) : '';
+				h_type_b ? __h = Math.ceil(win_h - h_h - (modalSpace * 2)) : '';
+				h_type_c ? __h = Math.ceil(win_h - f_h - (modalSpace * 2)) : '';
+				h_type_d ? __h = Math.ceil(win_h - (modalSpace * 2)) : '';
 				h_cont = __h;
 
 				if (!is_mobile) {
@@ -2054,18 +2073,20 @@ var mConsole = (function(){
 				if (!opt.height) {
 					$modalCont.css('max-height', 'auto');
 					laywrap_h = $modalWrap.outerHeight();
-					laywrap_h > winH ? laywrap_h = winH : '';
-					!!titH && !!titF ? __h = Math.ceil(laywrap_h - titH) : '';//title, footer
-					!!titH && !titF ? __h = Math.ceil(laywrap_h - titH) : '';//only title
-					!titH && !!titF ? __h = Math.ceil(laywrap_h) : '';//only footer
-					!titH && !titF ? __h = Math.ceil(laywrap_h) : '';//not title, footer
-					winH < __h + (modalSpace * 2) + titH + titF ? __h =  winH - titF - titH - (modalSpace * 2) : '';
+					laywrap_h > win_h ? laywrap_h = win_h : '';
+
+					h_type_a ? __h = Math.ceil(laywrap_h - h_h) : '';//title, footer
+					h_type_b ? __h = Math.ceil(laywrap_h - h_h) : '';//only title
+					h_type_c ? __h = Math.ceil(laywrap_h) : '';//only footer
+					h_type_d ? __h = Math.ceil(laywrap_h) : '';//not title, footer
+
+					win_h < __h + (modalSpace * 2) + h_h + f_h ? __h =  win_h - f_h - h_h - (modalSpace * 2) : '';
 					h_cont = __h;
 					$modalCont.css('max-height', __h);
 					$modalCont.css('height', __h);
 				} else {
-					$modalCont.css('max-height', Math.ceil(opt.height - titH));
-					$modalCont.css('height', Math.ceil(opt.height - titH));
+					$modalCont.css('max-height', Math.ceil(opt.height - h_h));
+					$modalCont.css('height', Math.ceil(opt.height - h_h));
 				}
 			}
 
@@ -2078,8 +2099,8 @@ var mConsole = (function(){
 			// 	w = Number($modal.data('orgw'));
 			// }
 
-			overH = winH <= h;
-			overW = winW <= w;
+			overH = win_h <= h;
+			overW = win_w <= w;
 
 			if (!is_mobile) {
 				overW ? $('body').addClass('modal-full') : $('body').removeClass('modal-full');
@@ -2094,20 +2115,20 @@ var mConsole = (function(){
 			//full ? is_full_h = true : '';
 			// if (is_full_h) {
 			// 	//full
-			// 	$modalCont.css({ height: Math.ceil(winH - (titH + titF) - (modalSpace * 2)) + 'px' });
-			// 	winH < ih ?
-			// 		$modal.find('.ui-modal-iframe iframe').attr('height', winH - (modalSpace * 2)) :
+			// 	$modalCont.css({ height: Math.ceil(win_h - (h_h + f_h) - (modalSpace * 2)) + 'px' });
+			// 	win_h < ih ?
+			// 		$modal.find('.ui-modal-iframe iframe').attr('height', win_h - (modalSpace * 2)) :
 			// 		$modal.find('.ui-modal-iframe iframe').attr('height', ih);
 
-			// 	$modal.css('height', winH - (modalSpace * 2));
+			// 	$modal.css('height', win_h - (modalSpace * 2));
 			// } else {
 			// 	!!words ? $modalCont.css({ hegiht: 'auto', maxHeight: 'none' }) : '';
-			// 	h = !!titF ? h + titF : h;
+			// 	h = !!f_h ? h + f_h : h;
 			// 	$modal.css('height', h);
 			// }
 
 			!!words ? $modalCont.css({ maxHeight: 'none' }) : '';
-				h = !!titF ? h + titF : h;
+				h = !!f_h ? h + f_h : h;
 				$modal.css('height', h);
 
 			if (!v.resize) {
@@ -2236,18 +2257,18 @@ var mConsole = (function(){
 			$modalTit = $modal.find('.ui-modal-tit'),
 			$modalCont = $modal.find('.ui-modal-cont'),
 			$modalFoot = $modal.find('.ui-modal-footer'),
-			titF,
-			titH,
+			f_h,
+			h_h,
 			w = _opt.width === undefined ? Math.ceil($modal.outerWidth()) : _opt.width,
 			h = _opt.height === undefined ? Math.ceil($modal.outerHeight()) : _opt.height,
 			words = _opt.words === undefined ? false : _opt.words,
-			termsUrl = _opt.termsUrl === undefined ? false : _opt.termsUrl,
+			terms_url = _opt.terms_url === undefined ? false : _opt.terms_url,
 			modalSpace = 10,
 			full = _opt.full === undefined ? false : _opt.full,
-			winH = $(win).outerHeight(),
-			winW = $(win).outerWidth(),
-			overH = winH <= h,
-			overW = winW <= w,
+			win_h = $(win).outerHeight(),
+			win_w = $(win).outerWidth(),
+			overH = win_h <= h,
+			overW = win_w <= w,
 			iname = _opt.iname === undefined ? false : _opt.iname,
 			h_cont,
 			timer,
@@ -2270,8 +2291,8 @@ var mConsole = (function(){
 		$modal.css({ height: 'auto', width: 'auto' });
 		$modal.find('.mCustomScrollBox').css({ maxHeight: 'none' });
 
-		titH = !!$modalTit.length ? $modalTit.outerHeight() : 0;
-		titF = !!$modalFoot.outerHeight() ? $modalFoot.outerHeight() : 0;
+		h_h = !!$modalTit.length ? $modalTit.outerHeight() : 0;
+		f_h = !!$modalFoot.outerHeight() ? $modalFoot.outerHeight() : 0;
 		
 		setTimeout(function(){
 			review();
@@ -2281,43 +2302,43 @@ var mConsole = (function(){
 			
 			if (full) {
 				if (!opt.height) {
-					!!titH && !!titF ? __h = Math.ceil(winH - (titH)) : '';
-					!!titH && !titF ? __h = Math.ceil(winH - titH) : '';
-					!titH && !!titF ? __h = Math.ceil(winH) : '';
-					!titH && !titF ? __h = Math.ceil(winH) : '';
+					!!h_h && !!f_h ? __h = Math.ceil(win_h - (h_h)) : '';
+					!!h_h && !f_h ? __h = Math.ceil(win_h - h_h) : '';
+					!h_h && !!f_h ? __h = Math.ceil(win_h) : '';
+					!h_h && !f_h ? __h = Math.ceil(win_h) : '';
 					$modalCont.css('max-height', __h);
 					$modalCont.css('height', __h);
 					h_cont = __h;
 				} else {
-					$modalCont.css('max-height', Math.ceil(opt.height - (titH)));
-					$modalCont.css('height',  Math.ceil(opt.height - (titH)));
+					$modalCont.css('max-height', Math.ceil(opt.height - (h_h)));
+					$modalCont.css('height',  Math.ceil(opt.height - (h_h)));
 				}
 			} else {
 				if (!opt.height) {
 					//$modalCont.css('max-height', 'none');
 					laywrap_h = $modal.find('.ui-modal-wrap').outerHeight();
-					if (laywrap_h > winH) {
-						laywrap_h = winH;
-						!!titH && !!titF ? __h = Math.ceil(laywrap_h - (titH)) : '';
-						!!titH && !titF ? __h = Math.ceil(laywrap_h - titH) : '';
-						!titH && !!titF ? __h = Math.ceil(laywrap_h) : '';
-						!titH && !titF ? __h = Math.ceil($modalWrap.height()) : '';
+					if (laywrap_h > win_h) {
+						laywrap_h = win_h;
+						!!h_h && !!f_h ? __h = Math.ceil(laywrap_h - (h_h)) : '';
+						!!h_h && !f_h ? __h = Math.ceil(laywrap_h - h_h) : '';
+						!h_h && !!f_h ? __h = Math.ceil(laywrap_h) : '';
+						!h_h && !f_h ? __h = Math.ceil($modalWrap.height()) : '';
 						__h = __h;
 						$modalCont.css('max-height', __h);
 						$modalCont.css('height',  __h);
 						h_cont = __h;
 					} 
 				} else {
-					$modalCont.css('max-height', Math.ceil(opt.height - (titH)));
-					$modalCont.css('height', Math.ceil(opt.height - (titH)));
+					$modalCont.css('max-height', Math.ceil(opt.height - (h_h)));
+					$modalCont.css('height', Math.ceil(opt.height - (h_h)));
 				}
 			}
 
 			h = (opt.height === undefined) ? Math.ceil($modal.outerHeight()) : opt.height;
 			w = (opt.width === undefined) ? Math.ceil($modal.outerWidth()) : opt.width;
 
-			overH = winH <= h;
-			overW = winW <= w;
+			overH = win_h <= h;
+			overW = win_w <= w;
 
 			//|| !words
 			if (!is_mobile || !words) {
@@ -2340,15 +2361,15 @@ var mConsole = (function(){
 			//full ? is_full_h = true : '';
 			if (is_full_h) {
 				//full
-				$modalCont.css({ height: Math.ceil(winH - (titH + titF) - (modalSpace * 2)) + 'px' });
-				winH < ih ?
-					$modal.find('.ui-modal-iframe iframe').attr('height', winH - (modalSpace * 2)) :
+				$modalCont.css({ height: Math.ceil(win_h - (h_h + f_h) - (modalSpace * 2)) + 'px' });
+				win_h < ih ?
+					$modal.find('.ui-modal-iframe iframe').attr('height', win_h - (modalSpace * 2)) :
 					$modal.find('.ui-modal-iframe iframe').attr('height', ih);
 
-				$modal.css('height', winH - (modalSpace * 2));
+				$modal.css('height', win_h - (modalSpace * 2));
 			} else {
 				!!words ? $modalCont.css('hegiht','auto') : '';
-				h = !!titF ? h + titF : h;
+				h = !!f_h ? h + f_h : h;
 				$modal.css('height', h);
 			}
 
@@ -2356,20 +2377,20 @@ var mConsole = (function(){
 				top: is_full_h ? modalSpace : '50%',
 				left: is_full_w ? modalSpace : '50%',
 				width: w,
-				height: is_full_h ? winH - (modalSpace * 2) : words ? 'auto' : h,
+				height: is_full_h ? win_h - (modalSpace * 2) : words ? 'auto' : h,
 				marginTop: is_full_h ? 0 : (h / 2) * -1,
 				marginLeft: is_full_w ? 0 : (w / 2) * -1
 			},200);
 		}
 		// if (is_full_h) {
-		// 	$modalCont.css({ height: Math.ceil(winH - (titH + titF) - (modalSpace * 2)) + 'px' });
+		// 	$modalCont.css({ height: Math.ceil(win_h - (h_h + f_h) - (modalSpace * 2)) + 'px' });
 		// 	$modalWrap.css('overflow', 'hidden');
-		// 	$modalCont.css({ height: Math.ceil(winH - (titH + titF) - (modalSpace * 2)) + 'px' });
+		// 	$modalCont.css({ height: Math.ceil(win_h - (h_h + f_h) - (modalSpace * 2)) + 'px' });
 		// } else {
 		// 	if (words) {
 		// 		$modalCont.css({ height: 'auto' });
 		// 	}
-		// 	if (termsUrl) {
+		// 	if (terms_url) {
 		// 		$modalCont.css({ height: h_cont - 1 });
 		// 	}
 		// }
@@ -2381,13 +2402,13 @@ var mConsole = (function(){
 		// $modal.css({
 		// 	top: is_full_h ? modalSpace : '50%',
 		// 	left: is_full_w ? modalSpace : '50%',
-		// 	width: is_full_w ? is_mobile ? '100%' : winW - (modalSpace * 2) : is_iframe ? iw : w,
-		// 	height: is_full_h ? is_iframe ? winH : winH - (modalSpace * 2) : h,
+		// 	width: is_full_w ? is_mobile ? '100%' : win_w - (modalSpace * 2) : is_iframe ? iw : w,
+		// 	height: is_full_h ? is_iframe ? win_h : win_h - (modalSpace * 2) : h,
 		// 	marginTop: is_full_h ? 0 : (h / 2) * -1,
 		// 	marginLeft: is_full_w ? 0 : (w / 2) * -1
 		// });
 		// is_full_w ?
-		// 	$modal.find('.ui-modal-iframe iframe').attr('width', winW - (modalSpace * 2)).attr('height', winH - (modalSpace * 2)) :
+		// 	$modal.find('.ui-modal-iframe iframe').attr('width', win_w - (modalSpace * 2)).attr('height', win_h - (modalSpace * 2)) :
 		// 	$modal.find('.ui-modal-iframe iframe').attr('width', $modal.find('.ui-modal-iframe').data('orgw')).attr('height', $modal.find('.ui-modal-iframe').data('orgh'));
 
 	}
@@ -2426,11 +2447,11 @@ var mConsole = (function(){
 
 			closecallback = !!now_callback ? now_callback : opt.closecallback,
 			full = opt.full, 
-			termsTit = opt.termsTit, 
+			terms_tit = opt.terms_tit, 
 			sct = $modal.data('scrolltop') === undefined ? 0 : $modal.data('scrolltop'),
 			ps = opt.ps,
 			wst = $(win).scrollTop(),
-			winH = $(win).outerHeight(),
+			win_h = $(win).outerHeight(),
 			h = Math.ceil($modal.outerHeight()),
 			fst;
 
@@ -2440,7 +2461,7 @@ var mConsole = (function(){
 		opt.endfocus !== undefined && opt.endfocus !== null && !!endfocus ? 
 		 	sct = $(endfocus).offset().top : '';
 
-		win[global].browser.mobile ? !!termsTit ? full = true : '' : '';
+		win[global].browser.mobile ? !!terms_tit ? full = true : '' : '';
 
 		$('#__modalCF_cont').css('display', 'none');
 		
@@ -3093,10 +3114,10 @@ var mConsole = (function(){
 				wraph = _$wrap.outerHeight(),
 				btnh = _$sel.outerHeight(),
 				opth = _$opt.outerHeight(),
-				winh = $(win).outerHeight(),
+				win_h = $(win).outerHeight(),
 				clsname = 'bottom';
 
-			clsname = winh - ((offtop - scrtop) + btnh) > wraph ? 'bottom' : 'top' ;			
+			clsname = win_h - ((offtop - scrtop) + btnh) > wraph ? 'bottom' : 'top' ;			
 
 			$('body').addClass('dim-dropdown');
 			$('body').data('scrolling') === 'yes' ? win[global].uiScrollingCancel(): '';
@@ -4467,7 +4488,7 @@ var mConsole = (function(){
 		base.opt.len = base.item.length;
 		base.opt.w = base.item.eq(base.opt.current).outerWidth();
 		base.opt.h = base.item.eq(base.opt.current).outerHeight();
-		base.opt.winw = $(win).outerWidth();
+		base.opt.win_w = $(win).outerWidth();
 		base.opt.docw = $(doc).outerHeight();
 		
 		//multi
@@ -4609,11 +4630,11 @@ var mConsole = (function(){
 		$(win).resize(function(){
 			clearTimeout(base.timers);
 			base.timers = setTimeout(function(){
-				if (base.opt.winw !== $(win).outerWidth()) {
+				if (base.opt.win_w !== $(win).outerWidth()) {
 					base.opt.len = base.item.length;
 					base.opt.w = base.item.eq(base.opt.current).outerWidth();
 					base.opt.h = base.item.eq(base.opt.current).outerHeight();
-					base.opt.winw = $(win).outerHeight();
+					base.opt.win_w = $(win).outerHeight();
 					base.opt.docw = $(doc).outerHeight();
 					base.evt.activate = false; //현재 모션 여부
 					
@@ -5774,14 +5795,14 @@ var mConsole = (function(){
 						table += id !== '' ? overl !== '' ? ifm === '' ? pop === '1' ? tabIs === 'T' ?
 							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html?tab=' + (tab - 1) + '\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
 							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, termsTit:\'약관제목\', termsUrl:\'/terms/' + overl + '.html\' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
+							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, terms_tit:\'약관제목\', terms_url:\'/terms/' + overl + '.html\' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
 							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ iframe:true, isrc:\'/modal/' + overl + '_iframe.html\', iname:\'name_' + overl + '\', id:\'modal_' + overl + '\', full:' + full + ' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
 							(ifm === '') ?
 								(pop === '1') ?
 									tabIs === 'T' ?
 										'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html?tab=' + (tab - 1) + '\'});">' + id + '</button></td>' :
 										'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html\' });">' + id + '</button></td>' :
-									'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, termsTit:\'약관제목\', termsUrl:\'/terms/' + id + '.html\' });">' + id + '</button></td>' :
+									'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, terms_tit:\'약관제목\', terms_url:\'/terms/' + id + '.html\' });">' + id + '</button></td>' :
 								'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ iframe:true, isrc:\'/modal/' + id + '_iframe.html\', iname:\'name_' + id + '\', id:\'modal_' + id + '\', full:' + full + ' });">' + id + '</button></td>' :
 							'<td class="id "><span></span></td>';
 					}
@@ -6539,4 +6560,108 @@ var mConsole = (function(){
 	*
 	*/
 
+	/*
+	$plugins.modal.system({
+		type : 'confirm' or 'alert'
+		btn_confirm_yes : '확인',
+		btn_confirm_no : '취소'
+		btn_alert : '확인',
+		cont_text : '.....'
+		width : 410,
+		zindex : null,
+		state : '알림' or '선택' or '확인' or '오류'
+
+	})
+	*/
+	win[global].modal = {};
+	win[global].modal.option = {
+		type : 'alert',
+		btn_confirm_yes : null,
+		btn_confirm_no : null,
+		btn_alert : '확인',
+		cont_text : '확인해주세요.',
+		width : 410,
+		zindex : null,
+		state : '알림'
+	}
+	win[global].modal = {
+		system: function (opt){
+			var opt = $.extend(true, {}, win[global].modal.option, opt),
+				btn_confirm_yes = opt.btn_confirm_yes,
+				btn_confirm_no = opt.btn_confirm_no,
+				btn_alert = opt.btn_alert,
+				cont_text = opt.cont_text,
+				w = opt.width,
+				z = opt.zindex,
+				type = opt.type,
+				is_alert = type === 'alert' ? true : false,
+				class_name,
+				system_url = is_alert ? '/modal/modalAlert.html' : '/modal/modalConfirm.html';
+
+			switch (type) {
+				case '알림': 
+					class_name = 'system-type-a';
+					break;
+
+				case '선택': 
+					class_name = 'system-type-b';
+					break;
+					
+				case '오류':
+					class_name = 'system-type-c';
+					break;
+			}
+
+			$plugins.uiModal({
+				id: is_alert ? '__modalAlert' : '__modalConfirm', 
+				link: system_url, 
+				words: cont_text, 
+				btntxt1: is_alert ? btn_confirm_yes : btn_alert, 
+				btntxt2: is_alert ? btn_confirm_no : null , 
+				type: class_name, 
+				autofocus: false, 
+				width: w, 
+				zindex: z 
+			});
+
+			$('#__confirm').off('click.confirm').on('click.confirm', function () {
+				$plugins.uiModalClose({ 
+					id: '__modalConfirm',
+					remove: true, 
+					callback: opt.confirmCallback
+				});
+			});
+			$('#__cancel, .btn-close').off('click.confirm').on('click.confirm', function () {
+				$plugins.uiModalClose({ 
+					id: '__modalConfirm', 
+					remove: true, 
+					callback: opt.cancelCallback 
+				});
+			});
+		},
+		
+		terms: function (title, url) {
+			//$plugins.modal.terms('개인정보 수집/이용 동의 (SKT)', '/terms/phone_skt_01.html');
+			var title = title === undefined ? '약관' : title,
+				url = url === undefined ? false : url;
+
+			if (!!url) {
+				$('body.type-iframe').length ?
+					parent.$plugins.uiModal({
+						id: '__modalTerms',
+						link: '/modal/modalTerms.html',
+						remove: true,
+						termsTit: title,
+						termsUrl: url
+					}) :
+					$plugins.uiModal({
+						id: '__modalTerms',
+						link: '/modal/modalTerms.html',
+						remove: true,
+						termsTit: title,
+						termsUrl: url
+					});
+			}
+		}
+	}
 })(jQuery, window, document);	

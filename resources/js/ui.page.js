@@ -209,7 +209,7 @@
                 $plugins.uiModal({ id:'modal_sample1', link:'/html/modal/modalSample1.html', callback:$plugins.page.callback });
                 break;
             case 'modalOpen2':
-                $plugins.uiModal({ id:'modal_sample2', link:'/html/modal/modalSample2.html', callback:$plugins.page.callback });
+                $plugins.uiModal({ id:'modal_sample2', link:'/html/modal/modalSample2.html', callback:$plugins.page.callback, width:700 });
                 break;
             }
         });

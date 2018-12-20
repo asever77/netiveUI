@@ -36,13 +36,13 @@
 				<div class="markup-modal">
 					<section class="ui-modal" id="modal_name" role="dialog" aria-hidden="true">
 						<div class="ui-modal-wrap">
-							<header class="ui-modal-head">
+							<header class="ui-modal-header">
 								<h1 class="ui-modal-tit"><span>제목</span></h1>
 							</header>
-							<div class="ui-modal-cont">
+							<div class="ui-modal-cont" style="height:300px">
 								내용...
 							</div>
-							<div class="ui-modal-foot">
+							<div class="ui-modal-footer">
 								<button type="button" class="btn-base" onclick="$plugins.uiModalClose({ id:'modal_name', callback:function(){ console.log('확인'); } });">확인</button>
 							</div>
 							<button type="button" class="ui-modal-close btn-close" aria-label="close" >닫기</button>
@@ -55,13 +55,13 @@
 <span class="c">&lt;div class="base-layer" id="baseLayer"&gt;</span>
 	&lt;section <span class="na">class=</span><span class="s">"ui-modal"</span> <span class="na">id=</span><span class="s">"modal_name"</span> <span class="na">role=</span><span class="s">"dialog"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span>&gt;
 		&lt;div <span class="na">class=</span><span class="s">"ui-modal-wrap"</span>&gt;
-			&lt;header <span class="na">class=</span><span class="s">"ui-modal-head"</span>&gt;
+			&lt;header <span class="na">class=</span><span class="s">"ui-modal-header"</span>&gt;
 				&lt;h1 <span class="na">class=</span><span class="s">"ui-modal-tit"</span>&gt;&lt;span&gt;title&lt;/span&gt;&lt;/h1&gt;
 			&lt;/header&gt;
 			&lt;div <span class="na">class=</span><span class="s">"ui-modal-cont"</span>&gt;
 				....
 			&lt;/div&gt;
-			&lt;div <span class="na">class=</span><span class="s">"ui-modal-foot"</span>&gt;
+			&lt;div <span class="na">class=</span><span class="s">"ui-modal-footer"</span>&gt;
 				&lt;button type="button" class="btn-base"&gt;확인&lt;/button&gt;
 			&lt;/div&gt;
 			&lt;button type="button" <span class="na">class=</span><span class="s">"ui-modal-close btn-close"</span>&gt;닫기&lt;/button&gt;
@@ -77,12 +77,32 @@
 				<div class="btn-wrap mgt-s txt-l">
 					<button type="button" class="btn-base" aria-haspopup="true" id="modalOpen1"><span>Ajax 기본 팝업(center)</span></button>
 					<button type="button" class="btn-base" aria-haspopup="true" id="modalOpen2"><span>Ajax 기본 팝업(scroll)</span></button>
+
+					<button type="button" class="btn-base" onclick="
+						$plugins.modal.system({
+							type : 'alert',
+							btn_alert : '확인',
+							cont_text : '.....',
+							width : 410,
+							zindex : null,
+							state : '알림'
+						});
+					"><span>system(alert)</span></button>
 				</div>
 <div class="box-code">
 <pre>
 <code>
 <span class="c">// width,height 값을 주면 </span>
-$plugins<span class="na">.uiModal</span>({ <span class="s">id:'modal_name', width:500, height:500, ps:'top' endfocus:'idname', full:true, link:'/html/modal/sample.html', callback:function(v){...}</span> });
+$plugins<span class="na">.uiModal</span>({ <span class="s">
+	id:'modal_name', 
+	width:500, 
+	height:500, 
+	ps:'top' 
+	endfocus:'idname', 
+	full:true, 
+	link:'/html/modal/sample.html', 
+	callback:function(v){...}</span> 
+});
 </code>
 </pre>
 </div>
