@@ -310,13 +310,20 @@
 .ui-modal.ps-center{top:40%}
 .ui-modal.ps-bottom{bottom:-25%}
 .ui-modal.type-full{left:0; top:0; width:100%; height:100%;}
-.ui-modal .btn-close{position:absolute; top:12px; right:12px; z-index:3;}
+.ui-modal .btn-close{position:absolute; top:0; right:-28px; z-index:3;}
 .ui-modal-wrap{width:100%; height:100%; background-color:#fff; box-shadow:0 0 10px rgba(0,0,0,0.2)}
 .ui-modal-header{width:100%;}
 .ui-modal-header h1{font-size:20px; color:#fff; text-align:center; height:100%; padding:10px; background-color:#333333;}
 .ui-modal-cont{position:relative; overflow-y:auto; overflow-x:hidden; width:100%; margin:0; padding:0; background-color:#fff;}
 .ui-modal-footer{position:absolute; bottom:0; width:100%; z-index:1; text-align:center; margin:0; padding:20px 0; border-top: 1px solid #ccc; background: #fff;}
-    
+
+.modal-system .ui-modal-cont{text-align: center; padding:20px; font-size:16px;}
+.modal-system .btn-wrap {margin-top:20px;}
+.modal-system .ui-modal-cont:before{content:""; display:inline-block; width:50px; height:50px; background:url(/resources/img/common/ico_modal.png) no-repeat -25px -25px; margin-bottom:20px;}
+
+.modal-system .system-type-a:before{background-position:-25px -25px}
+.modal-system .system-type-b:before{background-position:-125px -25px}
+.modal-system .system-type-c:before{background-position:-225px -25px}
 
     /* ui modal mobile */
     .ui-m .modal-open{padding:0}

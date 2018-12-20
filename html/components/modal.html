@@ -78,16 +78,6 @@
 					<button type="button" class="btn-base" aria-haspopup="true" id="modalOpen1"><span>Ajax 기본 팝업(center)</span></button>
 					<button type="button" class="btn-base" aria-haspopup="true" id="modalOpen2"><span>Ajax 기본 팝업(scroll)</span></button>
 
-					<button type="button" class="btn-base" onclick="
-						$plugins.modal.system({
-							type : 'alert',
-							btn_alert : '확인',
-							cont_text : '.....',
-							width : 410,
-							zindex : null,
-							state : '알림'
-						});
-					"><span>system(alert)</span></button>
 				</div>
 <div class="box-code">
 <pre>
@@ -106,6 +96,80 @@ $plugins<span class="na">.uiModal</span>({ <span class="s">
 </code>
 </pre>
 </div>
+				<h2 class="h2">$plugins.modal.system</h2>
+				<p>system 모달 팝업 세팅 및 실행</p>
+				<div class="btn-wrap mgt-s txt-l">
+					<button type="button" class="btn-base" onclick="
+						$plugins.modal.system({
+							type : 'alert',
+							btn_alert : '확인',
+							cont_text : '확인하세요',
+							width : 310,
+							zindex : null,
+							state : '알림',
+							confirmCallback: function(){console.log('alert 확인')}
+						});
+					"><span>알림(alert)</span></button>
+
+					<button type="button" class="btn-base" onclick="
+						$plugins.modal.system({
+							type : 'confirm',
+							btn_confirm_yes : '확인',
+							btn_confirm_no : '취소',
+							cont_text : '둘중에 하나를 선택하세요<br> 오직 하나만~',
+							zindex : 100,
+							state : '선택',
+							confirmCallback: function(){console.log('confirm 확인')},
+							cancelCallback: function(){console.log('confirm 취소')}
+						});
+					"><span>선택(confirm)</span></button>
+
+					<button type="button" class="btn-base" onclick="
+						$plugins.modal.system({
+							type : 'alert',
+							btn_alert : '확인',
+							cont_text : '오류가 있습니다.',
+							width : 310,
+							state : '오류',
+							confirmCallback: function(){console.log('alert 확인')}
+						});
+					"><span>오류(confirm)</span></button>
+				</div>
+<div class="box-code">
+<pre>
+<code>
+<span class="c">// 확인 </span>
+$plugins<span class="na">.modal.system</span>({ <span class="s">
+	type : 'alert',
+	btn_alert : '확인',
+	cont_text : '확인하세요.',
+	state : '알림',
+	confirmCallback: function(){console.log('alert 확인')}</span> 
+});
+
+<span class="c">// 선택 </span>
+$plugins<span class="na">.modal.system</span>({ <span class="s">
+	type : 'alert',
+	btn_alert : '확인',
+	cont_text : '오류가 있습니다.',
+	state : '오류',
+	confirmCallback: function(){console.log('alert 확인')}</span> 
+});
+
+<span class="c">// 오류 </span>
+$plugins<span class="na">.modal.system</span>({ <span class="s">
+	type : 'confirm',
+	btn_confirm_yes : '확인',
+	btn_confirm_no : '취소',
+	cont_text : '둘중에 하나를 선택하세요. &lt;br&gt; 오직 하나만~',
+	state : '선택',
+	confirmCallback: function(){console.log('confirm 확인')},
+	cancelCallback: function(){console.log('confirm 취소')}</span> 
+});
+</code>
+</pre>
+</div>
+
 				<table class="tbl-base type-option">
 					<caption>
 						<strong>$plugins.uiModal 옵션 설명</strong>

@@ -1751,14 +1751,13 @@ var mConsole = (function(){
 		callback: false,
 		closecallback: false,
 		space: 10,
-
 		ajax_type: 'GET',
 
-		words: false,
-		btntxt1: false,
-		btntxt2: false,
+		system_words: false,
+		system_btntxt1: false,
+		system_btntxt2: false,
+		system_class: false,
 
-		sys_type: false,
 		terms_tit: false,
 		terms_url: false,
 
@@ -1909,10 +1908,10 @@ var mConsole = (function(){
 			re_timer,
 
 			//system
-			words = opt.words,
-			btntxt1 = opt.btntxt1,
-			btntxt2 = opt.btntxt2,
-			sys_type = opt.type,
+			system_words = opt.system_words,
+			system_btntxt1 = opt.system_btntxt1,
+			system_btntxt2 = opt.system_btntxt2,
+			system_class = opt.system_class,
 
 			//terms
 			terms_tit = opt.terms_tit,
@@ -1954,12 +1953,13 @@ var mConsole = (function(){
 			}
 
 			//type alert & comfirm modal
-			if (words) {
-				words && is_mobile ? opt.width = win_w > 400 ? 400 : win_w - (modalSpace * 2) : '';
-				$modal.find('#modalAlertTxt').append(words);
-				$modal.find('.ui-partial').removeClass('warning-type1 warning-type2 warning-type3').addClass(sys_type);
-				!!btntxt1 ? $modal.find('#__confirm').text(btntxt1) : '';
-				!!btntxt2 ? $modal.find('#__cancel').text(btntxt2) : '';
+			if (system_words) {
+				system_words && is_mobile ? opt.width = win_w > 400 ? 400 : win_w - (modalSpace * 2) : '';
+				$modal.find('#modalSystemTxt').append(system_words);
+				$modal.find('.ui-modal-cont').removeClass().addClass('ui-modal-cont').addClass(system_class);
+
+				!!system_btntxt1 ? $modal.find('#modalSystemBtn1').text(system_btntxt1) : '';
+				!!system_btntxt2 ? $modal.find('#modalSystemBtn2').text(system_btntxt2) : '';
 			}
 
 			//type full modal
@@ -1994,7 +1994,7 @@ var mConsole = (function(){
 			$modal.css({
 				zIndex: born ? zidx + 20 : zidx,
 				position: 'fixed'
-			}).attr('n', zidx).addClass('hide-scroll2');
+			}).attr('n', zidx);
 
 			//모달생성 설정 
 			console.log(ps);
@@ -2127,7 +2127,7 @@ var mConsole = (function(){
 			// 	$modal.css('height', h);
 			// }
 
-			!!words ? $modalCont.css({ maxHeight: 'none' }) : '';
+			!!system_words ? $modalCont.css({ maxHeight: 'none' }) : '';
 				h = !!f_h ? h + f_h : h;
 				$modal.css('height', h);
 
@@ -2150,7 +2150,7 @@ var mConsole = (function(){
 						top: '50%',
 						left: '50%',
 						width: w,
-						height: words ? 'auto' : h,
+						height: system_words ? 'auto' : h,
 						marginTop: (h / 2) * -1,
 						marginLeft: is_iframe ? (iw / 2) * -1 : (w / 2) * -1
 					});
@@ -2181,7 +2181,7 @@ var mConsole = (function(){
 				//$modalCont.css('height', h_cont - 1);
 
 				//alert, confirm modal 제외
-				if (!words) {
+				if (!system_words) {
 					if (window.mCustomScrollbar && !iname && isMscroll) {
 						//pc모드, 아이프레임X,
 						$modalCont.mCustomScrollbar({ scrollButtons: { enable: true } });
@@ -2225,7 +2225,7 @@ var mConsole = (function(){
 					}
 				}
 
-				!!words ? '' : 
+				!!system_words ? '' : 
 				win[global].callback !== undefined ? $plugins.callback.modal(opt.id) : '';
 
 				//!words ? win[global].uiModalResize({ id: opt.id }) : '';
@@ -2261,7 +2261,7 @@ var mConsole = (function(){
 			h_h,
 			w = _opt.width === undefined ? Math.ceil($modal.outerWidth()) : _opt.width,
 			h = _opt.height === undefined ? Math.ceil($modal.outerHeight()) : _opt.height,
-			words = _opt.words === undefined ? false : _opt.words,
+			system_words = _opt.system_words === undefined ? false : _opt.system_words,
 			terms_url = _opt.terms_url === undefined ? false : _opt.terms_url,
 			modalSpace = 10,
 			full = _opt.full === undefined ? false : _opt.full,
@@ -2341,7 +2341,7 @@ var mConsole = (function(){
 			overW = win_w <= w;
 
 			//|| !words
-			if (!is_mobile || !words) {
+			if (!is_mobile || !system_words) {
 				if (overW) {
 					full = true;
 					$modal.addClass('modal-full');
@@ -2368,7 +2368,7 @@ var mConsole = (function(){
 
 				$modal.css('height', win_h - (modalSpace * 2));
 			} else {
-				!!words ? $modalCont.css('hegiht','auto') : '';
+				!!system_words ? $modalCont.css('hegiht','auto') : '';
 				h = !!f_h ? h + f_h : h;
 				$modal.css('height', h);
 			}
@@ -2377,7 +2377,7 @@ var mConsole = (function(){
 				top: is_full_h ? modalSpace : '50%',
 				left: is_full_w ? modalSpace : '50%',
 				width: w,
-				height: is_full_h ? win_h - (modalSpace * 2) : words ? 'auto' : h,
+				height: is_full_h ? win_h - (modalSpace * 2) : system_words ? 'auto' : h,
 				marginTop: is_full_h ? 0 : (h / 2) * -1,
 				marginLeft: is_full_w ? 0 : (w / 2) * -1
 			},200);
@@ -6573,20 +6573,20 @@ var mConsole = (function(){
 
 	})
 	*/
-	win[global].modal = {};
-	win[global].modal.option = {
+
+	win[global].modalOption = {
 		type : 'alert',
 		btn_confirm_yes : null,
 		btn_confirm_no : null,
 		btn_alert : '확인',
 		cont_text : '확인해주세요.',
-		width : 410,
+		width : 'auto',
 		zindex : null,
 		state : '알림'
 	}
 	win[global].modal = {
 		system: function (opt){
-			var opt = $.extend(true, {}, win[global].modal.option, opt),
+			var opt = $.extend(true, {}, win[global].modalOption, opt),
 				btn_confirm_yes = opt.btn_confirm_yes,
 				btn_confirm_no = opt.btn_confirm_no,
 				btn_alert = opt.btn_alert,
@@ -6594,11 +6594,12 @@ var mConsole = (function(){
 				w = opt.width,
 				z = opt.zindex,
 				type = opt.type,
+				state = opt.state,
 				is_alert = type === 'alert' ? true : false,
 				class_name,
-				system_url = is_alert ? '/modal/modalAlert.html' : '/modal/modalConfirm.html';
+				system_url = is_alert ? '/html/modal/modalAlert.html' : '/html/modal/modalConfirm.html';
 
-			switch (type) {
+			switch (state) {
 				case '알림': 
 					class_name = 'system-type-a';
 					break;
@@ -6611,29 +6612,29 @@ var mConsole = (function(){
 					class_name = 'system-type-c';
 					break;
 			}
-
+			console.log(w, opt.width);
 			$plugins.uiModal({
-				id: is_alert ? '__modalAlert' : '__modalConfirm', 
+				id: 'modalSystem', 
 				link: system_url, 
-				words: cont_text, 
-				btntxt1: is_alert ? btn_confirm_yes : btn_alert, 
-				btntxt2: is_alert ? btn_confirm_no : null , 
-				type: class_name, 
 				autofocus: false, 
 				width: w, 
-				zindex: z 
+				zindex: z ,
+				system_words: cont_text, 
+				system_btntxt1: is_alert ? btn_alert : btn_confirm_yes, 
+				system_btntxt2: is_alert ? null : btn_confirm_no , 
+				system_class: class_name
 			});
 
-			$('#__confirm').off('click.confirm').on('click.confirm', function () {
+			$('#modalSystemBtn1').off('click.confirm').on('click.confirm', function () {
 				$plugins.uiModalClose({ 
-					id: '__modalConfirm',
+					id: 'modalSystem',
 					remove: true, 
 					callback: opt.confirmCallback
 				});
 			});
-			$('#__cancel, .btn-close').off('click.confirm').on('click.confirm', function () {
+			$('#modalSystemBtn2, .btn-close').off('click.confirm').on('click.confirm', function () {
 				$plugins.uiModalClose({ 
-					id: '__modalConfirm', 
+					id: 'modalSystem', 
 					remove: true, 
 					callback: opt.cancelCallback 
 				});

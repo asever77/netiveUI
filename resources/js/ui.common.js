@@ -119,11 +119,7 @@
     };
 
     //modal
-    $plugins.modal = {
-        alert: function(v){
-            //console.log(v);
-        }
-    }
+    
 
     //page 
     $plugins.page = {}

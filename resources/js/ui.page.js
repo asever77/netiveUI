@@ -212,6 +212,7 @@
                 $plugins.uiModal({ id:'modal_sample2', link:'/html/modal/modalSample2.html', callback:$plugins.page.callback, width:700 });
                 break;
             }
+
         });
     }
 
