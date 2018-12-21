@@ -2451,7 +2451,7 @@
 			id_btn, 
 			_$btn, 
 			_$pnl,
-			para = $global.uiPara('tab'),
+			para = $ui.uiPara('tab'),
 			paras,
 			paraname;
 
