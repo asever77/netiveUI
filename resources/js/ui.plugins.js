@@ -2425,6 +2425,7 @@
 	$ui.uiTab.option = {
 		current: 0,
 		unres: false,
+		label: false,
 		callback: false
 	};
 	function createUiTab(opt) {
@@ -2434,6 +2435,7 @@
 			current = isNaN(opt.current) ? 0 : opt.current,
 			unres = opt.unres,
 			callback = opt.callback,
+			tabLabel = opt.label,
 			keys = $ui.option.keys,
 			$tab = $('#' + id),
 			$btns = $tab.children('.ui-tab-btns'),
@@ -2442,6 +2444,7 @@
 			$pnl = $pnls.children('.ui-tab-pnl'),
 			para = $ui.uiPara('tab'), // tab=idname-1
 			len = $btn.length,
+			fix = !!$tab.data('tabnum'),
 			ps_l = [],
 			i, 
 			_class, 
@@ -2478,21 +2481,25 @@
 			}
 		}
 
+		//set up
 		$tab.data('opt', opt);
+		tabLabel ? $btns.attr('aria-label', tabLabel) : '';
 		$btns.attr('role','tablist');
 		$btn.attr('role','tab');
 		$pnl.attr('role','tabpanel');
 		
 		for (i = 0; i < len; i++) {
-			is_current = current === i;
+			var tabn = fix ? $btn.eq(i).data('tabnum') : i;
+
+			is_current = current === tabn;
 			_class = is_current ? 'addClass' : 'removeClass';
 			_attr = is_current ? 'removeAttr' : 'attr';
 			_$btn = $btn.eq(i);
 			_$pnl = $pnl.eq(i);
 
 			//id make
-			_$btn.attr('id') === undefined ? _$btn.attr('id', id + 'Btn' + i) : '';
-			_$pnl.attr('id') === undefined ? _$pnl.attr('id', id + 'Pnl' + i) : '';
+			_$btn.attr('id') === undefined ? _$btn.attr('id', id + 'Btn' + tabn) : '';
+			_$pnl.attr('id') === undefined ? _$pnl.attr('id', id + 'Pnl' + tabn) : '';
 			
 			id_btn = _$btn.attr('id');
 			id_pnl = _$pnl.attr('id');
@@ -2500,15 +2507,18 @@
 			_$btn.attr('aria-controls', id_pnl)[_attr]('tabindex', -1)[_class]('selected');
 
 			if (unres === false) {
-				_$pnl.attr('aria-labelledby', id_btn)[_class]('selected');
+				_$btn.attr('aria-controls', _$pnl.attr('id'));
+				_$pnl.attr('aria-labelledby', id_btn).attr('aria-hidden', (current === tabn) ? false : true)[attrs]('tabindex', -1)[cls]('selected');
 			} else {
 				is_current ? $pnl.attr('aria-labelledby', id_btn).addClass('selected') : '';
 			}
 
-			is_current ? 
-				_$btn.attr('aria-selected', true).addClass('selected'):
-				_$btn.attr('aria-selected', false).removeClass('selected');
-			
+			if (is_current) {
+				_$btn.attr('aria-selected', true).addClass('selected').append('<b class="hide">선택됨</b>');
+			} else {
+				_$btn.attr('aria-selected', false).removeClass('selected').find('b.hide').remove();
+			}
+				
 			ps_l.push(Math.ceil(_$btn.position().left));
 
 			i === 0 ? _$btn.attr('tab-first', true) : '';
@@ -4521,7 +4531,7 @@
 			step, re, timer, r;
 			
 		if ($base.data('ing') !== true) {
-			textNum = uiComma(countNum);
+			textNum = $ui.option.uiComma(countNum);
 			base_h === 0 ? base_h = $base.text('0').outerHeight() : '';
 			$base.data('ing',true).empty().css('height', base_h);
 			len = textNum.length;
@@ -4583,7 +4593,7 @@
 			counter = function(){
 				diff = countNum - count;
 				(diff > 0) ? count += Math.ceil(diff / 20, -2) : '';
-				var n = uiComma(count);
+				var n = $ui.option.uiComma(count);
 				$base.text(n);
 				if(count < countNum) {
 					timer = setTimeout(function() { 
