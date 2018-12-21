@@ -1,775 +1,20 @@
-
-'use strict';
-
-//Polyfill
-if (!Object.create) {
-	Object.create = function (o) {
-		if (arguments.length > 1) {
-			throw new Error('Sorry the polyfill Object.create only accepts the first parameter.');
-		}
-		function F() {}
-		F.prototype = o;
-		return new F();
-	};
-}
-if (!Array.indexOf){ 
-	Array.prototype.indexOf = function(obj){ 
-		for(var i=0; i<this.length; i++){ 
-			if(this[i]==obj){ return i; } 
-		} 
-		return -1; 
-	}
-}
-if (!Array.prototype.forEach) {
-	Array.prototype.forEach = function(callback,thisArg) {
-		var T,k;
-		if(this === null) {
-			throw new TypeError('error');
-		}
-		var O = Object(this);
-		var len = O.length >>> 0;
-		if(typeof callback !== "function"){
-			throw new TypeError('error');
-		}
-		if(arguments.length > 1){
-			T = thisArg;
-		}
-		k = 0;
-		while(k < len){
-			var kValue;
-			if(k in O) {
-				kValue = O[k];
-				callback.call(T, kValue, k, O);
-			}
-			k++;
-		}
-	};
-}
-if (!Array.isArray) {
-	Array.isArray = function(arg){
-		return Object.prototype.toString.call(arg) === '[object Array]';
-	}
-}
-if (!Object.keys){
-	Object.keys = (function() {
-		'use strict';
-		var hasOwnProperty = Object.prototype.hasOwnProperty,
-			hasDontEnumBug = !({ toDtring : null }).propertyIsEnumerable('toString'),
-			dontEnums = [
-				'toString',
-				'toLocaleString',
-				'valueOf',
-				'hasOwnProperty',
-				'isPrototypeOf',
-				'propertyIsEnumerable',
-				'constructor'
-			],
-			dontEnumsLength = dontEnums.length;
-		
-		return function(obj) {
-			if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
-				throw new TypeError('Object.keys called on non=object');
-			}
-			var result = [], prop, i;
-			for (prop in obj) {
-				if (hasOwnProperty.call(obj, prop)) {
-					result.push(prop);
-				}
-			}
-			if (hasDontEnumBug) {
-				for (i=0; i < dontEnumsLength; i++) {
-					if (hasOwnProperty.call(obj, dontEnums[i])) {
-						result.push(dontEnums[i]);
-					}
-				}
-			}
-			return result;
-		};
-	}()); 
-}
-
-//mobile console
-var mConsole = (function(){
-	var html = [
-			'<div id="uiConsole" class="ui-console">',
-				'<button type="button" id="uiConsoleOpen" class="ui-console-open">열고닫기</button>',
-				'<div id="uiConsoleTab" class="ui-console-tab">',
-					'<button type="button" id="uiConsoleTabConsole" class="ui-console-btn">Console</button>',
-					'<button type="button" id="uiConsoleTabElement" class="ui-console-btn">Element</button>',
-				'</div>',
-				'<button type="button" id="uiConsoleClear" class="ui-console-clear">clear</button>',
-				'<div id="uiConsoleView" class="ui-console-view">',
-					'<div id="uiConsoleViewConsole">',
-						
-						'<div id="uiConsoleViewConsoleText">',
-						'</div>',
-					'</div>',
-					'<div id="uiConsoleViewElement" style="display:none"></div>',
-				'</div>',
-			'</div>'
-			],
-		temp = document.createElement('div'),
-		init = function(){
-			if(document.getElementById('uiConsole')) return;
-				temp.innerHTML = html.join('');
-				document.body.appendChild(temp.childNodes[0]);
-				document.getElementById('uiConsole').onclick = function(e){
-				switch(e.target.id){
-				case'uiConsoleClear':
-					document.getElementById('uiConsoleViewConsoleText').innerHTML = '';
-					break;
-				case'uiConsoleOpen':
-					document.getElementById('uiConsole').classList.toggle('on');
-					break;
-				case'uiConsoleTab':
-					e.target.style.height = e.target.style.height == '200px' ? '20px' : '200px';
-					break;
-				case'uiConsoleTabElement':
-					document.getElementById('uiConsoleClear').style.display = 'none';
-					document.getElementById('uiConsoleViewConsole').style.display = 'none';
-					document.getElementById('uiConsoleViewElement').style.display = 'block';
-					document.getElementById('uiConsoleViewElement').innerHTML = '<pre>' +
-						('<html>\n' + document.getElementsByTagName('html')[0].innerHTML + '\n</html>').replace(/[<]/g, '&lt;') +
-						'</pre>';
-					break;
-				case'uiConsoleTabConsole':
-					document.getElementById('uiConsoleViewConsole').style.display = 'block';
-					document.getElementById('uiConsoleViewElement').style.display = 'none';
-					document.getElementById('uiConsoleClear').style.display = 'block';
-				}
-			}
-		};
-	
-	return {
-		log:function(){
-			var a = arguments, i = 0, j = a.length, item, v;
-			init();
-		item = ['<div class="ui-console-wrap">'];
-			while(i < j){
-				v = a[i++];
-				if(v && typeof v == 'object') v = JSON.stringify(v);
-				item.push('<div class="ui-console_item">' + v + '</div>');
-			}
-		item.push('</div>');
-			temp.innerHTML = item.join('');
-			document.getElementById('uiConsoleViewConsoleText').appendChild(temp.childNodes[0]);
-		}
-	};
-})();
-
-/*!
-  * CodeGhost v1.0.1 (http://netive.co.kr)
-  * Copyright 2018-2018 The CodeGhost Authors (http://github.com/asever77)
-  */
-
 //utils module
 ;(function ($, win, doc, undefined) {
-	console.log('plguins.js')
 
 	'use strict';
 
-	var global = "$plugins", 
-		namespace = "codeGhost.plugins",
-		easings = {
-			linear : function(t,b,c,d){return c*t/d+b;},
-			easeInQuad : function(t,b,c,d){return c*(t/=d)*t+b;},
-			easeOutQuad : function(t,b,c,d){return -c*(t/=d)*(t-2)+b;},
-			easeInOutQuad : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t+b;return -c/2*((--t)*(t-2)-1)+b;},
-			easeOutInQuad : function(t,b,c,d){if(t < d/2)return easings.easeOutQuad(t*2,b,c/2,d);return easings.easeInQuad((t*2)-d,b+c/2,c/2,d);},
-			easeInCubic : function(t,b,c,d){return c*(t/=d)*t*t+b;},
-			easeOutCubic : function(t,b,c,d){return c*((t=t/d-1)*t*t+1)+b;},
-			easeInOutCubic : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t+b;return c/2*((t-=2)*t*t+2)+b;},
-			easeOutInCubic : function(t,b,c,d){if(t<d/2)return easings.easeOutCubic(t*2,b,c/2,d);return easings.easeInCubic((t*2)-d,b+c/2,c/2,d);},
-			easeInQuart : function(t,b,c,d){return c*(t/=d)*t*t*t+b;},
-			easeOutQuart : function(t,b,c,d){return -c*((t=t/d-1)*t*t*t-1)+b;},
-			easeInOutQuart : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t+b;return -c/2*((t-=2)*t*t*t-2)+b;},
-			easeOutInQuart : function(t,b,c,d){if(t<d/2)return easings.easeOutQuart(t*2,b,c/2,d);return easings.easeInQuart((t*2)-d,b+c/2,c/2,d);},
-			easeInQuint : function(t,b,c,d){return c*(t/=d)*t*t*t*t+b;},
-			easeOutQuint : function(t,b,c,d){return c*((t=t/d-1)*t*t*t*t+1)+b;},
-			easeInOutQuint : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t*t+b;return c/2*((t-=2)*t*t*t*t+2)+b;},
-			easeOutInQuint : function(t,b,c,d){if(t<d/2)return easings.easeOutQuint(t*2,b,c/2,d);return easings.easeInQuint((t*2)-d,b+c/2,c/2,d);},
-			easeInSine : function(t,b,c,d){return -c*Math.cos(t/d*(Math.PI/2))+c+b;},
-			easeOutSine : function(t,b,c,d){return c*Math.sin(t/d*(Math.PI/2))+b;},
-			easeInOutSine : function(t,b,c,d){return -c/2*(Math.cos(Math.PI*t/d)-1)+b;},
-			easeOutInSine : function(t,b,c,d){if(t<d/2)return easings.easeOutSine(t*2,b,c/2,d);return easings.easeInSine((t*2)-d,b+c/2,c/2,d);},
-			easeInExpo : function(t,b,c,d){return (t==0)? b : c*Math.pow(2,10*(t/d-1))+b-c*0.001;},
-			easeOutExpo : function(t,b,c,d){return (t==d)? b+c : c*1.001*(-Math.pow(2,-10*t/d)+1)+b;},
-			easeInOutExpo : function(t,b,c,d){if(t==0)return b;if(t==d)return b+c;if((t/=d/2)<1)return c/2*Math.pow(2,10*(t-1))+b-c*0.0005;return c/2*1.0005*(-Math.pow(2,-10*--t)+2)+b;},
-			easeOutInExpo : function(t,b,c,d){if(t<d/2)return easings.easeOutExpo(t*2,b,c/2,d);return easings.easeInExpo((t*2)-d,b+c/2,c/2,d);},
-			easeInCirc : function(t,b,c,d){return -c*(Math.sqrt(1-(t/=d)*t)-1)+b;},
-			easeOutCirc : function(t,b,c,d){return c*Math.sqrt(1-(t=t/d-1)*t)+b;},
-			easeInOutCirc : function(t,b,c,d){if((t/=d/2)<1)return -c/2*(Math.sqrt(1-t*t)-1)+b;return c/2*(Math.sqrt(1-(t-=2)*t)+1)+b;},
-			easeOutInCirc : function(t,b,c,d){if (t<d/2)return easings.easeOutCirc(t*2,b,c/2,d);return easings.easeInCirc((t*2)-d,b+c/2,c/2,d);},		
-			easeInElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return -(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;},
-			easeOutElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return (a*Math.pow(2,-10*t)*Math.sin((t*d-s)*(2*Math.PI)/p)+c+b);},
-			easeInOutElastic : function(t,b,c,d,a,p){if(t==0)return b;if((t/=d/2)==2)return b+c;var s,p=d*(.3*1.5),a=0;var s,p=(!p||typeof(p)!='number')? d*(.3*1.5) : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);if(t<1)return -.5*(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;return a*Math.pow(2,-10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p)*.5+c+b;},
-			easeOutInElastic : function(t,b,c,d,a,p){if (t<d/2)return easings.easeOutElastic(t*2,b,c/2,d,a,p);return easings.easeInElastic((t*2)-d,b+c/2,c/2,d,a,p);},
-			easeInBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*(t/=d)*t*((s+1)*t-s)+b;},
-			easeOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*((t=t/d-1)*t*((s+1)*t+s)+1)+b;},
-			easeInOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;if((t/=d/2)<1)return c/2*(t*t*(((s*=(1.525))+1)*t-s))+b;return c/2*((t-=2)*t*(((s*=(1.525))+1)*t+s)+2)+b;},
-			easeOutInBack : function(t,b,c,d,s){if(t<d/2)return easings.easeOutBack(t*2,b,c/2,d,s);return easings.easeInBack((t*2)-d,b+c/2,c/2,d,s);},			
-			easeInBounce : function(t,b,c,d){return c-easings.easeOutBounce(d-t,0,c,d)+b;},
-			easeOutBounce : function(t,b,c,d){if((t/=d)<(1/2.75))return c*(7.5625*t*t)+b;else if(t<(2/2.75))return c*(7.5625*(t-=(1.5/2.75))*t+.75)+b;else if(t<(2.5/2.75))return c*(7.5625*(t-=(2.25/2.75))*t+.9375)+b;else return c*(7.5625*(t-=(2.625/2.75))*t+.984375)+b;},
-			easeInOutBounce : function(t,b,c,d){if(t<d/2)return easings.easeInBounce(t*2,0,c,d)*.5+b;else return easings.easeOutBounce(t*2-d,0,c,d)*.5+c*.5+b;},
-			easeOutInBounce : function(t,b,c,d){if(t<d/2)return easings.easeOutBounce(t*2,b,c/2,d);return easings.easeInBounce((t*2)-d,b+c/2,c/2,d);}
-		},
-		easing;
-
-	//IIFE - device & browser setup check
-	(function () {
-		var width = document.documentElement.offsetWidth,
-			devsize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360],
-			size_len = devsize.length,
-			sizeMode,
-			colClass = width > devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4',
-			html5tags = ['article', 'aside', 'details', 'figcaption', 'figure', 'footer', 'header', 'hgroup', 'nav', 'main', 'section', 'summary'],
-			i = 0,
-			max = html5tags.length,
-			timer;
-
-		deviceSizeClassName(width);
-
-		for (i = 0; i < max; i++) {
-			document.createElement(html5tags[i]);
-		}
-
-		document.documentElement.className += (' s' + sizeMode + ' ' +colClass);
-
-		$(win).resize(function () {
-			clearTimeout(timer);
-			timer = setTimeout(function () {
-				width = $(win).outerWidth();
-
-				deviceSizeClassName(width);
-
-				colClass = (width > devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4');
-				$('html').removeClass('s1920 s1600 s1440 s1280 s1024 s960 s840 s720 s600 s480 s400 s360 s0 col12 col8 col4').addClass(' s' + sizeMode + ' ' + colClass);
-			}, 100);
-		});
-
-		function deviceSizeClassName(w){
-			for (var j = 0; j < size_len; j++) {
-				if (w > devsize[j]) {
-					sizeMode = devsize[j];
-					break;
-				} else {
-					w < devsize[size_len - 1] ? sizeMode = 0 : '';
-				}
-			}
-		}
-	})();
-	
-
-	//requestAnimationFrame
-	win.requestAFrame = (function () {
-		return win.requestAnimationFrame || win.webkitRequestAnimationFrame || win.mozRequestAnimationFrame || win.oRequestAnimationFrame ||
-			//if all else fails, use setTimeout
-			function (callback) {
-				return win.setTimeout(callback, 1000 / 60); //shoot for 60 fp
-			};
-	})();
-	win.cancelAFrame = (function () {
-		return win.cancelAnimationFrame || win.webkitCancelAnimationFrame || win.mozCancelAnimationFrame || win.oCancelAnimationFrame ||
-			function (id) {
-				win.clearTimeout(id);
-			};
-	})();
-
-	//jquery easing add
-	for (easing in easings) {
-		$.easing[easing] = (function(easingname) {
-			return function(x, t, b, c, d) {
-				return easings[easingname](t, b, c, d);
-			}
-		})(easing);
-	}
-
-	//function
-	function uiNameSpace(identifier, module){
-		if (identifier === undefined) {
-			return false;
-		}
-		
-		var w = win, 
-			name = identifier.split('.'), 
-			p;
-	
-		if (!!identifier) {
-			for (var i = 0; i < name.length; i += 1) {
-				!w[name[i]] ? (i === 0) ? w[name[i]] = {} : w[name[i]] = {} : '';
-				w = w[name[i]];
-			}
-		}
-		if (!!module) {
-			for (p in module) {
-				if (!w[p]) {
-					w[p] = module[p];
-				} else {
-					throw new Error('module already exists! >> ' + p);
-				}
-			}
-		}
-		return w;
-	}
-	function uiComma(n) {
-		var parts = n.toString().split(".");
-			return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
-	}
-	function partsAdd0(x, y, z) {
-		//숫자 한자리수 일때 0 앞에 붙이기
-		var y = y === undefined ? 10 : y,
-			z = z === undefined ? '0' : z;
-
-		return ((x < 10) ? z + x : x);
-	}
-
-	//global namespace
-	if (!!win[global]) {
-		throw new Error("already exists global!> " + global);
-	} else {
-		win[global] = uiNameSpace(namespace, {});
-	}
-
-	//components option
-	win[global].option = {
-		keys: { 
-			'tab': 9, 'enter': 13, 'alt': 18, 'esc': 27, 'space': 32, 'pageup': 33, 'pagedown': 34, 'end': 35, 'home': 36, 'left': 37, 'up': 38, 'right': 39, 'down': 40,
-		},
-		//http://cubic-bezier.com - css easing effect
-		effect: {
-			linear: '0.250, 0.250, 0.750, 0.750',
-			ease: '0.250, 0.100, 0.250, 1.000',
-			easeIn: '0.420, 0.000, 1.000, 1.000',
-			easeOut: '0.000, 0.000, 0.580, 1.000',
-			easeInOut: '0.420, 0.000, 0.580, 1.000',
-			easeInQuad: '0.550, 0.085, 0.680, 0.530',
-			easeInCubic: '0.550, 0.055, 0.675, 0.190',
-			easeInQuart: '0.895, 0.030, 0.685, 0.220',
-			easeInQuint: '0.755, 0.050, 0.855, 0.060',
-			easeInSine: '0.470, 0.000, 0.745, 0.715',
-			easeInExpo: '0.950, 0.050, 0.795, 0.035',
-			easeInCirc: '0.600, 0.040, 0.980, 0.335',
-			easeInBack: '0.600, -0.280, 0.735, 0.045',
-			easeOutQuad: '0.250, 0.460, 0.450, 0.940',
-			easeOutCubic: '0.215, 0.610, 0.355, 1.000',
-			easeOutQuart: '0.165, 0.840, 0.440, 1.000',
-			easeOutQuint: '0.230, 1.000, 0.320, 1.000',
-			easeOutSine: '0.390, 0.575, 0.565, 1.000',
-			easeOutExpo: '0.190, 1.000, 0.220, 1.000',
-			easeOutCirc: '0.075, 0.820, 0.165, 1.000',
-			easeOutBack: '0.175, 0.885, 0.320, 1.275',
-			easeInOutQuad: '0.455, 0.030, 0.515, 0.955',
-			easeInOutCubic: '0.645, 0.045, 0.355, 1.000',
-			easeInOutQuart: '0.770, 0.000, 0.175, 1.000',
-			easeInOutQuint: '0.860, 0.000, 0.070, 1.000',
-			easeInOutSine: '0.445, 0.050, 0.550, 0.950',
-			easeInOutExpo: '1.000, 0.000, 0.000, 1.000',
-			easeInOutCirc: '0.785, 0.135, 0.150, 0.860',
-			easeInOutBack: '0.680, -0.550, 0.265, 1.550'
-		}
-	};
-
-	(function () {
-		console.log(win[global]);
-		var ua = navigator.userAgent,
-			ie = ua.match(/(?:msie ([0-9]+)|rv:([0-9\.]+)\) like gecko)/i),
-			deviceInfo = ['android', 'iphone', 'ipod', 'ipad', 'blackberry', 'windows ce', 'samsung', 'lg', 'mot', 'sonyericsson', 'nokia', 'opeara mini', 'opera mobi', 'webos', 'iemobile', 'kfapwi', 'rim', 'bb10'],
-			filter = "win16|win32|win64|mac|macintel",
-			uAgent = ua.toLowerCase(),
-			deviceInfo_len = deviceInfo.length,
-			browser = win[global].borwser,
-			support = $.support,
-			device = win[global].device,
-			i = 0,
-			version,
-			j;
-
-		!browser ? win[global].browser = browser = {} : '';
-
-		for (i = 0; i < deviceInfo_len; i++) {
-			if (uAgent.match(deviceInfo[i]) != null) {
-				device = deviceInfo[i];
-				break;
-			}
-		}
-		
-		browser.local = (/^http:\/\//).test(location.href);
-		browser.firefox = (/firefox/i).test(ua);
-		browser.webkit = (/applewebkit/i).test(ua);
-		browser.chrome = (/chrome/i).test(ua);
-		browser.opera = (/opera/i).test(ua);
-		browser.ios = (/ip(ad|hone|od)/i).test(ua);
-		browser.android = (/android/i).test(ua);
-		browser.safari = browser.webkit && !browser.chrome;
-		browser.app = ua.indexOf('appname') > -1 ? true : false;
-
-		//touch, mobile 환경 구분
-		support.touch = browser.ios || browser.android || (doc.ontouchstart !== undefined && doc.ontouchstart !== null);
-		browser.mobile = support.touch && ( browser.ios || browser.android);
-		//navigator.platform ? filter.indexOf(navigator.platform.toLowerCase()) < 0 ? browser.mobile = false : browser.mobile = true : '';
-		
-		//false 삭제
-		// for (j in browser) {
-		// 	if (!browser[j]) {
-		// 		delete browser[j]
-		// 	}
-		// }
-		
-		//os 구분
-		browser.os = (navigator.appVersion).match(/(mac|win|linux)/i);
-		browser.os = browser.os ? browser.os[1].toLowerCase() : '';
-
-		//version 체크
-		if (browser.ios || browser.android) {
-			version = ua.match(/applewebkit\/([0-9.]+)/i);
-			version && version.length > 1 ? browser.webkitversion = version[1] : '';
-			if (browser.ios) {
-				version = ua.match(/version\/([0-9.]+)/i);
-				version && version.length > 1 ? browser.ios = version[1] : '';
-			} else if (browser.android) {
-				version = ua.match(/android ([0-9.]+)/i);
-				version && version.length > 1 ? browser.android = parseInt(version[1].replace(/\./g, '')) : '';
-			}
-		}
-
-		if (ie) {
-			browser.ie = ie = parseInt( ie[1] || ie[2] );
-			browser.oldie = false;
-			browser.ie9 = false;
-			( 9 > ie ) ? browser.oldie = true : ( 9 == ie ) ? browser.ie9 = true : '';
-			( 11 > ie ) ? support.pointerevents = false : '';
-			( 9 > ie ) ? support.svgimage = false : '';
-		} else {
-			browser.ie = false;
-			browser.oldie = false;
-			browser.ie9 = false;
-		}
-
-		//class 생성
-		$('html')
-		.addClass(browser.os)
-		.addClass(browser.chrome? 'chrome' : browser.firefox ? 'firefox' : browser.opera ? 'opera' : browser.safari ? 'safari' : browser.ie ? 'ie ie' + browser.ie : '')
-		.addClass(browser.ie && 8 > browser.ie ? 'oldie' : '')
-		.addClass(browser.ios ? "ios" : browser.android ? "android" : '')
-		.addClass(browser.mobile ? 'ui-m' : 'ui-d')
-		.addClass(browser.app ? 'ui-a' : '');
-	})();
+	var $ui = win.$plugins,
+		namespace = 'netiveUI.plugins';
 
 	/* ------------------------------------------------------------------------
-	 * common components
-	 * - consoleGuide
-	 * - ajax
-	 * - scroll move
-	 * - paramiter check
-	 * - is scroll?
-	 * - focus tab check
-	 * - window popup
-	 * date : 2018-04-21
+	* name : accordion tab  
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiAccordion({ option });
+	* - $plugins.uiAccordionToggle({ option });
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
-		uiConsoleGuide: function (opt) {
-			return createUiConsoleGuide(opt);
-		},
-		uiAjax: function (opt) {
-			return createUiAjax(opt);
-		},
-		uiScroll: function (opt) {
-			return createUiScroll(opt);
-		},
-		uiPara: function (v) {
-			return createUiPara(v);
-		},
-		uiHasScrollBar: function (opt) {
-			return createUiHasScrollBar(opt);
-		},
-		uiFocusTab: function (opt) {
-			return createUiFocusTab(opt);
-		},
-		uiPopup: function (opt) {
-			return createUiPopup(opt);
-		}
-	});
-	function createUiConsoleGuide(opt) {
-		if (!win[global].browser.ie) {
-			console.log('');
-			for (var i = 0; i < opt.length; i++) {
-				(i === 0) ? console.log("%c" + opt[i], "background:#333; color:#ffe400; font-size:12px"): console.log(opt[i]);
-			}
-			console.log('');
-		}
-	}
-	win[global].uiAjax.option = {
-		page: true,
-		add: false,
-		prepend: false,
-		type: 'GET',
-		callback: false,
-		errorCallback: false
-	};
-	function createUiAjax(opt) {
-		if (opt === undefined) {
-			win[global].uiConsoleGuide([
-				global + ".uiAjax({ id:'아이디명', url:'링크주소', add:true/false, page:true/false, callback:function(){...} );",
-				"- id: #을 제외한 아이디명만 입력(!필수)",
-				"- url: 링크 주소 입력(!필수)",
-				"- page: true일 경우 html추가 및 값 전달, false일 경우 값만 전달, (!선택 - 기본값 true)",
-				"- add: false일 경우 삭제추가, true일 경우 추가(!선택 - 기본값 false)",
-				"- callback: 콜백함수 (!선택)",
-			]);
-			return false;
-		}
-
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiAjax.option, opt),
-			$id = $('#' + opt.id),
-			callback = opt.callback === undefined ? false : opt.callback,
-			errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
-
-		$.ajax({
-			type: opt.type,
-			url: opt.url,
-			cache: false,
-			async: false, //비동기 통신 여부 
-			headers: {
-				"cache-control": "no-cache",
-				"pragma": "no-cache"
-			},
-			error: function (request, status, err) {
-				errorCallback ? errorCallback() : '';
-			},
-			success: function (result) {
-				opt.page ? opt.add ? opt.prepend ? $id.prepend(result) : $id.append(result) : $id.html(result) : '';
-				callback ? callback(result) : '';
-			}
-		});
-	}
-	win[global].uiScroll.option = {
-		value: 0,
-		speed: 0,
-		callback: false,
-		ps: 'top',
-		focus: false,
-		target: false
-	};
-	function createUiScroll(opt){
-		if (opt === undefined) {
-			win[global].uiConsoleGuide([
-				global + ".uiScroll({ value:0, speed:600, focus:'#name', callback:function(){...} );",
-				"- value: 움직일 위치값(!선택 - 기본값 0)",
-				"- speed: 속도(!선택 - 기본값 600)",
-				"- p: 방향(!선택 - 기본값 'top')",
-				"- focus: 포커스이동  (!선택)",
-				"- callback: 콜백함수 (!선택)"
-			]);
-			return false;
-		}
-
-		var opt = $.extend(true, {}, win[global].uiScroll.option, opt),
-			v = opt.value,
-			s = opt.speed,
-			c = opt.callback,
-			p = opt.ps,
-			overlap = false,
-			f = typeof opt.focus === 'string' ? '#' + opt.focus : opt.focus,
-			$target = opt.target === false ? $('html, body') : opt.target;
-		
-		if (p === 'top') {
-			$target.stop().animate({ 
-				scrollTop : v 
-			}, { 
-				duration: s,
-				step: function(now) { 
-					!!c && now !== 0 ? c({ scrolltop:Math.ceil(now), complete:false }) : '';
-				},
-				complete: function(){
-					if (overlap) {
-						!!c ? c({ focus:f, complete:true }) : '';
-						!!f ? $(f).attr('tabindex', 0).focus() : '';
-					} else {
-						overlap = true;
-					}
-				}
-			});
-		} else if (p === 'left') {
-			$target.stop().animate({ 
-				scrollLeft : v 
-			}, { 
-				duration: s,
-				step: function(now) { 
-					!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
-				},
-				complete: function(){
-					if (overlap) {
-						!!c ? c({ focus:f, complete:true }) : '';
-						!!f ? $(f).attr('tabindex', 0).focus() : '';
-					} else {
-						overlap = true;
-					}
-				}
-			});
-		}
-	}
-	function createUiPara(paraname){
-		var _tempUrl = win.location.search.substring(1),
-			_tempArray = _tempUrl.split('&'),
-			_tempArray_len = _tempArray.length,
-			_keyValue;
-
-		for (var i = 0, len = _tempArray_len; i < len; i++) {
-			_keyValue = _tempArray[i].split('=');
-
-			if (_keyValue[0] === paraname) {
-				return _keyValue[1];
-			}
-		}
-	}
-	function createUiHasScrollBar(opt) {
-		var $this = opt.selector;
-		return ($this.prop('scrollHeight') == 0 && $this.prop('clientHeight') == 0) || ($this.prop('scrollHeight') > $this.prop('clientHeight'));
-	}
-	win[global].uiFocusTab.option = {
-		focusitem : '.ui-select-tit, iframe, a:not([data-disabled]), button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), label, [role="button"]',
-		callback: false,
-		focusnot: false,
-		type: 'hold' //'hold', 'sense'
-	};
-	function createUiFocusTab(opt){
-		if (opt === undefined) {
-			win[global].uiConsoleGuide([
-				global + ".uiFocusHold({ id:'css셀렉트' );",
-				"- selector: css셀렉터 형식 예) '#aaa', '.aa .bb' ...(!필수)",
-				"※  지정한 특정영역에서 tab 이동 시 포커스 홀딩 "
-			]);
-			return false;
-		}
-		
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiFocusTab.option, opt),
-			$focus = $(opt.selector),
-			$item = $focus.find(opt.focusitem),
-			callback = opt.callback,
-			focusnot = opt.focusnot,
-			type = opt.type,
-			timer; 
-
-		if (!!$item.length) {
-			$item.eq(0).addClass('ui-fctab-s').attr('tabindex', 0).attr('holds', true);
-			$item.eq(-1).addClass('ui-fctab-e').attr('tabindex', 0).attr('holde', true);
-		} else {
-			$focus.prepend('<div class="ui-fctab-s" tabindex="0" holds="true"></div>');
-			$focus.append('<div class="ui-fctab-e" tabindex="0" holde="true"></div>');
-			$item = $focus.find('.ui-fctab-s, .ui-fctab-e');
-		}
-		
-		clearTimeout(timer);
-		timer = setTimeout(function(){
-			!focusnot ? $item.eq(0).focus() : '';
-		},0);
-		timer = '';
-
-		$focus.find('.ui-fctab-s').off('keydown.holds').on('keydown.holds', function (e) {
-			if (type === 'hold') {
-				if (e.shiftKey && e.keyCode == 9) {
-					e.preventDefault();
-					$focus.find('.ui-fctab-e').focus();
-				}
-			} else if (type === 'sense') {
-				$focus.off('keydown.holds');
-				(e.shiftKey && e.keyCode == 9) ? callback('before') : '';
-			}
-		});
-		$focus.find('.ui-fctab-e').off('keydown.holde').on('keydown.holde', function (e) {
-			if (type === 'hold') {
-				if (!e.shiftKey && e.keyCode == 9) {
-					e.preventDefault();
-					$focus.find('.ui-fctab-s').focus();
-				}
-			} else if (type === 'sense') {
-				$focus.off('keydown.holds');
-				(!e.shiftKey && e.keyCode == 9) ? callback('after') : '';
-			}
-		});
-	}
-	win[global].uiPopup.option = {
-		name: 'new popup',
-		width: 790,
-		height: 620,
-		align: 'center',
-		top: 0,
-		left: 0,
-		toolbar: 'no',
-		location: 'no',
-		memubar: 'no',
-		status: 'no',
-		resizable: 'no',
-		scrolbars: 'yes'
-	};
-	function createUiPopup(opt) {
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiPopup.option, opt),
-			specs;
-
-		if (opt.align === 'center') {
-			opt.left = ($(win).outerWidth() / 2) - (opt.width / 2);
-			opt.top = ($(win).outerHeight() / 2) - (opt.height / 2);
-		}
-
-		specs = 'width=' + opt.width + ', height='+ opt.height + ', left=' + opt.left + ', top=' + opt.top;
-		specs += ', toolbar=' + opt.toolbar + ', location=' + opt.location + ', resizable=' + opt.resizable + ', status=' + opt.status + ', menubar=' + opt.menubar + ', scrollbars=' + opt.scrollbars;
-		
-		win.open(opt.link, opt.name , specs);
-	}
-
-
-	/* ------------------------------------------------------------------------
-	 * cookie set & get & del v1.1 
-	 * date : 2018-07-28
-	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
-		uiCookieSet: function (opt) {
-			return creaeteUiCookieSet(opt);
-		},
-		uiCookieGet: function (opt) {
-			return creaeteUiCookieGet(opt);
-		},
-		uiCookieDel: function (opt) {
-			return creaeteUiCookieDel(opt);
-		}
-	});
-	function creaeteUiCookieSet(opt){
-		var cookieset = opt.name + '=' + opt.value + ';',
-			expdate;
-		if (opt.term) {
-			expdate = new Date();
-			expdate.setTime( expdate.getTime() + opt.term * 1000 * 60 * 60 * 24 ); // term 1 is a day
-			cookieset += 'expires=' + expdate.toGMTString() + ';';
-		}
-		(opt.path) ? cookieset += 'path=' + opt.path + ';' : '';
-		(opt.domain) ? cookieset += 'domain=' + opt.domain + ';' : '';
-		document.cookie = cookieset;
-	}
-	function creaeteUiCookieGet(opt){
-		var match = ( document.cookie || ' ' ).match( new RegExp(opt.name + ' *= *([^;]+)') );
-		return (match) ? match[1] : null;
-	}
-	function creaeteUiCookieDel(opt){
-		var expireDate = new Date();
-
-		expireDate.setDate(expireDate.getDate() + -1);
-		win[global].uiCookieSet({ name:opt.name, term:'-1' });
-	}
-	
-	/* ------------------------------------------------------------------------
-	 * accordion tab v1.0 
-	 * $plugins.uiAccordion
-	 * date : 2018-04-21
-	 * option
-	 * - id : 'name' / [string]
-	 * - current : [0,0,...] or null or 'all' / [array] 복수선택 가능, null(기본값)인 경우 전체 닫힌상태, 'all'인 경우 전체 열린상태"
-	 * - autoclose : true or false / [boolean] true(기본)일 경우 단일 열림으로 다른 아이템은 닫힘
-	 * - callback : 함수실행문 / [function] 아코디언 열리고 닫힐때마다 콜백 실행
-	 ------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiAccordion: function (opt) {
 			return createUiAccordion(opt);
 		},
@@ -777,18 +22,18 @@ var mConsole = (function(){
 			return createUiAccordionToggle(opt);
 		}
 	});
-	win[global].uiAccordion.option = {
+	$ui.uiAccordion.option = {
 	 	current: null,
 		autoclose: false,
 		callback: false,
 		level: 3
 	};
 	function createUiAccordion(opt){
-		//option guide
 		if (opt === undefined || !$('#' + opt.id).length) {
 			return false;
 		}
-		var opt = $.extend(true, {}, win[global].uiTab.option, opt),
+
+		var opt = $.extend(true, {}, $ui.uiTab.option, opt),
 			id = opt.id,
 			current = opt.current,
 			callback = opt.callback,
@@ -800,7 +45,7 @@ var mConsole = (function(){
 			$tit = $wrap.children('.ui-acco-tit'),
 			$btn = $tit.find('.ui-acco-btn'),
 			len = $wrap.length, 
-			keys = win[global].option.keys,
+			keys = $ui.option.keys,
 			i = 0, 
 			optAcco;
 		
@@ -845,15 +90,14 @@ var mConsole = (function(){
 		}
 		
 		current !== null ? 
-			win[global].uiAccordionToggle({ 
+			$ui.uiAccordionToggle({ 
 				id: id, 
 				current: current, 
 				motion: false 
 			}) : '';
 
 		//event
-		$btn
-			.off('click.uitab keydown.uitab')
+		$btn.off('click.uitab keydown.uitab')
 			.on({
 				'click.uitab': evtClick,
 				'keydown.uitab': evtKeys
@@ -865,7 +109,7 @@ var mConsole = (function(){
 				var $this = $(this);
 
 				optAcco = $this.closest('.ui-acco').data('opt');
-				win[global].uiAccordionToggle({ 
+				$ui.uiAccordionToggle({ 
 					id: optAcco.id, 
 					current: [$this.data('n')], 
 					close: optAcco.close, 
@@ -926,15 +170,6 @@ var mConsole = (function(){
 	}
 	function createUiAccordionToggle(opt){
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
-				global + ".uiAccordionToggle({ id:'name', current:[0,1], motion:false, state:'open', callback:function(v){...} });",
-				"- id [String]: #을 제외한 아이디명만 입력 (!필수)",
-				"- current [Array]: [0,1,2] 복수선택 가능, null 인 경우 무선택 (!선택, 기본 0)",
-				"- state [String]: 'toggle'일 토글, 'open' 열림 , 'close' 닫힘 .(!선택- 기본 toggle)",
-				"- motion [Boolean]: true 일 경우 animate효과, false 일 경우 모션없음 (!선택, -기본 true)",
-				"- callback [Function]: 콜백함수 실행 (!선택)",
-				"※ 아코디언 탭"
-			]);
 			return false;
 		}
 		
@@ -946,8 +181,6 @@ var mConsole = (function(){
 			state = opt.state === undefined ? 'toggle' : opt.state,
 			motion = opt.motion === undefined ? true : opt.motion,
 			autoclose = dataOpt.close,
-			allshow = opt.allshow,
-			allhide = opt.allhide,
 			open = null,
 			$wrap = $acco.children('.ui-acco-wrap'),
 			$pnl,
@@ -971,7 +204,12 @@ var mConsole = (function(){
 					(state === 'open') ? act('down') : (state === 'close') ? act('up') : '';
 				}
 			}
-			!!callback ? callback({ id:id, open:open, current:current}): '';
+			!callback ? '' :
+				callback({ 
+					id:id, 
+					open:open, 
+					current:current
+				});
 		} else if (current === 'all') {
 			checking();
 		}
@@ -1011,72 +249,41 @@ var mConsole = (function(){
 
 			if (autoclose === true && isDown) {
 				$wrap.each(function(i){
-					$wrap
-						.eq(i)
-						.find('> .ui-acco-tit .ui-acco-btn')
-						.data('selected', false)
-						.removeClass('selected')
-						.attr('aria-expanded', false)
-						.find('.ui-acco-txt')
-						.text('열기');
-					$wrap
-						.eq(i)
-						.find('> .ui-acco-pnl')
-						.attr('aria-hidden',true)
-						.stop()
-						.slideUp(speed);
+					$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', false).removeClass('selected').attr('aria-expanded', false)
+						.find('.ui-acco-txt').text('열기');
+					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden',true).stop().slideUp(speed);
 				});
 			}
 			if (current === 'all') {
 				$wrap.each(function(i){
-					$wrap
-						.eq(i)
-						.find('> .ui-acco-tit .ui-acco-btn')
-						.data('selected', a)[cls]('selected')
-						.attr('aria-expanded', a)
-						.find('.ui-acco-txt')
-						.text(txt);
-					$wrap
-						.eq(i)
-						.find('> .ui-acco-pnl')
-						.attr('aria-hidden', !a)
-						.stop()
-						[updown](speed, function(){
-							// 초기화
-							$(this).css({ 
-								height: '', 
-								padding: '', 
-								margin: '' 
-							}); 
-						});
+					$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', a)[cls]('selected').attr('aria-expanded', a)
+						.find('.ui-acco-txt').text(txt);
+					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden', !a).stop()[updown](speed, function(){
+						$(this).css({ height: '', padding: '', margin: '' }); // 초기화
+					});
 				});
 			} else {
-				$btn
-					.data('selected', a)
-					.attr('aria-expanded', a)
-					[cls]('selected')
-					.find('.ui-acco-txt')
-					.text(txt);
-				$pnl
-					.attr('aria-hidden', !a)
-					.stop()
-					[updown](speed, function(){
-						// 초기화
-						$(this).css({ 
-							height: '', 
-							padding: '', 
-							margin: '' 
-						}); 
-					});
+				$btn.data('selected', a).attr('aria-expanded', a)[cls]('selected')
+					.find('.ui-acco-txt').text(txt);
+				$pnl.attr('aria-hidden', !a).stop()[updown](speed, function(){
+					$(this).css({ height: '', padding: '', margin: '' }); // 초기화
+				});
 			}
 		}
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * dropdown v2.0 
-	 * date : 2018-08-15
+	* name : dropdown
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uidropdown({ option });
+	* - $plugins.uiDropdownToggle({ option });
+	* - $plugins.uiDropdownHide();
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiDropdown: function (opt) {
 			return createUiDropdown(opt);
 		},
@@ -1087,7 +294,7 @@ var mConsole = (function(){
 			return createUiDropdownHide();
 		},
 	});
-	win[global].uiDropdown.option = {
+	$ui.uiDropdown.option = {
 		eff: 'base',
 		ps: 'bl',
 		hold: true,
@@ -1099,11 +306,11 @@ var mConsole = (function(){
 		eff_speed: 100
 	};
 	function createUiDropdown(opt){
-		if (opt === undefined) {
+		if (opt === undefined || !$('#' + opt.id).length) {
 			return false;
 		}
 
-		var opt = $.extend(true, {}, win[global].uiDropdown.option, opt),
+		var opt = $.extend(true, {}, $ui.uiDropdown.option, opt),
 			id = opt.id,
 			eff = opt.eff,
 			ps = opt.ps,
@@ -1114,7 +321,6 @@ var mConsole = (function(){
 			_expanded = opt._expanded,
 			eff_ps = opt.eff_ps,
 			eff_speed = opt.eff_speed,
-
 			$btn = $('#' + id),
 			$pnl = $('[data-id="'+ id +'"]'); 
 				
@@ -1130,7 +336,6 @@ var mConsole = (function(){
 				_expanded: _expanded,
 				eff_ps: eff_ps,
 				eff_speed: eff_speed
-
 			});
 		$pnl.attr('aria-hidden', true).attr('aria-labelledby', id).addClass(ps)
 			.data('opt', { 
@@ -1149,22 +354,23 @@ var mConsole = (function(){
 		$btn.off('click.dropdown').on('click.dropdown', function(e){
 			action(this);
 		});
-		$(doc)
-		.off('click.dropdownclose').on('click.dropdownclose', '.ui-drop-close', function(e){
-			var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
+		$(doc).off('click.dropdownclose')
+			.on('click.dropdownclose', '.ui-drop-close', function(e){
+				var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
 
-			pnl_opt._expanded = true;
-			win[global].uiDropdownToggle({ id: pnl_opt.id });
-			$('#' + pnl_opt.id).focus();
-		})
-		.off('click.bd').on('click.bd', function(e){
-			//dropdown 영역 외에 클릭 시 판단
-			if (!!$('body').data('dropdownOpened')){
-				if ($('.ui-drop-pnl').has(e.target).length < 1) {
-					win[global].uiDropdownHide();
+				pnl_opt._expanded = true;
+				$ui.uiDropdownToggle({ id: pnl_opt.id });
+				$('#' + pnl_opt.id).focus();
+			})
+			.off('click.bd')
+			.on('click.bd', function(e){
+				//dropdown 영역 외에 클릭 시 판단
+				if (!!$('body').data('dropdownOpened')){
+					if ($('.ui-drop-pnl').has(e.target).length < 1) {
+						$ui.uiDropdownHide();
+					}
 				}
-			}
-		});
+			});
 
 		!back_close ? $(doc).off('click.bd') : '';
 
@@ -1173,7 +379,7 @@ var mConsole = (function(){
 				btn_opt = $this.data('opt');
 
 			$this.data('sct', $(doc).scrollTop());
-			win[global].uiDropdownToggle({ id: btn_opt.id });
+			$ui.uiDropdownToggle({ id: btn_opt.id });
 		}
 	}
 	function createUiDropdownToggle(opt){
@@ -1209,6 +415,9 @@ var mConsole = (function(){
 			is_modal ? btn_t = btn_t - $(win).scrollTop(): '';
 		}
 
+		//test 
+		!!$btn.attr('data-ps') ? ps = $btn.attr('data-ps') : '';
+
 		_expanded === 'false' ? pnlShow(): pnlHide();
 
 		function pnlShow(){
@@ -1223,7 +432,7 @@ var mConsole = (function(){
 					$('.ui-drop').not('#' + drop_inner).attr('aria-expanded', false);
 					$('.ui-drop-pnl').not('[data-id="' + drop_inner +'"]').attr('aria-hidden', true).attr('tabindex', -1).removeAttr('style');
 				} else {
-					win[global].uiDropdownHide();
+					$ui.uiDropdownHide();
 				}
 			}
 
@@ -1232,8 +441,8 @@ var mConsole = (function(){
 
 			//focus hold or sense
 			hold ?	
-				win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
-				win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
+				$ui.uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
+				$ui.uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
 
 			switch (ps) {
 				case 'bl': $pnl.css({ top: btn_t + btn_h, left: btn_l }); 
@@ -1297,7 +506,7 @@ var mConsole = (function(){
 			switch (eff) {
 				case 'base': $pnl.stop().hide(0, pnlHideEnd); 
 					break;
-				case 'fade': $pnl.stop().fadeout(eff_speed, pnlHideEnd); 
+				case 'fade': $pnl.stop().fadeOut(eff_speed, pnlHideEnd); 
 					break;
 				case 'st': $pnl.stop().animate({ top: org_t - eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
 					break;
@@ -1317,32 +526,63 @@ var mConsole = (function(){
 	function createUiDropdownHide(){
 		$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
 		$('.ui-drop').attr('aria-expanded', false);
-		$('.ui-drop-pnl').attr('aria-hidden', true).attr('tabindex', -1).removeAttr('style');
+		$('.ui-drop-pnl').attr('aria-hidden', true).attr('tabindex', -1)
+		$('.ui-drop-pnl').each(function(){
+			var $pnl = $(this),
+				defaults = $pnl.data('opt'),
+				opt = $.extend(true, {}, defaults, opt),
+				eff = opt.eff,
+				eff_ps = opt.eff_ps,
+				eff_speed = opt.eff_speed,
+				org_t = parseInt($pnl.css('top')),
+				org_l = parseInt($pnl.css('left'));
+			
+			switch (eff) {
+				case 'base': $pnl.stop().hide(0, pnlHideEnd); 
+					break;
+				case 'fade': $pnl.stop().fadeOut(eff_speed, pnlHideEnd); 
+					break;
+				case 'st': $pnl.stop().animate({ top: org_t - eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
+					break;
+				case 'sb': $pnl.stop().animate({ top: org_t + eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
+					break;
+				case 'sl': $pnl.stop().animate({ left: org_l + eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
+					break;
+				case 'sr': $pnl.stop().animate({ left: org_l - eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
+					break;
+			}
+
+			function pnlHideEnd(){
+				$pnl.hide().removeAttr('style'); 
+			}
+		});	
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * date picker v1.0 
-	 * $plugins.uiDatePicker
-	 * date : 2018-08-15
-	 * option : 
+	* name : date picker
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiDatePicker({ option });
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiDatePicker: function (opt) {
 			return createUiDatePicker(opt);
 		}
 	});
-	win[global].uiDatePicker.option = {
+	$ui.uiDatePicker.option = {
 		selector: '.ui-datepicker',
 		date_split: '-',
 		callback: function(v){ console.log(v) },
 		shortDate: false, //DDMMYYYY
 		dateMonths: new Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'),
-		weekDay: new Array('일', '월', '화', '수', '목', '금', '토'),
+		weekDay: new Array('Sun', '월', '화', '수', '목', '금', '토'),
 		remove: false
 	};
 	function createUiDatePicker(opt){
-		var opt = $.extend(true, {}, win[global].uiDatePicker.option, opt),
-
+		var opt = $.extend(true, {}, $ui.uiDatePicker.option, opt),
 			date_split = opt.date_split,
 			selector = opt.selector,
 			callback = opt.callback,
@@ -1350,7 +590,6 @@ var mConsole = (function(){
 			weekDay = opt.weekDay,
 			shortDate = opt.shortDate,
 			remove = opt.remove,
-
 			$datepicker = $(selector),
 			date = new Date(),
 			dateToday = date,
@@ -1364,9 +603,9 @@ var mConsole = (function(){
 			
 			if (whatday === true) {
 				//요일 추가
-				return (text_date.getFullYear() + date_split + dateMonths[text_date.getMonth()] + date_split + partsAdd0(text_date.getDate()) + " (" + weekDay[text_date.getDay()] + ")");
+				return (text_date.getFullYear() + date_split + dateMonths[text_date.getMonth()] + date_split + $ui.option.partsAdd0(text_date.getDate()) + " (" + weekDay[text_date.getDay()] + ")");
 			} else {
-				return (text_date.getFullYear() + date_split + dateMonths[text_date.getMonth()] + date_split + partsAdd0(text_date.getDate()));
+				return (text_date.getFullYear() + date_split + dateMonths[text_date.getMonth()] + date_split + $ui.option.partsAdd0(text_date.getDate()));
 			}
 		}
 
@@ -1378,7 +617,7 @@ var mConsole = (function(){
 		//DD.MM.YYYY 순으로 정렬
 		function toDDMMYYY(d) {
 			var d = new Date(d);
-			return (partsAdd0(d.getDate()) + date_split + partsAdd0(d.getMonth() + 1) + date_split + d.getFullYear());
+			return ($ui.option.partsAdd0(d.getDate()) + date_split + $ui.option.partsAdd0(d.getMonth() + 1) + date_split + d.getFullYear());
 		}
 		//input에 출력
 		function writeInputDateValue(calendarEl, obj) {
@@ -1417,10 +656,12 @@ var mConsole = (function(){
 				day = !generate ? date.getDate() : inp_val === '' ? date.getDate() : Number(nVal[2]),
 				month = !generate ? date.getMonth() : inp_val === '' ? date.getMonth() : Number(nVal[1] - 1),
 				year = !generate ? date.getFullYear() : inp_val === '' ? date.getFullYear() : Number(nVal[0]),
+				prevMonth = new Date(year, month - 1, 1),
 				thisMonth = new Date(year, month, 1),
 				nextMonth = new Date(year, month + 1, 1),
 				firstWeekDay = thisMonth.getDay(),
 				daysInMonth = Math.floor((nextMonth.getTime() - thisMonth.getTime()) / (1000 * 60 * 60 * 24)),
+				daysInMonth_prev = Math.floor((thisMonth.getTime() - prevMonth.getTime()) / (1000 * 60 * 60 * 24)),
 				$input = $('#' + calendarEl.inputId).eq(0),
 				tit = $input.attr('title'),
 				_minDay = new Array(),
@@ -1485,22 +726,34 @@ var mConsole = (function(){
 			/* datepicker-core -------------------- */
 			_calendarHtml += '<div class="datepicker-core">';
 			_calendarHtml += '<table class="tbl-datepicker">';
-			_calendarHtml += '<caption>날짜 선택 양식입력 테이블</caption>';
-			_calendarHtml += '<thead><tr><th scope="col"><abbr title="일요일">일</abbr></th><th scope="col"><abbr title="월요일">월</abbr></th><th scope="col"><abbr title="화요일">화</abbr></th><th scope="col"><abbr title="수요일">수</abbr></th><th scope="col"><abbr title="목요일">목</abbr></th><th scope="col"><abbr title="금요일">금</abbr></th><th scope="col" class="weekend"><abbr title="토요일">토</abbr></th></tr></thead>';
+			_calendarHtml += '<caption>'+ year +'년 '+ dateMonths[month] +'월 일자 선택</caption>';
+			_calendarHtml += '<thead><tr>';
+			_calendarHtml += '<th scope="col" class="day-sun"><abbr title="일요일">'+ weekDay[0] +'</abbr></th>';
+			_calendarHtml += '<th scope="col"><abbr title="월요일">'+ weekDay[1] +'</abbr></th>';
+			_calendarHtml += '<th scope="col"><abbr title="화요일">'+ weekDay[2] +'</abbr></th>';
+			_calendarHtml += '<th scope="col"><abbr title="수요일">'+ weekDay[3] +'</abbr></th>';
+			_calendarHtml += '<th scope="col"><abbr title="목요일">'+ weekDay[4] +'</abbr></th>';
+			_calendarHtml += '<th scope="col"><abbr title="금요일">'+ weekDay[5] +'</abbr></th>';
+			_calendarHtml += '<th scope="col" class="day-sat"><abbr title="토요일">'+ weekDay[6] +'</abbr></th>';
+			_calendarHtml += '</tr></thead>';
 			_calendarHtml += '<tbody><tr>';
 
+			// 빈 셀 채우기 - 전
+			var empty_before = daysInMonth_prev - firstWeekDay;
 			for (var week = 0; week < firstWeekDay; week++) {
+				empty_before  = empty_before + 1;
+
 				if (week === 0) {
-					_calendarHtml += '<td>&nbsp;</td>';
+					_calendarHtml += '<td class="empty"><span>'+ empty_before +'</span></td>'; //일요일
 				} else if (week === 6) {
-					_calendarHtml += '<td>&nbsp;</td>';
+					_calendarHtml += '<td class="empty"><span>'+ empty_before +'</span></td>'; //토요일
 				} else {
-					_calendarHtml += '<td>&nbsp;</td>';
+					_calendarHtml += '<td class="empty"><span>'+ empty_before +'</span></td>'; 
 				}
 			}
 
 			mm < 1 ? mm = 12 : '';
-			mm = partsAdd0(mm);
+			mm = $ui.option.partsAdd0(mm);
 			week_day = firstWeekDay;
 
 			for (var dayCounter = 1; dayCounter <= daysInMonth; dayCounter++) {
@@ -1518,25 +771,28 @@ var mConsole = (function(){
 				// 예상은 남은 여백에 지난달 다음달 날짜가 아닐지.. 
 				if ((year < _minDay[0]) || (year == _minDay[0] && dateMonths[month] < _minDay[1]) || (year == _minDay[0] && dateMonths[month] == _minDay[1] && dayCounter < _minDay[2])) {
 					//_isOver = true;
-					_calendarHtml += '<span title="'+ textDate(dayCounter, mm, year, true) +'">' + partsAdd0(dayCounter) + '</span></td>';
+					_calendarHtml += '<span title="'+ textDate(dayCounter, mm, year, true) +'">' + $ui.option.partsAdd0(dayCounter) + '</span></td>';
 				} else if ((year > _maxDay[0]) || (year == _maxDay[0] && dateMonths[month] > _maxDay[1]) || (year == _maxDay[0] && dateMonths[month] == _maxDay[1] && dayCounter > _maxDay[2])) {
 					//_isOver = true;
-					_calendarHtml += '<span title="'+ textDate(dayCounter, mm, year, true) +'">' + partsAdd0(dayCounter) + '</span></td>';
+					_calendarHtml += '<span title="'+ textDate(dayCounter, mm, year, true) +'">' + $ui.option.partsAdd0(dayCounter) + '</span></td>';
 				} else {
 					//_isOver = false;
-					_calendarHtml += '<button type="button" title="'+ textDate(dayCounter, mm, year, true) +'" data-day="'+ textDate(dayCounter, mm, year, false) +'" value="'+ dayCounter +'">'+ partsAdd0(dayCounter) +'</button></td>';
+					_calendarHtml += '<button type="button" title="'+ textDate(dayCounter, mm, year, true) +'" data-day="'+ textDate(dayCounter, mm, year, false) +'" value="'+ dayCounter +'">'+ $ui.option.partsAdd0(dayCounter) +'</button></td>';
 				}
 				week_day++;
 			}
 
-			// 빈 셀 채우기
+			// 빈 셀 채우기 - 후
+			var empty_after = 0;
 			for (week_day = week_day; week_day < 7; week_day++) { 
+				empty_after = empty_after + 1;
+
 				if (week_day === 0) {
-					_calendarHtml += '<td>&nbsp;</td>'; //일요일
+					_calendarHtml += '<td class="empty"><span>'+ empty_after +'</span></td>'; //일요일
 				} else if (week_day == 6) {
-					_calendarHtml += '<td>&nbsp;</td>'; //토요일
+					_calendarHtml += '<td class="empty"><span>'+ empty_after +'</span></td>'; //토요일
 				} else {
-					_calendarHtml += '<td class="empty">&nbsp;</td>';
+					_calendarHtml += '<td class="empty"><span>'+ empty_after +'</span></td>';
 				}
 			}
 
@@ -1558,8 +814,8 @@ var mConsole = (function(){
 		function datepickerClose(t, calendarEl){
 			var $btn = $(t).closest('.ui-datepicker').find('.ui-datepicker-btn');
 
-			win[global].uiDropdownToggle({ id:$btn.attr('id') });
-			win[global].uiScroll({ value:$btn.data('sct'), speed:200 });
+			$ui.uiDropdownToggle({ id:$btn.attr('id') });
+			$ui.uiScroll({ value:$btn.data('sct'), speed:200 });
 
 			remove ? hideCalendar(calendarEl): '';
 		}
@@ -1569,7 +825,7 @@ var mConsole = (function(){
 			var $calWrap = $("#" + calendarEl.calId);
 			
 			$calWrap.empty().append(buildCalendar(date, calendarEl, v));
-			win[global].uiFocusTab({ selector:$('#' + calendarEl.calId), type:'hold' });
+			$ui.uiFocusTab({ selector:$('#' + calendarEl.calId), type:'hold' });
 
 			//datepicker event--------------------------------------------------------
 			//select year & month
@@ -1653,9 +909,9 @@ var mConsole = (function(){
 			callback = !!$this.data('callback') ?
 				$this.data('callback') : callback;
 
-			win[global].uiDropdown({ id:$(this).attr('id'), eff:'st', ps:'bc' });
+			$ui.uiDropdown({ id:$(this).attr('id'), eff:'st', ps:'bc' });
 
-			win[global].browser.mobile ? 
+			$ui.browser.mobile ? 
 				$('#' + $btn.data('inp')).prop('readonly', true).attr('aria-hidden', true) : '';
 		});
 
@@ -1666,7 +922,7 @@ var mConsole = (function(){
 				_ps = 'bc',
 				_ef = 'st';
 			
-			if (Math.abs($(win).scrollTop() - $this.offset().top - $this.outerHeight()) < Math.abs($(win).scrollTop() + $(win).outerHeight() / 2)) {
+			if (Math.abs($(win).scrollTop() - $this.offset().top - $this.outerHeight()) < Math.abs($(win).scrollTop() + $(win).outerHeight() / 1.5)) {
 				_ps = 'bc';
 				_ef = 'st';
 				$('#' + dropid+'_pnl').addClass('type-bottom').removeClass('type-top');
@@ -1678,7 +934,7 @@ var mConsole = (function(){
 
 			$this.attr('ps', _ps).attr('eff', _ef);
 			$this.attr('aria-expanded') === 'false' || $this.attr('aria-expanded') === undefined ?
-				win[global].uiDropdown({ id:dropid, eff:_ef, ps:_ps}) : '';
+				$ui.uiDropdown({ id:dropid, eff:_ef, ps:_ps}) : '';
 		});
 
 		$datepicker.find('.ui-datepicker-btn').off('click.uidpbtn').on('click.uidpbtn', function() {
@@ -1712,21 +968,21 @@ var mConsole = (function(){
 		});
 	}
 
+
 	/* ------------------------------------------------------------------------
-	 * modal layer popup v2.0 
-	 * date : 2018-08-21
-	 * 
-	 * modal cookie check close & open
-	 * $plugins.uiCookieModalClose
-	 * date : 2018-07-28
-	 * term 부분 옵션값 필요
+	* name : modal layer popup
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiModal({ option });
+	* - $plugins.uiModalClose({ option });
+	* - $plugins.uiModalResize({ option });
+	* - $plugins.uiCookieModal({ option });
+	* - $plugins.uiCookieModalClose({ option });
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiModal: function (opt) {
 			return createUiModal(opt);
-		},
-		uiModalOpen: function (opt) {
-			return createUiModalOpen(opt);
 		},
 		uiModalClose: function (opt) {
 			return createUiModalClose(opt);
@@ -1741,8 +997,7 @@ var mConsole = (function(){
 			return creaeteUiCookieModalClose(opt);
 		}
 	});
-	/* uimodal ----------------------------------------- */
-	win[global].uiModal.option = {
+	$ui.uiModal.option = {
 		autofocus: true,
 		endfocus: null,
 		full: false,
@@ -1752,6 +1007,7 @@ var mConsole = (function(){
 		closecallback: false,
 		space: 10,
 		ajax_type: 'GET',
+		open: true,
 
 		system_words: false,
 		system_btntxt1: false,
@@ -1770,7 +1026,7 @@ var mConsole = (function(){
 		sctarray : []
 	};
 	function createUiModal(opt) {
-		var opt = $.extend(true, {}, win[global].uiModal.option, opt);
+		var opt = $.extend(true, {}, $ui.uiModal.option, opt);
 		
 		if ($('#' + opt.id + '[opened="true"]').length > 0) {
 			return false;
@@ -1781,8 +1037,8 @@ var mConsole = (function(){
 			var iname = opt.iname,
 				ititle = opt.ititle,
 				isrc = opt.isrc,
-				iwidth = opt.iwidth === undefined ? win[global].browser.mobile ? '100%' : 965 : opt.iwidth,
-				iheight = opt.iheight === undefined ? win[global].browser.mobile ? '100%' : $(win).outerHeight() - 20 : opt.iheight,
+				iwidth = opt.iwidth === undefined ? $ui.browser.mobile ? '100%' : 965 : opt.iwidth,
+				iheight = opt.iheight === undefined ? $ui.browser.mobile ? '100%' : $(win).outerHeight() - 20 : opt.iheight,
 				icallback = opt.icallback,
 				remove = opt.remove,
 				iclosecallback = opt.iclosecallback,
@@ -1795,7 +1051,7 @@ var mConsole = (function(){
 				parasrc = parasrc + '?uiType=F' 
 			}
 
-			if (win[global].browser.mobile) {
+			if ($ui.browser.mobile) {
 				iwidth = '100%';
 				iheight = $(win).outerHeight();
 			} 
@@ -1805,7 +1061,7 @@ var mConsole = (function(){
 			modal_html += '<div class="ui-modal-iframe" data-orgw="' + iwidth + '" data-orgh="' + iheight + '" style="height:' + iheight + 'px;">';
 			modal_html += '<iframe id="' + iname + '" name="' + iname + '" src="' + parasrc + '" width="' + iwidth + '" height="' + iheight + '" title="' + ititle + '" orgw="' + iwidth + '" orgh="' + iheight + '"></iframe>';
 			modal_html += '</div>';
-			!win[global].browser.mobile ?
+			!$ui.browser.mobile ?
 				modal_html += '<button type="button" class="btn-close ui-modal-closecallback" onclick="$plugins.uiModalClose({ id:\'' + opt.id + '\', remove: ' + remove + ' })"><span>닫기</span></button>' : '';
 			modal_html += '</div>';
 			modal_html += '</section>';
@@ -1827,17 +1083,17 @@ var mConsole = (function(){
 				}
 			});
 
-			if (win[global].browser.ie8) {
+			if ($ui.browser.ie8) {
 				$('#' + opt.id).data('iframeload', true);
 			} 
 			
 			$('#' + iname).on('load', function(){
 				$('#' + opt.id).data('iframeload', true);
-				win[global].callback !== undefined ? frames[iname].$plugins.callback.modal(opt.id) : '';
+				$ui.callback !== undefined ? frames[iname].$plugins.callback.modal(opt.id) : '';
 				!!icallback ? icallback() : '';
 
 				/* 2018-11-26 : IOS iframe fixed bug */
-				if (win[global].browser.mobile && win[global].browser.ios) {
+				if ($ui.browser.mobile && $ui.browser.ios) {
 					frames[iname].$('#wrapIframe').css({ 
 						'max-height':$(win).outerHeight(),
 						'overflow' : 'scroll'
@@ -1847,7 +1103,7 @@ var mConsole = (function(){
 			});
 			// document.getElementById(iname).onload = function () {
 			// 	$('#' + opt.id).data('iframeload', true);
-			// 	win[global].callback !== undefined ? frames[iname].$plugins.callback.modal(opt.id) : '';
+			// 	$ui.callback !== undefined ? frames[iname].$plugins.callback.modal(opt.id) : '';
 			// 	!!icallback ? icallback() : '';
 			// };
 			
@@ -1861,7 +1117,7 @@ var mConsole = (function(){
 			// Ajax 모달 
 			!!$('#' + opt.id).length ?
 				uiModalOpen(opt) :
-				win[global].uiAjax({
+				$ui.uiAjax({
 					id: !!opt.born ? opt.born : !$('#baseLayer').length ? opt.born = $('body') : 'baseLayer',
 					url: opt.link,
 					page: true,
@@ -1893,6 +1149,7 @@ var mConsole = (function(){
 			callback = opt.callback,
 			closecallback = opt.closecallback,
 			modalSpace = opt.space,
+			open = opt.open,
 
 			win_h = $(win).outerHeight(),
 			win_w = $(win).outerWidth(),
@@ -1926,7 +1183,7 @@ var mConsole = (function(){
 			icallback = opt.icallback,
 			
 			//state
-			is_mobile = win[global].browser.mobile,
+			is_mobile = $ui.browser.mobile,
 			is_full_h,
 			is_full_w,
 			is_iframe,
@@ -1948,7 +1205,7 @@ var mConsole = (function(){
 					modalSpace = 0;
 					$modal.addClass('type-full');
 				}	
-				win[global].uiAjax({ id: opt.id + '_cont', url: terms_url, page: true });
+				$ui.uiAjax({ id: opt.id + '_cont', url: terms_url, page: true });
 				$modalTit.find('.tit-h1').text(terms_tit);
 			}
 
@@ -1968,9 +1225,9 @@ var mConsole = (function(){
 				$modal.addClass('type-full');
 			}
 			
-			win[global].uiModal.option.sctarray.push($(win).scrollTop());
-
-			modalReady();
+			$ui.uiModal.option.sctarray.push($(win).scrollTop());
+			open ?
+			modalReady() : '';
 		}
 
 		//MODAL READY -------------------------------------------------
@@ -2003,6 +1260,7 @@ var mConsole = (function(){
 				top: is_mobile ? '100%' : '50%', 
 				opacity: 0
 			});
+			
 			
 			modalApp({ resize: false });
 		}
@@ -2037,7 +1295,7 @@ var mConsole = (function(){
 	
 			if ($modalCont.outerHeight() < 20 && $modal.data('iframeload') === undefined && !v.resize ) {
 				if (re_num === 0) {
-					win[global].uiLoading({ visible: true });
+					$ui.uiLoading({ visible: true });
 					re_num = re_num + 1;
 				}
 
@@ -2156,7 +1414,7 @@ var mConsole = (function(){
 					});
 				}
 
-				win[global].uiLoading({ visible: false });
+				$ui.uiLoading({ visible: false });
 
 				//modal backdrop setup
 				if (layN === 1) {
@@ -2206,7 +1464,7 @@ var mConsole = (function(){
 			function modalCompleted() {
 				!!callback ? callback() : '';				
 
-				win[global].uiFocusTab({
+				$ui.uiFocusTab({
 					selector: '#' + opt.id
 				});
 				$modal.data('orgw', w).data('orgh', h);
@@ -2217,18 +1475,18 @@ var mConsole = (function(){
 					}, 0) : '';
 
 				if (is_iframe) {
-					//win[global].browser.ie8 ? frames[opt.iname].$plugins.page.formReset() : '';
-					if (!win[global].browser.ie8) {
+					//$ui.browser.ie8 ? frames[opt.iname].$plugins.page.formReset() : '';
+					if (!$ui.browser.ie8) {
 						window.mCustomScrollbar && isMscroll ?
 							frames[opt.iname].$('.wrap-iframe').mCustomScrollbar({ scrollButtons: { enable: true } }) : '';
-						// win[global].callback !== undefined ? frames[opt.iname].$plugins.callback.modal(opt.id) : '';
+						// $ui.callback !== undefined ? frames[opt.iname].$plugins.callback.modal(opt.id) : '';
 					}
 				}
 
 				!!system_words ? '' : 
-				win[global].callback !== undefined ? $plugins.callback.modal(opt.id) : '';
+				$ui.callback !== undefined ? $plugins.callback.modal(opt.id) : '';
 
-				//!words ? win[global].uiModalResize({ id: opt.id }) : '';
+				//!words ? $ui.uiModalResize({ id: opt.id }) : '';
 			}
 		}
 
@@ -2246,7 +1504,7 @@ var mConsole = (function(){
 		}
 		$modal.find('.ui-modal-close').off('click.uilayerpop').on('click.uilayerpop', function (e) {
 			e.preventDefault();
-			win[global].uiModalClose({ id: opt.id, closecallback: closecallback });
+			$ui.uiModalClose({ id: opt.id, closecallback: closecallback });
 		});
 	}
 	function createUiModalResize(opt) {
@@ -2281,7 +1539,7 @@ var mConsole = (function(){
 			ih,
 			__h,
 			laywrap_h,
-			is_mobile = win[global].browser.mobile;
+			is_mobile = $ui.browser.mobile;
 
 		if (is_mobile) {
 			return false;
@@ -2419,7 +1677,7 @@ var mConsole = (function(){
 
 		if (c_h < w_h) {
 			//$this.find('.ui-modal-cont').css('height', 'auto');
-			win[global].uiModalResize({ id: v });
+			$ui.uiModalResize({ id: v });
 		} else {
 			if (!!$this.length) {
 				if (Math.abs(w_h - c_h) < 10) {
@@ -2461,18 +1719,18 @@ var mConsole = (function(){
 		opt.endfocus !== undefined && opt.endfocus !== null && !!endfocus ? 
 		 	sct = $(endfocus).offset().top : '';
 
-		win[global].browser.mobile ? !!terms_tit ? full = true : '' : '';
+		$ui.browser.mobile ? !!terms_tit ? full = true : '' : '';
 
 		$('#__modalCF_cont').css('display', 'none');
 		
 		if (!!$('#uiCfPlayer').length) {
-			win[global].browser.ie8 ? 
+			$ui.browser.ie8 ? 
 			doc.getElementById('uiCfPlayer').stop() : doc.getElementById('uiCfPlayer').pause();
 		}
 
 		if (layN < 2) {
 			$modal.removeAttr('opened');
-			if (win[global].browser.mobile && full) {
+			if ($ui.browser.mobile && full) {
 				$('body').removeClass('modal-full');
 				$modal.attr('aria-hidden', true).stop().animate({
 					top: '100%',
@@ -2492,13 +1750,13 @@ var mConsole = (function(){
 				});
 			}
 
-			win[global].uiModal.option.sctarray.pop();
+			$ui.uiModal.option.sctarray.pop();
 			$('#baseLayer').removeClass('under');
 			modalBackdrop('close');
 		} else {
 			//multi
 			var z = layN - 1;
-			win[global].browser.mobile ? 
+			$ui.browser.mobile ? 
 			$('body').addClass('modal-full') : '';
 			$modal.attr('aria-hidden', true).stop().animate({
 				opacity: 0
@@ -2509,9 +1767,9 @@ var mConsole = (function(){
 				$('.ui-modal[n="' + z + '"]').attr('aria-hidden', false);
 				
 				$('html, body').stop().animate({
-					scrollTop: Number(win[global].uiModal.option.sctarray.slice(-1)[0])
+					scrollTop: Number($ui.uiModal.option.sctarray.slice(-1)[0])
 				}, 0, function () {
-					win[global].uiModal.option.sctarray.pop();
+					$ui.uiModal.option.sctarray.pop();
 					//autofocus ? $(endfocus).attr('tabindex', 0).focus() : '';
 				});
 				closecallback ? closecallback({ id: opt.id }) : '';
@@ -2580,39 +1838,28 @@ var mConsole = (function(){
 			}).removeClass('on');
 		}
 	}
-
 	function creaeteUiCookieModal(opt){
-		win[global].uiCookieGet({ name:opt.cookiename }) ? '' : open();
+		$ui.uiCookieGet({ name:opt.cookiename }) ? '' : open();
 		function open(){
-			win[global].uiModal({ id:opt.id, full:opt.full === undefined ? false : opt.full, link: opt.link === undefined ? false : opt.link });
+			$ui.uiModal({ id:opt.id, full:opt.full === undefined ? false : opt.full, link: opt.link === undefined ? false : opt.link });
 		}
 	}
 	function creaeteUiCookieModalClose(opt){
 		$('#' + opt.cookiename).prop('checked') ?
-			win[global].uiCookieSet({ name:opt.cookiename, value:true, term:365 }) : '';
-		win[global].uiModalClose({ id:opt.modalid });
+			$ui.uiCookieSet({ name:opt.cookiename, value:true, term:365 }) : '';
+		$ui.uiModalClose({ id:opt.modalid });
 	}
 
+
 	/* ------------------------------------------------------------------------
-	 * selection(radio & checkbox) v2.0 
-	 * $plugins.uiSelection
-	 * date : 2018-09-16
-	 * exe : $plugins.uiSelection({ id:'name', all:false, callback:function(v){...} });
-	 * option
-	 * - id: 'name' [string] 
-	 * - all: true/false [boolean] 이면 전체체크 사용
-	 * - callback: function명 [function] / 콜백함수 실행 (!선택)
-	 * 	 
-	 * $plugins.uiSelectionChange
-	 * date : 2018-09-16
-	 * exe : $plugins.uiSelectionChange({ id:'name', checked:true/false, disabled:true/false, callback::function(v){...} });
-	 * option
-	 * - id: 'name' [string] 
-	 * - checked: true/false [boolean] checked 설정
-	 * - disabled: true/false [boolean] disabled 설정
-	 * - callback: function명 [function] / 콜백함수 실행 (!선택)
+	* name : selection(radio & checkbox)
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiSelection({ option });
+	* - $plugins.uiSelectionChange({ option });
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {	
+	$ui = $ui.uiNameSpace(namespace, {	
 		uiSelection: function (opt) {
 			return createUiSelection(opt);
 		},
@@ -2620,14 +1867,14 @@ var mConsole = (function(){
 			return createUiSelectionChange(opt);
 		}
 	});
-	win[global].uiSelection.option = {
+	$ui.uiSelection.option = {
 		id: false,
 		all: false,
 		callback: false
 	};
 	function createUiSelection(opt){
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiSelection.option, opt),
+			opt = $.extend(true, {}, $ui.uiSelection.option, opt),
 			id = opt.id,
 			is_id = id === false ? false : true,
 			$inp = id === false ? $('input[type="checkbox"], input[type="radio"]') : typeof id === 'string' ? $('#' + id) : id,
@@ -2657,13 +1904,13 @@ var mConsole = (function(){
 		$('body').data('selection', true);
 
 		//event
-		$inp
-		.off('click.ui focus.ui blur.ui')
-		.on({
-			'click.ui': evtFocus,
-			'focus.ui': evtAdd,
-			'blur.ui': evtRemove
-		});
+		$inp.off('click.ui focus.ui blur.ui')
+			.on({
+				'click.ui': evtFocus,
+				'focus.ui': evtAdd,
+				'blur.ui': evtRemove
+			});
+
 		function evtFocus(){
 			labelState($(this).attr('id'), 'focus', $(this).attr('type'));
 		}
@@ -2673,25 +1920,24 @@ var mConsole = (function(){
 		function evtRemove(){
 			labelState($(this).attr('id'), 'remove', $(this).attr('type'));
 		}
-
 		function labelState(id, state, type){
 			var $lable = $('label[for="'+ id +'"]');
 
 			switch (state){
-			case 'focus' : 
-				type === 'checkbox' ?
-					selectionCheck({ id:id, evt:true })://checkbox
-					selectionApp({ id:id });//radio
-				$lable.focus();
-				break;
+				case 'focus' : 
+					type === 'checkbox' ?
+						selectionCheck({ id:id, evt:true })://checkbox
+						selectionApp({ id:id });//radio
+					$lable.focus();
+					break;
 
-			case 'add' : 
-				$lable.addClass('activated');
-				break;
+				case 'add' : 
+					$lable.addClass('activated');
+					break;
 
-			case 'remove' : 
-				$lable.removeClass('activated');
-				break;
+				case 'remove' : 
+					$lable.removeClass('activated');
+					break;
 			}
 		}
 	}
@@ -2715,7 +1961,6 @@ var mConsole = (function(){
 		
 		//checkgroup이 있다면 실행하여 현재 그룹의 체크된 갯수 파악 
 		if (checkgroup !== undefined) {
-			
 			for (i = 0; i < len; i++) {
 				n = ($inps.eq(i).prop('checked')) ?  1 : 0;
 				m = m + n;
@@ -2836,14 +2081,16 @@ var mConsole = (function(){
 		!!callback ? callback() : '';
 	}
 
+
 	/* ------------------------------------------------------------------------
-	 * select v1.0 
-	 * date : 2018-04-21
-	 * modify : 2018-04-29 이벤트 및 선택됨 텍스트 추가
-	 * option
-	 * - opt.selector : 'id' or $(...) / [string] or [object]
+	* name : select(radio & checkbox)
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiSelect({ option });
+	* - $plugins.uiSelectAct({ option });
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiSelect: function (opt) {
 			return createUiSelect(opt);
 		},
@@ -2851,19 +2098,19 @@ var mConsole = (function(){
 			return createUiSelectAct(opt);
 		}
 	});
-	win[global].uiSelect.option = {
+	$ui.uiSelect.option = {
 		id: false, //select id
 		current: null
 	};
 	function createUiSelect(opt){
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiSelect.option, opt),
+			opt = $.extend(true, {}, $ui.uiSelect.option, opt),
 			current = opt.current, 
 			id = opt.id,
 			is_id = id === false ? false : true,
 			$ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.closest('.ui-select') : $('.ui-select'), 
 			
-			keys = win[global].option.keys,
+			keys = $ui.option.keys,
 			len = $ui_select.length, 
 			i = 0,
 			j = 0,
@@ -2949,8 +2196,8 @@ var mConsole = (function(){
 
 			_option_wrap += '</div>'; 
 			
-			win[global].browser.mobile ? _option_wrap += '<button type="button" class="btn-close"><span>닫기</span></button>': '';
-			win[global].browser.mobile ? _option_wrap += '<div class="dim"></div>': '';
+			$ui.browser.mobile ? _option_wrap += '<button type="button" class="btn-close"><span>닫기</span></button>': '';
+			$ui.browser.mobile ? _option_wrap += '<div class="dim"></div>': '';
 			_option_wrap += '</div>'; 
 
 			$sel_current.append('<input type="text" class="ui-select-btn" id="'+ sel_id +'_inp" role="combobox" aria-autocomplete="list" aria-owns="'+ list_id +'" aria-haspopup="true" aria-expanded="false" aria-activedescendant="'+ opt_id_selected +'" readonly value="'+ _txt +'" data-n="'+ sel_n +'" data-id="'+ sel_id +'">');
@@ -2962,8 +2209,7 @@ var mConsole = (function(){
 		}
 		
 		//event
-		$('.ui-select-btn')
-			.off('click.ui keydown.ui mouseover.ui focus.ui blur.ui')
+		$('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui blur.ui')
 			.on({
 				'click.ui': selectClick,
 				'keydown.ui': selectKey,
@@ -2971,20 +2217,18 @@ var mConsole = (function(){
 				'focus.ui': selectOver,
 				'blur.ui': optBlur
 			});
-		$('.ui-select-opt')
-			.off('click.ui mouseover.ui')
+		$('.ui-select-opt').off('click.ui mouseover.ui')
 			.on({
 				'click.ui':optClick,
 				'mouseover.ui':selectOver
 			});
-		$('.ui-select select')
-			.off('change.ui')
+		$('.ui-select select').off('change.ui')
 			.on({
 				'change.ui':selectChange,
 			});
 		
 		function selectChange(){
-			win[global].uiSelectAct({ id:$(this).attr('id'), current:$(this).find('option:selected').index(), original:true });
+			$ui.uiSelectAct({ id:$(this).attr('id'), current:$(this).find('option:selected').index(), original:true });
 		}
 		function optBlur() {
 			clearTimeout(timer_opt);
@@ -3004,12 +2248,10 @@ var mConsole = (function(){
 				sct = $(t).closest('.ui-select').find('.ui-select-btn').data('sct');
 
 			clearTimeout(timer_opt);
-			win[global].uiSelectAct({ id:$(t).closest('.ui-select').find('.ui-select-btn').data('id'), current:$(t).index() })
+			$ui.uiSelectAct({ id:$(t).closest('.ui-select').find('.ui-select-btn').data('id'), current:$(t).index() })
 			$(t).closest('.ui-select').find('.ui-select-btn').focus();
 			optClose();
-			console.log('sct', sct);
-			win[global].uiScroll({ value:sct, speed:200 });
-			
+			$ui.uiScroll({ value:sct, speed:200 });
 		}
 		function selectOver(){
 			clearTimeout(timer);
@@ -3037,32 +2279,32 @@ var mConsole = (function(){
 			
 			switch(e.keyCode){
 				case keys.up:
-				nn = n - 1 < 0 ? len - 1 : n - 1;
-				n_top = $opt.eq(nn).position().top;
-				optScroll($wrap, n_top, wrap_h, 'up');
-				optPrev(e, id, n, len);
-				break;
+					nn = n - 1 < 0 ? len - 1 : n - 1;
+					n_top = $opt.eq(nn).position().top;
+					optScroll($wrap, n_top, wrap_h, 'up');
+					optPrev(e, id, n, len);
+					break;
 
 				case keys.left:
-				nn = n - 1 < 0 ? len - 1 : n - 1;
-				n_top = $opt.eq(nn).position().top;
-				optScroll($wrap, n_top, wrap_h, 'up');
-				optPrev(e, id, n, len);
-				break;
+					nn = n - 1 < 0 ? len - 1 : n - 1;
+					n_top = $opt.eq(nn).position().top;
+					optScroll($wrap, n_top, wrap_h, 'up');
+					optPrev(e, id, n, len);
+					break;
 
 				case keys.down:
-				nn = n + 1 > len - 1 ? 0 : n + 1;
-				n_top = $opt.eq(nn).position().top;
-				optScroll($wrap, n_top, wrap_h, 'down');
-				optNext(e, id, n, len);
-				break;
+					nn = n + 1 > len - 1 ? 0 : n + 1;
+					n_top = $opt.eq(nn).position().top;
+					optScroll($wrap, n_top, wrap_h, 'down');
+					optNext(e, id, n, len);
+					break;
 
 				case keys.right:
-				nn = n + 1 > len - 1 ? 0 : n + 1;
-				n_top = $opt.eq(nn).position().top;
-				optScroll($wrap, n_top, wrap_h, 'down');
-				optNext(e, id, n, len);
-				break;
+					nn = n + 1 > len - 1 ? 0 : n + 1;
+					n_top = $opt.eq(nn).position().top;
+					optScroll($wrap, n_top, wrap_h, 'down');
+					optNext(e, id, n, len);
+					break;
 			}
 
 			if (e.keyCode === keys.enter || e.keyCode === keys.space) {   
@@ -3073,7 +2315,7 @@ var mConsole = (function(){
 			}    
 		}
 		function optExpanded(t){
-			if (win[global].browser.mobile) {
+			if ($ui.browser.mobile) {
 				optOpen(t)
 			} else {
 				if ($(t).attr('aria-expanded') === 'false') {
@@ -3094,16 +2336,16 @@ var mConsole = (function(){
 		function optPrev(e, id, n, len){
 			e.preventDefault();
 			n === 0 ? n = len - 1 : n = n - 1;
-			win[global].uiSelectAct({ id:id, current:n });
+			$ui.uiSelectAct({ id:id, current:n });
 		}
 		function optNext(e, id, n, len){
 			e.preventDefault();
 			n === len - 1 ? n = 0 : n = n + 1;
-			win[global].uiSelectAct({ id:id, current:n });
+			$ui.uiSelectAct({ id:id, current:n });
 		}
-
 		function optOpen(t){
-			var _$sel = $(t),
+			var $body = $('body'),
+				_$sel = $(t),
 				_$uisel = _$sel.closest('.ui-select'),
 				_$wrap = _$uisel.find('.ui-select-wrap'),
 				_$opts = _$wrap.find('.ui-select-opts'),
@@ -3112,15 +2354,15 @@ var mConsole = (function(){
 				offtop = _$uisel.offset().top,
 				scrtop = $(doc).scrollTop(),
 				wraph = _$wrap.outerHeight(),
-				btnh = _$sel.outerHeight(),
-				opth = _$opt.outerHeight(),
+				btn_h = _$sel.outerHeight(),
+				opt_h = _$opt.outerHeight(),
 				win_h = $(win).outerHeight(),
 				clsname = 'bottom';
 
-			clsname = win_h - ((offtop - scrtop) + btnh) > wraph ? 'bottom' : 'top' ;			
+			clsname = win_h - ((offtop - scrtop) + btn_h) > wraph ? 'bottom' : 'top' ;			
 
-			$('body').addClass('dim-dropdown');
-			$('body').data('scrolling') === 'yes' ? win[global].uiScrollingCancel(): '';
+			$body.addClass('dim-dropdown');
+			$body.data('scrolling') === 'yes' ? $ui.uiScrollingCancel(): '';
 
 			if(!_$sel.data('expanded')){
 				_$sel.data('expanded', true).attr('aria-expanded', true);
@@ -3128,16 +2370,17 @@ var mConsole = (function(){
 				_$wrap.addClass('on ' + clsname).attr('aria-hidden', false);
 				_$opts.find('.ui-select-opt').eq(_$uisel.find(':checked').index());
 
-				win[global].uiScroll({ target:_$wrap, value:Number(opth * _$uisel.find(':checked').index()), speed:0 });
+				$ui.uiScroll({ target:_$wrap, value:Number(opt_h * _$uisel.find(':checked').index()), speed:0 });
 			}
 		}
 		function optClose(){
-			var $select = $('.ui-select'),
+			var $body = $('body'),
+				$select = $('.ui-select'),
 				$btn = $('.ui-select-btn'),
 				$wrap = $('.ui-select-wrap');
 			
-			$('body').data('scrolling') === 'no' ? win[global].uiScrolling(): '';
-			$('body').removeClass('dim-dropdown');
+			$body.data('scrolling') === 'no' ? $ui.uiScrolling(): '';
+			$body.removeClass('dim-dropdown');
 			$btn.data('expanded', false).attr('aria-expanded', false);
 			$select.removeClass('on');
 			$wrap.removeClass('on top bottom').attr('aria-hidden', true);
@@ -3153,30 +2396,25 @@ var mConsole = (function(){
 			current= opt.current,
 			org= opt.original === undefined ? false : opt.original;
 
-		!org ?
-			$uisel.find('option').prop('selected', false).eq(current).prop('selected', true).change() : '';
+		!org ? $uisel.find('option').prop('selected', false).eq(current).prop('selected', true).change() : '';
+
 		$uisel.find('.ui-select-btn').val($opt.eq(current).text());
 		$opt_.removeClass('selected').eq(current).addClass('selected');
 		
 		callback ? callback({ id:id, current:current, val:$opt.eq(current).val() }) : '';
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * tab v2.0 
-	 * $plugins.uiTab
-	 * date : 2018-09-14
-	 * exe : $plugins.uiTab({ id:'name', current:0, unres:false, callback:function(v){...} });
-	 * option
-	 * - id: 'name' [string] 
-	 * - current: 0 [number] / 처음 열린패널 선택 (!선택, 기본 0)
-	 * - unres: false [boolean] / true 일 경우 변경무 (!선택, -기본 false)
-	 * - callback: function명 [function] / 콜백함수 실행 (!선택)
-	 * 
-	 * $plugins.uiTabAct
-	 * date : 2018-09-14
-	 * exe : $plugins.uiTabAct({ id:'name', current:0, callback:function(v){...} });
+	* name : tab
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiTab({ option });
+	* - $plugins.uiTabAct({ option });
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiTab: function (opt) {
 			return createUiTab(opt);
 		},
@@ -3184,33 +2422,60 @@ var mConsole = (function(){
 			return createUiTabAct(opt);
 		}
 	});
-	win[global].uiTab.option = {
+	$ui.uiTab.option = {
 		current: 0,
 		unres: false,
 		callback: false
 	};
 	function createUiTab(opt) {
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiTab.option, opt),
+			opt = $.extend(true, {}, $ui.uiTab.option, opt),
 			id = opt.id,
 			current = isNaN(opt.current) ? 0 : opt.current,
 			unres = opt.unres,
 			callback = opt.callback,
-			keys = win[global].option.keys,
+			keys = $ui.option.keys,
 			$tab = $('#' + id),
 			$btns = $tab.children('.ui-tab-btns'),
 			$btn = $btns.find('.ui-tab-btn'),
 			$pnls = $tab.children('.ui-tab-pnls'),
 			$pnl = $pnls.children('.ui-tab-pnl'),
-			para = win[global].uiPara('tab'), // tab=idname-1
+			para = $ui.uiPara('tab'), // tab=idname-1
 			len = $btn.length,
 			ps_l = [],
-			i, _class, _attr, is_current, id_pnl, id_btn, _$btn, _$pnl;
+			i, 
+			_class, 
+			_attr, 
+			is_current, 
+			id_pnl, 
+			id_btn, 
+			_$btn, 
+			_$pnl,
+			para = $global.uiPara('tab'),
+			paras,
+			paraname;
 
 		//set up
-		if (para !== undefined) {
-			para = para.split('-');
-			para[0] === id ? current = Number(para[1]) : '';
+		if (!!para) {
+			if (para.split('+').length > 1) {
+				//2개이상의 탭설정
+				//tab=exeTab1-1+Tab_productBanner-3
+				paras = para.split('+');
+
+				for (var i = 0; i < paras.length; i++ ) {
+					paraname = paras[i].split('*');
+					opt.id === paraname[0] ? current = Number(paraname[1]) : '';
+				}
+			} else {
+				//1개 탭 설정
+				//tab=1
+			 	if (para.split('*').length > 1) {
+					paraname = para.split('*');
+					opt.id === paraname[0] ? current = Number(paraname[1]) : '';
+				} else {
+					current = Number(para);
+				}
+			}
 		}
 
 		$tab.data('opt', opt);
@@ -3253,7 +2518,7 @@ var mConsole = (function(){
 		callback ? callback(opt) : '';
 
 		$btn.data('psl', ps_l).data('len', len);
-		win[global].uiScroll({ 
+		$ui.uiScroll({ 
 			value: ps_l[current], 
 			target: $btn.parent(), 
 			speed: 0, 
@@ -3261,15 +2526,14 @@ var mConsole = (function(){
 		});
 
 		//event
-		$btn
-			.off('click.uitab keydown.uitab')
+		$btn.off('click.uitab keydown.uitab')
 			.on({
 				'click.uitab': evtClick,
 				'keydown.uitab': evtKeys
 			});
 
 		function evtClick() {
-			win[global].uiTabAct({ id: id, current: $(this).index() }); 
+			$ui.uiTabAct({ id: id, current: $(this).index() }); 
 		}
 		function evtKeys(e) {
 			var $this = $(this),
@@ -3299,22 +2563,22 @@ var mConsole = (function(){
 			function upLeftKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-first') ? 
-				win[global].uiTabAct({ id: id, current: n - 1 }): 
-				win[global].uiTabAct({ id: id, current: m - 1 });
+				$ui.uiTabAct({ id: id, current: n - 1 }): 
+				$ui.uiTabAct({ id: id, current: m - 1 });
 			}
 			function downRightKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-last') ? 
-				win[global].uiTabAct({ id: id, current: n + 1 }): 
-				win[global].uiTabAct({ id: id, current: 0 });
+				$ui.uiTabAct({ id: id, current: n + 1 }): 
+				$ui.uiTabAct({ id: id, current: 0 });
 			}
 			function endKey(e) {
 				e.preventDefault();
-				win[global].uiTabAct({ id: id, current: m - 1 });
+				$ui.uiTabAct({ id: id, current: m - 1 });
 			}
 			function homeKey(e) {
 				e.preventDefault();
-				win[global].uiTabAct({ id: id, current: 0 });
+				$ui.uiTabAct({ id: id, current: 0 });
 			}
 		}
 	}
@@ -3331,11 +2595,10 @@ var mConsole = (function(){
 			unres = opt.unres,
 			callback = opt.callback;
 
-		$btn
-			.attr('aria-selected', false).attr('tabindex', -1).removeClass('selected')
+		$btn.attr('aria-selected', false).attr('tabindex', -1).removeClass('selected')
 			.eq(current).attr('aria-selected', true).removeAttr('tabindex').addClass('selected').focus();
 		
-		win[global].uiScroll({ 
+		$ui.uiScroll({ 
 			value: ps_l[current], 
 			target: $btns, 
 			speed: 200, 
@@ -3348,23 +2611,26 @@ var mConsole = (function(){
 		!!callback ? callback(opt) : '';
 	}
 
+
+
+
 	/* ------------------------------------------------------------------------
 	 * tooltip v2.0 
 	 * date : 2018-10-06
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiTooltip: function (opt) {
 			return createUiTooltip(opt);
 		}
 	});
-	win[global].uiTooltip.option = {
+	$ui.uiTooltip.option = {
 		visible: null,
 		id: false,
 		ps: false
 	};
 	function createUiTooltip(opt){
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiTblScroll.option, opt),
+			opt = $.extend(true, {}, $ui.uiTblScroll.option, opt),
 			$btn = $('.ui-tooltip-btn'),
 			$tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false,
 			visible = opt.visible,
@@ -3460,12 +2726,12 @@ var mConsole = (function(){
 			pst ? cursorCls += 'b' : cursorCls += 't';
 
 			if (!!$id.attr('modal')) {
-				if (!win[global].browser.oldie) {
+				if (!$ui.browser.oldie) {
 					ps_l = ps_l;
 					ps_r = ps_r;
 				}
 
-				win[global].browser.ie ? '' : off_t = off_t;
+				$ui.browser.ie ? '' : off_t = off_t;
 			}
 
 			if (!!$id.closest('.type-fixed-bottom').length) {
@@ -3487,7 +2753,7 @@ var mConsole = (function(){
 	 * - table caption v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiTblScroll: function () {
 			return createUiTblScroll();
 		},
@@ -3495,13 +2761,13 @@ var mConsole = (function(){
 			return createUiCaption();
 		}
 	});
-	win[global].uiTblScroll.option = {
+	$ui.uiTblScroll.option = {
 		selector: '.ui-tblscroll',
 		coln: 5
 	}
 	function createUiTblScroll(opt){
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiTblScroll.option, opt),
+			opt = $.extend(true, {}, $ui.uiTblScroll.option, opt),
 			$tbl = $(opt.selector),
 			coln = opt.coln,
 			len = $tbl.length,
@@ -3575,12 +2841,12 @@ var mConsole = (function(){
 	 * object floating v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiFloating: function (opt) {
 			return createUiFloating(opt);
 		}
 	});
-	win[global].uiFloating.option = {
+	$ui.uiFloating.option = {
 		ps: 'bottom',
 		add: false,
 		fix: true,
@@ -3588,7 +2854,7 @@ var mConsole = (function(){
 	};
 	function createUiFloating(opt) {
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiFloating.option, opt),
+			opt = $.extend(true, {}, $ui.uiFloating.option, opt),
 			id = opt.id,
 			ps = opt.ps,
 			add = opt.add,
@@ -3620,7 +2886,7 @@ var mConsole = (function(){
 			var tt = Math.ceil($id.offset().top),
 				th = Math.ceil($idwrap.outerHeight()),
 				st = $(win).scrollTop(),
-				wh = Math.ceil( win[global].browser.mobile ? window.screen.height : $(win).outerHeight() ),
+				wh = Math.ceil( $ui.browser.mobile ? window.screen.height : $(win).outerHeight() ),
 				dh = Math.ceil($(doc).outerHeight()),
 				lh = (!!add) ? $add.outerHeight() : 0 ,
 				lt = (!!add) ? dh - ($add.offset().top).toFixed(0) : 0,
@@ -3711,7 +2977,7 @@ var mConsole = (function(){
 	 * option
 	 * - id: 'name' [string] 
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiBrickList: function (opt) {
 			return createUiBrickList(opt);
 		},
@@ -3719,7 +2985,7 @@ var mConsole = (function(){
 			return createUiBrickListAdd(opt);
 		}
 	});
-	win[global].uiBrickList.option = {
+	$ui.uiBrickList.option = {
 		margin: 0,
 		response: true
 	}
@@ -3727,7 +2993,7 @@ var mConsole = (function(){
 		if (opt === undefined) { return false; }
 		
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiBrickList.option, opt),
+			opt = $.extend(true, {}, $ui.uiBrickList.option, opt),
 			$base = $('#' + opt.id), 
 			$item = $base.find('.ui-bricklist-item'),
 			mg = opt.margin,
@@ -3766,7 +3032,7 @@ var mConsole = (function(){
 					'col':item_col, 
 					'mg':mg
 				});
-			win[global].uiBrickListAdd({ id: opt.id });
+			$ui.uiBrickListAdd({ id: opt.id });
 		},200);
 		
 		
@@ -3774,7 +3040,7 @@ var mConsole = (function(){
 			$(win).resize(function(){
 				clearTimeout(timer);
 				timer = setTimeout(function(){
-					win[global].uiBrickList({ id : opt.id, margin: opt.margin });
+					$ui.uiBrickList({ id : opt.id, margin: opt.margin });
 				},500);
 				$base.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, item_top));
 			});
@@ -3822,7 +3088,7 @@ var mConsole = (function(){
 	 * print v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiPrint: function (opt) {
 			return createUiPrint(opt);
 		}
@@ -3845,7 +3111,7 @@ var mConsole = (function(){
 	 * slot machine v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiSlot: function (opt) {
 			return createUiSlot(opt);
 		},
@@ -3856,10 +3122,10 @@ var mConsole = (function(){
 			return createUiSlotStop(opt);
 		}
 	});
-	win[global].uiSlot.play = {}
+	$ui.uiSlot.play = {}
 	function createUiSlot(opt){
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
+			$ui.uiConsoleGuide([
 				global + ".uiSlot({ id:'아이디명', auto:true/false, single:true/false });",
 				"- id: #을 제외한 아이디명만 입력(!필수)",
 				"- auto: true일 경우 자동실행, (!선택 - 기본값 false)",
@@ -3923,12 +3189,12 @@ var mConsole = (function(){
 			clone = $item.eq(opt.n).clone().addClass('clone').removeAttr('n');
 			$wrap[opt.append ? 'append' : 'prepend'](clone);
 		}
-		auto ? win[global].uiSlotStart(opt) : '';
+		auto ? $ui.uiSlotStart(opt) : '';
 	}
 	function createUiSlotStart(opt){
 		//option guide
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
+			$ui.uiConsoleGuide([
 				global + ".uiSlotStart({ id:'아이디명' });",
 				"- id: #을 제외한 아이디명만 입력(!필수)",
 				"※  슬롯머신 시작"
@@ -3948,21 +3214,21 @@ var mConsole = (function(){
 		var s = 500;
 		if (!$slot.data('ing')) {
 			$slot.data('ing', true);
-			win[global].uiSlot.play[opt.id] = win.setInterval(steplot, s);
+			$ui.uiSlot.play[opt.id] = win.setInterval(steplot, s);
 		}
 		
 		function steplot(){
 			$wrap.css('top', 0).stop().animate({
 				top: single ? item_h * (len - 1) * -1 : Math.ceil(item_h * (len - 3) * -1)
 			},s , 'linear') ;
-			win.clearInterval(win[global].uiSlot.play[opt.id]);
-			win[global].uiSlot.play[opt.id] = win.setInterval(steplot, s);
+			win.clearInterval($ui.uiSlot.play[opt.id]);
+			$ui.uiSlot.play[opt.id] = win.setInterval(steplot, s);
 		}
 	}
 	function createUiSlotStop(opt){
 		//option guide
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
+			$ui.uiConsoleGuide([
 				global + ".uiSlotStop({ id:'아이디명', callback:function(result){...} });",
 				"- id: #을 제외한 아이디명만 입력(!필수)",
 				"- callback: 콜백함수 선택값 전달 (!선택)",
@@ -3991,7 +3257,7 @@ var mConsole = (function(){
 
 		clearTimeout(timer);
 		timer = setTimeout(function(){
-			win.clearInterval(win[global].uiSlot.play[opt.id]);
+			win.clearInterval($ui.uiSlot.play[opt.id]);
 			t = item_h * x * -1 > 0 ? item_h * x : item_h * x * -1;
 			$wrap.stop().animate({
 				top: t
@@ -4006,7 +3272,7 @@ var mConsole = (function(){
 	 * slider v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiSlider: function (opt) {
 			return createUiSlider(opt);
 		}
@@ -4420,7 +3686,7 @@ var mConsole = (function(){
 	 * slide(carousel) v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiSlide: function (opt) {
 			return createUiSlide(opt);
 		},
@@ -4431,7 +3697,7 @@ var mConsole = (function(){
 			return createUiSlideFnAuto(opt);
 		}
 	});
-	win[global].uiSlide.options = {
+	$ui.uiSlide.options = {
 		current:0,
 		multi:false,
 		loop:true,
@@ -4453,7 +3719,7 @@ var mConsole = (function(){
 	function createUiSlide(opt) {
 		//option guide
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
+			$ui.uiConsoleGuide([
 				global + ".uiSlide({ id:'name', current:0, multi:false, loop:true, items:1, eff:'slide', dot:true, nav:true, auto:true, play:false, gauge:true, speed:300, autTime:3000, margin:0, mouseDrag:true, touchDrag:true });",
 				"- id [String]: #을 제외한 아이디명만 입력 (!필수)",
 				"※ 슬라이드"
@@ -4461,8 +3727,8 @@ var mConsole = (function(){
 			return false;
 		}
 		
-		win[global].uiSlide[opt.id] = {};
-		var base = win[global].uiSlide[opt.id];
+		$ui.uiSlide[opt.id] = {};
+		var base = $ui.uiSlide[opt.id];
 
 		//루트설정
 		base.root = $('#' + opt.id);
@@ -4473,7 +3739,7 @@ var mConsole = (function(){
 		base.itemtit = base.root.find('.ui-slide-itemtit');
 
 		//옵션저장
-		base.opt = $.extend({}, win[global].uiSlide.options, opt);
+		base.opt = $.extend({}, $ui.uiSlide.options, opt);
 		
 		//중복실행 방지
 		if (!base.root.is('.load')) {
@@ -5233,7 +4499,7 @@ var mConsole = (function(){
 	 * count number v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {	
+	$ui = $ui.uiNameSpace(namespace, {	
 		uiCountStep: function (opt) {
 			return createUiCountStep(opt);
 		},
@@ -5281,7 +4547,7 @@ var mConsole = (function(){
 				}
 				
 				$base_div = $base.children('.n' + i);
-				$base_div.find('span').wrapAll('<div class="ui-count-num" style="top:' + base_h + 'px; transition:top '+ speed +' cubic-bezier(' + win[global].option.effect[eff] + ');"></div>');
+				$base_div.find('span').wrapAll('<div class="ui-count-num" style="top:' + base_h + 'px; transition:top '+ speed +' cubic-bezier(' + $ui.option.effect[eff] + ');"></div>');
 				$thisNum = $base_div.find('.ui-count-num');
 				$thisNum.data('height', $thisNum.height()); 
 			}
@@ -5336,7 +4602,7 @@ var mConsole = (function(){
 	 * date : 2018-04-21
 	 * 수정작업중
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiMenu: function (opt) {
 			return createUiMenu(opt);
 		},
@@ -5344,17 +4610,17 @@ var mConsole = (function(){
 			return createUiMenuSelected(opt);
 		}
 	});
-	win[global].uiMenu.map = {};
-	win[global].uiMenu.json = {};
+	$ui.uiMenu.map = {};
+	$ui.uiMenu.json = {};
 	function createUiMenu(opt){
 		var dataExecel,
 			menu_callback = opt.callback;
 
-		win[global].uiAjax({ url:opt.url, page:false, callback:callback });
+		$ui.uiAjax({ url:opt.url, page:false, callback:callback });
 
 		function callback(v){
 			dataExecel = v;
-			win[global].uiMenu.json = dataExecel;
+			$ui.uiMenu.json = dataExecel;
 
 			var len = dataExecel.menu.length,
 				i = 0,
@@ -5555,9 +4821,9 @@ var mConsole = (function(){
 		$menu.find('.dep-3-btn').attr('aria-selected', false);
 		$menu.find('.dep-3-wrap').attr('aria-hidden', true).css('display', 'none');
 		
-		for (var i = 0, len = win[global].uiMenu.json.menu.length; i < len; i++) {
-			if (win[global].uiMenu.json.menu[i].code === opt.code) {
-				opt.callback(win[global].uiMenu.json.menu[i].tit);
+		for (var i = 0, len = $ui.uiMenu.json.menu.length; i < len; i++) {
+			if ($ui.uiMenu.json.menu[i].code === opt.code) {
+				opt.callback($ui.uiMenu.json.menu[i].tit);
 			}
 		}
 
@@ -5575,7 +4841,7 @@ var mConsole = (function(){
 	 * json coding list v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiCodinglist: function (opt) {
 			return createUiCodinglist(opt);
 		}
@@ -5583,7 +4849,7 @@ var mConsole = (function(){
 	function createUiCodinglist(opt) {
 		var dataExecel;
 
-		win[global].uiAjax({ 
+		$ui.uiAjax({ 
 			url: opt.url, 
 			page: false, 
 			callback: callback 
@@ -5707,7 +4973,7 @@ var mConsole = (function(){
 				ctg_enddate.push(dataExecel.list[i].enddate);
 				ctg_menu.push(dataExecel.list[i].d2);
 
-				var imgroot = win[global].browser.mobile ? "m" : "d";
+				var imgroot = $ui.browser.mobile ? "m" : "d";
 
 				if (state !== '제외' && i === 0) {
 					table += '<table>';
@@ -5760,7 +5026,7 @@ var mConsole = (function(){
 				}
 				else if (state !== '제외') {
 					num = num + 1;
-					win[global].browser.mobile ?
+					$ui.browser.mobile ?
 						table += '<tr class="' + cls + '" >' :
 						table += '<tr class="' + cls + '">';
 					table += '<td class="state"><span>' + state + '</span></td>';
@@ -5954,14 +5220,14 @@ var mConsole = (function(){
 	 * screen capture v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiCapture: function (opt) {
 			return createUiCapture(opt);
 		}
 	});
 	function createUiCapture(opt){
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
+			$ui.uiConsoleGuide([
 				global + ".uiCapture({ id:'name' });",
 				"- id [String]: #을 제외한 아이디명만 입력 (!필수)",
 				"- 필수 라이브러리 : canvas-toBlob.js, FileSaver.js, html2canvas.js",
@@ -5992,7 +5258,7 @@ var mConsole = (function(){
 	 * input placeholder v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiInputCancel: function () {
 			return createUiInputCancel();
 		},
@@ -6045,14 +5311,14 @@ var mConsole = (function(){
 	 * file upload v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiFileUpload: function (opt) {
 			return createUiFileUpload(opt);
 		}
 	});
 	function createUiFileUpload(opt){
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
+			$ui.uiConsoleGuide([
 				global + ".uiFileUpload({ id:'name', multi:false, accept:'image/*' });",
 				"- id [String]: #을 제외한 아이디명만 입력 (!필수)",
 				"- multi [Boolean]: true 일 경우 다중업로드 (!선택, -기본 false)",
@@ -6167,7 +5433,7 @@ var mConsole = (function(){
 	 * textarea auto height v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiTextareaAutoHeight: function () {
 			return createUiTextareaAutoHeight();
 		}
@@ -6189,7 +5455,7 @@ var mConsole = (function(){
 	 * loading v1.0 
 	 * date : 2018-06-02
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiLoading: function (opt) {
 			return createUiLoading(opt);
 		}
@@ -6223,20 +5489,20 @@ var mConsole = (function(){
 	 * date : 2018-07-28
 	 * 출력부분 시간,분,초 세분화 전달필요.
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiTimer: function (opt) {
 			return createUiTimer(opt)
 		}
 	});
-	win[global].uiTimer.timerID = '';
+	$ui.uiTimer.timerID = '';
 	function createUiTimer(opt){
 		var timer = '',
 			$timer = $('#' + opt.id),
 			time = opt.time,
 			callback = opt.callback;
 
-		clearInterval(win[global].uiTimer.timeID);
-		win[global].uiTimer.timeID = setInterval(decrementTime, 1000);
+		clearInterval($ui.uiTimer.timeID);
+		$ui.uiTimer.timeID = setInterval(decrementTime, 1000);
 
 		function decrementTime(){
 			$timer.text(toMinSec(time));
@@ -6272,7 +5538,7 @@ var mConsole = (function(){
 	 * - opt.selector : 'id' or $(...) / [strong] or [object]
 	 * - opt.wrapper : '...' / [strong]
 	------------------------------------------------------------------------ */
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiError: function (opt) {
 			return createUiError(opt);
 		}
@@ -6306,7 +5572,7 @@ var mConsole = (function(){
 
 
 
-	win[global] = uiNameSpace(namespace, {
+	$ui = $ui.uiNameSpace(namespace, {
 		uiScrolling: function (opt) {
 			return createUiScrolling(opt);
 		},
@@ -6347,7 +5613,7 @@ var mConsole = (function(){
 		});
 	}
 	
-	win[global].uiScrolling.option = {
+	$ui.uiScrolling.option = {
 		act:true,
 		scrollpow: $(win).outerHeight() / 2,
 		scrlltime: 400,
@@ -6356,9 +5622,9 @@ var mConsole = (function(){
 		callback: false,
 		dots: true
 	};
-	win[global].uiScrolling.ing = false;
+	$ui.uiScrolling.ing = false;
 	function createUiScrolling(opt) {
-		var opt = $.extend(true, {}, win[global].uiScrolling.option, opt),
+		var opt = $.extend(true, {}, $ui.uiScrolling.option, opt),
             $page = $('.ui-pagescroll'),
 			$item = $page.find('.ui-pagescroll-item'),
             len = $item.length,
@@ -6393,7 +5659,7 @@ var mConsole = (function(){
 
 			$('.ui-pagescroll-dot').on('click.dot', function(){
 				$('body').data('page', $(this).index());
-				win[global].uiScrollingGoto({
+				$ui.uiScrollingGoto({
 					goto: $(this).index() 
 				});
 			});
@@ -6401,14 +5667,14 @@ var mConsole = (function(){
 		$('.type-mainvisual .item').css('height', w_h);
 		
 		if (act) {
-			win[global].uiScrollingAct({
+			$ui.uiScrollingAct({
 				goto: Math.round($(win).scrollTop() / w_h ),
 				move_time: mTime,
 				scrollPow: _scrollPow
 			});
 		}
 
-		// !!$('body.sub').length && win[global].browser.mobile ? 
+		// !!$('body.sub').length && $ui.browser.mobile ? 
 		// // $('.ui-pagescroll-item.n2').css('min-height', $(win).outerHeight() - ($('#baseFooter').outerHeight() + 75) ) : '';
 
 		$(doc)
@@ -6418,7 +5684,7 @@ var mConsole = (function(){
 				$('body').data('page', $('body').data('page') + 1);
 				$('body').data('page') >= $('body').data('allpage') ? $('body').data('page', $('body').data('allpage')) : '';
 
-				win[global].uiScrollingGoto({
+				$ui.uiScrollingGoto({
 					goto: $('body').data('page')
 				});
 			} 
@@ -6426,7 +5692,7 @@ var mConsole = (function(){
 				$('body').data('page', $('body').data('page') - 1);
 				$('body').data('page') < 0 ? $('body').data('page', 0) : '';
 
-				win[global].uiScrollingGoto({
+				$ui.uiScrollingGoto({
 					goto: $('body').data('page')
 				});
 			} 
@@ -6439,12 +5705,12 @@ var mConsole = (function(){
 		// 	tcs = $(win).scrollTop();
 		// });
 		// $('.ui-pagescroll-item.n1').on('touchcancel touchend', function(e){
-		// 	if (win[global].browser.mobile) {
+		// 	if ($ui.browser.mobile) {
 		// 		if ($(win).scrollTop() < $(win).outerHeight() && tcs < $(win).scrollTop()) {
 		// 			clearTimeout(timer_scroll2);
 		// 			timer_scroll2 = setTimeout(function(){
 		// 				if ($(win).scrollTop() <  $(win).outerHeight() + ($(win).outerHeight() / 2) ) {
-		// 					win[global].uiScroll({ value:$(win).outerHeight(), speed:300  })
+		// 					$ui.uiScroll({ value:$(win).outerHeight(), speed:300  })
 		// 				}
 		// 			},0);
 					
@@ -6478,13 +5744,13 @@ var mConsole = (function(){
 			// _scrollPow = w_h : 
 			_scrollPow = opt.scrollpow;
 			console.log(opt.scrollpow)
-			!win[global].uiScrolling.ing ? _smoothScroll(e) : '';
+			!$ui.uiScrolling.ing ? _smoothScroll(e) : '';
 		}
 		function _smoothScroll (e) {
 			var move_time = mTime,
 				delta = -Math.max(-1, Math.min(1, e.originalEvent.wheelDelta));
 
-			win[global].uiScrollingAct({
+			$ui.uiScrollingAct({
 				delta: delta,
 				move_time: move_time,
 				scrollPow:_scrollPow,
@@ -6502,7 +5768,7 @@ var mConsole = (function(){
 			scrollTop: $('.ui-pagescroll-item').eq(n).position().top
 		}, 400, 'easeOutQuad', function(){
 			setTimeout(function(){
-				win[global].uiScrolling.ing = false;
+				$ui.uiScrolling.ing = false;
 			},100);
 		});
 		$('body').attr('scrollpage', n);
@@ -6518,7 +5784,7 @@ var mConsole = (function(){
 			s,
 			current;
 
-		win[global].uiScrolling.ing = true;		
+		$ui.uiScrolling.ing = true;		
 		s = Math.round( _tgScroll/ _scrollPow) * _scrollPow;
 		s < 0 ? s = 0 : '';
 		_goto !== undefined ? s = _scrollPow * _goto : '';
@@ -6535,7 +5801,7 @@ var mConsole = (function(){
 		}, _move_time, 'easeOutQuad', function(){
 			
 			setTimeout(function(){
-				win[global].uiScrolling.ing = false;
+				$ui.uiScrolling.ing = false;
 			},100);
 		});
 
@@ -6546,8 +5812,8 @@ var mConsole = (function(){
 		$('body').data('scrolling', 'no');
 	}
 	function createUiScrollingSwitch(){
-		$('body').data('scrolling') === 'yes' ? win[global].uiScrollingCancel(): '';
-		$('body').data('scrolling') === 'no' ? win[global].uiScrolling(): '';
+		$('body').data('scrolling') === 'yes' ? $ui.uiScrollingCancel(): '';
+		$('body').data('scrolling') === 'no' ? $ui.uiScrolling(): '';
 	}
 
 	/* 참고용
@@ -6574,7 +5840,7 @@ var mConsole = (function(){
 	})
 	*/
 
-	win[global].modalOption = {
+	$ui.modalOption = {
 		type : 'alert',
 		btn_confirm_yes : null,
 		btn_confirm_no : null,
@@ -6584,9 +5850,9 @@ var mConsole = (function(){
 		zindex : null,
 		state : '알림'
 	}
-	win[global].modal = {
+	$ui.modal = {
 		system: function (opt){
-			var opt = $.extend(true, {}, win[global].modalOption, opt),
+			var opt = $.extend(true, {}, $ui.modalOption, opt),
 				btn_confirm_yes = opt.btn_confirm_yes,
 				btn_confirm_no = opt.btn_confirm_no,
 				btn_alert = opt.btn_alert,

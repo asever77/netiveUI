@@ -75,8 +75,17 @@
 				<h2 class="h2">$plugins.uiModal</h2>
 				<p>기본적인 모달 팝업 세팅 및 실행</p>
 				<div class="btn-wrap mgt-s txt-l">
-					<button type="button" class="btn-base" aria-haspopup="true" id="modalOpen1"><span>Ajax 기본 팝업(center)</span></button>
-					<button type="button" class="btn-base" aria-haspopup="true" id="modalOpen2"><span>Ajax 기본 팝업(scroll)</span></button>
+					<button type="button" class="btn-base" onclick="
+						$plugins.uiModal({ id:'modal_sample1', link:'/html/modal/modalSample1.html', callback:$plugins.page.callback });
+					"><span>Ajax 기본 팝업(center)</span></button>
+
+					<button type="button" class="btn-base" onclick="
+						$plugins.uiModal({ id:'modal_sample2', link:'/html/modal/modalSample2.html', callback:$plugins.page.callback, width:700 });
+					"><span>Ajax 기본 팝업(scroll)</span></button>
+
+					<button type="button" class="btn-base" onclick="
+						$plugins.uiModal({ id:'modal_sample1', link:'/html/modal/modalSample1.html', callback:$plugins.page.callback, open:false });
+					"><span>Ajax 기본 팝업(wait)</span></button>
 
 				</div>
 <div class="box-code">

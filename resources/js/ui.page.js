@@ -168,7 +168,7 @@
         $plugins.uiCodinglist({
             id: 'uiCodinglist',
             url: '/resources/data/codinglist.json',
-            type: 'json'
+            type: 'text'
         });
     }
 
