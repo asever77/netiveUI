@@ -3148,6 +3148,8 @@
 		}
 	}
 
+
+
 	/* ------------------------------------------------------------------------
 	 * slot machine v1.0 
 	 * date : 2018-04-21
@@ -3166,13 +3168,6 @@
 	$ui.uiSlot.play = {}
 	function createUiSlot(opt){
 		if (opt === undefined) {
-			$ui.uiConsoleGuide([
-				global + ".uiSlot({ id:'아이디명', auto:true/false, single:true/false });",
-				"- id: #을 제외한 아이디명만 입력(!필수)",
-				"- auto: true일 경우 자동실행, (!선택 - 기본값 false)",
-				"- single: true일 경우 하나만 노출, false일 경우 걸쳐보이는...(!선택 - 기본값 true)",
-				"※  슬롯머신효과"
-			]);
 			return false;
 		}
 		
@@ -3760,11 +3755,6 @@
 	function createUiSlide(opt) {
 		//option guide
 		if (opt === undefined) {
-			$ui.uiConsoleGuide([
-				global + ".uiSlide({ id:'name', current:0, multi:false, loop:true, items:1, eff:'slide', dot:true, nav:true, auto:true, play:false, gauge:true, speed:300, autTime:3000, margin:0, mouseDrag:true, touchDrag:true });",
-				"- id [String]: #을 제외한 아이디명만 입력 (!필수)",
-				"※ 슬라이드"
-			]);
 			return false;
 		}
 		
@@ -4536,9 +4526,15 @@
 
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * count number v1.0 
-	 * date : 2018-04-21
+	* name :  count number
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiCountStep({ option });
+	* - $plugins.uiCountSlide({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {	
 		uiCountStep: function (opt) {
@@ -5257,9 +5253,14 @@
 		}
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * screen capture v1.0 
-	 * date : 2018-04-21
+	* name : screen capture
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiCapture({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiCapture: function (opt) {
@@ -5268,12 +5269,6 @@
 	});
 	function createUiCapture(opt){
 		if (opt === undefined) {
-			$ui.uiConsoleGuide([
-				global + ".uiCapture({ id:'name' });",
-				"- id [String]: #을 제외한 아이디명만 입력 (!필수)",
-				"- 필수 라이브러리 : canvas-toBlob.js, FileSaver.js, html2canvas.js",
-				"※ 선택 영역 캡쳐하기"
-			]);
 			return false;
 		}
 
