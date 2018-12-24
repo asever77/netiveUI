@@ -86,7 +86,110 @@
 					
 					<button type="button" class="btn-base ui-add">추가</button>
 				</div>
+				<h2 class="h2">Base Html Markup</h2>
+<div class="box-code">
+<pre>
+<code>
+&lt;div class="ui-bricklist" role="list" id="uiBrickList1"&gt;
+	&lt;ul class="ui-bricklist-wrap"&gt;
+		&lt;li class="ui-bricklist-item" role="listitem"&gt;
+			&lt;div&gt;&lt;img src="/resources/img/dummy/@iu1.jpg" alt=""&gt;&lt;/div&gt;
+			&lt;strong&gt;title&lt;/strong&gt;
+		&lt;/li&gt;
+		...
+	&lt;/ul&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
 
+				<h2 class="h2">$plugins.uiBrickList</h2>
+<div class="box-code">
+<pre>
+<code>
+$plugins<span class="na">.uiBrickList</span>({ <span class="s">
+	id:'uiBrickList1', 
+	margin:10, 
+	response:true </span> 
+});
+</code>
+</pre>
+</div>
+				<table class="tbl-base type-option">
+					<caption>옵션 설명</caption>
+					<colgroup>
+						<col class="n1">
+						<col class="n2">
+						<col class="n3">
+						<col class="n4">
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">옵션명</th>
+							<th scope="col">유형</th>
+							<th scope="col">기본</th>
+							<th scope="col">설명</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="nec">
+							<th scope="row">id:</th>
+							<td>[string]</td>
+							<td>'name'</td>
+							<td>(필수) ui-bricklist의 아이디명 기입</td>
+						</tr>
+						<tr>
+							<th scope="row">margin:</th>
+							<td>[number]</td>
+							<td>10</td>
+							<td>item간의 간격</td>
+						</tr>
+						<tr>
+							<th scope="row">response:</th>
+							<td>[boolean]</td>
+							<td>true</td>
+							<td>resize 시 재구성여부</td>
+						</tr>
+
+					</tbody>
+				</table>
+
+				<h2 class="h2">$plugins.uiBrickListAdd</h2>
+				<p>동적으로 추가되는 리스트가 있을 경우 사용</p>
+<div class="box-code">
+<pre>
+<code>
+$plugins<span class="na">.uiBrickListAdd</span>({ <span class="s">
+	id:'uiBrickList1'</span> 
+});
+</code>
+</pre>
+</div>			
+				<table class="tbl-base type-option">
+					<caption>옵션 설명</caption>
+					<colgroup>
+						<col class="n1">
+						<col class="n2">
+						<col class="n3">
+						<col class="n4">
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">옵션명</th>
+							<th scope="col">유형</th>
+							<th scope="col">기본</th>
+							<th scope="col">설명</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="nec">
+							<th scope="row">id:</th>
+							<td>[string]</td>
+							<td>'name'</td>
+							<td>(필수) ui-bricklist의 아이디명 기입</td>
+						</tr>
+					</tbody>
+				</table>
 			</main>
 		</div>
 		<footer class="base-footer" id="baseFooter"></footer>

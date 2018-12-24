@@ -23,6 +23,7 @@
             function headerChange(v){
                 v > 0 ? $('body').addClass('type-mini'): $('body').removeClass('type-mini');
             }
+            $plugins.uiCaption();
         },
         
         header: function(){

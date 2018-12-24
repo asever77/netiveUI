@@ -2447,8 +2447,8 @@
 			fix = !!$tab.data('tabnum'),
 			ps_l = [],
 			i, 
-			_class, 
-			_attr, 
+			cls, 
+			attrs, 
 			is_current, 
 			id_pnl, 
 			id_btn, 
@@ -2492,8 +2492,8 @@
 			var tabn = fix ? $btn.eq(i).data('tabnum') : i;
 
 			is_current = current === tabn;
-			_class = is_current ? 'addClass' : 'removeClass';
-			_attr = is_current ? 'removeAttr' : 'attr';
+			cls = is_current ? 'addClass' : 'removeClass';
+			attrs = is_current ? 'removeAttr' : 'attr';
 			_$btn = $btn.eq(i);
 			_$pnl = $pnl.eq(i);
 
@@ -2504,7 +2504,7 @@
 			id_btn = _$btn.attr('id');
 			id_pnl = _$pnl.attr('id');
 
-			_$btn.attr('aria-controls', id_pnl)[_attr]('tabindex', -1)[_class]('selected');
+			_$btn.attr('aria-controls', id_pnl)[attrs]('tabindex', -1)[cls]('selected');
 
 			if (unres === false) {
 				_$btn.attr('aria-controls', _$pnl.attr('id'));
@@ -2605,17 +2605,18 @@
 			unres = opt.unres,
 			callback = opt.callback;
 
-		$btn.attr('aria-selected', false).attr('tabindex', -1).removeClass('selected')
-			.eq(current).attr('aria-selected', true).removeAttr('tabindex').addClass('selected').focus();
-		
-		$ui.uiScroll({ 
+		$btn.find('b.hide').remove();
+		$btn.eq(current).append('<b class="hide">선택됨</b>');
+		$btn.removeClass('selected').eq(current).addClass('selected').focus();
+		$plugins.uiScroll({ 
 			value: ps_l[current], 
-			target: $btns, 
-			speed: 200, 
+			target: $btn.parent(), 
+			speed: 300, 
 			ps: 'left' 
 		});
+
 		if (unres === false) {
-			$pnl.removeClass('selected').eq(current).addClass('selected');
+			$pnl.attr('aria-hidden', true).removeClass('selected').attr('tabindex', '-1').eq(current).addClass('selected').attr('aria-hidden', false).removeAttr('tabindex');
 		}
 
 		!!callback ? callback(opt) : '';
@@ -2623,10 +2624,13 @@
 
 
 
-
 	/* ------------------------------------------------------------------------
-	 * tooltip v2.0 
-	 * date : 2018-10-06
+	* name : tooltip
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiTooltip();
+	* - $plugins.uiTooltip({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiTooltip: function (opt) {
@@ -2655,12 +2659,12 @@
 			visible ? tooltipSet(id) : tooltipHide();
 		}
 
-		$btn
-			.on('click', function(e){
+		$btn.on('click', function(e){
 				e.preventDefault();
 				tooltipSet($(this).attr('aria-describedby'));
 			})
-			.off('mouseover.ui touchstart.ui focus.ui').on('mouseover.ui touchstart.ui focus.ui', function(e){
+			.off('mouseover.ui touchstart.ui focus.ui')
+			.on('mouseover.ui touchstart.ui focus.ui', function(e){
 				tooltipSet($(this).attr('aria-describedby'));
 			})
 			
@@ -2732,7 +2736,6 @@
 			ps ? cursorCls = 'ps-l' : '';
 			ps ? ps_l = off_l : '';
 			ps ? psl = true : '';
-
 			pst ? cursorCls += 'b' : cursorCls += 't';
 
 			if (!!$id.attr('modal')) {
@@ -2757,15 +2760,18 @@
 		}
 	}
 
+
 	/* ------------------------------------------------------------------------
-	 * table 
-	 * - table scroll v2.0
-	 * - table caption v1.0 
-	 * date : 2018-04-21
+	* name : table scroll & caption
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiCaption();
+	* - $plugins.uiTblSroll({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
-		uiTblScroll: function () {
-			return createUiTblScroll();
+		uiTblScroll: function (opt) {
+			return createUiTblScroll(opt);
 		},
 		uiCaption: function () {
 			return createUiCaption();
@@ -2790,6 +2796,9 @@
 			clone_tbl = '';
 
 		for (i = 0; i < len; i++) {
+			$tbl.eq(i).find('.tbl-scroll-thead').remove();
+			$tbl.eq(i).find('.tbl-scroll-tbody').removeAttr('style');
+
 			coln = !!$tbl.eq(i).data('col') ? $tbl.eq(i).data('col') : coln,
 			$tbody = $tbl.eq(i).find('.tbl-scroll-tbody');
 			clone_colgroup = $tbody.find('colgroup').clone();
@@ -2799,15 +2808,14 @@
 			clone_tbl += '<table class="tbl-scroll-thead txt-c" aria-hidden="true" tabindex="-1">';
 			clone_tbl += '</table>';
 
-			$tbl.prepend(clone_tbl);
-			$tbl.find('.tbl-scroll-thead').append(clone_colgroup);
-			$tbl.find('.tbl-scroll-thead').append(clone_thead);
+			$tbl.eq(i).prepend(clone_tbl);
+			clone_tbl = '';
+			$tbl.eq(i).find('.tbl-scroll-thead').append(clone_colgroup);
+			$tbl.eq(i).find('.tbl-scroll-thead').append(clone_thead);
 			$thead = $tbl.eq(i).find('.tbl-scroll-thead');
-
 			$thead.find('th').each(function(){
 				$(this).replaceWith('<td>'+ $(this).text() +'</td>');
 			});
-
 
 			if ($tbody.find('tbody tr').length > coln) {
 				for (var j = 0; j < coln; j++) {
@@ -2847,9 +2855,13 @@
 		})
 	}
 
+
 	/* ------------------------------------------------------------------------
-	 * object floating v1.0 
-	 * date : 2018-04-21
+	* name : object floating
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiFloating({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiFloating: function (opt) {
@@ -2903,10 +2915,15 @@
 				lb = 0, 
 				_lb;
 			
+			$idwrap.removeAttr('style');
 			$id.data('fixbottom', th);
-			if ($add.data('fixbottom') === undefined) {
-				$add.data('fixbottom', th + $addwrap.outerHeight());
-			} 
+
+			if (!!add) {
+				if ($add.data('fixbottom') === undefined) {
+					$add.data('fixbottom', th + $addwrap.outerHeight());
+				}
+			}
+
 			!!add ? lh = lh + Number($add.data('fixtop') === undefined ? 0 : $add.data('fixtop')) : '';
 			!!callback ? callback({ id:id, scrolltop:st, boundaryline: tt - lh }) : '';
 			$id.css('height', th);
@@ -2956,13 +2973,6 @@
 					if (tt + th + _lb - wh <= st) {
 						$id.addClass(c);
 						$idwrap.css('bottom', _lb);
-						// if (lt !== 0) {
-						// 	if (dh - (lt + wh) < st) {
-						// 		$idwrap.css({ position: 'fixed', bottom:'auto' , top: (wh - th) - Math.abs((wh + lt) - (dh - st)) , zIndex: 9999 });
-						// 	} else{
-						// 		$idwrap.removeAttr('style');
-						// 	}
-						// }
 					} else {
 						$id.removeClass(c);
 						$idwrap.removeAttr('style');
@@ -2972,20 +2982,15 @@
 		}
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * Brick list v1.0 
-	 * $plugins.uibricklist
-	 * date : 2018-04-21
-	 * option
-	 * - id: 'name' [string] 
-	 * - margin: 0 [number] / 아이템간의 간격 마진값
-	 * - response: true or false [boolean] / resize 시 재구성여부 
-	 * 
-	 * Brick list v1.0 
-	 * $plugins.uibricklistAdd
-	 * date : 2018-04-21
-	 * option
-	 * - id: 'name' [string] 
+	* name : Brick list
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uibricklist({ option });
+	* - $plugins.uibricklistAdd({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiBrickList: function (opt) {
@@ -3045,7 +3050,6 @@
 			$ui.uiBrickListAdd({ id: opt.id });
 		},200);
 		
-		
 		if (re) {
 			$(win).resize(function(){
 				clearTimeout(timer);
@@ -3094,9 +3098,14 @@
 		},300);
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * print v1.0 
-	 * date : 2018-04-21
+	* name : print
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiPrint({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiPrint: function (opt) {
@@ -3106,15 +3115,37 @@
 	function createUiPrint(opt) {
 		var $print = $('#' + opt.id),
 			clone = $print.clone(),
-			html = '<div class="base-print"></div>';
+			html = '';
 
-		$('body').append(html);
-		$('.base-print').append(clone);
+		html += '<div class="base-print" id="basePrint"></div>';
+		console.log(self !== top);
+		if (self !== top) {
+			parent.$('body').append(html);
+			parent.$('.base-print').append(clone);
 
-		win.print();
-		setTimeout(function(){
-			$('.base-print').remove();
-		},0);
+			if ($global.uiCheck.ie)	{
+				var webBrowser ='<OBJECT ID="previewWeb" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+			
+				doc.body.insertAdjacentHTML('beforeEnd', webBrowser);
+				previewWeb.ExecWB(7,1);
+				previewWeb.outerHTML='';
+			} else {
+				win.parent.print();
+			}
+
+			setTimeout(function () {
+				parent.$('.base-print').remove();
+			}, 0);
+		} else {
+			$('body').addClass('print-ing').append(html);
+			$('.base-print').append(clone);
+			win.print();
+
+			setTimeout(function () {
+				$('body').removeClass('print-ing')
+				$('.base-print').remove();
+			}, 0);
+		}
 	}
 
 	/* ------------------------------------------------------------------------

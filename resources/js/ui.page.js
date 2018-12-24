@@ -27,8 +27,7 @@
             "/resources/img/dummy/@iu7.jpg"
             ]
         function randomNum(){
-            var n = Math.floor(Math.random() * 10) + 1;
-             console.log(n);
+            var n = Math.floor(Math.random() * 10);
             return n;
         }
 
@@ -532,11 +531,11 @@
         $plugins.uiTab({ id:'exeTab4', current:0, callback: tabCallback2  });
         
         function tabCallback(v){
-            console.log(v)
+            console.log(v);
         }
         function tabCallback2(v){
             $('#'+ v.id).find('.ui-tab-tit').text($('#'+ v.id).find('.ui-tab-btn').eq(v.current).text());
-            //console.log(v)
+            console.log(v);
         }
         
         $('.ui-tab-btns').on('scroll', function(){
@@ -546,6 +545,7 @@
 
     $plugins.page.table = function(){
         $plugins.uiTblScroll();
+        $plugins.uiTblScroll({ selector:'#uiTblSroll1',coln:4 });
         $plugins.uiDatePicker();
         $plugins.uiSelection();
         $plugins.uiSelect();
