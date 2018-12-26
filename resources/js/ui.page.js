@@ -295,17 +295,35 @@
         //range slider
         $plugins.uiSlider({ 
             id:"uiSlider", 
-            vertical:false, reverse:false, range:true, 
-            now:[1500, 2500], step:10, min:1000, max:6000, 
-            tooltip:true, unit:'만원', txt_s:'이하', txt_e:'이상', 
-            acc:true, callback:sliderCallback
+            vertical:false, 
+            reverse:false, 
+            range:true, 
+            now:[1500, 2500], 
+            step:10, 
+            min:1000, 
+            max:6000, 
+            tooltip:true, 
+            unit:'만원', 
+            txt_s:'이하', 
+            txt_e:'이상', 
+            acc:true, 
+            callback:sliderCallback
         });
         $plugins.uiSlider({ 
             id:"uiSlider2", 
-            vertical:false, reverse:true, range:true, 
-            now:[1500, 2500], step:10, min:1000, max:6000, 
-            tooltip:true, unit:'만원', txt_s:'이하', txt_e:'이상', 
-            acc:true, callback:sliderCallback
+            vertical:false, 
+            reverse:true, 
+            range:true, 
+            now:[1500, 2500], 
+            step:10, 
+            min:1000, 
+            max:6000, 
+            tooltip:true,
+            unit:'달러', 
+            txt_s:'', 
+            txt_e:'', 
+            acc:true, 
+            callback:sliderCallback
         });
         $plugins.uiSlider({ 
             id:"uiSlider3", 

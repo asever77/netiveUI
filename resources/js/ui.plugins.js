@@ -3342,17 +3342,41 @@
 		},10);
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * slider v1.0 
-	 * date : 2018-04-21
+	* name : slider
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiSlider({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiSlider: function (opt) {
 			return createUiSlider(opt);
 		}
 	});
+	$ui.uiSlider.option = {
+		vertical: false, //가로,세로형
+		range: false, //범위슬라이더
+		reverse : false, //역순
+		acc: false, //select 연결
+		stepname: false,
+		callback: false,
+
+		tooltip: false,
+		unit: '',
+		txt_s:'',
+		txt_e:'',
+
+		now: [0],
+		step: 10,
+		min: 0,
+		max: 100,
+	}
 	function createUiSlider(opt) {
-		var $slider = $('#' + opt.id),
+		var opt = $.extend(true, {}, $ui.uiSlider.option, opt),
+			$slider = $('#' + opt.id),
 			$wrap = $slider.find('.ui-slider-wrap'),
 			$divwrap = $slider.find('.ui-slider-divwrap'),
 			$bg = $wrap.find('.ui-slider-bg'),
@@ -3360,11 +3384,11 @@
 			$btn_s = $wrap.find('.ui-slider-btn-s'),
 			$btn_e = $wrap.find('.ui-slider-btn-e'),
 			$bar = $bg.find('.ui-slider-bar'),
-			vertical = (opt.vertical === undefined) ? false : opt.vertical,//가로세로 type
-			range = (opt.range === undefined) ? false : opt.range,//range type
-			rev = (opt.reverse === undefined) ? false : opt.reverse,//역순
-			stepname = (opt.stepname === undefined) ? false : opt.stepname,
-			acc = (opt.acc === undefined) ? false : opt.acc;//select 연결
+			vertical = opt.vertical,
+			range = opt.range,
+			rev = opt.reverse,
+			stepname = opt.stepname,
+			acc = opt.acc;//select 연결
 
 		rev ? $slider.addClass('type-reverse') : $slider.removeClass('type-reverse');
 		vertical ? $slider.addClass('type-vertical') : $slider.removeClass('type-vertical');
@@ -3373,11 +3397,14 @@
 			id = opt.id,
 			min = opt.min,
 			max = opt.max,
-			tooltip = (opt.txt_e === undefined) ? false : opt.tooltip,
-			callback = (opt.callback === undefined) ? false : opt.callback,
-			unit = (opt.unit === undefined) ? '' : opt.unit,
-			txt_e = (opt.txt_e === undefined) ? '' : opt.txt_e,
-			txt_s = (opt.txt_s === undefined) ? '' : opt.txt_s,
+			tooltip = opt.tooltip,
+			callback = opt.callback,
+			unit = opt.unit,
+			txt_e = opt.txt_e,
+			txt_s = opt.txt_s,
+			txt_e2 = '', 
+			txt_s2 = '',
+
 			slider_w = !vertical ? $bg.outerWidth() : $bg.outerHeight(),
 			step_w = 100 / step,
 			unit_sum = (max - min) / step,
@@ -3386,8 +3413,6 @@
 			per_min = ((now_s - min) / (max - min)) * 100,
 			per_max = ((now_e - min) / (max - min)) * 100,
 			div_w = Math.ceil(slider_w / step),
-			maxlimit = 100,
-			minlimit = 0,
 			lmt_max,
 			lmt_min,
 			now_sum = [],
@@ -3434,14 +3459,15 @@
 
 		//graph step & select option setting
 		for (var i = 0; i < step + 1; i++) {
-			txt_e = (i === step) ? opt.txt_e : '';
-			txt_s = (i === 0) ? opt.txt_s : '';
+			txt_e2 = (i === step) ? opt.txt_e : '';
+			txt_s2 = (i === 0) ? opt.txt_s : '';
+			console.log('txt_s2:' + txt_s2)
 			txt_val = parseInt(min + (unit_sum * i));
 			now_sum.push(txt_val);
 			if (stepname) {
 				$divwrap.append('<span class="ui-slider-div n'+ i +'" style="'+ dir +':' + step_w * i + '%; '+ siz +':' + div_w + 'px; margin-'+ dir +':' + (div_w / 2) * -1 + 'px"><em>' + stepname[i] + '</em></div>');
 			} else {
-				$divwrap.append('<span class="ui-slider-div n'+ i +'" style="'+ dir +':' + step_w * i + '%; '+ siz +':' + div_w + 'px; margin-'+ dir +':' + (div_w / 2) * -1 + 'px"><em>' + txt_val + ' ' + txt_e + '' + txt_s + '</em></div>');
+				$divwrap.append('<span class="ui-slider-div n'+ i +'" style="'+ dir +':' + step_w * i + '%; '+ siz +':' + div_w + 'px; margin-'+ dir +':' + (div_w / 2) * -1 + 'px"><em>' + txt_val + ' ' + txt_e2 + '' + txt_s2 + '</em></div>');
 			}
 			
 			sliderstep.push(parseInt(min + (unit_sum * i)));
@@ -3466,19 +3492,19 @@
 			} else {
 				if (acc) {
 					if (now_s === txt_val) {
-						$sel_s.append('<option value="' + txt_val + '" selected>' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_s.append('<option value="' + txt_val + '" selected>' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					} else if (now_e < txt_val) {
-						$sel_s.append('<option value="' + txt_val + '" disabled>' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_s.append('<option value="' + txt_val + '" disabled>' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					} else {
-						$sel_s.append('<option value="' + txt_val + '">' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_s.append('<option value="' + txt_val + '">' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					}
 					
 					if (now_e === txt_val && range) {
-						$sel_e.append('<option value="' + txt_val + '" selected>' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_e.append('<option value="' + txt_val + '" selected>' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					} else if (now_s > txt_val && range) {
-						$sel_e.append('<option value="' + txt_val + '" disabled>' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_e.append('<option value="' + txt_val + '" disabled>' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					} else if (range){
-						$sel_e.append('<option value="' + txt_val + '">' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_e.append('<option value="' + txt_val + '">' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					}
 				}
 			}
@@ -3707,9 +3733,11 @@
 				n_max = opt.now_2,
 				in_s = (per_min === 0) ? txt_s : '',
 				in_e = (per_max === 100) ? txt_e : '',
-				in_se = (per_max === 0) ? txt_s : (per_min === 100) ? txt_e : '';
+				in_se = (per_min === 0) ? txt_s : (per_max === 100) ? txt_e : '';
 
 			!range ? in_e = (per_min === 100) ? txt_e : '' : '';
+
+			console.log(per_min === 0, txt_s, txt_e)
 
 			if (per_min === 0 && per_max === 100) {
 				$tooltip.text('전체');
