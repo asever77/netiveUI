@@ -54,19 +54,11 @@ p{color:#333}
 
 
 /* main */
-.page-main{background:#191919;
-animation-duration:5s;
-animation-name: bgani;
-}
-@keyframes bgani {
-  from {
-    background:#dbdbdb;
-  }
-
-  to {
-    background:#191919;
-  }
-}
+.page-main{background:#191919;}
+.main-logo-wrap{text-align: left; width:240px; margin:0 auto 20px;}
+.main-intro .main-logo-wrap h1{text-align: left;}
+.main-logo-wrap p{font-size:14px; color:#929292;}
+.main-logo-wrap b{font-size:18px; color:#fff;}
 .page-main .base-main{padding:0; height:100%;}
 .page-main a{color:#dbdbdb; font-size:18px; display:inline-block; margin:20px 15px; font-weight: 300; text-decoration:none; letter-spacing: 0}
 .main-intro{position: absolute; top:50%; left:50%; width:500px; margin:-150px 0 0 -250px; text-align: center}
