@@ -32,6 +32,17 @@
 					<h1 class="h1" id="uiPageTit"></h1>
 				</div>
 
+				<h2 class="h2">$plugins.uiLoading</h2>
+<div class="box-code">
+<pre>
+<code>
+$plugins<span class="na">.uiLoading</span>({ <span class="s">visible:true</span> });
+$plugins<span class="na">.uiLoading</span>({ <span class="s">visible:false</span> });
+</code>
+</pre>
+</div>
+
+				<button type="button" class="btn-base" onclick="$plugins.uiLoading({ visible:true });"><span>로딩중 실행</span></button>
 			</main>
 		</div>
 		<footer class="base-footer" id="baseFooter"></footer>
@@ -46,8 +57,7 @@
 			$(doc).ready(function(){
 				
 				console.log('page ready after')
-				$plugins.page.jsonmenu();
-
+				$plugins.uiLoading({ visible:true });
 			});
 		})(jQuery, window, document);
 	</script>

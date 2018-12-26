@@ -1089,7 +1089,8 @@
 			
 			$('#' + iname).on('load', function(){
 				$('#' + opt.id).data('iframeload', true);
-				$ui.callback !== undefined ? frames[iname].$plugins.callback.modal(opt.id) : '';
+				console.log($ui.callback)
+				//$ui.callback !== undefined ? frames[iname].$ui.callback.modal(opt.id) : '';
 				!!icallback ? icallback() : '';
 
 				/* 2018-11-26 : IOS iframe fixed bug */
@@ -1245,6 +1246,15 @@
 
 			$modal.siblings('.ui-modal').attr('aria-hidden', true);
 			
+			switch(ps) {
+				case 'top' : 
+					$modal.addClass('ps-top');
+					break;
+				case 'bottom' : 
+					$modal.addClass('ps-bottom');
+					break;
+			}
+
 			//single or multi modal
 			layN = $('.ui-modal[opened="true"]').length;
 			opt.zindex !== undefined ? opt.zindex !== null ? zidx = opt.zindex : zidx = layN : zidx = layN;
@@ -1255,12 +1265,21 @@
 
 			//모달생성 설정 
 			console.log(ps);
-			$modal.css({ 
-				display: 'block', 
-				top: is_mobile ? '100%' : '50%', 
-				opacity: 0
-			});
-			
+			switch(ps) {
+				case 'center':
+					$modal.css({ 
+						display: 'block', 
+						top: is_mobile ? '100%' : '50%', 
+						opacity: 0
+					});
+					break;
+				case 'top':
+					$modal.css({ 
+						display: 'block', 
+						opacity: 0
+					});
+					break;
+			}
 			
 			modalApp({ resize: false });
 		}
@@ -1292,7 +1311,6 @@
 			$modal.css({ height: 'auto' });
 			//!full ? $modal.css({ height: 'auto' }) : '';
 			//modal height 100 작거나 iframeload 전 일때 재 실행, resize 옵션 false 일경우
-	
 			if ($modalCont.outerHeight() < 20 && $modal.data('iframeload') === undefined && !v.resize ) {
 				if (re_num === 0) {
 					$ui.uiLoading({ visible: true });
@@ -1405,13 +1423,25 @@
 					//desktop
 					$modal.css({
 						opacity: v.resize ? 1 : 0,
-						top: '50%',
 						left: '50%',
 						width: w,
 						height: system_words ? 'auto' : h,
-						marginTop: (h / 2) * -1,
 						marginLeft: is_iframe ? (iw / 2) * -1 : (w / 2) * -1
 					});
+					switch(ps) {
+						case 'center':
+							$modal.css({
+								top: '50%',
+								marginTop: (h / 2) * -1,
+							});
+							break;
+						case 'top':
+							$modal.css({
+								top: 0,
+								marginTop: modalSpace,
+							});
+							break;
+					}
 				}
 
 				$ui.uiLoading({ visible: false });
@@ -1457,8 +1487,12 @@
 							modalCompleted();
 						});
 				} else {
-					$modal.css('opacity', 1);
-					modalCompleted();
+					//$modal.css('opacity', 1);
+					$modal.stop().animate({
+						opacity: 1
+					}, 150, function(){
+						modalCompleted();
+					});
 				}
 			}
 			function modalCompleted() {
@@ -1737,6 +1771,10 @@
 					marginTop:0
 				}, 450, 'easeInOutQuart', closed);
 			} else {
+				switch(ps) {
+					case 'top':
+						$modal.css('top','-10%');
+				}
 				$modal.attr('aria-hidden', true).stop().animate({
 					opacity: 0
 				}, 200, 'easeOutQuart', closed);
@@ -4837,7 +4875,6 @@
 			!!array_d3.length ? array_d3.push(html_d3) : '';
 			html_d3 = '';
 
-			console.log(array_d2,array_d3);
 			menu_callback({ 
 				d1: html_d1, 
 				d2: array_d2, 
@@ -5487,6 +5524,8 @@
 		});
 	}
 
+
+
 	/* ------------------------------------------------------------------------
 	 * loading v1.0 
 	 * date : 2018-06-02
@@ -5499,7 +5538,7 @@
 	function createUiLoading(opt) {
 		var loading = '',
 			$selector = opt.id === undefined ? $('body') : opt.id === '' ? $('body') : typeof opt.id === 'string' ? $('#' + opt.id) : opt.id,
-			txt = opt.txt === undefined ? '서비스 처리중입니다.' : opt.txt;
+			txt = opt.txt === undefined ? 'Loading …' : opt.txt;
 
 		opt.id === undefined ?
 			loading += '<div class="ui-loading">':
@@ -5513,10 +5552,14 @@
 		opt.visible === true ? showLoading() : hideLoading();
 		
 		function showLoading(){
-			$selector.prepend(loading)
+			$selector.prepend(loading);
+			$selector.find('.ui-loading').animate({ 'opacity':1 });
 		}
 		function hideLoading(){
-			$('.ui-loading').remove();
+			$selector.find('.ui-loading').animate({ 'opacity':0 }, function(){
+				$('.ui-loading').remove();
+			});
+			
 		}
 	}	
 

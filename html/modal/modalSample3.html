@@ -14,33 +14,23 @@
 
 	<title>CODE GHOST</title>
 	<link rel="stylesheet" href="/resources/css/ui.base.css">
-
-	
-	
-	
 </head>
 
 <body class="base-iframe">
-	<div class="base-skip" id="baseSkip"></div>
-	<div class="base-layer" id="baseLayer"></div>
-	
-	<div class="base-wrap" id="baseWrap">
-        
-        <!-- modal html -->
-        <header class="ui-modal-head">
-            <h1 class="ui-modal-tit">제목2</h1>
-        </header>
-        <div class="ui-modal-cont">
-            <p>기본적인 모달 레이어 팝업</p>
-            <p>width, height 값은 콘텐츠 내용에 따라 자동으로 설정</p>
-            <p>특정 크기 값을 줄수도 있음.</p>
-            <div style="width:100%; height:1000px; background:lightsteelblue">스크롤 생성</div>
-        </div>
-        <div class="ui-modal-foot">
-            <button type="button" class="btn-base" onclick="parent.$plugins.uiModalClose({ id:'modal_sample2', callback:function(v){ console.log(v); } });">확인</button>
-        </div>
-        <button type="button" class="ui-modal-close btn-close" aria-label="close" >닫기</button>
-        <!-- //modal html -->
-
+    <!-- modal html -->
+    <header class="ui-modal-header">
+        <h1 class="ui-modal-tit">제목2</h1>
+    </header>
+    <div class="ui-modal-cont">
+        <p>기본적인 모달 레이어 팝업</p>
+        <p>width, height 값은 콘텐츠 내용에 따라 자동으로 설정</p>
+        <p>특정 크기 값을 줄수도 있음.</p>
+       
     </div>
+    <div class="ui-modal-footer">
+        <button type="button" class="btn-base" onclick="parent.$plugins.uiModalClose({ id:'modal_sample3', callback:function(v){ console.log(v); } });">확인</button>
+    </div>
+    <button type="button" class="ui-modal-close btn-close" aria-label="close" >닫기</button>
+    <!-- //modal html -->
+
 </body>
