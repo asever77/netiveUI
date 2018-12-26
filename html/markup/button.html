@@ -31,8 +31,146 @@
 				<div class="tit-wrap">
 					<h1 class="h1" id="uiPageTit">버튼</h1>
 				</div>
+				<h2>Button Base</h2>
+				<p>	
+					기본적으로 <code>&lt;btn-wrap&gt; &lt;/btn-wrap&gt;</code>로 버튼요소를 감싸줍니다.  버튼태그로는 <code>&lt;a&gt;</code>, <code>&lt;button&gt;</code> 태그를 사용 하며,
+					<br><code>&lt;a&gt;</code>는 링크요소버튼으로 'target="" ', 'title="" '속성을 함께 사용하고, <code>&lt;button&gt;</code>는 페이지내에서 이뤄지는 동작관련 버튼으로써 사용합니다.
+				</p>
+				<div class="btn-wrap">
+					<button type="button" class="btn-base"><span>button 버튼</span></button>
+					<a href="#none" class="btn-base"><span>a 버튼</span></a>
+				</div>
+<div class="box-code">
+<pre>	
+<code>&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
+	&lt;button <span class="na">class=</span><span class="s">"btn-base"</span> <span class="na">type=</span><span class="s">"button"</span>&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/button&gt;
+	&lt;a <span class="na">class=</span><span class="s">"btn-base"</span> <span class="na">href=</span><span class="s">"#none"</span>&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
 
-			</main>
+
+				<h2>Button Size</h2>
+				<p>버튼의 사이즈는 <code>btn-s</code>, <code>btn-l</code>, <code>btn-xl</code>를 추가하면 됩니다.</p>
+
+				<div class="btn-wrap">
+					<button type="button" class="btn-base btn-s"><span>button 버튼 s사이즈</span></button>
+					<a href="#none" class="btn-base btn-s"><span>a 버튼 s사이즈</span></a>
+				</div>
+				<div class="btn-wrap">
+					<button type="button" class="btn-base"><span>button 버튼 기본</span></button>
+					<a href="#none" class="btn-base"><span>a 버튼 기본</span></a>
+				</div>
+				<div class="btn-wrap">
+					<button type="button" class="btn-base btn-l"><span>button 버튼 l사이즈</span></button>
+					<a href="#none" class="btn-base btn-l"><span>a 버튼 l사이즈</span></a>
+				</div>
+				<div class="btn-wrap">
+					<button type="button" class="btn-base btn-xl"><span>button 버튼 xl사이즈</span></button>
+					<a href="#none" class="btn-base btn-xl"><span>a 버튼 xl사이즈</span></a>
+				</div>
+<div class="box-code">
+<pre>	
+<code>&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
+	&lt;button <span class="na">class=</span><span class="s">"btn-base btn-s"</span> <span class="na">type=</span><span class="s">"button"</span>&gt;&lt;span&gt;버튼s사이즈&lt;/span&gt;&lt;/button&gt;
+	&lt;a <span class="na">class=</span><span class="s">"btn-base btn-s"</span> <span class="na">href=</span><span class="s">"#none"</span>&gt;&lt;span&gt;버튼s사이즈&lt;/span&gt;&lt;/a&gt;
+	
+	&lt;button <span class="na">class=</span><span class="s">"btn-base btn-l"</span> <span class="na">type=</span><span class="s">"button"</span>&gt;&lt;span&gt;버튼l사이즈&lt;/span&gt;&lt;/button&gt;
+	&lt;a <span class="na">class=</span><span class="s">"btn-base btn-l"</span> <span class="na">href=</span><span class="s">"#none"</span>&gt;&lt;span&gt;버튼l사이즈&lt;/span&gt;&lt;/a&gt;
+
+	&lt;button <span class="na">class=</span><span class="s">"btn-base btn-xl"</span> <span class="na">type=</span><span class="s">"button"</span>&gt;&lt;span&gt;버튼xl사이즈&lt;/span&gt;&lt;/button&gt;
+	&lt;a <span class="na">class=</span><span class="s">"btn-base btn-xl"</span> <span class="na">href=</span><span class="s">"#none"</span>&gt;&lt;span&gt;버튼xl사이즈&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+
+
+				<h2>Button 좌우정렬</h2>
+				<p>버튼의 좌우정렬 기본은 중앙정렬이며, 부모요소에 좌측정렬은 <code>txt-l</code>,클래스를, 우측정렬은 <code>txt-r</code> 클래스를 추가하면 됩니다.</p>
+
+				<div class="btn-wrap txt-l">
+					<button type="button" class="btn-base"><span>button 버튼 좌측</span></button>
+					<a href="#none" class="btn-base"><span>a 버튼 좌측</span></a>
+				</div>
+				<div class="btn-wrap">
+					<button type="button" class="btn-base"><span>button 버튼 센터</span></button>
+					<a href="#none" class="btn-base"><span>a 버튼 센터</span></a>
+				</div>
+				<div class="btn-wrap txt-r">
+					<button type="button" class="btn-base"><span>button 버튼 우측</span></button>
+					<a href="#none" class="btn-base"><span>a 버튼 우측</span></a>
+				</div>
+<div class="box-code">
+<pre>	
+<code>&lt;div <span class="na">class=</span><span class="s">"btn-wrap txt-l"</span>&gt;
+	&lt;button <span class="na">class=</span><span class="s">"btn-base"</span> <span class="na">type=</span><span class="s">"button"</span>&gt;&lt;span&gt;버튼 좌측&lt;/span&gt;&lt;/button&gt;
+	&lt;a <span class="na">class=</span><span class="s">"btn-base"</span> <span class="na">href=</span><span class="s">"#none"</span>&gt;&lt;span&gt;버튼 좌측&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
+	&lt;button <span class="na">class=</span><span class="s">"btn-base"</span> <span class="na">type=</span><span class="s">"button"</span>&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/button&gt;
+	&lt;a <span class="na">class=</span><span class="s">"btn-base"</span> <span class="na">href=</span><span class="s">"#none"</span>&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div <span class="na">class=</span><span class="s">"btn-wrap txt-r"</span>&gt;
+	&lt;button <span class="na">class=</span><span class="s">"btn-base"</span> <span class="na">type=</span><span class="s">"button"</span>&gt;&lt;span&gt;버튼 우측&lt;/span&gt;&lt;/button&gt;
+	&lt;a <span class="na">class=</span><span class="s">"btn-base"</span> <span class="na">href=</span><span class="s">"#none"</span>&gt;&lt;span&gt;버튼 우측&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+
+				<h2>Button 스타일</h2>
+				<p>버튼의 메인 스타일은 버튼에 <code>btn-main@</code>,클래스를 메인 서브에는 <code>btn-main@-sub</code> 추가하면됩니다.
+				<br>그외 스타일은 <code>btn-color@</code> 클래스를 추가하면 됩니다.
+				<br> (@는 숫자)</p>
+
+				<div class="btn-wrap">
+					<button type="button" class="btn-main-sub"><span>이전(메인 스타일 서브)</span></button>
+					<a href="#none" class="btn-main"><span>다음 (메인 스타일)</span></a>
+				</div>
+				<div class="btn-wrap">
+					<button type="button" class="btn-main2-sub"><span>이전(메인 스타일 서브2)</span></button>
+					<a href="#none" class="btn-main2"><span>다음 (메인 스타일2)</span></a>
+				</div>
+				<div class="btn-wrap">
+					<button type="button" class="btn-main btn-color1"><span>button 버튼 스타일1</span></button>
+				</div>
+				<div class="btn-wrap">
+					<a href="#none" class="btn-main btn-color2"><span>a 버튼 스타일2</span></a>
+				</div>
+<div class="box-code">
+<pre>	
+<code>&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
+	&lt;button <span class="na">class=</span><span class="s">"btn-main-sub"</span> <span class="na">type=</span><span class="s">"button"</span>&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/button&gt;
+	&lt;a <span class="na">class=</span><span class="s">"btn-main"</span> <span class="na">href=</span><span class="s">"#none"</span>&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
+	&lt;button <span class="na">class=</span><span class="s">"btn-main2"</span> <span class="na">type=</span><span class="s">"button"</span>&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/button&gt;
+	&lt;a <span class="na">class=</span><span class="s">"btn-main2-sub"</span> <span class="na">href=</span><span class="s">"#none"</span>&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+
+&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
+	&lt;button <span class="na">class=</span><span class="s">"btn-mian btn-color1"</span> <span class="na">type=</span><span class="s">"button"</span>&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
+	&lt;a <span class="na">class=</span><span class="s">"btn-mian btn-color2"</span> <span class="na">href=</span><span class="s">"#none"</span>&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+				<h2>Button 비활성화</h2>
+				<p>버튼의 비활성화처리는 <code>disabled</code> 클래스를 추가 합니다.</p>
+				<div class="btn-wrap">
+					<button type="button" class="btn-base disabled"><span>button 버튼 비활성화</span></button>
+					<a href="#none" class="btn-main disabled"><span>a 버튼 비활성화</span></a>
+					<a href="#none" class="btn-main btn-color2 disabled"><span>a 버튼 비활성화</span></a>
+				</div>
+			</main>	
 		</div>
 		<footer class="base-footer" id="baseFooter"></footer>
 	</div>
