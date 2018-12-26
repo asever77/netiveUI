@@ -55,12 +55,12 @@ p{color:#333}
 
 /* main */
 .page-main{background:#191919;
-animation-duration:5s;
+animation-duration:2s;
 animation-name: bgani;
 }
 @keyframes bgani {
   from {
-    background:#dbdbdb;
+    background:#000;
   }
 
   to {
