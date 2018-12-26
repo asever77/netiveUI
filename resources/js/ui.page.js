@@ -27,8 +27,7 @@
             "/resources/img/dummy/@iu7.jpg"
             ]
         function randomNum(){
-            var n = Math.floor(Math.random() * 10) + 1;
-             console.log(n);
+            var n = Math.floor(Math.random() * 10);
             return n;
         }
 
@@ -296,17 +295,35 @@
         //range slider
         $plugins.uiSlider({ 
             id:"uiSlider", 
-            vertical:false, reverse:false, range:true, 
-            now:[1500, 2500], step:10, min:1000, max:6000, 
-            tooltip:true, unit:'만원', txt_s:'이하', txt_e:'이상', 
-            acc:true, callback:sliderCallback
+            vertical:false, 
+            reverse:false, 
+            range:true, 
+            now:[1500, 2500], 
+            step:10, 
+            min:1000, 
+            max:6000, 
+            tooltip:true, 
+            unit:'만원', 
+            txt_s:'이하', 
+            txt_e:'이상', 
+            acc:true, 
+            callback:sliderCallback
         });
         $plugins.uiSlider({ 
             id:"uiSlider2", 
-            vertical:false, reverse:true, range:true, 
-            now:[1500, 2500], step:10, min:1000, max:6000, 
-            tooltip:true, unit:'만원', txt_s:'이하', txt_e:'이상', 
-            acc:true, callback:sliderCallback
+            vertical:false, 
+            reverse:true, 
+            range:true, 
+            now:[1500, 2500], 
+            step:10, 
+            min:1000, 
+            max:6000, 
+            tooltip:true,
+            unit:'달러', 
+            txt_s:'', 
+            txt_e:'', 
+            acc:true, 
+            callback:sliderCallback
         });
         $plugins.uiSlider({ 
             id:"uiSlider3", 
@@ -532,11 +549,11 @@
         $plugins.uiTab({ id:'exeTab4', current:0, callback: tabCallback2  });
         
         function tabCallback(v){
-            console.log(v)
+            console.log(v);
         }
         function tabCallback2(v){
             $('#'+ v.id).find('.ui-tab-tit').text($('#'+ v.id).find('.ui-tab-btn').eq(v.current).text());
-            //console.log(v)
+            console.log(v);
         }
         
         $('.ui-tab-btns').on('scroll', function(){
@@ -546,6 +563,7 @@
 
     $plugins.page.table = function(){
         $plugins.uiTblScroll();
+        $plugins.uiTblScroll({ selector:'#uiTblSroll1',coln:4 });
         $plugins.uiDatePicker();
         $plugins.uiSelection();
         $plugins.uiSelect();

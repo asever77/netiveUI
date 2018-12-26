@@ -1089,7 +1089,8 @@
 			
 			$('#' + iname).on('load', function(){
 				$('#' + opt.id).data('iframeload', true);
-				$ui.callback !== undefined ? frames[iname].$plugins.callback.modal(opt.id) : '';
+				console.log($ui.callback)
+				//$ui.callback !== undefined ? frames[iname].$ui.callback.modal(opt.id) : '';
 				!!icallback ? icallback() : '';
 
 				/* 2018-11-26 : IOS iframe fixed bug */
@@ -1245,6 +1246,15 @@
 
 			$modal.siblings('.ui-modal').attr('aria-hidden', true);
 			
+			switch(ps) {
+				case 'top' : 
+					$modal.addClass('ps-top');
+					break;
+				case 'bottom' : 
+					$modal.addClass('ps-bottom');
+					break;
+			}
+
 			//single or multi modal
 			layN = $('.ui-modal[opened="true"]').length;
 			opt.zindex !== undefined ? opt.zindex !== null ? zidx = opt.zindex : zidx = layN : zidx = layN;
@@ -1255,12 +1265,21 @@
 
 			//모달생성 설정 
 			console.log(ps);
-			$modal.css({ 
-				display: 'block', 
-				top: is_mobile ? '100%' : '50%', 
-				opacity: 0
-			});
-			
+			switch(ps) {
+				case 'center':
+					$modal.css({ 
+						display: 'block', 
+						top: is_mobile ? '100%' : '50%', 
+						opacity: 0
+					});
+					break;
+				case 'top':
+					$modal.css({ 
+						display: 'block', 
+						opacity: 0
+					});
+					break;
+			}
 			
 			modalApp({ resize: false });
 		}
@@ -1292,7 +1311,6 @@
 			$modal.css({ height: 'auto' });
 			//!full ? $modal.css({ height: 'auto' }) : '';
 			//modal height 100 작거나 iframeload 전 일때 재 실행, resize 옵션 false 일경우
-	
 			if ($modalCont.outerHeight() < 20 && $modal.data('iframeload') === undefined && !v.resize ) {
 				if (re_num === 0) {
 					$ui.uiLoading({ visible: true });
@@ -1405,13 +1423,25 @@
 					//desktop
 					$modal.css({
 						opacity: v.resize ? 1 : 0,
-						top: '50%',
 						left: '50%',
 						width: w,
 						height: system_words ? 'auto' : h,
-						marginTop: (h / 2) * -1,
 						marginLeft: is_iframe ? (iw / 2) * -1 : (w / 2) * -1
 					});
+					switch(ps) {
+						case 'center':
+							$modal.css({
+								top: '50%',
+								marginTop: (h / 2) * -1,
+							});
+							break;
+						case 'top':
+							$modal.css({
+								top: 0,
+								marginTop: modalSpace,
+							});
+							break;
+					}
 				}
 
 				$ui.uiLoading({ visible: false });
@@ -1457,8 +1487,12 @@
 							modalCompleted();
 						});
 				} else {
-					$modal.css('opacity', 1);
-					modalCompleted();
+					//$modal.css('opacity', 1);
+					$modal.stop().animate({
+						opacity: 1
+					}, 150, function(){
+						modalCompleted();
+					});
 				}
 			}
 			function modalCompleted() {
@@ -1737,6 +1771,10 @@
 					marginTop:0
 				}, 450, 'easeInOutQuart', closed);
 			} else {
+				switch(ps) {
+					case 'top':
+						$modal.css('top','-10%');
+				}
 				$modal.attr('aria-hidden', true).stop().animate({
 					opacity: 0
 				}, 200, 'easeOutQuart', closed);
@@ -2447,8 +2485,8 @@
 			fix = !!$tab.data('tabnum'),
 			ps_l = [],
 			i, 
-			_class, 
-			_attr, 
+			cls, 
+			attrs, 
 			is_current, 
 			id_pnl, 
 			id_btn, 
@@ -2492,8 +2530,8 @@
 			var tabn = fix ? $btn.eq(i).data('tabnum') : i;
 
 			is_current = current === tabn;
-			_class = is_current ? 'addClass' : 'removeClass';
-			_attr = is_current ? 'removeAttr' : 'attr';
+			cls = is_current ? 'addClass' : 'removeClass';
+			attrs = is_current ? 'removeAttr' : 'attr';
 			_$btn = $btn.eq(i);
 			_$pnl = $pnl.eq(i);
 
@@ -2504,7 +2542,7 @@
 			id_btn = _$btn.attr('id');
 			id_pnl = _$pnl.attr('id');
 
-			_$btn.attr('aria-controls', id_pnl)[_attr]('tabindex', -1)[_class]('selected');
+			_$btn.attr('aria-controls', id_pnl)[attrs]('tabindex', -1)[cls]('selected');
 
 			if (unres === false) {
 				_$btn.attr('aria-controls', _$pnl.attr('id'));
@@ -2605,17 +2643,18 @@
 			unres = opt.unres,
 			callback = opt.callback;
 
-		$btn.attr('aria-selected', false).attr('tabindex', -1).removeClass('selected')
-			.eq(current).attr('aria-selected', true).removeAttr('tabindex').addClass('selected').focus();
-		
-		$ui.uiScroll({ 
+		$btn.find('b.hide').remove();
+		$btn.eq(current).append('<b class="hide">선택됨</b>');
+		$btn.removeClass('selected').eq(current).addClass('selected').focus();
+		$plugins.uiScroll({ 
 			value: ps_l[current], 
-			target: $btns, 
-			speed: 200, 
+			target: $btn.parent(), 
+			speed: 300, 
 			ps: 'left' 
 		});
+
 		if (unres === false) {
-			$pnl.removeClass('selected').eq(current).addClass('selected');
+			$pnl.attr('aria-hidden', true).removeClass('selected').attr('tabindex', '-1').eq(current).addClass('selected').attr('aria-hidden', false).removeAttr('tabindex');
 		}
 
 		!!callback ? callback(opt) : '';
@@ -2623,10 +2662,13 @@
 
 
 
-
 	/* ------------------------------------------------------------------------
-	 * tooltip v2.0 
-	 * date : 2018-10-06
+	* name : tooltip
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiTooltip();
+	* - $plugins.uiTooltip({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiTooltip: function (opt) {
@@ -2655,12 +2697,12 @@
 			visible ? tooltipSet(id) : tooltipHide();
 		}
 
-		$btn
-			.on('click', function(e){
+		$btn.on('click', function(e){
 				e.preventDefault();
 				tooltipSet($(this).attr('aria-describedby'));
 			})
-			.off('mouseover.ui touchstart.ui focus.ui').on('mouseover.ui touchstart.ui focus.ui', function(e){
+			.off('mouseover.ui touchstart.ui focus.ui')
+			.on('mouseover.ui touchstart.ui focus.ui', function(e){
 				tooltipSet($(this).attr('aria-describedby'));
 			})
 			
@@ -2732,7 +2774,6 @@
 			ps ? cursorCls = 'ps-l' : '';
 			ps ? ps_l = off_l : '';
 			ps ? psl = true : '';
-
 			pst ? cursorCls += 'b' : cursorCls += 't';
 
 			if (!!$id.attr('modal')) {
@@ -2757,15 +2798,18 @@
 		}
 	}
 
+
 	/* ------------------------------------------------------------------------
-	 * table 
-	 * - table scroll v2.0
-	 * - table caption v1.0 
-	 * date : 2018-04-21
+	* name : table scroll & caption
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiCaption();
+	* - $plugins.uiTblSroll({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
-		uiTblScroll: function () {
-			return createUiTblScroll();
+		uiTblScroll: function (opt) {
+			return createUiTblScroll(opt);
 		},
 		uiCaption: function () {
 			return createUiCaption();
@@ -2790,6 +2834,9 @@
 			clone_tbl = '';
 
 		for (i = 0; i < len; i++) {
+			$tbl.eq(i).find('.tbl-scroll-thead').remove();
+			$tbl.eq(i).find('.tbl-scroll-tbody').removeAttr('style');
+
 			coln = !!$tbl.eq(i).data('col') ? $tbl.eq(i).data('col') : coln,
 			$tbody = $tbl.eq(i).find('.tbl-scroll-tbody');
 			clone_colgroup = $tbody.find('colgroup').clone();
@@ -2799,15 +2846,14 @@
 			clone_tbl += '<table class="tbl-scroll-thead txt-c" aria-hidden="true" tabindex="-1">';
 			clone_tbl += '</table>';
 
-			$tbl.prepend(clone_tbl);
-			$tbl.find('.tbl-scroll-thead').append(clone_colgroup);
-			$tbl.find('.tbl-scroll-thead').append(clone_thead);
+			$tbl.eq(i).prepend(clone_tbl);
+			clone_tbl = '';
+			$tbl.eq(i).find('.tbl-scroll-thead').append(clone_colgroup);
+			$tbl.eq(i).find('.tbl-scroll-thead').append(clone_thead);
 			$thead = $tbl.eq(i).find('.tbl-scroll-thead');
-
 			$thead.find('th').each(function(){
 				$(this).replaceWith('<td>'+ $(this).text() +'</td>');
 			});
-
 
 			if ($tbody.find('tbody tr').length > coln) {
 				for (var j = 0; j < coln; j++) {
@@ -2847,9 +2893,13 @@
 		})
 	}
 
+
 	/* ------------------------------------------------------------------------
-	 * object floating v1.0 
-	 * date : 2018-04-21
+	* name : object floating
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiFloating({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiFloating: function (opt) {
@@ -2903,10 +2953,15 @@
 				lb = 0, 
 				_lb;
 			
+			$idwrap.removeAttr('style');
 			$id.data('fixbottom', th);
-			if ($add.data('fixbottom') === undefined) {
-				$add.data('fixbottom', th + $addwrap.outerHeight());
-			} 
+
+			if (!!add) {
+				if ($add.data('fixbottom') === undefined) {
+					$add.data('fixbottom', th + $addwrap.outerHeight());
+				}
+			}
+
 			!!add ? lh = lh + Number($add.data('fixtop') === undefined ? 0 : $add.data('fixtop')) : '';
 			!!callback ? callback({ id:id, scrolltop:st, boundaryline: tt - lh }) : '';
 			$id.css('height', th);
@@ -2956,13 +3011,6 @@
 					if (tt + th + _lb - wh <= st) {
 						$id.addClass(c);
 						$idwrap.css('bottom', _lb);
-						// if (lt !== 0) {
-						// 	if (dh - (lt + wh) < st) {
-						// 		$idwrap.css({ position: 'fixed', bottom:'auto' , top: (wh - th) - Math.abs((wh + lt) - (dh - st)) , zIndex: 9999 });
-						// 	} else{
-						// 		$idwrap.removeAttr('style');
-						// 	}
-						// }
 					} else {
 						$id.removeClass(c);
 						$idwrap.removeAttr('style');
@@ -2972,20 +3020,15 @@
 		}
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * Brick list v1.0 
-	 * $plugins.uibricklist
-	 * date : 2018-04-21
-	 * option
-	 * - id: 'name' [string] 
-	 * - margin: 0 [number] / 아이템간의 간격 마진값
-	 * - response: true or false [boolean] / resize 시 재구성여부 
-	 * 
-	 * Brick list v1.0 
-	 * $plugins.uibricklistAdd
-	 * date : 2018-04-21
-	 * option
-	 * - id: 'name' [string] 
+	* name : Brick list
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uibricklist({ option });
+	* - $plugins.uibricklistAdd({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiBrickList: function (opt) {
@@ -3045,7 +3088,6 @@
 			$ui.uiBrickListAdd({ id: opt.id });
 		},200);
 		
-		
 		if (re) {
 			$(win).resize(function(){
 				clearTimeout(timer);
@@ -3094,9 +3136,14 @@
 		},300);
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * print v1.0 
-	 * date : 2018-04-21
+	* name : print
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiPrint({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiPrint: function (opt) {
@@ -3106,16 +3153,40 @@
 	function createUiPrint(opt) {
 		var $print = $('#' + opt.id),
 			clone = $print.clone(),
-			html = '<div class="base-print"></div>';
+			html = '';
 
-		$('body').append(html);
-		$('.base-print').append(clone);
+		html += '<div class="base-print" id="basePrint"></div>';
+		console.log(self !== top);
+		if (self !== top) {
+			parent.$('body').append(html);
+			parent.$('.base-print').append(clone);
 
-		win.print();
-		setTimeout(function(){
-			$('.base-print').remove();
-		},0);
+			if ($global.uiCheck.ie)	{
+				var webBrowser ='<OBJECT ID="previewWeb" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+			
+				doc.body.insertAdjacentHTML('beforeEnd', webBrowser);
+				previewWeb.ExecWB(7,1);
+				previewWeb.outerHTML='';
+			} else {
+				win.parent.print();
+			}
+
+			setTimeout(function () {
+				parent.$('.base-print').remove();
+			}, 0);
+		} else {
+			$('body').addClass('print-ing').append(html);
+			$('.base-print').append(clone);
+			win.print();
+
+			setTimeout(function () {
+				$('body').removeClass('print-ing')
+				$('.base-print').remove();
+			}, 0);
+		}
 	}
+
+
 
 	/* ------------------------------------------------------------------------
 	 * slot machine v1.0 
@@ -3135,13 +3206,6 @@
 	$ui.uiSlot.play = {}
 	function createUiSlot(opt){
 		if (opt === undefined) {
-			$ui.uiConsoleGuide([
-				global + ".uiSlot({ id:'아이디명', auto:true/false, single:true/false });",
-				"- id: #을 제외한 아이디명만 입력(!필수)",
-				"- auto: true일 경우 자동실행, (!선택 - 기본값 false)",
-				"- single: true일 경우 하나만 노출, false일 경우 걸쳐보이는...(!선택 - 기본값 true)",
-				"※  슬롯머신효과"
-			]);
 			return false;
 		}
 		
@@ -3278,17 +3342,41 @@
 		},10);
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * slider v1.0 
-	 * date : 2018-04-21
+	* name : slider
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiSlider({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiSlider: function (opt) {
 			return createUiSlider(opt);
 		}
 	});
+	$ui.uiSlider.option = {
+		vertical: false, //가로,세로형
+		range: false, //범위슬라이더
+		reverse : false, //역순
+		acc: false, //select 연결
+		stepname: false,
+		callback: false,
+
+		tooltip: false,
+		unit: '',
+		txt_s:'',
+		txt_e:'',
+
+		now: [0],
+		step: 10,
+		min: 0,
+		max: 100,
+	}
 	function createUiSlider(opt) {
-		var $slider = $('#' + opt.id),
+		var opt = $.extend(true, {}, $ui.uiSlider.option, opt),
+			$slider = $('#' + opt.id),
 			$wrap = $slider.find('.ui-slider-wrap'),
 			$divwrap = $slider.find('.ui-slider-divwrap'),
 			$bg = $wrap.find('.ui-slider-bg'),
@@ -3296,11 +3384,11 @@
 			$btn_s = $wrap.find('.ui-slider-btn-s'),
 			$btn_e = $wrap.find('.ui-slider-btn-e'),
 			$bar = $bg.find('.ui-slider-bar'),
-			vertical = (opt.vertical === undefined) ? false : opt.vertical,//가로세로 type
-			range = (opt.range === undefined) ? false : opt.range,//range type
-			rev = (opt.reverse === undefined) ? false : opt.reverse,//역순
-			stepname = (opt.stepname === undefined) ? false : opt.stepname,
-			acc = (opt.acc === undefined) ? false : opt.acc;//select 연결
+			vertical = opt.vertical,
+			range = opt.range,
+			rev = opt.reverse,
+			stepname = opt.stepname,
+			acc = opt.acc;//select 연결
 
 		rev ? $slider.addClass('type-reverse') : $slider.removeClass('type-reverse');
 		vertical ? $slider.addClass('type-vertical') : $slider.removeClass('type-vertical');
@@ -3309,11 +3397,14 @@
 			id = opt.id,
 			min = opt.min,
 			max = opt.max,
-			tooltip = (opt.txt_e === undefined) ? false : opt.tooltip,
-			callback = (opt.callback === undefined) ? false : opt.callback,
-			unit = (opt.unit === undefined) ? '' : opt.unit,
-			txt_e = (opt.txt_e === undefined) ? '' : opt.txt_e,
-			txt_s = (opt.txt_s === undefined) ? '' : opt.txt_s,
+			tooltip = opt.tooltip,
+			callback = opt.callback,
+			unit = opt.unit,
+			txt_e = opt.txt_e,
+			txt_s = opt.txt_s,
+			txt_e2 = '', 
+			txt_s2 = '',
+
 			slider_w = !vertical ? $bg.outerWidth() : $bg.outerHeight(),
 			step_w = 100 / step,
 			unit_sum = (max - min) / step,
@@ -3322,8 +3413,6 @@
 			per_min = ((now_s - min) / (max - min)) * 100,
 			per_max = ((now_e - min) / (max - min)) * 100,
 			div_w = Math.ceil(slider_w / step),
-			maxlimit = 100,
-			minlimit = 0,
 			lmt_max,
 			lmt_min,
 			now_sum = [],
@@ -3370,14 +3459,15 @@
 
 		//graph step & select option setting
 		for (var i = 0; i < step + 1; i++) {
-			txt_e = (i === step) ? opt.txt_e : '';
-			txt_s = (i === 0) ? opt.txt_s : '';
+			txt_e2 = (i === step) ? opt.txt_e : '';
+			txt_s2 = (i === 0) ? opt.txt_s : '';
+			console.log('txt_s2:' + txt_s2)
 			txt_val = parseInt(min + (unit_sum * i));
 			now_sum.push(txt_val);
 			if (stepname) {
 				$divwrap.append('<span class="ui-slider-div n'+ i +'" style="'+ dir +':' + step_w * i + '%; '+ siz +':' + div_w + 'px; margin-'+ dir +':' + (div_w / 2) * -1 + 'px"><em>' + stepname[i] + '</em></div>');
 			} else {
-				$divwrap.append('<span class="ui-slider-div n'+ i +'" style="'+ dir +':' + step_w * i + '%; '+ siz +':' + div_w + 'px; margin-'+ dir +':' + (div_w / 2) * -1 + 'px"><em>' + txt_val + ' ' + txt_e + '' + txt_s + '</em></div>');
+				$divwrap.append('<span class="ui-slider-div n'+ i +'" style="'+ dir +':' + step_w * i + '%; '+ siz +':' + div_w + 'px; margin-'+ dir +':' + (div_w / 2) * -1 + 'px"><em>' + txt_val + ' ' + txt_e2 + '' + txt_s2 + '</em></div>');
 			}
 			
 			sliderstep.push(parseInt(min + (unit_sum * i)));
@@ -3402,19 +3492,19 @@
 			} else {
 				if (acc) {
 					if (now_s === txt_val) {
-						$sel_s.append('<option value="' + txt_val + '" selected>' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_s.append('<option value="' + txt_val + '" selected>' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					} else if (now_e < txt_val) {
-						$sel_s.append('<option value="' + txt_val + '" disabled>' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_s.append('<option value="' + txt_val + '" disabled>' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					} else {
-						$sel_s.append('<option value="' + txt_val + '">' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_s.append('<option value="' + txt_val + '">' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					}
 					
 					if (now_e === txt_val && range) {
-						$sel_e.append('<option value="' + txt_val + '" selected>' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_e.append('<option value="' + txt_val + '" selected>' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					} else if (now_s > txt_val && range) {
-						$sel_e.append('<option value="' + txt_val + '" disabled>' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_e.append('<option value="' + txt_val + '" disabled>' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					} else if (range){
-						$sel_e.append('<option value="' + txt_val + '">' + txt_val + '' + opt.unit + ' ' + txt_e +'' + txt_s + '</option>');
+						$sel_e.append('<option value="' + txt_val + '">' + txt_val + '' + opt.unit + ' ' + txt_e2 +'' + txt_s2 + '</option>');
 					}
 				}
 			}
@@ -3643,9 +3733,11 @@
 				n_max = opt.now_2,
 				in_s = (per_min === 0) ? txt_s : '',
 				in_e = (per_max === 100) ? txt_e : '',
-				in_se = (per_max === 0) ? txt_s : (per_min === 100) ? txt_e : '';
+				in_se = (per_min === 0) ? txt_s : (per_max === 100) ? txt_e : '';
 
 			!range ? in_e = (per_min === 100) ? txt_e : '' : '';
+
+			console.log(per_min === 0, txt_s, txt_e)
 
 			if (per_min === 0 && per_max === 100) {
 				$tooltip.text('전체');
@@ -3729,11 +3821,6 @@
 	function createUiSlide(opt) {
 		//option guide
 		if (opt === undefined) {
-			$ui.uiConsoleGuide([
-				global + ".uiSlide({ id:'name', current:0, multi:false, loop:true, items:1, eff:'slide', dot:true, nav:true, auto:true, play:false, gauge:true, speed:300, autTime:3000, margin:0, mouseDrag:true, touchDrag:true });",
-				"- id [String]: #을 제외한 아이디명만 입력 (!필수)",
-				"※ 슬라이드"
-			]);
 			return false;
 		}
 		
@@ -4505,9 +4592,15 @@
 
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * count number v1.0 
-	 * date : 2018-04-21
+	* name :  count number
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiCountStep({ option });
+	* - $plugins.uiCountSlide({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {	
 		uiCountStep: function (opt) {
@@ -4810,7 +4903,6 @@
 			!!array_d3.length ? array_d3.push(html_d3) : '';
 			html_d3 = '';
 
-			console.log(array_d2,array_d3);
 			menu_callback({ 
 				d1: html_d1, 
 				d2: array_d2, 
@@ -5226,9 +5318,14 @@
 		}
 	}
 
+
+
 	/* ------------------------------------------------------------------------
-	 * screen capture v1.0 
-	 * date : 2018-04-21
+	* name : screen capture
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiCapture({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiCapture: function (opt) {
@@ -5237,12 +5334,6 @@
 	});
 	function createUiCapture(opt){
 		if (opt === undefined) {
-			$ui.uiConsoleGuide([
-				global + ".uiCapture({ id:'name' });",
-				"- id [String]: #을 제외한 아이디명만 입력 (!필수)",
-				"- 필수 라이브러리 : canvas-toBlob.js, FileSaver.js, html2canvas.js",
-				"※ 선택 영역 캡쳐하기"
-			]);
 			return false;
 		}
 
@@ -5461,6 +5552,8 @@
 		});
 	}
 
+
+
 	/* ------------------------------------------------------------------------
 	 * loading v1.0 
 	 * date : 2018-06-02
@@ -5473,7 +5566,7 @@
 	function createUiLoading(opt) {
 		var loading = '',
 			$selector = opt.id === undefined ? $('body') : opt.id === '' ? $('body') : typeof opt.id === 'string' ? $('#' + opt.id) : opt.id,
-			txt = opt.txt === undefined ? '서비스 처리중입니다.' : opt.txt;
+			txt = opt.txt === undefined ? 'Loading …' : opt.txt;
 
 		opt.id === undefined ?
 			loading += '<div class="ui-loading">':
@@ -5487,10 +5580,14 @@
 		opt.visible === true ? showLoading() : hideLoading();
 		
 		function showLoading(){
-			$selector.prepend(loading)
+			$selector.prepend(loading);
+			$selector.find('.ui-loading').animate({ 'opacity':1 });
 		}
 		function hideLoading(){
-			$('.ui-loading').remove();
+			$selector.find('.ui-loading').animate({ 'opacity':0 }, function(){
+				$('.ui-loading').remove();
+			});
+			
 		}
 	}	
 

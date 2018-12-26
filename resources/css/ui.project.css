@@ -35,7 +35,7 @@ p{color:#333}
 .header-nav .dep-1-btn.selected{font-weight:500;}
 .header-nav .dep-1-btn.selected:before{content:"ˇ"; display:block; position: absolute; top:-5px; left:4px;}
 
-.type-mini .base-header{height:66px; background:#000}
+.type-mini .base-header{height:66px; background:#000; border-bottom:0}
 .type-mini .header-wrap{margin:-95px auto}
 .type-mini .header-nav .dep-1-btn {color:#fff}
 
@@ -54,19 +54,11 @@ p{color:#333}
 
 
 /* main */
-.page-main{background:#191919;
-animation-duration:2s;
-animation-name: bgani;
-}
-@keyframes bgani {
-  from {
-    background:#000;
-  }
-
-  to {
-    background:#191919;
-  }
-}
+.page-main{background:#191919;}
+.main-logo-wrap{text-align: left; width:240px; margin:0 auto 20px;}
+.main-intro .main-logo-wrap h1{text-align: left;}
+.main-logo-wrap p{font-size:14px; color:#929292;}
+.main-logo-wrap b{font-size:18px; color:#fff;}
 .page-main .base-main{padding:0; height:100%;}
 .page-main a{color:#dbdbdb; font-size:18px; display:inline-block; margin:20px 15px; font-weight: 300; text-decoration:none; letter-spacing: 0}
 .main-intro{position: absolute; top:50%; left:50%; width:500px; margin:-150px 0 0 -250px; text-align: center}
@@ -146,7 +138,7 @@ body{background-color:#fff;}
     .col4 .type-option td:last-child{min-width:100%} */
 
 /* box */
-.box-code{width:100%; margin:10px 0; padding:0 20px; background:#fcfcfc; border:1px solid rgb(243, 243, 243)}
+.box-code{width:100%; margin:10px 0; padding:0 20px; background:#fcfcfc; border:1px solid #ccc}
 .box-code pre{padding:0; margin:0; overflow:auto}
 .box-code code{font-family: SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace; color:#272727; line-height:1.5}
 .box-code .si{color:#a00}
