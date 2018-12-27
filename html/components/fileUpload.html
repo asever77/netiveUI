@@ -35,18 +35,36 @@
 				<h2 class="h2">Button Type</h1>
 				<p>button으로 스타일을 적용할수 있게 자동으로 input type="file"을 생성</p>
 				<div class="btn-wrap txt-l">
-					<div class="ui-file" id="addfile1">
-						<button type="button" class="btn-base ui-file-btn"><span>단일 첨부파일</span></button>
-					</div>
-					<div class="ui-file" id="addfile2">
-						<button type="button" class="btn-base ui-file-btn"><span>멀티 첨부파일</span></button>
-					</div>
+					<form>
+						<div class="ui-file btn-base" id="addfileWrap">
+							<span>파일선택</span>
+							<input type="file" class="ui-file-inp" id="addfileInp" multiple>
+						</div>
+
+						<div class="ui-file-list" aria-labelledby="addfileInp">
+
+						</div>
+
+						<div class="ui-file btn-base" id="addfileWrap">
+							<span>파일선택</span>
+							<input type="file" class="ui-file-inp" id="addfileInp2" multiple>
+						</div>
+
+						<div class="ui-file-list" aria-labelledby="addfileInp2">
+
+						</div>
+					</form>
 				</div>
 <div class="box-code">
 <pre>
 <code>
-&lt;div <span class="na">class=</span><span class="s">"ui-file"</span> <span class="na">id=</span><span class="s">"addfile1"</span>&gt;
-    &lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn-base ui-file-btn"</span>&gt;&lt;span&gt;첨부파일&lt;/span&gt;&lt;/button&gt;
+&lt;div class="ui-file btn-base" id="addfileWrap"&gt;
+	&lt;span&gt;파일선택&lt;/span&gt;
+	&lt;input type="file" class="ui-file-inp" id="addfileInp" multiple&gt;
+&lt;/div&gt;
+
+&lt;div class="ui-file-list" aria-labelledby="addfileInp"&gt;
+
 &lt;/div&gt;
 </code>
 </pre>
@@ -56,58 +74,11 @@
 <div class="box-code">
 <pre>
 <code>
-<span class="c">// 싱글 파일업로드</span>
-$plugins<span class="na">.uiFileUpload</span>({ <span class="s">id:'name', accept:'image/*'</span> });
-
-<span class="c">// 멀티 파일업로드</span>
-$plugins<span class="na">.uiFileUpload</span>({ <span class="s">id:'name', multi:true</span> });
+$plugins<span class="na">.uiFileUpload</span>();
 </code>
 </pre>
 </div>
-				<table class="tbl-base type-option">
-					<caption>옵션 설명</caption>
-					<colgroup>
-						<col class="col-xs">
-						<col class="col-xs">
-						<col class="col-xs">
-						<col class="col-auto">
-					</colgroup>
-					<thead>
-						<tr>
-							<th scope="col">옵션명</th>
-							<th scope="col">유형</th>
-							<th scope="col">기본</th>
-							<th scope="col">설명</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr class="nec">
-							<th scope="row">id:</th>
-							<td>[string]</td>
-							<td>'name'</td>
-							<td>(필수) ui-file의 아이디명 기입</td>
-						</tr>
-						<tr>
-							<th scope="row">accept:</th>
-							<td>[string]</td>
-							<td>''</td>
-							<td>
-								파일업로드 유형선택 <a href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input/file" target="_blank">속성 참고</a>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">multi:</th>
-							<td>[boolean]</td>
-							<td>false</td>
-							<td>멀티 업로드 선택
-								<ul>
-								<li>true : 멀티업로드</li>
-								<li>false : 단일 업로드</li>
-								</ul>
-							</td>
-						</tr>
-					</tbody>
-				</table>
+
 			</main>
 		</div>
 		<footer class="base-footer" id="baseFooter"></footer>

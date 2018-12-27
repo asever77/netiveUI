@@ -5409,8 +5409,11 @@
 	}
 
 	/* ------------------------------------------------------------------------
-	 * file upload v1.0 
-	 * date : 2018-04-21
+	* name : file upload
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiFileUpload({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiFileUpload: function (opt) {
@@ -5418,117 +5421,44 @@
 		}
 	});
 	function createUiFileUpload(opt){
-		if (opt === undefined) {
-			$ui.uiConsoleGuide([
-				global + ".uiFileUpload({ id:'name', multi:false, accept:'image/*' });",
-				"- id [String]: #을 제외한 아이디명만 입력 (!필수)",
-				"- multi [Boolean]: true 일 경우 다중업로드 (!선택, -기본 false)",
-				"- accept [String]: 업로드 파일 종류 선택 (!선택 - 기본 '')",
-				"※ 파일업로드"
-			]);
-			return false;
-		}
-		
-		var base = {};
-
-		base.id = $('#' + opt.id);
-		base.multi = opt.multi === undefined ? false : opt.multi;
-		base.accept = opt.accept === undefined ? '' : 'accept="' + opt.accept + '"' ;
-		base.callback = opt.callback === undefined ? false : opt.callback;
-		base.n = 0;
-		base.txthtml = '<input type="text" class="ui-file-txt inp-base" readonly="readonly" title="첨부파일명">';
-		base.delhtml = '<button type="button" class="ui-file-del btn-del">첨부파일 삭제</button>';
-		base.filehtml = '<input type="file" value="" ' + base.accept + '" class="ui-file-inp" aria-hidden="true" tabindex="-1" title="첨부파일 불러오기">';
-		base.id.data('files', opt.multi);
-		base.wraphtml = '<div class="ui-file-wrap"></div>';
-		base.btn = base.id.find('.ui-file-btn');
-		base.id.append(base.wraphtml);
-		base.wrap = base.id.find('.ui-file-wrap');
-		base.wrap.append(base.filehtml);
-		base.file = base.wrap.find('.ui-file-inp');
-		base.timer;
-		
-		//event
-		$(doc).off('change.'+ opt.id).on('change.' + opt.id, '#' + opt.id + ' .ui-file-inp', function(){
-			fileChange(base);
-		});
-		$(doc).off('click.fileuploadDel').on('click.fileuploadDel', '.ui-file-del', function(){
-			fileDel(this);
-		});
-		base.btn.off('click.'+ opt.id).on('click.'+ opt.id, function(){
-			upload(base);
-		}); 
-		
+		$(doc).on('change', '.ui-file-inp', function(){
+				upload(this);
+			})
+			.on('click', '.ui-file-del', function(){
+				fileDel(this);
+			});
+			
 		//fn
-		function upload(base){
-			if (!base.multi) {
-				base.file.trigger('click');
-			} else {
-				base.wrap = base.id.find('.ui-file-wrap').eq(-1);
-				base.file = base.wrap.find('.ui-file-inp');
-				base.file.trigger('click');
-			}
-		}
-		function fileDel(v){
-			var $del = $(v),
-				$file = $del.closest('.ui-file'),
-				len = $file.find('.ui-file-wrap').length,
-				idx = $del.closest('.ui-file-wrap').index() - 1,
-				$txt = $file.find('.ui-file-txt'),
-				$wrap = $del.closest('.ui-file-wrap'),
-				file = $txt.val();
-	
-			if (!$file.data('files')) {
-				if($wrap.length > 0) {
-					$wrap.find('.ui-file-inp').val('');
-					$txt.remove();
-					$del.remove();
-				} 
-				$file.data('single', false);
-			} else {
-				(len > 1) ? $file.find('.ui-file-wrap').eq(idx).remove() : '';
-			}
-			//base.callback({ id:$file.attr('id'), upload:false, file:file });
-		}
-		function fileChange(base){
-			base.v = base.file.val();
-			base.v =  base.v.split("\\");
-			base.n =  base.v.length;
-			base.n = ( base.n === 0) ? 0 :  base.n - 1; 
+		function upload(t){
+			var $this = $(t),
+				v = $this[0].files,
+				id = $this.attr('id'),
+				len = v.length,
+				$list = $('.ui-file-list[aria-labelledby="'+ id +'"]');
 
-			(!base.multi && !base.id.data('single')) ? act('single') : '';
-			if (!!base.multi){
-				!base.id.data('multi') ? act('multi') : act('add');
+			$list.find('.ui-file-item').remove();
+			for (var i = 0; i < len; i++) {
+				$list.append('<div class="ui-file-item n'+ i +'">'+ v[i].name +'</div>');
 				
-				clearTimeout(base.timer);
-				base.timer = setTimeout(function(){
-					base.wraphtml = '<div class="ui-file-wrap"></div>';
-					base.id.append(base.wraphtml);
-					base.wrap = base.id.find('.ui-file-wrap').eq(-1);
-					base.wrap.append(base.filehtml);
-					base.file = base.wrap.find('.ui-file-inp');
-				},35);
-			} 
-			if (!!base.v && !base.file.val()) {
-				base.txt.remove();
-				base.del.remove();
-				base.id.data('single', false);
-			} 
-			function act(v){
-				v === 'single' ? base.id.data('single', true) : '';
-				v === 'multi' ? base.id.data('multi', true) : '';
-				v === 'add' ? base.wrap = base.id.find('.ui-file-wrap').eq(-1) : '';
-
-				base.wrap.append(base.txthtml);
-				base.wrap.append(base.delhtml);
-				base.txt = base.wrap.find('.ui-file-txt');
-				base.del = base.wrap.find('.ui-file-del');
-
-				//base.callback({ id:$file.attr('id'), upload:false, file:file });
 			}
-			base.txt.val(base.v[base.n]);
+			$list.append('<button type="button" class="ui-file-del btn-del">첨부파일 삭제</button>');
 		}
+		function fileDel(t){
+			var $this = $(t),
+				$list = $this.closest('.ui-file-list'),
+				id = $list.attr('aria-labelledby'),
+				$id = $('#' + id);
+
+			$ui.browser.ie ?
+				$id.replaceWith( $id.clone(true) ) : $id.val(''); 
+			$list.find('.ui-file-item').remove();
+			$this.remove();
+		}
+		
 	}
+
+
+	
 
 	/* ------------------------------------------------------------------------
 	 * textarea auto height v1.0 

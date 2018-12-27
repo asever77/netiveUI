@@ -218,7 +218,7 @@ if (!Object.keys){
             }
         });
     }
-
+	console.log(win[global])
 	//components option
 	win[global].option = {
 		keys: { 
@@ -666,5 +666,4 @@ if (!Object.keys){
 		expireDate.setDate(expireDate.getDate() + -1);
 		win[global].uiCookieSet({ name:opt.name, term:'-1' });
 	}
-
 })(jQuery, window, document);	

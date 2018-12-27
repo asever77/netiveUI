@@ -179,12 +179,13 @@
 
 
 /* ui file */
-.ui-file{margin:10px 0}
-.ui-file-wrap{display:inline-block}
-.ui-file-inp{position:absolute; width:0; height:0; z-index:-1; color:transparent; overflow:hidden; font-size:xx-small; line-height:0;}
-.ui-file .ui-file-txt,
-.ui-file .ui-file-del{vertical-align:middle}
-.ui-file .ui-file-del{margin:0 20px 0 10px}
+.ui-file{margin:10px 0; position: relative; overflow:hidden}
+.ui-file-wrap{display:inline-block; position:relative;}
+.ui-file-list{position: relative; padding:10px; border:1px solid #ccc}
+.ui-file-item{position: relative; width:100%;}
+.ui-file-list .ui-file-del{position:absolute; right:10px; top:10px}
+
+.ui-file-inp{position:absolute; top:0; right: 0; margin:0; opacity:0; -ms-filter:'alpha(opacity=0)'; font-size:200px !important; direction:ltr; cursor:pointer;}
 
 /* ui card list : base */
 .ui-bricklist{position:relative; width:100%;}

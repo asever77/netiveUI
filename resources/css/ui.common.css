@@ -263,13 +263,13 @@ input[type="checkbox"] {opacity:0; display:inline-block; position:absolute; z-in
 
 /* base form: input text */
 .inp-error {border-color:red !important;}
-[class*="inp-"] {display:inline-block; vertical-align:top; width:100%; border:1px solid #c9c9c9; border-radius:2px; height:30px; padding:0 10px;}
+[class*="inp-"] {display:inline-block; vertical-align:top; width:100%; border:1px solid #c9c9c9; border-radius:2px; height:40px; padding:0 10px;}
 .inp-mmdd {width:50px;}
 .inp-date {width:100px;}
 .inp-tarea {height:100px; padding:10px;}
 
 /* base form: select */
-select {display:inline-block; position:relative; vertical-align:top; width:auto; height:30px; padding:0 30px 0 10px; border-radius:2px; 
+select {display:inline-block; position:relative; vertical-align:top; width:auto; height:40px; padding:0 40px 0 10px; border-radius:2px; 
 background:#fff url(/resources/img/common/ico_form.png) no-repeat 100% -110px; background-size:200px 200px; appearance:none; -moz-appearance:none; -webkit-appearance:none; border:1px solid #c9c9c9; font-size:14px; cursor:pointer;}
 select::-ms-expand {display:none;}
 select optgroup,

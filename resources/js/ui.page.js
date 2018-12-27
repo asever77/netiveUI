@@ -86,26 +86,10 @@
     }
 
     $plugins.page.fileupload = function(){
-        $plugins.uiSelection({ id:'uiChk2', all:true, callback:allCheckCallback });
-        $plugins.uiSelection({ id:'c3_0', all:true, callback:allCheckCallback });
-        $plugins.uiSelection({ id:'c3_4', callback:inpCheckCallback });
-        
-        function allCheckCallback(v){
-        }
-
-        function inpCheckCallback(v){
-            if (v.value) {
-                $('#abcd input').prop('disabled', false).prop('checked', true).removeAttr('disabled');
-                $('#abcd label').removeClass('disabled').addClass('checked');
-            } else {
-                $('#abcd input').prop('disabled', true).prop('checked', false).attr('disabled');
-                $('#abcd label').removeClass('checked').addClass('disabled');
-            }
-        }
 
         /* 파일 업로드 */
-        $plugins.uiFileUpload({ id:'addfile1', accept: 'image/*' }); 
-        $plugins.uiFileUpload({ id:'addfile2', multi: true }); 
+        $plugins.uiFileUpload(); 
+ 
     }
 
     $plugins.page.floating = function(){
