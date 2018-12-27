@@ -426,7 +426,6 @@
         $plugins.uiSlot({ id: 'wuiSlot2', current:3, auto:true });
         $plugins.uiSlot({ id: 'wuiSlot3', current:6, auto:true });
         $plugins.uiSlot({ id: 'wuiSlot4', current:8, auto:true }); 
-        $plugins.uiSlot({ id: 'wuiSlot5', current:8, auto:true }); 
         
 
         var n = 1,

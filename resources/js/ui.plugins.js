@@ -969,6 +969,7 @@
 	}
 
 
+
 	/* ------------------------------------------------------------------------
 	* name : modal layer popup
 	* Ver. : v1.0.0
@@ -1889,6 +1890,7 @@
 	}
 
 
+
 	/* ------------------------------------------------------------------------
 	* name : selection(radio & checkbox)
 	* Ver. : v1.0.0
@@ -2118,6 +2120,7 @@
 
 		!!callback ? callback() : '';
 	}
+
 
 
 	/* ------------------------------------------------------------------------
@@ -2799,6 +2802,7 @@
 	}
 
 
+
 	/* ------------------------------------------------------------------------
 	* name : table scroll & caption
 	* Ver. : v1.0.0
@@ -2892,6 +2896,7 @@
 			$(this).text(cp_txt + ' 정보입니다.');
 		})
 	}
+
 
 
 	/* ------------------------------------------------------------------------
@@ -3156,20 +3161,20 @@
 			html = '';
 
 		html += '<div class="base-print" id="basePrint"></div>';
-		console.log(self !== top);
+		
+		function preview_print(){ 
+			var webBrowser ='<OBJECT ID="previewWeb" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+			
+			doc.body.insertAdjacentHTML('beforeEnd', webBrowser);
+			previewWeb.ExecWB(7,1);
+			previewWeb.outerHTML='';
+		} 
+
 		if (self !== top) {
 			parent.$('body').append(html);
 			parent.$('.base-print').append(clone);
-
-			if ($global.uiCheck.ie)	{
-				var webBrowser ='<OBJECT ID="previewWeb" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
 			
-				doc.body.insertAdjacentHTML('beforeEnd', webBrowser);
-				previewWeb.ExecWB(7,1);
-				previewWeb.outerHTML='';
-			} else {
-				win.parent.print();
-			}
+			$ui.browser.ie ? preview_print() : win.parent.print();
 
 			setTimeout(function () {
 				parent.$('.base-print').remove();
@@ -3177,8 +3182,9 @@
 		} else {
 			$('body').addClass('print-ing').append(html);
 			$('.base-print').append(clone);
-			win.print();
-
+			
+			$ui.browser.ie ? preview_print() : win.print();
+			
 			setTimeout(function () {
 				$('body').removeClass('print-ing')
 				$('.base-print').remove();
@@ -3268,11 +3274,6 @@
 	function createUiSlotStart(opt){
 		//option guide
 		if (opt === undefined) {
-			$ui.uiConsoleGuide([
-				global + ".uiSlotStart({ id:'아이디명' });",
-				"- id: #을 제외한 아이디명만 입력(!필수)",
-				"※  슬롯머신 시작"
-			]);
 			return false;
 		}
 		
@@ -3302,12 +3303,6 @@
 	function createUiSlotStop(opt){
 		//option guide
 		if (opt === undefined) {
-			$ui.uiConsoleGuide([
-				global + ".uiSlotStop({ id:'아이디명', callback:function(result){...} });",
-				"- id: #을 제외한 아이디명만 입력(!필수)",
-				"- callback: 콜백함수 선택값 전달 (!선택)",
-				"※  슬롯머신 정지"
-			]);
 			return false;
 		}
 		
@@ -3785,7 +3780,7 @@
 	}
 	
 
-	
+
 	/* ------------------------------------------------------------------------
 	 * slide(carousel) v1.0 
 	 * date : 2018-04-21
