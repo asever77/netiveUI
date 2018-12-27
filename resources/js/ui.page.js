@@ -78,7 +78,7 @@
         $('.drop-ps-change').on('change', function(){
             $(this).closest('.form-item').find('.ui-drop').attr('data-ps', $(this).val());
         });
-        
+        $plugins.uiSelect();
         $plugins.uiDropdown({ id:'uiDrop1', eff:'st', ps:'bc', _offset: true });
         $plugins.uiDropdown({ id:'uiDrop2', eff:'sl', ps:'rt' });
         $plugins.uiDropdown({ id:'uiDrop5', eff:'sl', ps:'rb'});
