@@ -54,15 +54,15 @@ p{color:#333}
 
 
 /* main */
-.page-main{background:#191919;}
-.main-logo-wrap{text-align: left; width:240px; margin:0 auto 20px;}
+.page-main{background:#1a1a1a;}
+.main-logo-wrap{text-align: left; width:240px; margin:0 0 20px;}
 .main-intro .main-logo-wrap h1{text-align: left;}
 .main-logo-wrap p{font-size:14px; color:#929292;}
-.main-logo-wrap b{font-size:18px; color:#fff;}
+.main-logo-wrap b{display:block; font-size:16px; color:#dedede; margin-bottom:5px}
 .page-main .base-main{padding:0; height:100%;}
-.page-main a{color:#dbdbdb; font-size:18px; display:inline-block; margin:20px 15px; font-weight: 300; text-decoration:none; letter-spacing: 0}
-.main-intro{position: absolute; top:50%; left:50%; width:500px; margin:-150px 0 0 -250px; text-align: center}
-.main-intro h1{display:block; width:100%; text-align:center;}
+.page-main a{color:#b6b6b6; font-size:18px; display:inline-block; margin:20px 30px 0 0; font-weight: 300; text-decoration:none; letter-spacing: 0}
+.main-intro{position: absolute; top:50%; left:50%; width:440px; margin:-150px 0 0 -220px; text-align: left}
+.main-intro h1{display:block; width:100%; text-align:center; margin-bottom:15px}
 
 .h1 .ver{font-size:12px; display:inline-block; margin-left:10px; font-weight:500; background:#222; color:#fff; padding:0 2px; border-radius:4px}
 .h1 .ver-date{font-size:12px; display:inline-block; margin-left:5px; color:#000; font-weight:500;}
