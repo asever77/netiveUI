@@ -112,10 +112,10 @@ project/
 				<table class="tbl-base type-option">
 					<caption>옵션 설명</caption>
 					<colgroup>
-						<col class="n4">
-						<col class="n2">
-						<col class="n3">
-						<col class="n4">
+						<col class="col-s">
+						<col class="col-xs">
+						<col class="col-xs">
+						<col class="col-auto">
 					</colgroup>
 					<thead>
 						<tr>
@@ -125,17 +125,17 @@ project/
 							<th scope="col">설명</th>
 						</tr>
 					</thead>
-					<tbody>
+					<tbody class="txt-l">
 						<tr class="nec">
 							<th scope="row">.base-skip</th>
 							<td>z-index</td>
-							<td>2</td>
+							<td>100</td>
 							<td>스킵네비게이션 메뉴 (모든 컨텐츠의 최상위에 존재)</td>
 						</tr>
 						<tr class="nec">
 							<th scope="row">.base-layer</th>
 							<td>z-index</td>
-							<td>1</td>
+							<td>20</td>
 							<td>모달, 드롭다운, 툴팁 등 레이어로 뜨는 오브젝트(본문보다 상위)</td>
 						</tr>
 						<tr>
@@ -171,12 +171,6 @@ project/
 					</tbody>
 				</table>
 
-				<h2 class="h2">History</h2>
-				<ul>
-				<li>2018.02.02 (v1.0) : 기본정의</li>
-				<li>2018.02.10 (v1.1) : z-index 정의 추가</li>
-				<li>2018.02.25 (v1.2) : base-container 추가</li>
-				</ul>
 			</main>
 		</div>
 		<footer class="base-footer" id="baseFooter"></footer>

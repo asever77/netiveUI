@@ -2,7 +2,7 @@
 
 /* base */
 p{color:#333}
-.dropdownOpened{background:lightblue}
+.dropdownOpened{background:#f1f1f1}
 
 .h1 {font-size:60px; color:#000; margin:0 0 60px; font-weight:100; line-height:1.2;}
 .h2 {font-size:25px; color:#333; margin:50px 0 7px; font-weight:300; line-height:1.2;}
@@ -54,7 +54,7 @@ p{color:#333}
 
 
 /* main */
-.page-main{background:#1a1a1a;}
+.page-main{background:#2a2a2a;}
 .main-logo-wrap{text-align: left; width:240px; margin:0 0 20px;}
 .main-intro .main-logo-wrap h1{text-align: left;}
 .main-logo-wrap p{font-size:14px; color:#929292;}
@@ -120,7 +120,7 @@ body{background-color:#fff;}
 
 .type-option .nec,
 .type-option .nec th,
-.type-option .nec td{color:#000; font-weight:500}
+.type-option .nec td{color:#000; font-weight:400}
 .type-option .bou th,
 .type-option .bou td{border-bottom:1px solid #000}
 .type-option .un,

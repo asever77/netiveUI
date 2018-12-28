@@ -34,13 +34,21 @@
 
 				<h2 class="h2">Breakpoint 기준</h2>
 				<p>최적의 환경을 구성하기 위해 breakpoint를 디바이스의 해상도에 따라 12가지로 나눈다. 그중에 600을 기준으로 4, 8 열로 960기준으로 8, 12열로 나누어진다.</p>
-				<ul>
+				<ul class="bul-hyphen">
 					<li>12 columns : 960 ~</li>
 					<li>8 columns : 600 ~ 959</li>
 					<li>4 columns : 320 ~ 599</li>
 				</ul>
-				<table class="tbl-base type-option">
+				<table class="tbl-base type-option txt-c">
 					<caption>디바이스 화면 크기에 따른 breakpoint와 열, 홈 정보</caption>
+					<colgroup>
+						<col class="col-xxs">
+						<col class="col-auto">
+						<col class="col-auto">
+						<col class="col-auto">
+						<col class="col-xxs">
+						<col class="col-xxs">
+					</colgroup>
 					<thead>
 						<tr>
 							<th scope="col">증단점</th>
@@ -76,7 +84,7 @@
 							<td>4</td>
 							<td>16</td>
 						</tr>
-						<tr class="bou">
+						<tr>
 							<th scope="row">480</th>
 							<td>큰 핸드셋</td>
 							<td>작은 핸드셋</td>
@@ -84,6 +92,8 @@
 							<td>4</td>
 							<td>16</td>
 						</tr>
+					</tbody>
+					<tbody class="tbl-tbody">
 						<tr>
 							<th scope="row">600</th>
 							<td>작은 태블릿</td>
@@ -100,7 +110,7 @@
 							<td>8</td>
 							<td>16</td>
 						</tr>
-						<tr class="bou">
+						<tr>
 							<th scope="row">840</th>
 							<td>큰 태블릿</td>
 							<td>큰 핸드셋</td>
@@ -108,6 +118,8 @@
 							<td>8</td>
 							<td>16</td>
 						</tr>
+					</tbody>
+					<tbody class="tbl-tbody">
 						<tr>
 							<th scope="row">960</th>
 							<td></td>
@@ -173,7 +185,7 @@
 	</div>
 				<h3 class="h3"><span class="coln12">12-Columns(1080기준-90)</span><span class="coln8">8-Columns</span><span class="coln4">4-Columns</span></h3>
 				<p>1080기준으로 12col은 1080px크기로 1col의 기본 크기는 92px 기준 </p>
-				<div class="grid-wrap">
+				<div class="grid-wrap mgt-s">
 					<div class="grid-col" grid="1-1-1"><b>1</b><b>1</b><b>1</b></div>
 					<div class="grid-col" grid="2-2-1"><b>2</b><b>2</b><b>1</b></div>
 					<div class="grid-col" grid="3-3-1"><b>3</b><b>3</b><b>1</b></div>

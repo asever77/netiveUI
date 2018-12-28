@@ -578,7 +578,7 @@
 		callback: function(v){ console.log(v) },
 		shortDate: false, //DDMMYYYY
 		dateMonths: new Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'),
-		weekDay: new Array('Sun', '월', '화', '수', '목', '금', '토'),
+		weekDay: new Array('일', '월', '화', '수', '목', '금', '토'),
 		remove: false
 	};
 	function createUiDatePicker(opt){
@@ -683,7 +683,7 @@
 			/* 년월 선택: datepicker-head-select */
 			_calendarHtml += '<div class="datepicker-head-select">';
 			_calendarHtml += '<div class="ui-select datepicker-head-year">';
-			_calendarHtml += '<select title="년도 선택">';
+			_calendarHtml += '<select title="년도 선택" id="sel_'+ calendarEl.inputId +'_year">';
 
 			for (var y = Number(_minDay[0]); y < Number(_maxDay[0]) + 1; y++) {
 				_calendarHtml += y === year ? '<option value="'+ y +'" selected>'+ y +'년</option>': '<option value="'+ y +'">'+ y +'년</option>';
@@ -693,7 +693,7 @@
 			_calendarHtml += '</div>';
 
 			_calendarHtml += '<div class="ui-select datepicker-head-month">';
-			_calendarHtml += '<select title="월 선택">';
+			_calendarHtml += '<select title="월 선택" id="sel_'+ calendarEl.inputId +'_month">';
 
 			for (var m = 1; m < 13; m++) {
 				_calendarHtml += m === month + 1 ? '<option value="'+ m +'" selected>'+ m +'월</option>': '<option value="'+ m +'">'+ m +'월</option>';
@@ -705,26 +705,95 @@
 
 			/* 년월 선택: button */
 			_calendarHtml += '<div class="datepicker-head-btn">';
-			_calendarHtml += year < _minDay[0] || year == _minDay[0] && dateMonths[month] <= _minDay[1] ? 
-				'<button type="button" class="ui-datepicker-prev disabled" disabled>': '<button type="button" class="ui-datepicker-prev">';
-			_calendarHtml += '<span>이전 ' + dateMonths[(month === 0) ? 11 : month - 1] + ' 월로 이동</span></button>';
+			_calendarHtml += year <= _minDay[0] && dateMonths[month] <= _minDay[1] ? 
+				'<button type="button" class="ui-datepicker-prev-y disabled" disabled>': '<button type="button" class="ui-datepicker-prev-y" title="이전 년도">';
+			_calendarHtml += '<span class="hide">이전 ' + (year - 1) + ' 년으로 이동</span></button>';
 
-			_calendarHtml += year > _maxDay[0] || year == _maxDay[0] && dateMonths[month] >= _maxDay[1] ? 
-				'<button type="button" class="ui-datepicker-next disabled" disabled>': '<button type="button" class="ui-datepicker-next">';
-			_calendarHtml += '<span>다음 ' + dateMonths[(month == 11) ? 0 : month + 1] + ' 월로 이동</span></button>';
+			_calendarHtml += year <= _minDay[0] ? 
+				'<button type="button" class="ui-datepicker-prev disabled" disabled>': '<button type="button" class="ui-datepicker-prev" title="이전 달">';
+			_calendarHtml += '<span class="hide">이전 ' + dateMonths[(month === 0) ? 11 : month - 1] + ' 월로 이동</span></button>';
+
+			_calendarHtml += year >= _maxDay[0] && dateMonths[month] >= _maxDay[1] ? 
+				'<button type="button" class="ui-datepicker-next disabled" disabled>': '<button type="button" class="ui-datepicker-next" title="다음 달">';
+			_calendarHtml += '<span class="hide">다음 ' + dateMonths[(month == 11) ? 0 : month + 1] + ' 월로 이동</span></button>';
+
+			_calendarHtml += year >= _maxDay[0] ? 
+				'<button type="button" class="ui-datepicker-next-y disabled" disabled>': '<button type="button" class="ui-datepicker-next-y" title="다음 년도">';
+			_calendarHtml += '<span class="hide">다음 ' + (year + 1) + ' 년으로 이동</span></button>';
 			_calendarHtml += '</div>';
 
 			/* today */
-			_calendarHtml += '<div class="today"><button type="button" class="today" data-day=' + textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), true) + '><span>오늘 - '+ textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), true) +' 이동</span></button></div>';
+			_calendarHtml += '<div class="datepicker-head-today">';
+			_calendarHtml += '<button type="button" class="today" data-day=' + textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), true) + ' title="오늘로 이동"><span class="hide">오늘 - '+ textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), true) +' 이동</span></button>';
+			_calendarHtml += '</div>';
+			
 			/* datepicker-head-date */
 			_calendarHtml += '<div class="datepicker-head-date">';
-			_calendarHtml += '<span class="year" data-y="'+ year +'"><strong>' + year + '</strong>년<span class="hide"> - 선택된 년도</span></span>';
-			_calendarHtml += '<span class="month" data-m="'+ dateMonths[month] +'"><strong>' + dateMonths[month] + '</strong>월<span class="hide"> - 선택된 월</span></span>';
+			_calendarHtml += '<span class="year" data-y="'+ year +'"><strong>' + year + '</strong>년</span> ';
+			_calendarHtml += '<span class="month" data-m="'+ dateMonths[month] +'"><strong>' + dateMonths[month] + '</strong>월</span>';
+			_calendarHtml += '<span class="hide">선택됨</span>';
 			_calendarHtml += '</div>';
 			_calendarHtml += '</div>';
 			
 			/* datepicker-core -------------------- */
-			_calendarHtml += '<div class="datepicker-core">';
+			_calendarHtml += '<div class="datepicker-core"></div>';
+			_calendarHtml += '<button type="button" class="btn-close ui-datepicker-close"><span class="hide">닫기</span></button>';
+
+			return _calendarHtml;
+		}
+		function buildCore(date, calendarEl, v) {
+			var $base = $('#' + calendarEl.calId),
+				inp_val = $('#' + calendarEl.inputId).val(),
+				nVal = inp_val.split(date_split),
+				generate = v === 'generate' ? true : false,
+				day = !generate ? date.getDate() : inp_val === '' ? date.getDate() : Number(nVal[2]),
+				month = !generate ? date.getMonth() : inp_val === '' ? date.getMonth() : Number(nVal[1] - 1),
+				year = !generate ? date.getFullYear() : inp_val === '' ? date.getFullYear() : Number(nVal[0]),
+				prevMonth = new Date(year, month - 1, 1),
+				thisMonth = new Date(year, month, 1),
+				nextMonth = new Date(year, month + 1, 1),
+				firstWeekDay = thisMonth.getDay(),
+				daysInMonth = Math.floor((nextMonth.getTime() - thisMonth.getTime()) / (1000 * 60 * 60 * 24)),
+				daysInMonth_prev = Math.floor((thisMonth.getTime() - prevMonth.getTime()) / (1000 * 60 * 60 * 24)),
+				$input = $('#' + calendarEl.inputId).eq(0),
+				tit = $input.attr('title'),
+				_minDay = new Array(),
+				_maxDay = new Array(),
+				_calendarHtml = '',
+				//_isOver = false,
+				mm = nextMonth.getMonth(),
+				week_day;
+
+			$input.data('min') !== undefined ? _minDay = $input.data('min').split(date_split, 3) : _minDay[0] = 1910;// 최소 선택 가능
+			$input.data('max') !== undefined ? _maxDay = $input.data('max').split(date_split, 3) : _maxDay[0] = 2050;// 최대 선택 가능
+			month === 2 ? daysInMonth = 31 : '';
+
+			$base.find('.ui-datepicker-prev span').text('이전 '+ dateMonths[(month === 0) ? 11 : month - 1]+ '월로 이동');
+			$base.find('.ui-datepicker-next span').text('다음 '+ dateMonths[(month == 11) ? 0 : month + 1]+ '월로 이동');
+			$base.find('.datepicker-head-date').find('.year').data('y',year).find('strong').text(year);
+			$base.find('.datepicker-head-date').find('.month').data('m',dateMonths[month]).find('strong').text(dateMonths[month]);
+			$base.find('.datepicker-head-year option').prop('selected', false).removeAttr('selected');
+			$base.find('.datepicker-head-year option[value="'+ year +'"]').prop('selected', true);
+			$base.find('.datepicker-head-month option').prop('selected', false).removeAttr('selected');
+			$base.find('.datepicker-head-month option[value="'+ (month + 1) +'"]').prop('selected', true);
+
+			year <= _minDay[0] && dateMonths[month] <= _minDay[1] ? 
+				$base.find('.ui-datepicker-prev').addClass('disabled').attr('disabled'):
+				$base.find('.ui-datepicker-prev').removeAttr('disabled').removeClass('disabled');
+			
+			year <= _minDay[0] ? 
+				$base.find('.ui-datepicker-prev-y').addClass('disabled').attr('disabled'):
+				$base.find('.ui-datepicker-prev-y').removeAttr('disabled').removeClass('disabled');
+
+			year >= _maxDay[0] && dateMonths[month] >= _maxDay[1] ? 
+				$base.find('.ui-datepicker-next').addClass('disabled').attr('disabled'): 
+				$base.find('.ui-datepicker-next').removeAttr('disabled').removeClass('disabled');
+
+			year >= _maxDay[0] ? 
+				$base.find('.ui-datepicker-next-y').addClass('disabled').attr('disabled'): 
+				$base.find('.ui-datepicker-next-y').removeAttr('disabled').removeClass('disabled');
+
+			/* datepicker-core -------------------- */
 			_calendarHtml += '<table class="tbl-datepicker">';
 			_calendarHtml += '<caption>'+ year +'년 '+ dateMonths[month] +'월 일자 선택</caption>';
 			_calendarHtml += '<thead><tr>';
@@ -797,8 +866,6 @@
 			}
 
 			_calendarHtml += '</tr></tbody></table>';
-			_calendarHtml += '</div>';
-			_calendarHtml += '<button type="button" class="btn-close ui-datepicker-close"><span class="hide">닫기</span></button>';
 
 			return _calendarHtml;
 		}
@@ -821,37 +888,62 @@
 		}
 
 		//달력 Show
+		function reDisplayCalendar(calendarEl, v) {
+			var $calWrap = $("#" + calendarEl.calId);
+			
+			$calWrap.find('.datepicker-core').empty().append(buildCore(date, calendarEl, v));
+		}
 		function displayCalendar(calendarEl, v) {
 			var $calWrap = $("#" + calendarEl.calId);
 			
 			$calWrap.empty().append(buildCalendar(date, calendarEl, v));
+			reDisplayCalendar(calendarEl, v);
 			$ui.uiFocusTab({ selector:$('#' + calendarEl.calId), type:'hold' });
 
 			//datepicker event--------------------------------------------------------
 			//select year & month
-			$calWrap.find('.datepicker-head-year select').off('change.uidpsel').on('change.uidpsel', function(){
-				yearMonthSelect(this, 'year')
+			$calWrap.find('.datepicker-head-year select').off('change.uidpsel').on('change.uidpsel', function(e){
+				e.preventDefault();
+				yearMonthSelect(this, 'year');
 			});
-			$calWrap.find('.datepicker-head-month select').off('change.uidpsel').on('change.uidpsel', function(){
-				yearMonthSelect(this, 'month')
+			$calWrap.find('.datepicker-head-month select').off('change.uidpsel').on('change.uidpsel', function(e){
+				e.preventDefault();
+				yearMonthSelect(this, 'month');
 			});
 			//next & prev month
-			$calWrap.find('.ui-datepicker-prev').off('click.uidatepicker').on('click.uidatepicker', function() {
+			$calWrap.find('.ui-datepicker-prev').off('click.uidatepicker').on('click.uidatepicker', function(e) {
+				e.preventDefault();
 				monthNextPrev(this, 'prev');
 			});
-			$calWrap.find('.ui-datepicker-next').off('click.uidatepicker').on('click.uidatepicker', function() {
+			$calWrap.find('.ui-datepicker-next').off('click.uidatepicker').on('click.uidatepicker', function(e) {
+				e.preventDefault();
 				monthNextPrev(this, 'next');
+			});
+			$calWrap.find('.ui-datepicker-prev-y').off('click.uidatepicker').on('click.uidatepicker', function(e) {
+				e.preventDefault();
+				yearNextPrev(this, 'prev');
+			});
+			$calWrap.find('.ui-datepicker-next-y').off('click.uidatepicker').on('click.uidatepicker', function(e) {
+				e.preventDefault();
+				yearNextPrev(this, 'next');
 			});
 
 			function yearMonthSelect(t, v){
 				var $currentDate = $(t).closest('.datepicker-head').find('.datepicker-head-date'),
-					_y = v === 'year' ? $(t).closest('.datepicker-head-year').find('select').eq(0).val(): Number($currentDate.find('.year').data('y')),
-					_m = v === 'year' ? Number($currentDate.find('.month').data('m') - 1): $(t).closest('.datepicker-head-month').find('select').eq(0).val(),
+					_y = v === 'year' ? 
+						$(t).closest('.datepicker-head-year').find('select').eq(0).val(): 
+						Number($currentDate.find('.year').data('y')),
+					_m = v === 'month' ? 
+						$(t).closest('.datepicker-head-month').find('select').eq(0).val(): 
+						Number($currentDate.find('.month').data('m') - 1),
 					dateTemp = v === 'year' ? new Date(_y, _m, 1): new Date(_y, _m - 1, 1);
 
 				date = dateTemp;
-				displayCalendar(calendarEl);
-				v === 'year' ? $calWrap.find('.datepicker-head-year select').eq(0).focus(): $calWrap.find('.datepicker-head-month select').eq(0).focus();
+				reDisplayCalendar(calendarEl);
+				
+				v === 'year' ? 
+					$calWrap.find('.datepicker-head-year select').eq(0).focus(): 
+					$calWrap.find('.datepicker-head-month select').eq(0).focus();
 			}
 			function monthNextPrev(t, v){
 				var $this = $(t),
@@ -865,35 +957,46 @@
 					alert($('#'+ calendarEl.inputId).data(limit) +' 을 벗어난 달은 선택이 불가능 합니다.');
 				} else {
 					date = dateTemp;
-					setTimeout(function(){
-						displayCalendar(calendarEl);
-						$this.eq(0).focus();
-					},0);
+					reDisplayCalendar(calendarEl);
+					$this.eq(0).focus();
+				}
+			}
+			function yearNextPrev(t, v){
+				var $this = $(t),
+					limit = v === 'next' ? 'max': 'min',
+					$currentDate = $this.closest('.datepicker-head').find('.datepicker-head-date'),
+					_y = Number($currentDate.find('.year').data('y')),
+					_m = Number($currentDate.find('.month').data('m') - 1),
+					dateTemp = v === 'next' ? new Date(_y + 1, _m, 1): new Date(_y - 1, _m, 1);
+
+				if ($this.hasClass('disabled')) {
+					alert($('#'+ calendarEl.inputId).data(limit) +' 을 벗어난 년은 선택이 불가능 합니다.');
+				} else {
+					date = dateTemp;
+					reDisplayCalendar(calendarEl);
+					$this.eq(0).focus();
 				}
 			}
 			
 			//close
-			$('.ui-datepicker-close').off('click.uidpclose').on('click.uidpclose', function(){
+			$('.ui-datepicker-close').off('click.uidayclose').on('click.uidayclose', function(){
 				datepickerClose(this, calendarEl);
 			});
 
-			$calWrap.find('td button').off('click.uidpday').on('click.uidpday', function() {
-				var $this = $(this),
-					$btn = $this.closest('.ui-datepicker').find('.ui-datepicker-btn');
+			var id_ = "#" + calendarEl.calId;
+			$(doc)
+				.off('click.uidaysel').on('click.uidaysel', id_ + ' td button', function() {
+					var $this = $(this);
 
-				writeInputDateValue(calendarEl, $this);
-				datepickerClose(this, calendarEl);
-			});
+					writeInputDateValue(calendarEl, $this);
+					datepickerClose(this, calendarEl);
+				})
+				.off('click.uitoday').on('click.uitoday', id_ + ' .datepicker-head-today button', function() {
+					date = new Date();
 
-			$calWrap.find('.today button').off('click.uidatepicker').on('click.uidatepicker', function() {
-				date = new Date();
-
-				setTimeout(function(){
-					displayCalendar(calendarEl);
+					reDisplayCalendar(calendarEl);
 					$calWrap.find('td button.today').eq(0).focus();
-				},0);
-				
-			});
+				});
 
 			var _btnOffset = $("#" + calendarEl.buttonId).offset();
 			matchToday();
