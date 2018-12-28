@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<link rel="apple-touch-icon" href="/resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="/resources/img/common/ico_favicon.ico"> 
+
+	<title>CODE GHOST</title>
+
+	<link rel="stylesheet" href="/resources/css/ui.base.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="/resources/js/ui.base.js"></script>
+    <style>
+    .in-wrap{border:1px solid #222; background:#f1f1f1;}
+    .in-item{border:1px dashed #ccc; padding:10px; background:#fff;}
+
+    .fl-wrap{border:1px solid #222; background:#f1f1f1;}
+    .fl-item-r,
+    .fl-item-l{border:1px dashed #ccc; padding:10px; background:#fff;}
+    </style>
+</head>
+
+<body class="page-typography">
+	<div class="base-skip" id="baseSkip"></div>
+	<div class="base-layer" id="baseLayer"></div>
+	<div class="base-wrap" id="baseWrap">
+		<header class="base-header" id="baseHeader"></header>
+        <div class="base-body" id="baseBody">
+			<aside class="base-aside" id="baseAside"></aside>
+            <main class="base-main" id="baseMain" role="main">
+                <div class="tit-wrap">
+					<h1 class="h1" id="uiPageTit">Margin</h1>
+				</div>
+
+                <h2 class="h2">inline-block Layout</h2>
+
+                <p>inline-block으로 레이아웃 구성 시 기본으로 생기는 여백을 .in-wrap 에서 font-size:0 으로 해결한다.<br>
+                .in-item에서는 필수로 font-size를 재정의를 해줘야한다.
+                </p>
+
+				<div class="in-wrap">
+                    <div class="in-item col-xs txt-c">A</div>
+                    <div class="in-item col-s txt-c">B</div>
+                    <div class="in-item col-m txt-c">C</div>
+                </div>
+                <div class="in-wrap txt-c">
+                    <div class="in-item col-xs txt-c">A</div>
+                    <div class="in-item col-s txt-c">B</div>
+                    <div class="in-item col-m txt-c">C</div>
+                </div>
+                <div class="in-wrap txt-r">
+                    <div class="in-item col-xs txt-c">A</div>
+                    <div class="in-item col-s txt-c">B</div>
+                    <div class="in-item col-m txt-c">C</div>
+                </div>
+<div class="box-code">
+<pre>
+<code>
+&lt;div class="in-wrap"&gt;
+    &lt;div class="in-item"&gt;...&lt;/div&gt;
+    &lt;div class="in-item"&gt;...&lt;/div&gt;
+    &lt;div class="in-item"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+                <h2 class="h2">float Layout</h2>
+
+                <p>float으로 레이아웃 구성 시 부모가 자식의 높이값을 못가져오는 현상은 :after로 해결한다.</p>
+
+				<div class="fl-wrap">
+                    <div class="fl-item-l col-xs txt-c">A</div>
+                    <div class="fl-item-l col-s txt-c">B</div>
+                    <div class="fl-item-r col-m txt-c">C</div>
+                </div>
+
+<div class="box-code">
+<pre>
+<code>
+&lt;div class="fl-wrap"&gt;
+    &lt;div class="fl-item-l"&gt;...&lt;/div&gt;
+    &lt;div class="fl-item-l"&gt;...&lt;/div&gt;
+    &lt;div class="fl-item-r"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+                    
+            </main>
+        </div>
+		<footer class="base-footer" id="baseFooter"></footer>
+	</div>
+
+    <!-- only page script -->
+	<script>
+		;(function($, win, doc, undefined) {
+			console.log('page ready before')
+			$plugins.common.pageid = 'G_02_07_00_00';
+
+			$(doc).ready(function(){
+				
+				console.log('page ready after')
+
+			});
+		})(jQuery, window, document);
+	</script>
+
+</body>
+</html>

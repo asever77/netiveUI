@@ -5688,7 +5688,7 @@
 		var msg = opt.message, 
 			err = opt.error, 
 			$this = typeof opt.selector === 'string' ? $('#' + opt.selector) : opt.selector,
-			$wrap = opt.wrapper === undefined ? $this.closest('.form-item') : $this.closest(opt.wrapper),
+			$wrap = opt.wrapper === undefined ? $this.closest('.in-wrap') : $this.closest(opt.wrapper),
 			id = $this.attr('id'),
 			err_html = '<em class="ui-error-msg" aria-hidden="true" id="'+ id +'-error">'+ msg +'</em>';
 

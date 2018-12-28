@@ -125,7 +125,8 @@
 
     $plugins.page.inputformat = function(){
         var n = 3;
-
+        
+        $plugins.uiSelect();
         $plugins.uiInputCancel();
         $('#uiErrorOn').on('click', function(){
             n = 3;
