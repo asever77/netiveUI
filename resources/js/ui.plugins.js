@@ -33,7 +33,7 @@
 			return false;
 		}
 
-		var opt = $.extend(true, {}, $ui.uiTab.option, opt),
+		var opt = $.extend(true, {}, $ui.uiAccordion.option, opt),
 			id = opt.id,
 			current = opt.current,
 			callback = opt.callback,
@@ -97,10 +97,10 @@
 			}) : '';
 
 		//event
-		$btn.off('click.uitab keydown.uitab')
+		$btn.off('click.uiaccotab keydown.uiaccotab')
 			.on({
-				'click.uitab': evtClick,
-				'keydown.uitab': evtKeys
+				'click.uiaccotab': evtClick,
+				'keydown.uiaccotab': evtKeys
 			});
 
 		function evtClick(e) {
@@ -2601,7 +2601,8 @@
 			para = $ui.uiPara('tab'),
 			paras,
 			paraname;
-
+		
+		
 		//set up
 		if (!!para) {
 			if (para.split('+').length > 1) {
@@ -2622,6 +2623,8 @@
 				} else {
 					current = Number(para);
 				}
+
+				console.log(current);
 			}
 		}
 
@@ -5109,11 +5112,7 @@
 				r3 = dataExecel.list[i].r3 || '';
 				r4 = dataExecel.list[i].r4 || '';
 				overl = dataExecel.list[i].overlab || '';
-
-				r1 === '' ? root += '' : root += '/' + r1;
-				(dataExecel.list[i].r2 !== undefined && dataExecel.list[i].r2 !== '') ? root += '/' + r2 : '';
-				(dataExecel.list[i].r3 !== undefined && dataExecel.list[i].r3 !== '') ? root += '/' + r3 : '';
-				(dataExecel.list[i].r4 !== undefined && dataExecel.list[i].r4 !== '') ? root += '/' + r4 : '';
+				root = dataExecel.list[i].root || '';
 
 				(d1 !== '') ? d1_ = dataExecel.list[i - 1 < 0 ? 0 : i].d1 : d1 = d1_;
 
@@ -5156,9 +5155,10 @@
 				delsum = (state === "제외") ? delsum + 1 : delsum;
 				watsum = (state === "대기") ? watsum + 1 : watsum;
 				chksum = (state === "체크") ? chksum + 1 : chksum;
-				var x = (i === 0) ? 0 : i - 1,
-					z1 = dataExecel.list[i].d1 !== dataExecel.list[x].d1;
-				c1 = (z1) ? ' c1' : '';
+
+				var x = (i === 0) ? 0 : i - 1;
+
+				c1 = (dataExecel.list[i].d1 !== dataExecel.list[x].d1) ? ' c1' : '';
 				c2 = (dataExecel.list[i].d2 !== dataExecel.list[x].d2) ? ' c2' : '';
 				c3 = (dataExecel.list[i].d3 !== dataExecel.list[x].d3) ? ' c3' : '';
 				c4 = (dataExecel.list[i].d4 !== dataExecel.list[x].d4) ? ' c4' : '';
@@ -5167,7 +5167,14 @@
 				c7 = (dataExecel.list[i].d7 !== dataExecel.list[x].d7) ? ' c7' : '';
 				c8 = (dataExecel.list[i].d8 !== dataExecel.list[x].d8) ? ' c8' : '';
 
-				cls2 = state === '체크' ? 'chk' : state === '진행' ? 'ing' : state === '완료' ? 'end' : state === '검수' ? 'tst' : state === '제외' ? 'del' : state === '약관' ? 'trm' : '';
+				cls2 = 
+					state === '체크' ? 'chk' : 
+					state === '진행' ? 'ing' : 
+					state === '완료' ? 'end' : 
+					state === '검수' ? 'tst' : 
+					state === '제외' ? 'del' : 
+					state === '약관' ? 'trm' : '';
+
 				cls = cls2 + c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8;
 
 				ctg_state.push(dataExecel.list[i].state);
@@ -5177,42 +5184,36 @@
 				ctg_enddate.push(dataExecel.list[i].enddate);
 				ctg_menu.push(dataExecel.list[i].d2);
 
-				var imgroot = $ui.browser.mobile ? "m" : "d";
-
 				if (state !== '제외' && i === 0) {
 					table += '<table>';
 					table += '<caption>코딩리스트</caption>';
 					table += '<colgroup>';
-					table += '<col class="col1">';
-					table += '<col class="col2">';
-					table += '<col class="col3">';
-					table += '<col class="col4">';
-					table += '<col class="col4">';
-					//table += '<col class="col5">';
-					//table += '<col class="col7">';
-					table += '<col class="col6">';
-					table += '<col class="col6">';
-					table += '<col class="col4">';
+					table += '<col class="col-1">';
+					table += '<col class="col-2">';
+					table += '<col class="col-3">';
+					table += '<col class="col-4">';
+					table += '<col class="col-5">';
+					table += '<col class="col-6">';
+					table += '<col class="col-7">';
+					table += '<col class="col-8">';
 					table += '</colgroup>';
 					table += '<colgroup>';
-					(dataExecel.list[i].d1 !== undefined) ? table += '<col class="col8 n1">' : '';
-					(dataExecel.list[i].d2 !== undefined) ? table += '<col class="col8 n2">' : '';
-					(dataExecel.list[i].d3 !== undefined) ? table += '<col class="col8 n3">' : '';
-					(dataExecel.list[i].d4 !== undefined) ? table += '<col class="col8 n4">' : '';
-					(dataExecel.list[i].d5 !== undefined) ? table += '<col class="col8 n5">' : '';
-					(dataExecel.list[i].d6 !== undefined) ? table += '<col class="col8 n6">' : '';
-					(dataExecel.list[i].d7 !== undefined) ? table += '<col class="col8 n7">' : '';
-					(dataExecel.list[i].d8 !== undefined) ? table += '<col class="col8 n8">' : '';
+					(dataExecel.list[i].d1 !== undefined) ? table += '<col class="col-9">' : '';
+					(dataExecel.list[i].d2 !== undefined) ? table += '<col class="col-9">' : '';
+					(dataExecel.list[i].d3 !== undefined) ? table += '<col class="col-9">' : '';
+					(dataExecel.list[i].d4 !== undefined) ? table += '<col class="col-9">' : '';
+					(dataExecel.list[i].d5 !== undefined) ? table += '<col class="col-9">' : '';
+					(dataExecel.list[i].d6 !== undefined) ? table += '<col class="col-9">' : '';
+					(dataExecel.list[i].d7 !== undefined) ? table += '<col class="col-9">' : '';
+					(dataExecel.list[i].d8 !== undefined) ? table += '<col class="col-9">' : '';
 					table += '</colgroup>';
-					table += '<col class="col9">';
+					table += '<col class="col-10">';
 					table += '<thead>';
 					table += '<th scope="col">' + state + '</th>';
 					table += '<th scope="col">' + date + '</th>';
 					table += '<th scope="col">' + enddate + '</th>';
 					table += '<th scope="col">' + pub + '</th>';
 					table += '<th scope="col">' + dev + '</th>';
-					//table += '<th scope="col">IMG</th>';
-					//table += '<th scope="col">'+ root +'</th>';
 					table += '<th scope="col">' + pop + '</th>';
 					table += '<th scope="col">' + tab + '</th>';
 					table += '<th scope="col">' + id + '</th>';
@@ -5238,28 +5239,19 @@
 					table += '<td class="enddate"><span>' + enddate + '</span></td>';
 					table += '<td class="name pub"><span>' + pub + '</span></td>';
 					table += '<td class="name dev"><span>' + dev + '</span></td>';
-					/*
-					if (!!id) {
-						table += '<td class="img"><span><a href="/resources/json/design/'+ imgroot + '/'+ id +'.png" target="design"><img src="/resources/json/design/img.png" alt=""></a></span></td>';
-					} else {
-						table += '<td class="img"></td>';
-					}
-					*/
+
 					var popIs = !!pop ? 'P' : '',
 						tabIs = tab === 'S' ? 'S' : tab === '' ? '' : 'T',
 						full = !!full ? true : false;
 
-					//table += '<td class="root"><span>' + root + '/</span></td>';
 					table += '<td class="txt-c"><span>' + popIs + '</span></td>';
 					table += '<td class="txt-c"><span>' + tabIs + '</span></td>';
 
 					if (!pop) {
-						table += (id !== '') ?
-							(overl !== '') ?
-								tabIs === 'T' ?
-									'<td class="id ico_pg"><span><a href="' + root + '/' + overl + '.html?tab=' + (tab - 1) + '" target="coding">' + overl + '</a></span><span class="overl">' + id + '</span></td>' :
-									'<td class="id ico_pg"><span><a href="' + root + '/' + overl + '.html" target="coding">' + overl + '</a></span><span class="overl">' + id + '</span></td>' :
-								'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
+						table += id !== '' ? overl !== '' ? tabIs === 'T' ?
+							'<td class="id ico_pg"><span><a href="' + root + '/' + overl + '.html?tab=' + (tab - 1) + '" target="coding">' + overl + '</a></span><span class="overl">' + id + '</span></td>' :
+							'<td class="id ico_pg"><span><a href="' + root + '/' + overl + '.html" target="coding">' + overl + '</a></span><span class="overl">' + id + '</span></td>' :
+							'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
 							'<td class="id "><span></span></td>';
 					} else {
 						table += id !== '' ? overl !== '' ? ifm === '' ? pop === '1' ? tabIs === 'T' ?
@@ -5322,6 +5314,11 @@
 			}
 
 			var sel = '';
+			sel += '<div class="box-srch">';
+			sel += '<div class="srch-area">';
+			sel += '<input type="search" id="uiCodinglistSrchCode" class="inp-srch" value="" placeholder="검색어를 입력해주세요.">';
+			sel += '</div>';
+			sel += '</div>';
 			sel += '<div class="ui-codinglist-sel">';
 			sel += '<button type="button" class="btn-base"><span>전체</span></button>';
 			sel += '<select id="uiCLstate" data-ctg="state">';
@@ -5342,6 +5339,7 @@
 			sel += '<a href="/guide/coding_list.html" class="btn-base"><span>PC</span></a>';
 			sel += '<a href="/m/guide/coding_list.html" class="btn-base"><span>Mobile</span></a>';
 			sel += '</div>';
+			
 			$('#' + opt.id).prepend(sel);
 
 			selectoption('uiCLstate', ctg_state);
@@ -5417,6 +5415,25 @@
 			$('.ui-codinglist table a, .ui-codinglist table button').off('click.uicoding').on('click.uicoding', function () {
 				$(this).closest('tr').addClass('selected').siblings().removeClass('selected');
 			});
+
+			if ($('#uiCodinglistSrchCode').val() !== '') {
+				var temp = $('.ui-codinglist tbody tr td *:contains('+ $('#uiCodinglistSrchCode').val() +')');
+
+				$('.ui-codinglist tbody tr').hide();
+				$(temp).closest('tr').show();
+			}
+			$.expr[":"].contains = $.expr.createPseudo(function(arg){
+				return function(elem) {
+					return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+				}
+			});
+			$('#uiCodinglistSrchCode').on('keyup', function(){
+				var k = $(this).val(),
+					temp = $('.ui-codinglist tbody tr td *:contains('+ k +')');
+				$('.ui-codinglist tbody tr').hide();
+				$(temp).closest('tr').show();
+			});
+
 		}
 	}
 
