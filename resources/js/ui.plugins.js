@@ -78,7 +78,7 @@
 				.attr('aria-expanded', false)
 				.attr('aria-controls', $accopln.attr('id'))
 				.removeClass('selected')
-				.find('.ui-acco-txt').text('열기');
+				.find('.ui-acco-arrow').text('열기');
 			$accopln
 				.attr('data-n', i)
 				.attr('data-len', len)
@@ -250,21 +250,21 @@
 			if (autoclose === true && isDown) {
 				$wrap.each(function(i){
 					$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', false).removeClass('selected').attr('aria-expanded', false)
-						.find('.ui-acco-txt').text('열기');
+						.find('.ui-acco-arrow').text('열기');
 					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden',true).stop().slideUp(speed);
 				});
 			}
 			if (current === 'all') {
 				$wrap.each(function(i){
 					$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', a)[cls]('selected').attr('aria-expanded', a)
-						.find('.ui-acco-txt').text(txt);
+						.find('.ui-acco-arrow').text(txt);
 					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden', !a).stop()[updown](speed, function(){
 						$(this).css({ height: '', padding: '', margin: '' }); // 초기화
 					});
 				});
 			} else {
 				$btn.data('selected', a).attr('aria-expanded', a)[cls]('selected')
-					.find('.ui-acco-txt').text(txt);
+					.find('.ui-acco-arrow').text(txt);
 				$pnl.attr('aria-hidden', !a).stop()[updown](speed, function(){
 					$(this).css({ height: '', padding: '', margin: '' }); // 초기화
 				});
