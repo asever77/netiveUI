@@ -78,7 +78,7 @@
 				.attr('aria-expanded', false)
 				.attr('aria-controls', $accopln.attr('id'))
 				.removeClass('selected')
-				.find('.ui-acco-txt').text('열기');
+				.find('.ui-acco-arrow').text('열기');
 			$accopln
 				.attr('data-n', i)
 				.attr('data-len', len)
@@ -250,21 +250,21 @@
 			if (autoclose === true && isDown) {
 				$wrap.each(function(i){
 					$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', false).removeClass('selected').attr('aria-expanded', false)
-						.find('.ui-acco-txt').text('열기');
+						.find('.ui-acco-arrow').text('열기');
 					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden',true).stop().slideUp(speed);
 				});
 			}
 			if (current === 'all') {
 				$wrap.each(function(i){
 					$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', a)[cls]('selected').attr('aria-expanded', a)
-						.find('.ui-acco-txt').text(txt);
+						.find('.ui-acco-arrow').text(txt);
 					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden', !a).stop()[updown](speed, function(){
 						$(this).css({ height: '', padding: '', margin: '' }); // 초기화
 					});
 				});
 			} else {
 				$btn.data('selected', a).attr('aria-expanded', a)[cls]('selected')
-					.find('.ui-acco-txt').text(txt);
+					.find('.ui-acco-arrow').text(txt);
 				$pnl.attr('aria-hidden', !a).stop()[updown](speed, function(){
 					$(this).css({ height: '', padding: '', margin: '' }); // 초기화
 				});
@@ -2952,14 +2952,16 @@
 			clone_colgroup = $tbody.find('colgroup').clone();
 			clone_thead = $tbody.find('thead tr').clone();
 			h = 0;
-
-			clone_tbl += '<table class="tbl-scroll-thead txt-c" aria-hidden="true" tabindex="-1">';
+			
+			clone_tbl += '<div class="tbl-scroll-thead">';
+			clone_tbl += '<table class="txt-c" aria-hidden="true" tabindex="-1">';
 			clone_tbl += '</table>';
+			clone_tbl += '</div>'
 
 			$tbl.eq(i).prepend(clone_tbl);
 			clone_tbl = '';
-			$tbl.eq(i).find('.tbl-scroll-thead').append(clone_colgroup);
-			$tbl.eq(i).find('.tbl-scroll-thead').append(clone_thead);
+			$tbl.eq(i).find('.tbl-scroll-thead table').append(clone_colgroup);
+			$tbl.eq(i).find('.tbl-scroll-thead table').append(clone_thead);
 			$thead = $tbl.eq(i).find('.tbl-scroll-thead');
 			$thead.find('th').each(function(){
 				$(this).replaceWith('<td>'+ $(this).text() +'</td>');
@@ -2971,9 +2973,48 @@
 				}
 				$tbl.eq(i).addClass('is-scr');
 				$tbody.css('max-height', h + 'px');
-				$thead.find('col').eq(-1).removeClass().addClass($tbody.find('col').eq(-1).attr('class') + '-scr');
 			}
 		}
+		
+		/* scroll event
+		if (!$plugins.browser.mobile) {
+			var y = 0,
+				y2 = 0,
+				y3 = 0,
+				yn = 0,
+				wrap_h,
+				tbl_h,
+				max_y;
+
+			$('.tbl-scroll-tbody').on('mousedown', function(e){
+				var $this = $(this);
+
+				wrap_h = $this.outerHeight();
+				tbl_h = $this.find('.tbl-base').outerHeight();
+				max_y = tbl_h - wrap_h;
+				y = e.pageY;
+				
+				$(doc).on('mousemove.tblscroll', function(e){
+					$this.data('y') === undefined ? $this.data('y', 0) :'';
+					y2 = e.pageY;
+					yn = Number($this.data('y')) + (y2 - y);
+					yn = Math.ceil(yn + (yn / 10));
+					console.log(yn,  Math.abs(yn), max_y);
+					y3 = yn > 0 ? 0 : Math.abs(yn) >= max_y ? max_y * -1 : yn;
+					$this.find('.tbl-base').css('transform','translatey('+ y3 +'px)');
+
+					$(doc).on('mouseup', function(){
+						$this.data('y', y3);
+						$(doc).off('mousemove.tblscroll');
+					})
+				})
+				
+			});
+		}
+		*/
+		
+		
+		
 	}
 	function createUiCaption(){
 		var $cp = $('.ui-caption');

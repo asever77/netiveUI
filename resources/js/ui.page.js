@@ -8,6 +8,7 @@
         $plugins.uiAccordion({ id:'exeAcco1', current:[0,2], callback:function(v){console.log(v)} });
         $plugins.uiAccordion({ id:'exeAcco2', current:[0,2], autoclose:true });
         $plugins.uiAccordion({ id:'exeAcco3', current:null, autoclose:false });
+        $plugins.uiAccordion({ id:'exeAcco4', current:null, autoclose:false });
     }
 
     $plugins.page.brickList = function(){

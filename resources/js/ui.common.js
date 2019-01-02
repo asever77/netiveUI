@@ -3,9 +3,9 @@
     'use strict';
     
     $plugins.common = {
+ 
         init: function(){
             $plugins.uiAjax({ id:'baseHeader', url:'/html/inc/header.html', page:true, callback:$plugins.common.header });
-            
             $plugins.uiAjax({ id:'baseFooter', url:'/html/inc/footer.html', page:true, callback:$plugins.common.footer });
             
             console.log('------------------------------------------------------')
@@ -30,15 +30,46 @@
             console.log('header load');
             $plugins.uiAjax({ id:'baseAside', url:'/html/inc/aside.html', page:true });
             $plugins.common.pageid === undefined ? $plugins.common.pageid = "G00_00_00_00" : '';
- 
+            
+            var timer = '';
+            $('.btn-menu').on('click', function(){
+                menuSwitch();
+            });
+            $(doc).on('click', '.menu-dim', function(){
+                console.log(1);
+                menuHide();
+            });
+            function menuSwitch(){
+                !$('.btn-menu').data('on') ? menuShow() :  menuHide();
+            }
+            function menuShow(){
+                console.log('show');
+                $('.btn-menu').data('on', true);
+                $('body').addClass('menu-on');
+                clearTimeout(timer);
+                timer = setTimeout(function(){
+                    $('#uiMenu').addClass('on');
+                    $('.menu-dim').addClass('on');
+                }, 10);
+            }
+            function menuHide(){
+                console.log('hide');
+                $('.btn-menu').data('on', false);
+                $('#uiMenu').removeClass('on');
+                $('.menu-dim').removeClass('on');
+                clearTimeout(timer);
+                timer = setTimeout(function(){
+                    $('#uiMenu').removeClass('menu-on');
+                }, 300);
+            }
+
             $plugins.uiMenu({ 
-                id:'uiSideMenu', 
                 url:'/resources/data/menu.json', 
                 ctg:'가이드', 
                 selected: $plugins.common.pageid, 
                 callback: fncallback 
             });
-
+        
             function fncallback(opt){
                 var d1 = opt.d1,
                     d2 = opt.d2,
@@ -46,11 +77,18 @@
                     current = opt.current,
                     navi = opt.navi,
                     $gnb = $('#uiGNB'),
-                    $lnb = $('#uiLNB');
+                    $lnb = $('#uiLNB'),
+                    $menu = $('#uiMenu');
 
                 //menu 구성
                 $gnb.append(d1);
                 $lnb.append(d1);
+                $menu.append(d1);
+
+                $menu.find('.dep-1').each(function(i){
+                    $(this).append(d2[i]);
+                });
+
                 $lnb.find('.dep-1').not('.selected').remove();
                 console.log(current);
                 $lnb.find('.dep-1.selected').append(d2[current[0]]);
