@@ -5,6 +5,8 @@
 /* base */
 p{color:#333}
 .dropdownOpened{background:#f1f1f1}
+code{padding:2px 4px; font-size:100%; background-color:#eee; border-radius:4px; font-family:Menlo,Monaco,Consolas,"Courier New",monospace;}
+.box-code code{background:transparent;}
 
 /* layout */
 .base-wrap{padding-top:0;}
@@ -25,7 +27,7 @@ p{color:#333}
 .menu-on .menu-wrap{display:block;}
 .menu-wrap.on{left:0}
 .menu-wrap{position:fixed; top:0; left:-300px; z-index:3; display:none; overflow:hidden; width:300px; height:100%; margin:0 auto; background:#fff; transition:left 300ms}
-.menu-wrap .dep-1-wrap{position:relative; z-index:1; width:100%; height:100%; text-align: left; padding:20px; margin-top:50px; overflow:auto; }
+.menu-wrap .dep-1-wrap{position:relative; z-index:1; width:100%; height:calc(100% - 50px); text-align: left; padding:20px 20px 50px; margin-top:50px; overflow:auto; }
 .menu-wrap .dep-1{display:inline-block; width:100%; margin-top:10px;}
 .menu-wrap .dep-1-btn {display:inline-block; width:100%; font-size:16px; font-weight:300; color:#000; margin:0; letter-spacing:0; text-decoration:none; margin-bottom:10px;}
 .menu-wrap .dep-2-btn {display:inline-block; width:100%; font-size:13px; font-weight:300; color:#000; margin:0; letter-spacing:0; text-decoration:none; margin-bottom:5px;}
@@ -63,11 +65,11 @@ p{color:#333}
 
 /* page */
 .tbl-grid01 .col-n1{width:auto}
-.tbl-grid01 .col-n2{width:80px}
-.tbl-grid01 .col-n3{width:70px}
-.tbl-grid01 .col-n4{width:55px}
-.tbl-grid01 .col-n5{width:55px}
-.tbl-grid01 .col-n5-scr{width:55px}
+.tbl-grid01 .col-n2{width:20%}
+.tbl-grid01 .col-n3{width:20%}
+.tbl-grid01 .col-n4{width:20%}
+.tbl-grid01 .col-n5{width:20%}
+
 /* //mobile first ----------------------------------------- */
 
 
@@ -102,7 +104,7 @@ p{color:#333}
 
 
 /* page */
-.page-scroll .box-base{height:2000px; background:#222 url(/resources/img/codeghost/codeghost.png) no-repeat 50% 50%;}
+.page-scroll .box-base{height:2000px; background:#222; z-index:3;}
 
 .page-floating .tst-obj{width:100%; margin:0 auto; height:50px; font-size:15px; color:#000; text-align:center; padding-top:10px; border:1px dashed rgba(0,0,0,0.3); background:rgba(255,255,255, 0.6); }
 .ui-d .page-floating .ui-floating.ui-fixed-bottom .ui-floating-wrap,
