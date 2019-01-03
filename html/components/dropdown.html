@@ -20,7 +20,6 @@
 
 	<style>
 	.test-w-300{width:300px}
-	.dropdownOpened{background:lightblue}
 	</style>
 </head>
 
@@ -186,8 +185,8 @@ $plugins<span class="na">.uiDropdown</span>({ <span class="s">
 	eff:'st', 
 	auto: false,
 	dim:false,
-	openback: functiton() { console.log('open callback'); },
-	closeback: functiton() { console.log('open closeback'); },
+	openback: function() { console.log('open callback'); },
+	closeback: function() { console.log('close callback'); },
 	offset:false</span> 
 });
 </code>

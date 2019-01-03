@@ -76,19 +76,50 @@
 				<p>기본적인 모달 팝업 세팅 및 실행</p>
 				<div class="btn-wrap mgt-s txt-l">
 					<button type="button" class="btn-base" onclick="
-						$plugins.uiModal({ id:'modal_sample1', link:'/html/modal/modalSample1.html', remove:true, callback:$plugins.page.callback });
+						$plugins.uiModal({ 
+							id:'modal_sample1', 
+							link:'/html/modal/modalSample1.html', 
+							remove:true, 
+							openback: function() { console.log('open callback'); },
+							closeback: function(v) { console.log('close callback', v); },
+							callback:$plugins.page.callback 
+						});
 					"><span>Ajax 기본 팝업(center)</span></button>
 
 					<button type="button" class="btn-base" onclick="
-						$plugins.uiModal({ id:'modal_sample2', link:'/html/modal/modalSample2.html', remove:true, callback:$plugins.page.callback, width:700 });
+						$plugins.uiModal({ 
+							id:'modal_sample2', 
+							link:'/html/modal/modalSample2.html', 
+							remove:true, 
+							mpage: true,
+							openback: function() { console.log('open callback2'); },
+							closeback: function(v) { console.log('close callback2', v); },
+							width:700 
+						});
 					"><span>Ajax 기본 팝업(scroll)</span></button>
 
 					<button type="button" class="btn-base" onclick="
-						$plugins.uiModal({ id:'modal_sample5', link:'/html/modal/modalSample5.html', remove:true, callback:$plugins.page.callback });
+						$plugins.uiModal({ 
+							id:'modal_sample5', 
+							width: 600,
+							link:'/html/modal/modalSample5.html', 
+							mpage: true,
+							openback: function() { console.log('open callback3'); },
+							closeback: function(v) { console.log('close callback3', v); },
+							remove:true 
+						});
 					"><span>Ajax 기본 팝업(loading)</span></button>
 
 					<button type="button" class="btn-base" onclick="
-						$plugins.uiModal({ id:'modal_sample1', link:'/html/modal/modalSample4.html', remove:true, callback:$plugins.page.callback, open:false });
+						$plugins.uiModal({ id:
+							'modal_sample4', 
+							link:'/html/modal/modalSample4.html', 
+							remove:true, 
+							mpage: true,
+							openback: function() { console.log('open callback3'); },
+							closeback: function(v) { console.log('close callback3', v); },
+							open:false 
+						});
 					"><span>Ajax 기본 팝업(wait)</span></button>
 					
 					<button type="button" class="btn-base" onclick="
@@ -118,7 +149,8 @@ $plugins<span class="na">.uiModal</span>({ <span class="s">
 	endfocus:'idname', 
 	full:true, 
 	link:'/html/modal/sample.html', 
-	callback:function(v){...}</span> 
+	openback: function() { console.log('open callback'); },
+	closeback: function() { console.log('close callback'); }</span> 
 });
 </code>
 </pre>
@@ -292,10 +324,34 @@ $plugins<span class="na">.modal.system</span>({ <span class="s">
 							</td>
 						</tr>
 						<tr>
-							<th scope="row">callback:</th>
+							<th scope="row">openback:</th>
 							<td>[function]</td>
-							<td></td>
-							<td>모달 레이어 팝업 오픈 실행 후 콜백값 실행</td>
+							<td>false</td>
+							<td>모달 레이어 팝업 오픈 시 콜백값 실행</td>
+						</tr>
+						<tr>
+							<th scope="row">closeback:</th>
+							<td>[function]</td>
+							<td>false</td>
+							<td>모달 레이어 팝업 닫을 시 콜백값 실행</td>
+						</tr>
+						<tr>
+							<th scope="row">autofocus:</th>
+							<td>[boolean]</td>
+							<td>true</td>
+							<td>모달 닫을 시 포커스 자동이동 여부 설정</td>
+						</tr>
+						<tr>
+							<th scope="row">mpage:</th>
+							<td>[boolean]</td>
+							<td>false</td>
+							<td>모바일 디바이스에서 true일 경우 페이지 형식(전체 화면)으로 생성</td>
+						</tr>
+						<tr>
+							<th scope="row">cutline:</th>
+							<td>[number]</td>
+							<td>31</td>
+							<td>.ui-modal-cont 의 기본 페딩이 15일 경우 그 값보다 1 큰값으로 설정하여 콘텐츠 로딩여부 판단에 사용. </td>
 						</tr>
 					</tbody>
 				</table>

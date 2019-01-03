@@ -1180,10 +1180,13 @@
 		remove: false,
 		ps: 'center',
 		callback: false,
-		closecallback: false,
+		openback: false,
+		closeback: false,
 		space: 10,
 		ajax_type: 'GET',
 		open: true,
+		mpage: false,
+		cutline: 31,
 
 		system_words: false,
 		system_btntxt1: false,
@@ -1270,12 +1273,12 @@
 				!!icallback ? icallback() : '';
 
 				/* 2018-11-26 : IOS iframe fixed bug */
-				if ($ui.browser.mobile && $ui.browser.ios) {
-					frames[iname].$('#wrapIframe').css({ 
-						'max-height':$(win).outerHeight(),
-						'overflow' : 'scroll'
-					});
-				} 
+				// if ($ui.browser.mobile && $ui.browser.ios) {
+				// 	frames[iname].find('#wrapIframe').css({ 
+				// 		'max-height':$(win).outerHeight(),
+				// 		'overflow' : 'scroll'
+				// 	});
+				// } 
 
 			});
 			// document.getElementById(iname).onload = function () {
@@ -1321,12 +1324,15 @@
 			h = opt.height === undefined ? Math.ceil($modal.outerHeight()) : opt.height,
 
 			full = opt.full,
+			mpage = opt.mpage,
 			remove = opt.remove,
 			ps = opt.ps, 
 			callback = opt.callback,
-			closecallback = opt.closecallback,
+			openback = opt.openback,
+			closeback = opt.closeback,
 			modalSpace = opt.space,
 			open = opt.open,
+			cutline = opt.cutline,
 
 			win_h = $(win).outerHeight(),
 			win_w = $(win).outerWidth(),
@@ -1397,14 +1403,14 @@
 			}
 
 			//type full modal
-			if (full & is_mobile) {
+			if (mpage & is_mobile) {
+				// /full = true;
 				modalSpace = 0;
 				$modal.addClass('type-full');
 			}
 			
 			$ui.uiModal.option.sctarray.push($(win).scrollTop());
-			open ?
-			modalReady() : '';
+			open ? modalReady() : '';
 		}
 
 		//MODAL READY -------------------------------------------------
@@ -1479,7 +1485,7 @@
 			} 
 			
 			$modalCont.css({ 
-				height:  'auto',
+				height: 'auto',
 				maxHeight: 'none',
 				minHeight: 'none'
 			}).attr('tabindex', 0);
@@ -1487,7 +1493,7 @@
 			$modal.css({ height: 'auto' });
 			//!full ? $modal.css({ height: 'auto' }) : '';
 			//modal height 100 작거나 iframeload 전 일때 재 실행, resize 옵션 false 일경우
-			if ($modalCont.outerHeight() < 20 && $modal.data('iframeload') === undefined && !v.resize ) {
+			if ($modalCont.outerHeight() < cutline && $modal.data('iframeload') === undefined && !v.resize ) {
 				if (re_num === 0) {
 					$ui.uiLoading({ visible: true });
 					re_num = re_num + 1;
@@ -1525,6 +1531,7 @@
 				if (!opt.height) {
 					$modalCont.css('max-height', 'auto');
 					laywrap_h = $modalWrap.outerHeight();
+
 					laywrap_h > win_h ? laywrap_h = win_h : '';
 
 					h_type_a ? __h = Math.ceil(laywrap_h - h_h) : '';//title, footer
@@ -1534,6 +1541,7 @@
 
 					win_h < __h + (modalSpace * 2) + h_h + f_h ? __h =  win_h - f_h - h_h - (modalSpace * 2) : '';
 					h_cont = __h;
+
 					$modalCont.css('max-height', __h);
 					$modalCont.css('height', __h);
 				} else {
@@ -1543,7 +1551,7 @@
 			}
 
 			h = (opt.height === undefined) ? Math.ceil($modal.outerHeight()) : opt.height;
-			w = (opt.width === undefined) ? Math.ceil($modal.outerWidth()) : opt.width;
+			w = (opt.width === undefined) ? Math.ceil($modal.outerWidth() + 1) : opt.width;
 
 			//resize일 경우 원래 크기로 돌아가기.
 			// if (!!$modal.data('orgw') || !!$modal.data('orgh') && !is_mobile) {
@@ -1558,8 +1566,10 @@
 				overW ? $('body').addClass('modal-full') : $('body').removeClass('modal-full');
 			}
 
-			is_full_h = overH || full;
-			is_full_w = overW || full;
+			console.log('is_full_h'+ overH, full)
+
+			is_full_h = overH || full || mpage;
+			is_full_w = overW || full || mpage;
 			is_iframe = !!$modal.find('.ui-modal-iframe').length;
 			iw = $modal.find('.ui-modal-iframe').data('orgw');
 			ih = $modal.find('.ui-modal-iframe').data('orgh');
@@ -1586,15 +1596,30 @@
 			if (!v.resize) {
 				if (is_mobile) {
 					//modal
-					$modal.css({
-						opacity: 0,
-						top: is_full_h ? '100%' : '50%',
-						left: is_full_w ? 0 : '50%',
-						width: is_full_w ? '100%' : w,
-						height: is_full_h ? '100%' : h,
-						marginTop: is_full_h ? 0 : (h / 2) * -1,
-						marginLeft: is_full_w ? 0 : (w / 2) * -1
-					});
+					switch(ps) {
+						case 'center':
+							$modal.css({
+								opacity: 0,
+								width: is_full_w ? '100%' : w,
+								height: is_full_h ? '100%' : h,
+								left: is_full_w ? 0 : '50%',
+								top: is_full_h ? '100%' : '50%',
+								marginTop: is_full_h ? 0 : (h / 2) * -1,
+								marginLeft: is_full_w ? 0 : (w / 2) * -1
+							});
+							break;
+						case 'top':
+							$modal.css({
+								opacity: 0,
+								width: '100%',
+								height: is_full_h ? '100%' : h,
+								left: 0,
+								top: 0,
+								marginTop: 0,
+								marginLeft: 0
+							});
+							break;
+					}
 				} else {
 					//desktop
 					$modal.css({
@@ -1651,14 +1676,14 @@
 						$modalCont.mCustomScrollbar({ scrollButtons: { enable: true } });
 					}
 				}
-				if (is_mobile && full) {
+				if (is_mobile && mpage) {
 					//모바일 전체모달레이어 show 모션 효과
 					//$modal.find('.ui-floating').removeClass('.ui-fixed-top').find('.ui-floating-wrap').removeAttr('style');
 					$modal.css({ 'min-height': $(win).outerHeight(), background: '#fff' })
 						.animate({
 							opacity: 1, 
 							top: 0
-						}, 500, 'easeInOutQuart', function () {
+						}, 365, 'easeInOutQuart', function () {
 							$('body').addClass('modal-full');
 							modalCompleted();
 						});
@@ -1695,6 +1720,7 @@
 
 				!!system_words ? '' : 
 				$ui.callback !== undefined ? $plugins.callback.modal(opt.id) : '';
+				!!openback ? openback() : '';
 
 				//!words ? $ui.uiModalResize({ id: opt.id }) : '';
 			}
@@ -1714,7 +1740,7 @@
 		}
 		$modal.find('.ui-modal-close').off('click.uilayerpop').on('click.uilayerpop', function (e) {
 			e.preventDefault();
-			$ui.uiModalClose({ id: opt.id, closecallback: closecallback });
+			$ui.uiModalClose({ id: opt.id });
 		});
 	}
 	function createUiModalResize(opt) {
@@ -1904,16 +1930,14 @@
 	}
 	$plugins.uiModal.focusid = '';
 	function createUiModalClose(opt) {
-		var now_callback = opt === undefined || opt.callback === undefined ? false : opt.callback,
-			opt = $.extend(true, {}, $('#' + opt.id).data('opt'), opt),
+		var opt = $.extend(true, {}, $('#' + opt.id).data('opt'), opt),
 			$modal = $('#' + opt.id),
 			$modalshow = $('.ui-modal[opened="true"]'),
 			layN = $modalshow.length,
 			autofocus = opt.autofocus,
+			closeback = opt.closeback,
 			endfocus = opt.endfocus === null ? typeof $modal.data('endfocus') === 'string' ? '#' + $modal.data('endfocus') : $modal.data('endfocus') : '#' + opt.endfocus,
 			layRemove = opt.remove,
-
-			closecallback = !!now_callback ? now_callback : opt.closecallback,
 			full = opt.full, 
 			terms_tit = opt.terms_tit, 
 			sct = $modal.data('scrolltop') === undefined ? 0 : $modal.data('scrolltop'),
@@ -1986,7 +2010,8 @@
 					$ui.uiModal.option.sctarray.pop();
 					//autofocus ? $(endfocus).attr('tabindex', 0).focus() : '';
 				});
-				closecallback ? closecallback({ id: opt.id }) : '';
+
+				closeback ? closeback({ id: opt.id }) : '';
 			});
 
 			if (!!$modal.closest('#baseLayer').length) {
@@ -2019,7 +2044,7 @@
 			$('body').removeClass('modal-open modal-full modal-ria');
 			$(doc).off('keyup.uilayerpop');
 
-			closecallback ? closecallback({ id: opt.id }) : '';
+			closeback ? closeback({ id: opt.id }) : '';
 		}
 	}
 	function modalBackdrop(value, born) {

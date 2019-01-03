@@ -9,38 +9,38 @@
 /* colunns 4 / gutters 16 ---------------- */
 /* handset */ 
 @media all and (max-width:599px) and (orientation:portrait) {
-    body:after{content:"handset"; display:block; position:fixed; top:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
+    body:after{content:"handset"; display:block; position:fixed; bottom:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
 }
 /* small handset */ 
 @media all and (max-width:359px) {
-    body:after{content:"small handset"; display:block; position:fixed; top:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
+    body:after{content:"small handset"; display:block; position:fixed; bottom:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
 }
 /* small handset landscape */ 
 @media all and (max-width:599px) and (orientation:landscape) { 
-    body:after{content:"small handset landscape"; display:block; position:fixed; top:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
+    body:after{content:"small handset landscape"; display:block; position:fixed; bottom:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
 }
 
 /* colunns 8 / gutters 16 ---------------- */
 /* tablet & handset landscape */ 
 @media all and (max-width:959px) and (orientation:landscape) { 
-    body:after{content:"tablet & handset landscape"; display:block; position:fixed; top:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
+    body:after{content:"tablet & handset landscape"; display:block; position:fixed; bottom:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
 }
 /* tablet  */ 
 @media all and (min-width:600px) and (max-width:1112px) and (orientation:portrait) {
-    body:after{content:"tablet"; display:block; position:fixed; top:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
+    body:after{content:"tablet"; display:block; position:fixed; bottom:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
 }
 
 
 /* colunns 12 / gutters 24  ---------------- */
 /* tablet landscape */ 
 @media all and (min-width:960px) and (max-width:1439px) and (orientation:landscape) {
-    body:after{content:"tablet landscape"; display:block; position:fixed; top:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
+    body:after{content:"tablet landscape"; display:block; position:fixed; bottom:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
 }
 
 
 /* desktop */ 
 @media all and (min-width:960px) {
-    .ui-d body:after{content:"desktop"; display:block; position:fixed; top:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
+    .ui-d body:after{content:"desktop"; display:block; position:fixed; bottom:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
 
     /* global */
     [class*="tbl-base"] {table-layout:fixed;}
