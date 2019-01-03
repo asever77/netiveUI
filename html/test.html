@@ -15,9 +15,6 @@
 	<title> kkmk</title>
 
 	<link rel="stylesheet" href="/resources/css/ui.base.css">
-
-	
-	<script src="/resources/js/ui.base.js"></script>
 </head>
 
 <body class="page-main">
@@ -28,44 +25,27 @@
 	<div class="base-wrap" id="baseWrap">
 		<header class="base-header" id="baseHeader"></header>
 		<main class="base-main" id="baseMain" role="main">
-			<div class="base-content" id="baseContent">
-                <div class="btn-wrap mgt-l"> 
-                    최소:true 최대:true 값:true 
-                    <div class="ui-datepicker" id="uidatepicker1">
-                        <input class="inp-base" type="tel" value="2016.04.20" data-min="2013.10.05" data-max="2018.12.31" title="시작날짜" id="uiDatePckInp_1">
-
-                        <button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="uiDatePckInp_1" id="uiDatePck1" aria-expanded="false"><span>달력</span></button>
-                        <section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck1" id="uiDatePck1_pnl"></section>
-                    </div>
-                </div>
-                <div class="btn-wrap">
-                    최소:false 최대:false 값:false  
-                    <div class="ui-datepicker" id="uidatepicker2">
-                        <input class="inp-base" type="tel" value="" title="종료날짜" id="uiDatePckInp_2">
-
-                        <button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="uiDatePckInp_2" id="uiDatePck2" aria-expanded="false"><span>달력</span></button>
-                        <section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck2" id="uiDatePck2_pnl"></section>
-                    </div>
-                </div>
-			</div>
+			
 		</main>
 		<footer class="base-footer" id="baseFooter"></footer>
 	</div>
 		
 	<script>
-	;(function($, win, doc, undefined) {
-		$(doc).ready(function(){
-			$plugins.uiDatePicker.option.datesplit = '.';
-			$plugins.uiDatePicker.option.callback = function(v){
-				console.log(v);
-			};
-            $plugins.uiDatePicker();
-			$plugins.uiDatePicker({ selector:'uidatepicker2', callback:aaa });
-			function aaa(v) {
-				console.log('aaa', v);
-			}
-		});
-	})(jQuery, window, document);
+
+		var counter = 0;
+		function increment() {
+			return ++counter;
+		}
+
+		increment();
+		increment();
+		console.log(counter);
+
+		var increment2 = counter2 => counter2 + 1;
+		var plus2 = run(increment2, increment2);
+
+		console.log(plus2(0));
+
 	</script>
 </body>
 </html>
