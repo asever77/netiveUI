@@ -20,7 +20,6 @@
 
 	<style>
 	.test-w-300{width:300px}
-	.dropdownOpened{background:lightblue}
 	</style>
 </head>
 
@@ -180,7 +179,16 @@
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiDropdown</span>({ <span class="s">id:'uiDrop1', ps:'bl', eff:'st', offset:false</span> });
+$plugins<span class="na">.uiDropdown</span>({ <span class="s">
+	id:'uiDrop1', 
+	ps:'bl', 
+	eff:'st', 
+	auto: false,
+	dim:false,
+	openback: function() { console.log('open callback'); },
+	closeback: function() { console.log('close callback'); },
+	offset:false</span> 
+});
 </code>
 </pre>
 </div>
@@ -188,7 +196,15 @@ $plugins<span class="na">.uiDropdown</span>({ <span class="s">id:'uiDrop1', ps:'
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiDropdownToggle</span>({ <span class="s">id:'uiDrop1', ps:'bl', eff:'st', offset:true, expended:true, besides:true, inner:true</span> });
+$plugins<span class="na">.uiDropdownToggle</span>({ <span class="s">
+	id:'uiDrop1', 
+	ps:'bl', 
+	eff:'st', 
+	offset:true,
+	expended:true,
+	besides:true, 
+	inner:true</span> 
+});
 </code>
 </pre>
 </div>
@@ -264,6 +280,30 @@ $plugins<span class="na">.uiDropdownToggle</span>({ <span class="s">id:'uiDrop1'
 									<li>false : 위치값 상대값(position)</li>
 								</ul>
 							</td>
+						</tr>
+						<tr>
+							<th scope="row">dim:</th>
+							<td>[boolean]</td>
+							<td>false</td>
+							<td>오브젝트 뒤에 dim처리 설정</td>
+						</tr>
+						<tr>
+							<th scope="row">auto:</th>
+							<td>[boolean]</td>
+							<td>false</td>
+							<td>현재 y축 위치에 따라 위아래 위치 자동 설정</td>
+						</tr>
+						<tr>
+							<th scope="row">openback:</th>
+							<td>[function]</td>
+							<td>false</td>
+							<td>오픈 시 콜백</td>
+						</tr>
+						<tr>
+							<th scope="row">closeback:</th>
+							<td>[function]</td>
+							<td>false</td>
+							<td>닫을 시 콜백</td>
 						</tr>
 						<tr>
 							<th scope="row">close:</th>

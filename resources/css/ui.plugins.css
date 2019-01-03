@@ -1,4 +1,59 @@
 @charset "utf-8";
+
+/* Date Picker */
+.ui-drop-dim{position:fixed; top:0; left:0; z-index:99; width:100%; height:100%; background:#000; opacity:0;}
+
+.ui-datepicker{display:inline-block; vertical-align:top;}
+.ui-datepicker .inp-base{width:100px}
+
+.ui-datepicker .ui-datepicker-wrap{position:absolute; width:300px;}
+.ui-m .ui-datepicker .ui-datepicker-wrap{position:fixed; width:100%; padding:0 10px}
+.ui-m .ui-datepicker .ui-drop-pnl .btn-close{right:16px;}
+
+.datepicker-sec {width:100%; height:100%; border:solid 1px #63686d; background:#fff; }
+.datepicker-sec select{border:0; width:auto}
+.datepicker-sec .cal-wrapper {padding:10px; min-width:450px; width:auto !important; width:450px; overflow:hidden; }
+
+
+.datepicker-wrap:after{content:''; display:block; clear:both}
+
+.datepicker-head{position: relative;}
+.datepicker-head > div{padding:5px 10px; }
+.datepicker-head-tit{border-bottom:1px solid #ccc; padding:5px; text-align:center; font-weight:600;}
+.datepicker-head-select{padding:5px 10px;}
+.datepicker-head-date{text-align:center; font-size:18px}
+.tb_cal_popup tbody tr td:first-child button{color:#ff0000}
+
+.datepicker-core{min-height:250px; padding:10px;}
+.tbl-datepicker thead th{color:#222}
+.tbl-datepicker thead tr{border-bottom:1px solid #c9c9c9}
+.tbl-datepicker {width:100%; }
+.tbl-datepicker th {padding:11px 0; text-align:center !important; font-weight:600; background:#fff; }
+.tbl-datepicker th abbr {display:block; border:0; cursor:default; }
+.tbl-datepicker td {padding:0; width:14.28%; text-align:center; background:#fff; border:0; }
+.tbl-datepicker td span,
+.tbl-datepicker td button {position:relative; display:block; width:100%; height:100%; line-height:25px; margin:5px 1px 0; color:#444; background:#fff; text-align:center;}
+.tbl-datepicker td span {color:#666; cursor:default; opacity:0.5}
+.tbl-datepicker th.day-sun,
+.tbl-datepicker td.day-sun button {color:red; }
+.tbl-datepicker th.day-sat,
+.tbl-datepicker td.day-sat button {color:blue; }
+.tbl-datepicker td.empty {background:#fff; }
+.tbl-datepicker button:hover,
+.tbl-datepicker button.selected {color:#000; font-weight:900}
+.tbl-datepicker button.today:hover:before,
+.tbl-datepicker button.today.selected:before{display:none}
+.tbl-datepicker button.today:before {content:""; position:absolute; top:0; left:50%; margin-left:-1px; display:block; width:4px; height:4px; background:#666; border-radius:2px;}
+.datepicker-head-btn{position:absolute; width:100%; z-index:1;}
+.datepicker-head-today{position:absolute; z-index:1; top:0}
+.datepicker-head-today button{width:100px; height:30px}
+.datepicker-head-btn button{position:absolute; width:23px; height:23px; background:url(/resources/img/common/ico_datepicker.png) no-repeat 0 0; top:8px}
+.datepicker-head-btn .ui-datepicker-prev{background-position:-50px 0; left:40px}
+.datepicker-head-btn .ui-datepicker-next{background-position:-50px -50px; right:40px;}
+.datepicker-head-btn .ui-datepicker-prev-y{background-position:0 0; left:10px}
+.datepicker-head-btn .ui-datepicker-next-y{background-position:0 -50px; right:10px}
+
+
 .page-main .ui-ajaxpage{padding-right:0}
 .ui-ajaxpage{position:relative; width:100%; background:#fff; padding-right:50px}
 .ui-ajaxpage-next{position:absolute; left:0; opacity:0; width:100%; background:#fff; z-index:1; padding-right:50px}
@@ -154,7 +209,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-select.type-bank{width:200px}
 .ui-select.type-card{width:200px}
 
-    .ui-m .ui-select{width:100%;}
+    /* .ui-m .ui-select{width:100%;}
     .ui-m .ui-select-wrap{position:fixed; z-index:100; top:auto !important; bottom:0 !important; left:0 !important; width:100%; border:0; border-top:1px solid #000; background:#fff; min-height:40%; max-height:40%; }
     .ui-m .ui-select-tit{position:absolute; display:block; top:0; left:0; z-index:1; min-height:40px; max-height:40px; width:100%; background:#fff; padding:10px 0 0; text-align:center; background:#f2f2f2}
     .ui-m .ui-select-opts{position:absolute; top:40px; padding:0; left:0; z-index:1; min-height:calc(100% - 40px); max-height:calc(100% - 40px); width:100%; background:#fff; overflow-y:auto; }
@@ -162,7 +217,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
     .ui-m .ui-select-opt.activated{background:rgb(218, 218, 218); }
     .ui-m .ui-select-opt[aria-selected="true"]{background:#444; color:#fff;}
     .ui-m .dim{position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:0}
-
+ */
 
 
 
@@ -222,7 +277,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-codinglist{width:100%; margin:30px 0 0}
 .ui-codinglist table{width:100%; }
 .ui-codinglist table a,
-.ui-codinglist table button{font-size:12px; letter-spacing:-0.07em; color:blue; text-decoration:none}
+.ui-codinglist table button{font-size:12px; letter-spacing:-0.07em; color:#5a5a5a; text-decoration:none}
 .ui-codinglist thead th{background:#3a3a3a; color:rgb(241, 241, 241); border:1px solid #222; padding:4px 10px; font-size:10px; letter-spacing:1px;}
 .ui-codinglist th,
 .ui-codinglist td{border:1px solid #e4e4e4; padding:3px 10px; text-align:left; font-weight:400; font-size:12px;}
@@ -244,7 +299,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-codinglist .name,
 .ui-codinglist .img{text-align:center; word-break:keep-all;}
 .ui-codinglist .d{color:#ccc;}
-.ui-codinglist .end .d{color:#e48dad;}
+.ui-codinglist .end .d{color:#c9bbf7;}
 .ui-codinglist .c1 .d1,
 .ui-codinglist .c2 .d2,
 .ui-codinglist .c3 .d3,
@@ -260,10 +315,10 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-codinglist .tst{background:#fff9da;}
 .ui-codinglist .tst td{border:1px solid #fdea86;}
 .ui-codinglist .trm{background:#f9d5e2;}
-.ui-codinglist .end{background:#ffbdd5;}
-.ui-codinglist .end td{border:1px solid #f1a3c0;}
+.ui-codinglist .end{background:#dbd0ff;}
+.ui-codinglist .end td{border:1px solid #c9bbf7;}
 .ui-codinglist .end a,
-.ui-codinglist .end button{color:#fe0980 !important;}
+.ui-codinglist .end button{color:#6d4bde !important;}
 .ui-codinglist .del span{opacity:0.1;}
 .ui-codinglist .del{background:#f7f7f7;}
 .ui-codinglist .overlap{color:#ccc !important;} 
@@ -278,7 +333,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-codinglist tr:hover {outline:2px solid #3a3a3a; }
     .ui-m .ui-codinglist thead{display:none;} 
     .ui-m .ui-codinglist tr{display:block; width:100%; border-bottom:1px solid #d8d8d8; overflow:hidden; padding:10px; box-sizing:border-box;}
-    .ui-m .ui-codinglist .end{border-color:#f1a3c0;}
+    .ui-m .ui-codinglist .end{border-color:#c9bbf7;}
     .ui-m .ui-codinglist .ing{border-color:#b9dff3;}
     .ui-m .ui-codinglist td{display:block; float:left; border:0; padding:3px;}
     .ui-m .ui-codinglist td img{width:14px; margin-top:2px;}
@@ -331,7 +386,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-modal-wrap{width:100%; height:100%; background-color:#fff; box-shadow:0 0 10px rgba(0,0,0,0.2)}
 .ui-modal-header{width:100%;}
 .ui-modal-header h1{font-size:20px; color:#fff; text-align:center; height:100%; padding:10px; background-color:#333333;}
-.ui-modal-cont{position:relative; overflow-y:auto; overflow-x:hidden; width:100%; margin:0; padding:0; background-color:#fff;}
+.ui-modal-cont{position:relative; overflow-y:auto; overflow-x:hidden; width:100%; margin:0; padding:15px; background-color:#fff;}
 .ui-modal-footer{position:absolute; bottom:0; width:100%; z-index:1; text-align:center; margin:0; padding:20px 0; border-top:1px solid #ccc; background:#fff;}
 
 .modal-full .base-layer{position:fixed; overflow-x:scroll; overflow-y:auto;  width:100%; height:100%; top:0; left:0; background:#fff}
@@ -349,6 +404,8 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .modal-system .system-type-a:before{background-position:-25px -25px}
 .modal-system .system-type-b:before{background-position:-125px -25px}
 .modal-system .system-type-c:before{background-position:-225px -25px}
+
+
 
     /* ui modal mobile */
     .ui-m .modal-open{padding:0}
@@ -399,63 +456,6 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
 .ui-tooltip.ps-rb .tt-arrow{right:0; top:-6px; transform:rotate(-45deg); margin-right:10px}
 
 
-
-
-
-
-
-
-
-/* Date Picker */
-.ui-datepicker{display:inline-block; vertical-align:top;}
-.ui-datepicker .inp-base{width:100px}
-.ui-datepicker-wrap{width:300px;}
-.datepicker-sec select{border:0; width:auto}
-.datepicker-wrap:after{content:''; display:block; clear:both}
-
-
-.datepicker-sec {width:100%; height:100%; border:solid 1px #63686d; background:#fff; }
-.datepicker-head{position: relative;}
-.datepicker-head > div{padding:5px 10px; }
-.datepicker-head-tit{border-bottom:1px solid #ccc; padding:5px; text-align:center; font-weight:600;}
-.datepicker-head-select{padding:5px 10px;}
-.datepicker-head-date{text-align:center; font-size:18px}
-
-.datepicker-sec .cal-wrapper {padding:10px; min-width:450px; width:auto !important; width:450px; overflow:hidden; }
-
-.tb_cal_popup tbody tr td:first-child button{color:#ff0000}
-
-.datepicker-core{padding:10px;}
-.tbl-datepicker thead th{color:#222}
-.tbl-datepicker thead tr{border-bottom:1px solid #c9c9c9}
-
-.tbl-datepicker {width:100%; }
-.tbl-datepicker th {padding:11px 0; text-align:center !important; font-weight:600; background:#fff; }
-.tbl-datepicker th abbr {display:block; border:0; cursor:default; }
-.tbl-datepicker td {padding:0; width:14.28%; text-align:center; background:#fff; border:0; }
-.tbl-datepicker td span,
-.tbl-datepicker td button {position:relative; display:block; width:100%; height:100%; line-height:25px; margin:5px 1px 0; color:#444; background:#fff; text-align:center;}
-.tbl-datepicker td span {color:#666; cursor:default; opacity:0.5}
-.tbl-datepicker th.day-sun,
-.tbl-datepicker td.day-sun button {color:red; }
-.tbl-datepicker th.day-sat,
-.tbl-datepicker td.day-sat button {color:blue; }
-.tbl-datepicker td.empty {background:#fff; }
-.tbl-datepicker button:hover,
-.tbl-datepicker button.selected {color:#000; font-weight:900}
-.tbl-datepicker button.today:hover:before,
-.tbl-datepicker button.today.selected:before{display:none}
-.tbl-datepicker button.today:before {content:""; position:absolute; top:0; left:50%; margin-left:-1px; display:block; width:4px; height:4px; background:#666; border-radius:2px;}
-
-.datepicker-head-btn{position:absolute; width:100%; z-index:1;}
-.datepicker-head-today{position:absolute; z-index:1; top:0}
-.datepicker-head-today button{width:100px; height:30px}
-.datepicker-head-btn button{position:absolute; width:23px; height:23px; background:url(/resources/img/common/ico_datepicker.png) no-repeat 0 0; top:8px}
-.datepicker-head-btn .ui-datepicker-prev{background-position:-50px 0; left:40px}
-.datepicker-head-btn .ui-datepicker-next{background-position:-50px -50px; right:40px;}
-.datepicker-head-btn .ui-datepicker-prev-y{background-position:0 0; left:10px}
-.datepicker-head-btn .ui-datepicker-next-y{background-position:0 -50px; right:10px}
-
 /**/
 .capSct{width:100%; max-width:400px; margin:0 0 2.0rem; overflow:hidden; background:#fff}
 .capSct h1{font-size:1.8rem}
@@ -483,3 +483,81 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
     body.print-ing > * {display:none}
     body.print-ing > .base-print {display:block;}
 } 
+
+
+
+/* colunns 4 / gutters 16 ---------------- */
+/* handset */ 
+@media all and (max-width:599px) and (orientation:portrait) {
+}
+/* small handset */ 
+@media all and (max-width:359px) {
+}
+/* small handset landscape */ 
+@media all and (max-width:599px) and (orientation:landscape) { 
+
+}
+
+/* colunns 8 / gutters 16 ---------------- */
+/* tablet & handset landscape */ 
+@media all and (max-width:959px) and (orientation:landscape) { 
+
+}
+/* tablet  */ 
+@media all and (min-width:600px) and (max-width:1112px) and (orientation:portrait) {
+}
+
+
+/* colunns 12 / gutters 24  ---------------- */
+/* tablet landscape */ 
+@media all and (min-width:960px) and (max-width:1439px) and (orientation:landscape) {
+
+}
+
+
+/* desktop */ 
+@media all and (min-width:960px) {
+    /* Date Picker */
+    .ui-datepicker{display:inline-block; vertical-align:top;}
+    .ui-datepicker .inp-base{width:100px}
+    .ui-datepicker .ui-datepicker-wrap{position:absolute; width:300px; margin-top:0 !important}
+    .datepicker-sec select{border:0; width:auto}
+    .datepicker-wrap:after{content:''; display:block; clear:both}
+    .datepicker-sec {width:100%; height:100%; border:solid 1px #63686d; background:#fff; }
+    .datepicker-head{position: relative;}
+    .datepicker-head > div{padding:5px 10px; }
+    .datepicker-head-tit{border-bottom:1px solid #ccc; padding:5px; text-align:center; font-weight:600;}
+    .datepicker-head-select{padding:5px 10px;}
+    .datepicker-head-date{text-align:center; font-size:18px}
+    .datepicker-sec .cal-wrapper {padding:10px; min-width:450px; width:auto !important; width:450px; overflow:hidden; }
+    .tb_cal_popup tbody tr td:first-child button{color:#ff0000}
+    .datepicker-core{padding:10px;}
+    .tbl-datepicker thead th{color:#222}
+    .tbl-datepicker thead tr{border-bottom:1px solid #c9c9c9}
+    .tbl-datepicker {width:100%; }
+    .tbl-datepicker th {padding:11px 0; text-align:center !important; font-weight:600; background:#fff; }
+    .tbl-datepicker th abbr {display:block; border:0; cursor:default; }
+    .tbl-datepicker td {padding:0; width:14.28%; text-align:center; background:#fff; border:0; }
+    .tbl-datepicker td span,
+    .tbl-datepicker td button {position:relative; display:block; width:100%; height:100%; line-height:25px; margin:5px 1px 0; color:#444; background:#fff; text-align:center;}
+    .tbl-datepicker td span {color:#666; cursor:default; opacity:0.5}
+    .tbl-datepicker th.day-sun,
+    .tbl-datepicker td.day-sun button {color:red; }
+    .tbl-datepicker th.day-sat,
+    .tbl-datepicker td.day-sat button {color:blue; }
+    .tbl-datepicker td.empty {background:#fff; }
+    .tbl-datepicker button:hover,
+    .tbl-datepicker button.selected {color:#000; font-weight:900}
+    .tbl-datepicker button.today:hover:before,
+    .tbl-datepicker button.today.selected:before{display:none}
+    .tbl-datepicker button.today:before {content:""; position:absolute; top:0; left:50%; margin-left:-1px; display:block; width:4px; height:4px; background:#666; border-radius:2px;}
+    .datepicker-head-btn{position:absolute; width:100%; z-index:1;}
+    .datepicker-head-today{position:absolute; z-index:1; top:0}
+    .datepicker-head-today button{width:100px; height:30px}
+    .datepicker-head-btn button{position:absolute; width:23px; height:23px; background:url(/resources/img/common/ico_datepicker.png) no-repeat 0 0; top:8px}
+    .datepicker-head-btn .ui-datepicker-prev{background-position:-50px 0; left:40px}
+    .datepicker-head-btn .ui-datepicker-next{background-position:-50px -50px; right:40px;}
+    .datepicker-head-btn .ui-datepicker-prev-y{background-position:0 0; left:10px}
+    .datepicker-head-btn .ui-datepicker-next-y{background-position:0 -50px; right:10px}
+
+}

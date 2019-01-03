@@ -36,14 +36,12 @@
                 menuSwitch();
             });
             $(doc).on('click', '.menu-dim', function(){
-                console.log(1);
                 menuHide();
             });
             function menuSwitch(){
                 !$('.btn-menu').data('on') ? menuShow() :  menuHide();
             }
             function menuShow(){
-                console.log('show');
                 $('.btn-menu').data('on', true);
                 $('body').addClass('menu-on');
                 clearTimeout(timer);
@@ -53,13 +51,12 @@
                 }, 10);
             }
             function menuHide(){
-                console.log('hide');
                 $('.btn-menu').data('on', false);
                 $('#uiMenu').removeClass('on');
                 $('.menu-dim').removeClass('on');
                 clearTimeout(timer);
                 timer = setTimeout(function(){
-                    $('#uiMenu').removeClass('menu-on');
+                    $('body').removeClass('menu-on');
                 }, 300);
             }
 

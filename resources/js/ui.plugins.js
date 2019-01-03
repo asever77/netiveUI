@@ -47,8 +47,37 @@
 			len = $wrap.length, 
 			keys = $ui.option.keys,
 			i = 0, 
-			optAcco;
+			optAcco,
+			para = $ui.uiPara('acco'),
+			paras,
+			paraname;
 		
+		
+		//set up
+		if (!!para) {
+			if (para.split('+').length > 1) {
+				//2개이상 설정
+				//acco=exeAcco1*2+exeAcco2*3
+				paras = para.split('+');
+
+				for (var i = 0; i < paras.length; i++ ) {
+					paraname = paras[i].split('*');
+					opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
+				}
+			} else {
+				//1개 탭 설정
+				//tab=1
+			 	if (para.split('*').length > 1) {
+					paraname = para.split('*');
+					opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
+				} else {
+					current = [Number(para)];
+				}
+
+				console.log(current);
+			}
+		}
+
 		//set up
 		!$pnl ? $pnl = $tit.children('.ui-acco-pnl') : '';
 		$acco
@@ -298,7 +327,11 @@
 		eff: 'base',
 		ps: 'bl',
 		hold: true,
+		auto: false,
 		back_close: true,
+		openback:false,
+		closeback:false,
+		dim : false,
 		_offset: false,
 		_close: true,
 		_expanded: false,
@@ -313,9 +346,13 @@
 		var opt = $.extend(true, {}, $ui.uiDropdown.option, opt),
 			id = opt.id,
 			eff = opt.eff,
+			auto = opt.auto,
 			ps = opt.ps,
 			hold = opt.hold,
 			back_close = opt.back_close,
+			dim = opt.dim,
+			openback = opt.openback,
+			closeback = opt.closeback,
 			_offset = opt._offset,
 			_close = opt._close,
 			_expanded = opt._expanded,
@@ -325,12 +362,28 @@
 			$pnl = $('[data-id="'+ id +'"]'); 
 				
 		//set up
+
+		if (auto) {
+			if (Math.abs($(win).scrollTop() - $btn.offset().top - $btn.outerHeight()) < Math.abs($(win).scrollTop() +  $(win).outerHeight() / 1.5)) {
+				ps = 'bc';
+				eff = 'st';
+			} else {
+				ps = 'tc';
+				eff = 'sb';
+			}
+		}
+		console.log(ps);
+
 		$btn.attr('aria-expanded', false)
 			.data('opt', { 
 				id: id, 
 				eff: eff, 
 				ps: ps,
 				hold: hold, 
+				auto: auto,
+				dim: dim,
+				openback: openback,
+				closeback: closeback,
 				_offset: _offset, 
 				_close :_close, 
 				_expanded: _expanded,
@@ -343,6 +396,10 @@
 				eff: eff, 
 				ps: ps,
 				hold: hold, 
+				auto: auto,
+				dim : dim,
+				openback: openback,
+				closeback: closeback,
 				_offset: _offset, 
 				_close: _close, 
 				_expanded: _expanded,
@@ -354,23 +411,22 @@
 		$btn.off('click.dropdown').on('click.dropdown', function(e){
 			action(this);
 		});
-		$(doc).off('click.dropdownclose')
-			.on('click.dropdownclose', '.ui-drop-close', function(e){
-				var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
+		$(doc)
+		.off('click.dropdownclose').on('click.dropdownclose', '.ui-drop-close', function(e){
+			var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
 
-				pnl_opt._expanded = true;
-				$ui.uiDropdownToggle({ id: pnl_opt.id });
-				$('#' + pnl_opt.id).focus();
-			})
-			.off('click.bd')
-			.on('click.bd', function(e){
-				//dropdown 영역 외에 클릭 시 판단
-				if (!!$('body').data('dropdownOpened')){
-					if ($('.ui-drop-pnl').has(e.target).length < 1) {
-						$ui.uiDropdownHide();
-					}
+			pnl_opt._expanded = true;
+			$ui.uiDropdownToggle({ id: pnl_opt.id });
+			$('#' + pnl_opt.id).focus();
+		})
+		.off('click.bd').on('click.bd', function(e){
+			//dropdown 영역 외에 클릭 시 판단
+			if (!!$('body').data('dropdownOpened')){
+				if ($('.ui-drop-pnl').has(e.target).length < 1) {
+					$ui.uiDropdownHide();
 				}
-			});
+			}
+		});
 
 		!back_close ? $(doc).off('click.bd') : '';
 
@@ -393,7 +449,11 @@
 			defaults = $btn.data('opt'),
 			opt = $.extend(true, {}, defaults, opt),
 			eff = opt.eff,
+			auto = opt.auto,
 			ps = opt.ps,
+			dim = opt.dim,
+			openback = opt.openback,
+			closeback = opt.closeback,
 			hold = opt.hold,
 			_offset = opt._offset,
 			_close = opt._close,
@@ -418,6 +478,17 @@
 		//test 
 		!!$btn.attr('data-ps') ? ps = $btn.attr('data-ps') : '';
 
+		//위치 자동 설정
+		if (auto) {
+			if (Math.abs($(win).scrollTop() - $btn.offset().top - $btn.outerHeight()) < Math.abs($(win).scrollTop() +  $(win).outerHeight() / 1.5)) {
+				ps = 'bc';
+				eff = 'st';
+			} else {
+				ps = 'tc';
+				eff = 'sb';
+			}
+		}
+		
 		_expanded === 'false' ? pnlShow(): pnlHide();
 
 		function pnlShow(){
@@ -469,6 +540,8 @@
 					break;
 				case 'lb': $pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l - pnl_w }); 
 					break; 
+				case 'center': $pnl.css({ top: '50%', left: 0, marginTop: (pnl_h / 2 ) * -1 }); 
+					break;
 			}
 			
 			org_t = parseInt($pnl.css('top')),
@@ -492,6 +565,10 @@
 			setTimeout(function(){
 				$('body').data('dropdownOpened',true).addClass('dropdownOpened');
 			},0);
+
+			!!openback ? openback() : '';
+			!!dim ? dimShow($pnl) : '';
+			
 		}
 		function pnlHide(){
 			var org_t = parseInt($pnl.css('top')),
@@ -521,18 +598,37 @@
 			function pnlHideEnd(){
 				$pnl.hide().removeAttr('style'); 
 			}
+
+			!!closeback ? closeback() : '';
+			!!dim ? dimHide() : '';
 		}
+
+		
+	}
+	function dimShow(t){
+		$(t).after('<div class="ui-drop-dim"></div>');
+		$('.ui-drop-dim').stop().animate({
+			opacity:0.7
+		})
+	}
+	function dimHide(){
+		$('.ui-drop-dim').stop().animate({
+			opacity:0
+		},200, function(){
+			$(this).remove();
+		});
 	}
 	function createUiDropdownHide(){
 		$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
 		$('.ui-drop').attr('aria-expanded', false);
-		$('.ui-drop-pnl').attr('aria-hidden', true).attr('tabindex', -1)
-		$('.ui-drop-pnl').each(function(){
+		
+		$('.ui-drop-pnl[aria-hidden="false"]').each(function(){
 			var $pnl = $(this),
 				defaults = $pnl.data('opt'),
-				opt = $.extend(true, {}, defaults, opt),
+				opt = $.extend(true, {}, defaults),
 				eff = opt.eff,
 				eff_ps = opt.eff_ps,
+				closeback = opt.closeback,
 				eff_speed = opt.eff_speed,
 				org_t = parseInt($pnl.css('top')),
 				org_l = parseInt($pnl.css('left'));
@@ -555,7 +651,12 @@
 			function pnlHideEnd(){
 				$pnl.hide().removeAttr('style'); 
 			}
+			$pnl.attr('aria-hidden', true).attr('tabindex', -1);
+			!!closeback ? closeback() : '';
 		});	
+
+		
+		dimHide();
 	}
 
 
@@ -575,6 +676,8 @@
 	$ui.uiDatePicker.option = {
 		selector: '.ui-datepicker',
 		date_split: '-',
+		openback: false,
+		closeback: false,
 		callback: function(v){ console.log(v) },
 		shortDate: false, //DDMMYYYY
 		dateMonths: new Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'),
@@ -585,6 +688,8 @@
 		var opt = $.extend(true, {}, $ui.uiDatePicker.option, opt),
 			date_split = opt.date_split,
 			selector = opt.selector,
+			openback = opt.openback,
+			closeback = opt.closeback,
 			callback = opt.callback,
 			dateMonths = opt.dateMonths,
 			weekDay = opt.weekDay,
@@ -595,7 +700,7 @@
 			dateToday = date,
 			calVar;
 
-		$datepicker.data('opt', { callback: callback, shortDate: shortDate });
+		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback:openback, closeback:closeback });
 
 		//이달의 날짜 텍스트화
 		function textDate(d, m, y, whatday) {
@@ -1009,39 +1114,35 @@
 			var $this = $(this),
 				$btn = $this.find('.ui-datepicker-btn');
 			
-			callback = !!$this.data('callback') ?
-				$this.data('callback') : callback;
+			callback = !!$this.data('callback') ? $this.data('callback') : callback;
 
-			$ui.uiDropdown({ id:$(this).attr('id'), eff:'st', ps:'bc' });
-
-			$ui.browser.mobile ? 
-				$('#' + $btn.data('inp')).prop('readonly', true).attr('aria-hidden', true) : '';
-		});
-
-		//위치 지정
-		$datepicker.find('.ui-datepicker-btn').off('focus.uidpbtn mouseover.uidpbtn').on('focus.uidpbtn mouseover.uidpbtn', function(){
-			var $this = $(this),
-				dropid = $this.attr('id'),
-				_ps = 'bc',
-				_ef = 'st';
-			
-			if (Math.abs($(win).scrollTop() - $this.offset().top - $this.outerHeight()) < Math.abs($(win).scrollTop() + $(win).outerHeight() / 1.5)) {
-				_ps = 'bc';
-				_ef = 'st';
-				$('#' + dropid+'_pnl').addClass('type-bottom').removeClass('type-top');
+			if ($ui.browser.mobile) {
+				$ui.uiDropdown({ 
+					id:$btn.attr('id'), 
+					ps:'center', 
+					dim:true,
+					openback: openback,
+					closeback: closeback
+				});
+				$('#' + $btn.data('inp')).prop('readonly', true).attr('aria-hidden', true);
 			} else {
-				_ps = 'tc';
-				_ef = 'sb';
-				$('#' + dropid+'_pnl').addClass('type-top').removeClass('type-bottom');
+				$ui.uiDropdown({ 
+					id:$btn.attr('id'), 
+					auto:true,
+					openback: openback,
+					closeback: closeback
+				});
 			}
 
-			$this.attr('ps', _ps).attr('eff', _ef);
-			$this.attr('aria-expanded') === 'false' || $this.attr('aria-expanded') === undefined ?
-				$ui.uiDropdown({ id:dropid, eff:_ef, ps:_ps}) : '';
+			datepickerReady($btn);
 		});
 
-		$datepicker.find('.ui-datepicker-btn').off('click.uidpbtn').on('click.uidpbtn', function() {
-			var $this = $(this),
+		$datepicker.find('.ui-datepicker-btn').off('click.uidatepicker').on('click.uidatepicker', function() {
+			datepickerReady(this);
+		});
+
+		function datepickerReady(v){
+			var $this = $(v),
 				dropid = $this.attr('id'),
 				inputId = $this.data('inp'),
 				regExp = /^([0-9]{4})-([0-9]{2})-([0-9]{2})/g,
@@ -1068,7 +1169,7 @@
 			$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').append(calspaceHTML);
 			displayCalendar(calVar, 'generate');
 			$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + inputId).val() + '"]').addClass('selected').attr('aria-selected', true);
-		});
+		}	
 	}
 
 
@@ -1108,10 +1209,13 @@
 		remove: false,
 		ps: 'center',
 		callback: false,
-		closecallback: false,
+		openback: false,
+		closeback: false,
 		space: 10,
 		ajax_type: 'GET',
 		open: true,
+		mpage: false,
+		cutline: 31,
 
 		system_words: false,
 		system_btntxt1: false,
@@ -1198,12 +1302,12 @@
 				!!icallback ? icallback() : '';
 
 				/* 2018-11-26 : IOS iframe fixed bug */
-				if ($ui.browser.mobile && $ui.browser.ios) {
-					frames[iname].$('#wrapIframe').css({ 
-						'max-height':$(win).outerHeight(),
-						'overflow' : 'scroll'
-					});
-				} 
+				// if ($ui.browser.mobile && $ui.browser.ios) {
+				// 	frames[iname].find('#wrapIframe').css({ 
+				// 		'max-height':$(win).outerHeight(),
+				// 		'overflow' : 'scroll'
+				// 	});
+				// } 
 
 			});
 			// document.getElementById(iname).onload = function () {
@@ -1249,12 +1353,15 @@
 			h = opt.height === undefined ? Math.ceil($modal.outerHeight()) : opt.height,
 
 			full = opt.full,
+			mpage = opt.mpage,
 			remove = opt.remove,
 			ps = opt.ps, 
 			callback = opt.callback,
-			closecallback = opt.closecallback,
+			openback = opt.openback,
+			closeback = opt.closeback,
 			modalSpace = opt.space,
 			open = opt.open,
+			cutline = opt.cutline,
 
 			win_h = $(win).outerHeight(),
 			win_w = $(win).outerWidth(),
@@ -1325,14 +1432,14 @@
 			}
 
 			//type full modal
-			if (full & is_mobile) {
+			if (mpage & is_mobile) {
+				// /full = true;
 				modalSpace = 0;
 				$modal.addClass('type-full');
 			}
 			
 			$ui.uiModal.option.sctarray.push($(win).scrollTop());
-			open ?
-			modalReady() : '';
+			open ? modalReady() : '';
 		}
 
 		//MODAL READY -------------------------------------------------
@@ -1407,7 +1514,7 @@
 			} 
 			
 			$modalCont.css({ 
-				height:  'auto',
+				height: 'auto',
 				maxHeight: 'none',
 				minHeight: 'none'
 			}).attr('tabindex', 0);
@@ -1415,7 +1522,7 @@
 			$modal.css({ height: 'auto' });
 			//!full ? $modal.css({ height: 'auto' }) : '';
 			//modal height 100 작거나 iframeload 전 일때 재 실행, resize 옵션 false 일경우
-			if ($modalCont.outerHeight() < 20 && $modal.data('iframeload') === undefined && !v.resize ) {
+			if ($modalCont.outerHeight() < cutline && $modal.data('iframeload') === undefined && !v.resize ) {
 				if (re_num === 0) {
 					$ui.uiLoading({ visible: true });
 					re_num = re_num + 1;
@@ -1453,6 +1560,7 @@
 				if (!opt.height) {
 					$modalCont.css('max-height', 'auto');
 					laywrap_h = $modalWrap.outerHeight();
+
 					laywrap_h > win_h ? laywrap_h = win_h : '';
 
 					h_type_a ? __h = Math.ceil(laywrap_h - h_h) : '';//title, footer
@@ -1462,6 +1570,7 @@
 
 					win_h < __h + (modalSpace * 2) + h_h + f_h ? __h =  win_h - f_h - h_h - (modalSpace * 2) : '';
 					h_cont = __h;
+
 					$modalCont.css('max-height', __h);
 					$modalCont.css('height', __h);
 				} else {
@@ -1471,7 +1580,7 @@
 			}
 
 			h = (opt.height === undefined) ? Math.ceil($modal.outerHeight()) : opt.height;
-			w = (opt.width === undefined) ? Math.ceil($modal.outerWidth()) : opt.width;
+			w = (opt.width === undefined) ? Math.ceil($modal.outerWidth() + 1) : opt.width;
 
 			//resize일 경우 원래 크기로 돌아가기.
 			// if (!!$modal.data('orgw') || !!$modal.data('orgh') && !is_mobile) {
@@ -1486,8 +1595,10 @@
 				overW ? $('body').addClass('modal-full') : $('body').removeClass('modal-full');
 			}
 
-			is_full_h = overH || full;
-			is_full_w = overW || full;
+			console.log('is_full_h'+ overH, full)
+
+			is_full_h = overH || full || mpage;
+			is_full_w = overW || full || mpage;
 			is_iframe = !!$modal.find('.ui-modal-iframe').length;
 			iw = $modal.find('.ui-modal-iframe').data('orgw');
 			ih = $modal.find('.ui-modal-iframe').data('orgh');
@@ -1514,15 +1625,30 @@
 			if (!v.resize) {
 				if (is_mobile) {
 					//modal
-					$modal.css({
-						opacity: 0,
-						top: is_full_h ? '100%' : '50%',
-						left: is_full_w ? 0 : '50%',
-						width: is_full_w ? '100%' : w,
-						height: is_full_h ? '100%' : h,
-						marginTop: is_full_h ? 0 : (h / 2) * -1,
-						marginLeft: is_full_w ? 0 : (w / 2) * -1
-					});
+					switch(ps) {
+						case 'center':
+							$modal.css({
+								opacity: 0,
+								width: is_full_w ? '100%' : w,
+								height: is_full_h ? '100%' : h,
+								left: is_full_w ? 0 : '50%',
+								top: is_full_h ? '100%' : '50%',
+								marginTop: is_full_h ? 0 : (h / 2) * -1,
+								marginLeft: is_full_w ? 0 : (w / 2) * -1
+							});
+							break;
+						case 'top':
+							$modal.css({
+								opacity: 0,
+								width: '100%',
+								height: is_full_h ? '100%' : h,
+								left: 0,
+								top: 0,
+								marginTop: 0,
+								marginLeft: 0
+							});
+							break;
+					}
 				} else {
 					//desktop
 					$modal.css({
@@ -1579,14 +1705,14 @@
 						$modalCont.mCustomScrollbar({ scrollButtons: { enable: true } });
 					}
 				}
-				if (is_mobile && full) {
+				if (is_mobile && mpage) {
 					//모바일 전체모달레이어 show 모션 효과
 					//$modal.find('.ui-floating').removeClass('.ui-fixed-top').find('.ui-floating-wrap').removeAttr('style');
 					$modal.css({ 'min-height': $(win).outerHeight(), background: '#fff' })
 						.animate({
 							opacity: 1, 
 							top: 0
-						}, 500, 'easeInOutQuart', function () {
+						}, 365, 'easeInOutQuart', function () {
 							$('body').addClass('modal-full');
 							modalCompleted();
 						});
@@ -1623,6 +1749,7 @@
 
 				!!system_words ? '' : 
 				$ui.callback !== undefined ? $plugins.callback.modal(opt.id) : '';
+				!!openback ? openback() : '';
 
 				//!words ? $ui.uiModalResize({ id: opt.id }) : '';
 			}
@@ -1642,7 +1769,7 @@
 		}
 		$modal.find('.ui-modal-close').off('click.uilayerpop').on('click.uilayerpop', function (e) {
 			e.preventDefault();
-			$ui.uiModalClose({ id: opt.id, closecallback: closecallback });
+			$ui.uiModalClose({ id: opt.id });
 		});
 	}
 	function createUiModalResize(opt) {
@@ -1832,16 +1959,14 @@
 	}
 	$plugins.uiModal.focusid = '';
 	function createUiModalClose(opt) {
-		var now_callback = opt === undefined || opt.callback === undefined ? false : opt.callback,
-			opt = $.extend(true, {}, $('#' + opt.id).data('opt'), opt),
+		var opt = $.extend(true, {}, $('#' + opt.id).data('opt'), opt),
 			$modal = $('#' + opt.id),
 			$modalshow = $('.ui-modal[opened="true"]'),
 			layN = $modalshow.length,
 			autofocus = opt.autofocus,
+			closeback = opt.closeback,
 			endfocus = opt.endfocus === null ? typeof $modal.data('endfocus') === 'string' ? '#' + $modal.data('endfocus') : $modal.data('endfocus') : '#' + opt.endfocus,
 			layRemove = opt.remove,
-
-			closecallback = !!now_callback ? now_callback : opt.closecallback,
 			full = opt.full, 
 			terms_tit = opt.terms_tit, 
 			sct = $modal.data('scrolltop') === undefined ? 0 : $modal.data('scrolltop'),
@@ -1914,7 +2039,8 @@
 					$ui.uiModal.option.sctarray.pop();
 					//autofocus ? $(endfocus).attr('tabindex', 0).focus() : '';
 				});
-				closecallback ? closecallback({ id: opt.id }) : '';
+
+				closeback ? closeback({ id: opt.id }) : '';
 			});
 
 			if (!!$modal.closest('#baseLayer').length) {
@@ -1947,7 +2073,7 @@
 			$('body').removeClass('modal-open modal-full modal-ria');
 			$(doc).off('keyup.uilayerpop');
 
-			closecallback ? closecallback({ id: opt.id }) : '';
+			closeback ? closeback({ id: opt.id }) : '';
 		}
 	}
 	function modalBackdrop(value, born) {
@@ -2806,30 +2932,52 @@
 			visible ? tooltipSet(id) : tooltipHide();
 		}
 
-		$btn.on('click', function(e){
-				e.preventDefault();
-				tooltipSet($(this).attr('aria-describedby'));
-			})
-			.off('mouseover.ui touchstart.ui focus.ui')
-			.on('mouseover.ui touchstart.ui focus.ui', function(e){
-				tooltipSet($(this).attr('aria-describedby'));
-			})
-			
-			.off('mouseleave.ui ').on('mouseleave.ui', function(){
-				tooltipHideDelay();
+		// $btn
+		// .on('click', function(e){
+		// 	e.preventDefault();
+		// 	tooltipSet($(this).attr('aria-describedby'));
+		// });
 
-				$('.ui-tooltip')
-					.on('mouseover.ui', function(){
-						clearTimeout(timer);
-					})
-					.on('mouseleave.ui', function(e){
-						tooltipHideDelay();
-					});
-			})
-			.off('touchcancel.ui touchend.ui blur.ui').on('touchcancel.ui touchend.ui blur.ui', function(e){
+		$btn
+		.off('mouseover.ui focus.ui').on('mouseover.ui focus.ui', function(e){
+			e.preventDefault();
+			tooltipSet($(this).attr('aria-describedby'));
+		})
+		.off('mouseleave.ui ').on('mouseleave.ui', function(){
+			tooltipHideDelay();
+
+			$('.ui-tooltip')
+				.on('mouseover.ui', function(){
+					clearTimeout(timer);
+				})
+				.on('mouseleave.ui', function(e){
+					tooltipHideDelay();
+				});
+		})
+
+		$btn
+		.off('touchstart.uitooltip').on('touchstart.uitooltip', function(e){
+			e.preventDefault();
+			if (!$(this).data('view')){
+				$(this).data('view', true);
 				tooltipHide();
-			});
-		
+				tooltipSet($(this).attr('aria-describedby'));
+			} else {
+				$(this).data('view', false);
+				tooltipHide();
+			}
+
+			// $(doc).off('click.bdd').on('click.bdd', function(e){
+			// 	//dropdown 영역 외에 클릭 시 판단
+			// 	if (!!$('body').data('dropdownOpened')){
+			// 		console.log($('.ui-tooltip').has(e.target).length);
+			// 		if ($('.ui-tooltip').has(e.target).length < 1) {
+			// 			tooltipHide();
+			// 		}
+			// 	}
+			// });
+		});
+
 		function tooltipSet(v) {
 			var $t = $('[aria-describedby="'+ v +'"]');
 
@@ -5336,7 +5484,7 @@
 			info += '<li>진행 : <span class="n_ing">0</span> (<span class="per3">0</span>%)</li>';
 			info += '<li>대기 : <span class="n_wat">0</span> (<span class="per4">0</span>%)</li>';
 			info += '</ul>';
-			$('#' + opt.id).prepend(info);
+			
 
 			if (!$('.ui-codinglist-info .total').data('data')) {
 				$('.ui-codinglist-info .total').data('data', true).text(len - delsum - 1);
@@ -5355,12 +5503,7 @@
 			}
 
 			var sel = '';
-			sel += '<div class="box-srch">';
-			sel += '<div class="srch-area">';
-			sel += '<input type="search" id="uiCodinglistSrchCode" class="inp-srch" value="" placeholder="검색어를 입력해주세요.">';
-			sel += '</div>';
-			sel += '</div>';
-			sel += '<div class="ui-codinglist-sel">';
+			sel += '<div class="ui-codinglist-sel mgb-xxxs">';
 			sel += '<button type="button" class="btn-base"><span>전체</span></button>';
 			sel += '<select id="uiCLstate" data-ctg="state">';
 			sel += '<option value="0">상태선택</option>';
@@ -5377,11 +5520,15 @@
 			sel += '<select id="uiCLdepth" data-ctg="d2">';
 			sel += '<option value="0">메뉴선택</option>';
 			sel += '</select>';
-			sel += '<a href="/guide/coding_list.html" class="btn-base"><span>PC</span></a>';
-			sel += '<a href="/m/guide/coding_list.html" class="btn-base"><span>Mobile</span></a>';
+			sel += '</div>';
+			sel += '<div class="box-srch mgb-xxxs">';
+			sel += '<div class="srch-area">';
+			sel += '<input type="search" id="uiCodinglistSrchCode" class="inp-srch ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
+			sel += '</div>';
 			sel += '</div>';
 			
 			$('#' + opt.id).prepend(sel);
+			$('#' + opt.id).prepend(info);
 
 			selectoption('uiCLstate', ctg_state);
 			selectoption('uiCLpub', ctg_pub);
@@ -5475,6 +5622,8 @@
 				$(temp).closest('tr').show();
 			});
 
+			$ui.uiInputClear();
+
 		}
 	}
 
@@ -5520,14 +5669,14 @@
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
-		uiInputCancel: function () {
-			return createUiInputCancel();
+		uiInputClear: function () {
+			return createUiInputClear();
 		},
 		uiPlaceholder: function () {
 			return createUiPlaceholder();
 		}
 	});
-	function createUiInputCancel(){
+	function createUiInputClear(){
 		var $inp = $('.ui-inpcancel');
 
 		$inp.each(function(i){
@@ -5656,6 +5805,7 @@
 			return createUiLoading(opt);
 		}
 	});
+	$ui.uiLoading.timer = {};
 	function createUiLoading(opt) {
 		var loading = '',
 			$selector = opt.id === undefined ? $('body') : opt.id === '' ? $('body') : typeof opt.id === 'string' ? $('#' + opt.id) : opt.id,
@@ -5670,18 +5820,27 @@
 		loading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="$plugins.uiLoading({ visible:false });"><span>$plugins.uiLoading({ visible:false })</span></button>';
 		loading += '</div>';
 
-		opt.visible === true ? showLoading() : hideLoading();
+		clearTimeout($ui.uiLoading.timer);
+		opt.visible === true && !$('body').data('loading') ? showLoading() : opt.visible === false ? hideLoading() : '';
 		
 		function showLoading(){
+			clearTimeout($ui.uiLoading.timer);
+			$('body').data('loading', true);
 			$selector.prepend(loading);
-			$selector.find('.ui-loading').animate({ 'opacity':1 });
+			$selector.find('.ui-loading').stop().animate({ 'opacity':1 });
 		}
 		function hideLoading(){
-			$selector.find('.ui-loading').animate({ 'opacity':0 }, function(){
-				$('.ui-loading').remove();
-			});
+			clearTimeout($ui.uiLoading.timer);
+			$ui.uiLoading.timer = setTimeout(function(){
+				$selector.find('.ui-loading').stop().animate({ 'opacity':0 }, function(){
+					$('.ui-loading').remove();
+					$('body').data('loading', false);
+				});
+			},100);
 		}
 	}	
+
+
 
 	/* ------------------------------------------------------------------------
 	 * time check

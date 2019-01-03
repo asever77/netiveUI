@@ -21,6 +21,8 @@ strong, b {font-weight:normal;}
 a {color:rgb(16, 79, 252); outline-offset:1px; }
 button {border:0 none; font-family:'Noto Sans KR'; cursor:pointer; background:transparent; color:#666; cursor:pointer;}
 input, textarea, select {box-sizing:border-box; font-family:'Noto Sans KR', sans-serif; font-size:14px;}
+[class*="inp-"]::-webkit-search-cancel-button{display:none}
+
 
 /* html5 */
 article, aside, details, figcaption, figure, footer, header, main, hgroup, nav, section, summary {display:block; margin:0; padding:0; box-sizing:border-box;}
@@ -297,7 +299,8 @@ input[type="checkbox"] {opacity:0; filter:alpha(opacity=0); display:inline-block
 
 /* base form:input text */
 .inp-error {border-color:red !important;}
-[class*="inp-"] {display:inline-block; vertical-align:top; width:100%; border:1px solid #c9c9c9; border-radius:2px; height:40px; padding:0 10px;}
+[class*="inp-"] {display:inline-block; vertical-align:top; width:100%; border:1px solid #c9c9c9; border-radius:2px; height:40px; padding:0 10px; outline:0;}
+[class*="inp-"]:focus{border-color:#000}
 .inp-mmdd {width:50px;}
 .inp-date {width:100px;}
 .inp-tarea {height:100px; padding:10px;}

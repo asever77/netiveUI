@@ -168,7 +168,7 @@ if (!Object.keys){
 				deviceSizeClassName(width);
 
 				colClass = (width > devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4');
-				$('html').removeClass('s1920 s1600 s1440 s1280 s1024 s960 s840 s720 s600 s480 s400 s360 s0 col12 col8 col4').addClass(' s' + sizeMode + ' ' + colClass);
+				$('html').removeClass('s1920 s1600 s1440 s1280 s1024 s960 s840 s720 s600 s480 s400 s360 s300 col12 col8 col4').addClass(' s' + sizeMode + ' ' + colClass);
 			}, 100);
 		});
 
@@ -178,7 +178,7 @@ if (!Object.keys){
 					sizeMode = devsize[j];
 					break;
 				} else {
-					w < devsize[size_len - 1] ? sizeMode = 0 : '';
+					w < devsize[size_len - 1] ? sizeMode = 300 : '';
 				}
 			}
 		}
