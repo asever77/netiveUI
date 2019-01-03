@@ -277,7 +277,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-codinglist{width:100%; margin:30px 0 0}
 .ui-codinglist table{width:100%; }
 .ui-codinglist table a,
-.ui-codinglist table button{font-size:12px; letter-spacing:-0.07em; color:blue; text-decoration:none}
+.ui-codinglist table button{font-size:12px; letter-spacing:-0.07em; color:#5a5a5a; text-decoration:none}
 .ui-codinglist thead th{background:#3a3a3a; color:rgb(241, 241, 241); border:1px solid #222; padding:4px 10px; font-size:10px; letter-spacing:1px;}
 .ui-codinglist th,
 .ui-codinglist td{border:1px solid #e4e4e4; padding:3px 10px; text-align:left; font-weight:400; font-size:12px;}
@@ -299,7 +299,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-codinglist .name,
 .ui-codinglist .img{text-align:center; word-break:keep-all;}
 .ui-codinglist .d{color:#ccc;}
-.ui-codinglist .end .d{color:#e48dad;}
+.ui-codinglist .end .d{color:#c9bbf7;}
 .ui-codinglist .c1 .d1,
 .ui-codinglist .c2 .d2,
 .ui-codinglist .c3 .d3,
@@ -315,10 +315,10 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-codinglist .tst{background:#fff9da;}
 .ui-codinglist .tst td{border:1px solid #fdea86;}
 .ui-codinglist .trm{background:#f9d5e2;}
-.ui-codinglist .end{background:#ffbdd5;}
-.ui-codinglist .end td{border:1px solid #f1a3c0;}
+.ui-codinglist .end{background:#dbd0ff;}
+.ui-codinglist .end td{border:1px solid #c9bbf7;}
 .ui-codinglist .end a,
-.ui-codinglist .end button{color:#fe0980 !important;}
+.ui-codinglist .end button{color:#6d4bde !important;}
 .ui-codinglist .del span{opacity:0.1;}
 .ui-codinglist .del{background:#f7f7f7;}
 .ui-codinglist .overlap{color:#ccc !important;} 
@@ -333,7 +333,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-codinglist tr:hover {outline:2px solid #3a3a3a; }
     .ui-m .ui-codinglist thead{display:none;} 
     .ui-m .ui-codinglist tr{display:block; width:100%; border-bottom:1px solid #d8d8d8; overflow:hidden; padding:10px; box-sizing:border-box;}
-    .ui-m .ui-codinglist .end{border-color:#f1a3c0;}
+    .ui-m .ui-codinglist .end{border-color:#c9bbf7;}
     .ui-m .ui-codinglist .ing{border-color:#b9dff3;}
     .ui-m .ui-codinglist td{display:block; float:left; border:0; padding:3px;}
     .ui-m .ui-codinglist td img{width:14px; margin-top:2px;}

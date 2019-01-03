@@ -47,8 +47,37 @@
 			len = $wrap.length, 
 			keys = $ui.option.keys,
 			i = 0, 
-			optAcco;
+			optAcco,
+			para = $ui.uiPara('acco'),
+			paras,
+			paraname;
 		
+		
+		//set up
+		if (!!para) {
+			if (para.split('+').length > 1) {
+				//2개이상 설정
+				//acco=exeAcco1*2+exeAcco2*3
+				paras = para.split('+');
+
+				for (var i = 0; i < paras.length; i++ ) {
+					paraname = paras[i].split('*');
+					opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
+				}
+			} else {
+				//1개 탭 설정
+				//tab=1
+			 	if (para.split('*').length > 1) {
+					paraname = para.split('*');
+					opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
+				} else {
+					current = [Number(para)];
+				}
+
+				console.log(current);
+			}
+		}
+
 		//set up
 		!$pnl ? $pnl = $tit.children('.ui-acco-pnl') : '';
 		$acco
@@ -5455,7 +5484,7 @@
 			info += '<li>진행 : <span class="n_ing">0</span> (<span class="per3">0</span>%)</li>';
 			info += '<li>대기 : <span class="n_wat">0</span> (<span class="per4">0</span>%)</li>';
 			info += '</ul>';
-			$('#' + opt.id).prepend(info);
+			
 
 			if (!$('.ui-codinglist-info .total').data('data')) {
 				$('.ui-codinglist-info .total').data('data', true).text(len - delsum - 1);
@@ -5474,12 +5503,7 @@
 			}
 
 			var sel = '';
-			sel += '<div class="box-srch">';
-			sel += '<div class="srch-area">';
-			sel += '<input type="search" id="uiCodinglistSrchCode" class="inp-srch" value="" placeholder="검색어를 입력해주세요.">';
-			sel += '</div>';
-			sel += '</div>';
-			sel += '<div class="ui-codinglist-sel">';
+			sel += '<div class="ui-codinglist-sel mgb-xxxs">';
 			sel += '<button type="button" class="btn-base"><span>전체</span></button>';
 			sel += '<select id="uiCLstate" data-ctg="state">';
 			sel += '<option value="0">상태선택</option>';
@@ -5496,11 +5520,15 @@
 			sel += '<select id="uiCLdepth" data-ctg="d2">';
 			sel += '<option value="0">메뉴선택</option>';
 			sel += '</select>';
-			sel += '<a href="/guide/coding_list.html" class="btn-base"><span>PC</span></a>';
-			sel += '<a href="/m/guide/coding_list.html" class="btn-base"><span>Mobile</span></a>';
+			sel += '</div>';
+			sel += '<div class="box-srch mgb-xxxs">';
+			sel += '<div class="srch-area">';
+			sel += '<input type="search" id="uiCodinglistSrchCode" class="inp-srch ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
+			sel += '</div>';
 			sel += '</div>';
 			
 			$('#' + opt.id).prepend(sel);
+			$('#' + opt.id).prepend(info);
 
 			selectoption('uiCLstate', ctg_state);
 			selectoption('uiCLpub', ctg_pub);
@@ -5594,6 +5622,8 @@
 				$(temp).closest('tr').show();
 			});
 
+			$ui.uiInputClear();
+
 		}
 	}
 
@@ -5639,14 +5669,14 @@
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
-		uiInputCancel: function () {
-			return createUiInputCancel();
+		uiInputClear: function () {
+			return createUiInputClear();
 		},
 		uiPlaceholder: function () {
 			return createUiPlaceholder();
 		}
 	});
-	function createUiInputCancel(){
+	function createUiInputClear(){
 		var $inp = $('.ui-inpcancel');
 
 		$inp.each(function(i){
@@ -5779,8 +5809,7 @@
 	function createUiLoading(opt) {
 		var loading = '',
 			$selector = opt.id === undefined ? $('body') : opt.id === '' ? $('body') : typeof opt.id === 'string' ? $('#' + opt.id) : opt.id,
-			txt = opt.txt === undefined ? 'Loading …' : opt.txt,
-			timer;
+			txt = opt.txt === undefined ? 'Loading …' : opt.txt;
 
 		opt.id === undefined ?
 			loading += '<div class="ui-loading">':
