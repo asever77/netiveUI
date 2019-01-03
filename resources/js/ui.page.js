@@ -72,7 +72,22 @@
     }
 
     $plugins.page.datePicker = function(){
-        $plugins.uiDatePicker();
+        $plugins.uiDatePicker({ 
+            selector:'#uiDatePicker1', 
+            openback: function(){
+                console.log('open callback gg');
+                $('#baseHeader').stop().animate({
+                    top:-50
+                },200)
+            },
+            closeback: function(){
+                console.log('close callback gg');
+                 $('#baseHeader').stop().animate({
+                    top:0
+                },200)
+            }
+        });
+        $plugins.uiDatePicker({ selector:'#uiDatePicker2' });
     }
 
     $plugins.page.dropdown = function(){
