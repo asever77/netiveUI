@@ -5775,10 +5775,12 @@
 			return createUiLoading(opt);
 		}
 	});
+	$ui.uiLoading.timer = {};
 	function createUiLoading(opt) {
 		var loading = '',
 			$selector = opt.id === undefined ? $('body') : opt.id === '' ? $('body') : typeof opt.id === 'string' ? $('#' + opt.id) : opt.id,
-			txt = opt.txt === undefined ? 'Loading …' : opt.txt;
+			txt = opt.txt === undefined ? 'Loading …' : opt.txt,
+			timer;
 
 		opt.id === undefined ?
 			loading += '<div class="ui-loading">':
@@ -5789,18 +5791,27 @@
 		loading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="$plugins.uiLoading({ visible:false });"><span>$plugins.uiLoading({ visible:false })</span></button>';
 		loading += '</div>';
 
-		opt.visible === true ? showLoading() : hideLoading();
+		clearTimeout($ui.uiLoading.timer);
+		opt.visible === true && !$('body').data('loading') ? showLoading() : opt.visible === false ? hideLoading() : '';
 		
 		function showLoading(){
+			clearTimeout($ui.uiLoading.timer);
+			$('body').data('loading', true);
 			$selector.prepend(loading);
-			$selector.find('.ui-loading').animate({ 'opacity':1 });
+			$selector.find('.ui-loading').stop().animate({ 'opacity':1 });
 		}
 		function hideLoading(){
-			$selector.find('.ui-loading').animate({ 'opacity':0 }, function(){
-				$('.ui-loading').remove();
-			});
+			clearTimeout($ui.uiLoading.timer);
+			$ui.uiLoading.timer = setTimeout(function(){
+				$selector.find('.ui-loading').stop().animate({ 'opacity':0 }, function(){
+					$('.ui-loading').remove();
+					$('body').data('loading', false);
+				});
+			},100);
 		}
 	}	
+
+
 
 	/* ------------------------------------------------------------------------
 	 * time check
