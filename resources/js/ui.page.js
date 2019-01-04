@@ -564,6 +564,7 @@
     $plugins.page.table = function(){
         $plugins.uiTblScroll();
         $plugins.uiTblScroll({ selector:'#uiTblSroll1',coln:4 });
+        
         $plugins.uiDatePicker();
         $plugins.uiSelection();
         $plugins.uiSelect();
