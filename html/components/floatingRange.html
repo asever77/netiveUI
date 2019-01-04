@@ -33,35 +33,45 @@
 				</div>
 
 				<p>특정 범위안에서 스크롤에 따라 이동</p>
+
+				<h2 class="h2">Base HTML</h2>
+				<div class="ui-floating-range" id="uiflRange01" style="display:inline-block;vertical-align: middle; height:300px; width:200px; border:1px dashed #ccc;">
+					<div class="ui-floating-range-item">
+						<div class="tst-obj">특정 영역 안에서만 이동</div>
+					</div>
+				</div>
+				<div class="ui-floating-range" id="uiflRange02" style="display:inline-block; vertical-align: middle; height:500px; width:300px; border:1px dashed #ccc; margin-left:30px;">
+					<div class="ui-floating-range-item">
+						<div class="tst-obj">특정 영역 안에서만 이동</div>
+					</div>
+				</div>
 				
 <div class="box-code">
 <pre>
 <code>
 &lt;div <span class="na">class=</span><span class="s">"ui-floating-range"</span> <span class="na">id=</span><span class="s">"uiflRange01"</span>&gt;
-&lt;div <span class="na">class=</span><span class="s">"ui-floating-range-item"</span>&gt;
-	...
-&lt;/div&gt;
+	&lt;div <span class="na">class=</span><span class="s">"ui-floating-range-item"</span>&gt;
+		...
+	&lt;/div&gt;
 &lt;/div&gt;
 </code>
 </pre>
 </div>
-				<h2 class="h2"></h2>
-				<div class="ui-floating-range" id="uiflRange01" style="display:inline-block; height:300px; width:200px; border:1px dashed #ccc;">
-					<div class="ui-floating-range-item">
-						<div class="tst-obj">특정 영역 안에서만 이동</div>
-					</div>
-				</div>
-				<div class="ui-floating-range" id="uiflRange02" style="display:inline-block; height:500px; width:300px; border:1px dashed #ccc;">
-					<div class="ui-floating-range-item">
-						<div class="tst-obj">특정 영역 안에서만 이동</div>
-					</div>
-				</div>
-				
 
-				
-	
-				<h2 class="h2">$plugins.uiFloating</h2>
+				<h2 class="h2">$plugins.uiFloatingRange</h2>
 				<p>필수 옵션과 선택 옵션의 정보</p>
+
+<div class="box-code">
+<pre>
+<code>
+$plugins.uiFloatingRange({ 
+	id:'uiflRange01', 
+	add:'baseHeader' ,
+	margin: 20
+});
+</code>
+</pre>
+</div>
 				<table class="tbl-base type-option" style="margin-bottom:100px">
 				<caption>옵션 설명</caption>
 				<colgroup>
@@ -121,7 +131,6 @@
 					</tr>
 				</tbody>
 				</table>
-				<div style="height:200px"> </div>
 			</main>
 		</div>
 		<footer class="base-footer" id="baseFooter"></footer>
