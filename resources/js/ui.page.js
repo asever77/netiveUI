@@ -433,55 +433,36 @@
         $plugins.uiBrickList({ id:'uiListcard', margin:10, response:true });
         //$plugins.uiCardListRow({ id:'uiListcard' });  추가
         
-        $plugins.uiSlot({ id: 'muiSlot1', current:1, auto:true });
-        $plugins.uiSlot({ id: 'muiSlot2', current:3, auto:true });
-        $plugins.uiSlot({ id: 'muiSlot3', current:6, auto:true });
-        $plugins.uiSlot({ id: 'muiSlot4', current:8, auto:true });
-        $plugins.uiSlot({ id: 'muiSlot5', current:10, auto:true });
-        
-        $plugins.uiSlot({ id: 'wuiSlot1', current:1, auto:true });
-        $plugins.uiSlot({ id: 'wuiSlot2', current:3, auto:true });
-        $plugins.uiSlot({ id: 'wuiSlot3', current:6, auto:true });
-        $plugins.uiSlot({ id: 'wuiSlot4', current:8, auto:true }); 
-        
+
+
+        $plugins.uiSlot({ id: 'wuiSlot1', current:1, auto:true, single:true });
+        $plugins.uiSlot({ id: 'wuiSlot2', current:9, auto:true, single:true });
+        $plugins.uiSlot({ id: 'wuiSlot3', current:3, auto:true, single:true });
+        $plugins.uiSlot({ id: 'wuiSlot4', current:5, auto:true, single:true });
+        $plugins.uiSlot({ id: 'wuiSlot5', current:7, auto:true, single:true });
 
         var n = 1,
             j = 1,
             m = [],
-            w = [];
+            w = [],
+            iulen = 6;
         
         $('#allstop2').on('click',function(){
-            if (n === 1 && j === 1) {
+            if (j === 1) {
                 $('body').addClass('on');
-                slotstop(n);
-                slotstop2(j);
+                slotstop(j);
             } else {
                 $('body').removeClass('on');
-                n = 1;
                 j = 1;
                 m = [],
                 w = [];
             }
         });
-        function slotstop(n){
-            if (n < 6) {
+       
+        function slotstop(j){
+            if (j < iulen) {
                 setTimeout(function(){
-                    $plugins.uiSlotStop({ id: 'muiSlot' + n, callback: slotCallback });
-                    $('#muiSlot' + n).closest('.ui-bricklist-item').addClass('ok');
-                    $('.ui-bricklist-item.n'+ n).find('strong').stop().animate({
-                        opacity: 1
-                    },500);
-                    $('.ui-bricklist-item.n'+ n).find('p').stop().animate({
-                        opacity: 1
-                    },500);
-                },100);
-                
-            }
-        }
-        function slotstop2(j){
-            if (j < 6) {
-                setTimeout(function(){
-                    $plugins.uiSlotStop({ id: 'wuiSlot' + j, callback: slotCallback2 });
+                    $plugins.uiSlotStop({ id: 'wuiSlot' + j, callback: slotCallback });
                     $('#wuiSlot' + j).closest('.ui-bricklist-item').addClass('ok');
                     $('.ui-bricklist-item.n'+ j).find('strong').stop().animate({
                         opacity: 1
@@ -494,41 +475,18 @@
         }
 
         function slotCallback(v){
-            if (n < 6 && n > 1) {
-                var len = m.length;
-                for (var i = 0; i < len ; i++) {
-                    if (m[i] === v) {
-                        slotstop(n);
-                        break;
-                    } else { 
-                        if(i === len - 1){
-                            m.push(v);
-                            n = n + 1;
-                            if (n < 6) {
-                                slotstop(n);
-                            }
-                        }
-                    }
-                }
-            } else if(n === 1) {
-                m.push(v);
-                n = n + 1;
-                slotstop(n);
-            }
-        }
-        function slotCallback2(v){
-            if (j < 6 && j > 1) {
+            if (j < iulen && j > 1) {
                 var len = w.length;
                 for (var i = 0; i < len ; i++) {
                     if (w[i] === v) {
-                        slotstop2(j);
+                        slotstop(j);
                         break;
                     } else { 
                         if(i === len - 1){
                             w.push(v);
                             j = j + 1;
-                            if (j < 6) {
-                                slotstop2(j);
+                            if (j < iulen) {
+                                slotstop(j);
                             }
                         }
                     }
@@ -536,7 +494,7 @@
             } else if(j === 1) {
                 w.push(v);
                 j = j + 1;
-                slotstop2(n);
+                slotstop(j);
             }
         }
     }
@@ -563,7 +521,7 @@
 
     $plugins.page.table = function(){
         $plugins.uiTblScroll();
-        $plugins.uiTblScroll({ selector:'#uiTblSroll1',coln:4 });
+        $plugins.uiTblScroll({ selector:'#uiTblSroll1',rown:4 });
         
         $plugins.uiDatePicker();
         $plugins.uiSelection();
