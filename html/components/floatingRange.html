@@ -35,16 +35,17 @@
 				<p>특정 범위안에서 스크롤에 따라 이동</p>
 
 				<h2 class="h2">Base HTML</h2>
-				<div class="ui-floating-range" id="uiflRange01" style="display:inline-block;vertical-align: middle; height:300px; width:200px; border:1px dashed #ccc;">
+				<div class="ui-floating-range" id="uiflRange02" style="display:inline-block; vertical-align: middle; height:500px; width:300px; border:1px dashed #ccc; ">
 					<div class="ui-floating-range-item">
 						<div class="tst-obj">특정 영역 안에서만 이동</div>
 					</div>
 				</div>
-				<div class="ui-floating-range" id="uiflRange02" style="display:inline-block; vertical-align: middle; height:500px; width:300px; border:1px dashed #ccc; margin-left:30px;">
+				<div class="ui-floating-range" id="uiflRange01" style="display:inline-block;vertical-align: middle; height:300px; width:200px; border:1px dashed #ccc; margin-left:30px;">
 					<div class="ui-floating-range-item">
 						<div class="tst-obj">특정 영역 안에서만 이동</div>
 					</div>
 				</div>
+				
 				
 <div class="box-code">
 <pre>
@@ -96,38 +97,16 @@ $plugins.uiFloatingRange({
 						<td>(필수) fix follow를 적용 시킬 영역(ui-floating)의 id 명</td>
 					</tr>
 					<tr>
-						<th scope="row">ps:</th>
-						<td>[string]</td>
-						<td>'top'</td>
-						<td>고정될 위치 설정
-							<ul>
-							<li>'top' : 상단</li>
-							<li>'bottom' : 하단</li>
-							</ul>
-						</td>
-					</tr>
-					<tr>
-						<th scope="row">fix:</th>
-						<td>[boolean]</td>
-						<td>true</td>
-						<td>고정되어 시작할지 여부
-							<ul>
-							<li>true : 고정에서 기본</li>
-							<li>false : 기본에서 고정</li>
-							</ul>
-						</td>
-					</tr>
-					<tr>
 						<th scope="row">add:</th>
 						<td>[string]</td>
 						<td>'name'</td>
 						<td>고정되어 있는 오브젝트가 이미 있다면 그위치 다음으로 위치하기 위해 해당 영역의 아이디명 </td>
 					</tr>
 					<tr>
-						<th scope="row">callback:</th>
-						<td>[function]</td>
-						<td>function</td>
-						<td>콜백값으로 아이디와 현재스크롤위치값, 상태변경 위치값</td>
+						<th scope="row">margin:</th>
+						<td>[number]</td>
+						<td>0</td>
+						<td>오브젝트 상단영역 마진값 추가로 이동시점 변경</td>
 					</tr>
 				</tbody>
 				</table>

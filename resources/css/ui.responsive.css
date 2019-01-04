@@ -2,6 +2,7 @@
 
 /* pc(mobile view) */
 .ui-d [class*="tbl-base"] {table-layout:fixed;}
+.ui-d .is-scr .tbl-scroll-thead{padding-right:17px;}
 /* page */
 
 
@@ -44,6 +45,7 @@
 
     /* global */
     [class*="tbl-base"] {table-layout:fixed;}
+    
     /* .tbl-scroll-tbody{overflow-y:hidden;} */
 
     /* layout */
