@@ -60,6 +60,14 @@ $plugins<span class="na">.uiDatePicker</span>();
 					<button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal2" id="uiDatePck2" aria-expanded="false"><span>달력</span></button>
 					<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck2" id="uiDatePck2_pnl"></section>
 				</div>
+
+
+				<div class="ui-datepicker" id="uiDatePicker3">
+					<input class="inp-base" type="tel" value="2018-08-20" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="lnd0060Cal3">
+					<input class="inp-base" type="tel" value="2018-08-20" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="lnd0060Cal3_end">
+					<button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal3" id="uiDatePck3" aria-expanded="false"><span>달력</span></button>
+					<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck3" id="uiDatePck3_pnl"></section>
+				</div>
 				
 				<div class="tbl-wrap">
 					<table class="tbl-base type-option">
@@ -149,6 +157,11 @@ $plugins<span class="na">.uiDatePicker</span>();
 					}
 				});
 				$plugins.uiDatePicker({ selector:'#uiDatePicker2' });
+
+				$plugins.uiDatePicker({ 
+					selector:'#uiDatePicker3',
+					dual : true
+				});
 
 			});
 		})(jQuery, window, document);

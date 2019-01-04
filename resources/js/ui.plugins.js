@@ -675,6 +675,7 @@
 	});
 	$ui.uiDatePicker.option = {
 		selector: '.ui-datepicker',
+		dual: false,
 		date_split: '-',
 		openback: false,
 		closeback: false,
@@ -688,6 +689,7 @@
 		var opt = $.extend(true, {}, $ui.uiDatePicker.option, opt),
 			date_split = opt.date_split,
 			selector = opt.selector,
+			dual = opt.dual,
 			openback = opt.openback,
 			closeback = opt.closeback,
 			callback = opt.callback,
@@ -700,7 +702,7 @@
 			dateToday = date,
 			calVar;
 
-		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback:openback, closeback:closeback });
+		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback:openback, closeback:closeback, dual:dual });
 
 		//이달의 날짜 텍스트화
 		function textDate(d, m, y, whatday) {
