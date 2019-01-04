@@ -2370,12 +2370,14 @@
 	});
 	$ui.uiSelect.option = {
 		id: false, //select id
-		current: null
+		current: null,
+		callback:false
 	};
 	function createUiSelect(opt){
 		var opt = opt === undefined ? {} : opt,
 			opt = $.extend(true, {}, $ui.uiSelect.option, opt),
 			current = opt.current, 
+			callback = opt.callback,
 			id = opt.id,
 			is_id = id === false ? false : true,
 			$ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.closest('.ui-select') : $('.ui-select'), 
@@ -2421,7 +2423,8 @@
 			$sel_current = $ui_select.eq(i);
 			$sel = $sel_current.find('select');
 			$opt = $sel.find('option');
-			
+			$sel.data('callback', callback);
+
 			sel_id = $sel.attr('id');
 			list_id = sel_id +'_list';
 			opt_id = sel_id +'_opt';
@@ -2430,15 +2433,21 @@
 			opt_len = $opt.length;
 
 			_option_wrap += '<div class="ui-select-wrap" style="min-width:'+ $sel_current.outerWidth() +'px">';
-			_option_wrap += '<div class="ui-select-opts" role="listbox" id="'+ list_id +'" aria-hidden="true" tabindex="-1">';
+			$ui.browser.mobile ?
+			_option_wrap += '<div class="ui-select-opts" role="listbox" id="'+ list_id +'" aria-hidden="false">':
+			_option_wrap += '<div class="ui-select-opts" role="listbox" id="'+ list_id +'" aria-hidden="false" tabindex="-1">';
 
 			for (j = 0; j < opt_len; j++) {
 				$opt_current = $opt.eq(j);
 
 				if (current !== null) {
-					_selected = current === j ?
-						$opt_current.prop('selected', true):
-						$opt_current.prop('selected', false);
+					if (current === j) {
+						_selected = true;
+						$opt_current.prop('selected', true).attr('selected');
+					} else {
+						_selected = false;
+						$opt_current.prop('selected', false).removeAttr('selected');
+					}						
 				} else {
 					_selected = $opt_current.prop('selected');
 				}
@@ -2452,14 +2461,25 @@
 				id_optname = $sel.attr('id') + '_opt';
 				id_opt = id_optname + '_' + j;
 
-				_disabled ?
-					_selected?
-					_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt disabled selected" value="'+ $opt_current.val() +'" disabled tabindex="-1">':
-					_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt disabled" value="'+ $opt_current.val() +'" disabled tabindex="-1">':
-					_selected?
-					_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt selected" value="'+ $opt_current.val() +'" tabindex="-1">':
-					_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt" value="'+ $opt_current.val() +'" tabindex="-1">';
+				if ($ui.browser.mobile) {
+					_disabled ?
+						_selected ?
+						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt disabled selected" value="'+ $opt_current.val() +'" disabled tabindex="-1">':
+						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt disabled" value="'+ $opt_current.val() +'" disabled tabindex="-1">':
+						_selected ?
+						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt selected" value="'+ $opt_current.val() +'">':
+						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt" value="'+ $opt_current.val() +'">';
+				} else {
+					_disabled ?
+						_selected ?
+						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt disabled selected" value="'+ $opt_current.val() +'" disabled tabindex="-1">':
+						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt disabled" value="'+ $opt_current.val() +'" disabled tabindex="-1">':
+						_selected ?
+						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt selected" value="'+ $opt_current.val() +'" tabindex="-1">':
+						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt" value="'+ $opt_current.val() +'" tabindex="-1">';
 
+				}
+				
 				_option_wrap += '<span class="ui-select-txt">' + $opt_current.text() + '</span>';
 				_option_wrap += '</button>'; 
 			}
@@ -2479,26 +2499,32 @@
 		}
 		
 		//event
-		$('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui blur.ui')
-			.on({
+		$('.ui-select-btn')
+			.off('click.ui keydown.ui mouseover.ui focus.ui blur.ui').on({
 				'click.ui': selectClick,
 				'keydown.ui': selectKey,
 				'mouseover.ui': selectOver,
 				'focus.ui': selectOver,
 				'blur.ui': optBlur
 			});
-		$('.ui-select-opt').off('click.ui mouseover.ui')
-			.on({
+		$('.ui-select-opt')
+			.off('click.ui mouseover.ui').on({
 				'click.ui':optClick,
 				'mouseover.ui':selectOver
 			});
-		$('.ui-select select').off('change.ui')
-			.on({
-				'change.ui':selectChange,
+		$('.ui-select select').off('change.ui').on({ 'change.ui':selectChange });
+
+		$('.ui-select-label')
+			.off('click.ui').on('click.ui', function(){
+				var idname = $(this).attr('for');
+
+				setTimeout(function(){
+					$('#'+ idname +'_inp').focus();
+				},0);
 			});
 		
 		function selectChange(){
-			$ui.uiSelectAct({ id:$(this).attr('id'), current:$(this).find('option:selected').index(), original:true });
+			$ui.uiSelectAct({ id:$(this).attr('id'), current:$(this).find('option:selected').index(), callback:$(this).data('callback'), original:true });
 		}
 		function optBlur() {
 			clearTimeout(timer_opt);
