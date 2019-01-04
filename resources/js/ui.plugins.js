@@ -2943,7 +2943,7 @@
 	};
 	function createUiTooltip(opt){
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, $ui.uiTblScroll.option, opt),
+			opt = $.extend(true, {}, $ui.uiTooltip.option, opt),
 			$btn = $('.ui-tooltip-btn'),
 			$tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false,
 			visible = opt.visible,
@@ -3101,13 +3101,13 @@
 	});
 	$ui.uiTblScroll.option = {
 		selector: '.ui-tblscroll',
-		coln: 5
+		rown: 5
 	}
 	function createUiTblScroll(opt){
 		var opt = opt === undefined ? {} : opt,
 			opt = $.extend(true, {}, $ui.uiTblScroll.option, opt),
 			$tbl = $(opt.selector),
-			coln = opt.coln,
+			rown = opt.rown,
 			len = $tbl.length,
 			$thead = '',
 			$tbody = '',
@@ -3121,7 +3121,7 @@
 			$tbl.eq(i).find('.tbl-scroll-thead').remove();
 			$tbl.eq(i).find('.tbl-scroll-tbody').removeAttr('style');
 
-			coln = !!$tbl.eq(i).data('col') ? $tbl.eq(i).data('col') : coln,
+			rown = !!$tbl.eq(i).data('row') ? $tbl.eq(i).data('row') : rown,
 			$tbody = $tbl.eq(i).find('.tbl-scroll-tbody');
 			clone_colgroup = $tbody.find('colgroup').clone();
 			clone_thead = $tbody.find('thead tr').clone();
@@ -3141,8 +3141,8 @@
 				$(this).replaceWith('<td>'+ $(this).text() +'</td>');
 			});
 
-			if ($tbody.find('tbody tr').length > coln) {
-				for (var j = 0; j < coln; j++) {
+			if ($tbody.find('tbody tr').length > rown) {
+				for (var j = 0; j < rown; j++) {
 					h = h + $tbody.find('tbody tr').eq(j).outerHeight();
 				}
 				$tbl.eq(i).addClass('is-scr');
@@ -3150,7 +3150,7 @@
 			}
 		}
 		
-		/* scroll event
+		/* scroll event test
 		if (!$plugins.browser.mobile) {
 			var y = 0,
 				y2 = 0,
@@ -3186,9 +3186,6 @@
 			});
 		}
 		*/
-		
-		
-		
 	}
 	function createUiCaption(){
 		var $cp = $('.ui-caption');
@@ -3654,26 +3651,41 @@
 		if (opt === undefined) {
 			return false;
 		}
-		
+		console.log('opt', opt)
 		var $slot = $('#' + opt.id),
 			$wrap = $slot.find('.ui-slot-wrap'),
 			$item = $wrap.find('.ui-slot-item'),
 			single = $slot.data('single'),
 			item_h = $item.outerHeight(),
+			current = opt.current,
 			len = $item.length,
+			first_t = item_h * current * -1,
 			wrap_h = len * item_h,
 			h = 0;
 		
-		var s = 500;
+		var s = Math.ceil((500 / len) * (len - current));
+		
+		console.log(s);
+
 		if (!$slot.data('ing')) {
+			console.log(111111111)
 			$slot.data('ing', true);
-			$ui.uiSlot.play[opt.id] = win.setInterval(steplot, s);
+			//$ui.uiSlot.play[opt.id] = win.setInterval(steplot, s);
+			$wrap.css('top', first_t).stop().animate({
+				top: single ? item_h * (len - 1) * -1 : Math.ceil(item_h * (len - 3) * -1)
+			},s , 'linear', function(){
+				s = 500;
+				first_t = 0;
+				steplot();
+			}) ;
 		}
 		
 		function steplot(){
 			$wrap.css('top', 0).stop().animate({
 				top: single ? item_h * (len - 1) * -1 : Math.ceil(item_h * (len - 3) * -1)
 			},s , 'linear') ;
+			
+			
 			win.clearInterval($ui.uiSlot.play[opt.id]);
 			$ui.uiSlot.play[opt.id] = win.setInterval(steplot, s);
 		}
@@ -3705,10 +3717,13 @@
 		clearTimeout(timer);
 		timer = setTimeout(function(){
 			win.clearInterval($ui.uiSlot.play[opt.id]);
-			t = item_h * x * -1 > 0 ? item_h * x : item_h * x * -1;
+			t = item_h * x * -1;
+			
+			var ss = Math.ceil((5000 / len) * (len - x));
+			console.log(ss, x)
 			$wrap.stop().animate({
 				top: t
-			},1000, 'easeOutQuad', function(){
+			}, ss, 'easeOutQuad', function(){
 				$wrap.find('.ui-slot-item').eq(index).addClass('selected');
 				callback(result);
 			});
