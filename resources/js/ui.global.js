@@ -585,8 +585,8 @@ if (!Object.keys){
 		function scrollbarReady(v){
 			var $wrap = v,
 				$item =  $wrap.children('.ui-scrollbar-item'),
-				wr_h = $wrap.outerHeight(),
-				it_h = $item.outerHeight(),
+				wr_h = $wrap.innerHeight(),
+				it_h = $item.outerHeight(true),
 				bar_h = wr_h / (it_h / 100);
 
 			$wrap.css('overflow','hidden');
@@ -644,7 +644,7 @@ if (!Object.keys){
 					console.log(this);
 
 					wrap_h = $this.outerHeight();
-					item_h = $this.children('.ui-scrollbar-item').outerHeight();
+					item_h = $this.children('.ui-scrollbar-item').outerHeight(true);
 					max_y = item_h - wrap_h;
 					y = e.pageY;
 
@@ -653,7 +653,7 @@ if (!Object.keys){
 					act($this, wrap_h, item_h, max_y, y, wh);
 				});
 
-				var a = 0;
+				var overlapExe = 0;
 
 				function act($this, wrap_h, item_h, max_y, y, wh){
 					$this.off('mousewheel.aa DOMMouseScroll.aa').on('mousewheel.aa DOMMouseScroll.aa', function(e){
@@ -662,9 +662,18 @@ if (!Object.keys){
 
 						var delta = -Math.max(-1, Math.min(1, e.originalEvent.wheelDelta)),
 							it = $this.children('.ui-scrollbar-item').position().top,
+							
+							_a = $this.innerHeight(),
+							_b = $this.find('.ui-scrollbar-item').outerHeight(true),
+							_c = _b - _a,
+							_c_ = _c / 100,
+							_d = _a / (_b / 100),
+							_e = _a - $this.find('.ui-scrollbar-bar').outerHeight(),
+							_e_ = _e / 100,
+							bar_m,
 							v;
 						
-						console.log(delta);
+						//console.log(delta);
 
 						if (delta > 0) {
 							wh = it - (wrap_h / 1.5);
@@ -683,14 +692,22 @@ if (!Object.keys){
 
 						
 						//console.log(v, max_y, wh);
-						a = a + 1;
+						overlapExe = overlapExe + 1;
 						
-						if (a === 1 ) {
+						if (overlapExe === 1 ) {
+							
+							bar_m = (v / _c_) * _e_;
+							console.log('scrollbar: ',Math.abs(bar_m), _e   );
+
+							Math.abs(bar_m) > _e ? bar_m = _e * -1 : '';
+
+							 $this.find('.ui-scrollbar-bar').stop().animate({
+								'top': bar_m * -1 +'px'
+							},300);
 							$this.children('.ui-scrollbar-item').stop().animate({
 								'top': v +'px'
 							},300, 'easeInOutQuad', function(){
-								console.log(a,v);
-								a = 0;1
+								overlapExe = 0;
 							});
 						}
 
@@ -703,12 +720,7 @@ if (!Object.keys){
 
 					});
 				}
-				
-				function aaa(){
-					if (a === 1 ) {
-						console.log('실행', a);
-					}
-				}
+
 			//}
 		}
 		
