@@ -3152,42 +3152,7 @@
 			}
 		}
 		
-		/* scroll event test
-		if (!$plugins.browser.mobile) {
-			var y = 0,
-				y2 = 0,
-				y3 = 0,
-				yn = 0,
-				wrap_h,
-				tbl_h,
-				max_y;
-
-			$('.tbl-scroll-tbody').on('mousedown', function(e){
-				var $this = $(this);
-
-				wrap_h = $this.outerHeight();
-				tbl_h = $this.find('.tbl-base').outerHeight();
-				max_y = tbl_h - wrap_h;
-				y = e.pageY;
-				
-				$(doc).on('mousemove.tblscroll', function(e){
-					$this.data('y') === undefined ? $this.data('y', 0) :'';
-					y2 = e.pageY;
-					yn = Number($this.data('y')) + (y2 - y);
-					yn = Math.ceil(yn + (yn / 10));
-					console.log(yn,  Math.abs(yn), max_y);
-					y3 = yn > 0 ? 0 : Math.abs(yn) >= max_y ? max_y * -1 : yn;
-					$this.find('.tbl-base').css('transform','translatey('+ y3 +'px)');
-
-					$(doc).on('mouseup', function(){
-						$this.data('y', y3);
-						$(doc).off('mousemove.tblscroll');
-					})
-				})
-				
-			});
-		}
-		*/
+		
 	}
 	function createUiCaption(){
 		var $cp = $('.ui-caption');
@@ -3216,7 +3181,6 @@
 			$(this).text(cp_txt + ' 정보입니다.');
 		})
 	}
-
 
 
 	/* ------------------------------------------------------------------------

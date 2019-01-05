@@ -543,11 +543,29 @@
         {
             "use": "Y",
             "usem": "Y",
+            "code": "G_03_25_00_00",
+            "ctg": "가이드",
+            "n1": "G03",
+            "d1": "",
+            "d2": "Scroll Bar",
+            "ol": "",
+            "d3": "",
+            "d4": "",
+            "href": "/html/components/scrollBar.html",
+            "mhref": "/html/components/scrollBar.html",
+            "func": "",
+            "blank": "",
+            "tit": "Scroll Bar",
+            "mtit": "Scroll Bar"
+        },
+        {
+            "use": "Y",
+            "usem": "Y",
             "code": "G_03_15_00_00",
             "ctg": "가이드",
             "n1": "G03",
             "d1": "",
-            "d2": "Scroll move",
+            "d2": "Scroll Move",
             "ol": "",
             "d3": "",
             "d4": "",
@@ -555,8 +573,8 @@
             "mhref": "/html/components/scrollMove.html",
             "func": "",
             "blank": "",
-            "tit": "Scroll move",
-            "mtit": "Scroll move"
+            "tit": "Scroll Move",
+            "mtit": "Scroll Move"
         },
         {
             "use": "Y",

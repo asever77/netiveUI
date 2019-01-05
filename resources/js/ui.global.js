@@ -371,6 +371,9 @@ if (!Object.keys){
 		uiHasScrollBar: function (opt) {
 			return createUiHasScrollBar(opt);
 		},
+		uiScrollBar: function (opt) {
+			return createuiScrollBar(opt);
+		},
 		uiFocusTab: function (opt) {
 			return createUiFocusTab(opt);
 		},
@@ -421,6 +424,9 @@ if (!Object.keys){
 			console.log('');
 		}
 	}
+
+
+
 	win[global].uiAjax.option = {
 		page: true,
 		add: false,
@@ -468,6 +474,9 @@ if (!Object.keys){
 			}
 		});
 	}
+
+
+
 	win[global].uiScroll.option = {
 		value: 0,
 		speed: 0,
@@ -534,6 +543,9 @@ if (!Object.keys){
 			});
 		}
 	}
+
+
+
 	function createUiPara(paraname){
 		var _tempUrl = win.location.search.substring(1),
 			_tempArray = _tempUrl.split('&'),
@@ -548,6 +560,161 @@ if (!Object.keys){
 			}
 		}
 	}
+
+
+
+	win[global].uiScrollBar.option = {
+		ps: 'bottom',
+		add: false,
+		fix: true,
+		callback: false
+	};
+	function createuiScrollBar(opt) {
+		var $base = $('.ui-scrollbar'),
+			len = $base.length;
+
+		console.log(len);
+		$base.each(function(i){
+			var $this = $(this);
+
+			if (win[global].uiHasScrollBar({ selector: $this  })) {
+				scrollbarReady($this);
+			}
+		});
+		
+		function scrollbarReady(v){
+			var $wrap = v,
+				$item =  $wrap.children('.ui-scrollbar-item'),
+				wr_h = $wrap.outerHeight(),
+				it_h = $item.outerHeight(),
+				bar_h = wr_h / (it_h / 100);
+
+			$wrap.css('overflow','hidden');
+
+			var html_scrollbar = '';
+
+			html_scrollbar += '<div class="ui-scrollbar-barwrap">';
+			html_scrollbar += '<div class="ui-scrollbar-bar" style="height:'+ bar_h +'%">';
+			html_scrollbar += '</div>';
+			html_scrollbar += '</div>';
+
+
+			$wrap.prepend(html_scrollbar);
+			//if (!$plugins.browser.mobile) {
+				var y = 0,
+					y2 = 0,
+					y3 = 0,
+					y4 = 0,
+					yn = 0,
+					wrap_h,
+					item_h,
+					max_y;
+
+				$wrap.on('mousedown.uiscrollbar', function(e){
+					// var $this = $(this);
+
+					// wrap_h = $this.outerHeight();
+					// item_h = $this.find('.ui-scrollbar-item').outerHeight();
+					// max_y = item_h - wrap_h;
+					// y = e.pageY;
+					
+					// $(doc).on('mousemove.uiscrollbar', function(e){
+					// 	$this.data('y') === undefined ? $this.data('y', 0) :'';
+					// 	y2 = e.pageY;
+					// 	yn = Number($this.data('y')) + (y2 - y);
+					// 	yn = Math.ceil(yn + (yn / 10));
+					// 	console.log(yn,  Math.abs(yn), max_y);
+					// 	y3 = yn > 0 ? 0 : Math.abs(yn) >= max_y ? max_y * -1 : yn;
+					// 	$this.find('.ui-scrollbar-item').css('transform','translatey('+ y3 +'px)');
+
+						
+					// });
+
+					// $(doc).on('mouseup', function(){
+					// 		$this.data('y', y3);
+					// 		$(doc).off('mousemove.uiscrollbar');
+					// 		//$('.ui-scrollbar').off('mousedown.uiscrollbar');
+					// 	});
+					
+				}).off('mouseover.uiscrbar').on('mouseover.uiscrbar', function(e){
+					e.preventDefault();
+					e.stopPropagation();
+
+					var $this = $(this);
+					console.log(this);
+
+					wrap_h = $this.outerHeight();
+					item_h = $this.children('.ui-scrollbar-item').outerHeight();
+					max_y = item_h - wrap_h;
+					y = e.pageY;
+
+					var wh = 0;
+
+					act($this, wrap_h, item_h, max_y, y, wh);
+				});
+
+				var a = 0;
+
+				function act($this, wrap_h, item_h, max_y, y, wh){
+					$this.off('mousewheel.aa DOMMouseScroll.aa').on('mousewheel.aa DOMMouseScroll.aa', function(e){
+						e.preventDefault();
+						e.stopPropagation();
+
+						var delta = -Math.max(-1, Math.min(1, e.originalEvent.wheelDelta)),
+							it = $this.children('.ui-scrollbar-item').position().top,
+							v;
+						
+						console.log(delta);
+
+						if (delta > 0) {
+							wh = it - (wrap_h / 1.5);
+						} else {
+							wh = it + (wrap_h / 1.5);
+						}
+
+						v = Math.ceil(wh);
+
+						if (v > 0) {
+							v = 0;
+						} else if (Math.abs(v) > max_y){
+							v = max_y * -1;
+							it = max_y * -1;
+						}
+
+						
+						//console.log(v, max_y, wh);
+						a = a + 1;
+						
+						if (a === 1 ) {
+							$this.children('.ui-scrollbar-item').stop().animate({
+								'top': v +'px'
+							},300, 'easeInOutQuad', function(){
+								console.log(a,v);
+								a = 0;1
+							});
+						}
+
+						// $this.data('y') === undefined ? $this.data('y', 0) :'';
+						// y2 = e.pageY;
+						// yn = Number($this.data('y')) + (y2 - y);
+						// yn = Math.ceil(yn + (yn / 10));
+						// y3 = yn > 0 ? 0 : Math.abs(yn) >= max_y ? max_y * -1 : yn;
+						// $this.find('.ui-scrollbar-item').css('transform','translatey('+ y3 +'px)');
+
+					});
+				}
+				
+				function aaa(){
+					if (a === 1 ) {
+						console.log('실행', a);
+					}
+				}
+			//}
+		}
+		
+		
+	}
+
 	function createUiHasScrollBar(opt) {
 		var $this = opt.selector;
 		return ($this.prop('scrollHeight') == 0 && $this.prop('clientHeight') == 0) || ($this.prop('scrollHeight') > $this.prop('clientHeight'));
@@ -558,6 +725,10 @@ if (!Object.keys){
 		focusnot: false,
 		type: 'hold' //'hold', 'sense'
 	};
+
+
+
+
 	function createUiFocusTab(opt){
 		if (opt === undefined) {
 			win[global].uiConsoleGuide([
