@@ -87,7 +87,6 @@
                 });
 
                 $lnb.find('.dep-1').not('.selected').remove();
-                console.log(current);
                 $lnb.find('.dep-1.selected').append(d2[current[0]]);
                 // /$lnb.find('.dep-2-wrap').not('.selected').remove();
                 $plugins.common.baseSetting(navi);

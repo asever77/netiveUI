@@ -616,27 +616,7 @@ if (!Object.keys){
 					wrap_h = $this.innerHeight(),
 					item_h = $this.children('.ui-scrollbar-item').outerHeight(true),
 					max_y = item_h - wrap_h,
-					y = e.pageY,
 					bar_t;
-
-				//미완성 mouse drag event
-				$('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e){
-					e.preventDefault();
-					var $bar = $(this),
-						moving = false;
-
-					bar_t = $bar.position().top;
-					console.log('bar_t', bar_t);
-
-					$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function(e){
-						moving = true;
-						console.log(22222);
-					}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function(){
-						console.log(33333);
-						//moving ? act($this, minmax) : '';
-						$(doc).off('mousemove.bar mouseup.bar touchmove.bar');
-					});
-				});
 
 				//wheel event
 				$this.off('mousewheel.aa DOMMouseScroll.aa').on('mousewheel.aa DOMMouseScroll.aa', function(e){
@@ -644,6 +624,43 @@ if (!Object.keys){
 					e.stopPropagation();
 					wheelAct($this, e.originalEvent.wheelDelta, wrap_h, item_h, max_y);
 				});
+
+				//미완성 mouse drag event
+				$('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e){
+					e.preventDefault();
+					var $bar = $(this),
+						y_s = 0,
+						t_s = $bar.position().top,
+						s_h = $bar.closest('.ui-scrollbar-barwrap').innerHeight() - $bar.outerHeight(true),
+						
+						$item = $bar.closest('.ui-scrollbar').children('.ui-scrollbar-item'),
+						bar_unit = s_h / 100,
+						wrap_unit = ($bar.closest('.ui-scrollbar').innerHeight() - $item.outerHeight(true)) / 100,
+						w_sh = $item.outerHeight(true) - $bar.closest('.ui-scrollbar').innerHeight(),
+						moving = false;
+
+					bar_t = $bar.position().top;
+					if (e.touches === undefined) {
+						if (e.pageY !== undefined) {
+							y_s = e.pageY;
+						}
+						//ie
+						if (e.pageY === undefined) {
+							y_s = e.clientY;
+						}
+
+						console.log('s: ' + y_s, t_s, s_h);
+					}
+
+					$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function(e){
+						moving = true;
+						dragAct($bar, $item, e, y_s, t_s, s_h, w_sh, bar_unit, wrap_unit);
+					}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function(){
+						//moving ? act($this, minmax) : '';
+						$(doc).off('mousemove.bar mouseup.bar touchmove.bar');
+					});
+				});
+
 			}
 
 			function keyEventAct(e){
@@ -652,11 +669,8 @@ if (!Object.keys){
 						wrap_h = $this.innerHeight(),
 						item_h = $this.children('.ui-scrollbar-item').outerHeight(true),
 						max_y = item_h - wrap_h,
-						y = e.pageY,
-						bar_t,
 						keys = win[global].option.keys;
 
-					console.log('focus', e.keyCode);
 					switch(e.keyCode){
 						case keys.up:
 							e.preventDefault();
@@ -680,17 +694,16 @@ if (!Object.keys){
 		function wheelAct(wrap_this, wheelDelta, wrap_h, item_h, max_y) {
 			var $this = wrap_this,
 				delta = -Math.max(-1, Math.min(1, wheelDelta)),
-				$this_bar = $this.find('> .ui-scrollbar-barwrap > .ui-scrollbar-bar'),
+				$this_barwrap = $this.find('> .ui-scrollbar-barwrap'),
+				$this_bar = $this_barwrap.find('> .ui-scrollbar-bar'),
 				$this_item =  $this.children('.ui-scrollbar-item'),
-
 				item_top = $this_item.position().top,
-				bar_space = wrap_h - $this_bar.outerHeight(),
+				bar_space = $this_barwrap.innerHeight() - $this_bar.outerHeight(true),
 				v,
 				wh,
 				ms = 3;
 
 			overlapExe = overlapExe + 1;
-			console.log(overlapExe);
 
 			switch (overlapExe) {
 				case 1 : ms = 3; break;
@@ -700,19 +713,15 @@ if (!Object.keys){
 				default : ms = 0.5; break;
 			}
 
-			if (delta > 0) {
-				wh = item_top - (wrap_h / ms);
-			} else {
+			delta > 0 ?
+				wh = item_top - (wrap_h / ms):
 				wh = item_top + (wrap_h / ms);
-			}
 
 			v = Math.ceil(wh);
 
 			if (v > 0) {
 				v = 0;
-				console.log('최상단');
 			} else if (Math.abs(v) > max_y){
-				console.log('최하단');
 				v = max_y * -1;
 				item_top = max_y * -1;
 			}
@@ -735,64 +744,93 @@ if (!Object.keys){
 			},100);
 		}
 
-			function per($this, e, minmax){
-				var value_l;
+		function dragAct(bar_this, item_this, e, y_s, t_s, s_h, w_sh, bar_unit, wrap_unit){
+			var $bar = bar_this,
+				$item = item_this,
+				per = 0,
+				v = 0,
+				v_item = 0;
 
-				slider_w = !vertical ? $bg.outerWidth() : $bg.outerHeight();
-				
-				if (!vertical) {
-					if (e.touches !== undefined) {
-						value_l = e.touches[0].pageX - $bg.offset().left - 0;
-					}
-					if (e.touches === undefined) {
-						if (e.pageX !== undefined) {
-							value_l = e.pageX - $bg.offset().left - 0;
-						}
-						//ie
-						if (e.pageX === undefined) {
-							value_l = e.clientX - $bg.offset().left - 0;
-						}
-					}
-				} else {
-					if (e.touches !== undefined) {
-						value_l = e.touches[0].pageY - $bg.offset().top - 0;
-					}
-					if (e.touches === undefined) {
-						if (e.pageX !== undefined) {
-							value_l = e.pageY - $bg.offset().top - 0;
-						}
-						//ie
-						if (e.pageX === undefined) {
-							value_l = e.clientY - $bg.offset().top - 0;
-						}
-					}
+			if (e.touches === undefined) {
+				if (e.pageY !== undefined) {
+					v = (e.pageY) - y_s + t_s;
+				}
+				if (e.pageY === undefined) {
+					v = (e.clientY) - y_s + t_s;
 				}
 
-				p = (value_l <= 0) ? 0 : (value_l >= slider_w) ? slider_w - 0 : value_l;
-				p = (p / slider_w) * 100;
-				rev ? p = 100 - p : ''; 
-				p > 50 ? Math.floor(p/10) * 10 : Math.ceil(p/10) * 10;
-				p = p.toFixed(0);
-				p = p < 0 ? 0 : p > 100 ? 100 : p;
-
-
-				if (minmax === 'min') {
-					lmt_min = 0;
-					isNaN(lmt_max) ? lmt_max = per_max : '';
-					p * 1 >= lmt_max * 1 ? p = lmt_max: '';
-					per_min = p; 
-					!range ? $bar.css(siz, per_min + '%').css(dir, 0) : $bar.css(siz, lmt_max - per_min + '%').css(dir, per_min + '%');
-				}  
+				v < 0 ? v = 0 : '';
+				s_h < v ? v = s_h : '';
 				
-				if (minmax === 'max') {
-					lmt_max = 100;
-					isNaN(lmt_min) ? lmt_min = per_min : '';
-					p * 1 <= lmt_min * 1 ? p = lmt_min: '';
-					per_max = p;
-					$bar.css(siz, per_max - per_min + '%');
-				}
-				$this.css(dir, p + '%');
+				$bar.css('top', v +'px');
+
+				per = Math.ceil(v / s_h * 100);
+				
+				v_item = Math.ceil(wrap_unit * per);
+
+				console.log(v_item, w_sh);	
+
+				$item.css('top', v_item +'px');
+
 			}
+
+			// var value_l;
+
+			// slider_w = !vertical ? $bg.outerWidth() : $bg.outerHeight();
+			
+			// if (!vertical) {
+			// 	if (e.touches !== undefined) {
+			// 		value_l = e.touches[0].pageX - $bg.offset().left - 0;
+			// 	}
+			// 	if (e.touches === undefined) {
+			// 		if (e.pageX !== undefined) {
+			// 			value_l = e.pageX - $bg.offset().left - 0;
+			// 		}
+			// 		//ie
+			// 		if (e.pageX === undefined) {
+			// 			value_l = e.clientX - $bg.offset().left - 0;
+			// 		}
+			// 	}
+			// } else {
+			// 	if (e.touches !== undefined) {
+			// 		value_l = e.touches[0].pageY - $bg.offset().top - 0;
+			// 	}
+			// 	if (e.touches === undefined) {
+			// 		if (e.pageY !== undefined) {
+			// 			value_l = e.pageY - $bg.offset().top - 0;
+			// 		}
+			// 		//ie
+			// 		if (e.pageY === undefined) {
+			// 			value_l = e.clientY - $bg.offset().top - 0;
+			// 		}
+			// 	}
+			// }
+
+			// p = (value_l <= 0) ? 0 : (value_l >= slider_w) ? slider_w - 0 : value_l;
+			// p = (p / slider_w) * 100;
+			// rev ? p = 100 - p : ''; 
+			// p > 50 ? Math.floor(p/10) * 10 : Math.ceil(p/10) * 10;
+			// p = p.toFixed(0);
+			// p = p < 0 ? 0 : p > 100 ? 100 : p;
+
+
+			// if (minmax === 'min') {
+			// 	lmt_min = 0;
+			// 	isNaN(lmt_max) ? lmt_max = per_max : '';
+			// 	p * 1 >= lmt_max * 1 ? p = lmt_max: '';
+			// 	per_min = p; 
+			// 	!range ? $bar.css(siz, per_min + '%').css(dir, 0) : $bar.css(siz, lmt_max - per_min + '%').css(dir, per_min + '%');
+			// }  
+			
+			// if (minmax === 'max') {
+			// 	lmt_max = 100;
+			// 	isNaN(lmt_min) ? lmt_min = per_min : '';
+			// 	p * 1 <= lmt_min * 1 ? p = lmt_min: '';
+			// 	per_max = p;
+			// 	$bar.css(siz, per_max - per_min + '%');
+			// }
+			// $this.css(dir, p + '%');
+		}
 
 			
 			// $wrap.on('mousedown.uiscrollbar', function(e){
