@@ -562,7 +562,7 @@ if (!Object.keys){
 	}
 
 
-
+	
 	win[global].uiScrollBar.option = {
 		ps: 'bottom',
 		add: false,
@@ -572,246 +572,262 @@ if (!Object.keys){
 	win[global].uiScrollBar.timer = {};
 	function createuiScrollBar(opt) {
 		var $base = $('.ui-scrollbar'),
-			len = $base.length;
+			overlapExe = 0;
 
-		console.log(len);
 		$base.each(function(i){
 			var $this = $(this);
 
-			if (win[global].uiHasScrollBar({ selector: $this  })) {
-				scrollbarReady($this);
+			if (win[global].uiHasScrollBar({ selector: $this }) && !$plugins.browser.mobile) {
+				scrollbarReady($this, i);
 			}
 		});
+		scrollbarEvent();
 		
-		function scrollbarReady(v){
-			var $wrap = v,
+		function scrollbarReady(wrap_this, i){
+			var $wrap = wrap_this,
 				$item =  $wrap.children('.ui-scrollbar-item'),
-				wr_h = $wrap.innerHeight(),
-				it_h = $item.outerHeight(true),
-				bar_h = wr_h / (it_h / 100);
+				html_scrollbar = '';
 
-			$wrap.css('overflow','hidden');
+			//set
+			if (!$wrap.data('ready') || !$wrap.attr('id')) {
+				$wrap.css('overflow','hidden').attr('tabindex', 0).attr('id', 'uiScrollBar_'+ i).data('ready', true);
+			
+				html_scrollbar += '<div class="ui-scrollbar-barwrap" >';
+				html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1"><span class="hide">스크롤버튼</span></button>';
+				html_scrollbar += '</div>';
+				html_scrollbar += '</div>';
 
-			var html_scrollbar = '';
+				$wrap.prepend(html_scrollbar);
+				$wrap.find('> .ui-scrollbar-barwrap .ui-scrollbar-bar').css('height', Math.floor($wrap.innerHeight() / ($item.outerHeight(true) / 100)) +'%')
+			}
+		}
 
-			html_scrollbar += '<div class="ui-scrollbar-barwrap">';
-			html_scrollbar += '<button type="button" class="ui-scrollbar-bar" style="height:'+ bar_h +'%"><span class="hide">스크롤버튼</span></button>';
-			html_scrollbar += '</div>';
-			html_scrollbar += '</div>';
+		function scrollbarEvent(){
+			$('.ui-scrollbar').off('mouseover.uiscrbar focus.uiscrbar').on({
+				'mouseover.uiscrbar': mouseEventAct,
+				'focus.uiscrbar': keyEventAct
+			});
+			
+			function mouseEventAct(e) {
+				e.preventDefault();
+				e.stopPropagation();
 
+				var $this = $(this),
+					wrap_h = $this.innerHeight(),
+					item_h = $this.children('.ui-scrollbar-item').outerHeight(true),
+					max_y = item_h - wrap_h,
+					y = e.pageY,
+					bar_t;
 
-			$wrap.prepend(html_scrollbar);
-			//if (!$plugins.browser.mobile) {
-				var y = 0,
-					y2 = 0,
-					y3 = 0,
-					y4 = 0,
-					yn = 0,
-					wrap_h,
-					item_h,
-					max_y,
-					overlapExe = 0;
-
-				// $wrap.on('mousedown.uiscrollbar', function(e){
-				// 	var $this = $(this);
-				// 	wrap_h = $this.outerHeight();
-				// 	item_h = $this.find('.ui-scrollbar-item').outerHeight();
-				// 	max_y = item_h - wrap_h;
-				// 	y = e.pageY;	
-				// 	$(doc).on('mousemove.uiscrollbar', function(e){
-				// 		$this.data('y') === undefined ? $this.data('y', 0) :'';
-				// 		y2 = e.pageY;
-				// 		yn = Number($this.data('y')) + (y2 - y);
-				// 		yn = Math.ceil(yn + (yn / 10));
-				// 		console.log(yn,  Math.abs(yn), max_y);
-				// 		y3 = yn > 0 ? 0 : Math.abs(yn) >= max_y ? max_y * -1 : yn;
-				// 		$this.find('.ui-scrollbar-item').css('transform','translatey('+ y3 +'px)');
-	
-				// 	});
-				// 	$(doc).on('mouseup', function(){
-				// 			$this.data('y', y3);
-				// 			$(doc).off('mousemove.uiscrollbar');
-				// 			//$('.ui-scrollbar').off('mousedown.uiscrollbar');
-				// 		});
-				// });
-
-				$wrap.off('mouseover.uiscrbar').on('mouseover.uiscrbar', function(e){
+				//미완성 mouse drag event
+				$('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e){
 					e.preventDefault();
-					e.stopPropagation();
+					var $bar = $(this),
+						moving = false;
 
-					var $this = $(this);
+					bar_t = $bar.position().top;
+					console.log('bar_t', bar_t);
 
-					wrap_h = $this.outerHeight();
-					item_h = $this.children('.ui-scrollbar-item').outerHeight(true);
-					max_y = item_h - wrap_h;
-					y = e.pageY;
-
-					act($this, wrap_h, item_h, max_y, y);
+					$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function(e){
+						moving = true;
+						console.log(22222);
+					}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function(){
+						console.log(33333);
+						//moving ? act($this, minmax) : '';
+						$(doc).off('mousemove.bar mouseup.bar touchmove.bar');
+					});
 				});
 
-				
+				//wheel event
+				$this.off('mousewheel.aa DOMMouseScroll.aa').on('mousewheel.aa DOMMouseScroll.aa', function(e){
+					e.preventDefault();
+					e.stopPropagation();
+					wheelAct($this, e.originalEvent.wheelDelta, wrap_h, item_h, max_y);
+				});
+			}
 
-				function act($this, wrap_h, item_h, max_y, y){
-					var bar_t,
-						bar_t2,
-						wh = 0;
+			function keyEventAct(e){
+				$('.ui-scrollbar').off('keydown.bb').on('keydown.bb', function(e){
+					var $this = $(this),
+						wrap_h = $this.innerHeight(),
+						item_h = $this.children('.ui-scrollbar-item').outerHeight(true),
+						max_y = item_h - wrap_h,
+						y = e.pageY,
+						bar_t,
+						keys = win[global].option.keys;
 
-					$('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e){
-						e.preventDefault();
-						var $bar = $(this),
-							moving = false;;
+					console.log('focus', e.keyCode);
+					switch(e.keyCode){
+						case keys.up:
+							e.preventDefault();
+							e.stopPropagation();
+							console.log('up');
+							wheelAct($this, 120, wrap_h, item_h, max_y);
+							break;
 
-						bar_t = $bar.position().top;
-						console.log('bar_t', bar_t);
-
-						$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function(e){
-							moving = true;
-							console.log(22222);
-						}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function(){
-							console.log(33333);
-							//moving ? act($this, minmax) : '';
-							$(doc).off('mousemove.bar mouseup.bar touchmove.bar');
-						});
-					});
-					
-	
-					function per($this, e, minmax){
-						var value_l;
-						slider_w = !vertical ? $bg.outerWidth() : $bg.outerHeight();
-						if (!vertical) {
-							if (e.touches !== undefined) {
-								value_l = e.touches[0].pageX - $bg.offset().left - 0;
-							}
-							if (e.touches === undefined) {
-								if (e.pageX !== undefined) {
-									value_l = e.pageX - $bg.offset().left - 0;
-								}
-								//ie
-								if (e.pageX === undefined) {
-									value_l = e.clientX - $bg.offset().left - 0;
-								}
-							}
-						} else {
-							if (e.touches !== undefined) {
-								value_l = e.touches[0].pageY - $bg.offset().top - 0;
-							}
-							if (e.touches === undefined) {
-								if (e.pageX !== undefined) {
-									value_l = e.pageY - $bg.offset().top - 0;
-								}
-								//ie
-								if (e.pageX === undefined) {
-									value_l = e.clientY - $bg.offset().top - 0;
-								}
-							}
-						}
-
-						p = (value_l <= 0) ? 0 : (value_l >= slider_w) ? slider_w - 0 : value_l;
-						p = (p / slider_w) * 100;
-						rev ? p = 100 - p : ''; 
-						p > 50 ? Math.floor(p/10) * 10 : Math.ceil(p/10) * 10;
-						p = p.toFixed(0);
-						p = p < 0 ? 0 : p > 100 ? 100 : p;
-
-
-						if (minmax === 'min') {
-							lmt_min = 0;
-							isNaN(lmt_max) ? lmt_max = per_max : '';
-							p * 1 >= lmt_max * 1 ? p = lmt_max: '';
-							per_min = p; 
-							!range ? $bar.css(siz, per_min + '%').css(dir, 0) : $bar.css(siz, lmt_max - per_min + '%').css(dir, per_min + '%');
-						}  
-						
-						if (minmax === 'max') {
-							lmt_max = 100;
-							isNaN(lmt_min) ? lmt_min = per_min : '';
-							p * 1 <= lmt_min * 1 ? p = lmt_min: '';
-							per_max = p;
-							$bar.css(siz, per_max - per_min + '%');
-						}
-						$this.css(dir, p + '%');
+						case keys.down:
+							e.preventDefault();
+							e.stopPropagation();
+							console.log('down');
+							wheelAct($this, -120, wrap_h, item_h, max_y);
+							break;
 					}
+				});
+			}
 
-					
-					$this.off('mousewheel.aa DOMMouseScroll.aa').on('mousewheel.aa DOMMouseScroll.aa', function(e){
-						e.preventDefault();
-						e.stopPropagation();
+		}
+			
+		function wheelAct(wrap_this, wheelDelta, wrap_h, item_h, max_y) {
+			var $this = wrap_this,
+				delta = -Math.max(-1, Math.min(1, wheelDelta)),
+				$this_bar = $this.find('> .ui-scrollbar-barwrap > .ui-scrollbar-bar'),
+				$this_item =  $this.children('.ui-scrollbar-item'),
 
-						var delta = -Math.max(-1, Math.min(1, e.originalEvent.wheelDelta)),
-							it = $this.children('.ui-scrollbar-item').position().top,
-							
-							_a = $this.innerHeight(),
-							_b = $this.find('.ui-scrollbar-item').outerHeight(true),
-							_c = _b - _a,
-							_c_ = _c / 100,
-							_d = _a / (_b / 100),
-							_e = _a - $this.find('.ui-scrollbar-bar').outerHeight(),
-							_e_ = _e / 100,
-							bar_m,
-							v;
-						
-						//console.log(delta);
-						var ms = 3;
+				item_top = $this_item.position().top,
+				bar_space = wrap_h - $this_bar.outerHeight(),
+				v,
+				wh,
+				ms = 3;
 
-						overlapExe = overlapExe + 1;
-						console.log(overlapExe);
-						switch (overlapExe) {
-							case 1 : ms = 3; break;
-							case 2 : ms = 2; break;
-							case 3 : ms = 1.5; break;
-							case 4 : ms = 1; break;
-							default : ms = 0.5; break;
+			overlapExe = overlapExe + 1;
+			console.log(overlapExe);
+
+			switch (overlapExe) {
+				case 1 : ms = 3; break;
+				case 2 : ms = 2; break;
+				case 3 : ms = 1.5; break;
+				case 4 : ms = 1; break;
+				default : ms = 0.5; break;
+			}
+
+			if (delta > 0) {
+				wh = item_top - (wrap_h / ms);
+			} else {
+				wh = item_top + (wrap_h / ms);
+			}
+
+			v = Math.ceil(wh);
+
+			if (v > 0) {
+				v = 0;
+				console.log('최상단');
+			} else if (Math.abs(v) > max_y){
+				console.log('최하단');
+				v = max_y * -1;
+				item_top = max_y * -1;
+			}
+
+			clearTimeout(win[global].uiScrollBar.timer);
+			win[global].uiScrollBar.timer = setTimeout(function(){
+				var v_bar = (v / (max_y / 100)) * (bar_space / 100);
+
+				Math.ceil(v_bar) > bar_space ? v_bar = bar_space * -1 : '';
+				
+				$this_bar.stop().animate({
+					'top': v_bar * -1 +'px'
+				},300);
+
+				$this_item.stop().animate({
+					'top': v +'px'
+				},300, 'easeInOutQuad', function(){
+					overlapExe = 0;
+				});
+			},100);
+		}
+
+			function per($this, e, minmax){
+				var value_l;
+
+				slider_w = !vertical ? $bg.outerWidth() : $bg.outerHeight();
+				
+				if (!vertical) {
+					if (e.touches !== undefined) {
+						value_l = e.touches[0].pageX - $bg.offset().left - 0;
+					}
+					if (e.touches === undefined) {
+						if (e.pageX !== undefined) {
+							value_l = e.pageX - $bg.offset().left - 0;
 						}
-
-						if (delta > 0) {
-							wh = it - (wrap_h / ms);
-						} else {
-							wh = it + (wrap_h / ms);
+						//ie
+						if (e.pageX === undefined) {
+							value_l = e.clientX - $bg.offset().left - 0;
 						}
-
-						v = Math.ceil(wh);
-
-						if (v > 0) {
-							v = 0;
-						} else if (Math.abs(v) > max_y){
-							v = max_y * -1;
-							it = max_y * -1;
+					}
+				} else {
+					if (e.touches !== undefined) {
+						value_l = e.touches[0].pageY - $bg.offset().top - 0;
+					}
+					if (e.touches === undefined) {
+						if (e.pageX !== undefined) {
+							value_l = e.pageY - $bg.offset().top - 0;
 						}
-
-						
-						
-						clearTimeout(win[global].uiScrollBar.timer);
-						win[global].uiScrollBar.timer = setTimeout(function(){
-							bar_m = (v / _c_) * _e_;
-							console.log('scrollbar: ',Math.abs(bar_m), _e   );
-
-							Math.abs(bar_m) > _e ? bar_m = _e * -1 : '';
-
-							 $this.find('.ui-scrollbar-bar').stop().animate({
-								'top': bar_m * -1 +'px'
-							},300);
-							$this.children('.ui-scrollbar-item').stop().animate({
-								'top': v +'px'
-							},300, 'easeInOutQuad', function(){
-								overlapExe = 0;
-							});
-						},100);
-
-						
-						
-
-						// $this.data('y') === undefined ? $this.data('y', 0) :'';
-						// y2 = e.pageY;
-						// yn = Number($this.data('y')) + (y2 - y);
-						// yn = Math.ceil(yn + (yn / 10));
-						// y3 = yn > 0 ? 0 : Math.abs(yn) >= max_y ? max_y * -1 : yn;
-						// $this.find('.ui-scrollbar-item').css('transform','translatey('+ y3 +'px)');
-
-					});
+						//ie
+						if (e.pageX === undefined) {
+							value_l = e.clientY - $bg.offset().top - 0;
+						}
+					}
 				}
 
-			//}
-		}
+				p = (value_l <= 0) ? 0 : (value_l >= slider_w) ? slider_w - 0 : value_l;
+				p = (p / slider_w) * 100;
+				rev ? p = 100 - p : ''; 
+				p > 50 ? Math.floor(p/10) * 10 : Math.ceil(p/10) * 10;
+				p = p.toFixed(0);
+				p = p < 0 ? 0 : p > 100 ? 100 : p;
+
+
+				if (minmax === 'min') {
+					lmt_min = 0;
+					isNaN(lmt_max) ? lmt_max = per_max : '';
+					p * 1 >= lmt_max * 1 ? p = lmt_max: '';
+					per_min = p; 
+					!range ? $bar.css(siz, per_min + '%').css(dir, 0) : $bar.css(siz, lmt_max - per_min + '%').css(dir, per_min + '%');
+				}  
+				
+				if (minmax === 'max') {
+					lmt_max = 100;
+					isNaN(lmt_min) ? lmt_min = per_min : '';
+					p * 1 <= lmt_min * 1 ? p = lmt_min: '';
+					per_max = p;
+					$bar.css(siz, per_max - per_min + '%');
+				}
+				$this.css(dir, p + '%');
+			}
+
+			
+			// $wrap.on('mousedown.uiscrollbar', function(e){
+			// 	var $this = $(this);
+			// 	wrap_h = $this.outerHeight();
+			// 	item_h = $this.find('.ui-scrollbar-item').outerHeight();
+			// 	max_y = item_h - wrap_h;
+			// 	y = e.pageY;	
+			// 	$(doc).on('mousemove.uiscrollbar', function(e){
+			// 		$this.data('y') === undefined ? $this.data('y', 0) :'';
+			// 		y2 = e.pageY;
+			// 		yn = Number($this.data('y')) + (y2 - y);
+			// 		yn = Math.ceil(yn + (yn / 10));
+			// 		console.log(yn,  Math.abs(yn), max_y);
+			// 		y3 = yn > 0 ? 0 : Math.abs(yn) >= max_y ? max_y * -1 : yn;
+			// 		$this.find('.ui-scrollbar-item').css('transform','translatey('+ y3 +'px)');
+
+			// 	});
+			// 	$(doc).on('mouseup', function(){
+			// 			$this.data('y', y3);
+			// 			$(doc).off('mousemove.uiscrollbar');
+			// 			//$('.ui-scrollbar').off('mousedown.uiscrollbar');
+			// 		});
+			// });
+
+			//event
+			
+
+			
+
+			
+			
+			
+		
+		
 		
 		
 	}
