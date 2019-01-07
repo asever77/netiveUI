@@ -374,6 +374,9 @@ if (!Object.keys){
 		uiScrollBar: function (opt) {
 			return createuiScrollBar(opt);
 		},
+		uiScrollBarAct: function (opt) {
+			return createuiScrollBarAct(opt);
+		},
 		uiFocusTab: function (opt) {
 			return createUiFocusTab(opt);
 		},
@@ -570,6 +573,17 @@ if (!Object.keys){
 		callback: false
 	};
 	win[global].uiScrollBar.timer = {};
+	function createuiScrollBarAct(opt) {
+		var $base = $('#'+ opt.id),
+			$item = $base.children('.ui-scrollbar-item');
+
+		setTimeout(function(){
+			console.log(opt.id, $item.position().top);
+			// /$item.css('top', $item.position().top +'px');
+		},100)
+		
+
+	}
 	function createuiScrollBar(opt) {
 		var $base = $('.ui-scrollbar'),
 			overlapExe = 0;
@@ -665,11 +679,16 @@ if (!Object.keys){
 
 			function keyEventAct(e){
 				$('.ui-scrollbar').off('keydown.bb').on('keydown.bb', function(e){
+					console.log(1111);
 					var $this = $(this),
 						wrap_h = $this.innerHeight(),
 						item_h = $this.children('.ui-scrollbar-item').outerHeight(true),
 						max_y = item_h - wrap_h,
 						keys = win[global].option.keys;
+
+					win[global].uiScrollBarAct({ 
+						id: $this.attr('id')
+					})
 
 					switch(e.keyCode){
 						case keys.up:
