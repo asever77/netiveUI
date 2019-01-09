@@ -671,7 +671,7 @@ if (!Object.keys){
 						$this.children('.ui-scrollbar-item').css('top', 0);
 						$this.find('> .ui-scrollbar-barwrap > .ui-scrollbar-bar').css('top', 0);
 						$('.ui-scrollbar-barwrap').show();
-						$(this).data('tabmove', false).;
+						$(this).data('tabmove', false);
 					}
 					wheelAct($this, e.originalEvent.wheelDelta, wrap_h, item_h, max_y);
 				});
