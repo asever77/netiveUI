@@ -5992,24 +5992,7 @@
 	}
 
 
-
-
 	$ui = $ui.uiNameSpace(namespace, {
-		uiScrolling: function (opt) {
-			return createUiScrolling(opt);
-		},
-		uiScrollingAct: function (opt) {
-			return createUiScrollingAct(opt);
-		},
-		uiScrollingGoto: function (opt) {
-			return createUiScrollingGoto(opt);
-		},
-		uiScrollingCancel: function () {
-			return createUiScrollingCancel();
-		},
-		uiScrollingSwitch: function () {
-			return createUiScrollingSwitch();
-		},
 		uiBgScrollMove: function () {
 			return createUiBgScrollMove();
 		}
@@ -6034,6 +6017,27 @@
 			}
 		});
 	}
+
+	
+
+	$ui = $ui.uiNameSpace(namespace, {
+		uiScrolling: function (opt) {
+			return createUiScrolling(opt);
+		},
+		uiScrollingAct: function (opt) {
+			return createUiScrollingAct(opt);
+		},
+		uiScrollingGoto: function (opt) {
+			return createUiScrollingGoto(opt);
+		},
+		uiScrollingCancel: function () {
+			return createUiScrollingCancel();
+		},
+		uiScrollingSwitch: function () {
+			return createUiScrollingSwitch();
+		}
+	});
+	
 	
 	$ui.uiScrolling.option = {
 		act:true,

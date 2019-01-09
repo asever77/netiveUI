@@ -580,9 +580,7 @@ if (!Object.keys){
 		setTimeout(function(){
 			console.log(opt.id, $item.position().top);
 			// /$item.css('top', $item.position().top +'px');
-		},100)
-		
-
+		},100);
 	}
 	function createuiScrollBar(opt) {
 		var $base = $('.ui-scrollbar'),
@@ -632,6 +630,8 @@ if (!Object.keys){
 					max_y = item_h - wrap_h,
 					bar_t;
 
+				console.log(wrap_h, item_h, max_y);
+
 				//wheel event
 				$this.off('mousewheel.aa DOMMouseScroll.aa').on('mousewheel.aa DOMMouseScroll.aa', function(e){
 					e.preventDefault();
@@ -639,7 +639,7 @@ if (!Object.keys){
 					wheelAct($this, e.originalEvent.wheelDelta, wrap_h, item_h, max_y);
 				});
 
-				//미완성 mouse drag event
+				//mouse drag event
 				$('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e){
 					e.preventDefault();
 					var $bar = $(this),
@@ -654,6 +654,7 @@ if (!Object.keys){
 						moving = false;
 
 					bar_t = $bar.position().top;
+					
 					if (e.touches === undefined) {
 						if (e.pageY !== undefined) {
 							y_s = e.pageY;
@@ -744,7 +745,7 @@ if (!Object.keys){
 				v = max_y * -1;
 				item_top = max_y * -1;
 			}
-
+			console.log(overlapExe);
 			clearTimeout(win[global].uiScrollBar.timer);
 			win[global].uiScrollBar.timer = setTimeout(function(){
 				var v_bar = (v / (max_y / 100)) * (bar_space / 100);
