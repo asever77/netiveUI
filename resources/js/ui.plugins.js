@@ -3689,7 +3689,7 @@
 			console.log(ss, x)
 			$wrap.stop().animate({
 				top: t
-			}, ss, 'easeOutQuad', function(){
+			}, s, 'easeOutQuad', function(){
 				$wrap.find('.ui-slot-item').eq(index).addClass('selected');
 				callback(result);
 			});
