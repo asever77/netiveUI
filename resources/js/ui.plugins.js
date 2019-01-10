@@ -6393,4 +6393,5 @@
 			}
 		}
 	}
+
 })(jQuery, window, document);
