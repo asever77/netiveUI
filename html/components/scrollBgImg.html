@@ -17,6 +17,10 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="/resources/js/ui.base.js"></script>
+	<style>
+		.ui-bgscroll.n1{width:100%; height:300px; background:url(/resources/img/dummy/@iu1.jpg) no-repeat 0 0;background-attachment: fixed;}
+		.ui-bgscroll.n2{width:100%; height:400px; background:url(/resources/img/dummy/@iu2.jpg) no-repeat 0 0;background-attachment: fixed;}
+	</style>
 </head>
 
 <body class="page-floating">
@@ -35,20 +39,15 @@
 				<p>특정 범위안에서 스크롤에 따라 이동</p>
 
 				<h2 class="h2">Base HTML</h2>
-				<div class="ui-bgscroll" id="uiBgScroll1" style="width:100%; height:300px; background:url(/resources/img/dummy/@iu1.jpg) no-repeat 0 0;"></div>
-				<div class="ui-bgscroll" id="uiBgScroll2" style="width:100%; height:400px; background:url(/resources/img/dummy/@iu1.jpg) no-repeat 0 0;"></div> 
-				<div class="ui-bgscroll" id="uiBgScroll3" style="width:100%; height:300px; background:url(/resources/img/dummy/@iu2.jpg) no-repeat 0 0;"></div>
-			
-				<div class="ui-bgscroll" id="uiBgScroll4" style="width:100%; height:300px; background:url(/resources/img/dummy/@iu2.jpg) no-repeat 0 0;"></div>
-				<div class="ui-bgscroll" id="uiBgScroll5" style="width:100%; height:300px; background:url(/resources/img/dummy/@iu2.jpg) no-repeat 0 0;"></div> 
+				<div style="height:500px"></div>
+
+				<div class="ui-bgscroll n1" id="uiBgScroll1"></div>
+				<div class="ui-bgscroll n2" id="uiBgScroll2"></div>
+
+				<div style="width:100%; height:300px; background:url(/resources/img/dummy/@iu1.jpg) no-repeat 0 0; background-attachment: fixed; border-top:1px dashed #ddd" ></div> 
+				<div style="width:100%; height:700px; background:url(/resources/img/dummy/@iu2.jpg) no-repeat 0 0; background-attachment: fixed; border-top:1px dashed #ddd" ></div> 
 
 				<div style="height:500px"></div>
-				
-				
-
-				
-
-				
 
 
 			</main>
@@ -67,9 +66,7 @@
 				console.log('page ready after')
 				$plugins.uiBgScrollMove({ id:'uiBgScroll1' });
 				$plugins.uiBgScrollMove({ id:'uiBgScroll2' });
-				$plugins.uiBgScrollMove({ id:'uiBgScroll3' });
-				$plugins.uiBgScrollMove({ id:'uiBgScroll4' });
-				$plugins.uiBgScrollMove({ id:'uiBgScroll5' });
+
 				
 			});
 		})(jQuery, window, document);

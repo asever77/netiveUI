@@ -6001,6 +6001,7 @@
 		zoomeff : false,
 		zoomrate : 5
 	}
+	$ui.uiBgScrollMove.timer = {};
 	function createUiBgScrollMove(opt){
 		var opt = $.extend(true, {}, $ui.uiBgScrollMove.option, opt),
 			$win = $(window),
@@ -6014,29 +6015,24 @@
 			win_h = $win.outerHeight(),
 			sct = $vs.scrollTop();
 
-		bgposition($vs, sct, unit_vs, true);
+		bgposition($vs, sct, unit_vs);
 		$(window).scroll(function(){
 			sct = $(this).scrollTop();
 
-			bgposition($(this), sct, unit_vs, false);
+			bgposition($(this), sct, unit_vs);
 		});
 
-		function bgposition(t, sct, unit_vs, first){
+		function bgposition(t, sct, unit_vs){
 			var s = sct,
 				$this = t,
-				unit_vs = unit_vs,
-				first = first;
-
-			first ? $this.data('start', s) : '';
+				unit_vs = unit_vs;
 
 			if (s + win_h > vs_t ) {
 				
 				var unit = win_h / 100,
-					per = win_h - (s - Number($this.data('start', s))),
 					n = ((vs_t ) - (s)) / unit;
 					//n = Math.abs( (win_h ) - (s + win_h) ),
 					//n = Math.abs( (vs_t + vs_h_half) - (s + win_h) ),
-console.log(s, vs_h, per);
 
 				Math.abs(n) > 100 ? n = 100 : '';
 				//n < 0 ? n = 0 : '';
@@ -6044,8 +6040,12 @@ console.log(s, vs_h, per);
 				//n = Math.abs(n);
 				console.log('n: '+ n)
 				//$vs.css('background-position', '0 '+ (100 - n) + '%');
+				
 				$vs.css('background-position', '0 '+ n + '%');
-				//zoomeff ? $vs.css('background-size', (100 * zoomrate) + '%') : '';
+
+				
+				
+				//$vs.css('background-size', (100 * zoomrate) + '%');
 			}
 
 			//if (s + win_h > vs_t + vs_h_half && s + win_h < vs_t + win_h + vs_h_half) {
