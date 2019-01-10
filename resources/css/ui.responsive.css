@@ -87,7 +87,8 @@
     .aside-nav .dep-1{display:inline-block; }
     .aside-nav .dep-1-btn {display:inline-block; width:100%; font-size:18px; font-weight:300; color:#000; margin:0; letter-spacing:0; text-decoration:none; margin-bottom:25px;}
     .aside-nav .dep-2-btn {display:inline-block; width:100%; font-size:14px; font-weight:300; color:#000; margin:0; letter-spacing:0; text-decoration:none; margin-bottom:10px;}
-    .aside-nav .dep-2-btn:before{content:"-"; display:inline-block; margin-right:5px; width:10px}
+    .aside-nav .dep-2-btn span {display:inline-block; vertical-align:top; width:calc(100% - 20px)}
+    .aside-nav .dep-2-btn:before{content:"-"; display:inline-block; margin-right:5px; width:10px; line-height:1.3; vertical-align:top;}
     .aside-nav .dep-2-btn.selected{font-weight:500;}
     .aside-nav .dep-2-btn.selected:before{content:"+ "; }
 

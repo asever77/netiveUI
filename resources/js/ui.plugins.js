@@ -3689,7 +3689,7 @@
 			console.log(ss, x)
 			$wrap.stop().animate({
 				top: t
-			}, ss, 'easeOutQuad', function(){
+			}, s, 'easeOutQuad', function(){
 				$wrap.find('.ui-slot-item').eq(index).addClass('selected');
 				callback(result);
 			});
@@ -5992,7 +5992,69 @@
 	}
 
 
+	$ui = $ui.uiNameSpace(namespace, {
+		uiBgScrollMove: function (opt) {
+			return createUiBgScrollMove(opt);
+		}
+	});
+	$ui.uiBgScrollMove.option = {
+		zoomeff : false,
+		zoomrate : 5
+	}
+	function createUiBgScrollMove(opt){
+		var opt = $.extend(true, {}, $ui.uiBgScrollMove.option, opt),
+			$win = $(window),
+			$vs = $('#' + opt.id),
+			zoomeff = opt.zoomeff,
+			zoomrate = opt.zoomrate,
+			vs_t = $vs.offset().top,
+			vs_h = $vs.innerHeight(),
+			unit_vs = vs_h / 100,
+			vs_h_half = (vs_h / 2),
+			win_h = $win.outerHeight(),
+			sct = $vs.scrollTop();
 
+		bgposition($vs, sct, unit_vs, true);
+		$(window).scroll(function(){
+			sct = $(this).scrollTop();
+
+			bgposition($(this), sct, unit_vs, false);
+		});
+
+		function bgposition(t, sct, unit_vs, first){
+			var s = sct,
+				$this = t,
+				unit_vs = unit_vs,
+				first = first;
+
+			first ? $this.data('start', s) : '';
+
+			if (s + win_h > vs_t ) {
+				
+				var unit = win_h / 100,
+					per = win_h - (s - Number($this.data('start', s))),
+					n = ((vs_t ) - (s)) / unit;
+					//n = Math.abs( (win_h ) - (s + win_h) ),
+					//n = Math.abs( (vs_t + vs_h_half) - (s + win_h) ),
+console.log(s, vs_h, per);
+
+				Math.abs(n) > 100 ? n = 100 : '';
+				//n < 0 ? n = 0 : '';
+				
+				//n = Math.abs(n);
+				console.log('n: '+ n)
+				//$vs.css('background-position', '0 '+ (100 - n) + '%');
+				$vs.css('background-position', '0 '+ n + '%');
+				//zoomeff ? $vs.css('background-size', (100 * zoomrate) + '%') : '';
+			}
+
+			//if (s + win_h > vs_t + vs_h_half && s + win_h < vs_t + win_h + vs_h_half) {
+				
+			//}
+		}
+	}
+
+	
 
 	$ui = $ui.uiNameSpace(namespace, {
 		uiScrolling: function (opt) {
@@ -6009,31 +6071,9 @@
 		},
 		uiScrollingSwitch: function () {
 			return createUiScrollingSwitch();
-		},
-		uiBgScrollMove: function () {
-			return createUiBgScrollMove();
 		}
 	});
-	function createUiBgScrollMove(){
-		var $win = $(window),
-			$vs = $('.ui-bgscroll'),
-			vs_t = $vs.offset().top,
-			vs_h = $vs.outerHeight(),
-			vs_h_half = (vs_h / 2),
-			win_h = $win.outerHeight(),
-			sct = 0;
-
-		$(window).scroll(function(){
-			sct = $(this).scrollTop();
-			if (sct + win_h > vs_t + vs_h_half && sct + win_h < vs_t + win_h + vs_h_half) {
-				var n = Math.abs((vs_t + vs_h_half) - (sct + win_h)),
-				m = n / win_h * 100;
-
-				$vs.css('background-position', '50% ' + (100 - m) + '%');
-				$vs.css('background-size', (100 + (m/5)) + '%');
-			}
-		});
-	}
+	
 	
 	$ui.uiScrolling.option = {
 		act:true,

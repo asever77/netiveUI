@@ -573,20 +573,45 @@ if (!Object.keys){
 		callback: false
 	};
 	win[global].uiScrollBar.timer = {};
+	win[global].uiScrollBar.overlapExe = 0;
 	function createuiScrollBarAct(opt) {
-		var $base = $('#'+ opt.id),
-			$item = $base.children('.ui-scrollbar-item');
+		var $this = $('#'+ opt.id),
+			$this_barwrap = $this.find('> .ui-scrollbar-barwrap'),
+			$this_bar = $this_barwrap.find('> .ui-scrollbar-bar'),
+			$this_item = $this.children('.ui-scrollbar-item');
 
-		setTimeout(function(){
-			console.log(opt.id, $item.position().top);
-			// /$item.css('top', $item.position().top +'px');
-		},100)
-		
+		//$this_item.css('top', 'auto');
+		$this_barwrap.hide();
+		$this.data('tabmove', true);
+
+		// setTimeout(function(){
+		// 	var item_top = $this_item.position().top,
+		// 		item_h = $this_item.outerHeight(true),
+		// 		wrap_h = $this.innerHeight(),
+		// 		max_y = item_h - wrap_h,
+		// 		bar_space = $this_barwrap.innerHeight() - $this_bar.outerHeight(true),
+		// 		v = item_top,
+		// 		v_bar;
+
+			
+
+
+		// 	console.log('item-top : '+ v);
+
+		// 	v_bar = (v / (max_y / 100)) * (bar_space / 100);
+
+		// 	Math.ceil(v_bar) > bar_space ? v_bar = bar_space * -1 : '';
+			
+			
+
+		// 	// $this_bar.css('top', v_bar * -1 +'px');
+		// 	// $this_item.css('top', v +'px');
+
+		// },100)
 
 	}
 	function createuiScrollBar(opt) {
-		var $base = $('.ui-scrollbar'),
-			overlapExe = 0;
+		var $base = $('.ui-scrollbar');
 
 		$base.each(function(i){
 			var $this = $(this);
@@ -626,20 +651,32 @@ if (!Object.keys){
 				e.preventDefault();
 				e.stopPropagation();
 
+				
+
 				var $this = $(this),
 					wrap_h = $this.innerHeight(),
 					item_h = $this.children('.ui-scrollbar-item').outerHeight(true),
 					max_y = item_h - wrap_h,
 					bar_t;
 
+				console.log(wrap_h, item_h, max_y);
+				
+
 				//wheel event
 				$this.off('mousewheel.aa DOMMouseScroll.aa').on('mousewheel.aa DOMMouseScroll.aa', function(e){
 					e.preventDefault();
 					e.stopPropagation();
+					if ($(this).data('tabmove')) {
+						$this.scrollTop(0);
+						$this.children('.ui-scrollbar-item').css('top', 0);
+						$this.find('> .ui-scrollbar-barwrap > .ui-scrollbar-bar').css('top', 0);
+						$('.ui-scrollbar-barwrap').show();
+						$(this).data('tabmove', false);
+					}
 					wheelAct($this, e.originalEvent.wheelDelta, wrap_h, item_h, max_y);
 				});
 
-				//미완성 mouse drag event
+				//mouse drag event
 				$('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e){
 					e.preventDefault();
 					var $bar = $(this),
@@ -654,6 +691,7 @@ if (!Object.keys){
 						moving = false;
 
 					bar_t = $bar.position().top;
+					
 					if (e.touches === undefined) {
 						if (e.pageY !== undefined) {
 							y_s = e.pageY;
@@ -686,11 +724,13 @@ if (!Object.keys){
 						max_y = item_h - wrap_h,
 						keys = win[global].option.keys;
 
-					win[global].uiScrollBarAct({ 
-						id: $this.attr('id')
-					})
-
 					switch(e.keyCode){
+						case keys.tab:
+							win[global].uiScrollBarAct({ 
+								id: $this.attr('id')
+							});
+							break;
+
 						case keys.up:
 							e.preventDefault();
 							e.stopPropagation();
@@ -709,7 +749,6 @@ if (!Object.keys){
 			}
 
 		}
-			
 		function wheelAct(wrap_this, wheelDelta, wrap_h, item_h, max_y) {
 			var $this = wrap_this,
 				delta = -Math.max(-1, Math.min(1, wheelDelta)),
@@ -722,9 +761,11 @@ if (!Object.keys){
 				wh,
 				ms = 3;
 
-			overlapExe = overlapExe + 1;
+			console.log('item-top : '+ item_top);
 
-			switch (overlapExe) {
+			win[global].uiScrollBar.overlapExe = win[global].uiScrollBar.overlapExe + 1;
+
+			switch (win[global].uiScrollBar.overlapExe) {
 				case 1 : ms = 3; break;
 				case 2 : ms = 2; break;
 				case 3 : ms = 1.5; break;
@@ -744,7 +785,7 @@ if (!Object.keys){
 				v = max_y * -1;
 				item_top = max_y * -1;
 			}
-
+			console.log(win[global].uiScrollBar.overlapExe);
 			clearTimeout(win[global].uiScrollBar.timer);
 			win[global].uiScrollBar.timer = setTimeout(function(){
 				var v_bar = (v / (max_y / 100)) * (bar_space / 100);
@@ -758,7 +799,7 @@ if (!Object.keys){
 				$this_item.stop().animate({
 					'top': v +'px'
 				},300, 'easeInOutQuad', function(){
-					overlapExe = 0;
+					win[global].uiScrollBar.overlapExe = 0;
 				});
 			},100);
 		}
@@ -792,102 +833,9 @@ if (!Object.keys){
 				$item.css('top', v_item +'px');
 
 			}
-
-			// var value_l;
-
-			// slider_w = !vertical ? $bg.outerWidth() : $bg.outerHeight();
-			
-			// if (!vertical) {
-			// 	if (e.touches !== undefined) {
-			// 		value_l = e.touches[0].pageX - $bg.offset().left - 0;
-			// 	}
-			// 	if (e.touches === undefined) {
-			// 		if (e.pageX !== undefined) {
-			// 			value_l = e.pageX - $bg.offset().left - 0;
-			// 		}
-			// 		//ie
-			// 		if (e.pageX === undefined) {
-			// 			value_l = e.clientX - $bg.offset().left - 0;
-			// 		}
-			// 	}
-			// } else {
-			// 	if (e.touches !== undefined) {
-			// 		value_l = e.touches[0].pageY - $bg.offset().top - 0;
-			// 	}
-			// 	if (e.touches === undefined) {
-			// 		if (e.pageY !== undefined) {
-			// 			value_l = e.pageY - $bg.offset().top - 0;
-			// 		}
-			// 		//ie
-			// 		if (e.pageY === undefined) {
-			// 			value_l = e.clientY - $bg.offset().top - 0;
-			// 		}
-			// 	}
-			// }
-
-			// p = (value_l <= 0) ? 0 : (value_l >= slider_w) ? slider_w - 0 : value_l;
-			// p = (p / slider_w) * 100;
-			// rev ? p = 100 - p : ''; 
-			// p > 50 ? Math.floor(p/10) * 10 : Math.ceil(p/10) * 10;
-			// p = p.toFixed(0);
-			// p = p < 0 ? 0 : p > 100 ? 100 : p;
-
-
-			// if (minmax === 'min') {
-			// 	lmt_min = 0;
-			// 	isNaN(lmt_max) ? lmt_max = per_max : '';
-			// 	p * 1 >= lmt_max * 1 ? p = lmt_max: '';
-			// 	per_min = p; 
-			// 	!range ? $bar.css(siz, per_min + '%').css(dir, 0) : $bar.css(siz, lmt_max - per_min + '%').css(dir, per_min + '%');
-			// }  
-			
-			// if (minmax === 'max') {
-			// 	lmt_max = 100;
-			// 	isNaN(lmt_min) ? lmt_min = per_min : '';
-			// 	p * 1 <= lmt_min * 1 ? p = lmt_min: '';
-			// 	per_max = p;
-			// 	$bar.css(siz, per_max - per_min + '%');
-			// }
-			// $this.css(dir, p + '%');
 		}
-
-			
-			// $wrap.on('mousedown.uiscrollbar', function(e){
-			// 	var $this = $(this);
-			// 	wrap_h = $this.outerHeight();
-			// 	item_h = $this.find('.ui-scrollbar-item').outerHeight();
-			// 	max_y = item_h - wrap_h;
-			// 	y = e.pageY;	
-			// 	$(doc).on('mousemove.uiscrollbar', function(e){
-			// 		$this.data('y') === undefined ? $this.data('y', 0) :'';
-			// 		y2 = e.pageY;
-			// 		yn = Number($this.data('y')) + (y2 - y);
-			// 		yn = Math.ceil(yn + (yn / 10));
-			// 		console.log(yn,  Math.abs(yn), max_y);
-			// 		y3 = yn > 0 ? 0 : Math.abs(yn) >= max_y ? max_y * -1 : yn;
-			// 		$this.find('.ui-scrollbar-item').css('transform','translatey('+ y3 +'px)');
-
-			// 	});
-			// 	$(doc).on('mouseup', function(){
-			// 			$this.data('y', y3);
-			// 			$(doc).off('mousemove.uiscrollbar');
-			// 			//$('.ui-scrollbar').off('mousedown.uiscrollbar');
-			// 		});
-			// });
-
-			//event
-			
-
-			
-
-			
-			
-			
-		
-		
-		
-		
 	}
+
 
 	function createUiHasScrollBar(opt) {
 		var $this = opt.selector;

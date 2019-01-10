@@ -58,12 +58,13 @@
 	.w li.n9{background-position:0 -2400px}
 	.w li.n10{background-position:0 -2700px}
 
-	.pj-heroes .ui-bricklist-item.hero:after{display:none;}
-	.pj-heroes .ui-bricklist-item p,
-	.pj-heroes .ui-bricklist-item strong{opacity:0}
-	.pj-heroes .ui-bricklist-item{width:200px; border-radius:4px; overflow:hidden; box-shadow:0 0 10px rgba(0,0,0,0.2); padding:0; font-size:0}
-	.pj-heroes .ui-bricklist-item strong{display:block; width:100%; padding:10px; text-align:center; font-size:1.8rem; letter-spacing:0.5rem}
-	.pj-heroes .ui-bricklist-item p{padding:10px 10px 20px; color:#777}
+	.pj-heroes ul{overflow:hidden}
+	.pj-heroes li.hero:after{display:none;}
+	.pj-heroes li p,
+	.pj-heroes li strong{opacity:0}
+	.pj-heroes li{float:left;width:200px; border-radius:4px; overflow:hidden; box-shadow:0 0 10px rgba(0,0,0,0.2); padding:0; font-size:0}
+	.pj-heroes li strong{display:block; width:100%; padding:10px; text-align:center; font-size:1.8rem; letter-spacing:0.5rem}
+	.pj-heroes li p{padding:10px 10px 20px; color:#777}
 	.pj-heroes .ui-slot{display:inline-block; margin:0; height:300px}
 	</style>
 </head>
@@ -150,9 +151,9 @@
 				<div class="btn-wrap txt-l">
 					<button type="button" class="btn-base title" id="allstop2"><span>두구두구..!!!</span></button>
 				</div>
-				<div class="ui-bricklist pj-heroes" role="list" id="uiListcard">
-					<ul class="ui-bricklist-wrap">
-						<li class="ui-bricklist-item" role="listitem">
+				<div class="pj-heroes" role="list" id="uiListcard">
+					<ul>
+						<li role="listitem">
 							<div class="ui-slot w" id="wuiSlot1">
 								<ul class="ui-slot-wrap">
 								<li class="ui-slot-item n1"></li>
@@ -168,7 +169,7 @@
 								</ul>
 							</div>
 						</li>
-						<li class="ui-bricklist-item" role="listitem">
+						<li role="listitem">
 							<div class="ui-slot w" id="wuiSlot2">
 								<ul class="ui-slot-wrap">
 								<li class="ui-slot-item n1"></li>
@@ -184,7 +185,7 @@
 								</ul>
 							</div>
 						</li>
-						<li class="ui-bricklist-item" role="listitem">
+						<li role="listitem">
 							<div class="ui-slot w" id="wuiSlot3">
 								<ul class="ui-slot-wrap">
 								<li class="ui-slot-item n1"></li>
@@ -201,7 +202,7 @@
 							</div>
 						</li>
 
-						<li class="ui-bricklist-item" role="listitem">
+						<li role="listitem">
 							<div class="ui-slot w" id="wuiSlot4">
 								<ul class="ui-slot-wrap">
 								<li class="ui-slot-item n1"></li>
@@ -218,7 +219,7 @@
 							</div>
 						</li>
 
-						<li class="ui-bricklist-item" role="listitem">
+						<li role="listitem">
 							<div class="ui-slot w" id="wuiSlot5">
 								<ul class="ui-slot-wrap">
 								<li class="ui-slot-item n1"></li>
