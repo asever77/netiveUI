@@ -5,8 +5,8 @@
     $plugins.common = {
  
         init: function(){
-            $plugins.uiAjax({ id:'baseHeader', url:'/html/inc/header.html', page:true, callback:$plugins.common.header });
-            $plugins.uiAjax({ id:'baseFooter', url:'/html/inc/footer.html', page:true, callback:$plugins.common.footer });
+            $plugins.uiAjax({ id:'baseHeader', url:'/netiveUI/html/inc/header.html', page:true, callback:$plugins.common.header });
+            $plugins.uiAjax({ id:'baseFooter', url:'/netiveUI/html/inc/footer.html', page:true, callback:$plugins.common.footer });
             
             console.log('------------------------------------------------------')
             
@@ -28,7 +28,7 @@
         
         header: function(){
             console.log('header load');
-            $plugins.uiAjax({ id:'baseAside', url:'/html/inc/aside.html', page:true });
+            $plugins.uiAjax({ id:'baseAside', url:'/netiveUI/html/inc/aside.html', page:true });
             $plugins.common.pageid === undefined ? $plugins.common.pageid = "G00_00_00_00" : '';
             
             var timer = '';
@@ -61,7 +61,7 @@
             }
 
             $plugins.uiMenu({ 
-                url:'/resources/data/menu.json', 
+                url:'/netiveUI/resources/data/menu.json', 
                 ctg:'가이드', 
                 selected: $plugins.common.pageid, 
                 callback: fncallback 

@@ -1,5 +1,5 @@
 /*
-  html2canvas 0.5.0-alpha2 <http://html2canvas.hertzen.com>
+  html2canvas 0.5.0-alpha2 <http://netiveUI/html2canvas.hertzen.com>
   Copyright (c) 2015 Niklas von Hertzen
 
   Released under MIT License
@@ -1223,7 +1223,7 @@ process.umask = function() { return 0; };
 
 	/**
 	 * Bias adaptation function as per section 3.4 of RFC 3492.
-	 * http://tools.ietf.org/html/rfc3492#section-3.4
+	 * http://tools.ietf.org/netiveUI/html/rfc3492#section-3.4
 	 * @private
 	 */
 	function adapt(delta, numPoints, firstTime) {
@@ -1597,7 +1597,7 @@ function isIE9() {
     return document.documentMode && document.documentMode <= 9;
 }
 
-// https://github.com/niklasvh/html2canvas/issues/503
+// https://github.com/niklasvh/netiveUI/html2canvas/issues/503
 function cloneNodeIE9(node, javascriptEnabled) {
     var clone = node.nodeType === 3 ? document.createTextNode(node.nodeValue) : node.cloneNode(false);
 
@@ -1657,7 +1657,7 @@ module.exports = function(ownerDocument, containerDocument, width, height, optio
         };
 
         documentClone.open();
-        documentClone.write("<!DOCTYPE html><html></html>");
+        documentClone.write("<!DOCTYPE html><html></netiveUI/html>");
         // Chrome scrolls the parent document for some reason after the write to the cloned window???
         restoreOwnerScroll(ownerDocument, x, y);
         documentClone.replaceChild(options.javascriptEnabled === true ? documentClone.adoptNode(documentElement) : removeScriptNodes(documentClone.adoptNode(documentElement)), documentClone.documentElement);
@@ -3738,7 +3738,7 @@ function documentFromHTML(src) {
     return function(html) {
         var parser = new DOMParser(), doc;
         try {
-            doc = parser.parseFromString(html, "text/html");
+            doc = parser.parseFromString(html, "text/netiveUI/html");
         } catch(e) {
             log("DOMParser not supported, falling back to createHTMLDocument");
             doc = document.implementation.createHTMLDocument("");

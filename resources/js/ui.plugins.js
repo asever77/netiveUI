@@ -6326,7 +6326,7 @@
 				state = opt.state,
 				is_alert = type === 'alert' ? true : false,
 				class_name,
-				system_url = is_alert ? '/html/modal/modalAlert.html' : '/html/modal/modalConfirm.html';
+				system_url = is_alert ? '/netiveUI/html/modal/modalAlert.html' : '/netiveUI/html/modal/modalConfirm.html';
 
 			switch (state) {
 				case '알림': 
