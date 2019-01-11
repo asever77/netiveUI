@@ -6006,52 +6006,24 @@
 		var opt = $.extend(true, {}, $ui.uiBgScrollMove.option, opt),
 			$win = $(window),
 			$vs = $('#' + opt.id),
-			zoomeff = opt.zoomeff,
-			zoomrate = opt.zoomrate,
 			vs_t = $vs.offset().top,
-			vs_h = $vs.innerHeight(),
-			unit_vs = vs_h / 100,
-			vs_h_half = (vs_h / 2),
 			win_h = $win.outerHeight(),
 			sct = $vs.scrollTop();
 
-		bgposition($vs, sct, unit_vs);
+		bgposition($vs, sct);
+		
 		$(window).scroll(function(){
-			sct = $(this).scrollTop();
+			var $this = $(this);
 
-			bgposition($(this), sct, unit_vs);
+			bgposition($vs, $(this).scrollTop());
 		});
 
-		function bgposition(t, sct, unit_vs){
-			var s = sct,
-				$this = t,
-				unit_vs = unit_vs;
-
+		function bgposition(t, s){
 			if (s + win_h > vs_t ) {
-				
-				var unit = win_h / 100,
-					n = ((vs_t ) - (s)) / unit;
-					//n = Math.abs( (win_h ) - (s + win_h) ),
-					//n = Math.abs( (vs_t + vs_h_half) - (s + win_h) ),
-
+				var n = (vs_t  - s) / (win_h / 100);
 				Math.abs(n) > 100 ? n = 100 : '';
-				//n < 0 ? n = 0 : '';
-				
-				//n = Math.abs(n);
-				console.log('n: '+ n.toFixed(4))
-				//$vs.css('background-position', '0 '+ (100 - n) + '%');
-				
-				$vs.css('background-position-y', n.toFixed(4) + '%');
-				//$vs.stop().animate({'background-position-y': n + '%'});
-
-				
-				
-				//$vs.css('background-size', (100 * zoomrate) + '%');
+				t.css('background-position-y', n.toFixed(4) + '%');
 			}
-
-			//if (s + win_h > vs_t + vs_h_half && s + win_h < vs_t + win_h + vs_h_half) {
-				
-			//}
 		}
 	}
 
