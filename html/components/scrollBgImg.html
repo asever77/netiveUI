@@ -18,8 +18,10 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="/resources/js/ui.base.js"></script>
 	<style>
-		.ui-bgscroll.n1{width:100%; height:300px; background:url(/resources/img/dummy/@iu1.jpg) no-repeat 0 0;background-attachment: fixed;}
-		.ui-bgscroll.n2{width:100%; height:400px; background:url(/resources/img/dummy/@iu2.jpg) no-repeat 0 0;background-attachment: fixed;}
+		.ui-bgscroll{border:1px solid #ddd}
+		.ui-bgscroll.n1{display:inline-block; width:33%; height:700px; background:url(/resources/img/dummy/@iu2.jpg) no-repeat 50% 0; }
+		.ui-bgscroll.n2{display:inline-block; width:33%;; height:700px; background:url(/resources/img/dummy/@iu2.jpg) no-repeat 50% 0; background-attachment: fixed; border-top:1px dashed #ddd;}
+		.ui-bgscroll.n3{display:inline-block; width:33%;; height:700px; background:url(/resources/img/dummy/@iu2.jpg) no-repeat 50% 0; border-top:1px dashed #ddd}
 	</style>
 </head>
 
@@ -39,13 +41,10 @@
 				<p>특정 범위안에서 스크롤에 따라 이동</p>
 
 				<h2 class="h2">Base HTML</h2>
-				<div style="height:500px"></div>
 
 				<div class="ui-bgscroll n1" id="uiBgScroll1"></div>
-				<div class="ui-bgscroll n2" id="uiBgScroll2"></div>
-
-				<div style="width:100%; height:300px; background:url(/resources/img/dummy/@iu1.jpg) no-repeat 0 0; background-attachment: fixed; border-top:1px dashed #ddd" ></div> 
-				<div style="width:100%; height:700px; background:url(/resources/img/dummy/@iu2.jpg) no-repeat 0 0; background-attachment: fixed; border-top:1px dashed #ddd" ></div> 
+				<div class="ui-bgscroll n2" ></div> 
+				<div class="ui-bgscroll n3" ></div> 
 
 				<div style="height:500px"></div>
 
@@ -65,7 +64,6 @@
 				
 				console.log('page ready after')
 				$plugins.uiBgScrollMove({ id:'uiBgScroll1' });
-				$plugins.uiBgScrollMove({ id:'uiBgScroll2' });
 
 				
 			});

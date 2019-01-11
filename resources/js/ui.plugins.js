@@ -6038,10 +6038,11 @@
 				//n < 0 ? n = 0 : '';
 				
 				//n = Math.abs(n);
-				console.log('n: '+ n)
+				console.log('n: '+ n.toFixed(4))
 				//$vs.css('background-position', '0 '+ (100 - n) + '%');
 				
-				$vs.css('background-position', '0 '+ n + '%');
+				$vs.css('background-position-y', n.toFixed(4) + '%');
+				//$vs.stop().animate({'background-position-y': n + '%'});
 
 				
 				
