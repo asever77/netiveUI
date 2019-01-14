@@ -1,0 +1,151 @@
+<!doctype html>
+<tr lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<link rel="apple-touch-icon" href="/netiveUI/resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="/netiveUI/resources/img/common/ico_favicon.ico"> 
+
+	<title>CODE GHOST</title>
+
+	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="/netiveUI/resources/js/ui.base.js"></script>
+</head>
+
+<body class="page-typography">
+	<div class="base-skip" id="baseSkip"></div>
+	<div class="base-layer" id="baseLayer"></div>
+	<div class="base-wrap" id="baseWrap">
+		<header class="base-header" id="baseHeader"></header>
+        <div class="base-body" id="baseBody">
+			<aside class="base-aside" id="baseAside"></aside>
+            <main class="base-main" id="baseMain" role="main">
+                <div class="tit-wrap">
+					<h1 class="h1" id="uiPageTit">Units</h1>
+				</div>
+
+                <h2 class="h2">CSS 단위</h2>
+
+                <h3 class="h3">절대 단위</h3>
+                <table class="tbl-base type-discription">
+					<caption>class 예약어</caption>
+					<colgroup>
+					<col class="col-th">
+					<col class="col-auto">
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">단위</th>
+							<th scope="col">설명</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">cm</th>
+							<td>centimeters</td>
+						</tr>
+						<tr>
+							<th scope="row">mm</th>
+							<td>millimeters</td>
+						</tr>
+						<tr>
+							<th scope="row">in</th>
+							<td>inches (1in = 96px = 2.54cm)</td>
+						</tr>
+						<tr>
+							<th scope="row">px</th>
+							<td>pixels (1px = 1/96th of 1in) 저해상도와 고해상도에서 1px의 정의가 달라진다.</td>
+						</tr>
+                        <tr>
+							<th scope="row">pt</th>
+							<td>points (1pt = 1/72 of 1in)</td>
+						</tr>
+                        <tr>
+							<th scope="row">pc</th>
+							<td>picas (1pc = 12 pt)</td>
+						</tr>
+					</tbody>
+				</table>
+
+                <h3 class="h3">상대 단위</h3>
+                <table class="tbl-base type-discription">
+					<caption>class 예약어</caption>
+					<colgroup>
+					<col class="col-th">
+					<col class="col-auto">
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">단위</th>
+							<th scope="col">설명</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<th scope="row">em</th>
+							<td>요소의 글꼴 크기(대문자)에 상대적인 값(2em이란 현재 글꼴의 2배)</td>
+						</tr>
+						<tr>
+							<th scope="row">ex</th>
+							<td>x(소문자)의 높이의 상대적인 값</td>
+						</tr>
+						<tr>
+							<th scope="row">ch</th>
+							<td>'0'의 너비에 상대적인 값</td>
+						</tr>
+						<tr>
+							<th scope="row">rem</th>
+							<td>root 요소(html)의 글꼴 크기(대문자)에 상대적인 값(12px 기준으로 62.5% 지정)</td>
+						</tr>
+                        <tr>
+							<th scope="row">vw</th>
+							<td>브라우저 창 너비 1%</td>
+                        </tr>
+                        <tr>
+							<th scope="row">vh</th>
+							<td>브라우저 창 높이 1%</td>
+						</tr>
+                        <tr>
+							<th scope="row">vmin</th>
+							<td>브라우저 창 높이 1%</td>
+						</tr>
+                        <tr>
+							<th scope="row">vmax</th>
+							<td>브라우저 창 높이와 너비의 최소값 1%</td>
+						</tr>
+                        <tr>
+							<th scope="row">%</th>
+							<td>부모요소 기준의 비율</td>
+						</tr>
+					</tbody>
+				</table>
+               
+                    
+            </main>
+        </div>
+		<footer class="base-footer" id="baseFooter"></footer>
+	</div>
+
+    <!-- only page script -->
+	<script>
+		;(function($, win, doc, undefined) {
+			console.log('page ready before')
+			$plugins.common.pageid = 'G_02_04_00_00';
+
+			$(doc).ready(function(){
+				
+				console.log('page ready after')
+
+			});
+		})(jQuery, window, document);
+	</script>
+
+</body>
+</netiveUI/html>
