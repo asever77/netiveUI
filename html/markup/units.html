@@ -132,7 +132,7 @@
 					
 				</ul>
 
-                <h3 class="h3">상대 단위</h3>
+                <h3 class="h3">font size 상대 단위</h3>
                 <table class="tbl-base type-discription">
 					<caption>class 예약어</caption>
 					<colgroup>
@@ -163,6 +163,39 @@
 							<td>root 요소(html)의 글꼴 크기(대문자)에 상대적인 값(12px 기준으로 62.5% 지정)</td>
 						</tr>
 					</tbody>
+				</table>
+				<ul class="test-unit" >
+					<li>
+						<p>10em</p>
+						<div style="width:10em; height:10em; font-size:12px;">A</div>
+					</li>
+					<li>
+						<p>10ex</p>
+						<div style="width:10ex; height:10ex; font-size:12px; ">x</div>
+					</li>
+					<li>
+						<p>10ch</p>
+						<div style="width:10ch; height:10ch; font-size:12px; ">0</div>
+					</li>
+					<li>
+						<p>10rem</p>
+						<div style="width:10rem; height:10rem; font-size:12px;"></div>
+					</li>
+				</ul>
+
+				<h3 class="h3">browser size 상대 단위</h3>
+                <table class="tbl-base type-discription">
+					<caption>class 예약어</caption>
+					<colgroup>
+					<col class="col-th">
+					<col class="col-auto">
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">단위</th>
+							<th scope="col">설명</th>
+						</tr>
+					</thead>
 					<tbody class="line-t">
                         <tr>
 							<th scope="row">vw</th>
@@ -186,27 +219,18 @@
 						</tr>
 					</tbody>
 				</table>
-				
 				<ul class="test-unit" >
-					<li>
-						<p>7.143em</p>
-						<div style="width:10em; height:10em; font-size:12px;">X</div>
-					</li>
-					<li>
-						<p>10ex</p>
-						<div style="width:10ex; height:10ex; font-size:12px; ">x</div>
-					</li>
-					<li>
-						<p>10ch</p>
-						<div style="width:10ch; height:10ch; font-size:12px; ">0</div>
-					</li>
-					<li>
-						<p>10rem</p>
-						<div style="width:10rem; height:10rem; font-size:12px;"></div>
-					</li>
 					<li>
 						<p>10vw</p>
 						<div style="width:10vw; height:10vw;"></div>
+					</li>
+					<li>
+						<p>10vmax</p>
+						<div style="width:10vmax; height:10vmax;"></div>
+					</li>
+					<li style="width:10%; height:10%; padding-bottom:10%">
+						<p>10%</p>
+						<div style="width:100%; height:100%; padding-bottom:100%"></div>
 					</li>
 					<li>
 						<p>10vh</p>
@@ -216,14 +240,7 @@
 						<p>10vmin</p>
 						<div style="width:10vmin; height:10vmin;"></div>
 					</li>
-					<li>
-						<p>10vmax</p>
-						<div style="width:10vmax; height:10vmax;"></div>
-					</li>
-					<li>
-						<p>100%</p>
-						<div style="width:100%; height:100%; padding-bottom:100%"></div>
-					</li>
+					
 				</ul>
 				
 
