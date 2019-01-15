@@ -3103,6 +3103,7 @@
 	});
 	$ui.uiTblScroll.option = {
 		selector: '.ui-tblscroll',
+		customscroll: false,
 		rown: 5
 	}
 	function createUiTblScroll(opt){
@@ -3110,6 +3111,7 @@
 			opt = $.extend(true, {}, $ui.uiTblScroll.option, opt),
 			$tbl = $(opt.selector),
 			rown = opt.rown,
+			customscroll = opt.customscroll,
 			len = $tbl.length,
 			$thead = '',
 			$tbody = '',
@@ -3128,7 +3130,7 @@
 			clone_colgroup = $tbody.find('colgroup').clone();
 			clone_thead = $tbody.find('thead tr').clone();
 			h = 0;
-			
+
 			clone_tbl += '<div class="tbl-scroll-thead">';
 			clone_tbl += '<table class="txt-c" aria-hidden="true" tabindex="-1">';
 			clone_tbl += '</table>';
@@ -3147,12 +3149,18 @@
 				for (var j = 0; j < rown; j++) {
 					h = h + $tbody.find('tbody tr').eq(j).outerHeight();
 				}
-				$tbl.eq(i).addClass('is-scr');
+				
+				if (customscroll) {
+					$tbl.eq(i).removeClass('is-scr');
+					$tbody.addClass('ui-scrollbar').find('.tbl-base').addClass('ui-scrollbar-item');
+				} else {
+					$tbl.eq(i).addClass('is-scr');
+					$tbody.removeClass('ui-scrollbar').find('.tbl-base').removeClass('ui-scrollbar-item');
+				}
 				$tbody.css('max-height', h + 'px');
 			}
+			customscroll ? $ui.uiScrollBar(): '';
 		}
-		
-		
 	}
 	function createUiCaption(){
 		var $cp = $('.ui-caption');

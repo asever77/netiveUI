@@ -452,6 +452,24 @@
 									<td>이순신</td>
 									<td>lss</td>
 								</tr>
+								<tr>
+									<td>1</td>
+									<td class="txt-l">제목이 들어가는 공간입니다.</td>
+									<td>이순신</td>
+									<td>lss</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td class="txt-l">제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다.</td>
+									<td>이순신</td>
+									<td>lss</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td class="txt-l">제목이 들어가는 공간입니다.</td>
+									<td>이순신</td>
+									<td>lss</td>
+								</tr>
 							</tbody>
 						</table>
 					</div>
@@ -471,7 +489,14 @@
 			$(doc).ready(function(){
 				
 				console.log('page ready after')
-				$plugins.page.table();
+				$plugins.uiTblScroll();
+				$plugins.uiTblScroll({ selector:'#uiTblSroll1',rown:4, customscroll:true });
+				
+				$plugins.uiDatePicker();
+				$plugins.uiSelection();
+				$plugins.uiSelect();
+				$plugins.uiSelection({ id:'uiChk2', all:true });
+				
 
 			});
 		})(jQuery, window, document);
