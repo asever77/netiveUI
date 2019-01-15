@@ -267,8 +267,14 @@ if (!Object.keys){
                 z = z === undefined ? '0' : z;
 
             return ((x < 10) ? z + x : x);
-        }
+        },
+		validate : {
+			idpw : '/^[a-zA-Z0-9]{4,12}$/',
+			email: '/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;'
+		}
 	};
+
+
 
 	(function () {
 		var ua = navigator.userAgent,
