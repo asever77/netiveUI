@@ -2373,6 +2373,7 @@
 	$ui.uiSelect.option = {
 		id: false, //select id
 		current: null,
+		customscroll: true,
 		callback:false
 	};
 	function createUiSelect(opt){
@@ -2380,6 +2381,7 @@
 			opt = $.extend(true, {}, $ui.uiSelect.option, opt),
 			current = opt.current, 
 			callback = opt.callback,
+			customscroll = opt.customscroll,
 			id = opt.id,
 			is_id = id === false ? false : true,
 			$ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.closest('.ui-select') : $('.ui-select'), 
@@ -2434,10 +2436,15 @@
 			sel_tit = $sel.attr('title');
 			opt_len = $opt.length;
 
+			customscroll ?
+			_option_wrap += '<div class="ui-select-wrap ui-scrollbar" id="'+ sel_id +'_scroll" style="min-width:'+ $sel_current.outerWidth() +'px">':
 			_option_wrap += '<div class="ui-select-wrap" style="min-width:'+ $sel_current.outerWidth() +'px">';
+
 			$ui.browser.mobile ?
 			_option_wrap += '<div class="ui-select-opts" role="listbox" id="'+ list_id +'" aria-hidden="false">':
-			_option_wrap += '<div class="ui-select-opts" role="listbox" id="'+ list_id +'" aria-hidden="false" tabindex="-1">';
+			customscroll ?
+				_option_wrap += '<div class="ui-select-opts ui-scrollbar-item" role="listbox" id="'+ list_id +'" aria-hidden="false" tabindex="-1">':
+				_option_wrap += '<div class="ui-select-opts" role="listbox" id="'+ list_id +'" aria-hidden="false" tabindex="-1">';
 
 			for (j = 0; j < opt_len; j++) {
 				$opt_current = $opt.eq(j);
@@ -2499,7 +2506,7 @@
 			sel_dis ? $sel_current.find('.ui-select-btn').prop('disabled', true).addClass('disabled') : '';
 			_option_wrap = '';
 		}
-		
+
 		//event
 		$('.ui-select-btn')
 			.off('click.ui keydown.ui mouseover.ui focus.ui blur.ui').on({
@@ -2668,8 +2675,11 @@
 				_$wrap.addClass('on ' + clsname).attr('aria-hidden', false);
 				_$opts.find('.ui-select-opt').eq(_$uisel.find(':checked').index());
 
+				customscroll ? '' :
 				$ui.uiScroll({ target:_$wrap, value:Number(opt_h * _$uisel.find(':checked').index()), speed:0 });
 			}
+
+			customscroll ? $ui.uiScrollBar({ id:_$wrap.attr('id'), top:_$wrap.find('.selected').index() * _$wrap.find('.ui-select-opt').outerHeight() }) : '';
 		}
 		function optClose(){
 			var $body = $('body'),

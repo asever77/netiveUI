@@ -182,6 +182,9 @@
                 console.log('common.js ok')
                 clearTimeout(timer);
                 $plugins.common.init();
+                $('body').stop().animate({
+                    opacity:1
+                }, 150);
             }
         }
         function delayExe(){

@@ -567,51 +567,22 @@ if (!Object.keys){
 
 	
 	win[global].uiScrollBar.option = {
-		ps: 'bottom',
-		add: false,
-		fix: true,
-		callback: false
+		id: false,
+		top:0
 	};
 	win[global].uiScrollBar.timer = {};
 	win[global].uiScrollBar.overlapExe = 0;
 	function createuiScrollBarAct(opt) {
 		var $this = $('#'+ opt.id),
-			$this_barwrap = $this.find('> .ui-scrollbar-barwrap'),
-			$this_bar = $this_barwrap.find('> .ui-scrollbar-bar'),
-			$this_item = $this.children('.ui-scrollbar-item');
+			$this_barwrap = $this.find('> .ui-scrollbar-barwrap');
 
-		//$this_item.css('top', 'auto');
 		$this_barwrap.hide();
 		$this.data('tabmove', true);
-
-		// setTimeout(function(){
-		// 	var item_top = $this_item.position().top,
-		// 		item_h = $this_item.outerHeight(true),
-		// 		wrap_h = $this.innerHeight(),
-		// 		max_y = item_h - wrap_h,
-		// 		bar_space = $this_barwrap.innerHeight() - $this_bar.outerHeight(true),
-		// 		v = item_top,
-		// 		v_bar;
-
-			
-
-
-		// 	console.log('item-top : '+ v);
-
-		// 	v_bar = (v / (max_y / 100)) * (bar_space / 100);
-
-		// 	Math.ceil(v_bar) > bar_space ? v_bar = bar_space * -1 : '';
-			
-			
-
-		// 	// $this_bar.css('top', v_bar * -1 +'px');
-		// 	// $this_item.css('top', v +'px');
-
-		// },100)
-
 	}
 	function createuiScrollBar(opt) {
-		var $base = $('.ui-scrollbar');
+		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
+			sid = opt.id,
+			$base = !sid ? $('.ui-scrollbar') :  $('#'+ opt.id);
 
 		$base.each(function(i){
 			var $this = $(this);
@@ -619,8 +590,19 @@ if (!Object.keys){
 			if (win[global].uiHasScrollBar({ selector: $this }) && !$plugins.browser.mobile) {
 				scrollbarReady($this, i);
 			}
+
+			if (opt.top > 0 && $this.children('.ui-scrollbar-item').position().top === 0) {
+				console.log('item top : ', $this.children('.ui-scrollbar-item').position().top, opt.top)
+				var wrap_h = $this.innerHeight(),
+					item_h = $this.children('.ui-scrollbar-item').outerHeight(true),
+					max_y = item_h - wrap_h;
+
+				wheelAct($this, -120, wrap_h, item_h, max_y, true);
+			} 
+
 		});
 		scrollbarEvent();
+					
 		
 		function scrollbarReady(wrap_this, i){
 			var $wrap = wrap_this,
@@ -628,8 +610,11 @@ if (!Object.keys){
 				html_scrollbar = '';
 
 			//set
+			console.log(!$wrap.data('ready') || !$wrap.attr('id'))
 			if (!$wrap.data('ready') || !$wrap.attr('id')) {
-				$wrap.css('overflow','hidden').attr('tabindex', 0).attr('id', 'uiScrollBar_'+ i).data('ready', true);
+				!$wrap.attr('id') ?
+				$wrap.css('overflow','hidden').attr('tabindex', 0).attr('id', 'uiScrollBar_'+ i).data('ready', true):
+				$wrap.css('overflow','hidden').attr('tabindex', 0).data('ready', true);
 			
 				html_scrollbar += '<div class="ui-scrollbar-barwrap" >';
 				html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1"><span class="hide">스크롤버튼</span></button>';
@@ -637,6 +622,7 @@ if (!Object.keys){
 				html_scrollbar += '</div>';
 
 				$wrap.prepend(html_scrollbar);
+				console.log('bar 높이: ' ,$wrap.attr('id'), $item.outerHeight(true) );
 				$wrap.find('> .ui-scrollbar-barwrap .ui-scrollbar-bar').css('height', Math.floor($wrap.innerHeight() / ($item.outerHeight(true) / 100)) +'%')
 			}
 		}
@@ -749,7 +735,7 @@ if (!Object.keys){
 			}
 
 		}
-		function wheelAct(wrap_this, wheelDelta, wrap_h, item_h, max_y) {
+		function wheelAct(wrap_this, wheelDelta, wrap_h, item_h, max_y, notmotion) {
 			var $this = wrap_this,
 				delta = -Math.max(-1, Math.min(1, wheelDelta)),
 				$this_barwrap = $this.find('> .ui-scrollbar-barwrap'),
@@ -757,6 +743,7 @@ if (!Object.keys){
 				$this_item =  $this.children('.ui-scrollbar-item'),
 				item_top = $this_item.position().top,
 				bar_space = $this_barwrap.innerHeight() - $this_bar.outerHeight(true),
+				sp = notmotion ? 0 : 300,
 				v,
 				wh,
 				ms = 3;
@@ -794,11 +781,11 @@ if (!Object.keys){
 				
 				$this_bar.stop().animate({
 					'top': v_bar * -1 +'px'
-				},300);
+				},sp);
 
 				$this_item.stop().animate({
 					'top': v +'px'
-				},300, 'easeInOutQuad', function(){
+				},sp, 'easeInOutQuad', function(){
 					win[global].uiScrollBar.overlapExe = 0;
 				});
 			},100);

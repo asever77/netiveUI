@@ -197,6 +197,8 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-select-wrap.top{bottom:39px}
 .ui-select-wrap.bottom{top:39px}
 .ui-select-wrap{display:none; position:absolute; z-index:100; left:0; width:auto; border:1px solid #000; background:#fff; overflow-y:auto; max-height:150px}
+.ui-select-wrap.ui-scrollbar{position: absolute; min-height:150px}
+.ui-scrollbar-item{overflow:hidden;}
 .ui-select-opt{display:block; float:left; width:100%; padding:5px 20px 5px 10px; height:40px; text-align:left; background:#fff; white-space:nowrap}
 .ui-select-opt.selected{font-weight:700; text-decoration:underline; background:#444; color:#fff;}
 .ui-select-opts input:focus,
@@ -567,8 +569,9 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
 
 }
 
-.ui-scrollbar-barwrap{position:absolute; top:0; right:0; width:10px; height:100%; background:rgba(0,0,0,0.5); z-index:100;}
-.ui-scrollbar-bar{position:absolute; top:0; right:1px; width:8px; margin:0 0; height:20px; background:#fff; border-radius:5px;}
+.ui-scrollbar-barwrap{position:absolute; top:0; right:0; width:10px; height:100%; background:rgba(0,0,0,0.1); z-index:100;}
+.ui-scrollbar-bar{position:absolute; top:0; right:2px; width:6px; margin:2px 0; height:20px; background:#fff; opacity:1; border-radius:2px;}
+.ui-scrollbar:hover .ui-scrollbar-bar{opacity:1; box-shadow:0 0 5px rgba(0,0,0,0.3)}
 .ui-scrollbar{position:relative; overflow:auto;}
 .ui-scrollbar-item{position: absolute; /* background-attachment: fixed; */}
 .ie .ui-bgscroll{transition:background-position 0.3s} 
