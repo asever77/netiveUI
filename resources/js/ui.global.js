@@ -437,10 +437,18 @@ if (!Object.keys){
 	function createUivalueCheck(opt){
 		var type = opt.type,
 			target = opt.target,
-			msg = opt.message;
+			msg = opt.message,
+			callback = opt.callback,
+			error;
 
 		var	reg_idpw = /^[a-zA-Z0-9]{4,12}$/,
+			reg_email_id = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])$/i,
+			reg_email_address = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
 			reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+			reg_kr = /^[가-힣]+$/,
+			reg_kr_ = /^[가-힣\s]+$/,
+			reg_en = /^[a-zA-Z]+$/,
+			reg_en_ = /^[a-zA-Z\s]+$/,
 			reg_number = /^[0-9]+$/;
 
 		switch(type){
@@ -448,6 +456,12 @@ if (!Object.keys){
 			break;
 
 			case 'email':  valueCheck(reg_email, target, msg);
+			break;
+
+			case 'email_id':  valueCheck(reg_email_id, target, msg);
+			break;
+
+			case 'email_address':  valueCheck(reg_email_address, target, msg);
 			break;
 
 			case 'number':  valueCheck(reg_number, target, msg);
@@ -458,13 +472,23 @@ if (!Object.keys){
 		function valueCheck(reg, target, msg){
 			console.log(reg_number, target, target.val(), reg.test(target.value))
 			if (reg.test(target.val())) {
-				return false;
+				error = false;
+			} else {
+				error = true;
 			}
 
-			alert(msg);
+			win[global].uiError({ 
+				selector:target, 
+				error: error, 
+				message: msg 
+			});
+
+			callback ? callback() : '';
 			// target.value = '';
 			// target.focus();
-			return false;
+			
+
+			
 		}
 		
 	}

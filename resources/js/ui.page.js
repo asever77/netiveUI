@@ -144,24 +144,24 @@
         
         $plugins.uiSelect();
         $plugins.uiInputClear();
-        $('#uiErrorOn').on('click', function(){
-            n = 3;
-            $plugins.uiError({ selector:'a9', error:true, message:'9 오류메세지 내용' });
-            $plugins.uiError({ selector:'a10', error:true, message:'10 오류메세지 내용' });
-            $plugins.uiError({ selector:'a11', error:true, message:'11 오류메세지 내용' });
-        });
-        $('#uiErrorOff').on('click', function(){
-            if (n === 3) {
-                n = 2;
-                $plugins.uiError({ selector:'a9', error:false });    
-            } else if (n === 2) {
-                n = 1;
-                $plugins.uiError({ selector:'a10', error:false });
-            } else {
-                $plugins.uiError({ selector:'a11', error:false });
-            }
+        // $('#uiErrorOn').on('click', function(){
+        //     n = 3;
+        //     $plugins.uiError({ selector:'a9', error:true, message:'9 오류메세지 내용' });
+        //     $plugins.uiError({ selector:'a10', error:true, message:'10 오류메세지 내용' });
+        //     $plugins.uiError({ selector:'a11', error:true, message:'11 오류메세지 내용' });
+        // });
+        // $('#uiErrorOff').on('click', function(){
+        //     if (n === 3) {
+        //         n = 2;
+        //         $plugins.uiError({ selector:'a9', error:false });    
+        //     } else if (n === 2) {
+        //         n = 1;
+        //         $plugins.uiError({ selector:'a10', error:false });
+        //     } else {
+        //         $plugins.uiError({ selector:'a11', error:false });
+        //     }
             
-        });
+        // });
     }
 
     $plugins.page.jsoncodinglist = function(){

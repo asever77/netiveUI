@@ -38,7 +38,7 @@
                 <h3 class="h3">a singular item</h3>
                 <div class="in-wrap">
                     <div class="in-item">
-                        <input type="text" id="a1" class="inp-base" value="" placeholder="입력해주세요">
+                        <input type="text" id="a1" vchecktype="number" class="inp-base" value="" placeholder="입력해주세요">
                     </div>
                 </div>
                 
@@ -46,9 +46,9 @@
                 <h3 class="h3">a plural item</h3>
                 <div class="in-wrap">
                     <div class="in-item form-email">
-                        <input type="text" id="a2" class="inp-base form-email-id" value="" placeholder="이메일 아이디">
+                        <input type="text" id="a2" vchecktype="email_id" class="inp-base form-email-id" value="" placeholder="이메일 아이디">
                         <span class="txt-mark">@</span>
-                        <input type="text" id="a3" class="inp-base form-email-adr" value="" placeholder="이메일 주소">
+                        <input type="text" id="a3" vchecktype="email_address" class="inp-base form-email-adr" value="" placeholder="이메일 주소">
                     </div>
                     <div class="in-item form-tel mgl-s">
                         <div class="ui-select form-tel-n1">
@@ -167,10 +167,13 @@ $plugins.uiError({
 				$plugins.page.inputformat();
 
                 $('input').on('blur', function(){
+                    var $this = $(this);
+
                     $plugins.uiValueCheck({
-                        type: 'number',
-                        target: $(this),
-                        message: '정확하게 입력해주세요'
+                        type: $this.attr('vchecktype'),
+                        target: $this,
+                        message: '정확하게 입력해주세요',
+                        callback: function(){ console.log(1111); }
                     })
                 });
 
