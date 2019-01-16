@@ -442,33 +442,37 @@ if (!Object.keys){
 			error;
 
 		var	regex,
-			reg_idpw = '[a-zA-Z0-9]',
+			reg_id = /^[a-z0-9][a-z0-9_\-]{4,19}$/,
+			reg_pw = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/,
+			reg_phone = /^((01[1|6|7|8|9])[1-9][0-9]{6,7})$|(010[1-9][0-9]{7})$/,
+			reg_email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+
 			reg_email_id = '([\\w-]+(?:\\.[\w-]+)*)',
 			reg_email_address = '((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)',
-			reg_email = /^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/,
+			
+			
 			reg_kr = '[가-힣]+',
 			reg_kr_ = '[가-힣\s]+',
 			reg_en = '[a-zA-Z]+',
 			reg_en_ = '[a-zA-Z\s]+',
 			reg_number = '[0-9]+';
 
+		!!target.attr('required') && target.val() === '' ? msg = '필수정보입니다.' : msg = '';
+
 		switch(type){
 			case 'id': 
-			regex = new RegExp('^'+ reg_idpw +'{4,12}$');
-			console.log(target.val().length)
-			target.val().length < 4 || target.val().length > 12 ? msg = '4~12자 사이로 입력하세요.' : '';
-			valueCheck(regex, target, msg);
+			target.val().length > 0 ? msg ='5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.' : '';
+			// /(target.val().length < 5 && target.val().length > 0) || target.val().length > 20 ? msg ='5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.' : '';
+			valueCheck(reg_id, target, msg);
 			break;
 
 			case 'pw': 
-			regex = new RegExp('^'+ reg_idpw +'{12,}$');
-			msg = '12자 이상 입력하세요.'
-			valueCheck(regex, target, msg);
+			(target.val().length < 8 && target.val().length > 0) || target.val().length > 16 ? msg = '8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.' : '';
+			valueCheck(reg_pw, target, msg);
 			break;
 
 			case 'email':  
-			regex = new RegExp('^'+ reg_email_id + '@' + reg_email_address +'$');
-			valueCheck(regex, target, msg);
+			valueCheck(reg_email, target, msg);
 			break;
 
 			case 'email_id':  
