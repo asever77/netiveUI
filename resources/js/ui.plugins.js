@@ -5993,7 +5993,10 @@
 
 		//generate error message
 		$this.attr('aria-labelledby', id + '-error');
-		!$('#'+ id +'-error').length ? $wrap.append(err_html) : $wrap.find('ui-error-msg').text('msg') ;
+
+		console.log(!$('#'+ id +'-error').length, msg);
+
+		!$('#'+ id +'-error').length ? $wrap.append(err_html) : $wrap.find('.ui-error-msg').text(msg) ;
 		
 		//error 여부에 따른 설정
 		if (err) {

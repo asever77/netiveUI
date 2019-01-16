@@ -142,8 +142,7 @@
     $plugins.page.inputformat = function(){
         var n = 3;
         
-        $plugins.uiSelect();
-        $plugins.uiInputClear();
+        
         // $('#uiErrorOn').on('click', function(){
         //     n = 3;
         //     $plugins.uiError({ selector:'a9', error:true, message:'9 오류메세지 내용' });

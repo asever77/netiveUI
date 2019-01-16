@@ -441,36 +441,61 @@ if (!Object.keys){
 			callback = opt.callback,
 			error;
 
-		var	reg_idpw = /^[a-zA-Z0-9]{4,12}$/,
-			reg_email_id = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])$/i,
-			reg_email_address = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-			reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
-			reg_kr = /^[가-힣]+$/,
-			reg_kr_ = /^[가-힣\s]+$/,
-			reg_en = /^[a-zA-Z]+$/,
-			reg_en_ = /^[a-zA-Z\s]+$/,
-			reg_number = /^[0-9]+$/;
+		var	regex,
+			reg_idpw = '[a-zA-Z0-9]',
+			reg_email_id = '([\\w-]+(?:\\.[\w-]+)*)',
+			reg_email_address = '((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)',
+			reg_email = /^([\\w-]+(?:\\.[\\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/,
+			reg_kr = '[가-힣]+',
+			reg_kr_ = '[가-힣\s]+',
+			reg_en = '[a-zA-Z]+',
+			reg_en_ = '[a-zA-Z\s]+',
+			reg_number = '[0-9]+';
 
 		switch(type){
-			case 'id':  valueCheck(reg_idpw, target, msg);
+			case 'id': 
+			regex = new RegExp('^'+ reg_idpw +'{4,12}$');
+			console.log(target.val().length)
+			target.val().length < 4 || target.val().length > 12 ? msg = '4~12자 사이로 입력하세요.' : '';
+			valueCheck(regex, target, msg);
 			break;
 
-			case 'email':  valueCheck(reg_email, target, msg);
+			case 'pw': 
+			regex = new RegExp('^'+ reg_idpw +'{12,}$');
+			msg = '12자 이상 입력하세요.'
+			valueCheck(regex, target, msg);
 			break;
 
-			case 'email_id':  valueCheck(reg_email_id, target, msg);
+			case 'email':  
+			regex = new RegExp('^'+ reg_email_id + '@' + reg_email_address +'$');
+			valueCheck(regex, target, msg);
 			break;
 
-			case 'email_address':  valueCheck(reg_email_address, target, msg);
+			case 'email_id':  
+			regex = new RegExp('^'+ reg_email_id +'$');
+			valueCheck(regex, target, '정확한 이메일 아이디를 입력해주세요.');
 			break;
 
-			case 'number':  valueCheck(reg_number, target, msg);
+			case 'email_address': 
+			regex = new RegExp('^'+ reg_email_address +'$');
+			valueCheck(regex, target, '정확한 이메일 주소를 입력해주세요.');
+			break;
+
+			case 'number': 
+			regex = new RegExp('^'+ reg_number+'$');
+			valueCheck(regex, target, msg);
+			break;
+
+			case 'kr': 
+			regex = new RegExp('^'+ reg_kr +'$');
+			msg = '한글로만 입력하세요.'
+			valueCheck(regex, target, msg);
 			break;
 		}
 		
 
 		function valueCheck(reg, target, msg){
-			console.log(reg_number, target, target.val(), reg.test(target.value))
+			console.log(reg, target, target.val(), reg.test(target.value))
 			if (reg.test(target.val())) {
 				error = false;
 			} else {
