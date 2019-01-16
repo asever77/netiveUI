@@ -267,14 +267,10 @@ if (!Object.keys){
                 z = z === undefined ? '0' : z;
 
             return ((x < 10) ? z + x : x);
-        },
-		validate : {
-			idpw : '/^[a-zA-Z0-9]{4,12}$/',
-			email: '/^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;'
-		}
+        }
 	};
 
-
+	
 
 	(function () {
 		var ua = navigator.userAgent,
@@ -397,6 +393,9 @@ if (!Object.keys){
 		},
 		uiCookieDel: function (opt) {
 			return creaeteUiCookieDel(opt);
+		},
+		uiValueCheck: function(opt) {
+			return createUivalueCheck(opt)
 		}
 	});
     
@@ -434,6 +433,41 @@ if (!Object.keys){
 		}
 	}
 
+
+	function createUivalueCheck(opt){
+		var type = opt.type,
+			target = opt.target,
+			msg = opt.message;
+
+		var	reg_idpw = /^[a-zA-Z0-9]{4,12}$/,
+			reg_email = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i,
+			reg_number = /^[0-9]+$/;
+
+		switch(type){
+			case 'id':  valueCheck(reg_idpw, target, msg);
+			break;
+
+			case 'email':  valueCheck(reg_email, target, msg);
+			break;
+
+			case 'number':  valueCheck(reg_number, target, msg);
+			break;
+		}
+		
+
+		function valueCheck(reg, target, msg){
+			console.log(reg_number, target, target.val(), reg.test(target.value))
+			if (reg.test(target.val())) {
+				return false;
+			}
+
+			alert(msg);
+			// target.value = '';
+			// target.focus();
+			return false;
+		}
+		
+	}
 
 
 	win[global].uiAjax.option = {

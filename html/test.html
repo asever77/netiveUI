@@ -14,7 +14,13 @@
   
 	<title> kkmk</title>
 
-	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
+
+	<style>
+		label{display:inline-block;}
+		input:checked + .lbl:after{content:""; display:block; width:10px; height:10px; background:red}
+		input:checked + .lbl:before{content:""; display:block; width:10px; height:10px; background:blue}
+		label img{width:50px; height:50px;}
+	</style>
 </head>
 
 <body class="page-main">
@@ -25,26 +31,27 @@
 	<div class="base-wrap" id="baseWrap">
 		<header class="base-header" id="baseHeader"></header>
 		<main class="base-main" id="baseMain" role="main">
-			test: 성룡
+			<label class="edge_rdo">
+				<input type="radio" name="edge" value="">
+				<span class="lbl">
+					<span class="edge_img"><img src="http://ldb.phinf.naver.net/20170724_37/150090137751289WyW_JPEG/7f3d7f4c-e1c6-419f-84ca-50bdb141840f.jpeg" alt=""></span>
+					<span class="edge_txt">test1</span>
+				</span>
+			</label>
+			<label class="edge_rdo">
+				<input type="radio" name="edge" value="">
+				<span class="lbl">
+					<span class="edge_img"><img src="http://ldb.phinf.naver.net/20170724_37/150090137751289WyW_JPEG/7f3d7f4c-e1c6-419f-84ca-50bdb141840f.jpeg" alt=""></span>
+					<span class="edge_txt">test1</span>
+				</span>
+			</label>
 		</main>
 		<footer class="base-footer" id="baseFooter"></footer>
 	</div>
 		
 	<script>
 
-		var counter = 0;
-		function increment() {
-			return ++counter;
-		}
-
-		increment();
-		increment();
-		console.log(counter);
-
-		var increment2 = counter2 => counter2 + 1;
-		var plus2 = run(increment2, increment2);
-
-		console.log(plus2(0));
+	
 
 	</script>
 </body>

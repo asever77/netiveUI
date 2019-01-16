@@ -138,8 +138,6 @@
                     <input type="text" id="a11" class="inp-base form-tel-n3" value="" placeholder="-없이 입력해주세요" title="휴대폰 뒷번호">
                 </div>
 
-                
-
                 <div class="box-code">
 <pre>
 <code>
@@ -167,6 +165,16 @@ $plugins.uiError({
 				
 				console.log('page ready after')
 				$plugins.page.inputformat();
+
+                $('input').on('blur', function(){
+                    $plugins.uiValueCheck({
+                        type: 'number',
+                        target: $(this),
+                        message: '정확하게 입력해주세요'
+                    })
+                });
+
+                
 
 			});
 		})(jQuery, window, document);
