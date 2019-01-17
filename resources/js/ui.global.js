@@ -451,7 +451,7 @@ if (!Object.keys){
 			reg_email_address = '((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)',
 			
 			
-			reg_kr = '[가-힣]+',
+			reg_kr = /^[가-힣]{2,}$/,
 			reg_kr_ = '[가-힣\s]+',
 			reg_en = '[a-zA-Z]+',
 			reg_en_ = '[a-zA-Z\s]+',
@@ -491,9 +491,8 @@ if (!Object.keys){
 			break;
 
 			case 'kr': 
-			regex = new RegExp('^'+ reg_kr +'$');
-			msg = '한글로만 입력하세요.'
-			valueCheck(regex, target, msg);
+			target.val().length > 0 ? msg = '한글로만 1자 이상 입력하세요.' : '';
+			valueCheck(reg_kr, target, msg);
 			break;
 		}
 		

@@ -164,7 +164,9 @@
         modal: function(modalId){
             switch(modalId) {
                 case 'modalID':
-                    break;
+                    break;  
+
+                    
             }
         }
     }

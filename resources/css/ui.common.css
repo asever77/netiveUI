@@ -23,6 +23,8 @@ button {border:0 none; font-family:'Noto Sans KR'; cursor:pointer; background:tr
 input, textarea, select {box-sizing:border-box; font-family:'Noto Sans KR', sans-serif; font-size:14px;}
 [class*="inp-"]::-webkit-search-cancel-button{display:none}
 
+/* base line-height */
+p{line-height:1.8}
 
 /* html5 */
 article, aside, details, figcaption, figure, footer, header, main, hgroup, nav, section, summary {display:block; margin:0; padding:0; box-sizing:border-box;}
@@ -83,6 +85,12 @@ p.bul-care:before {content:"※"; position:absolute; left:0; top:2px; font-weigh
 .bul-hyphen ul li:before{content:"·"; position:absolute; left:0; top:2px; font-weight:900; line-height:1.2;}
 .bul-etc > li {position:relative; margin-top:5px; padding-left:20px; line-height:1.5; display:block;}
 .bul-ico{position:relative; top:0; margin:0 0 0 -20px; width:20px; display:inline-block;}
+
+/* paragraph */
+.paragraph-a{position:relative; width:100%; margin-top:20px;}
+.paragraph-a h3{margin-top:30px}
+.paragraph-a p{margin-top:15px}
+.paragraph-a > *:first-child{margin-top:0}
 
 /* text:type */
 [class*="txt-mark"] {display:inline-block; margin:0 5px; padding:10px 0 0;}
@@ -345,6 +353,11 @@ input[type="checkbox"] {opacity:0; filter:alpha(opacity=0); display:inline-block
 .inp-mmdd {width:50px;}
 .inp-date {width:100px;}
 .inp-tarea {height:100px; padding:10px;}
+
+.inp-wrap{position:relative;}
+.inp-wrap [class*="inp-"]{border:0}
+.lb-base{display:inline-block; margin-bottom:3px; cursor:pointer;}
+.placeholder{display:block; color:#999; font-size:small}
 
 /* base form:select */
 select {display:inline-block; position:relative; vertical-align:top; width:auto; height:40px; padding:0 40px 0 10px; border-radius:2px; 
