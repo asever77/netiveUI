@@ -396,6 +396,9 @@ if (!Object.keys){
 		},
 		uiValueCheck: function(opt) {
 			return createUivalueCheck(opt)
+		},
+		uiLabelAbove: function(opt) {
+			return createUiLabelAbove(opt)
 		}
 	});
     
@@ -433,6 +436,16 @@ if (!Object.keys){
 		}
 	}
 
+	function createUiLabelAbove(){
+		$('.field-inlabel input').each(function(v){
+			$(this).on('change', function(){
+				var $this = $(this),
+					$field =  $this.closest('.field-inlabel');
+
+				$this.val() !== '' ? $field.addClass('activated') : $field.removeClass('activated');
+			})
+		})
+	}
 
 	function createUivalueCheck(opt){
 		var type = opt.type,
@@ -457,7 +470,7 @@ if (!Object.keys){
 			reg_en_ = '[a-zA-Z\s]+',
 			reg_number = '[0-9]+';
 
-		!!target.attr('required') && target.val() === '' ? msg = '필수정보입니다.' : msg = '';
+		!!target.attr('required') && target.val() === '' ? msg = '필수정보입니다.' : '';
 
 		switch(type){
 			case 'id': 
@@ -491,18 +504,26 @@ if (!Object.keys){
 			break;
 
 			case 'kr': 
-			target.val().length > 0 ? msg = '한글로만 1자 이상 입력하세요.' : '';
-			valueCheck(reg_kr, target, msg);
+			if (target.val().length > 0) {
+				valueCheck(reg_kr, target, '한글로만 2자 이상 입력하세요.');
+			} else {
+				valueCheck(reg_kr, target, '', false);
+			};
+			
 			break;
 		}
 		
 
-		function valueCheck(reg, target, msg){
+		function valueCheck(reg, target, msg, err){
 			console.log(reg, target, target.val(), reg.test(target.value))
 			if (reg.test(target.val())) {
 				error = false;
 			} else {
 				error = true;
+			}
+
+			if (err !== undefined) {
+				error = err;
 			}
 
 			win[global].uiError({ 
