@@ -452,7 +452,8 @@ if (!Object.keys){
 			target = opt.target,
 			msg = opt.message,
 			callback = opt.callback,
-			error;
+			error,
+			err;
 
 		var	regex,
 			reg_id = /^[a-z0-9][a-z0-9_\-]{4,19}$/,
@@ -470,7 +471,7 @@ if (!Object.keys){
 			reg_en_ = '[a-zA-Z\s]+',
 			reg_number = '[0-9]+';
 
-		!!target.attr('required') && target.val() === '' ? msg = '필수정보입니다.' : '';
+		target.val().length > 0 ? err = true : err = false;
 
 		switch(type){
 			case 'id': 

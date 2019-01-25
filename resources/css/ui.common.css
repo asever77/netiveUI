@@ -347,8 +347,7 @@ input[type="checkbox"] {opacity:0; filter:alpha(opacity=0); display:inline-block
 .lb-tit {display:inline-block; height:40px; margin-right:10px; padding-top:10px; vertical-align:top; cursor:pointer;}
 
 /* in label style */
-.field-inlabel {position:relative;}
-.field-inlabel input{margin-bottom:20px;}
+.field-inlabel {position:relative; padding-bottom:30px}
 .field-inlabel label{position:absolute; top:0; left:10px; transform:translate(0, 9px); font-size:14px; color:#888; cursor:text; 
 -webkit-transition: -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
 transition: -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
@@ -364,10 +363,9 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 .field-inlabel.activated input + label:after,
 .field-inlabel input:focus + label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:2px solid #fff; transition-delay: 150ms;}
 .field-inlabel input:focus{background:rgb(245, 251, 253)}
-.field-inlabel .ui-error-msg{line-height:1.2}
-.field-inlabel .ui-error-msg{line-height:1.2; padding:0 10px;}
-.field-inlabel .placeholder{position: absolute; left:2px; top:42px; line-height:1.2}
-.field-inlabel.activated .placeholder{display:none}
+.field-inlabel .ui-error-msg{line-height:1.2; position: absolute; left:10px; top:42px; margin:0;}
+.field-inlabel .placeholder{position: absolute; left:10px; top:42px; line-height:1.2}
+.field-inlabel.ui-error-true .placeholder{display:none}
 
 /* base form:input text */
 .inp-error {border-color:red !important;}
