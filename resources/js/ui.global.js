@@ -438,22 +438,37 @@ if (!Object.keys){
 
 	function createUiLabelAbove(){
 		$('.field-inlabel input').each(function(v){
-			$(this).on('change', function(){
-				var $this = $(this),
-					$field =  $this.closest('.field-inlabel');
+			var $this = $(this),
+				$field =  $this.closest('.field-inlabel');
 
-				$this.val() !== '' ? $field.addClass('activated') : $field.removeClass('activated');
+			$this.val() !== '' ? $field.addClass('activated') : $field.removeClass('activated');
+
+			$this.on('change', function(){	
+				var $this_ = $(this),
+					$field_ =  $this_.closest('.field-inlabel');
+
+				$this_.val() !== '' ? $field_.addClass('activated') : $field_.removeClass('activated');
 			})
 		})
 	}
 
+	win[global].uiValueCheck.option = {
+		first: false
+	}
 	function createUivalueCheck(opt){
-		var type = opt.type,
+		var opt = $.extend(true, {}, win[global].uiValueCheck.option, opt),
+			type = opt.type,
 			target = opt.target,
+			first = opt.first,
 			msg = opt.message,
 			callback = opt.callback,
 			error,
 			err;
+
+		console.log()
+		if (first && target.val().length === 0) {
+			return false;
+		}
 
 		var	regex,
 			reg_id = /^[a-z0-9][a-z0-9_\-]{4,19}$/,
@@ -463,8 +478,8 @@ if (!Object.keys){
 
 			reg_email_id = '([\\w-]+(?:\\.[\w-]+)*)',
 			reg_email_address = '((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)',
-			
-			
+
+			reg_test = /^[가-힣]{2,}$/,
 			reg_kr = /^[가-힣]{2,}$/,
 			reg_kr_ = '[가-힣\s]+',
 			reg_en = '[a-zA-Z]+',
@@ -474,6 +489,14 @@ if (!Object.keys){
 		target.val().length > 0 ? err = true : err = false;
 
 		switch(type){
+			case 'test': 
+			if (target.val().length > 0) {
+				valueCheck(reg_test, target, 'error message');
+			} else {
+				valueCheck(reg_test, target, '', false);
+			};
+			break;
+
 			case 'id': 
 			target.val().length > 0 ? msg ='5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.' : '';
 			// /(target.val().length < 5 && target.val().length > 0) || target.val().length > 20 ? msg ='5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.' : '';
@@ -536,9 +559,6 @@ if (!Object.keys){
 			callback ? callback() : '';
 			// target.value = '';
 			// target.focus();
-			
-
-			
 		}
 		
 	}

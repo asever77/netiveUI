@@ -1,0 +1,261 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<link rel="apple-touch-icon" href="/netiveUI/resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="/netiveUI/resources/img/common/ico_favicon.ico"> 
+
+	<title></title>
+
+	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="/netiveUI/resources/js/ui.base.js"></script>
+</head>
+
+<body class="page-typography">
+	<div class="base-skip" id="baseSkip"></div>
+	<div class="base-layer" id="baseLayer"></div>
+	<div class="base-wrap" id="baseWrap">
+		<header class="base-header" id="baseHeader"></header>
+        <div class="base-body" id="baseBody">
+			<aside class="base-aside" id="baseAside"></aside>
+            <main class="base-main" id="baseMain" role="main">
+                <div class="tit-wrap">
+					<h1 class="h1" id="uiPageTit">Input Format</h1>
+				</div>
+
+                    
+                <h2 class="h2">In Label Style</h2>
+                <p>입력란 안에 label이 들어가는 스타일로 좁은 공간이나 모바일 환경에서 많이 사용한다.</p>
+                <div class="box-base">
+                    <div class="in-wrap">
+                        <div class="in-wrap">
+                            <div class="in-item" style="background: #eee">
+                                <div class="field-inlabel">
+                                    <em class="placeholder">Help Text</em>
+                                    <input type="text" id="mem_이름1" vchecktype="test" class="inp-base" value="">
+                                    <label for="mem_이름1">Label Title</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="in-wrap mgl-m">
+                            <div class="in-item" style="background: #eee">
+                                <div class="field-inlabel">
+                                    <em class="placeholder">Help Text</em>
+                                    <input type="text" id="mem_이름2" vchecktype="test" class="inp-base" value="23" required>
+                                    <label for="mem_이름2">Label Title</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form>
+                    <div class="in-wrap">
+                        <div class="in-item">
+                            <div class="field-inlabel">
+                                <em class="placeholder">한글로 입력해주세요.</em>
+                                <input type="text" id="mem_이름" vchecktype="kr" class="inp-base" value="">
+                                <label for="mem_이름">Name</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="in-wrap">
+                        <div class="in-item">
+                            <div class="field-inlabel">
+                                <em class="placeholder">필수정보</em>
+                                <input type="text" id="mem_아이디" vchecktype="id" class="inp-base" value="" required>
+                                <label for="mem_아이디">ID</label>
+                            </div>
+                        </div>
+                    
+                        <div class="in-item mgl-s">
+                            
+                            <div class="field-inlabel">
+                                <em class="placeholder">비밀번호를 입력하세요</em>
+                                <input type="password" id="mem_비밀번호" vchecktype="pw" class="inp-base" value="" required>
+                                <label for="mem_비밀번호">Password</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="in-wrap">
+                        <div class="in-item">
+                            <div class="field-inlabel">
+                                <input type="text" id="mem_이메일" vchecktype="email" class="inp-base" value="">
+                                <label for="mem_이메일">이메일</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="in-wrap">
+                        <div class="in-item form-email">
+                            <label for="mem_이메일아이디">이메일</label>
+                            <input type="text" id="mem_이메일아이디" vchecktype="email_id" class="inp-base" title="이메일 아이디" value="" placeholder="이메일 아이디">
+                            <span class="txt-mark">@</span>
+                            <div class="ui-select form-tel-n1">
+                                <select title="이메일 주소 선택" id="email_sel">
+                                    <option>선택하세요</option>
+                                    <option value="google.com">google.com</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="daum.net">daum.net</option>
+                                    <option value="direct">직접입력</option>
+                                </select>
+                            </div>
+                            <input type="text" id="a3" vchecktype="email_address" class="inp-base form-email-adr" title="이메일 주소" value="" placeholder="이메일 주소">
+                        </div>
+                        <div class="in-item form-tel mgl-s">
+                            <div class="ui-select form-tel-n1">
+                                <select title="통신사 선택" id="a4">
+                                    <option>선택하세요</option>
+                                    <option value="010">SKT</option>
+                                    <option value="011">KT</option>
+                                    <option value="017">LGT</option>
+                                </select>
+                            </div>
+                            <span class="txt-mark">-</span>
+                            <div class="ui-select form-tel-n2">
+                                <select title="휴대폰 식별자" id="a5">
+                                    <option>선택하세요</option>
+                                    <option value="010">010</option>
+                                    <option value="011">011</option>
+                                    <option value="017">017</option>
+                                    <option value="018">018</option>
+                                </select>
+                            </div>
+                            <span class="txt-mark">-</span>
+                            <input type="text" id="a6" class="inp-base form-tel-n3" value="" placeholder="-없이 입력해주세요" title="휴대폰 뒷번호">
+                        </div>
+                    </div>
+                </form>
+
+                
+                <div class="box-code">
+<pre>
+<code>
+&lt;div class="form-item type-email"&gt;
+    &lt;input type="text" class="inp-base" value="" placeholder="이메일 아이디"&gt;
+    &lt;span class="txt-mark"&gt;@&lt;/span&gt;
+    &lt;input type="text" class="inp-base" value="" placeholder="이메일 주소"&gt;
+&lt;/div&gt;
+</code>
+</pre>
+                </div>
+
+                <h2 class="h2">$plugins.uiInputClear</h2>
+                <p>IE에서 input 태그의 text 속성을 가지는 입력폼을 사용하는 경우 자동으로 생성되는 X버튼 기능구현</p>
+
+                <div class="in-wrap">
+                    <div class="in-item">
+                        <input type="text" id="a7" class="inp-base ui-inpcancel" value="" placeholder="입력해주세요">
+                    </div>
+                    <div class="in-item mgl-s">
+                        <input type="text" id="a8" class="inp-base ui-inpcancel" value="" placeholder="입력해주세요">
+                    </div>
+                </div>
+
+                <div class="box-code">
+<pre>
+<code>
+<span class="c">//.ui-inpcancel</span>
+&lt;input type="text" id="a7" class="inp-base ui-inpcancel" value="" placeholder="입력해주세요"&gt;
+</code>
+</pre>
+                </div>
+
+                <h2 class="h2">$plugins.uiError</h2>
+                <p>입력오류 및 미기입 시 에러메세지와 스타일 설정</p>
+                <div class="btn-wrap txt-l">
+                    <button type="button" class="btn-base" id="uiErrorOn"><span>에러메세지 ON</span></button>
+                    <button type="button" class="btn-base" id="uiErrorOff"><span>에러메세지 OFF</span></button>
+                </div>
+                
+                <div class="in-wrap form-tel">
+                    <div class="ui-select form-tel-n1">
+                        <select title="통신사 선택" id="a9">
+                            <option>선택하세요</option>
+                            <option value="010">SKT</option>
+                            <option value="011">KT</option>
+                            <option value="017">LGT</option>
+                        </select>
+                    </div>
+                    <span class="txt-mark">-</span>
+                    <div class="ui-select form-tel-n2">
+                        <select title="휴대폰 식별자" id="a10">
+                            <option>선택하세요</option>
+                            <option value="010">010</option>
+                            <option value="011">011</option>
+                            <option value="017">017</option>
+                            <option value="018">018</option>
+                        </select>
+                    </div>
+                    <span class="txt-mark">-</span>
+                    <input type="text" id="a11" class="inp-base form-tel-n3" value="" placeholder="-없이 입력해주세요" title="휴대폰 뒷번호">
+                </div>
+
+                <div class="box-code">
+<pre>
+<code>
+$plugins.uiError({ 
+    selector:'id' or $(...), 
+    error:true or flase, 
+    message:'오류메세지 내용' 
+});
+</code>
+</pre>
+                </div>
+
+            </main>
+        </div>
+		<footer class="base-footer" id="baseFooter"></footer>
+	</div>
+	
+    <!-- only page script -->
+	<script>
+		;(function($, win, doc, undefined) {
+			console.log('page ready before')
+			$plugins.common.pageid = 'G_02_10_00_00';
+
+			$(doc).ready(function(){
+				
+				console.log('page ready after')
+				//$plugins.page.inputformat();
+
+                $plugins.uiSelect();
+
+                $plugins.uiLabelAbove();
+                $plugins.uiPlaceholder();
+                $plugins.uiInputClear();
+                
+                $('input').each(function(){
+                    errCheckExe($(this), true);
+                });
+                
+                $('input').on('blur', function(){
+                    var $this = $(this);
+                    errCheckExe($this);
+                });
+
+                function errCheckExe(t, f){
+                    $plugins.uiValueCheck({
+                        first: f,
+                        type: t.attr('vchecktype'),
+                        target: t,
+                        message: '필수정보입니다.',
+                        callback: function(){ console.log(1111); }
+                    });
+                }
+                
+
+			});
+		})(jQuery, window, document);
+	</script>
+
+</body>
+</netiveUI/html>
