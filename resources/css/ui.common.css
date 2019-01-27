@@ -7,7 +7,7 @@ html, body {width:100%; height:100%;}
 html {font-size:62.5%;}
 body {font-family:'Noto Sans KR', sans-serif; font-size:14px; line-height:1.5; letter-spacing:-0.035em; -webkit-font-smoothing:antialiased; -webkit-text-size-adjust:none; -moz-osx-font-smoothing:grayscale; opacity:0; /*-webkit-overflow-scrolling:touch; -webkit-user-select:none; -khtml-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; -webkit-tap-highlight-color:rgba(0, 0, 0, 0); -webkit-tap-highlight-color:transparent;*/}
 body:before {content:''; position:fixed; left:0; top:0; width:100%; height:0;}/* fix webkit bug(scroll event delay) */
-body, div, h1, h2, h3, h4, h5, h6, form, fieldset, p, button, iframe, tr, tbody, thead, table, th, td, b, i, a, span, strong, label {margin:0; padding:0; box-sizing:border-box;}
+body, div, h1, h2, h3, h4, h5, h6, form, fieldset, p, button, iframe, tr, tbody, thead, table, th, td, b, i, a, span, strong, em, label {margin:0; padding:0; box-sizing:border-box;}
 dl, dt, dd, ul, ol, li {box-sizing:border-box; list-style:none; padding:0;}
 h1, h2, h3, h4, h5, h6, dt {font-weight:normal;}
 img, fieldset, iframe, button {border:0 none;}
@@ -347,15 +347,15 @@ input[type="checkbox"] {opacity:0; filter:alpha(opacity=0); display:inline-block
 .lb-tit {display:inline-block; height:40px; margin-right:10px; padding-top:10px; vertical-align:top; cursor:pointer;}
 
 /* in label style */
-.field-inlabel {position:relative; padding:10px 0 30px}
-.field-inlabel label{position:absolute; top:0; left:10px; transform:translate(0, 19px); font-size:14px; color:#888; cursor:text; 
+.field-inlabel {position:relative; padding:0 0 30px; display:inline-block; vertical-align:top;}
+.field-inlabel label{position:absolute; top:0; left:10px; transform:translate(0, 9px); font-size:14px; color:#888; cursor:text; 
 -webkit-transition: -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
 transition: -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
 -o-transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
 transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
 }
 .field-inlabel.activated input + label,
-.field-inlabel input:focus + label{transform:translate(0, 1px); color:#000; font-size:12px;}
+.field-inlabel input:focus + label{transform:translate(0, -9px); color:#000; font-size:12px;}
 .field-inlabel label:after{content:""; position:absolute; top:8px; left:0; display:block; width:100%; height:1px; z-index:-1; border-top:1px solid #fff;
 -o-transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(0.4, 0, 0.2, 1);
 transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -364,8 +364,21 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 .field-inlabel input:focus + label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:2px solid #fff; transition-delay: 150ms;}
 .field-inlabel input:focus{background:rgb(245, 251, 253)}
 .field-inlabel .ui-error-msg,
-.field-inlabel .placeholder{position: absolute; left:10px; top:52px; line-height:1.2; margin:0;}
+.field-inlabel .placeholder{position: absolute; left:0; padding-left:10px; top:42px; line-height:1.2; margin:0;}
+.field-inlabel .ui-select .ui-error-msg{top:42px}
 .field-inlabel.ui-error-true .placeholder{display:none}
+.field-inlabel input::-webkit-input-placeholder{color:transparent;}
+.field-inlabel input:-ms-input-placeholder{color:transparent;}
+.field-inlabel input::placeholder {color:transparent;}
+.field-inlabel input:focus::-webkit-input-placeholder{color:#999;}
+.field-inlabel input:focus:-ms-input-placeholder{color:#999;}
+.field-inlabel input:focus::placeholder {color:#999;}
+
+.field-outlabel {position:relative; padding:0 0 30px; display:inline-block; vertical-align:top;}
+.field-outlabel label{display:block; margin-bottom:2px}
+.field-outlabel .ui-error-msg,
+.field-outlabel .placeholder{position: absolute; left:0; padding-left:10px; top:64px; line-height:1.2; margin:0;}
+.field-outlabel .ui-select .ui-error-msg{top:64px}
 
 /* base form:input text */
 .inp-error {border-color:red !important;}

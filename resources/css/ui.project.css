@@ -230,9 +230,9 @@ fieldset{margin:0}
 .tip-test0{width:250px;}
 .tip-test1{width:100px;}
 
-
-.form-email .form-email-id {width:150px;}
-.form-email .form-email-adr {width:150px;}
+.form-email{}
+.form-email-id {width:200px;}
+.form-email-adr {width:200px;}
 
 .form-tel .form-tel-n1 {width:120px;}
 .form-tel .form-tel-n2 {width:120px;}

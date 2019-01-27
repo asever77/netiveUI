@@ -474,69 +474,98 @@ if (!Object.keys){
 			reg_id = /^[a-z0-9][a-z0-9_\-]{4,19}$/,
 			reg_pw = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/,
 			reg_phone = /^((01[1|6|7|8|9])[1-9][0-9]{6,7})$|(010[1-9][0-9]{7})$/,
+			
 			reg_email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+			reg_email_id = /^([\\w-]+(?:\\.[\w-]+)*)$/,
+			reg_email_address = /^((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)$/,
 
-			reg_email_id = '([\\w-]+(?:\\.[\w-]+)*)',
-			reg_email_address = '((?:[\\w-]+\\.)*\\w[\\w-]{0,66})\\.([a-z]{2,6}(?:\\.[a-z]{2})?)',
-
-			reg_test = /^[가-힣]{2,}$/,
 			reg_kr = /^[가-힣]{2,}$/,
 			reg_kr_ = '[가-힣\s]+',
 			reg_en = '[a-zA-Z]+',
 			reg_en_ = '[a-zA-Z\s]+',
-			reg_number = '[0-9]+';
+			reg_number = /^[0-9]+$/;
 
 		target.val().length > 0 ? err = true : err = false;
 
 		switch(type){
 			case 'test': 
-			if (target.val().length > 0) {
-				valueCheck(reg_test, target, 'error message');
-			} else {
-				valueCheck(reg_test, target, '', false);
-			};
-			break;
+				if (target.val().length > 0) {
+					valueCheck(reg_kr, target, 'error message');
+				} else {
+					valueCheck(reg_kr, target, '', false);
+				};
+				break;
 
 			case 'id': 
-			target.val().length > 0 ? msg ='5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.' : '';
-			// /(target.val().length < 5 && target.val().length > 0) || target.val().length > 20 ? msg ='5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.' : '';
-			valueCheck(reg_id, target, msg);
-			break;
+				target.val().length > 0 ? msg ='5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.' : '';
+				valueCheck(reg_id, target, msg);
+				break;
 
 			case 'pw': 
-			(target.val().length < 8 && target.val().length > 0) || target.val().length > 16 ? msg = '8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.' : '';
-			valueCheck(reg_pw, target, msg);
-			break;
+				(target.val().length < 8 && target.val().length > 0) || target.val().length > 16 ? msg = '8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.' : '';
+				valueCheck(reg_pw, target, msg);
+				break;
 
 			case 'email':  
-			valueCheck(reg_email, target, msg);
-			break;
+				valueCheck(reg_email, target, msg);
+				break;
 
 			case 'email_id':  
-			regex = new RegExp('^'+ reg_email_id +'$');
-			valueCheck(regex, target, '정확한 이메일 아이디를 입력해주세요.');
-			break;
+				valueCheck(reg_email_id, target, '정확한 이메일 아이디를 입력해주세요.');
+				break;
 
 			case 'email_address': 
-			regex = new RegExp('^'+ reg_email_address +'$');
-			valueCheck(regex, target, '정확한 이메일 주소를 입력해주세요.');
-			break;
+				valueCheck(reg_email_address, target, '정확한 이메일 주소를 입력해주세요.');
+				break;
 
-			case 'number': 
-			regex = new RegExp('^'+ reg_number+'$');
-			valueCheck(regex, target, msg);
-			break;
+
+			case 'tel': 
+				valueCheck(reg_tel, target, msg);
+				break;
+
+			case 'phone': 
+				valueCheck(reg_number, target, msg);
+				//phoneFomatter(target.val(),0);
+				break;
 
 			case 'kr': 
-			if (target.val().length > 0) {
-				valueCheck(reg_kr, target, '한글로만 2자 이상 입력하세요.');
-			} else {
-				valueCheck(reg_kr, target, '', false);
-			};
-			
-			break;
+				if (target.val().length > 0) {
+					valueCheck(reg_kr, target, '한글로만 2자 이상 입력하세요.');
+				} else {
+					valueCheck(reg_kr, target, '', false);
+				};
+				
+				break;
 		}
 		
+		function phoneFomatter(num, type){
+			var formatNum = '';
+			
+			if (num.length == 11) {
+				if (type == 0) {
+					formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3');
+				} else {
+					formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
+				}
+			} else if (num.length == 8) {
+				formatNum = num.replace(/(\d{4})(\d{4})/, '$1-$2');
+			} else {
+				if (num.indexOf('02') == 0) {
+					if (type == 0) {
+						formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-****-$3');
+					} else {
+						formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
+					}
+				} else {
+					if (type == 0) {
+						formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-***-$3');
+					} else {
+						formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
+					}
+				}
+			}
+			return target.val(formatNum);
+		}
 
 		function valueCheck(reg, target, msg, err){
 			console.log(reg, target, target.val(), reg.test(target.value))

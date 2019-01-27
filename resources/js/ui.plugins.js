@@ -2374,6 +2374,7 @@
 		id: false, //select id
 		current: null,
 		customscroll: true,
+		vchecktype: false,
 		callback:false
 	};
 	function createUiSelect(opt){
@@ -2382,6 +2383,7 @@
 			current = opt.current, 
 			callback = opt.callback,
 			customscroll = opt.customscroll,
+			vchecktype = opt.vchecktype,
 			id = opt.id,
 			is_id = id === false ? false : true,
 			$ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.closest('.ui-select') : $('.ui-select'), 
@@ -2499,8 +2501,11 @@
 			$ui.browser.mobile ? _option_wrap += '<div class="dim"></div>': '';
 			_option_wrap += '</div>'; 
 
-			$sel_current.append('<input type="text" class="ui-select-btn" id="'+ sel_id +'_inp" role="combobox" aria-autocomplete="list" aria-owns="'+ list_id +'" aria-haspopup="true" aria-expanded="false" aria-activedescendant="'+ opt_id_selected +'" readonly value="'+ _txt +'" data-n="'+ sel_n +'" data-id="'+ sel_id +'">');
+			var html_btn = '<input type="text" class="ui-select-btn" id="'+ sel_id +'_inp" role="combobox" aria-autocomplete="list" aria-owns="'+ list_id +'" aria-haspopup="true" aria-expanded="false" aria-activedescendant="'+ opt_id_selected +'" readonly value="'+ _txt +'" data-n="'+ sel_n +'" data-id="'+ sel_id +'" autocomplete="off"';
+			
+			!!vchecktype ?  html_btn += ' vchecktype='+ vchecktype +'>' : html_btn += '>';
 
+			$sel_current.append(html_btn);
 			$sel.addClass('off').attr('aria-hidden',true).attr('tabindex', -1);
 			$sel_current.append(_option_wrap);
 			sel_dis ? $sel_current.find('.ui-select-btn').prop('disabled', true).addClass('disabled') : '';
@@ -2533,7 +2538,8 @@
 			});
 		
 		function selectChange(){
-			$ui.uiSelectAct({ id:$(this).attr('id'), current:$(this).find('option:selected').index(), callback:$(this).data('callback'), original:true });
+			//클릭으로 인한 실행과 change로 실행이 두번 실행됨... 한번 실행이 맞을 듯한데 그럼 select에 onchange일때는...
+			//$ui.uiSelectAct({ id:$(this).attr('id'), current:$(this).find('option:selected').index(), callback:$(this).data('callback'), original:true });
 		}
 		function optBlur() {
 			clearTimeout(timer_opt);
@@ -2709,6 +2715,13 @@
 		$uisel.find('.ui-select-btn').val($opt.eq(current).text());
 		$opt_.removeClass('selected').eq(current).addClass('selected');
 		
+		console.log($opt.eq(current).val() === 'direct');
+		if ($opt.eq(current).val() === 'direct') {
+			$uisel.find('.ui-select-btn').prop('readonly', false).val('').focus();
+		} else {
+			$uisel.find('.ui-select-btn').prop('readonly', true).focus();;
+		}
+
 		callback ? callback({ id:id, current:current, val:$opt.eq(current).val() }) : '';
 	}
 
