@@ -347,7 +347,7 @@ input[type="checkbox"] {opacity:0; filter:alpha(opacity=0); display:inline-block
 .lb-tit {display:inline-block; height:40px; margin-right:10px; padding-top:10px; vertical-align:top; cursor:pointer;}
 
 /* in label style */
-.field-inlabel {position:relative; padding:0 0 30px; display:inline-block; vertical-align:top;}
+.field-inlabel {position:relative; padding:0 0 40px; display:inline-block; vertical-align:top;}
 .field-inlabel label{position:absolute; top:0; left:10px; transform:translate(0, 9px); font-size:14px; color:#888; cursor:text; 
 -webkit-transition: -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
 transition: -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
@@ -364,7 +364,7 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 .field-inlabel input:focus + label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:2px solid #fff; transition-delay: 150ms;}
 .field-inlabel input:focus{background:rgb(245, 251, 253)}
 .field-inlabel .ui-error-msg,
-.field-inlabel .placeholder{position: absolute; left:0; padding-left:10px; top:42px; line-height:1.2; margin:0;}
+.field-inlabel .placeholder{position: absolute; left:0; padding:0 10px; top:42px; line-height:1.2; margin:0;}
 .field-inlabel .ui-select .ui-error-msg{top:42px}
 .field-inlabel.ui-error-true .placeholder{display:none}
 .field-inlabel input::-webkit-input-placeholder{color:transparent;}
@@ -375,10 +375,11 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 .field-inlabel input:focus::placeholder {color:#999;}
 
 .field-outlabel {position:relative; padding:0 0 30px; display:inline-block; vertical-align:top;}
-.field-outlabel label{display:block; margin-bottom:2px}
+.field-outlabel label{display:block; margin-bottom:2px; padding-left:10px;}
 .field-outlabel .ui-error-msg,
-.field-outlabel .placeholder{position: absolute; left:0; padding-left:10px; top:64px; line-height:1.2; margin:0;}
-.field-outlabel .ui-select .ui-error-msg{top:64px}
+.field-outlabel .placeholder{position: absolute; left:0; padding:0 10px; top:65px; line-height:1.2; margin:0;}
+.field-outlabel .ui-select .ui-error-msg{top:65px}
+.field-outlabel.ui-error-true .placeholder{display:none}
 
 /* base form:input text */
 .inp-error {border-color:red !important;}

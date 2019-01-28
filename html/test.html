@@ -11,6 +11,9 @@
 
 	<link rel="apple-touch-icon" href="/netiveUI/resources/img/common/ico_app.png" >
 	<link rel="shortcut icon" href="/netiveUI/resources/img/common/ico_favicon.ico"> 
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<script src="/netiveUI/resources/js/ui.global.js"></script>
   
 	<title> kkmk</title>
 
@@ -29,7 +32,7 @@
 	
 	</div>
 	<div class="base-wrap" id="baseWrap">
-		<header class="base-header" id="baseHeader"></header>
+		//<header class="base-header" id="baseHeader"></header>
 		<main class="base-main" id="baseMain" role="main">
 			<label class="edge_rdo">
 				<input type="radio" name="edge" value="">
@@ -45,13 +48,21 @@
 					<span class="edge_txt">test1</span>
 				</span>
 			</label>
+			<div id="ddd">ㅎㅎㅎㅎㅎ</div>
+			<button type="button" onclick="$plugins.uiCookieDel({ name:'aaaaaa' })">삭제</button>
 		</main>
 		<footer class="base-footer" id="baseFooter"></footer>
 	</div>
 		
 	<script>
+		
+		if ($plugins.uiCookieGet({ name:'aaaaaa' })) {
+			$('#ddd').hide();
+		}
 
-	
+		$plugins.uiCookieSet({ name:'aaaaaa', value:true, term:10 });
+
+
 
 	</script>
 </body>
