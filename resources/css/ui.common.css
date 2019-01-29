@@ -24,7 +24,7 @@ input, textarea, select {box-sizing:border-box; font-family:'Noto Sans KR', sans
 [class*="inp-"]::-webkit-search-cancel-button{display:none}
 
 /* base line-height */
-p{line-height:1.8}
+p{line-height:1.5}
 
 /* html5 */
 article, aside, details, figcaption, figure, footer, header, main, hgroup, nav, section, summary {display:block; margin:0; padding:0; box-sizing:border-box;}
@@ -91,6 +91,16 @@ p.bul-care:before {content:"※"; position:absolute; left:0; top:2px; font-weigh
 .paragraph-a h3{margin-top:30px}
 .paragraph-a p{margin-top:15px}
 .paragraph-a > *:first-child{margin-top:0}
+
+/* heading */
+.h1 {font-size:40px; color:#000; font-weight:100;}
+.h2 {font-size:20px; color:#111; font-weight:300;}
+.h3 {font-size:16px; color:#222; font-weight:700;}
+.h4 {font-size:16px; color:#333; font-weight:500;}
+.h5 {font-size:14px; color:#333; font-weight:900;}
+.h6 {font-size:14px; color:#333; font-weight:500;}
+.txt1{font-size:16px; color:#333; font-weight:400;}
+.txt2{font-size:14px; color:#333; font-weight:400;}
 
 /* text:type */
 [class*="txt-mark"] {display:inline-block; margin:0 5px; padding:10px 0 0;}
@@ -348,20 +358,20 @@ input[type="checkbox"] {opacity:0; filter:alpha(opacity=0); display:inline-block
 
 /* in label style */
 .field-inlabel {position:relative; padding:0 0 40px; display:inline-block; vertical-align:top;}
-.field-inlabel label{position:absolute; top:0; left:10px; transform:translate(0, 9px); font-size:14px; color:#888; cursor:text; 
+.field-inlabel .field-inlabel-label{position:absolute; top:0; left:10px; transform:translate(0, 9px); font-size:14px; color:#888; cursor:text; 
 -webkit-transition: -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
 transition: -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
 -o-transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
 transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
 }
-.field-inlabel.activated input + label,
-.field-inlabel input:focus + label{transform:translate(0, -9px); color:#000; font-size:12px;}
-.field-inlabel label:after{content:""; position:absolute; top:8px; left:0; display:block; width:100%; height:1px; z-index:-1; border-top:1px solid #fff;
+.field-inlabel.activated input + .field-inlabel-label,
+.field-inlabel input:focus + .field-inlabel-label{transform:translate(0, -9px); color:#000; font-size:12px;}
+.field-inlabel .field-inlabel-label:after{content:""; position:absolute; top:8px; left:0; display:block; width:100%; height:1px; z-index:-1; border-top:1px solid #fff;
 -o-transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(0.4, 0, 0.2, 1);
 transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
-.field-inlabel.activated input + label:after,
-.field-inlabel input:focus + label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:2px solid #fff; transition-delay: 150ms;}
+.field-inlabel.activated input + .field-inlabel-label:after,
+.field-inlabel input:focus + .field-inlabel-label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:2px solid #fff; transition-delay: 150ms;}
 .field-inlabel input:focus{background:rgb(245, 251, 253)}
 .field-inlabel .ui-error-msg,
 .field-inlabel .placeholder{position: absolute; left:0; padding:0 10px; top:42px; line-height:1.2; margin:0;}
@@ -374,8 +384,8 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 .field-inlabel input:focus:-ms-input-placeholder{color:#999;}
 .field-inlabel input:focus::placeholder {color:#999;}
 
-.field-outlabel {position:relative; padding:0 0 30px; display:inline-block; vertical-align:top;}
-.field-outlabel label{display:block; margin-bottom:2px; padding-left:10px;}
+.field-outlabel {position:relative; padding:20px 0 30px; display:inline-block; vertical-align:top;}
+.field-outlabel label{position:absolute; top:0; display:block; margin-bottom:2px; padding-left:10px;}
 .field-outlabel .ui-error-msg,
 .field-outlabel .placeholder{position: absolute; left:0; padding:0 10px; top:65px; line-height:1.2; margin:0;}
 .field-outlabel .ui-select .ui-error-msg{top:65px}
@@ -417,7 +427,9 @@ select[disabled] {background-color:#f7f7f7; color:#888;}
 [class*="tbl-base"] > tbody > tr > th:first-child,
 [class*="tbl-base"] > tbody > tr > td:first-child {border-left:0;}
 [class*="tbl-base"] > tbody > tr > th {background:#fff;}
+[class*="tbl-base"] > tbody > tr > td {vertical-align: top}
 tbody.line-t{border-top:1px solid #c5c5c5}
+td .placeholder{margin-top:5px}
 
 /* table:base vertical */
 .tbl-base-v > tbody > th {background:#f1f1f1; border-bottom:1px solid #e4e4e4; border-left:1px solid #e4e4e4; color:#000; padding:5px 15px; font-weight:500; font-size:12px; height:40px;}

@@ -508,7 +508,7 @@
 			}
 
 			$btn.attr('aria-expanded', true);
-			$pnl.attr('aria-hidden', false).attr('tabindex', 0);
+			$pnl.attr('aria-hidden', false).attr('tabindex', 0).addClass('on');
 
 			//focus hold or sense
 			hold ?	
@@ -578,7 +578,7 @@
 				$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
 			}
 			$btn.attr('aria-expanded', false).focus();
-			$pnl.attr('aria-hidden', true).attr('tabindex', -1);
+			$pnl.attr('aria-hidden', true).attr('tabindex', -1).removeClass('on');
 			
 			switch (eff) {
 				case 'base': $pnl.stop().hide(0, pnlHideEnd); 
@@ -1707,6 +1707,7 @@
 						$modalCont.mCustomScrollbar({ scrollButtons: { enable: true } });
 					}
 				}
+				$modal.addClass('view');
 				if (is_mobile && mpage) {
 					//모바일 전체모달레이어 show 모션 효과
 					//$modal.find('.ui-floating').removeClass('.ui-fixed-top').find('.ui-floating-wrap').removeAttr('style');
@@ -1992,7 +1993,7 @@
 			$ui.browser.ie8 ? 
 			doc.getElementById('uiCfPlayer').stop() : doc.getElementById('uiCfPlayer').pause();
 		}
-
+		$modal.removeClass('view');
 		if (layN < 2) {
 			$modal.removeAttr('opened');
 			if ($ui.browser.mobile && full) {
@@ -3441,11 +3442,12 @@
 			$item.eq(i).attr('role','listitem').css({
 				position: 'absolute',
 				left : (item_w + mg) * i,
-				top : 0,
-				opacity: 0
-			}).stop().animate({
-				opacity: 1
-			}, 300);
+				top : 0
+			}).stop().delay(50 * i).animate({
+				top : 0
+			}, 300, function(){
+				$(this).addClass('on');
+			});
 			item_top[i] = $item.eq(i).outerHeight() + mg;
 		}
 
@@ -3501,11 +3503,12 @@
 				$item.eq(i).css({
 					position: 'absolute',
 					left : (item_w * nextN) + (mg * nextN),
-					top : item_top[nextN],
-					opacity: 0
-				}).stop().animate({
-					opacity: 1
-				},200);
+					top : item_top[nextN]
+				}).stop().delay(50 * i).animate({
+					top : item_top[nextN]
+				},150, function(){
+					$(this).addClass('on');
+				});
 				item_top[nextN] = Number(minH + item_h);
 			}
 			$base.data('opt', { 'wrap':wrap_w, 'width':item_w, 'top':item_top, 'row':item_row, 'col':i, 'mg':mg })
@@ -5841,6 +5844,7 @@
 				$list = $('.ui-file-list[aria-labelledby="'+ id +'"]');
 
 			$list.find('.ui-file-item').remove();
+			$list.find('.ui-file-del').remove();
 			for (var i = 0; i < len; i++) {
 				$list.append('<div class="ui-file-item n'+ i +'">'+ v[i].name +'</div>');
 				

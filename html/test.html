@@ -19,40 +19,35 @@
 
 
 	<style>
-		label{display:inline-block;}
-		input:checked + .lbl:after{content:""; display:block; width:10px; height:10px; background:red}
-		input:checked + .lbl:before{content:""; display:block; width:10px; height:10px; background:blue}
-		label img{width:50px; height:50px;}
+	.ddd{
+		position:absolute;
+		top:50%;
+		left:50%;
+		margin:-100px 0 0 -100px;	
+		width: 200px;
+		height: 200px;
+		z-index: 1;
+		background:silver;
+		perspective: 900px;
+	}
+	.aa{ 
+	
+    width:100%; height:100%;
+	transform-style: preserve-3d;
+    transition: transform 1s ease;}
+	
+	.aa:hover{transform:rotateY(180deg) ;}
 	</style>
 </head>
 
-<body class="page-main">
-	<div class="base-skip" id="baseSkip"></div>
-	<div class="base-layer" id="baseLayer">
+<body>
+		<div class="ddd">
+			<div class="aa">
+				<img src="/netiveUI/resources/img/dummy/@test.png" alt="">
+			</div>
+		</div>
+		
 	
-	</div>
-	<div class="base-wrap" id="baseWrap">
-		//<header class="base-header" id="baseHeader"></header>
-		<main class="base-main" id="baseMain" role="main">
-			<label class="edge_rdo">
-				<input type="radio" name="edge" value="">
-				<span class="lbl">
-					<span class="edge_img"><img src="http://ldb.phinf.naver.net/20170724_37/150090137751289WyW_JPEG/7f3d7f4c-e1c6-419f-84ca-50bdb141840f.jpeg" alt=""></span>
-					<span class="edge_txt">test1</span>
-				</span>
-			</label>
-			<label class="edge_rdo">
-				<input type="radio" name="edge" value="">
-				<span class="lbl">
-					<span class="edge_img"><img src="http://ldb.phinf.naver.net/20170724_37/150090137751289WyW_JPEG/7f3d7f4c-e1c6-419f-84ca-50bdb141840f.jpeg" alt=""></span>
-					<span class="edge_txt">test1</span>
-				</span>
-			</label>
-			<div id="ddd">ㅎㅎㅎㅎㅎ</div>
-			<button type="button" onclick="$plugins.uiCookieDel({ name:'aaaaaa' })">삭제</button>
-		</main>
-		<footer class="base-footer" id="baseFooter"></footer>
-	</div>
 		
 	<script>
 		
@@ -62,6 +57,9 @@
 
 		$plugins.uiCookieSet({ name:'aaaaaa', value:true, term:10 });
 
+		setTimeout(function(){
+			$('.aa').addClass('on');
+		},1000)
 
 
 	</script>

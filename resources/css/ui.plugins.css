@@ -256,8 +256,8 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 /* ui card list :base */
 .ui-bricklist{position:relative; width:100%;}
 .ui-bricklist-wrap{margin:0; padding:0;}
-.ui-bricklist-item{display:block; opacity:0; box-sizing:border-box; overflow:hidden; list-style:none; border-radius:3px; transition:top 0.3s, left 0.3s, opacity 0.3s;}
-
+.ui-bricklist-item{display:block; opacity:0; box-sizing:border-box; overflow:hidden; list-style:none; border-radius:3px; opacity:0; transform: scale(0.8); transition:transform 0.15s ease-in, opacity 0.3s ease-in}
+.ui-bricklist-item.on{transform: scale(1); opacity:1}
     /* style */
 	.ui-bricklist-item{width:150px; border:1px solid #e8e8e8; padding:3px; background:#fff; color:#444; text-align:center;}
 	.ui-bricklist-item img{width:100%;}
@@ -382,9 +382,10 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .modal-backdrop{display:none; opacity:0; position:fixed; top:0; left:0; z-index:0; width:100%; height:200%; background-color:rgba(0,0,0,0.7);}
 .modal-open{overflow:hidden; padding-right:17px}
 .modal-open .base-layer{width:100%; height:100%; position:fixed; overflow:hidden;}
-.ui-modal{display:none; opacity:0; position:fixed; z-index:1; width:auto; height:auto; padding:0;}
+.ui-modal{display:none; opacity:0; position:fixed; z-index:1; width:auto; height:auto; padding:0; transition:transform 0.15s ease-in; transform:scale(0.9);}
 .ui-modal.ps-top{top:-100%; transition:top 200ms}
-
+.ui-modal.view{transform:scale(1);}
+ 
 .ui-modal.show{display:block; left:50%}
 .ui-modal.ps-center{top:40%}
 .ui-modal.ps-bottom{bottom:-25%}
@@ -434,15 +435,16 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 
 /* dropdowns:z-index 100 ~ 199 */
 .ui-drop{position:relative; display:inline-block;}
-.ui-drop-pnl{position:absolute; z-index:100; background:transparent;}
+.ui-drop-pnl.on{transform:scale(1)}
+.ui-drop-pnl{position:absolute; z-index:100; background:transparent; transform:scale(0.5); transition:transform 0.15s ease-in}
 .ui-drop-pnl,
 .ui-drop-pnl[aria-hidden='true']{display:none;}
 .ui-drop-box{background:#fff; border:2px solid #222; padding:10px; border-radius:10px}
 .ui-drop-pnl .btn-close{position:absolute; top:6px; right:6px}
 .ui-drop-pnl .btn-close:before,
 .ui-drop-pnl .btn-close:after{background:#222}
-.drop-backdrop{display:none; width:100%; height:100%; position:fixed; top:0; left:0; z-index:0; background:rgba(0,0,0,0.2)}
-.drop-backdrop.on{display:block}
+.drop-backdrop{display:none; width:100%; height:100%; position:fixed; top:0; left:0; z-index:0; background:rgba(0,0,0,0.2);}
+.drop-backdrop.on{display:block;}
 
 /* ui tooltip:z-index 200 ~ 299 */
 .ui-tooltip{display:none; position:absolute; z-index:200; font-size:11px; border:1px solid #555; padding:10px; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.3)}

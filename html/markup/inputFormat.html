@@ -35,7 +35,102 @@
 					<h1 class="h1" id="uiPageTit">Input Format</h1>
 				</div>
 
-                    
+                <h2 class="h2">Base Style</h2>
+                <p>입력란과 label이 분리된 스타일</p>
+                <table class="tbl-base-v txt-l">
+                    <caption>
+                        <strong>기본 테이블</strong>
+                        <p class="ui-caption"></p>
+                    </caption>
+                    <colgroup>
+                        <col class="col-th">
+                        <col class="col-auto">
+                    </colgroup>
+                    <colgroup>
+                        <col class="col-th">
+                        <col class="col-auto">
+                    </colgroup>
+                    <tbody>
+                        <tr>
+                            <th scope="row">
+                                <label for="test_d1">이름</label>
+                            </th>
+                            <td>
+                                <input class="inp-base" vchecktype="kr" type="text" value="" id="test_d1" placeholder="한글로 입력하세요.">
+                                <em class="placeholder">한글로 입력해주세요.</em>
+                            </td>
+                            <th scope="row">아이디</th>
+                            <td><input class="inp-base" name="form_id" type="text" value="" placeholder="영문으로 입력하세요."></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">날짜</th>
+                            <td>
+                                <input class="inp-mmdd" name="form_mm" maxlength="2" type="tel" value="" placeholder="MM"><span class="txt-mark-r">월</span>
+                                <input class="inp-mmdd" name="form_dd" maxlength="2" type="text" value="" placeholder="DD"><span class="txt-mark-r">일</span>
+
+                            </td>
+                            <th scope="row"><label for="uiSelectCardNumber" class="lb-tit">카드번호</label></th>
+                            <td>
+                                <div class="ui-select type-card" >
+                                    <select title="카드번호 선택" id="uiSelectCardNumber">
+                                        <option>선택하세요</option>
+                                        <option value="1">신한카드 908*****2*5**</option>
+                                        <option value="2">시티카드 908*****2*5**</option>
+                                        <option value="3">현대카드 908*****2*5**</option>
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">차종</th>
+                            <td colspan="3">
+                                <fieldset role="group">
+                                    <legend>차종선택</legend>
+                                    <input type="checkbox" id="uiChk2" name="form_cartype">
+                                    <label class="lb-check all" for="uiChk2"><span>전체차종</span></label>
+                                    <input type="checkbox" id="uiChk2_1" checkgroup="uiChk2" name="form_cartype">
+                                    <label class="lb-check" for="uiChk2_1"><span>경형</span></label>
+                                    <input type="checkbox" id="uiChk2_2" checkgroup="uiChk2" name="form_cartype">
+                                    <label class="lb-check" for="uiChk2_2"><span>소형</span></label>
+                                    <input type="checkbox" id="uiChk2_3" checkgroup="uiChk2" name="form_cartype">
+                                    <label class="lb-check" for="uiChk2_3"><span>중형</span></label>
+                                </fieldset>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">구분</th>
+                            <td colspan="3">
+                                <input type="radio" name="form_ctg" id="r2_1">
+                                <label class="lb-radio" for="r2_1"><span>공인인증</span></label>
+                                <input type="radio" name="form_ctg" id="r2_2">
+                                <label class="lb-radio" for="r2_2"><span>카드인증</span></label>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">날짜</th>
+                            <td colspan="3">
+                                <div class="ui-datepicker">
+                                    <input class="inp-date" name="form_date_s" type="tel" value="2018-03-17" data-min="2016-10-05" data-max="2019-12-01" title="날짜" id="uiDatePck1_inp">
+                                    <button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="uiDatePck1_inp" id="uiDatePck1"><span>달력</span></button>
+                                    <div class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck1" id="uiDatePck1_pnl"></div>
+                                </div>
+                                <span class="txt-mark">~</span>
+                                <div class="ui-datepicker">
+                                    <input class="inp-date" name="form_date_e" type="tel" value="2018-03-20" data-min="2016-10-05" data-max="2019-12-01" title="날짜" id="uiDatePck2_inp">
+                                    <button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="uiDatePck2_inp" id="uiDatePck2"><span>달력</span></button>
+                                    <div class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck2" id="uiDatePck2_pnl"></div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row">주소</th>
+                            <td colspan="3"><textarea name="form_address" class="inp-tarea" placeholder="100글자 이내로 입력하세요."></textarea>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
                 <h2 class="h2">In Label Style</h2>
                 <p>입력란 안에 label이 들어가는 스타일로 좁은 공간이나 모바일 환경에서 많이 사용한다.</p>
                 <div class="box-base">
@@ -43,18 +138,18 @@
                         <div class="in-wrap">
                             <div class="in-item" style="background: #eee">
                                 <div class="field-inlabel">
-                                    <em class="placeholder">Help Text</em>
+                                    <em class="placeholder">Helper Text</em>
                                     <input type="text" id="test_a1" vchecktype="test" class="inp-base" value="" placeholder="placeholder text">
-                                    <label for="test_a1">Label Title</label>
+                                    <label class="field-inlabel-label" for="test_a1">Label Title</label>
                                 </div>
                             </div>
                         </div>
                         <div class="in-wrap">
                             <div class="in-item" style="background: #eee">
                                 <div class="field-inlabel">
-                                    <em class="placeholder">Help Text</em>
+                                    <em class="placeholder">Helper Text</em>
                                     <input type="text" id="test_a2" vchecktype="test" class="inp-base" value="23" required placeholder="placeholder text">
-                                    <label for="test_a2">Label Title</label>
+                                    <label class="field-inlabel-label" for="test_a2">Label Title</label>
                                 </div>
                             </div>
                         </div>
@@ -64,7 +159,7 @@
 <pre>
 <code>
 &lt;div class="field-inlabel"&gt;
-    &lt;em class="placeholder"&gt;Help Text&lt;/em&gt;
+    &lt;em class="placeholder"&gt;Helper Text&lt;/em&gt;
     &lt;input type="text" id="test_a1" vchecktype="test" class="inp-base" value="" placeholder="placeholder text"&gt;
     &lt;label for="test_a1"&gt;Label Title&lt;/label&gt;
 &lt;/div&gt;
@@ -78,7 +173,7 @@
                             <div class="field-inlabel">
                                 <em class="placeholder">한글로 입력해주세요.</em>
                                 <input type="text" id="test_b1" vchecktype="kr" class="inp-base" value="">
-                                <label for="test_b1">Name</label>
+                                <label class="field-inlabel-label" for="test_b1">Name</label>
                             </div>
                         </div>
 
@@ -86,7 +181,7 @@
                             <div class="field-inlabel">
                                 <em class="placeholder">영문으로 입력해주세요.</em>
                                 <input type="text" id="test_b2" vchecktype="en" class="inp-base" value="">
-                                <label for="test_b2">Name(EN)</label>
+                                <label class="field-inlabel-label" for="test_b2">Name(EN)</label>
                             </div>
                         </div>
             
@@ -94,7 +189,7 @@
                             <div class="field-inlabel">
                                 <em class="placeholder">필수정보</em>
                                 <input type="text" id="test_b3" vchecktype="id" class="inp-base" value="" required>
-                                <label for="test_b3">ID</label>
+                                <label class="field-inlabel-label" for="test_b3">ID</label>
                             </div>
                         </div>
                     
@@ -102,21 +197,28 @@
                             <div class="field-inlabel">
                                 <em class="placeholder">비밀번호를 입력하세요</em>
                                 <input type="password" id="test_b4" vchecktype="pw" class="inp-base" value="" required>
-                                <label for="test_b4">Password</label>
+                                <label class="field-inlabel-label" for="test_b4">Password</label>
                             </div>
                         </div>
  
                         <div class="in-item">
                             <div class="field-inlabel">
                                 <input type="text" id="test_b5" vchecktype="email" class="inp-base" value="" placeholder="id@gmail.com">
-                                <label for="test_b5">e-mail</label>
+                                <label class="field-inlabel-label" for="test_b5">e-mail</label>
+                            </div>
+                        </div>
+
+                        <div class="in-item">
+                            <div class="field-inlabel">
+                                <input type="checkbox" id="test_b12">
+                                <label for="test_b12" class="lb-check"><span>자바스크립트</span></label>
                             </div>
                         </div>
 
                         <div class="in-item form-email">
                             <div class="field-inlabel">
                                 <input type="text" id="test_b6" vchecktype="email_id" class="inp-base form-email-id" title="이메일 아이디"  value="">
-                                <label for="test_b6">e-mail ID</label>
+                                <label class="field-inlabel-label" for="test_b6">e-mail ID</label>
       
                                 <span class="txt-mark">@</span>
                
@@ -135,7 +237,7 @@
                             <div class="field-inlabel">
                                 <em class="placeholder">'-'없이 숫자만 입력하세요.</em>
                                 <input type="tel" id="test_b8" vchecktype="phone" class="inp-base" value="" placeholder="000-0000-0000" maxlength="11">
-                                <label for="test_b8">tel</label>
+                                <label class="field-inlabel-label" for="test_b8">tel</label>
                             </div>
                         </div>
                   
@@ -172,24 +274,26 @@
 
 
                 <h2 class="h2">Out Label Style</h2>
-                <p>입력란과 label이 분리된 스타일로 </p>
+                <p>입력란과 label이 분리된 스타일</p>
                 <div class="box-base">
                     <div class="in-wrap">
                         <div class="in-wrap">
                             <div class="in-item" style="background: #eee">
 
-                                <label for="test_c1">Label Title</label>
+                                
                                 <div class="field-outlabel">
-                                    <em class="placeholder">Help Text</em>
+                                    <label for="test_c1">Label Title</label>
+                                    <em class="placeholder">Helper Text</em>
                                     <input type="text" id="test_c1" vchecktype="test" class="inp-base" value="" placeholder="placeholder text">
                                 </div>
                             </div>
                         </div>
                         <div class="in-wrap">
                             <div class="in-item" style="background: #eee">
-                                <label for="test_c2">Label Title</label>
+                                
                                 <div class="field-outlabel">
-                                    <em class="placeholder">Help Text</em>
+                                    <label for="test_c2">Label Title</label>
+                                    <em class="placeholder">Helper Text</em>
                                     <input type="text" id="test_c2" vchecktype="test" class="inp-base" value="23" required placeholder="placeholder text">
                                 </div>
                             </div>
@@ -200,32 +304,36 @@
                 <form>
                     <div class="in-wrap">
                         <div class="in-item">
-                            <label for="test_c1">Name</label>
+                            
                             <div class="field-outlabel">
+                                <label for="test_c1">Name</label>
                                 <em class="placeholder">한글로 입력해주세요.</em>
                                 <input type="text" id="test_c1" vchecktype="kr" class="inp-base" value="">
                             </div>
                         </div>
 
                         <div class="in-item">
-                            <label for="test_c2">Name(EN)</label>
+                            
                             <div class="field-outlabel">
+                                <label for="test_c2">Name(EN)</label>
                                 <em class="placeholder">영문으로 입력해주세요.</em>
                                 <input type="text" id="test_c2" vchecktype="en" class="inp-base" value="">
                             </div>
                         </div>
             
                         <div class="in-item">
-                            <label for="test_c3">ID</label>
+                            
                             <div class="field-outlabel">
+                                <label for="test_c3">ID</label>
                                 <em class="placeholder">필수정보</em>
                                 <input type="text" id="test_c3" vchecktype="id" class="inp-base" value="" required>
                             </div>
                         </div>
                     
                         <div class="in-item">
-                            <label for="test_c4">Password</label>
+                            
                             <div class="field-outlabel">
+                                <label for="test_c4">Password</label>
                                 <em class="placeholder">비밀번호를 입력하세요</em>
                                 <input type="password" id="test_c4" vchecktype="pw" class="inp-base" value="" required>
                             </div>
@@ -333,6 +441,8 @@
                 $plugins.uiLabelAbove();
                 $plugins.uiPlaceholder();
                 $plugins.uiInputClear();
+                $plugins.uiSelection();
+                $plugins.uiSelection({ id:'uiChk2', all:true });
 
                 $('input').each(function(){
                     errCheckExe($(this), true);
