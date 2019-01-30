@@ -85,8 +85,6 @@ code{padding:2px 4px; font-size:100%; background-color:#eee; border-radius:4px; 
 
 
 /* page */
-.page-scroll .box-base{height:2000px; background:#222; z-index:3;}
-
 .page-floating .tst-obj{width:100%; margin:0 auto; height:50px; font-size:15px; color:#000; text-align:center; padding-top:10px; border:1px dashed rgba(0,0,0,0.3); background:rgba(255,255,255, 0.6); }
 .ui-d .page-floating .ui-floating.ui-fixed-bottom .ui-floating-wrap,
 .ui-d .page-floating .ui-floating.ui-fixed-top .ui-floating-wrap{width:calc(100% - 320px); left:230px}

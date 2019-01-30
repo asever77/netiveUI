@@ -256,7 +256,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 /* ui card list :base */
 .ui-bricklist{position:relative; width:100%;}
 .ui-bricklist-wrap{margin:0; padding:0;}
-.ui-bricklist-item{display:block; opacity:0; box-sizing:border-box; overflow:hidden; list-style:none; border-radius:3px; opacity:0; transform: scale(0.8); transition:transform 0.15s ease-in, opacity 0.3s ease-in}
+.ui-bricklist-item{display:block; opacity:0; box-sizing:border-box; overflow:hidden; list-style:none; border-radius:3px; opacity:0; transform: scale(0.8); transition:transform 0.15s ease-in, opacity 0.3s ease-in, top 0.3s ease-in-out, left 0.3s ease-in-out}
 .ui-bricklist-item.on{transform: scale(1); opacity:1}
     /* style */
 	.ui-bricklist-item{width:150px; border:1px solid #e8e8e8; padding:3px; background:#fff; color:#444; text-align:center;}
@@ -530,6 +530,9 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
     .ui-datepicker{display:inline-block; vertical-align:top;}
     .ui-datepicker .inp-base{width:100px}
     .ui-datepicker .ui-datepicker-wrap{position:absolute; width:300px; margin-top:0 !important}
+    .ui-datepicker .ui-datepicker-wrap.dual{width:602px;}
+    .ui-datepicker .ui-datepicker-wrap.dual:after{content:""; display:block; clear:both}
+    .ui-datepicker .ui-datepicker-wrap.dual .tbl-datepicker{width:270px; float:left; margin:0 10px}
     .datepicker-sec select{border:0; width:auto}
     .datepicker-wrap:after{content:''; display:block; clear:both}
     .datepicker-sec {width:100%; height:100%; border:solid 1px #63686d; background:#fff; }

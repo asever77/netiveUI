@@ -17,6 +17,13 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="/netiveUI/resources/js/ui.base.js"></script>
+	<style>
+		.ui-tab-btns{overflow-x:auto}
+		.tab-scroll-wrap{width:1600px;}
+		.ui-tab-btns .ui-tab-btn{width:200px}
+
+		.box-base.aa{background:url(/netiveUI/resources/img/dummy/@pattern.png) repeat 0 0; height:100vw}
+	</style>
 </head>
 
 <body class="page-scroll">
@@ -31,24 +38,41 @@
 					<h1 class="h1" id="uiPageTit"></h1>
 				</div>
 					
-				<div class="box-base">
-					<div class="sample-tab" id="sampleTap">
-						<div>
-						<button type="button">1번탭</button>
-						<button type="button">2번탭</button>
-						<button type="button">3번탭</button>
-						<button type="button">4번탭</button>
-						<button type="button">5번탭</button>
-						<button type="button" id="sampleTap6">6번탭</button>
-						<button type="button">7번탭</button>
+				<div class="box-base aa">
+					<div class="ui-tab tab-scroll" id="exeTab4">
+						<div class="ui-tab-btns">
+							<div class="tab-scroll-wrap">
+								<button type="button" class="ui-tab-btn"><i>주유/정비</i></button>
+								<button type="button" class="ui-tab-btn"><i>외식</i></button>
+								<button type="button" class="ui-tab-btn"><i>편의/쇼핑</i></button>
+								<button type="button" class="ui-tab-btn"><i>영화/도서</i></button>
+								<button type="button" class="ui-tab-btn"><i>보험/금융</i></button>
+								<button type="button" class="ui-tab-btn"><i>게임</i></button>
+								<button type="button" class="ui-tab-btn"><i>문화</i></button>
+								<button type="button" class="ui-tab-btn"><i>여행</i></button>
+							</div>
+						</div>
+						<div class="ui-tab-pnls">
+							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">주유/정비</h1></section>
+							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">외식</h1></section>
+							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">편의/쇼핑</h1></section>
+							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">영화/도서</h1></section>
+							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">보험/금융</h1></section>
+							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">게임</h1></section>
+							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">문화</h1></section>
+							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">여행</h1></section>
 						</div>
 					</div>
+					
 					<div class="btn-wrap">
 						<button type="button" class="btn-base" id="uiScrollLeft"><span>6번탭으로 이동</span></button>
 					</div>
-					<button type="button" class="btn-base" id="scrolltop" style="position:fixed; bottom:20px; right:20px;"><span>상단</span></button>
-					<button type="button" class="btn-base" id="scrolltop2" style="position:fixed; top:120px; right:20px;"><span>하단</span></button>
-					<button type="button" class="btn-base" id="scrolltop3" style="position:fixed; top:50%; right:20px;"><span>중단</span></button>
+					<div class="btn-wrap" style="width:auto; position:fixed; top:50%; left:50%; z-index: 1000">
+						<button type="button" class="btn-base" id="scrolltop"><span>상단</span></button>
+						<button type="button" class="btn-base" id="scrolltop3"><span>중단</span></button>
+						<button type="button" class="btn-base" id="scrolltop2"><span>하단</span></button>
+					</div>
+					
 				</div>
 	
 				<h2 class="h2">$plugins.uiScroll</h2>
@@ -139,9 +163,36 @@ $plugins<span class="na">.uiScroll</span>({ <span class="s">value:0, speed:300, 
 
 			$(doc).ready(function(){
 				
-				console.log('page ready after')
-				$plugins.page.scrollmove();
+				console.log('page ready after');
 
+				$plugins.uiTab({ id:'exeTab4', current:6 });
+
+				$('#scrolltop').on('click', function(){
+					$plugins.uiScroll({ value:0, speed:300, focus:'baseHeader', callback:callback });
+				});
+				
+				$('#scrolltop2').on('click', function(){
+					$plugins.uiScroll({ value:$(doc).outerHeight(), speed:300, callback:callback });
+				});
+				
+				$('#scrolltop3').on('click', function(){
+					$plugins.uiScroll({ value:$(doc).outerHeight() / 2, speed:300, callback:callback });
+				});
+
+				$('#uiScrollLeft').on('click', function(){
+					$plugins.uiScroll({ 
+						value:$('.tab-scroll-wrap button').eq(5).position().left, 
+						target:$('#exeTab4 .ui-tab-btns'), 
+						speed:300, 
+						focus:$('#exeTab4 .tab-scroll-wrap button').eq(5), 
+						callback:callback, 
+						ps:'left' 
+					});
+				});
+				
+				function callback(v){
+					console.log(v);
+				}
 			});
 		})(jQuery, window, document);
 	</script>

@@ -19,9 +19,10 @@ hr {border:0; border-top:1px solid #ccc; margin:40px 0;}
 em, u, cite, i, abbr {font-style:normal; text-decoration:none;}
 strong, b {font-weight:normal;}
 a {color:rgb(16, 79, 252); outline-offset:1px; }
-button {border:0 none; font-family:'Noto Sans KR'; cursor:pointer; background:transparent; color:#666; cursor:pointer;}
+button {border:0 none; font-family:'Noto Sans KR'; cursor:pointer; background:transparent; color:#666;}
 input, textarea, select {box-sizing:border-box; font-family:'Noto Sans KR', sans-serif; font-size:14px;}
 [class*="inp-"]::-webkit-search-cancel-button{display:none}
+label{cursor:pointer}
 
 /* base line-height */
 p{line-height:1.5}

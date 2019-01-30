@@ -32,9 +32,34 @@
 					<h1 class="h1" id="uiPageTit">스크롤바</h1>
 				</div>
 
-				<p>특정 범위안에서 스크롤에 따라 이동</p>
+				
 
-				<h2 class="h2">Base HTML</h2>
+				<h2 class="h2">$plugins.uiScrollBar</h2>
+				<p>현재 세로 스크롤만 지원됨.</p>	
+                <div class="box-code">
+<pre>
+<code>
+//스크립트 적용 전
+&lt;div class="ui-scrollbar"&gt;
+	&lt;div class="ui-scrollbar-item"&gt;
+	..........
+	&lt;/div&gt;
+&lt;/div&gt;
+
+//스크립트 적용 후
+&lt;div class="ui-scrollbar" id="uiScrollBar_0"&gt;
+	&lt;div class="ui-scrollbar-barwrap"&gt;
+		&lt;button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" style="height: 26%;"&gt;
+			&lt;span class="hide">스크롤버튼&lt;/span&gt;
+		&lt;/button&gt;
+	&lt;/div&gt;
+	&lt;div class="ui-scrollbar-item"&gt;
+	..........
+	&lt;/div&gt;
+&lt;/div&gt;
+</code>
+</pre>
+                </div>
 
 				<div class="ui-scrollbar" style="display:inline-block; vertical-align:top; height:200px; width:300px; border:1px dashed #ccc;">
 					<div class="ui-scrollbar-item" style="width:100%;">

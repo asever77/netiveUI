@@ -661,14 +661,6 @@ if (!Object.keys){
 	};
 	function createUiScroll(opt){
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
-				global + ".uiScroll({ value:0, speed:600, focus:'#name', callback:function(){...} );",
-				"- value: 움직일 위치값(!선택 - 기본값 0)",
-				"- speed: 속도(!선택 - 기본값 600)",
-				"- p: 방향(!선택 - 기본값 'top')",
-				"- focus: 포커스이동  (!선택)",
-				"- callback: 콜백함수 (!선택)"
-			]);
 			return false;
 		}
 
@@ -678,7 +670,7 @@ if (!Object.keys){
 			c = opt.callback,
 			p = opt.ps,
 			overlap = false,
-			f = typeof opt.focus === 'string' ? '#' + opt.focus : opt.focus,
+			f = typeof opt.focus === 'string' ? $('#' + opt.focus) : opt.focus,
 			$target = opt.target === false ? $('html, body') : opt.target;
 		
 		if (p === 'top') {
@@ -692,7 +684,7 @@ if (!Object.keys){
 				complete: function(){
 					if (overlap) {
 						!!c ? c({ focus:f, complete:true }) : '';
-						!!f ? $(f).attr('tabindex', 0).focus() : '';
+						!!f ? f.attr('tabindex', 0).focus() : '';
 					} else {
 						overlap = true;
 					}
@@ -707,12 +699,8 @@ if (!Object.keys){
 					!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
 				},
 				complete: function(){
-					if (overlap) {
-						!!c ? c({ focus:f, complete:true }) : '';
-						!!f ? $(f).attr('tabindex', 0).focus() : '';
-					} else {
-						overlap = true;
-					}
+					!!c ? c({ focus:f, complete:true }) : '';
+					!!f ? f.attr('tabindex', 0).focus() : '';
 				}
 			});
 		}

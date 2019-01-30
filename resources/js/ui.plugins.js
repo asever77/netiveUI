@@ -700,7 +700,8 @@
 			$datepicker = $(selector),
 			date = new Date(),
 			dateToday = date,
-			calVar;
+			calVar,
+			calVar_end;
 
 		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback:openback, closeback:closeback, dual:dual });
 
@@ -836,8 +837,16 @@
 			
 			/* datepicker-head-date */
 			_calendarHtml += '<div class="datepicker-head-date">';
+			
 			_calendarHtml += '<span class="year" data-y="'+ year +'"><strong>' + year + '</strong>년</span> ';
 			_calendarHtml += '<span class="month" data-m="'+ dateMonths[month] +'"><strong>' + dateMonths[month] + '</strong>월</span>';
+			if (dual) {
+				_calendarHtml += '~ <span class="year2" data-y="'+ year +'"><strong>' + year + '</strong>년</span> ';
+				console.log('month' + month, dateMonths[month + 1]);
+				_calendarHtml += '<span class="month2" data-m="'+  dateMonths[month + 1] +'"><strong>' +  dateMonths[month + 1] + '</strong>월</span>';
+			}
+			
+
 			_calendarHtml += '<span class="hide">선택됨</span>';
 			_calendarHtml += '</div>';
 			_calendarHtml += '</div>';
@@ -859,9 +868,13 @@
 				prevMonth = new Date(year, month - 1, 1),
 				thisMonth = new Date(year, month, 1),
 				nextMonth = new Date(year, month + 1, 1),
+				nextMonth2 = new Date(year, month + 2, 1),
 				firstWeekDay = thisMonth.getDay(),
+				nextWeekDay = nextMonth.getDay(),
+				prevWeekDay = prevMonth.getDay(),
 				daysInMonth = Math.floor((nextMonth.getTime() - thisMonth.getTime()) / (1000 * 60 * 60 * 24)),
 				daysInMonth_prev = Math.floor((thisMonth.getTime() - prevMonth.getTime()) / (1000 * 60 * 60 * 24)),
+				daysInMonth_next = Math.floor((nextMonth2.getTime() - nextMonth.getTime()) / (1000 * 60 * 60 * 24)),
 				$input = $('#' + calendarEl.inputId).eq(0),
 				tit = $input.attr('title'),
 				_minDay = new Array(),
@@ -879,6 +892,12 @@
 			$base.find('.ui-datepicker-next span').text('다음 '+ dateMonths[(month == 11) ? 0 : month + 1]+ '월로 이동');
 			$base.find('.datepicker-head-date').find('.year').data('y',year).find('strong').text(year);
 			$base.find('.datepicker-head-date').find('.month').data('m',dateMonths[month]).find('strong').text(dateMonths[month]);
+
+			if (dual) {
+				$base.find('.datepicker-head-date').find('.year2').data('y',year).find('strong').text(year);
+				$base.find('.datepicker-head-date').find('.month2').data('m',dateMonths[month + 1]).find('strong').text(dateMonths[month + 1]);
+			}
+
 			$base.find('.datepicker-head-year option').prop('selected', false).removeAttr('selected');
 			$base.find('.datepicker-head-year option[value="'+ year +'"]').prop('selected', true);
 			$base.find('.datepicker-head-month option').prop('selected', false).removeAttr('selected');
@@ -900,6 +919,7 @@
 				$base.find('.ui-datepicker-next-y').addClass('disabled').attr('disabled'): 
 				$base.find('.ui-datepicker-next-y').removeAttr('disabled').removeClass('disabled');
 
+			
 			/* datepicker-core -------------------- */
 			_calendarHtml += '<table class="tbl-datepicker">';
 			_calendarHtml += '<caption>'+ year +'년 '+ dateMonths[month] +'월 일자 선택</caption>';
@@ -974,8 +994,85 @@
 
 			_calendarHtml += '</tr></tbody></table>';
 
+			if (dual) {
+					/* datepicker-core -------------------- */
+				_calendarHtml += '<table class="tbl-datepicker">';
+				_calendarHtml += '<caption>'+ year +'년 '+ dateMonths[month + 1] +'월 일자 선택</caption>';
+				_calendarHtml += '<thead><tr>';
+				_calendarHtml += '<th scope="col" class="day-sun"><abbr title="일요일">'+ weekDay[0] +'</abbr></th>';
+				_calendarHtml += '<th scope="col"><abbr title="월요일">'+ weekDay[1] +'</abbr></th>';
+				_calendarHtml += '<th scope="col"><abbr title="화요일">'+ weekDay[2] +'</abbr></th>';
+				_calendarHtml += '<th scope="col"><abbr title="수요일">'+ weekDay[3] +'</abbr></th>';
+				_calendarHtml += '<th scope="col"><abbr title="목요일">'+ weekDay[4] +'</abbr></th>';
+				_calendarHtml += '<th scope="col"><abbr title="금요일">'+ weekDay[5] +'</abbr></th>';
+				_calendarHtml += '<th scope="col" class="day-sat"><abbr title="토요일">'+ weekDay[6] +'</abbr></th>';
+				_calendarHtml += '</tr></thead>';
+				_calendarHtml += '<tbody><tr>';
+
+				// 빈 셀 채우기 - 전
+				empty_before = daysInMonth - nextWeekDay;
+
+				for (var week = 0; week < nextWeekDay; week++) {
+					empty_before  = empty_before + 1;
+
+					if (week === 0) {
+						_calendarHtml += '<td class="empty"><span>'+ empty_before +'</span></td>'; //일요일
+					} else if (week === 6) {
+						_calendarHtml += '<td class="empty"><span>'+ empty_before +'</span></td>'; //토요일
+					} else {
+						_calendarHtml += '<td class="empty"><span>'+ empty_before +'</span></td>'; 
+					}
+				}
+				mm = mm + 1;
+				mm < 1 ? mm = 12 : '';
+				mm = $ui.option.partsAdd0(mm);
+				week_day = nextWeekDay;
+
+				for (var dayCounter = 1; dayCounter <= daysInMonth_next; dayCounter++) {
+					week_day %= 7;
+					week_day === 0 ? daysInMonth_next - dayCounter < 7 ? _calendarHtml += '</tr>' : _calendarHtml += '</tr><tr>' : '';
+					
+					if (week_day === 0) {
+						_calendarHtml += '<td class="day-sun">'; //일요일
+					} else if (week_day === 6) {
+						_calendarHtml += '<td class="day-sat">'; //토요일
+					} else {
+						_calendarHtml += '<td>';
+					}
+
+					// 예상은 남은 여백에 지난달 다음달 날짜가 아닐지.. 
+					if ((year < _minDay[0]) || (year == _minDay[0] && dateMonths[month + 1] < _minDay[1]) || (year == _minDay[0] && dateMonths[month + 1] == _minDay[1] && dayCounter < _minDay[2])) {
+						//_isOver = true;
+						_calendarHtml += '<span title="'+ textDate(dayCounter, mm, year, true) +'">' + $ui.option.partsAdd0(dayCounter) + '</span></td>';
+					} else if ((year > _maxDay[0]) || (year == _maxDay[0] && dateMonths[month + 1] > _maxDay[1]) || (year == _maxDay[0] && dateMonths[month + 1] == _maxDay[1] && dayCounter > _maxDay[2])) {
+						//_isOver = true;
+						_calendarHtml += '<span title="'+ textDate(dayCounter, mm, year, true) +'">' + $ui.option.partsAdd0(dayCounter) + '</span></td>';
+					} else {
+						//_isOver = false;
+						_calendarHtml += '<button type="button" title="'+ textDate(dayCounter, mm, year, true) +'" data-day="'+ textDate(dayCounter, mm, year, false) +'" value="'+ dayCounter +'">'+ $ui.option.partsAdd0(dayCounter) +'</button></td>';
+					}
+					week_day++;
+				}
+
+				// 빈 셀 채우기 - 후
+				var empty_after = 0;
+				for (week_day = week_day; week_day < 7; week_day++) { 
+					empty_after = empty_after + 1;
+
+					if (week_day === 0) {
+						_calendarHtml += '<td class="empty"><span>'+ empty_after +'</span></td>'; //일요일
+					} else if (week_day == 6) {
+						_calendarHtml += '<td class="empty"><span>'+ empty_after +'</span></td>'; //토요일
+					} else {
+						_calendarHtml += '<td class="empty"><span>'+ empty_after +'</span></td>';
+					}
+				}
+				_calendarHtml += '</tr></tbody></table>';
+			}
+
 			return _calendarHtml;
 		}
+
 
 		//달력 Hide&Remove
 		function hideCalendar(calendarEl) {
@@ -1150,12 +1247,15 @@
 				regExp = /^([0-9]{4})-([0-9]{2})-([0-9]{2})/g,
 				_val = $('#' + inputId).val(),
 				reset = regExp.test(_val),
-				calspaceHTML = '';
+				calspaceHTML = '',
+				calspaceHTML_end = '';
 
 			$this.data('sct', $(doc).scrollTop());
 			!reset ? $('#' + inputId).val(''): '';
 			$this.closest('.ui-datepicker').find('.datepicker-sec').remove();
 			
+			console.log(dual, dropid, inputId, shortDate);
+
 			calVar = new calendarObject({ 
 				calId: "calWrap_" + dropid, 
 				inputId: inputId, 
@@ -1171,6 +1271,10 @@
 			$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').append(calspaceHTML);
 			displayCalendar(calVar, 'generate');
 			$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + inputId).val() + '"]').addClass('selected').attr('aria-selected', true);
+
+			if (dual) {
+				$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').addClass('dual');
+			}
 		}	
 	}
 
@@ -2855,7 +2959,7 @@
 		$btn.data('psl', ps_l).data('len', len);
 		$ui.uiScroll({ 
 			value: ps_l[current], 
-			target: $btn.parent(), 
+			target: $btns,
 			speed: 0, 
 			ps: 'left' 
 		});
@@ -2933,9 +3037,11 @@
 		$btn.find('b.hide').remove();
 		$btn.eq(current).append('<b class="hide">선택됨</b>');
 		$btn.removeClass('selected').eq(current).addClass('selected').focus();
+
+		console.log('ps_l: '+ps_l[current])
 		$plugins.uiScroll({ 
 			value: ps_l[current], 
-			target: $btn.parent(), 
+			target: $btns, 
 			speed: 300, 
 			ps: 'left' 
 		});
@@ -3418,6 +3524,7 @@
 	});
 	$ui.uiBrickList.option = {
 		margin: 0,
+		actdelay: true,
 		response: true
 	}
 	function createUiBrickList(opt){
@@ -3429,25 +3536,29 @@
 			$item = $base.find('.ui-bricklist-item'),
 			mg = opt.margin,
 			re = opt.response,
+			actdelay = opt.actdelay,
 			wrap_w  = $base.outerWidth(),
 			item_w  = $item.outerWidth(),
 			item_sum = $item.length,
 			item_col = Math.floor(wrap_w / (item_w + mg)),
 			item_row = (item_sum / item_col) + (item_sum % item_col) ? 1 : 0,
 			item_top = [],
+			delay_n = 0,
 			i = 0,
 			timer;
 
 		for (i = 0; i < item_col; i++) {
+			actdelay ? delay_n = i: delay_n = 0;
 			$item.eq(i).attr('role','listitem').css({
 				position: 'absolute',
 				left : (item_w + mg) * i,
 				top : 0
 			}).stop().delay(50 * i).animate({
-				top : 0
+				zoom : 1
 			}, 300, function(){
 				$(this).addClass('on');
 			});
+			$(this).addClass('on');
 			item_top[i] = $item.eq(i).outerHeight() + mg;
 		}
 
@@ -3462,16 +3573,17 @@
 					'top':item_top, 
 					'row':item_row, 
 					'col':item_col, 
+					'actdelay':actdelay,
 					'mg':mg
 				});
-			$ui.uiBrickListAdd({ id: opt.id });
+			$ui.uiBrickListAdd({ id: opt.id, actdelay:actdelay });
 		},200);
 		
 		if (re) {
 			$(win).resize(function(){
 				clearTimeout(timer);
 				timer = setTimeout(function(){
-					$ui.uiBrickList({ id : opt.id, margin: opt.margin });
+					$ui.uiBrickList({ id : opt.id, margin: opt.margin, actdelay:false });
 				},500);
 				$base.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, item_top));
 			});
@@ -3484,18 +3596,23 @@
 			$item = $base.find('.ui-bricklist-item'),
 			dataOpt = $base.data('opt'),
 			wrap_w = dataOpt.wrap,
+			actdelay = dataOpt.actdelay,
 			item_w = dataOpt.width,
 			item_sum = $item.length,
 			item_col = dataOpt.col,
 			item_row = dataOpt.row,
 			item_top = dataOpt.top,
 			mg = dataOpt.mg,
+			delay_n = 0,
 			i = item_col,
 			minH, nextN, item_h,timer;
 
 		clearTimeout(timer);
 		timer = setTimeout(function(){
 			for (i; i < item_sum; i++) {
+
+				console.log(actdelay);
+				actdelay ? delay_n = i: delay_n = 0;
 				minH = Math.min.apply(null, item_top)
 				nextN = item_top.indexOf(minH);
 				item_h = Number($item.eq(i).outerHeight() + mg);
@@ -3505,7 +3622,7 @@
 					left : (item_w * nextN) + (mg * nextN),
 					top : item_top[nextN]
 				}).stop().delay(50 * i).animate({
-					top : item_top[nextN]
+					zoom : 1
 				},150, function(){
 					$(this).addClass('on');
 				});
