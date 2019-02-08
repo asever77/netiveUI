@@ -13,7 +13,7 @@
 
     $plugins.page.brickList = function(){
         //$('.ui-cardlist').imagesLoaded(function(){
-            $plugins.uiBrickList({ id:'uiBrickList1', margin:10, response:true });
+            $plugins.uiBrickList({ id:'uiBrickList1', margin:0, response:true });
         //});
         var img_array = [
             "/netiveUI/resources/img/dummy/@iu16.gif",
@@ -36,23 +36,36 @@
         $('.ui-bricklist .ui-add').on('click', function() {
             var add = '<li class="ui-bricklist-item" role="listitem">' +
                 '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '<strong>title</strong>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
                 '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '<strong>title</strong>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
                 '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '<strong>title</strong>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
                 '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '<strong>title</strong>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
                 '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '<strong>title</strong>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>';
 
             $(this).closest('.ui-bricklist').find('.ui-bricklist-wrap').append(add);

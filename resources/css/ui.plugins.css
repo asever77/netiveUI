@@ -14,7 +14,6 @@
 .datepicker-sec select{border:0; width:auto}
 .datepicker-sec .cal-wrapper {padding:10px; min-width:450px; width:auto !important; width:450px; overflow:hidden; }
 
-
 .datepicker-wrap:after{content:''; display:block; clear:both}
 
 .datepicker-head{position: relative;}
@@ -22,17 +21,18 @@
 .datepicker-head-tit{border-bottom:1px solid #ccc; padding:5px; text-align:center; font-weight:600;}
 .datepicker-head-select{padding:5px 10px;}
 .datepicker-head-date{text-align:center; font-size:18px}
-.tb_cal_popup tbody tr td:first-child button{color:#ff0000}
-
 .datepicker-core{min-height:250px; padding:10px;}
+
+.tb_cal_popup tbody tr td:first-child button{color:#ff0000}
+.tbl-datepicker {width:100%; }
 .tbl-datepicker thead th{color:#222}
 .tbl-datepicker thead tr{border-bottom:1px solid #c9c9c9}
-.tbl-datepicker {width:100%; }
+.tbl-datepicker col.n1{width:14.28%}
 .tbl-datepicker th {padding:11px 0; text-align:center !important; font-weight:600; background:#fff; }
 .tbl-datepicker th abbr {display:block; border:0; cursor:default; }
-.tbl-datepicker td {padding:0; width:14.28%; text-align:center; background:#fff; border:0; }
+.tbl-datepicker td {padding:0; text-align:center; border:0; }
 .tbl-datepicker td span,
-.tbl-datepicker td button {position:relative; display:block; width:100%; height:100%; line-height:25px; margin:5px 1px 0; color:#444; background:#fff; text-align:center;}
+.tbl-datepicker td button {position:relative; display:block; width:100%; height:100%; line-height:25px; margin:0 auto; color:#444; text-align:center;}
 .tbl-datepicker td span {color:#666; cursor:default; opacity:0.5}
 .tbl-datepicker th.day-sun,
 .tbl-datepicker td.day-sun button {color:red; }
@@ -256,11 +256,11 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 /* ui card list :base */
 .ui-bricklist{position:relative; width:100%;}
 .ui-bricklist-wrap{margin:0; padding:0;}
-.ui-bricklist-item{display:block; opacity:0; box-sizing:border-box; overflow:hidden; list-style:none; border-radius:3px; opacity:0; transform: scale(0.8); transition:transform 0.15s ease-in, opacity 0.3s ease-in, top 0.3s ease-in-out, left 0.3s ease-in-out}
+.ui-bricklist-item{display:block; opacity:0; box-sizing:border-box; overflow:hidden; list-style:none; border-radius:0; opacity:0; transform: scale(0.8); transition:transform 0.15s ease-in, opacity 0.3s ease-in, top 0.3s ease-in-out, left 0.3s ease-in-out}
 .ui-bricklist-item.on{transform: scale(1); opacity:1}
     /* style */
-	.ui-bricklist-item{width:150px; border:1px solid #e8e8e8; padding:3px; background:#fff; color:#444; text-align:center;}
-	.ui-bricklist-item img{width:100%;}
+	.ui-bricklist-item{width:150px; color:#444; text-align:center;}
+	.ui-bricklist-item img{width:100%; display:block}
 
 
 /* ui slot style :base*/
@@ -544,14 +544,17 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
     .datepicker-sec .cal-wrapper {padding:10px; min-width:450px; width:auto !important; width:450px; overflow:hidden; }
     .tb_cal_popup tbody tr td:first-child button{color:#ff0000}
     .datepicker-core{padding:10px;}
+    .datepicker-core:after{content:""; display:block; clear:both;}
+
+    .tbl-datepicker {width:100%; }
+    .tbl-datepicker col.n1{width:14.28%}
     .tbl-datepicker thead th{color:#222}
     .tbl-datepicker thead tr{border-bottom:1px solid #c9c9c9}
-    .tbl-datepicker {width:100%; }
     .tbl-datepicker th {padding:11px 0; text-align:center !important; font-weight:600; background:#fff; }
     .tbl-datepicker th abbr {display:block; border:0; cursor:default; }
-    .tbl-datepicker td {padding:0; width:14.28%; text-align:center; background:#fff; border:0; }
+    .tbl-datepicker td {padding:0; text-align:center; background:#fff; border:0; }
     .tbl-datepicker td span,
-    .tbl-datepicker td button {position:relative; display:block; width:100%; height:100%; line-height:25px; margin:5px 1px 0; color:#444; background:#fff; text-align:center;}
+    .tbl-datepicker td button {position:relative; display:block; width:100%; height:100%; line-height:25px; margin:0 auto; color:#444; text-align:center;}
     .tbl-datepicker td span {color:#666; cursor:default; opacity:0.5}
     .tbl-datepicker th.day-sun,
     .tbl-datepicker td.day-sun button {color:red; }
@@ -560,6 +563,17 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
     .tbl-datepicker td.empty {background:#fff; }
     .tbl-datepicker button:hover,
     .tbl-datepicker button.selected {color:#000; font-weight:900}
+    .tbl-datepicker button.selected-end,
+    .tbl-datepicker button.selected-start {color:#000; font-weight:900; background:rgb(227, 247, 255);}
+    .tbl-datepicker button.selected-ing { background:rgb(227, 247, 255);}
+    .datepicker-core .btn-wrap{float:left; }
+    /* .date-ing-on tr.date-ing ~ tr button:hover,
+    .date-ing-on tr.date-ing td.date-ing ~ td button,
+    .date-ing-on tr.date-ing ~ tr button{ background:rgb(227, 247, 255);}
+    .date-ing-on tr.date-end td.date-end ~ td button,
+    .date-ing-on tr.date-end ~ tr button{ background:transparent;} */
+
+
     .tbl-datepicker button.today:hover:before,
     .tbl-datepicker button.today.selected:before{display:none}
     .tbl-datepicker button.today:before {content:""; position:absolute; top:0; left:50%; margin-left:-1px; display:block; width:4px; height:4px; background:#666; border-radius:2px;}
