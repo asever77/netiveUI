@@ -1228,39 +1228,36 @@
 
 						if (!$core.data('start')) {
 							$core.data('start',true).data('day',n_day);
-							
 							$core.find('.selected').removeClass('selected').removeAttr('aria-selected');
 							$this.addClass('selected-start').attr('aria-selected', true);
 							s_day = $this;
 							//writeInputDateValue(calendarEl, $this);
 						} else if(next_day) {
-							console.log(calendarEl.inputId);
+							console.log('end: ', n_day);
+							$core.data('end',true).data('endday',n_day);
 							$core.find('.selected-end').removeClass('selected-end').removeAttr('aria-selected');
 							$this.addClass('selected-end').attr('aria-selected', true);
 							$core.addClass('date-ing-on');
 							e_day = $this;
 							//writeInputDateValue(calendarEl, $this, true);
-
-							
 						} else if(sam_day) {
-							
 							$core.data('start',false).data('day', undefined);
 							$this.removeClass('selected-start').removeAttr('aria-selected', true);
-						}
+						} 
 						
 						
 					})
-					.off('mouseover.uidaysel').on('mouseover.uidaysel', id_ + ' td button', function() {
-						var $this = $(this),
-							$core = $this.closest('.datepicker-core'),
-							n_day = $this.data('day').replace(/\-/g,''),
-							b_day = $core.data('day').replace(/\-/g,'');
+					// .off('mouseover.uidaysel').on('mouseover.uidaysel', id_ + ' td button', function() {
+					// 	var $this = $(this),
+					// 		$core = $this.closest('.datepicker-core'),
+					// 		n_day = $this.data('day').replace(/\-/g,''),
+					// 		b_day = $core.data('day').replace(/\-/g,'');
 							
-						console.log($core.data('day').replace(/\-/g,''), n_day)
-						if (b_day < n_day ) {
-							$this.addClass('selected-ing');
-						}
-					})
+					// 	//console.log($core.data('day').replace(/\-/g,''), n_day)
+					// 	if (b_day < n_day ) {
+					// 		//$this.addClass('selected-ing');
+					// 	}
+					// })
 					.off('click.uitoday').on('click.uitoday', id_ + ' .datepicker-head-today button', function() {
 						date = new Date();
 
