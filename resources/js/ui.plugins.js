@@ -1254,11 +1254,10 @@
 						var $this = $(this),
 							$core = $this.closest('.datepicker-core'),
 							n_day = $this.data('day').replace(/\-/g,''),
-							b_day = $core.data('day').replace(/\-/g,'');
+							b_day = $core.data('day') === undefined ? false : $core.data('day').replace(/\-/g,'');
 							
-						console.log($core.data('day').replace(/\-/g,''), n_day)
 						if (b_day < n_day ) {
-							$this.addClass('selected-ing');
+							//$this.addClass('selected-ing');
 						}
 					})
 					.off('click.uitoday').on('click.uitoday', id_ + ' .datepicker-head-today button', function() {
