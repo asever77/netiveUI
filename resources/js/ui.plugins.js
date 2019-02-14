@@ -73,8 +73,6 @@
 				} else {
 					current = [Number(para)];
 				}
-
-				console.log(current);
 			}
 		}
 
@@ -372,8 +370,6 @@
 				eff = 'sb';
 			}
 		}
-		console.log(ps);
-
 		$btn.attr('aria-expanded', false)
 			.data('opt', { 
 				id: id, 
@@ -701,7 +697,9 @@
 			date = new Date(),
 			dateToday = date,
 			calVar,
-			calVar_end;
+			calVar_end,
+			day_start,
+			day_end;
 
 		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback:openback, closeback:closeback, dual:dual });
 
@@ -845,7 +843,6 @@
 			
 			if (dual) {
 				_calendarHtml += '~ <span class="year2" data-y="'+ year +'"><strong>' + year + '</strong>년</span> ';
-				console.log('month' + month, dateMonths[month + 1]);
 				_calendarHtml += '<span class="month2" data-m="'+  dateMonths[month + 1] +'"><strong>' +  dateMonths[month + 1] + '</strong>월</span>';
 			}
 			
@@ -1104,7 +1101,6 @@
 			});
 		}
 		function datepickerClose(calendarEl){
-			console.log(calendarEl.calId);
 			var $btn = $('#' + calendarEl.calId).closest('.ui-datepicker').find('.ui-datepicker-btn');
 
 			$ui.uiDropdownToggle({ id:$btn.attr('id') });
@@ -1120,11 +1116,12 @@
 			$calWrap.find('.datepicker-core').empty().append(buildCore(date, calendarEl, v));
 		}
 		function displayCalendar(calendarEl, v) {
-			var $calWrap = $("#" + calendarEl.calId);
+			var id_ = "#" + calendarEl.calId,
+				$calWrap = $(id_);
 			
 			$calWrap.empty().append(buildCalendar(date, calendarEl, v));
 			reDisplayCalendar(calendarEl, v);
-			$ui.uiFocusTab({ selector:$('#' + calendarEl.calId), type:'hold' });
+			$ui.uiFocusTab({ selector:$calWrap, type:'hold' });
 
 			//datepicker event--------------------------------------------------------
 			//select year & month
@@ -1152,6 +1149,10 @@
 			$calWrap.find('.ui-datepicker-next-y').off('click.uidatepicker').on('click.uidatepicker', function(e) {
 				e.preventDefault();
 				yearNextPrev(this, 'next');
+			});
+			//close
+			$('.ui-datepicker-close').off('click.uidayclose').on('click.uidayclose', function(){
+				datepickerClose(calendarEl);
 			});
 
 			function yearMonthSelect(t, v){
@@ -1203,72 +1204,20 @@
 					$this.eq(0).focus();
 				}
 			}
-			
-			//close
-			$('.ui-datepicker-close').off('click.uidayclose').on('click.uidayclose', function(){
-				datepickerClose(calendarEl);
-			});
 
-			var id_ = "#" + calendarEl.calId;
 			if (dual) {
-				var b_day,
-					s_day,
-					e_day;
 				$(doc)
 					.off('click.uidaysel').on('click.uidaysel', id_ + ' td button', function() {
-						var $this = $(this),
-							$core = $this.closest('.datepicker-core'),
-							n_day = $this.data('day').replace(/\-/g,''),
-							n_day_ = $core.data('day') === undefined ? false :$core.data('day').replace(/\-/g,''),
-							sam_day = n_day === n_day_,
-							next_day = n_day > n_day_,
-							b_day = n_day;
-
-						console.log(b_day, sam_day, next_day);
-
-						if (!$core.data('start')) {
-							$core.data('start',true).data('day',n_day);
-							$core.find('.selected').removeClass('selected').removeAttr('aria-selected');
-							$this.addClass('selected-start').attr('aria-selected', true);
-							s_day = $this;
-							//writeInputDateValue(calendarEl, $this);
-						} else if(next_day) {
-							console.log('end: ', n_day);
-							$core.data('end',true).data('endday',n_day);
-							$core.find('.selected-end').removeClass('selected-end').removeAttr('aria-selected');
-							$this.addClass('selected-end').attr('aria-selected', true);
-							$core.addClass('date-ing-on');
-							e_day = $this;
-							//writeInputDateValue(calendarEl, $this, true);
-						} else if(sam_day) {
-							$core.data('start',false).data('day', undefined);
-							$this.removeClass('selected-start').removeAttr('aria-selected', true);
-						} 
-						
-						
+						daySelectAct(this);
 					})
-					// .off('mouseover.uidaysel').on('mouseover.uidaysel', id_ + ' td button', function() {
-					// 	var $this = $(this),
-					// 		$core = $this.closest('.datepicker-core'),
-					// 		n_day = $this.data('day').replace(/\-/g,''),
-					// 		b_day = $core.data('day').replace(/\-/g,'');
-							
-					// 	//console.log($core.data('day').replace(/\-/g,''), n_day)
-					// 	if (b_day < n_day ) {
-					// 		//$this.addClass('selected-ing');
-					// 	}
-					// })
 					.off('click.uitoday').on('click.uitoday', id_ + ' .datepicker-head-today button', function() {
 						date = new Date();
-
 						reDisplayCalendar(calendarEl);
 					})
 					.off('click.uitoday').on('click.uitoday', id_ + ' .btn-base', function() {
-						console.log(s_day,e_day);
-						writeInputDateValue(calendarEl, s_day);
-						writeInputDateValue(calendarEl, e_day, true);
+						writeInputDateValue(calendarEl, day_start);
+						writeInputDateValue(calendarEl, day_end, true);
 						datepickerClose(calendarEl);
-
 					});
 			} else {
 				$(doc)
@@ -1291,6 +1240,37 @@
 			matchToday();
 			
 			return false;
+		}
+
+		function daySelectAct(t){
+			var $this = $(t),
+				$core = $this.closest('.datepicker-core'),
+				n_day = $this.data('day').replace(/\-/g,''),
+				n_day_ = $core.data('day') === undefined ? false :$core.data('day').replace(/\-/g,''),
+				sam_day = n_day === n_day_,
+				next_day = n_day > n_day_,
+				b_day = n_day;
+
+			console.log($core.data('day'));
+
+			if (!$core.data('start')) {
+				$core.data('start',true).data('day',n_day);
+				$core.find('.selected-start').removeClass('selected-start').removeAttr('aria-selected');
+				$core.find('.selected').removeClass('selected').removeAttr('aria-selected');
+				$this.addClass('selected-start').attr('aria-selected', true);
+				day_start = $this;
+				//writeInputDateValue(calendarEl, $this);
+			} else if(next_day) {
+				$core.data('end',true).data('endday',n_day);
+				$core.find('.selected-end').removeClass('selected-end').removeAttr('aria-selected');
+				$this.addClass('selected-end').attr('aria-selected', true);
+				$core.addClass('date-ing-on');
+				day_end = $this;
+				//writeInputDateValue(calendarEl, $this, true);
+			} else if(sam_day) {
+				$core.data('start',false).data('day', undefined);
+				$this.removeClass('selected-start').removeAttr('aria-selected', true);
+			} 
 		}
 
 		//dropdown 설정
@@ -1332,15 +1312,12 @@
 				regExp = /^([0-9]{4})-([0-9]{2})-([0-9]{2})/g,
 				_val = $('#' + inputId).val(),
 				reset = regExp.test(_val),
-				calspaceHTML = '',
-				calspaceHTML_end = '';
+				calspaceHTML = '';
 
 			$this.data('sct', $(doc).scrollTop());
 			!reset ? $('#' + inputId).val(''): '';
 			$this.closest('.ui-datepicker').find('.datepicker-sec').remove();
 			
-			console.log(dual, dropid, inputId, shortDate);
-
 			calVar = new calendarObject({ 
 				calId: "calWrap_" + dropid, 
 				inputId: inputId, 
@@ -1355,12 +1332,20 @@
 
 			$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').append(calspaceHTML);
 			displayCalendar(calVar, 'generate');
-			$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + inputId).val() + '"]').addClass('selected').attr('aria-selected', true);
-
 			if (dual) {
 				$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').addClass('dual');
+				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + inputId).val() + '"]').addClass('selected-start').attr('aria-selected', true);
+				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + inputId + '_end').val() + '"]').addClass('selected-end').attr('aria-selected', true);
+
+				$datepicker.find('.datepicker-core').data('day', $('#' + inputId).val());
+				$datepicker.find('.datepicker-core').data('endday', $('#' + inputId + '_end').val());
+			} else {
+				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + inputId).val() + '"]').addClass('selected').attr('aria-selected', true);
+
 			}
-		}	
+			
+		}
+		
 	}
 
 
@@ -1488,7 +1473,6 @@
 			
 			$('#' + iname).on('load', function(){
 				$('#' + opt.id).data('iframeload', true);
-				console.log($ui.callback)
 				//$ui.callback !== undefined ? frames[iname].$ui.callback.modal(opt.id) : '';
 				!!icallback ? icallback() : '';
 
@@ -1666,7 +1650,6 @@
 			}).attr('n', zidx);
 
 			//모달생성 설정 
-			console.log(ps);
 			switch(ps) {
 				case 'center':
 					$modal.css({ 
@@ -1785,8 +1768,6 @@
 			if (!is_mobile) {
 				overW ? $('body').addClass('modal-full') : $('body').removeClass('modal-full');
 			}
-
-			console.log('is_full_h'+ overH, full)
 
 			is_full_h = overH || full || mpage;
 			is_full_w = overW || full || mpage;
@@ -2905,7 +2886,6 @@
 		$uisel.find('.ui-select-btn').val($opt.eq(current).text());
 		$opt_.removeClass('selected').eq(current).addClass('selected');
 		
-		console.log($opt.eq(current).val() === 'direct');
 		if ($opt.eq(current).val() === 'direct') {
 			$uisel.find('.ui-select-btn').prop('readonly', false).val('').focus();
 		} else {
@@ -2990,8 +2970,6 @@
 				} else {
 					current = Number(para);
 				}
-
-				console.log(current);
 			}
 		}
 
@@ -3123,7 +3101,6 @@
 		$btn.eq(current).append('<b class="hide">선택됨</b>');
 		$btn.removeClass('selected').eq(current).addClass('selected').focus();
 
-		console.log('ps_l: '+ps_l[current])
 		$plugins.uiScroll({ 
 			value: ps_l[current], 
 			target: $btns, 
@@ -3213,7 +3190,6 @@
 			// $(doc).off('click.bdd').on('click.bdd', function(e){
 			// 	//dropdown 영역 외에 클릭 시 판단
 			// 	if (!!$('body').data('dropdownOpened')){
-			// 		console.log($('.ui-tooltip').has(e.target).length);
 			// 		if ($('.ui-tooltip').has(e.target).length < 1) {
 			// 			tooltipHide();
 			// 		}
@@ -3695,8 +3671,6 @@
 		clearTimeout(timer);
 		timer = setTimeout(function(){
 			for (i; i < item_sum; i++) {
-
-				console.log(actdelay);
 				actdelay ? delay_n = i: delay_n = 0;
 				minH = Math.min.apply(null, item_top)
 				nextN = item_top.indexOf(minH);
@@ -3854,7 +3828,6 @@
 		if (opt === undefined) {
 			return false;
 		}
-		console.log('opt', opt)
 		var $slot = $('#' + opt.id),
 			$wrap = $slot.find('.ui-slot-wrap'),
 			$item = $wrap.find('.ui-slot-item'),
@@ -3868,10 +3841,7 @@
 		
 		var s = Math.ceil((500 / len) * (len - current));
 		
-		console.log(s);
-
 		if (!$slot.data('ing')) {
-			console.log(111111111)
 			$slot.data('ing', true);
 			//$ui.uiSlot.play[opt.id] = win.setInterval(steplot, s);
 			$wrap.css('top', first_t).stop().animate({
@@ -3923,7 +3893,6 @@
 			t = item_h * x * -1;
 			
 			var ss = Math.ceil((5000 / len) * (len - x));
-			console.log(ss, x)
 			$wrap.stop().animate({
 				top: t
 			}, s, 'easeOutQuad', function(){
@@ -4052,7 +4021,6 @@
 		for (var i = 0; i < step + 1; i++) {
 			txt_e2 = (i === step) ? opt.txt_e : '';
 			txt_s2 = (i === 0) ? opt.txt_s : '';
-			console.log('txt_s2:' + txt_s2)
 			txt_val = parseInt(min + (unit_sum * i));
 			now_sum.push(txt_val);
 			if (stepname) {
@@ -4327,8 +4295,6 @@
 				in_se = (per_min === 0) ? txt_s : (per_max === 100) ? txt_e : '';
 
 			!range ? in_e = (per_min === 100) ? txt_e : '' : '';
-
-			console.log(per_min === 0, txt_s, txt_e)
 
 			if (per_min === 0 && per_max === 100) {
 				$tooltip.text('전체');
@@ -4816,7 +4782,6 @@
 		} else {
 			var n = 0;
 			for (var i = 0; i < base.multi.w.length; i++) {
-				//console.log('end: ', Number(base.multi.w[i]),  Number(base.itemwrap.css('left').replace(/[^0-9]/g, "")));
 				if (Number(base.multi.w[i]) > Number(base.itemwrap.css('left').replace(/[^0-9]/g, ""))) {
 					n = i;
 					break;
@@ -5068,7 +5033,6 @@
 				px = progress + (px_add * nn);
 				n = Math.ceil(px - m); 
 				nn = nn + 1;
-				//console.log(tstamp, progress)
 				//next & prev step
 				if (!base.evt.cancel) {
 					base.item.eq(base.opt.past).css({ 
@@ -5133,7 +5097,6 @@
 		base.item.eq(base.opt.current).css('z-index', 1);
 		
 		(!base.evt.cancel) ? base.opt.past = base.opt.current : '';
-		//console.log('end: ' + base.opt.current);
 		
 		//base.opt.eff !== 'slide' ? base.item.eq(base.opt.current).addClass(base.opt.eff) : '';
 		base.evt.activate = false;
@@ -5399,7 +5362,6 @@
 							current_num.push(n_d1 - 1);
 							navig.push(tit);
 						}
-						console.log(href);
 						html_d1 += '<li class="dep-1 '+ cls_sel_1 +'" data-n="'+ n_d1 +'">';
 						html_d1 += href === '' ? 
 							'<button type="button" class="dep-1-btn '+ cls_sel_1 +'"><span>' + tit + '</span></button>':
@@ -6214,8 +6176,6 @@
 		//generate error message
 		$this.attr('aria-labelledby', id + '-error');
 
-		console.log(!$('#'+ id +'-error').length, msg);
-
 		!$('#'+ id +'-error').length ? $wrap.append(err_html) : $wrap.find('.ui-error-msg').text(msg) ;
 		
 		//error 여부에 따른 설정
@@ -6419,7 +6379,6 @@
 			// len * w_h > $(window).scrollTop() ? 
 			// _scrollPow = w_h : 
 			_scrollPow = opt.scrollpow;
-			console.log(opt.scrollpow)
 			!$ui.uiScrolling.ing ? _smoothScroll(e) : '';
 		}
 		function _smoothScroll (e) {
@@ -6554,7 +6513,6 @@
 					class_name = 'system-type-c';
 					break;
 			}
-			console.log(w, opt.width);
 			$plugins.uiModal({
 				id: 'modalSystem', 
 				link: system_url, 

@@ -563,7 +563,7 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
     .tbl-datepicker td.empty {background:#fff; }
     .tbl-datepicker button:hover,
     .tbl-datepicker button.selected {color:#000; font-weight:900}
-    .tbl-datepicker button.selected-end,
+    .tbl-datepicker button.selected-end {color:#000; font-weight:900; background:rgb(229, 255, 227);}
     .tbl-datepicker button.selected-start {color:#000; font-weight:900; background:rgb(227, 247, 255);}
     .tbl-datepicker button.selected-ing { background:rgb(227, 247, 255);}
     .datepicker-core .btn-wrap{float:left; }
