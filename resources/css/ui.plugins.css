@@ -541,6 +541,8 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
     .datepicker-head-tit{border-bottom:1px solid #ccc; padding:5px; text-align:center; font-weight:600;}
     .datepicker-head-select{padding:5px 10px;}
     .datepicker-head-date{text-align:center; font-size:18px}
+    .datepicker-dual-head{width:100%; overflow:hidden;}
+    .datepicker-dual-head > div{width:50%; float:left;}
     .datepicker-sec .cal-wrapper {padding:10px; min-width:450px; width:auto !important; width:450px; overflow:hidden; }
     .tb_cal_popup tbody tr td:first-child button{color:#ff0000}
     .datepicker-core{padding:10px;}
@@ -563,10 +565,14 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
     .tbl-datepicker td.empty {background:#fff; }
     .tbl-datepicker button:hover,
     .tbl-datepicker button.selected {color:#000; font-weight:900}
-    .tbl-datepicker button.selected-end {color:#000; font-weight:900; background:rgb(229, 255, 227);}
-    .tbl-datepicker button.selected-start {color:#000; font-weight:900; background:rgb(227, 247, 255);}
+    .tbl-datepicker button.selected-end {color:#000; font-weight:900; background:#c9bbf7 !important; border-right:1px solid #ab93fa}
+    .tbl-datepicker button.selected-start {color:#000; font-weight:900; background:#c9bbf7 !important; border-left:1px solid #ab93fa}
     .tbl-datepicker button.selected-ing { background:rgb(227, 247, 255);}
     .datepicker-core .btn-wrap{float:left; }
+
+    .tbl-datepicker button:disabled{background:#f8f8f8; cursor:default}
+    .tbl-datepicker td.hover:not(.disabled) button{background:#ede7ff}
+    .tbl-datepicker td.hover-on:not(.disabled) button{background:#ede7ff}
     /* .date-ing-on tr.date-ing ~ tr button:hover,
     .date-ing-on tr.date-ing td.date-ing ~ td button,
     .date-ing-on tr.date-ing ~ tr button{ background:rgb(227, 247, 255);}
