@@ -536,7 +536,7 @@
 					break;
 				case 'lb': $pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l - pnl_w }); 
 					break; 
-				case 'center': $pnl.css({ top: '50%', left: 0, marginTop: (pnl_h / 2 ) * -1 }); 
+				case 'center': $pnl.css({ top: '50%', left: '50%', marginTop: (pnl_h / 2 ) * -1, marginLeft: (pnl_w / 2 ) * -1 }); 
 					break;
 			}
 			
@@ -671,7 +671,7 @@
 	});
 	$ui.uiDatePicker.option = {
 		selector: '.ui-datepicker',
-		dual: false,
+		multi: false,
 		date_split: '-',
 		openback: false,
 		closeback: false,
@@ -685,7 +685,7 @@
 		var opt = $.extend(true, {}, $ui.uiDatePicker.option, opt),
 			date_split = opt.date_split,
 			selector = opt.selector,
-			dual = opt.dual,
+			multi = opt.multi,
 			openback = opt.openback,
 			closeback = opt.closeback,
 			callback = opt.callback,
@@ -700,7 +700,7 @@
 			day_start,
 			day_end;
 
-		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback:openback, closeback:closeback, dual:dual });
+		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback:openback, closeback:closeback, multi:multi });
 
 		//이달의 날짜 텍스트화
 		function textDate(d, m, y, whatday) {
@@ -838,8 +838,8 @@
 			_calendarHtml += '<div class="datepicker-head-date">';
 			
 			
-			if (dual) {
-				_calendarHtml += '<div class="datepicker-dual-head">';
+			if (multi) {
+				_calendarHtml += '<div class="datepicker-multi-head">';
 				_calendarHtml += '<div class="n1">';
 				_calendarHtml += '<span class="year" data-y="'+ year +'"><strong>' + year + '</strong>년</span> ';
 				_calendarHtml += '<span class="month" data-m="'+ dateMonths[month] +'"><strong>' + dateMonths[month] + '</strong>월</span>';
@@ -905,7 +905,7 @@
 			$base.find('.datepicker-head-date').find('.year').data('y',year).find('strong').text(year);
 			$base.find('.datepicker-head-date').find('.month').data('m',dateMonths[month]).find('strong').text(dateMonths[month]);
 
-			if (dual) {
+			if (multi) {
 				if (month + 1 === 12) {
 					$base.find('.datepicker-head-date').find('.year2').data('y',year + 1).find('strong').text(year + 1);
 					$base.find('.datepicker-head-date').find('.month2').data('m', dateMonths[0]).find('strong').text(dateMonths[0]);
@@ -988,12 +988,12 @@
 
 			_calendarHtml += '</tr></tbody></table>';
 
-			// dual datepicker table 
-			if (dual) {
+			// multi datepicker table 
+			if (multi) {
 				empty_after = 0;
 		 		empty_before = daysInMonth - nextWeekDay;
 
-				_calendarHtml += '<table class="tbl-datepicker type-dual" data-date="'+ year + '' + dateMonths[month + 1] +'">';
+				_calendarHtml += '<table class="tbl-datepicker type-multi" data-date="'+ year + '' + dateMonths[month + 1] +'">';
 				_calendarHtml += '<caption>'+ year +'년 '+ dateMonths[month + 1] +'월 일자 선택</caption>';
 				_calendarHtml += '<colgroup>';
 				_calendarHtml += '<col span="7" class="n1">';
@@ -1104,7 +1104,7 @@
 			var $calWrap = $("#" + calendarEl.calId);
 			
 			$calWrap.find('.datepicker-core').empty().append(buildCore(date, calendarEl, v));
-			dayDualSelect(calendarEl);
+			dayMultiSelect(calendarEl);
 		}
 		function displayCalendar(calendarEl, v) {
 			var id_ = "#" + calendarEl.calId,
@@ -1113,7 +1113,7 @@
 			$calWrap.empty().append(buildCalendar(date, calendarEl, v));
 
 			reDisplayCalendar(calendarEl, v);
-			dayDualSelect(calendarEl);
+			dayMultiSelect(calendarEl);
 			$ui.uiFocusTab({ selector:$calWrap, type:'hold' });
 
 			//datepicker event--------------------------------------------------------
@@ -1198,7 +1198,7 @@
 				}
 			}
 
-			if (dual) {
+			if (multi) {
 				$(doc)
 					.off('click.uidaysel').on('click.uidaysel', id_ + ' td button', function() {
 						daySelectAct(calendarEl, this);
@@ -1206,7 +1206,7 @@
 					.off('mouseover.uidaysel').on('mouseover.uidaysel', id_ + ' td button', function() {
 						dayHover(this);
 					})
-					.off('mouseover.uidaysel2').on('mouseover.uidaysel2', id_ + ' .type-dual td button', function() {
+					.off('mouseover.uidaysel2').on('mouseover.uidaysel2', id_ + ' .type-multi td button', function() {
 						monthHover(this);
 					})
 					.off('mouseleave.uidaysel3').on('mouseleave.uidaysel3', id_ + ' .tbl-datepicker', function() {
@@ -1289,7 +1289,7 @@
 
 				//선택 및 반영
 				$this.addClass('selected-start').attr('aria-selected', true);
-				if (!!$this.closest('table').hasClass('type-dual')) {
+				if (!!$this.closest('table').hasClass('type-multi')) {
 					$this.closest('table').prev().find('tr').addClass('disabled').find('td').addClass('disabled').find('button');
 				}
 				$this.closest('td').addClass('on-start').prevAll().addClass('disabled').find('button');
@@ -1325,7 +1325,7 @@
 				
 				//선택 및 반영
 				$this.addClass('selected-start').attr('aria-selected', true);
-				if (!!$this.closest('table').hasClass('type-dual')) {
+				if (!!$this.closest('table').hasClass('type-multi')) {
 					$this.closest('table').prev().find('tr').addClass('disabled').find('td').addClass('disabled').find('button');
 				}
 				$this.closest('td').addClass('on-start').prevAll().addClass('disabled').find('button');
@@ -1402,13 +1402,13 @@
 			$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').append(calspaceHTML);
 			displayCalendar(calVar, 'generate');
 
-			if (dual) {
-				$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').addClass('dual');
+			if (multi) {
+				$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').addClass('multi');
 			}
 		}
 
-		function dayDualSelect(calendarEl){
-			if (dual) {
+		function dayMultiSelect(calendarEl){
+			if (multi) {
 				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + calendarEl.inputId).val() + '"]').addClass('selected-start').attr('aria-selected', true).closest('td').addClass('on-start').closest('tr').addClass('on-start').closest('table').addClass('on-start-tbl');
 				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + calendarEl.inputId + '_end').val() + '"]').addClass('selected-end').attr('aria-selected', true).closest('td').addClass('on-end').closest('tr').addClass('on-end').closest('table').addClass('on-end-tbl');
 
@@ -1426,12 +1426,9 @@
 				} else {
 					$datepicker.find('.tbl-datepicker').each(function(){
 						if (s < $(this).data('date') && $(this).data('date') < e) {
-							console.log(3333333)
 							$(this).find('td').addClass('hover-on');
 						} 
-					})
-
-
+					});
 				}
 			} else {
 				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + calendarEl.inputId).val() + '"]').addClass('selected').attr('aria-selected', true);

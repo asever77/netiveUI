@@ -7,8 +7,8 @@
 .ui-datepicker .inp-base{width:100px}
 
 .ui-datepicker .ui-datepicker-wrap{position:absolute; width:300px;}
-.ui-m .ui-datepicker .ui-datepicker-wrap{position:fixed; width:100%; padding:0 10px}
-.ui-m .ui-datepicker .ui-drop-pnl .btn-close{right:16px;}
+/* .ui-m .ui-datepicker .ui-datepicker-wrap{position:fixed; width:100%; padding:0 10px}
+.ui-m .ui-datepicker .ui-drop-pnl .btn-close{right:16px;} */
 
 .datepicker-sec {width:100%; height:100%; border:solid 1px #63686d; background:#fff; }
 .datepicker-sec select{border:0; width:auto}
@@ -21,7 +21,7 @@
 .datepicker-head-tit{border-bottom:1px solid #ccc; padding:5px; text-align:center; font-weight:600;}
 .datepicker-head-select{padding:5px 10px;}
 .datepicker-head-date{text-align:center; font-size:18px}
-.datepicker-core{min-height:250px; padding:10px;}
+.datepicker-core{min-height:220px; padding:10px;}
 
 .tb_cal_popup tbody tr td:first-child button{color:#ff0000}
 .tbl-datepicker {width:100%; }
@@ -41,6 +41,14 @@
 .tbl-datepicker td.empty {background:#fff; }
 .tbl-datepicker button:hover,
 .tbl-datepicker button.selected {color:#000; font-weight:900}
+.tbl-datepicker button.selected-end {color:#000; font-weight:900; background:#c9bbf7 !important; border-right:1px solid #ab93fa}
+.tbl-datepicker button.selected-start {color:#000; font-weight:900; background:#c9bbf7 !important; border-left:1px solid #ab93fa}
+.tbl-datepicker button.selected-ing { background:rgb(227, 247, 255);}
+.datepicker-core .btn-wrap{float:left; }
+.tbl-datepicker button:disabled{background:#f8f8f8; cursor:default}
+.tbl-datepicker td.hover:not(.disabled) button{background:#ede7ff}
+.tbl-datepicker td.hover-on:not(.disabled) button{background:#ede7ff}
+
 .tbl-datepicker button.today:hover:before,
 .tbl-datepicker button.today.selected:before{display:none}
 .tbl-datepicker button.today:before {content:""; position:absolute; top:0; left:50%; margin-left:-1px; display:block; width:4px; height:4px; background:#666; border-radius:2px;}
@@ -498,29 +506,39 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
 /* colunns 4 / gutters 16 ---------------- */
 /* handset */ 
 @media all and (max-width:599px) and (orientation:portrait) {
+    .ui-datepicker .ui-datepicker-wrap{position:fixed}
+    /* .ui-m .ui-datepicker .ui-datepicker-wrap{position:fixed; width:100%; padding:0; bottom:0; top:initial !important; margin-top:0 !important}
+    .ui-m .ui-datepicker .ui-drop-pnl .btn-close{right:16px;}  */
 }
 /* small handset */ 
 @media all and (max-width:359px) {
+    .ui-datepicker .ui-datepicker-wrap{position:fixed}
 }
 /* small handset landscape */ 
 @media all and (max-width:599px) and (orientation:landscape) { 
+    .ui-datepicker .ui-datepicker-wrap{position:fixed}
+    /* .ui-m .ui-datepicker .ui-datepicker-wrap{position:fixed; width:100%; padding:0 10px}
+    .ui-m .ui-datepicker .ui-drop-pnl .btn-close{right:16px;}  */
 
 }
 
 /* colunns 8 / gutters 16 ---------------- */
 /* tablet & handset landscape */ 
 @media all and (max-width:959px) and (orientation:landscape) { 
-
+    .ui-datepicker .ui-datepicker-wrap{position:fixed}
+    /* .ui-m .ui-datepicker .ui-datepicker-wrap{position:fixed; width:300px; padding:0;}
+    .datepicker-core {min-height:220px;} */
 }
 /* tablet  */ 
 @media all and (min-width:600px) and (max-width:1112px) and (orientation:portrait) {
+    .ui-datepicker .ui-datepicker-wrap{position:fixed}
 }
 
 
 /* colunns 12 / gutters 24  ---------------- */
 /* tablet landscape */ 
 @media all and (min-width:960px) and (max-width:1439px) and (orientation:landscape) {
-
+    .ui-datepicker .ui-datepicker-wrap{position:fixed}
 }
 
 
@@ -530,9 +548,9 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
     .ui-datepicker{display:inline-block; vertical-align:top;}
     .ui-datepicker .inp-base{width:100px}
     .ui-datepicker .ui-datepicker-wrap{position:absolute; width:300px; margin-top:0 !important}
-    .ui-datepicker .ui-datepicker-wrap.dual{width:602px;}
-    .ui-datepicker .ui-datepicker-wrap.dual:after{content:""; display:block; clear:both}
-    .ui-datepicker .ui-datepicker-wrap.dual .tbl-datepicker{width:270px; float:left; margin:0 10px}
+    .ui-datepicker .ui-datepicker-wrap.multi{width:602px;}
+    .ui-datepicker .ui-datepicker-wrap.multi:after{content:""; display:block; clear:both}
+    .ui-datepicker .ui-datepicker-wrap.multi .tbl-datepicker{width:270px; float:left; margin:0 10px}
     .datepicker-sec select{border:0; width:auto}
     .datepicker-wrap:after{content:''; display:block; clear:both}
     .datepicker-sec {width:100%; height:100%; border:solid 1px #63686d; background:#fff; }
@@ -541,8 +559,8 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
     .datepicker-head-tit{border-bottom:1px solid #ccc; padding:5px; text-align:center; font-weight:600;}
     .datepicker-head-select{padding:5px 10px;}
     .datepicker-head-date{text-align:center; font-size:18px}
-    .datepicker-dual-head{width:100%; overflow:hidden;}
-    .datepicker-dual-head > div{width:50%; float:left;}
+    .datepicker-multi-head{width:100%; overflow:hidden;}
+    .datepicker-multi-head > div{width:50%; float:left;}
     .datepicker-sec .cal-wrapper {padding:10px; min-width:450px; width:auto !important; width:450px; overflow:hidden; }
     .tb_cal_popup tbody tr td:first-child button{color:#ff0000}
     .datepicker-core{padding:10px;}
@@ -569,15 +587,9 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
     .tbl-datepicker button.selected-start {color:#000; font-weight:900; background:#c9bbf7 !important; border-left:1px solid #ab93fa}
     .tbl-datepicker button.selected-ing { background:rgb(227, 247, 255);}
     .datepicker-core .btn-wrap{float:left; }
-
     .tbl-datepicker button:disabled{background:#f8f8f8; cursor:default}
     .tbl-datepicker td.hover:not(.disabled) button{background:#ede7ff}
     .tbl-datepicker td.hover-on:not(.disabled) button{background:#ede7ff}
-    /* .date-ing-on tr.date-ing ~ tr button:hover,
-    .date-ing-on tr.date-ing td.date-ing ~ td button,
-    .date-ing-on tr.date-ing ~ tr button{ background:rgb(227, 247, 255);}
-    .date-ing-on tr.date-end td.date-end ~ td button,
-    .date-ing-on tr.date-end ~ tr button{ background:transparent;} */
 
 
     .tbl-datepicker button.today:hover:before,
