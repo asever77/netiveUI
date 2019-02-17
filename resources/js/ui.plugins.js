@@ -1282,6 +1282,7 @@
 
 				//초기화
 				$core.find('.selected-end').removeClass('selected-end').removeAttr('aria-selected');
+				$core.find('.disabled').removeClass('disabled');
 				$core.find('.hover-on').removeClass('hover-on');
 				$core.find('.selected-start').removeClass('selected-start').removeAttr('aria-selected');
 				$core.find('.selected').removeClass('selected').removeAttr('aria-selected');
