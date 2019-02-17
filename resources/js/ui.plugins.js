@@ -1321,7 +1321,8 @@
 				$core.find('.hover-on').removeClass('hover-on');
 				$core.find('.selected-start').removeClass('selected-start').removeAttr('aria-selected');
 				$core.find('.selected').removeClass('selected').removeAttr('aria-selected');
-
+				$core.data('day', n_day);
+				
 				//선택 및 반영
 				$this.addClass('selected-start').attr('aria-selected', true);
 				if (!!$this.closest('table').hasClass('type-dual')) {
