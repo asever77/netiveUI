@@ -2939,8 +2939,8 @@
 				_$uisel.addClass('on');
 				_$wrap.addClass('on ' + clsname).attr('aria-hidden', false);
 				_$opts.find('.ui-select-opt').eq(_$uisel.find(':checked').index());
-
-				customscroll ? '' :
+	
+				customscroll ? _$wrap.css('min-width', _$opts.outerWidth()) :
 				$ui.uiScroll({ target:_$wrap, value:Number(opt_h * _$uisel.find(':checked').index()), speed:0 });
 			}
 

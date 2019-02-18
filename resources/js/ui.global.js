@@ -709,8 +709,6 @@ if (!Object.keys){
 		}
 	}
 
-
-
 	function createUiPara(paraname){
 		var _tempUrl = win.location.search.substring(1),
 			_tempArray = _tempUrl.split('&'),
@@ -726,8 +724,6 @@ if (!Object.keys){
 		}
 	}
 
-
-	
 	win[global].uiScrollBar.option = {
 		id: false,
 		top:0
@@ -755,7 +751,6 @@ if (!Object.keys){
 			if (win[global].uiHasScrollBarX({ selector: $this }) && !$plugins.browser.mobile) {
 				scrollbarReady($this, i);
 			}
-			
 
 			if (opt.top > 0 && $this.children('.ui-scrollbar-item').position().top === 0) {
 				console.log('item top : ', $this.children('.ui-scrollbar-item').position().top, opt.top)
@@ -765,20 +760,19 @@ if (!Object.keys){
 
 				wheelAct($this, -120, wrap_h, item_h, max_y, true);
 			} 
-			if (opt.top > 0 && $this.children('.ui-scrollbar-item').position().left === 0) {
+			// if (opt.top > 0 && $this.children('.ui-scrollbar-item').position().left === 0) {
 				
-				var wrap_w = $this.innerWidth(),
-					item_w = $this.children('.ui-scrollbar-item').outerWidth(true),
-					max_x = item_w - wrap_w;
+			// 	var wrap_w = $this.innerWidth(),
+			// 		item_w = $this.children('.ui-scrollbar-item').outerWidth(true),
+			// 		max_x = item_w - wrap_w;
 
-				console.log('item left : ', $this.children('.ui-scrollbar-item').position().left, opt.top, wrap_w, item_w, max_x);
-				//wheelAct($this, -120, wrap_h, item_h, max_y, true);
-			}
+			// 	console.log('item left : ', $this.children('.ui-scrollbar-item').position().left, opt.top, wrap_w, item_w, max_x);
+			// 	//wheelAct($this, -120, wrap_h, item_h, max_y, true);
+			// }
 
 		});
 		scrollbarEvent();
-					
-		
+
 		function scrollbarReady(wrap_this, i){
 			var $wrap = wrap_this,
 				$item =  $wrap.children('.ui-scrollbar-item'),
@@ -793,14 +787,17 @@ if (!Object.keys){
 				$wrap.css('overflow','hidden').attr('tabindex', 0).attr('id', 'uiScrollBar_'+ i).data('ready', true):
 				$wrap.css('overflow','hidden').attr('tabindex', 0).data('ready', true);
 				
-				if (is_scrollY) {
+				console.log($wrap.outerHeight(), $wrap.outerWidth());
+				console.log($item.outerHeight(), $item.outerWidth());
+
+
+				if (is_scrollY && $wrap.outerHeight() < $item.outerHeight()) {
 					html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
 					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">세로 스크롤버튼</span></button>';
 					html_scrollbar += '</div>';
 					html_scrollbar += '</div>';
 				}
-				if (is_scrollX) {
-					console.log('가로스크롤');
+				if (is_scrollX && $wrap.outerWidth() < $item.outerWidth()) {
 					html_scrollbar += '<div class="ui-scrollbar-barwrap type-x" >';
 					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="x"><span class="hide">가로 스크롤버튼</span></button>';
 					html_scrollbar += '</div>';
@@ -830,25 +827,29 @@ if (!Object.keys){
 				var $this = $(this),
 					wrap_h = $this.innerHeight(),
 					item_h = $this.children('.ui-scrollbar-item').outerHeight(true),
+					is_y = $this.find('.type-y').length,
 					max_y = item_h - wrap_h,
 					bar_t,
 					bar_l;
 
-				console.log(wrap_h, item_h, max_y,  $this.data('data-scrollxy'));
+				console.log(wrap_h, item_h, max_y);
 			
 				//wheel event
-				$this.off('mousewheel.aa DOMMouseScroll.aa').on('mousewheel.aa DOMMouseScroll.aa', function(e){
-					e.preventDefault();
-					e.stopPropagation();
-					if ($(this).data('tabmove')) {
-						$this.scrollTop(0);
-						$this.children('.ui-scrollbar-item').css('top', 0);
-						$this.find('> .ui-scrollbar-barwrap > .ui-scrollbar-bar').css('top', 0);
-						$('.ui-scrollbar-barwrap').show();
-						$(this).data('tabmove', false);
-					}
-					wheelAct($this, e.originalEvent.wheelDelta, wrap_h, item_h, max_y);
-				});
+				if (is_y
+				) {
+					$this.off('mousewheel.aa DOMMouseScroll.aa').on('mousewheel.aa DOMMouseScroll.aa', function(e){
+						e.preventDefault();
+						e.stopPropagation();
+						if ($(this).data('tabmove')) {
+							$this.scrollTop(0);
+							$this.children('.ui-scrollbar-item').css('top', 0);
+							$this.find('> .ui-scrollbar-barwrap > .ui-scrollbar-bar').css('top', 0);
+							$('.ui-scrollbar-barwrap').show();
+							$(this).data('tabmove', false);
+						}
+						wheelAct($this, e.originalEvent.wheelDelta, wrap_h, item_h, max_y);
+					});
+				}
 
 				//mouse drag event
 				$('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e){
