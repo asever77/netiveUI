@@ -20,7 +20,7 @@
 @media all and (max-width:599px) and (orientation:landscape) { 
     body:after{content:"small handset landscape"; display:block; position:fixed; bottom:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
 
-    .main-visual{background:#b1afb4 url(/netiveUI/resources/img/common/main_visual_m2.jpg) no-repeat 0 0; background-size:cover}
+    .main-visual{background:#b1afb4 url(/netiveUI/resources/img/common/main_visual.jpg) no-repeat 50% 0; background-size:cover}
 }
 
 /* colunns 8 / gutters 16 ---------------- */
@@ -29,7 +29,7 @@
     body:after{content:"tablet & handset landscape"; display:block; position:fixed; bottom:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
 
 
-    .main-visual{background:#b1afb4 url(/netiveUI/resources/img/common/main_visual_m2.jpg) no-repeat 0 0; background-size:cover}
+    .main-visual{background:#b1afb4 url(/netiveUI/resources/img/common/main_visual.jpg) no-repeat 50% 0; background-size:cover}
 }
 /* tablet  */ 
 @media all and (min-width:600px) and (max-width:1112px) and (orientation:portrait) {
