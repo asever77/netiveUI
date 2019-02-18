@@ -752,6 +752,9 @@ if (!Object.keys){
 			if (win[global].uiHasScrollBar({ selector: $this }) && !$plugins.browser.mobile) {
 				scrollbarReady($this, i);
 			}
+			if (win[global].uiHasScrollBarX({ selector: $this }) && !$plugins.browser.mobile) {
+				scrollbarReady($this, i);
+			}
 			
 
 			if (opt.top > 0 && $this.children('.ui-scrollbar-item').position().top === 0) {
@@ -780,23 +783,22 @@ if (!Object.keys){
 			var $wrap = wrap_this,
 				$item =  $wrap.children('.ui-scrollbar-item'),
 				html_scrollbar = '',
+				is_scrollY = win[global].uiHasScrollBar({ selector: wrap_this }) && !$plugins.browser.mobile,
 				is_scrollX = win[global].uiHasScrollBarX({ selector: wrap_this }) && !$plugins.browser.mobile;
 			
-			console.log('가로스크롤', is_scrollX)
-			
-
 			//set
 			console.log(!$wrap.data('ready') || !$wrap.attr('id'));
 			if (!$wrap.data('ready') || !$wrap.attr('id')) {
 				!$wrap.attr('id') ?
 				$wrap.css('overflow','hidden').attr('tabindex', 0).attr('id', 'uiScrollBar_'+ i).data('ready', true):
 				$wrap.css('overflow','hidden').attr('tabindex', 0).data('ready', true);
-			
-				html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
-				html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">세로 스크롤버튼</span></button>';
-				html_scrollbar += '</div>';
-				html_scrollbar += '</div>';
-
+				
+				if (is_scrollY) {
+					html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
+					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">세로 스크롤버튼</span></button>';
+					html_scrollbar += '</div>';
+					html_scrollbar += '</div>';
+				}
 				if (is_scrollX) {
 					console.log('가로스크롤');
 					html_scrollbar += '<div class="ui-scrollbar-barwrap type-x" >';
