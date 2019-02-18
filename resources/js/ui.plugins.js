@@ -1364,7 +1364,6 @@
 					closeback: closeback
 				});
 			}
-
 			datepickerReady($btn);
 		});
 
