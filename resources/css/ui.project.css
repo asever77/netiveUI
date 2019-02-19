@@ -88,7 +88,7 @@ code{padding:2px 4px; font-size:100%; background-color:#eee; border-radius:4px; 
 /* page */
 .page-floating .tst-obj{width:100%; margin:0 auto; height:50px; font-size:15px; color:#000; text-align:center; padding-top:10px; border:1px dashed rgba(201,187,247, 0.5); background:rgba(201,187,247, 0.1); }
 .ui-d .page-floating .ui-floating.ui-fixed-bottom .ui-floating-wrap,
-.ui-d .page-floating .ui-floating.ui-fixed-top .ui-floating-wrap{width:calc(100% - 250px); left:230px}
+.ui-d .page-floating .ui-floating.ui-fixed-top .ui-floating-wrap{width:calc(100% - 250px); left:230px; max-width:1180px}
 .page-floating .ui-floating{margin:10px 0; border:1px dashed rgb(233, 233, 233)}
 
 .page-scroll .sample-tab{width:100%; overflow-y:hidden; overflow-x:scroll; -webkit-overflow-scrolling:touch;}

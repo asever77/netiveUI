@@ -31,22 +31,22 @@
 				<div class="tit-wrap">
 					<h1 class="h1" id="uiPageTit">Floating Range</h1>
 				</div>
+				<p class="txt-s2">특정 범위안에서만 스크롤 이동에 따라 이동하는 오브젝트</p>
 
-				<p>특정 범위안에서 스크롤에 따라 이동</p>
-
-				<h2 class="h2">Base HTML</h2>
-				<div class="ui-floating-range" id="uiflRange02" style="display:inline-block; vertical-align: middle; height:500px; width:300px; border:1px dashed #ccc; ">
+				<h2 class="h2">Examples</h2>
+				<div class="ui-floating-range" id="uiflRange01" style="display:inline-block; vertical-align: middle; height:500px; width:300px; border:1px dashed #ccc; ">
 					<div class="ui-floating-range-item">
 						<div class="tst-obj">특정 영역 안에서만 이동</div>
 					</div>
 				</div>
-				<div class="ui-floating-range" id="uiflRange01" style="display:inline-block;vertical-align: middle; height:300px; width:200px; border:1px dashed #ccc; margin-left:30px;">
+				<div class="ui-floating-range" id="uiflRange02" style="display:inline-block;vertical-align: middle; height:300px; width:200px; border:1px dashed #ccc; margin-left:30px;">
 					<div class="ui-floating-range-item">
 						<div class="tst-obj">특정 영역 안에서만 이동</div>
 					</div>
 				</div>
 				
-				
+				<h2 class="h2">HTML Structure</h2>
+				<h3 class="h3">basic type</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -58,16 +58,14 @@
 </code>
 </pre>
 </div>
-
-				<h2 class="h2">$plugins.uiFloatingRange</h2>
-				<p>필수 옵션과 선택 옵션의 정보</p>
-
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiFloatingRange</h3>
 <div class="box-code">
 <pre>
 <code>
 $plugins.uiFloatingRange({ 
 	id:'uiflRange01', 
-	add:'baseHeader' ,
+	add:'baseHeader',
 	margin: 20
 });
 </code>
@@ -132,7 +130,7 @@ $plugins.uiFloatingRange({
 				$plugins.uiFloatingRange({ 
 					id:'uiflRange02', 
 					add:'baseHeader' ,
-					margin: 50
+					margin: 0
 				});
 				
 			});
