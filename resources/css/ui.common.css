@@ -106,14 +106,14 @@ p.bul-care:before {content:"※"; position:absolute; left:0; top:2px; font-weigh
 .paragraph-a > *:first-child{margin-top:0}
 
 /* heading */
-.h1 {font-size:40px; color:#000; font-weight:100;}
-.h2 {font-size:20px; color:#111; font-weight:300;}
-.h3 {font-size:16px; color:#222; font-weight:700;}
-.h4 {font-size:16px; color:#333; font-weight:500;}
-.h5 {font-size:14px; color:#333; font-weight:900;}
-.h6 {font-size:14px; color:#333; font-weight:500;}
-.txt1{font-size:16px; color:#333; font-weight:400;}
-.txt2{font-size:14px; color:#333; font-weight:400;}
+.h1 {font-size:40px; color:#000; font-weight:100; margin:30px 0}
+.h2 {font-size:20px; color:#111; font-weight:300; margin:30px 0 5px}
+.h3 {font-size:16px; color:#222; font-weight:500; margin:20px 0 5px}
+.h4 {font-size:16px; color:#333; font-weight:500; margin:20px 0}
+.h5 {font-size:14px; color:#333; font-weight:900; margin:20px 0}
+.h6 {font-size:14px; color:#333; font-weight:500; margin:20px 0}
+.txt-s2{font-size:14px; color:#333; font-weight:400;}
+.txt-s3{font-size:16px; color:#333; font-weight:400;}
 
 /* text:type */
 [class*="txt-mark"] {display:inline-block; margin:0 5px; padding:10px 0 0;}
@@ -672,7 +672,7 @@ td .placeholder{margin-top:5px}
 .btn-wrap.txt-r [class*="btn-base"]{margin-right:0; margin-left:10px;}
 
 /* base button */
-[class*="btn-base"]{display:inline-block; padding:0 20px; min-height:40px; min-width:60px; border:1px solid #63686d; font-size:14px; text-align:center; background:#fff; vertical-align:top; color:#222; text-decoration:none;}
+[class*="btn-base"]{display:inline-block; padding:0 20px; min-height:40px; min-width:60px; border:1px solid #63686d; font-size:14px; text-align:center; background:#fff; vertical-align:top; color:#222; text-decoration:none; line-height:1;}
 div[class*="btn-base"],
 span[class*="btn-base"],
 a[class*="btn-base"]{padding:9px 20px 8px;}
