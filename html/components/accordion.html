@@ -125,7 +125,7 @@
 					</div>
 				</div>
 
-				<h3 class="h3">링크추가</h3>
+				<h3 class="h3">link type 추가</h3>
 				<div class="ui-acco" role="group" id="exeAcco4">
 					<div class="ui-acco-wrap">
 						<div class="ui-acco-tit">
@@ -150,7 +150,7 @@
 					</div>
 				</div>
 
-				<h3 class="h3">제목텍스트를 아코디언 버튼과 분리 사용</h3>
+				<h3 class="h3">제목 영역과 동작버튼 분리</h3>
 				<div class="ui-acco type-b" role="group" id="exeAcco5">
 					<div class="ui-acco-wrap">
 						<div class="ui-acco-tit">
@@ -166,27 +166,21 @@
 					<div class="ui-acco-wrap">
 						<div class="ui-acco-tit">
 							<button type="button" class="ui-acco-btn">acco4-2<span class="ui-acco-arrow">열기</span></button>
-							<a href="#" class="ui-acco-txt">개인 정보는 잘 보호하자.</a>
+							<p class="ui-acco-txt">개인 정보 <a href="#" target="_black" title="새 창 열림">새 창 보기</a></p>
 						</div>
 						<div class="ui-acco-pnl">
-							acco4-1 content
+							대략적인 개인 정보 내용.
 						</div>
 					</div>
-					<div class="ui-acco-wrap">
-						<div class="ui-acco-tit">
-							<button type="button" class="ui-acco-btn">acco4-3<span class="ui-acco-arrow">열기</span></button>
-							<a href="#" class="ui-acco-txt">링크 제목3</a>
-						</div>
-						<div class="ui-acco-pnl">
-							acco4-3 content
-						</div>
-					</div>
+
 				</div>
 
 				<h2 class="h2">HTML Structure</h2>
+				<h3 class="h3">basic type</h3>
 <div class="box-code">
 <pre>
 <code>
+//dl type
 &lt;div <span class="na">class=</span><span class="s">"ui-acco"</span> <span class="na">role=</span><span class="s">"group"</span> <span class="na">id="</span><span class="s">exeAcco1"</span>&gt;
 	&lt;dl <span class="na">class=</span><span class="s">"ui-acco-wrap"</span>&gt;
 		&lt;dt <span class="na">class=</span><span class="s">"ui-acco-tit"</span>&gt;
@@ -201,14 +195,28 @@
 	...
 &lt;/div&gt;
 
-//링크 + 버튼
-&lt;div <span class="na">class=</span><span class="s">"ui-acco type-b"</span> <span class="na">role=</span><span class="s">"group"</span> <span class="na">id="</span><span class="s">exeAcco1"</span>&gt;
+//ul type
+&lt;ul <span class="na">class=</span><span class="s">"ui-acco"</span> <span class="na">role=</span><span class="s">"group"</span> <span class="na">id="</span><span class="s">exeAcco1"</span>&gt;
+	&lt;li <span class="na">class=</span><span class="s">"ui-acco-wrap"</span>&gt;
+		&lt;div <span class="na">class=</span><span class="s">"ui-acco-tit"</span>&gt;
+			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-acco-btn"</span>&gt;acco1
+				&lt;span <span class="na">class=</span><span class="s">"ui-acco-arrow"</span>&gt;열기&lt;/span&gt;
+			&lt;/button&gt;
+		&lt;/div&gt;
+		&lt;div <span class="na">class=</span><span class="s">"ui-acco-pnl"</span>&gt;
+			acco1 content
+		&lt;/div&gt;
+	&lt;/li&gt;
+	...
+&lt;/ul&gt;
+
+//div type
+&lt;div <span class="na">class=</span><span class="s">"ui-acco"</span> <span class="na">role=</span><span class="s">"group"</span> <span class="na">id="</span><span class="s">exeAcco1"</span>&gt;
 	&lt;div <span class="na">class=</span><span class="s">"ui-acco-wrap"</span>&gt;
 		&lt;div <span class="na">class=</span><span class="s">"ui-acco-tit"</span>&gt;
 			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-acco-btn"</span>&gt;acco1
 				&lt;span <span class="na">class=</span><span class="s">"ui-acco-arrow"</span>&gt;열기&lt;/span&gt;
 			&lt;/button&gt;
-			&lt;a href="#" <span class="na">class=</span><span class="s">"ui-acco-txt"</span>&gt;링크 제목2&lt;/a&gt;
 		&lt;/div&gt;
 		&lt;div <span class="na">class=</span><span class="s">"ui-acco-pnl"</span>&gt;
 			acco1 content
@@ -219,8 +227,29 @@
 </code>
 </pre>
 </div>
-
-				<h2 class="h2">$plugins.uiAccordion</h2>
+				<h3 class="h3">type-b (제목 영역과 동작버튼 분리)</h3>
+<div class="box-code">
+<pre>
+<code>
+&lt;div <span class="na">class=</span><span class="s">"ui-acco <b>type-b</b>"</span> <span class="na">role=</span><span class="s">"group"</span> <span class="na">id="</span><span class="s">exeAcco1"</span>&gt;
+	&lt;div <span class="na">class=</span><span class="s">"ui-acco-wrap"</span>&gt;
+		&lt;div <span class="na">class=</span><span class="s">"ui-acco-tit"</span>&gt;
+			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-acco-btn"</span>&gt;acco1
+				&lt;span <span class="na">class=</span><span class="s">"ui-acco-arrow"</span>&gt;열기&lt;/span&gt;
+			&lt;/button&gt;
+			<b>&lt;p <span class="na">class=</span><span class="s">"ui-acco-txt"</span>&gt;링크 제목2&lt;/p&gt;</b>
+		&lt;/div&gt;
+		&lt;div <span class="na">class=</span><span class="s">"ui-acco-pnl"</span>&gt;
+			acco1 content
+		&lt;/div&gt;
+	&lt;/div&gt;
+	...
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiAccordion</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -291,7 +320,7 @@ $plugins<span class="na">.uiAccordion</span>({
 					</tbody>
 				</table>
 
-				<h2 class="h2">$plugins.uiAccordionToggle</h2>
+				<h3 class="h3">$plugins.uiAccordionToggle</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -386,10 +415,10 @@ $plugins<span class="na">.uiAccordionToggle</span>({ <span class="s">
 					</tbody>
 				</table>
 
-				<h2 class="h2">parameter 값으로 아코디언탭 선택방법</h2>
+				<h3 class="h3">parameter 값으로 아코디언탭 선택방법</h3>
 <div class="box-code">
 <pre><code>
-single 선택
+단일 선택
 /netiveUI/html/components/accordion.html<span class="s">?acco=1</span> 
 
 복수 선택

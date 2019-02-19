@@ -57,6 +57,7 @@ code{padding:2px 4px; font-size:100%; background-color:#eee; border-radius:4px; 
 .box-code .na{color:#4f9fcf}
 .box-code .s{color:#d44950}
 .box-code .c{color:#999}
+.box-code b{font-weight:900; }
 
 /* page */
 .tbl-grid01 .col-n1{width:auto}
@@ -85,9 +86,9 @@ code{padding:2px 4px; font-size:100%; background-color:#eee; border-radius:4px; 
 
 
 /* page */
-.page-floating .tst-obj{width:100%; margin:0 auto; height:50px; font-size:15px; color:#000; text-align:center; padding-top:10px; border:1px dashed rgba(0,0,0,0.3); background:rgba(255,255,255, 0.6); }
+.page-floating .tst-obj{width:100%; margin:0 auto; height:50px; font-size:15px; color:#000; text-align:center; padding-top:10px; border:1px dashed rgba(201,187,247, 0.5); background:rgba(201,187,247, 0.1); }
 .ui-d .page-floating .ui-floating.ui-fixed-bottom .ui-floating-wrap,
-.ui-d .page-floating .ui-floating.ui-fixed-top .ui-floating-wrap{width:calc(100% - 320px); left:230px}
+.ui-d .page-floating .ui-floating.ui-fixed-top .ui-floating-wrap{width:calc(100% - 250px); left:230px}
 .page-floating .ui-floating{margin:10px 0; border:1px dashed rgb(233, 233, 233)}
 
 .page-scroll .sample-tab{width:100%; overflow-y:hidden; overflow-x:scroll; -webkit-overflow-scrolling:touch;}

@@ -28,42 +28,63 @@
 			<aside class="base-aside" id="baseAside"></aside>
 			<main class="base-main" id="baseMain" role="main">
 				<div class="tit-wrap">
-					<h1 class="h1" id="uiPageTit">리스트</h1>
+					<h1 class="h1" id="uiPageTit">카운트넘버</h1>
 				</div>
 
-				<h2 class="h2">$plugins.uiCountStep</h2>
+				<h2 class="h2">Examples</h2>
 				<h3 class="h3">Step Count</h3>
 				<p>step 형식은 현재 소수점 숫자는 아직 지원 안합니다.(정수만 가능)<br>
 				','콤마를 자동 생성합니다.</p>
+				<div class="box-base">
+					<div class="ui-count" id="exeCount1" style="font-size:5.0rem; color:#000">504025</div>
+				</div>
 				<div class="btn-wrap txt-l">
 					<button type="button" class="btn-base" onclick="$plugins.uiCountStep({ id:'exeCount1', value: 504025 });">재실행</button>
 				</div>
+
+				<h3 class="h3">Slide Count</h3>
+				<p>slide 형식은 소수점도 지원합니다.</p>
 				<div class="box-base">
-					<div class="ui-count" id="exeCount1" style="font-size:5.0rem; color:#000">0</div>
+					<div class="ui-count" id="exeCount2" style="font-size:5.0rem; color:#000">5040.25</div>
 				</div>
+				<div class="btn-wrap txt-l">
+					<button type="button" class="btn-base" onclick="$plugins.uiCountSlide({ id:'exeCount2', value: 5040.25 });">재실행</button>
+				</div>
+
+				<h2 class="h2">HTML Structure</h2>
+				<h3 class="h3">basic type</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins.uiCountStep({ id:'exeCount1', value: 504025 });
+&lt;div class="ui-count" id="exeCount1"&gt;504025&lt;/div&gt;
 </code>
 </pre>
 </div>
 
-				<h2 class="h2">$plugins.uiCountSlide</h2>
-				<h3 class="h3">Slide Count</h3>
-				<p>slide 형식은 소수점도 지원합니다.</p>
-				<div class="btn-wrap txt-l">
-					<button type="button" class="btn-base" onclick="$plugins.uiCountSlide({ id:'exeCount2', value: 5040.25 });">재실행</button>
-				</div>
-				<div class="box-base">
-					<div class="ui-count" id="exeCount2" style="font-size:5.0rem; color:#000">0</div>
-				</div>
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiCountStep</h3>
+<div class="box-code">
+<pre>
+<code>
+$plugins.uiCountStep({ 
+	id:'exeCount1', 
+	value: 504025 
+});
+</code>
+</pre>
+</div>
+
+				<h3 class="h3">$plugins.uiCountSlide</h3>
+				
 					
 				
 <div class="box-code">
 <pre>
 <code>
-$plugins.uiCountSlide({ id:'exeCount2', value: 5040.25 });
+$plugins.uiCountSlide({ 
+	id:'exeCount2', 
+	value: 5040.25 
+});
 </code>
 </pre>
 </div>

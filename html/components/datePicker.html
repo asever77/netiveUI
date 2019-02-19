@@ -30,26 +30,41 @@
 				<div class="tit-wrap">
 					<h1 class="h1" id="uiPageTit">달력</h1>
 				</div>
+				<p class="txt-s2">날짜 선택이나 기간 선택할때 사용한다.<br>
+				PC에서만 사용하며 모바일환경에서는 사용자 단말기의 픽커를 사용하는걸 권장한다.</p>
 
-				<h2 class="h2">Single Date Picker</h2>				
-				<p>단일 날짜 선택</p>
-				<div class="mgt-s">
-					<div class="ui-datepicker inp-datepicker" id="uiDatePicker1">
-						<input class="inp-base" type="tel" value="2018-05-20" data-min="2013-10-05" data-max="2020-12-01" title="시작일" id="lnd0060Cal1">
-						<button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal1" id="uiDatePck1" aria-expanded="false"><i class="material-icons" aria-label="달력 열기">date_range</i></button>
-						<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck1" id="uiDatePck1_pnl"></section>
-					</div>
-					<div class="ui-datepicker inp-datepicker" id="uiDatePicker2">
-						<input class="inp-base" type="tel" value="2018-08-20" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="lnd0060Cal2">
-						<button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal2" id="uiDatePck2" aria-expanded="false"><i class="material-icons" aria-label="달력 열기">date_range</i></button>
-						<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck2" id="uiDatePck2_pnl"></section>
-					</div>
+				<h2 class="h2">Examples</h2>
+				<h3 class="h3">Single Date Picker</h3>				
+				<div class="ui-datepicker inp-datepicker" id="uiDatePicker1">
+					<input class="inp-base" type="date" value="2018-05-20" data-min="2013-10-05" data-max="2020-12-01" title="시작일" id="lnd0060Cal1">
+					<button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal1" id="uiDatePck1" aria-expanded="false"><i class="material-icons" aria-label="달력 열기">date_range</i></button>
+					<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck1" id="uiDatePck1_pnl"></section>
 				</div>
+				<div class="ui-datepicker inp-datepicker" id="uiDatePicker2">
+					<input class="inp-base" type="date" value="2018-08-20" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="lnd0060Cal2">
+					<button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal2" id="uiDatePck2" aria-expanded="false"><i class="material-icons" aria-label="달력 열기">date_range</i></button>
+					<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck2" id="uiDatePck2_pnl"></section>
+				</div>
+				<h3 class="h3">Multiple Date picker</h3>				
+				<div class="ui-datepicker" id="uiDatePicker3">
+					<div class="inp-datepicker">					
+						<input class="inp-base" type="date" value="2018-08-20" data-min="2013-10-05" data-max="2020-12-01" title="시작일" id="lnd0060Cal3">
+						<span class="txt-mark">~</span>
+						<input class="inp-base" type="date" value="2018-10-20" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="lnd0060Cal3_end">
+						<button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal3" id="uiDatePck3" aria-expanded="false">
+							<i class="material-icons" aria-label="달력 열기">date_range</i>
+						</button>
+					</div>
+					<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck3" id="uiDatePck3_pnl"></section>
+				</div>
+
+				<h2 class="h2">HTML Structure</h2>
+				<h3 class="h3">Single type</h3>
 <div class="box-code">
 <pre>
 <code>
 &lt;div class="ui-datepicker inp-datepicker" id="uiDatePicker1"&gt;
-	&lt;input class="inp-base" type="tel" value="2018-05-20" data-min="2013-10-05" data-max="2020-12-01" title="시작일" id="lnd0060Cal1"&gt;
+	&lt;input class="inp-base" type="date" value="2018-05-20" data-min="2013-10-05" data-max="2020-12-01" title="시작일" id="lnd0060Cal1"&gt;
 	&lt;button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal1" id="uiDatePck1" aria-expanded="false"&gt;
 		&lt;i class="material-icons" aria-label="달력 열기"&gt;date_range&lt;/i&gt;
 	&lt;/button&gt;
@@ -58,30 +73,16 @@
 </code>
 </pre>
 </div>
-				
-				
 
-				<h2 class="h2">Multiple Date picker</h2>				
-				<p>기간 선택</p>
-				<div class="ui-datepicker mgt-s" id="uiDatePicker3">
-					<div class="inp-datepicker">					
-						<input class="inp-base" type="tel" value="2018-08-20" data-min="2013-10-05" data-max="2020-12-01" title="시작일" id="lnd0060Cal3">
-						<span class="txt-mark">~</span>
-						<input class="inp-base" type="tel" value="2018-10-20" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="lnd0060Cal3_end">
-						<button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal3" id="uiDatePck3" aria-expanded="false">
-							<i class="material-icons" aria-label="달력 열기">date_range</i>
-						</button>
-					</div>
-					<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck3" id="uiDatePck3_pnl"></section>
-				</div>
+				<h3 class="h3">Multiple type</h3>			
 <div class="box-code">
 <pre>
 <code>
 &lt;div class="ui-datepicker" id="uiDatePicker3"&gt;
 	&lt;div class="inp-datepicker"&gt;					
-		&lt;input class="inp-base" type="tel" value="2018-08-20" data-min="2013-10-05" data-max="2020-12-01" title="시작일" id="lnd0060Cal3"&gt;
+		&lt;input class="inp-base" type="date" value="2018-08-20" data-min="2013-10-05" data-max="2020-12-01" title="시작일" id="lnd0060Cal3"&gt;
 		&lt;span class="txt-mark"&gt;~&lt;/span&gt;
-		&lt;input class="inp-base" type="tel" value="2018-10-20" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="lnd0060Cal3_end"&gt;
+		&lt;input class="inp-base" type="date" value="2018-10-20" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="lnd0060Cal3_end"&gt;
 		&lt;button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal3" id="uiDatePck3" aria-expanded="false"&gt;
 			&lt;i class="material-icons" aria-label="달력 열기"&gt;date_range&lt;/i&gt;
 		&lt;/button&gt;
@@ -104,7 +105,7 @@
 						</thead>
 						<tbody class="txt-l">
 							<tr>
-								<th scope="row" rowspan="3">input type="text"</th>
+								<th scope="row" rowspan="4">input type="date"</th>
 								<th scope="row">data-min</th>
 								<td>2013-01-01</td>
 								<td>최소선택 년월일</td>
@@ -118,6 +119,11 @@
 								<th scope="row">id</th>
 								<td>유니크한 아이디이름 A</td>
 								<td>input의 id와 ui-datepicker-btn의 버튼의 data-inp과 동일한 이름 사용</td>
+							</tr>
+							<tr>
+								<th scope="row">id (multi 일 경우)</th>
+								<td>유니크한 아이디이름 A + '_end'</td>
+								<td>시작일 아이디에 _end 를 붙인 이름 규칙으로 아이디 사용</td>
 							</tr>
 
 							<tr>
@@ -147,8 +153,9 @@
 					</table>
 				
 				</div>
-				
-				<h2 class="h2">$plugins.uiDatePicker</h2>
+
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiDatePicker</h3>
 <div class="box-code">
 <pre>
 <code>

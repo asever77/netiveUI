@@ -107,8 +107,8 @@ p.bul-care:before {content:"※"; position:absolute; left:0; top:2px; font-weigh
 
 /* heading */
 .h1 {font-size:40px; color:#000; font-weight:100; margin:30px 0}
-.h2 {font-size:20px; color:#111; font-weight:300; margin:30px 0 5px}
-.h3 {font-size:16px; color:#222; font-weight:500; margin:20px 0 5px}
+.h2 {font-size:30px; color:#111; font-weight:300; margin:40px 0 5px}
+.h3 {font-size:20px; color:#222; font-weight:500; margin:30px 0 5px}
 .h4 {font-size:16px; color:#333; font-weight:500; margin:20px 0}
 .h5 {font-size:14px; color:#333; font-weight:900; margin:20px 0}
 .h6 {font-size:14px; color:#333; font-weight:500; margin:20px 0}
@@ -422,6 +422,14 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 .inp-datepicker .ui-datepicker-btn{border:0; padding:0; min-width:38px; height:38px;}
 .inp-datepicker .ui-datepicker-btn:focus,
 .inp-datepicker .ui-datepicker-btn:hover{border:0; outline:0}
+
+/* Removes the clear button from date inputs */
+input[type="date"]::-webkit-clear-button {display: none;}
+/* Removes the spin button */
+input[type="date"]::-webkit-inner-spin-button { display: none;}
+/* Always display the drop down caret */
+input[type="date"]::-webkit-calendar-picker-indicator {display: none;}
+input[type="date"] {appearance: none;-webkit-appearance: none; }
 
 /* base form:select */
 select {display:inline-block; position:relative; vertical-align:top; width:auto; height:40px; padding:0 40px 0 10px; border-radius:2px; 

@@ -32,37 +32,96 @@
 					<h1 class="h1" id="uiPageTit">Floating</h1>
 				</div>
 
-				<p>흐름안의 위치에서 벗어나 고정되는 오브젝트 영역 설정</p>
-				
-<div class="box-code">
-<pre>
-<code>
-&lt;div <span class="na">class=</span><span class="s">"ui-floating"</span> <span class="na">id=</span><span class="s">"exeFix1"</span>&gt;
-&lt;div <span class="na">class=</span><span class="s">"ui-floating-wrap"</span>&gt;
-	...
-&lt;/div&gt;
-&lt;/div&gt;
-</code>
-</pre>
-</div>
-				<h2 class="h2">상단고정 → 흐름</h2>
-				<p>상단에 fixed로 고정에서 원래 오브젝트의 위치에서 흐름안으로 들어가는 방식</p>
+				<p>원위치에서 벗어나 고정되는 오브젝트 영역 설정</p>
+				<h2 class="h2">Examples</h2>
+				<h3 class="h3">상단고정 → 원위치</h3>
+				<p>상단에 fixed로 고정에서 원위치로 들어가는 방식</p>
 				<div class="ui-floating" id="exeFix10">
 					<div class="ui-floating-wrap">
-						<div class="tst-obj">상단고정 → 흐름1</div>
+						<div class="tst-obj">상단고정 → 원위치1</div>
 					</div>
 				</div>
 				<div class="ui-floating" id="exeFix11">
 					<div class="ui-floating-wrap">
-						<div class="tst-obj">상단고정 → 흐름2</div>
+						<div class="tst-obj">상단고정 → 원위치2</div>
 					</div>
 				</div>	
 				<div class="ui-floating" id="exeFix12">
 					<div class="ui-floating-wrap">
-						<div class="tst-obj">상단고정 → 흐름3</div>
+						<div class="tst-obj">상단고정 → 원위치3</div>
+					</div>
+				</div>
+
+				<h3 class="h3">원위치 → 상단고정</h3>
+				<p>특정위치에 도달하면 원위치에서 벗어나 상단에 fixed로 고정되는 방식</p>
+				<div class="ui-floating" id="exeFix1">
+					<div class="ui-floating-wrap">
+						<div class="tst-obj">원위치 → 상단고정1</div>
+					</div>
+				</div>
+				<div class="ui-floating" id="exeFix2">
+					<div class="ui-floating-wrap">
+						<div class="tst-obj">원위치 → 상단고정2</div>
+					</div>
+				</div>
+				<div class="ui-floating" id="exeFix3">
+					<div class="ui-floating-wrap">
+						<div class="tst-obj">원위치 → 상단고정3</div>
+					</div>
+				</div>
+
+				<h3 class="h3">하단고정 → 원위치</h3>
+				<p>하단에 fixed로 고정에서 원위치로 들어가는 방식</p>
+				<div class="ui-floating" id="exeFix4">
+					<div class="ui-floating-wrap">
+						<div class="tst-obj">하단고정 → 원위치1</div>
+					</div>
+				</div>
+				<div class="ui-floating" id="exeFix5">
+					<div class="ui-floating-wrap">
+						<div class="tst-obj">하단고정 → 원위치2</div>
 					</div>
 				</div>	
-				
+				<div class="ui-floating" id="exeFix6">
+					<div class="ui-floating-wrap">
+						<div class="tst-obj">하단고정 → 원위치3</div>
+					</div>
+				</div>
+
+				<h3 class="h3">원위치 → 하단고정</h3>
+				<p>특정위치에 도달하면 원위치에서 벗어나 하단에 fixed로 고정되는 방식</p>
+				<div class="ui-floating" id="exeFix7">
+					<div class="ui-floating-wrap">
+						<div class="tst-obj">원위치 → 하단고정1</div>
+					</div>
+				</div>
+				<div class="ui-floating" id="exeFix8">
+					<div class="ui-floating-wrap">
+						<div class="tst-obj">원위치 → 하단고정2</div>
+					</div>
+				</div>
+				<div class="ui-floating" id="exeFix9">
+					<div class="ui-floating-wrap">
+						<div class="tst-obj">원위치 → 하단고정3</div>
+					</div>
+				</div>
+
+				<h2 class="h2">HTML Structure</h2>
+				<h3 class="h3">basic type</h3>
+<div class="box-code">
+<pre>
+<code>
+&lt;div <span class="na">class=</span><span class="s">"ui-floating"</span> <span class="na">id=</span><span class="s">"exeFix1"</span>&gt;
+	&lt;div <span class="na">class=</span><span class="s">"ui-floating-wrap"</span>&gt;
+		...
+	&lt;/div&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiFloating</h3>
+				<h4 class="h4">상단고정 → 원위치</h4>
 <div class="box-code">
 <pre>
 <code>
@@ -73,63 +132,18 @@ $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix10', ps:
 </code>
 </pre>
 </div>
-				<h2 class="h2">흐름 → 상단고정</h2>
-				<p>특정위치에서 흐름에서 벗어나 상단에 fixed로 고정되는 방식</p>
-				<div class="ui-floating" id="exeFix1">
-					<div class="ui-floating-wrap">
-						<div class="tst-obj">흐름 → 상단고정1</div>
-					</div>
-				</div>	
+				<h4 class="h4">원위치 → 상단고정</h4>
 <div class="box-code">
 <pre>
 <code>
 $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix1', ps:'top', fix:false</span> });
-</code>
-</pre>
-</div>	
-				<div class="ui-floating" id="exeFix2">
-					<div class="ui-floating-wrap">
-						<div class="tst-obj">흐름 → 상단고정2</div>
-					</div>
-				</div>
-<div class="box-code">
-<pre>
-<code>
 $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix2', ps:'top', add:'exeFix1' fix:false</span> });
-</code>
-</pre>
-</div>
-				<div class="ui-floating" id="exeFix3">
-					<div class="ui-floating-wrap">
-						<div class="tst-obj">흐름 → 상단고정3</div>
-					</div>
-				</div>
-<div class="box-code">
-<pre>
-<code>
 $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix3', ps:'top', add:'exeFix2' fix:false</span> });
 </code>
 </pre>
 </div>
 			
-				<h2 class="h2">하단고정 → 흐름</h2>
-				<p>하단에 fixed로 고정에서 원래 오브젝트의 위치에서 흐름안으로 들어가는 방식</p>
-				<div class="ui-floating" id="exeFix4">
-					<div class="ui-floating-wrap">
-						<div class="tst-obj">하단고정 → 흐름1</div>
-					</div>
-				</div>
-				<div class="ui-floating" id="exeFix5">
-					<div class="ui-floating-wrap">
-						<div class="tst-obj">하단고정 → 흐름2</div>
-					</div>
-				</div>	
-				<div class="ui-floating" id="exeFix6">
-					<div class="ui-floating-wrap">
-						<div class="tst-obj">하단고정 → 흐름3</div>
-					</div>
-				</div>	
-				
+				<h4 class="h4">하단고정 → 원위치</h4>
 <div class="box-code">
 <pre>
 <code>
@@ -140,47 +154,17 @@ $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix4', ps:'
 </code>
 </pre>
 </div>
-				<h2 class="h2">흐름 → 하단고정</h2>
-				<p>특정위치에서 흐름에서 벗어나 하단에 fixed로 고정되는 방식</p>
-				<div class="ui-floating" id="exeFix7">
-					<div class="ui-floating-wrap">
-						<div class="tst-obj">흐름 → 하단고정1</div>
-					</div>
-				</div>
+				<h4 class="h4">원위치 → 하단고정</h4>
 <div class="box-code">
 <pre>
 <code>
 $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix7', ps:'bottom', fix:false</span> });
-</code>
-</pre>
-</div>	
-				<div class="ui-floating" id="exeFix8">
-					<div class="ui-floating-wrap">
-						<div class="tst-obj">흐름 → 하단고정2</div>
-					</div>
-				</div>
-				
-<div class="box-code">
-<pre>
-<code>
 $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix8', ps:'bottom', add:'exeFix7', fix:false</span> });
-</code>
-</pre>
-</div>	
-				<div class="ui-floating" id="exeFix9">
-					<div class="ui-floating-wrap">
-						<div class="tst-obj">흐름 → 하단고정3</div>
-					</div>
-				</div>
-<div class="box-code">
-<pre>
-<code>
 $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix9', ps:'bottom', add:'exeFix8', fix:false</span> });
 </code>
 </pre>
 </div>	
-			<h2 class="h2">$plugins.uiFloating</h2>
-				<p>필수 옵션과 선택 옵션의 정보</p>
+
 				<table class="tbl-base type-option" style="margin-bottom:100px">
 				<caption>옵션 설명</caption>
 				<colgroup>

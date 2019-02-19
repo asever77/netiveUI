@@ -18,7 +18,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 	<script src="/netiveUI/resources/js/lib/canvas-toBlob.js"></script>
 	<script src="/netiveUI/resources/js/lib/FileSaver.js"></script>
-	<script src="/netiveUI/resources/js/lib/netiveUI/html2canvas.js"></script>
+	<script src="/netiveUI/resources/js/lib/html2canvas.js"></script>
 
 	<script src="/netiveUI/resources/js/ui.base.js"></script>
 
@@ -41,24 +41,40 @@
 			<aside class="base-aside" id="baseAside"></aside>
 			<main class="base-main" id="baseMain" role="main">
 				<div class="tit-wrap">
-					<h1 class="h1" id="uiPageTit">리스트</h1>
+					<h1 class="h1" id="uiPageTit">캡쳐</h1>
 				</div>
+				<p class="txt-s2">지정된 영역을 캡쳐하여 이미지로 저장합니다.</p>
 
-				<h2 class="h2">$plugins.uiCapture</h2>
-				<article id="capSct" class="capSct mgt-m">
+				<h2 class="h2">Examples</h2>
+				<div id="capSct" class="capSct mgt-m">
 					<span class="logo-bg">
 					<img src="/netiveUI/resources/img/dummy/@iu1.jpg" alt="">
 					</span>
 					<h1>나의 아저씨</h1>
 					<p>점선영역의 이미지와 텍스트를 캡쳐하여 이미지로 저장합니다.</p>
-
-				</article>
+				</div>
 				<button type="button" class="btn-base" id="uiCaptureBtn"><span>캡쳐하기</span></button>
-			
+
+				<h2 class="h2">HTML Structure</h2>
+				<h3 class="h3">basic type</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiCapture</span>({ <span class="si">id:'capSct'</span> });
+&lt;div id="capSct"&gt;
+	...
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiCapture</h3>
+<div class="box-code">
+<pre>
+<code>
+$plugins<span class="na">.uiCapture</span>({ <span class="si">
+	id:'capSct'</span> 
+});
 <span class="c">// id:'캡쳐할 영역의 아이디'
 // 필수 라이브러리 : canvas-toBlob.js, FileSaver.js, html2canvas.js</span>
 </code>
@@ -78,8 +94,9 @@ $plugins<span class="na">.uiCapture</span>({ <span class="si">id:'capSct'</span>
 			$(doc).ready(function(){
 				
 				console.log('page ready after')
-				$plugins.page.capture();
-
+				$('#uiCaptureBtn').on('click',function(){
+					$plugins.uiCapture({ id: 'capSct' });
+				});
 			});
 		})(jQuery, window, document);
 	</script>

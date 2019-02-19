@@ -31,62 +31,45 @@
 				<div class="tit-wrap">
 					<h1 class="h1" id="uiPageTit">벽돌 리스트</h1>
 				</div>
+				<p class="txt-s2">벽돌을 쌓아 올리듯 비어있는 공간이 없이 정렬시키는 리스트이다.<br>
+				가로 길이를 동일한 길이로 기준으로 맞추어 정리되며 옵션에서 margin 값으로 간격조절이 가능하다.</p>
 
-				<h2 class="h2">Brick Type List</h2>
-				<p>벽돌처럼 차곡차곡 정렬되는 느낌의 리스트형태</p>
+				<h2 class="h2">Examples</h2>
 				<div class="ui-bricklist mgt-m" role="list" id="uiBrickList1">
 					<ul class="ui-bricklist-wrap">
 						<li class="ui-bricklist-item" role="listitem">
 							<div><img src="/netiveUI/resources/img/dummy/@iu1.jpg" alt=""></div>
-							
-						</li>
-						
+						</li>					
 						<li class="ui-bricklist-item" role="listitem">
 							<div><img src="/netiveUI/resources/img/dummy/@iu2.jpg" alt=""></div>
-							
-						</li>
-						
+						</li>					
 						<li class="ui-bricklist-item" role="listitem">
 							<div><img src="/netiveUI/resources/img/dummy/@iu3.jpg" alt=""></div>
-							
-						</li>
-						
+						</li>						
 						<li class="ui-bricklist-item" role="listitem">
 							<div><img src="/netiveUI/resources/img/dummy/@iu4.jpg" alt=""></div>
-							
 						</li>
-						
 						<li class="ui-bricklist-item" role="listitem">
 							<div><img src="/netiveUI/resources/img/dummy/@iu5.jpg" alt=""></div>
-							
 						</li>
-						
 						<li class="ui-bricklist-item" role="listitem">
 							<div><img src="/netiveUI/resources/img/dummy/@iu6.jpg" alt=""></div>
-							
 						</li>
-						
 						<li class="ui-bricklist-item" role="listitem">
 							<div><img src="/netiveUI/resources/img/dummy/@iu7.jpg" alt=""></div>
-							
 						</li>
-						
 						<li class="ui-bricklist-item" role="listitem">
 							<div><img src="/netiveUI/resources/img/dummy/@iu8.jpg" alt=""></div>
-							
 						</li>
-						
 						<li class="ui-bricklist-item" role="listitem">
 							<div><img src="/netiveUI/resources/img/dummy/@iu9.jpg" alt=""></div>
-							
 						</li>
-						
-
 					</ul>
 					
-					<button type="button" class="btn-base ui-add">추가</button>
+					<button type="button" class="btn-base ui-add mgt-m">추가</button>
 				</div>
 				<h2 class="h2">HTML Structure</h2>
+				<h3 class="h3">basic type</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -103,7 +86,8 @@
 </pre>
 </div>
 
-				<h2 class="h2">$plugins.uiBrickList</h2>
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiBrickList</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -154,7 +138,7 @@ $plugins<span class="na">.uiBrickList</span>({ <span class="s">
 					</tbody>
 				</table>
 
-				<h2 class="h2">$plugins.uiBrickListAdd</h2>
+				<h3 class="h3">$plugins.uiBrickListAdd</h3>
 				<p>동적으로 추가되는 리스트가 있을 경우 사용</p>
 <div class="box-code">
 <pre>

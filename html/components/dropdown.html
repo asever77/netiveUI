@@ -71,16 +71,66 @@
 				<div class="tit-wrap">
 					<h1 class="h1" id="uiPageTit">Dropdown</h1>
 				</div>
+				<p class="txt-s2">Dropdown은 기본적으로 토글방식으로 문맥상에서 추가적인 콘텐츠나 메뉴에 사용<br>
+				기본적으로 12가지 위치를 제공하고 있으며 위치에 따른 자동설정도 가능하다. <br>
+				크게 두가지로 하나는 문장의 흐름에 맞추어 위치한 경우와 모달팝업과 같이 위치가 밖에 있는 경우가 있다.<br>
+				datePicker 사용 시 필수로 필요한 compontent 요소이다.</p>
 
-				<h2 class="h2">드롭다운 콘텐츠영역 위치</h2>
-				<p>드롭다운 형식의 토글 레이어입니다. 크게 두가지로 하나는 문장의 흐름에 맞추어 위치한 경우와 모달팝업과 같이 위치가 밖에 있는 경우</p>
+				<h2 class="h2">Examples</h2>
+				<h3 class="h3">basic type (논리적인 순서 구조)</h3>
+				<p>문단흐름에 맞추어 마크업 구조도 동일하게 구성</p>
+				<div class="form-item mgt-s">
+					<div class="ui-select" style="width:130px">
+						<select class="drop-ps-change" title="정렬선택" id="testPs2">
+							<option>Test 위치 선택</option>
+							<option value="tl">상단 좌측정렬</option>
+							<option value="tc">상단 중앙정렬</option>
+							<option value="tr">상단 우측정렬</option>
+							<option value="bl">하단 좌측정렬</option>
+							<option value="bc">하단 중앙정렬</option>
+							<option value="br">하단 우측정렬</option>
+							<option value="rt">우측 상단정렬</option>
+							<option value="rm">우측 중앙정렬</option>
+							<option value="rb">우측 하단정렬</option>
+							<option value="lt">좌측 상단정렬</option>
+							<option value="lm">좌측 중앙정렬</option>
+							<option value="lb">좌측 하단정렬</option>
+						</select>
+					</div>
+					<button type="button" class="btn-base ui-drop mgl-xxs" id="uiDrop2"><span>드롭다운</span></button>
+					<section class="ui-drop-pnl test-w-300" data-id="uiDrop2">
+						<div class="ui-drop-box">
+							<h1>제목</h1>
+							<p>abcdefg hijklmn opqrstu vwxyz</p>
+							<p>abcdefg hijklmn opqrstu vwxyz</p>
+							<p>abcdefg hijklmn opqrstu vwxyz</p>
+							<p>abcdefg hijklmn opqrstu vwxyz</p>
+					
+							<button type="button" class="btn-base ui-drop" id="uiDrop5"><span>드롭다운</span></button>
+							<section class="ui-drop-pnl" data-id="uiDrop5">
+								<div class="ui-drop-box" style="width:300px">
+									<h1>제목</h1>
+									<p>abcdefg hijklmn opqrstu vwxyz</p>
+									<p>abcdefg hijklmn opqrstu vwxyz</p>
+									<p>abcdefg hijklmn opqrstu vwxyz</p>
+									<p>abcdefg hijklmn opqrstu vwxyz</p>
+									<p>abcdefg hijklmn opqrstu vwxyz</p>
+								</div>
+								<button type="button" class="ui-drop-close btn-close">닫기</button>
+							</section>
+							
+							<p>abcdefg hijklmn opqrstu vwxyz</p>
+						</div>
+						<button type="button" class="ui-drop-close btn-close">닫기</button>
+					</section>
+				</div>
 
-				<h3 class="h3">baseLayer에 위치</h3>
+				<h3 class="h3">baseLayer type (baseLayer 위치에 있는 구조)</h3>
 				<p>z-index 값 상속문제나 overflow:hidden 속성 등으로 드롭다운 콘텐츠가 문장의 흐름에서 벗어나야할 경우 사용(baseLayer에 위치)</p>
 				<div class="form-item mgt-s">
 					<div class="ui-select" style="width:130px">
 						<select class="drop-ps-change" title="정렬선택" id="testPs1">
-							<option>Test</option>
+							<option>Test 위치 선택</option>
 							<option value="tl">상단 좌측정렬</option>
 							<option value="tc">상단 중앙정렬</option>
 							<option value="tr">상단 우측정렬</option>
@@ -97,6 +147,25 @@
 					</div>
 					<button type="button" class="btn-base ui-drop mgl-xxs" id="uiDrop1" aria-expanded="true"><span>드롭다운</span></button>
 				</div>
+
+
+				<h2 class="h2">HTML Structure</h2>
+				<h3 class="h3">basic type</h3>				
+<div class="box-code">
+<pre>
+<code>
+&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
+	&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn-base ui-drop"</span> <span class="na">id=</span><span class="s">"uiDrop1"</span>&gt;&lt;span&gt;드롭다운&lt;/span&gt;&lt;/button&gt;
+	&lt;div <span class="na">class=</span><span class="s">"ui-drop-wrap"</span> <span class="na">id=</span><span class="s">"uiDrpwrap"</span>&gt;
+		&lt;section <span class="na">class=</span><span class="s">"ui-drop-pnl"</span> <span class="na">data-id=</span><span class="s">"uiDrop1"</span>&gt;
+			....
+		&lt;/section&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+				<h3 class="h3">baseLayer type</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -113,69 +182,9 @@
 </pre>
 </div>	
 					
-			<h3 class="h3">논리적인 순서 구조</h3>
-			<p>문단흐름에 맞추어 마크업 구조도 동일하게 구성</p>
-			<div class="form-item mgt-s">
-				<div class="ui-select" style="width:130px">
-					<select class="drop-ps-change" title="정렬선택" id="testPs2">
-						<option>Test</option>
-						<option value="tl">상단 좌측정렬</option>
-						<option value="tc">상단 중앙정렬</option>
-						<option value="tr">상단 우측정렬</option>
-						<option value="bl">하단 좌측정렬</option>
-						<option value="bc">하단 중앙정렬</option>
-						<option value="br">하단 우측정렬</option>
-						<option value="rt">우측 상단정렬</option>
-						<option value="rm">우측 중앙정렬</option>
-						<option value="rb">우측 하단정렬</option>
-						<option value="lt">좌측 상단정렬</option>
-						<option value="lm">좌측 중앙정렬</option>
-						<option value="lb">좌측 하단정렬</option>
-					</select>
-				</div>
-				<button type="button" class="btn-base ui-drop mgl-xxs" id="uiDrop2"><span>드롭다운</span></button>
-				<section class="ui-drop-pnl test-w-300" data-id="uiDrop2">
-					<div class="ui-drop-box">
-						<h1>제목</h1>
-						<p>abcdefg hijklmn opqrstu vwxyz</p>
-						<p>abcdefg hijklmn opqrstu vwxyz</p>
-						<p>abcdefg hijklmn opqrstu vwxyz</p>
-						<p>abcdefg hijklmn opqrstu vwxyz</p>
-						
-						<button type="button" class="btn-base ui-drop" id="uiDrop5"><span>드롭다운</span></button>
-						<section class="ui-drop-pnl" data-id="uiDrop5">
-							<div class="ui-drop-box" style="width:300px">
-								<h1>제목</h1>
-								<p>abcdefg hijklmn opqrstu vwxyz</p>
-								<p>abcdefg hijklmn opqrstu vwxyz</p>
-								<p>abcdefg hijklmn opqrstu vwxyz</p>
-								<p>abcdefg hijklmn opqrstu vwxyz</p>
-								<p>abcdefg hijklmn opqrstu vwxyz</p>
-							</div>
-							<button type="button" class="ui-drop-close btn-close">닫기</button>
-						</section>
-						
-						<p>abcdefg hijklmn opqrstu vwxyz</p>
-					</div>
-					<button type="button" class="ui-drop-close btn-close">닫기</button>
-				</section>
-			</div>
-				
-<div class="box-code">
-<pre>
-<code>
-&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
-	&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"btn-base ui-drop"</span> <span class="na">id=</span><span class="s">"uiDrop1"</span>&gt;&lt;span&gt;드롭다운&lt;/span&gt;&lt;/button&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-drop-wrap"</span> <span class="na">id=</span><span class="s">"uiDrpwrap"</span>&gt;
-		&lt;section <span class="na">class=</span><span class="s">"ui-drop-pnl"</span> <span class="na">data-id=</span><span class="s">"uiDrop1"</span>&gt;
-			....
-		&lt;/section&gt;
-	&lt;/div&gt;
-&lt;/div&gt;
-</code>
-</pre>
-</div>
-				<h2 class="h2">$plugins.uiDropdown</h2>
+			
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiDropdown</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -192,7 +201,7 @@ $plugins<span class="na">.uiDropdown</span>({ <span class="s">
 </code>
 </pre>
 </div>
-				<h2 class="h2">$plugins.uiDropdownToggle</h2>
+				<h3 class="h3">$plugins.uiDropdownToggle</h3>
 <div class="box-code">
 <pre>
 <code>
