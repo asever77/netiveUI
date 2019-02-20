@@ -229,14 +229,7 @@
     }
 
     $plugins.page.popup = function(){
-        $('#uiPopupA').on('click', function(e){
-            e.preventDefault();
-            $plugins.uiPopup({ link:$(this).attr('href'), width:200  });
-        });
-        $('#uiPopupB').on('click', function(e){
-            e.preventDefault();
-            $plugins.uiPopup({ link:$(this).attr('href'), name:'list'  });
-        });
+       
     }
 
     $plugins.page.scrollmove = function(){

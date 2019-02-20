@@ -218,7 +218,7 @@ if (!Object.keys){
             }
         });
     }
-	console.log(win[global])
+	console.log(win[global]);
 	//components option
 	win[global].option = {
 		keys: { 
@@ -1102,6 +1102,8 @@ if (!Object.keys){
 			}
 		});
 	}
+
+
 	win[global].uiPopup.option = {
 		name: 'new popup',
 		width: 790,
@@ -1131,6 +1133,9 @@ if (!Object.keys){
 		
 		win.open(opt.link, opt.name , specs);
 	}
+
+
+
 	function creaeteUiCookieSet(opt){
 		var cookieset = opt.name + '=' + opt.value + ';',
 			expdate;
