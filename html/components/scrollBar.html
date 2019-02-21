@@ -32,45 +32,33 @@
 					<h1 class="h1" id="uiPageTit">스크롤바</h1>
 				</div>
 
-				<h2 class="h2">$plugins.uiScrollBar</h2>
-				<p>디자인 스크롤바</p>	
-<div class="box-code">
-<pre>
-<code>
-//스크립트 적용 전
-&lt;div class="ui-scrollbar"&gt;
-	&lt;div class="ui-scrollbar-item"&gt;
-	..........
-	&lt;/div&gt;
-&lt;/div&gt;
+				<h2 class="h2">Examples</h2>
+				<div style="margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:217px; border:1px dashed #ccc; overflow:auto">
+					<div style="width:100%; background:#ccc;">
+						<img src="/netiveUI/resources/img/dummy/w2.png" alt="" style="width:100%; display:block">
+					</div>
+				</div>
 
-//전체 적용 .ui-scrollbar
-$plugins.uiScrollBar();
+				<div class="ui-scrollbar" style="margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:200px; border:1px dashed #ccc;">
+					<div class="ui-scrollbar-item" style="background:#ccc;">
+						<img src="/netiveUI/resources/img/dummy/w2.png" alt="" style="width:100%; display:block">
+					</div>
+				</div>
+				
+				<div class="ui-scrollbar" id="scrbar1" style="margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:150px; border:1px dashed #ccc;">
+					<div class="ui-scrollbar-item" style="background:#ccc;">
+						<img src="/netiveUI/resources/img/dummy/@iu16.jpg" alt="" style=" display:block">
+					</div>
+				</div>
 
-//개별 적용
-$plugins.uiScrollBar({
-	id: 'id name',
-	top: 0
-});
+				<div class="ui-scrollbar" style="margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:150px; border:1px dashed #ccc;">
+					<div class="ui-scrollbar-item" style="background:#ccc;">
+						<img src="/netiveUI/resources/img/dummy/w2.png" alt="" style="display:block">
+					</div>
+				</div>
 
-
-//스크립트 적용 후
-&lt;div class="ui-scrollbar" id="uiScrollBar_0"&gt;
-	&lt;div class="ui-scrollbar-barwrap"&gt;
-		&lt;button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" style="height: 26%;"&gt;
-			&lt;span class="hide">스크롤버튼&lt;/span&gt;
-		&lt;/button&gt;
-	&lt;/div&gt;
-	&lt;div class="ui-scrollbar-item"&gt;
-	..........
-	&lt;/div&gt;
-&lt;/div&gt;
-</code>
-</pre>
-</div>
-
-				<div class="ui-scrollbar" style="display:inline-block; vertical-align:top; height:200px; width:300px; border:1px dashed #ccc;">
-					<div class="ui-scrollbar-item" style="">
+				<div class="ui-scrollbar" style="margin:10px 10px 0 0; display:inline-block; vertical-align:top; height:400px; width:200px; border:1px dashed #ccc;">
+					<div class="ui-scrollbar-item">
 						<p>
 						이 밤 그날의 <a href="#">반딧불</a>을<br>
 						당신의 창 가까이 보낼게요<br>
@@ -128,20 +116,9 @@ $plugins.uiScrollBar({
 					</div>
 				</div>
 
-				<div class="ui-scrollbar" style="margin-left:10px; vertical-align:top; display:inline-block; height:300px; width:200px; border:1px dashed #ccc;">
-					<div class="ui-scrollbar-item" style="background:#ccc;">
-						<img src="/netiveUI/resources/img/dummy/w2.png" alt="" style="width:100%; display:block">
-					</div>
-				</div>
-
-				<div style="margin-left:10px; vertical-align:top; display:inline-block; height:300px; width:200px; border:1px dashed #ccc; overflow:auto">
-					<div style="width:100%; background:#ccc;">
-						<img src="/netiveUI/resources/img/dummy/w2.png" alt="" style="width:100%; display:block">
-					</div>
-				</div>
-
-				<div class="ui-scrollbar" style="margin-left:10px; vertical-align:top; display:inline-block; height:500px; width:300px; border:1px dashed #ccc;">
+				<div class="ui-scrollbar" style="margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:400px; width:300px; border:1px dashed #ccc;">
 					<div class="ui-scrollbar-item" style="width:100%; height:1000px; background:#ccc; ">
+						
 						<div class="ui-scrollbar" style="display:inline-block; height:200px; width:100px; border:1px dashed #ddd;">
 							<div class="ui-scrollbar-item" style="width:100%; height:300px; background:#eee; ">
 								<div class="tst-obj" style="position:absolute; top:0; ">시작위치</div>
@@ -157,22 +134,50 @@ $plugins.uiScrollBar({
 					</div>
 				</div>
 
-				<div class="ui-scrollbar" style="margin-left:10px; vertical-align:top; display:inline-block; height:200px; width:200px; border:1px dashed #ccc;">
-					<div class="ui-scrollbar-item" style="background:#ccc;">
-						<img src="/netiveUI/resources/img/dummy/@iu13.gif" alt="">
-					</div>
-				</div>
+				<h2 class="h2">HTML Structure</h2>
+<div class="box-code">
+<pre>
+<code>
+//스크립트 적용 전
+&lt;div class="ui-scrollbar"&gt;
+	&lt;div class="ui-scrollbar-item"&gt;
+	..........
+	&lt;/div&gt;
+&lt;/div&gt;
 
-				<div class="ui-scrollbar" style="margin-left:10px; vertical-align:top; display:inline-block; height:344px; width:344px; border:1px dashed #ccc;">
-					<div class="ui-scrollbar-item" style="background:#ccc;">
-						<img src="/netiveUI/resources/img/dummy/@iu13.gif" alt="" style="display:block">
-					</div>
-				</div>
-				<div class="ui-scrollbar" id="scrbar1" style="margin-left:10px; vertical-align:top; display:inline-block; height:200px; width:600px; border:1px dashed #ccc;">
-					<div class="ui-scrollbar-item" style="background:#ccc;">
-						<img src="/netiveUI/resources/img/dummy/@iu13.gif" alt="">
-					</div>
-				</div>
+//스크립트 적용 후
+&lt;div class="ui-scrollbar" id="uiScrollBar_0"&gt;
+	&lt;div class="ui-scrollbar-barwrap"&gt;
+		&lt;button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" style="height: 26%;"&gt;
+			&lt;span class="hide">스크롤버튼&lt;/span&gt;
+		&lt;/button&gt;
+	&lt;/div&gt;
+	&lt;div class="ui-scrollbar-item"&gt;
+	..........
+	&lt;/div&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiScrollBar</h3>
+<div class="box-code">
+<pre>
+<code>
+//전체 적용 .ui-scrollbar
+$plugins.uiScrollBar();
+
+//개별 적용
+$plugins.uiScrollBar({
+	id: 'id name',
+	top: 0
+});
+</code>
+</pre>
+</div>
+
+				
 
 
 			</main>

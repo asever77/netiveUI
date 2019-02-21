@@ -80,22 +80,9 @@
 				<div class="tit-wrap">
 					<h1 class="h1" id="uiPageTit"></h1>
 				</div>
-					
-				<h2 class="h2">$plugins.uiSlot</h2>
 
-				<h3 class="h3">HTML Structure</h3>
-<div class="box-code">
-<pre>
-<code>
-&lt;div class="ui-slot" id="uiSlot1"&gt;
-	&lt;ul class="ui-slot-wrap"&gt;
-		&lt;li class="ui-slot-item"&gt; ... &lt;/li&gt;
-		....
-	&lt;/ul&gt;
-&lt;/div&gt;
-</code>
-</pre>
-</div>
+
+				<h2 class="h2">Examples</h2>
 				<div class="btn-wrap txt-l">
 					<button type="button" class="btn-base" id="start"><span>start</span></button>
 					<button type="button" class="btn-base" id="stop"><span>stop</span></button>
@@ -240,11 +227,34 @@
 				</div>
 
 
-				<h2 class="h2">$plugins.uiSlot</h2>
+				
+
+				<h2 class="h2">HTML Structure</h2>
 <div class="box-code">
 <pre>
 <code>
-$plugins.uiSlot({ id:'uiSlot1', current:1, auto:false, single:false });
+&lt;div class="ui-slot" id="uiSlot1"&gt;
+	&lt;ul class="ui-slot-wrap"&gt;
+		&lt;li class="ui-slot-item"&gt; ... &lt;/li&gt;
+		....
+	&lt;/ul&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+				
+
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiSlot</h3>
+<div class="box-code">
+<pre>
+<code>
+$plugins.uiSlot({ 
+	id:'uiSlot1', 
+	current:1, 
+	auto:false, 
+	single:false 
+});
 </code>
 </pre>
 </div>
@@ -295,7 +305,7 @@ $plugins.uiSlot({ id:'uiSlot1', current:1, auto:false, single:false });
 					</tbody>
 				</table>
 
-				<h2 class="h2">$plugins.uiSlotStart</h2>
+				<h3 class="h3">$plugins.uiSlotStart</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -332,11 +342,14 @@ $plugins.uiSlotStart({ id:'uiSlot1' });
 					</tbody>
 				</table>
 
-				<h2 class="h2">$plugins.uiSlotStop</h2>
+				<h3 class="h3">$plugins.uiSlotStop</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins.uiSlotStop({ id: 'uiSlot1', callback: slotMCallback });
+$plugins.uiSlotStop({ 
+	id: 'uiSlot1', 
+	callback: slotMCallback 
+});
 </code>
 </pre>
 </div>

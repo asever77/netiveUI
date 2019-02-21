@@ -32,8 +32,7 @@
 					<h1 class="h1" id="uiPageTit"></h1>
 				</div>
 
-				<h2 class="h2">Select Design</h2>
-				
+				<h2 class="h2">Examples</h2>
 				<h3 class="h3">CSS Design</h3>
 				<p>CSS로 스타일 표현하나 IE등 일부 브라우저에서는 지원을 안함.</p>
 				<fieldset class="mgt-s">
@@ -45,17 +44,8 @@
 						<option value="4">2015</option>
 					</select>
 				</fieldset>
-<div class="box-code" role="text">
-<pre>
-<code>
-&lt;select <span class="na">title=</span><span class="s">"고스트 선택"</span> <span class="na">id=</span><span class="s">"uiSel1"</span>&gt;
-	&lt;option <span class="na">value=</span><span class="s">"1"</span>&gt;먹깨비&lt;/option&gt;
-	&lt;option <span class="na">value=</span><span class="s">"2"</span>&gt;캐스퍼&lt;/option&gt;
-&lt;/select&gt;
-</code>
-</pre>
-</div>
-				<h3 class="h3">Script Select</h3>
+
+				<h3 class="h3">Custom Select</h3>
 				<p>모든 브라우저에서 동일한 UI와 디자인으로 접근 가능. option도 디자인 표현이 가능 </p>			
 				<div class="in-wrap mgt-s">
 					<fieldset >
@@ -106,6 +96,8 @@
 						</div>
 					</div>
 				</div>
+
+				<h2 class="h2">HTML Structure</h2>
 <div class="box-code">
 <pre>
 <code>
@@ -121,7 +113,8 @@
 </div>
 
 
-				<h2 class="h2">$plugins.uiSelect()</h2>
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiSelect()</h3>
 				<p>현재 select box기준으로 디자인 select 생성. 첫적용이나 동적인 변경이 있을때 사용한다. 특히 동적인 변경일 경우는 id로 개별 실행해주는게 좋다.</p>
 <div class="box-code">
 <pre>
@@ -178,7 +171,7 @@ $plugins.uiSelect({
 					</tbody>
 				</table>
 
-				<h2 class="h2">$plugins.uiSelectAct()</h2>
+				<h3 class="h3">$plugins.uiSelectAct()</h3>
 				<p>마우스, 키보드 이벤트가 아닌 option값 선택을 할 때 사용. $plugins.uiSelect()을 사용해도 되나 불필요한 재구성을 하지 않아 값변경 시에는 $plugins.uiSelectAct를 사용한다. </p>
 <div class="box-code">
 <pre>

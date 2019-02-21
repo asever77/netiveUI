@@ -22,7 +22,7 @@
 		.tab-scroll-wrap{width:1600px;}
 		.ui-tab-btns .ui-tab-btn{width:200px}
 
-		.box-base.aa{background:url(/netiveUI/resources/img/dummy/@pattern.png) repeat 0 0; height:100vw}
+		.box-base.aa{background:url(/netiveUI/resources/img/dummy/@pattern.png) repeat 0 0; height:50vw}
 	</style>
 </head>
 
@@ -35,51 +35,82 @@
 			<aside class="base-aside" id="baseAside"></aside>
 			<main class="base-main" id="baseMain" role="main">
 				<div class="tit-wrap">
-					<h1 class="h1" id="uiPageTit"></h1>
+					<h1 class="h1" id="uiPageTit">scroll move</h1>
 				</div>
-					
+				<p class="txt-s2">특정위치로 스크롤 이동 시 사용</p>
+				
+				<h2 class="h2">Examples</h2>
+				<div class="ui-tab tab-scroll" id="exeTab4">
+					<div class="ui-tab-btns">
+						<div class="tab-scroll-wrap">
+							<button type="button" class="ui-tab-btn"><i>주유/정비</i></button>
+							<button type="button" class="ui-tab-btn"><i>외식</i></button>
+							<button type="button" class="ui-tab-btn"><i>편의/쇼핑</i></button>
+							<button type="button" class="ui-tab-btn"><i>영화/도서</i></button>
+							<button type="button" class="ui-tab-btn"><i>보험/금융</i></button>
+							<button type="button" class="ui-tab-btn"><i>게임</i></button>
+							<button type="button" class="ui-tab-btn"><i>문화</i></button>
+							<button type="button" class="ui-tab-btn"><i>여행</i></button>
+						</div>
+					</div>
+					<div class="ui-tab-pnls">
+						<section class="ui-tab-pnl"><h1 class="ui-tab-tit">주유/정비</h1></section>
+						<section class="ui-tab-pnl"><h1 class="ui-tab-tit">외식</h1></section>
+						<section class="ui-tab-pnl"><h1 class="ui-tab-tit">편의/쇼핑</h1></section>
+						<section class="ui-tab-pnl"><h1 class="ui-tab-tit">영화/도서</h1></section>
+						<section class="ui-tab-pnl"><h1 class="ui-tab-tit">보험/금융</h1></section>
+						<section class="ui-tab-pnl"><h1 class="ui-tab-tit">게임</h1></section>
+						<section class="ui-tab-pnl"><h1 class="ui-tab-tit">문화</h1></section>
+						<section class="ui-tab-pnl"><h1 class="ui-tab-tit">여행</h1></section>
+					</div>
+				</div>
+				
+				<div class="btn-wrap">
+					<button type="button" class="btn-base" id="uiScrollLeft"><span>6번탭으로 이동</span></button>
+				</div>
 				<div class="box-base aa">
-					<div class="ui-tab tab-scroll" id="exeTab4">
-						<div class="ui-tab-btns">
-							<div class="tab-scroll-wrap">
-								<button type="button" class="ui-tab-btn"><i>주유/정비</i></button>
-								<button type="button" class="ui-tab-btn"><i>외식</i></button>
-								<button type="button" class="ui-tab-btn"><i>편의/쇼핑</i></button>
-								<button type="button" class="ui-tab-btn"><i>영화/도서</i></button>
-								<button type="button" class="ui-tab-btn"><i>보험/금융</i></button>
-								<button type="button" class="ui-tab-btn"><i>게임</i></button>
-								<button type="button" class="ui-tab-btn"><i>문화</i></button>
-								<button type="button" class="ui-tab-btn"><i>여행</i></button>
-							</div>
-						</div>
-						<div class="ui-tab-pnls">
-							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">주유/정비</h1></section>
-							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">외식</h1></section>
-							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">편의/쇼핑</h1></section>
-							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">영화/도서</h1></section>
-							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">보험/금융</h1></section>
-							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">게임</h1></section>
-							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">문화</h1></section>
-							<section class="ui-tab-pnl"><h1 class="ui-tab-tit">여행</h1></section>
-						</div>
-					</div>
-					
-					<div class="btn-wrap">
-						<button type="button" class="btn-base" id="uiScrollLeft"><span>6번탭으로 이동</span></button>
-					</div>
-					<div class="btn-wrap" style="width:auto; position:fixed; top:50%; left:50%; z-index: 1000">
+					<div class="btn-wrap" style="width:auto; position:fixed; top:50%; left:50%; z-index: 1000; padding:10px; background:rgba(0,0,0,0.3)">
 						<button type="button" class="btn-base" id="scrolltop"><span>상단</span></button>
 						<button type="button" class="btn-base" id="scrolltop3"><span>중단</span></button>
 						<button type="button" class="btn-base" id="scrolltop2"><span>하단</span></button>
 					</div>
-					
 				</div>
-	
-				<h2 class="h2">$plugins.uiScroll</h2>
+
+				<h2 class="h2">HTML Structure</h2>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiScroll</span>({ <span class="s">value:0, speed:300, ps:'top', target:'html,body' focus:'baseHeader', callback:function(v){console.log(v)}</span> });
+//탭 가로스크롤
+&lt;div class="ui-tab tab-scroll" id="exeTab4"&gt;
+	&lt;div class="ui-tab-btns"&gt;
+		&lt;div class="tab-scroll-wrap"&gt;
+			&lt;button type="button" class="ui-tab-btn"&gt;&lt;i&gt;탭버튼 1&lt;/i&gt;&lt;/button&gt;
+			...
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="ui-tab-pnls"&gt;
+		&lt;section class="ui-tab-pnl"&gt;&lt;h1 class="ui-tab-tit"&gt;콘텐츠 1&lt;/h1&gt;&lt;/section&gt;
+		...
+	&lt;/div&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+
+
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiScroll</h3>
+<div class="box-code">
+<pre>
+<code>
+$plugins<span class="na">.uiScroll</span>({ <span class="s">
+	value:0, 
+	target:'html,body',
+	speed:300, 
+	ps:'top', 
+	focus:'baseHeader', 
+	callback:function(v){console.log(v)}</span> 
+});
 </code>
 </pre>
 </div>	
@@ -176,7 +207,8 @@ $plugins<span class="na">.uiScroll</span>({ <span class="s">value:0, speed:300, 
 				});
 				
 				$('#scrolltop3').on('click', function(){
-					$plugins.uiScroll({ value:$(doc).outerHeight() / 2, speed:300, callback:callback });
+					console.log($(win).outerHeight(), $(doc).outerHeight())
+					$plugins.uiScroll({ value: ($(doc).outerHeight() / 2) - ($(win).outerHeight() / 2), speed:300, callback:callback });
 				});
 
 				$('#uiScrollLeft').on('click', function(){

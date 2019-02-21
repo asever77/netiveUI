@@ -31,7 +31,8 @@
 					<h1 class="h1" id="uiPageTit"></h1>
 				</div>
 
-				<h2 class="h2">기본 탭</h2>
+				<h2 class="h2">Examples</h2>
+				<h3 class="h3">기본 탭</h3>
 				<div class="ui-tab" id="exeTab1">
 					<div class="ui-tab-btns">
 						<button type="button" class="ui-tab-btn"><i>탭1</i></button>
@@ -101,7 +102,7 @@
 					</div>
 				</div>
 
-				<h2 class="h2">예외 사항 (unres:true)</h2>
+				<h3 class="h3">예외 사항 (unres:true)</h3>
 				<p>기본적으로 탭 클릭 시 콘텐츠 내용이 변경되는 기능을 빼고 콜백값으로 컨트롤이 필요한 경우 사용.</p>
 				<div class="ui-tab" id="exeTab2">
 					<div class="ui-tab-btns">
@@ -117,6 +118,7 @@
 					</div>
 				</div>
 				
+				<h2 class="h2">HTML Structure</h2>
 <div class="box-code">
 <pre>
 <code>
@@ -139,26 +141,19 @@
 </code>
 </pre>
 </div>	
-				<h2 class="h2">parameter 값으로 탭 선택방법</h2>
-<div class="box-code">
-<pre><code>
-single 선택
-/netiveUI/html/components/tab.html<span class="s">?tab=1</span> 
 
-복수 선택
-/netiveUI/html/components/tab.html<span class="s">?tab=exeTab1*0+exeTab1_2*1+exeTab2*1</span> 
-탭아이디*선택+탭아이디*선택....
-<span class="s">주의 : tab의 아이디를 '*'이 들어가는 이름으로 설정하면 안된다.</span>
 
-</code>
-</pre>
-</div>	
-
-				<h2 class="h2">$plugins.uiTab</h2>
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiTab</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiTab</span>({ <span class="s">id:'exeTab1', current:0, label:'인증서', callback:function(v){...}</span> });
+$plugins<span class="na">.uiTab</span>({ <span class="s">
+	id:'exeTab1', 
+	current:0, 
+	label:'인증서', 
+	callback:function(v){...}</span> 
+});
 </code>
 </pre>
 </div>	
@@ -218,11 +213,15 @@ $plugins<span class="na">.uiTab</span>({ <span class="s">id:'exeTab1', current:0
 					</tbody>
 				</table>
 
-				<h2 class="h2">$plugins.uiTabAct</h2>
+				<h3 class="h3">$plugins.uiTabAct</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiTabAct</span>({ <span class="s">id:'exeTab1', current:0, callback:function(v){...}</span> });
+$plugins<span class="na">.uiTabAct</span>({ <span class="s">
+	id:'exeTab1', 
+	current:0, 
+	callback:function(v){...}</span> 
+});
 </code>
 </pre>
 </div>
@@ -279,11 +278,29 @@ $plugins<span class="na">.uiTabAct</span>({ <span class="s">id:'exeTab1', curren
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiTab</span>({ <span class="s">id:'exeTab1', current:0, unres:true, callback:function(v){...}</span> });
+$plugins<span class="na">.uiTab</span>({ <span class="s">
+	id:'exeTab1', 
+	current:0, 
+	unres:true, 
+	callback:function(v){...}</span> 
+});
 </code>
 </pre>
 </div>
+				<h3 class="h3">parameter 값으로 탭 선택방법</h3>
+<div class="box-code">
+<pre><code>
+single 선택
+/netiveUI/html/components/tab.html<span class="s">?tab=1</span> 
 
+복수 선택
+/netiveUI/html/components/tab.html<span class="s">?tab=exeTab1*0+exeTab1_2*1+exeTab2*1</span> 
+탭아이디*선택+탭아이디*선택....
+<span class="s">주의 : tab의 아이디를 '*'이 들어가는 이름으로 설정하면 안된다.</span>
+
+</code>
+</pre>
+</div>	
 
 			</main>
 		</div>

@@ -53,20 +53,22 @@
                 <div class="tit-wrap">
 					<h1 class="h1" id="uiPageTit">Dropdown</h1>
 				</div>
-                <p>툴팁(말풍선)은 마우스오버나 포커스가 가는 즉시 동작하여 보충설명을 보여준다.</p>
+                <p class="txt-s2">툴팁(말풍선)은 마우스오버나 포커스가 가는 즉시 동작하여 보충설명을 보여준다.<br>
+                항상 상위에 보이기 위해(z-index, overflow:hidden) baseLayer 위치에 생성한다.<br>
+                기본적으로 자동으로 툴팁 실행위치를 계산하여 더 많은 공간이 있는 위치를 선택하여 보여준다.</p>
                 
-                <h2 class="h2">툴팁의 위치</h2>
-                <p>항상 상위에 보이기 위해(z-index, overflow:hidden) baseLayer 위치에 생성한다.<br>
-                    기본적으로 자동으로 툴팁 실행위치를 계산하여 더 많은 공간이 있는 위치를 선택하여 보여준다. </p>
-                
+                <h2 class="h2">Examples</h2>                
                 <h3 class="h3">a태그일 경우 기본 스타일</h3>
                 <div class="box-base">
                     <p>간략한 설명을 위해 <a href="#tt" aria-describedby="tt" class="ui-tooltip-btn">툴팁</a>기능을 사용합니다.</p>
                 </div> 
+
                 <h3 class="h3">button태그일 경우 기본 스타일</h3>
                 <div class="box-base">
                     <p>간략한 설명을 위해 툴팁 <button type="button" aria-describedby="tt2" class="ui-tooltip-btn">툴팁 설명</button> 기능을 사용합니다.</p>
                 </div>
+
+                <h2 class="h2">HTML Structure</h2>
 <div class="box-code">
 <pre>
 <code>
@@ -86,7 +88,8 @@
                 
 
 
-                <h2 class="h2">$plugins.uiTooltip</h2>
+                <h2 class="h2">Javascript</h2>
+                <h3 class="h3">$plugins.uiTooltip</h3>
 <div class="box-code">
 <pre>
 <code>

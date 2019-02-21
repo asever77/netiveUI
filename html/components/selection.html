@@ -31,10 +31,9 @@
 				<div class="tit-wrap">
 					<h1 class="h1" id="uiPageTit"></h1>
 				</div>
+				<p class="txt-s2">Radio button, checkbox 디자인 적용 시 사용</p>
 
-				<h2 class="h2">Radio & checkbox</h2>
-				<p>웹접근성을 고려하여 명시적 방법으로 마크업을 한다.</p>
-
+				<h2 class="h2">Examples</h2>
 				<h3 class="h3">Radio <small>(Single selection controls)</small></h3>
 				<fieldset role="radiogroup">
 					<legend>인증선택</legend>
@@ -58,14 +57,6 @@
 					<button type="button" class="btn-base" onclick="$plugins.uiSelectionChange({ id:'r3_2', disabled:true })"><span>disabled 설정</span></button>
 				</div>
 
-<div class="box-code">
-<pre>
-<code>
-&lt;input <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"r2"</span> <span class="na">id=</span><span class="s">"r2_1"</span>&gt;
-&lt;label <span class="na">class=</span><span class="s">"lb-radio"</span> <span class="na">for=</span><span class="s">"r2_1"</span>&gt;&lt;span&gt;선택&lt;/span&gt;&lt;/label&gt;
-</code>
-</pre>
-</div>
 				<h3 class="h3">checkbox <small>(Multi selection controls)</small></h3>
 				<fieldset role="group">
 					<legend>연료선택</legend>
@@ -121,6 +112,19 @@
 						<label class="lb-check" for="c4_7"><span>서면</span></label>
 					</div>
 				</fieldset>
+
+
+				<h2 class="h2">HTML Structure</h2>
+				<h3 class="h3">Radio</h3>
+<div class="box-code">
+<pre>
+<code>
+&lt;input <span class="na">type=</span><span class="s">"radio"</span> <span class="na">name=</span><span class="s">"r2"</span> <span class="na">id=</span><span class="s">"r2_1"</span>&gt;
+&lt;label <span class="na">class=</span><span class="s">"lb-radio"</span> <span class="na">for=</span><span class="s">"r2_1"</span>&gt;&lt;span&gt;선택&lt;/span&gt;&lt;/label&gt;
+</code>
+</pre>
+</div>
+				<h3 class="h3">Checkbox</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -139,8 +143,8 @@
 </pre>
 </div>
 					
-				<h2 class="h2">$plugins.uiSelection</h2>
-				<p>기본적인 설정</p>
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiSelection</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -148,7 +152,11 @@
 $plugins<span class="na">.uiSelection</span>();
 
 <span class="c">// 특정 아이디 실행</span>
-$plugins<span class="na">.uiSelection</span>({ <span class="s">id:'name', all:true, callback:function(v){...}</span> });
+$plugins<span class="na">.uiSelection</span>({ <span class="s">
+	id:'name', 
+	all:true, 
+	callback:function(v){...}</span> 
+});
 </code>
 </pre>
 </div>
@@ -195,11 +203,15 @@ $plugins<span class="na">.uiSelection</span>({ <span class="s">id:'name', all:tr
 					</tbody>
 				</table>
 
-				<h2 class="h2">$plugins.uiDisabled</h2>
+				<h3 class="h3">$plugins.uiDisabled</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiDisabled</span>({ <span class="s">id:'name', disabled:true, callback:function(v){...}</span> });
+$plugins<span class="na">.uiDisabled</span>({ <span class="s">
+	id:'name', 
+	disabled:true, 
+	callback:function(v){...}</span> 
+});
 </code>
 </pre>
 </div>
@@ -246,11 +258,15 @@ $plugins<span class="na">.uiDisabled</span>({ <span class="s">id:'name', disable
 					</tbody>
 				</table>
 
-				<h2 class="h2">$plugins.uiChecked</h2>
+				<h3 class="h3">$plugins.uiChecked</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiChecked</span>({ <span class="s">id:'name', checked:true, callback:function(v){...}</span> });
+$plugins<span class="na">.uiChecked</span>({ <span class="s">
+	id:'name', 
+	checked:true, 
+	callback:function(v){...}</span> 
+});
 </code>
 </pre>
 </div>

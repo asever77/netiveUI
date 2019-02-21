@@ -55,6 +55,58 @@
 					<h1 class="h1" id="uiPageTit"></h1>
 				</div>
 
+				<h2 class="h2">Examples</h2>
+				<h3 class="h3">slide eff</h3>
+					
+				<section class="ui-slide" id="slide1">
+					<h1 class="ui-slide-tit">slide 제목</h1>
+					<div class="ui-slide-wrap">
+						<div class="ui-slide-itemwrap">
+							<div class="ui-slide-item n1">
+								<h2 class="ui-slide-itemtit">아이템 제목 1</h2>
+								<p>item 1</p>
+							</div>
+							<div class="ui-slide-item n2" style="height:500px">
+								<h2 class="ui-slide-itemtit">아이템 제목 2</h2>
+								<p>item 2</p>
+							</div>
+							
+							<div class="ui-slide-item n3">
+								<h2 class="ui-slide-itemtit">아이템 제목 3</h2>
+								<p>item 3</p>
+							</div>
+						</div>
+					</div>
+				</section>
+				<h3 class="h3">fade eff</h3>
+				<section class="ui-slide" id="slide2">
+					<h1 class="ui-slide-tit">slide 제목</h1>
+					<div class="ui-slide-wrap">
+						<div class="ui-slide-itemwrap">
+							<div class="ui-slide-item n1">
+								<h2 class="ui-slide-itemtit">아이템 제목 1</h2>
+								<p>item 1</p>
+							</div>
+							
+							<div class="ui-slide-item n2">
+								<h2 class="ui-slide-itemtit">아이템 제목 2</h2>
+								<p>item 2</p>
+							</div>
+							
+							<div class="ui-slide-item n3">
+								<h2 class="ui-slide-itemtit">아이템 제목 3</h2>
+								<p>item 3</p>
+							</div>
+							
+							<div class="ui-slide-item n4">
+								<h2 class="ui-slide-itemtit">아이템 제목 4</h2>
+								<p>item 4</p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				<h2 class="h2">HTML Structure</h2>
 <div class="box-code">
 <pre>
 <code>
@@ -73,66 +125,30 @@
 </pre>
 </div>
 
-				<div class="box-base">
-					<h3 class="h3">slide eff</h3>
-					<section class="ui-slide" id="slide1">
-						<h1 class="ui-slide-tit">slide 제목</h1>
-						<div class="ui-slide-wrap">
-							<div class="ui-slide-itemwrap">
-								<div class="ui-slide-item n1">
-									<h2 class="ui-slide-itemtit">아이템 제목 1</h2>
-									<p>item 1</p>
-								</div>
-								<div class="ui-slide-item n2" style="height:500px">
-									<h2 class="ui-slide-itemtit">아이템 제목 2</h2>
-									<p>item 2</p>
-								</div>
-								
-								<div class="ui-slide-item n3">
-									<h2 class="ui-slide-itemtit">아이템 제목 3</h2>
-									<p>item 3</p>
-								</div>
-							</div>
-						</div>
-					</section>
-					<h3 class="h3">fade eff</h3>
-					<section class="ui-slide" id="slide2">
-						<h1 class="ui-slide-tit">slide 제목</h1>
-						<div class="ui-slide-wrap">
-							<div class="ui-slide-itemwrap">
-								<div class="ui-slide-item n1">
-									<h2 class="ui-slide-itemtit">아이템 제목 1</h2>
-									<p>item 1</p>
-								</div>
-								
-								<div class="ui-slide-item n2">
-									<h2 class="ui-slide-itemtit">아이템 제목 2</h2>
-									<p>item 2</p>
-								</div>
-								
-								<div class="ui-slide-item n3">
-									<h2 class="ui-slide-itemtit">아이템 제목 3</h2>
-									<p>item 3</p>
-								</div>
-								
-								<div class="ui-slide-item n4">
-									<h2 class="ui-slide-itemtit">아이템 제목 4</h2>
-									<p>item 4</p>
-								</div>
-							</div>
-						</div>
-					</section>
-				</div>
+				
 
-				<h2 class="h2">$plugins.uiSlide</h2>
+				<h2 class="h2">Javascript</h2>
+				<h3 class="h3">$plugins.uiSlide</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiSlide</span>({
-	<span class="s">id:'name', current:0, eff:'slide', speed:300, dot:true, nav:true, 
-	auto:true, gauge:true, play:false, autoTime:3000, 
-	mouseDrag:true, touchDrag:true,
-	loop:true, items:1, multi:false, margin:0</span> 
+$plugins<span class="na">.uiSlide</span>({ <span class="s">
+	id:'name', 
+	current:0, 
+	eff:'slide', 
+	speed:300, 
+	dot:true, 
+	nav:true, 
+	auto:true, 
+	gauge:true, 
+	play:false, 
+	autoTime:3000, 
+	mouseDrag:true, 
+	touchDrag:true,
+	loop:true, 
+	items:1, 
+	ulti:false, 
+	margin:0</span> 
 });
 </code>
 </pre>
@@ -266,12 +282,15 @@ $plugins<span class="na">.uiSlide</span>({
 					</tbody>
 				</table>
 
-				<h2 class="h2">$plugins.uiSlideFnEvt</h2>
+				<h3 class="h3">$plugins.uiSlideFnEvt</h3>
 				<p>지정된 아이템으로 전환</p>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiSlideFnEvt</span>({ <span class="s">id:'name', current:0</span> });
+$plugins<span class="na">.uiSlideFnEvt</span>({ <span class="s">
+	id:'name', 
+	current:0</span> 
+});
 </code>
 </pre>
 </div>	
@@ -307,12 +326,15 @@ $plugins<span class="na">.uiSlideFnEvt</span>({ <span class="s">id:'name', curre
 					</tbody>
 				</table>
 
-				<h2 class="h2">$plugins.uiSlideFnAuto</h2>
+				<h3 class="h3">$plugins.uiSlideFnAuto</h3>
 				<p>자동진행 play/stop 컨트롤</p>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiSlideFnAuto</span>({ <span class="s">id:'name', play:false</span> });
+$plugins<span class="na">.uiSlideFnAuto</span>({ <span class="s">
+	id:'name', 
+	play:false</span> 
+});
 </code>
 </pre>
 </div>	
@@ -353,7 +375,8 @@ $plugins<span class="na">.uiSlideFnAuto</span>({ <span class="s">id:'name', play
 					</tbody>
 				</table>
 
-				<h2 class="h2">multi, loop, items 기능 작업중</h2>
+				<h2 class="h2">진행중</h2>
+				<h3 class="h3">multi, loop, items 기능 작업중</h3>
 				<div class="box-base">
 					<section class="ui-slide" id="slide3">
 						<h1 class="ui-slide-tit">slide 제목</h1>
