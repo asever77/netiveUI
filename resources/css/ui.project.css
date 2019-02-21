@@ -71,7 +71,9 @@ code{padding:2px 4px; font-size:100%; background-color:#eee; border-radius:4px; 
 
 
 /* main */
-.page-main{background:#2a2a2a;}
+.main-bg{position: absolute; top:50%; left:50%; margin:-152px 0 0 -137px}
+.ui-m .main-bg{position: absolute; top:50%; left:50%; margin:-100px 0 0 -76px; width:152px; height:168px;}
+.ui-m .main-bg img{width:100%;}
 .main-logo-wrap{text-align: left; margin:0 0 20px;}
 .main-intro .main-logo-wrap h1{text-align: left;}
 .main-logo-wrap p{font-size:14px; color:#929292;}
