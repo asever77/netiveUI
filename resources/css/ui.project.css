@@ -71,11 +71,38 @@ code{padding:2px 4px; font-size:100%; background-color:#eee; border-radius:4px; 
 
 
 /* main */
-.main-bg{position: absolute; top:50%; left:50%; margin:-230px 0 0 -400px; width:800px; height:451px; background:#000;}
+.main-bg-m{display:none; position: absolute;  margin:0; width:100%; overflow:hidden;}
+.ui-d .main-bg,
+.ui-m .main-bg-m{display:block;}
+.main-bg{display:none; position: absolute; top:50%; left:50%; margin:-230px 0 0 -400px; width:800px; height:451px;}
 .main-bg-item{position: absolute; z-index:1; top:0; left:0; width:100%; height:100%;}
+.main-bg-item a{display:block}
+.ui-d .main-bg-vod{display:block}
+.main-bg-vod{display:none; width:100%; position: absolute; height:100%;}
+
 .ui-m .main-bg{position: absolute; top:50%; left:0; margin:-100px 0 0 0; width:100%; height:100%;}
-.ui-m .main-bg img{width:100%}
-.ui-m .main-bg iframe{display:none; position: absolute;}
+.ui-m .main-bg-item{position: relative; background:url(/netiveUI/resources/img/common/bg_space.jpg) no-repeat 0 80%; background-size:100% ;
+animation-name: bgmove;
+animation-duration: 60s;
+animation-delay: 1s;
+animation-timing-function:linear;
+animation-direction: alternate;
+animation-fill-mode:forwards
+}
+.ui-m .main-bg-item img{width:100%; display:block;}
+.main-bg-m .main-bg-img img{width:100%;}
+.main-bg-m .main-bg-img {position: absolute; top:-37vw; left:0;}
+
+@keyframes bgmove {
+  0% {
+    background-position:0 80%;
+  }
+  100% {
+    background-position:0 0;
+  }
+}
+
+
 .main-logo-wrap{text-align: left; margin:0 0 20px;}
 .main-intro .main-logo-wrap h1{text-align: left;}
 .main-logo-wrap p{font-size:14px; color:#929292;}
