@@ -4174,18 +4174,18 @@
 		}
 
 		$('body	.ui-slider-wrap button').on('touchmove.uislider', function(e){
-			e.preventDefault()}
-		);
+			e.preventDefault()
+		});
 
 		$btn.off('mousedown.sliderstart touchstart.sliderstart').on('mousedown.sliderstart touchstart.sliderstart', function(e){
 			e.preventDefault();
 			var $this = $(this),
 				minmax = $this.data('btn'),
 				moving = false;
-	
+
 			$(doc).off('mousemove.slidermove touchmove.slidermove').on('mousemove.slidermove touchmove.slidermove', function(e){
 				moving = true;
-				($('html').is('.mb')) ? per($this, event, minmax) : per($this, e, minmax);
+				($('html').is('.ui-m')) ? per($this, event, minmax) : per($this, e, minmax);
 				sliderTooltip({ now_1:((per_min / step_w) * unit_sum) + min, now_2:((per_max / step_w) * unit_sum) + min, per_min:perStep(per_min), per_max:perStep(per_max) });
 				
 			}).off('mouseup.sliderend touchcancel.slidermove touchend.slidermove').on('mouseup.sliderend touchcancel.slidermove touchend.slidermove', function(e){
