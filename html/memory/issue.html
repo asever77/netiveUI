@@ -23,6 +23,8 @@
 		.test-unit li{display:inline-block;margin:10px 10px 0 0; vertical-align: top}
 
         [class*="test-"].n1{color:red}
+
+		.srch-area .inp-srch{width:200px;}
 	</style>
 </head>
 
@@ -36,6 +38,13 @@
             <main class="base-main" id="baseMain" role="main">
                 <div class="tit-wrap">
 					<h1 class="h1" id="uiPageTit">Memory</h1>
+				</div>
+
+				<div class="box-srch">
+					<div class="srch-area">
+						<input type="search" id="uiIssueSearch" class="inp-srch ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">
+						<button type="button" class="btn-base" id="uiIssueSearchBtn">검색</button>
+					</div>
 				</div>
 
                 <div class="ui-bricklist mgt-m list-memory" role="list" id="uiBrickList1">
@@ -121,6 +130,37 @@
                     margin:10, 
                     response:true 
                 });
+
+
+		
+
+				if ($('#uiIssueSearch').val() !== '') {
+					var temp = $('.ui-bricklist-item *:contains('+ $('#uiIssueSearch').val() +')');
+
+					$('.ui-bricklist-item').addClass('disabled').hide();
+					$(temp).closest('.ui-bricklist-item').removeClass('disabled').show();
+				}
+				$.expr[":"].contains = $.expr.createPseudo(function(arg){
+					return function(elem) {
+						return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+					}
+				});
+				$('#uiIssueSearchBtn').on('click', function(){
+					var k = $('#uiIssueSearch').val(),
+						temp = $('.ui-bricklist-item *:contains('+ k +')');
+
+					console.log(k, temp)
+					$('.ui-bricklist-item').addClass('disabled').hide();
+					$(temp).closest('.ui-bricklist-item').removeClass('disabled').show();
+
+					$plugins.uiBrickList({ 
+						id:'uiBrickList1', 
+						margin:10, 
+						response:true 
+					});
+				});
+
+				
         
 			});
 		})(jQuery, window, document);

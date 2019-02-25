@@ -3682,7 +3682,7 @@
 		var opt = opt === undefined ? {} : opt,
 			opt = $.extend(true, {}, $ui.uiBrickList.option, opt),
 			$base = $('#' + opt.id), 
-			$item = $base.find('.ui-bricklist-item'),
+			$item = $base.find('.ui-bricklist-item').not('.disabled'),
 			mg = opt.margin,
 			re = opt.response,
 			actdelay = opt.actdelay,
@@ -3742,7 +3742,7 @@
 		if (opt === undefined) { return false; }
 		
 		var $base = $('#' + opt.id), 
-			$item = $base.find('.ui-bricklist-item'),
+			$item = $base.find('.ui-bricklist-item').not('.disabled'),
 			dataOpt = $base.data('opt'),
 			wrap_w = dataOpt.wrap,
 			actdelay = dataOpt.actdelay,
