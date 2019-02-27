@@ -42,10 +42,24 @@
         <p>{{ message }}</p>
         <button type="button" v-on:click="reverseMessage">메시지 뒤집기</button>
     </div>
+
+    <div id="app-6">
+        <p>{{ message }}</p>
+        <input type="text" v-model="message" v-bind:placeholder="message">
+    </div>
 	
 
 	<!-- only page script -->
 	<script>
+        vue.comnponent('todo-item', {
+            template:'<li>할일 항목 하나입니다.</li>'
+        });
+        var app6 = new Vue({
+            el: '#app-6',
+            data: {
+                message: '안녕하세요 Vue!'
+            }
+        });
         var app5 = new Vue({
             el: '#app-5',
             data: {
