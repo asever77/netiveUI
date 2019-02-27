@@ -146,10 +146,18 @@
 					}
 				});
 				$('#uiIssueSearchBtn').on('click', function(){
+					searchAct();
+				});
+				$('#uiIssueSearch').on('keydown', function(e){
+					if (e.keyCode === $plugins.option.keys.enter) {
+						searchAct();
+					}
+				});
+
+				function searchAct(){
 					var k = $('#uiIssueSearch').val(),
 						temp = $('.ui-bricklist-item *:contains('+ k +')');
 
-					console.log(k, temp)
 					$('.ui-bricklist-item').addClass('disabled').hide();
 					$(temp).closest('.ui-bricklist-item').removeClass('disabled').show();
 
@@ -158,7 +166,7 @@
 						margin:10, 
 						response:true 
 					});
-				});
+				}
 
 				
         

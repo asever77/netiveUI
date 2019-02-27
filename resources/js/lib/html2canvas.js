@@ -1657,7 +1657,7 @@ module.exports = function(ownerDocument, containerDocument, width, height, optio
         };
 
         documentClone.open();
-        documentClone.write("<!DOCTYPE html><html></netiveUI/html>");
+        documentClone.write("<!DOCTYPE html><html></html>");
         // Chrome scrolls the parent document for some reason after the write to the cloned window???
         restoreOwnerScroll(ownerDocument, x, y);
         documentClone.replaceChild(options.javascriptEnabled === true ? documentClone.adoptNode(documentElement) : removeScriptNodes(documentClone.adoptNode(documentElement)), documentClone.documentElement);

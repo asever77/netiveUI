@@ -175,4 +175,45 @@ function solutionPhoneHideReplace(phone_number) {
 
     return answer;
 }
- 
+
+
+//나누어 떨어지는 숫자 배열
+function solutionArrayDivide(arr, divisor) {
+    var answer = [];
+
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i] % divisor === 0) {
+            answer.push(arr[i]);
+        }
+    }
+
+    answer.length === 0 ? answer.push(-1) : answer.sort((a, b) => a -b);
+
+    return answer;
+}
+
+
+//문자열 내 특정 문자 개수 찾기
+function solutionTextSearch(s, t) {
+    var answer = true,
+        p = 0;
+
+    for (var i = 0; i < s.length; i++) {
+        if (s[i] === t.toUpperCase() || s[i] === t.toLowerCase()) {
+            p++;
+        }
+    }
+
+    if (p === 0) {
+        answer = false;
+    }
+
+    return p;
+}
+
+
+
+
+
+
+
