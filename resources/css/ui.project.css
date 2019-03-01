@@ -91,7 +91,7 @@ animation-iteration-count: infinite;
 animation-timing-function: linear;
 animation-direction: normal;
 animation-fill-mode:none}
-.ui-m .main-bg-item img{width:100%; display:block;}
+.main-bg-item img{width:100%; display:block;}
 .main-bg-m .main-bg-img img{width:100%;}
 .main-bg-m .main-bg-img {position: absolute; top:0; left:0;}
 
