@@ -81,9 +81,7 @@ code{padding:2px 4px; font-size:100%; background-color:#eee; border-radius:4px; 
 .main-bg-vod{display:none; width:100%; position: absolute; height:100%;}
 
 .ui-m .main-bg{position: absolute; top:50%; left:0; margin:-100px 0 0 0; width:100%; height:100%;}
-.ui-m .main-bg-item{position: relative; ;
-
-}
+.ui-m .main-bg-item{position: relative;}
 .main-bg-img{animation-name: bgmove;
 animation-duration: 120s;
 animation-delay: 0;
@@ -91,7 +89,8 @@ animation-iteration-count: infinite;
 animation-timing-function: linear;
 animation-direction: normal;
 animation-fill-mode:none}
-.main-bg-item img{width:100%; display:block;}
+.main-bg-item img{width:100%; display:block; height:451px}
+.ui-m .main-bg-item img{width:100%; display:block; height:auto}
 .main-bg-m .main-bg-img img{width:100%;}
 .main-bg-m .main-bg-img {position: absolute; top:0; left:0;}
 
