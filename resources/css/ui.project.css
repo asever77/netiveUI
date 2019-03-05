@@ -74,7 +74,7 @@ code{padding:2px 4px; font-size:100%; background-color:#eee; border-radius:4px; 
 .main-bg-m{display:none; position: absolute;  margin:0; width:100%; overflow:hidden;}
 .ui-d .main-bg,
 .ui-m .main-bg-m{display:block;}
-.main-bg{display:none; position: absolute; top:50%; left:50%; margin:-230px 0 0 -400px; width:800px; height:451px;}
+.main-bg{display:none; position: absolute; top:45%; left:50%; margin:-230px 0 0 -400px; width:800px; height:451px;}
 .main-bg-item{position: absolute; z-index:1; top:0; left:0; width:100%; height:100%;}
 .main-bg-item a{display:block}
 .ui-d .main-bg-vod{display:block}
