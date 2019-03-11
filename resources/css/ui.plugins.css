@@ -429,8 +429,9 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 
     /* ui modal mobile */
     .ui-m .modal-open{padding:0}
-    .ui-m .ui-modal{max-width:100%; padding:0;}
-    .ui-m .ui-modal-wrap{height:100%;}
+    .ui-m .ui-modal{max-width:100%; padding:0 15px;}
+    .ui-m .ui-modal.type-full{padding:0;}
+    .ui-m .ui-modal-wrap{height:100%; position:relative}
     .ui-m .ui-modal-cont{background:#fff; padding:15px; height:auto; overflow:auto; font-size:15px;}
     .ui-m .ui-modal-header{position:relative; border:0; top:0; left:0; z-index:1; padding:0; min-height:50px; max-height:100%;}
     .ui-m .ui-modal-header h1{font-size:20px; padding:15px 45px 10px; background-color:#333333; width:100%; min-height:50px; height:100%;}

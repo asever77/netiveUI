@@ -1514,9 +1514,9 @@
 				icallback = opt.icallback,
 				remove = opt.remove,
 				iclosecallback = opt.iclosecallback,
-				modal_html = '';
+				modal_html = '',
+				parasrc = opt.isrc;
 
-			var parasrc = opt.isrc;
 			if (opt.isrc.split('?').length > 1) {
 				parasrc = parasrc + '&uiType=F' 
 			} else {
@@ -1966,6 +1966,7 @@
 					}
 				}
 				$modal.addClass('view');
+
 				if (is_mobile && mpage) {
 					//모바일 전체모달레이어 show 모션 효과
 					//$modal.find('.ui-floating').removeClass('.ui-fixed-top').find('.ui-floating-wrap').removeAttr('style');

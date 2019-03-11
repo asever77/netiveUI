@@ -88,6 +88,7 @@
 						$plugins.uiModal({ 
 							id:'modal_sample3', 
 							remove: true,
+							mpage: true,
 							iname : 'iframe_modal_sample3',
 							isrc: '/netiveUI/html/modal/modalSample3.html',
 							ititle:'아이프레임 팝업'
@@ -507,7 +508,17 @@ $plugins<span class="na">.uiModalClose</span>({ <span class="s">
 			$(doc).ready(function(){
 				
 				console.log('page ready after')
-				$plugins.page.modal();
+				// $('.btn-base').on('click', function(){
+				// 	switch($(this).attr('id')){
+				// 	case 'modalOpen1':
+				// 		$plugins.uiModal({ id:'modal_sample1', link:'/netiveUI/html/modal/modalSample1.html', callback:$plugins.page.callback });
+				// 		break;
+				// 	case 'modalOpen2':
+				// 		$plugins.uiModal({ id:'modal_sample2', link:'/netiveUI/html/modal/modalSample2.html', callback:$plugins.page.callback, width:700 });
+				// 		break;
+				// 	}
+
+				// });
 
 			});
 		})(jQuery, window, document);
