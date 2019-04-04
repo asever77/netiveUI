@@ -72,7 +72,7 @@
 				console.log(bgv.length);
 
 
-				$('#mainBg').attr('src','https://www.youtube.com/embed/' + bgv[rdn] + '?autoplay=1&amp;enablejsapi=1&amp;&mute=1&amp;&volumn=0&amp;showinfo=0&amp;rel=0&amp;loop=1&amp;playlist=' + bgv[rdn]);
+				$('#mainBg').attr('src','https://www.youtube.com/embed/' + bgv[randomRange(0, bgv.length - 1 )] + '?autoplay=1&amp;enablejsapi=1&amp;&mute=1&amp;&volumn=0&amp;showinfo=0&amp;rel=0&amp;loop=1&amp;playlist=' + bgv[randomRange(0, bgv.length - 1 )]);
 
 				function randomRange(n1, n2) {
 					return Math.floor( (Math.random() * (n2 - n1 + 1)) + n1 );
