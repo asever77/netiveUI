@@ -1514,9 +1514,9 @@
 				icallback = opt.icallback,
 				remove = opt.remove,
 				iclosecallback = opt.iclosecallback,
-				modal_html = '';
+				modal_html = '',
+				parasrc = opt.isrc;
 
-			var parasrc = opt.isrc;
 			if (opt.isrc.split('?').length > 1) {
 				parasrc = parasrc + '&uiType=F' 
 			} else {
@@ -1966,6 +1966,7 @@
 					}
 				}
 				$modal.addClass('view');
+
 				if (is_mobile && mpage) {
 					//모바일 전체모달레이어 show 모션 효과
 					//$modal.find('.ui-floating').removeClass('.ui-fixed-top').find('.ui-floating-wrap').removeAttr('style');
@@ -2772,23 +2773,27 @@
 		}
 
 		//event
+		$(doc).on('click', '.dim-dropdown',function(){
+			if ($('body').data('select-open')) {
+				optBlur();
+			}
+		});
 		$('.ui-select-btn')
-			.off('click.ui keydown.ui mouseover.ui focus.ui blur.ui').on({
+			.off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
 				'click.ui': selectClick,
 				'keydown.ui': selectKey,
 				'mouseover.ui': selectOver,
 				'focus.ui': selectOver,
-				'blur.ui': optBlur
+				'mouseleave.ui': selectLeave
 			});
 		$('.ui-select-opt')
 			.off('click.ui mouseover.ui').on({
 				'click.ui':optClick,
 				'mouseover.ui':selectOver
 			});
+		$('.ui-select-wrap').off('mouseleave.ui').on({'mouseleave.ui': selectLeave });
 		$('.ui-select select').off('change.ui').on({ 'change.ui':selectChange });
-
-		$('.ui-select-label')
-			.off('click.ui').on('click.ui', function(){
+		$('.ui-select-label').off('click.ui').on('click.ui', function(){
 				var idname = $(this).attr('for');
 
 				setTimeout(function(){
@@ -2796,20 +2801,19 @@
 				},0);
 			});
 		
+		function selectLeave() {
+			$('body').data('select-open', true);
+		}
 		function selectChange(){
 			//클릭으로 인한 실행과 change로 실행이 두번 실행됨... 한번 실행이 맞을 듯한데 그럼 select에 onchange일때는...
 			//$ui.uiSelectAct({ id:$(this).attr('id'), current:$(this).find('option:selected').index(), callback:$(this).data('callback'), original:true });
 		}
 		function optBlur() {
-			clearTimeout(timer_opt);
-			timer_opt = setTimeout(function(){
-				optClose();
-			},200)
+			optClose();
 		}
 		function selectClick(){
 			var $btn = $(this);
 
-			clearTimeout(timer_opt);
 			$btn.data('sct', $(doc).scrollTop());
 			optExpanded(this);
 		}
@@ -2817,15 +2821,13 @@
 			var t = this,
 				sct = $(t).closest('.ui-select').find('.ui-select-btn').data('sct');
 
-			clearTimeout(timer_opt);
 			$ui.uiSelectAct({ id:$(t).closest('.ui-select').find('.ui-select-btn').data('id'), current:$(t).index() })
 			$(t).closest('.ui-select').find('.ui-select-btn').focus();
 			optClose();
 			$ui.uiScroll({ value:sct, speed:200 });
 		}
 		function selectOver(){
-			clearTimeout(timer);
-			$(this).closest('.ui-select').find('.ui-select-wrap.on').length > 0 ? clearTimeout(timer) : '';
+			$('body').data('select-open', false);
 		}
 		function selectKey(e){
 			var t = this,

@@ -172,13 +172,15 @@
     }
    
     $(doc).ready(function() {
-        var timer;
+        var timer,
+            n = 0;
 
         pageCodeIs();
         
         function pageCodeIs(){
             console.log('common.js ready?')
-            if ($plugins.common.pageid === undefined) {
+            if ($plugins.common.pageid === undefined && n < 10) {
+                n = n + 1;
                 delayExe();
             } else {
                 console.log('common.js ok')
