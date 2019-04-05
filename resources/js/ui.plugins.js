@@ -3691,7 +3691,7 @@
 			wrap_w  = $base.outerWidth(),
 			item_w  = $item.outerWidth(),
 			item_sum = $item.length,
-			item_col = Math.floor(wrap_w / (item_w + mg)),
+			item_col = Math.floor(wrap_w / (item_w + mg)) + 1,
 			item_row = (item_sum / item_col) + (item_sum % item_col) ? 1 : 0,
 			item_top = [],
 			delay_n = 0,
@@ -3705,7 +3705,7 @@
 				left : (item_w + mg) * i,
 				top : 0
 			}).stop().delay(50 * i).animate({
-				zoom : 1
+				top : 0
 			}, 300, function(){
 				$(this).addClass('on');
 			});
@@ -3771,7 +3771,7 @@
 					left : (item_w * nextN) + (mg * nextN),
 					top : item_top[nextN]
 				}).stop().delay(50 * i).animate({
-					zoom : 1
+					top : item_top[nextN]
 				},150, function(){
 					$plugins.uiLoading({ visible:false });
 					$(this).addClass('on');
