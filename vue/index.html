@@ -41,12 +41,12 @@
         </ul>
     </div>
 
-    <div id="app-5">
+    <div id="app-5" v-once>
         <p>{{ message }}</p>
         <button type="button" v-on:click="reverseMessage">메시지 뒤집기</button>
     </div>
 
-    <div id="app-6">
+    <div id="app-6"  >
         <p>{{ message }}</p>
         <input type="text" v-model="message" v-bind:placeholder="message">
     </div>
