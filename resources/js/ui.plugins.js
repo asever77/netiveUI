@@ -3769,7 +3769,7 @@
 		timer = setTimeout(function(){
 			for (i; i < item_sum; i++) {
 				actdelay ? delay_n = i: delay_n = 0;
-				minH = Math.min.apply(null, item_top)
+				minH = Math.min.apply(null, item_top);
 				nextN = item_top.indexOf(minH);
 				item_h = Number($item.eq(i).outerHeight() + mg);
 				$plugins.uiLoading({ visible:true });
