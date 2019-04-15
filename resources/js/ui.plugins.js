@@ -703,6 +703,7 @@
 			day_end;
 
 		$ui.uiDatePicker.option.dual = dual;
+		
 		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback:openback, closeback:closeback, multi:multi });
 
 		//이달의 날짜 텍스트화
