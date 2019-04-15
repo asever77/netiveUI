@@ -672,7 +672,7 @@
 	$ui.uiDatePicker.option = {
 		selector: '.ui-datepicker',
 		multi: false,
-		date_split: '.',
+		date_split: '-',
 		openback: false,
 		closeback: false,
 		dual: true,
