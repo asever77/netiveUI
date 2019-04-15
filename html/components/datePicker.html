@@ -58,6 +58,18 @@
 					<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck3" id="uiDatePck3_pnl"></section>
 				</div>
 
+				<div class="ui-datepicker" id="uiDatePicker4">
+					<div class="inp-datepicker">					
+						<input class="inp-base" type="date" value="2018-08-20" data-min="2013-10-05" data-max="2020-12-01" title="시작일" id="lnd0060Cal4">
+						<span class="txt-mark">~</span>
+						<input class="inp-base" type="date" value="2018-10-20" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="lnd0060Cal4_end">
+						<button type="button" class="btn-base ui-drop ui-datepicker-btn" data-inp="lnd0060Cal4" id="uiDatePck4" aria-expanded="false">
+							<i class="material-icons" aria-label="달력 열기">date_range</i>
+						</button>
+					</div>
+					<section class="ui-drop-pnl ui-datepicker-wrap" aria-hidden="true" data-id="uiDatePck4" id="uiDatePck4_pnl"></section>
+				</div>
+
 				<h2 class="h2">HTML Structure</h2>
 				<h3 class="h3">Single type</h3>
 <div class="box-code">
@@ -215,6 +227,12 @@ $plugins<span class="na">.uiDatePicker</span>({ <span class="s">
 				$plugins.uiDatePicker({ 
 					selector:'#uiDatePicker3',
 					multi : true
+				});
+
+				$plugins.uiDatePicker({ 
+					selector:'#uiDatePicker4',
+					multi : true,
+					dual : false
 				});
 
 			});

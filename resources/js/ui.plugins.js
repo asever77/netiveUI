@@ -672,9 +672,10 @@
 	$ui.uiDatePicker.option = {
 		selector: '.ui-datepicker',
 		multi: false,
-		date_split: '-',
+		date_split: '.',
 		openback: false,
 		closeback: false,
+		dual: true,
 		callback: function(v){ console.log(v) },
 		shortDate: false, //DDMMYYYY
 		dateMonths: new Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'),
@@ -686,6 +687,7 @@
 			date_split = opt.date_split,
 			selector = opt.selector,
 			multi = opt.multi,
+			dual = opt.dual,
 			openback = opt.openback,
 			closeback = opt.closeback,
 			callback = opt.callback,
@@ -700,6 +702,7 @@
 			day_start,
 			day_end;
 
+		$ui.uiDatePicker.option.dual = dual;
 		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback:openback, closeback:closeback, multi:multi });
 
 		//이달의 날짜 텍스트화
@@ -838,7 +841,7 @@
 			_calendarHtml += '<div class="datepicker-head-date">';
 			
 			
-			if (multi) {
+			if (multi && $ui.uiDatePicker.option.dual) {
 				_calendarHtml += '<div class="datepicker-multi-head">';
 				_calendarHtml += '<div class="n1">';
 				_calendarHtml += '<span class="year" data-y="'+ year +'"><strong>' + year + '</strong>년</span> ';
@@ -989,7 +992,7 @@
 			_calendarHtml += '</tr></tbody></table>';
 
 			// multi datepicker table 
-			if (multi) {
+			if (multi && $ui.uiDatePicker.option.dual) {
 				empty_after = 0;
 		 		empty_before = daysInMonth - nextWeekDay;
 
@@ -1270,8 +1273,14 @@
 			var $this = $(t),
 				$core = $this.closest('.datepicker-core'),
 				n_day = $this.data('day').replace(/\-/g,''),
-				n_day_ = $core.data('day') === undefined ? false :$core.data('day').replace(/\-/g,''),
-				sam_day = n_day === n_day_,
+				n_day_ = $core.data('day') === undefined ? false :$core.data('day').replace(/\-/g,'');
+
+			if($ui.uiDatePicker.option.date_split === '.') {
+				n_day = $this.data('day').replace(/\./g,'');
+				n_day_ = $core.data('day') === undefined ? false :$core.data('day').replace(/\./g,'');
+			}
+
+			var sam_day = n_day === n_day_,
 				next_day = n_day > n_day_,
 				prev_day = n_day < n_day_;
 
@@ -1378,8 +1387,11 @@
 				dropid = $this.attr('id'),
 				inputId = $this.data('inp'),
 				regExp = /^([0-9]{4})-([0-9]{2})-([0-9]{2})/g,
-				_val = $('#' + inputId).val(),
-				reset = regExp.test(_val),
+				_val = $('#' + inputId).val();
+
+			($ui.uiDatePicker.option.date_split === '.') ? regExp = /^([0-9]{4}).([0-9]{2}).([0-9]{2})/g : '';
+
+			var	reset = regExp.test(_val),
 				calspaceHTML = '';
 
 			$this.data('sct', $(doc).scrollTop());
@@ -1401,6 +1413,8 @@
 			$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').append(calspaceHTML);
 			displayCalendar(calVar, 'generate');
 
+			console.log($ui.uiDatePicker.option.dual);
+
 			if (multi) {
 				$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').addClass('multi');
 			}
@@ -1414,6 +1428,11 @@
 				var s = $('#' + calendarEl.inputId).val().replace(/\-/g,'').substring(0,6),
 					e = $('#' + calendarEl.inputId + '_end').val().replace(/\-/g,'').substring(0,6);
 
+				if ($ui.uiDatePicker.option.date_split === '.') {
+					s = $('#' + calendarEl.inputId).val().replace(/\./g,'').substring(0,6);
+					e = $('#' + calendarEl.inputId + '_end').val().replace(/\./g,'').substring(0,6);
+				}
+				
 				$datepicker.find('.tbl-datepicker').find('.on-start').prevAll().addClass('disabled').find('td').addClass('disabled');
 				$datepicker.find('.tbl-datepicker').find('.on-start').nextAll().addClass('hover-on').find('td').addClass('hover-on');
 				$datepicker.find('.tbl-datepicker').find('.on-end').prevAll().addClass('hover-on').find('td').addClass('hover-on');
