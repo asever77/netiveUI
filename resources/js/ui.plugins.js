@@ -841,7 +841,7 @@
 			_calendarHtml += '<div class="datepicker-head-date">';
 			
 			
-			if (multi && $ui.uiDatePicker.option.dual) {
+			if (multi && dual) {
 				_calendarHtml += '<div class="datepicker-multi-head">';
 				_calendarHtml += '<div class="n1">';
 				_calendarHtml += '<span class="year" data-y="'+ year +'"><strong>' + year + '</strong>년</span> ';
@@ -992,7 +992,7 @@
 			_calendarHtml += '</tr></tbody></table>';
 
 			// multi datepicker table 
-			if (multi && $ui.uiDatePicker.option.dual) {
+			if (multi && dual) {
 				empty_after = 0;
 		 		empty_before = daysInMonth - nextWeekDay;
 
@@ -1415,7 +1415,7 @@
 
 			console.log($ui.uiDatePicker.option.dual);
 
-			if (multi) {
+			if (multi && dual) {
 				$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').addClass('multi');
 			}
 		}
