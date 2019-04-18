@@ -1490,6 +1490,7 @@
 		autofocus: true,
 		endfocus: null,
 		full: false,
+		link: false,
 		remove: false,
 		ps: 'center',
 		callback: false,
@@ -1601,7 +1602,7 @@
 			
 			uiModalOpen(opt);
 		}
-
+		console.log(!opt.link)
 		if (!opt.link) {
 			//모달코드가 이미 페이지안에 있을 경우
 			($('#' + opt.id).attr('aria-hidden') === 'true') ? uiModalOpen(opt) : '';
@@ -1729,7 +1730,6 @@
 		function modalReady(){
 			$('body').addClass('modal-open');
 			$('#baseWrap').attr('aria-hidden', true);
-
 			$modal.attr('opened', true)
 				.data('opt', opt)
 				.data('endfocus', endfocus)
@@ -1769,6 +1769,13 @@
 				case 'top':
 					$modal.css({ 
 						display: 'block', 
+						opacity: 0
+					});
+					break;
+				case 'bottom':
+					$modal.css({ 
+						display: 'block', 
+						bottom: '-100%',
 						opacity: 0
 					});
 					break;
@@ -1928,6 +1935,17 @@
 								marginLeft: 0
 							});
 							break;
+						case 'bottom':
+							$modal.css({
+								opacity: 0,
+								width: '100%',
+								height: is_full_h ? '100%' : h,
+								left: 0,
+								bottom: 0,
+								marginTop: 0,
+								marginLeft: 0
+							});
+							break;
 					}
 				} else {
 					//desktop
@@ -1948,6 +1966,12 @@
 						case 'top':
 							$modal.css({
 								top: 0,
+								marginTop: modalSpace,
+							});
+							break;
+						case 'top':
+							$modal.css({
+								bottom: 0,
 								marginTop: modalSpace,
 							});
 							break;
@@ -1990,14 +2014,27 @@
 				if (is_mobile && mpage) {
 					//모바일 전체모달레이어 show 모션 효과
 					//$modal.find('.ui-floating').removeClass('.ui-fixed-top').find('.ui-floating-wrap').removeAttr('style');
-					$modal.css({ 'min-height': $(win).outerHeight(), background: '#fff' })
-						.animate({
-							opacity: 1, 
-							top: 0
-						}, 365, 'easeInOutQuart', function () {
-							$('body').addClass('modal-full');
-							modalCompleted();
-						});
+					console.log(ps)
+					if (ps !== 'bottom') {
+						$modal.css({ 'min-height': $(win).outerHeight(), background: '#fff' })
+							.animate({
+								opacity: 1, 
+								top: 0
+							}, 365, 'easeInOutQuart', function () {
+								$('body').addClass('modal-full');
+								modalCompleted();
+							});
+					} else {
+						$modal.css({ 'min-height': $(win).outerHeight(), background: '#fff' })
+							.animate({
+								opacity: 1, 
+								bottom: 0
+							}, 365, 'easeInOutQuart', function () {
+								$('body').addClass('modal-full');
+								modalCompleted();
+							});
+					}
+					
 				} else {
 					//$modal.css('opacity', 1);
 					$modal.stop().animate({
@@ -2337,7 +2374,7 @@
 				} else {
 					$('#baseLayer').removeClass('under');
 					$('body > .modal-backdrop').remove();
-					$('.modal-backdrop').css('opacity', '0.7');
+					$('.modal-backdrop').css('opacity', '0.8');
 				}
 			}
 		}
@@ -2374,7 +2411,7 @@
 			clearTimeout(timer);
 			timer = setTimeout(function () {
 				$backdrop.stop().animate({
-					opacity: 0.7,
+					opacity: 0.8,
 					width: '101%',
 					height: '101%',
 				}, 200).addClass('on');
