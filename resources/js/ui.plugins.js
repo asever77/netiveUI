@@ -751,10 +751,10 @@
 
 		//사용여부확인 필요
 		function matchToday() {
-			$('.tbl-datepicker button').each(function () {
+			$('.tbl-datepicker button').not(':disabled').each(function () {
 				var $this = $(this);
 
-				$this.data('day') === $('.datepicker-wrap .today button.today').data('day') ?
+				$this.data('day') === textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), false) ?
 					$this.attr('title', $this.attr('title')+' (오늘)').addClass('today') : '';
 			});
 		}
@@ -835,7 +835,7 @@
 
 			/* today */
 			_calendarHtml += '<div class="datepicker-head-today">';
-			_calendarHtml += '<button type="button" class="today" data-day=' + textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), true) + ' title="오늘로 이동"><span class="hide">오늘 - '+ textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), true) +' 이동</span></button>';
+			_calendarHtml += '<button type="button" class="today" data-day=' + textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), false) + ' title="오늘로 이동"><span class="hide">오늘 - '+ textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), true) +' 이동</span></button>';
 			_calendarHtml += '</div>';
 			
 			/* datepicker-head-date */
@@ -1061,11 +1061,11 @@
 					empty_before = empty_before + 1;
 
 					if (week === 0) {
-						_calendarHtml += '<td class="empty"><span>'+ empty_before +'</span></td>';
+						_calendarHtml += '<td class="empty"><button type="button" disabled>'+ empty_before +'</button></td>';
 					} else if (week === 6) {
-						_calendarHtml += '<td class="empty"><span>'+ empty_before +'</span></td>';
+						_calendarHtml += '<td class="empty"><button type="button" disabled>'+ empty_before +'</button></td>';
 					} else {
-						_calendarHtml += '<td class="empty"><span>'+ empty_before +'</span></td>'; 
+						_calendarHtml += '<td class="empty"><button type="button" disabled>'+ empty_before +'</button></td>'; 
 					}
 				}
 			}
@@ -1074,11 +1074,11 @@
 					empty_after = empty_after + 1;
 
 					if (week_day === 0) {
-						_calendarHtml += '<td class="empty"><span>'+ empty_after +'</span></td>';
+						_calendarHtml += '<td class="empty"><button type="button" disabled>'+ empty_after +'</button></td>';
 					} else if (week_day == 6) {
-						_calendarHtml += '<td class="empty"><span>'+ empty_after +'</span></td>';
+						_calendarHtml += '<td class="empty"><button type="button" disabled>'+ empty_after +'</button></td>';
 					} else {
-						_calendarHtml += '<td class="empty"><span>'+ empty_after +'</span></td>';
+						_calendarHtml += '<td class="empty"><button type="button" disabled>'+ empty_after +'</button></td>';
 					}
 				}
 			}
