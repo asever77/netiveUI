@@ -1624,6 +1624,7 @@
 		}
 	}
 	function uiModalOpen(opt) {
+		
 		var $modal = $('#' + opt.id),
 			$modalWrap = $modal.find('.ui-modal-wrap'),
 			$modalTit = $modal.find('.ui-modal-header'),
@@ -1694,6 +1695,7 @@
 
 		//MODAL TYPE -------------------------------------------------
 		function modalType(){
+			
 			//type terms modal
 			if (terms_url) {
 				if (is_mobile) {
@@ -1728,6 +1730,7 @@
 
 		//MODAL READY -------------------------------------------------
 		function modalReady(){
+			$('body').removeClass('modal-full');
 			$('body').addClass('modal-open');
 			$('#baseWrap').attr('aria-hidden', true);
 			$modal.attr('opened', true)
@@ -2342,8 +2345,8 @@
 		} else {
 			//multi
 			var z = layN - 1;
-			$ui.browser.mobile ? 
-			$('body').addClass('modal-full') : '';
+			
+			
 			$modal.attr('aria-hidden', true).stop().animate({
 				opacity: 0
 			}, 200, function () {
@@ -2360,6 +2363,8 @@
 				});
 
 				closeback ? closeback({ id: opt.id }) : '';
+				$ui.browser.mobile ? 
+				$('body').addClass('modal-full') : '';
 			});
 
 			if (!!$modal.closest('#baseLayer').length) {
@@ -5701,7 +5706,7 @@
 				id = dataExecel.list[i].id || '';
 				idm = dataExecel.list[i].idm || '';
 				full = dataExecel.list[i].full || '';
-				pop = dataExecel.list[i].pop || '';
+				pop = dataExecel.list[i].modal || '';
 				ifm = dataExecel.list[i].ifm || '';
 				tab = dataExecel.list[i].tab || '';
 				memo = dataExecel.list[i].memo || '';
@@ -5798,7 +5803,7 @@
 					table += '<col class="col-2">';
 					table += '<col class="col-3">';
 					table += '<col class="col-4">';
-					table += '<col class="col-5">';
+					//table += '<col class="col-5">';
 					table += '<col class="col-6">';
 					table += '<col class="col-7">';
 					table += '<col class="col-8">';
@@ -5819,7 +5824,7 @@
 					table += '<th scope="col">' + date + '</th>';
 					table += '<th scope="col">' + enddate + '</th>';
 					table += '<th scope="col">' + pub + '</th>';
-					table += '<th scope="col">' + dev + '</th>';
+					//table += '<th scope="col">' + dev + '</th>';
 					table += '<th scope="col">' + pop + '</th>';
 					table += '<th scope="col">' + tab + '</th>';
 					table += '<th scope="col">' + id + '</th>';
@@ -5844,7 +5849,7 @@
 					table += '<td class="date"><span>' + date + '</span></td>';
 					table += '<td class="enddate"><span>' + enddate + '</span></td>';
 					table += '<td class="name pub"><span>' + pub + '</span></td>';
-					table += '<td class="name dev"><span>' + dev + '</span></td>';
+					//table += '<td class="name dev"><span>' + dev + '</span></td>';
 
 					var popIs = !!pop ? 'P' : '',
 						tabIs = tab === 'S' ? 'S' : tab === '' ? '' : 'T',
@@ -5852,14 +5857,14 @@
 
 					table += '<td class="txt-c"><span>' + popIs + '</span></td>';
 					table += '<td class="txt-c"><span>' + tabIs + '</span></td>';
-
-					if (!pop) {
+					console.log(pop)
+					//if (!pop) {
 						table += id !== '' ? overl !== '' ? tabIs === 'T' ?
 							'<td class="id ico_pg"><span><a href="' + root + '/' + overl + '.html?tab=' + (tab - 1) + '" target="coding">' + overl + '</a></span><span class="overl">' + id + '</span></td>' :
 							'<td class="id ico_pg"><span><a href="' + root + '/' + overl + '.html" target="coding">' + overl + '</a></span><span class="overl">' + id + '</span></td>' :
 							'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
 							'<td class="id "><span></span></td>';
-					} else {
+					/*} else {
 						table += id !== '' ? overl !== '' ? ifm === '' ? pop === '1' ? tabIs === 'T' ?
 							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html?tab=' + (tab - 1) + '\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
 							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
@@ -5874,6 +5879,7 @@
 								'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ iframe:true, isrc:\'/modal/' + id + '_iframe.html\', iname:\'name_' + id + '\', id:\'modal_' + id + '\', full:' + full + ' });">' + id + '</button></td>' :
 							'<td class="id "><span></span></td>';
 					}
+					*/
 					(dataExecel.list[i].d1 !== '') ? table += '<td class="d d1"><span>' + d1 + '</span></td>' : table += '<td class="d"></td>';
 					(dataExecel.list[i].d2 !== '') ? table += '<td class="d d2"><span>' + d2 + '</span></td>' : table += '<td class="d"></td>';
 					(dataExecel.list[i].d3 !== '') ? table += '<td class="d d3"><span>' + d3 + '</span></td>' : table += '<td class="d"></td>';
@@ -5902,22 +5908,7 @@
 			info += '<li>대기 : <span class="n_wat">0</span> (<span class="per4">0</span>%)</li>';
 			info += '</ul>';
 			
-
-			if (!$('.ui-codinglist-info .total').data('data')) {
-				$('.ui-codinglist-info .total').data('data', true).text(len - delsum - 1);
-				$('.ui-codinglist-info .n_all').text(endsum + tstsum + chksum);
-				$('.ui-codinglist-info .per0').text(((endsum + tstsum + chksum) / (len - delsum - 1) * 100).toFixed(0));
-				$('.ui-codinglist-info .n_end').text(endsum);
-				$('.ui-codinglist-info .per1').text((endsum / (len - delsum - 1) * 100).toFixed(0));
-				$('.ui-codinglist-info .n_tst').text(tstsum);
-				$('.ui-codinglist-info .per2').text((tstsum / (len - delsum - 1) * 100).toFixed(0));
-				$('.ui-codinglist-info .n_ing').text(ingsum);
-				$('.ui-codinglist-info .per3').text((ingsum / (len - delsum - 1) * 100).toFixed(0));
-				$('.ui-codinglist-info .n_wat').text(watsum);
-				$('.ui-codinglist-info .per4').text((watsum / (len - delsum - 1) * 100).toFixed(0));
-				$('.ui-codinglist-info .n_chk').text(chksum);
-				$('.ui-codinglist-info .per5').text((chksum / (len - delsum - 1) * 100).toFixed(0));
-			}
+			
 
 			var sel = '';
 			sel += '<div class="ui-codinglist-sel mgb-xxxs">';
@@ -5946,6 +5937,22 @@
 			
 			$('#' + opt.id).prepend(sel);
 			$('#' + opt.id).prepend(info);
+
+			if (!$('.ui-codinglist-info .total').data('data')) {
+				$('.ui-codinglist-info .total').data('data', true).text(len - delsum - 1);
+				$('.ui-codinglist-info .n_all').text(endsum + tstsum + chksum);
+				$('.ui-codinglist-info .per0').text(((endsum + tstsum + chksum) / (len - delsum - 1) * 100).toFixed(0));
+				$('.ui-codinglist-info .n_end').text(endsum);
+				$('.ui-codinglist-info .per1').text((endsum / (len - delsum - 1) * 100).toFixed(0));
+				$('.ui-codinglist-info .n_tst').text(tstsum);
+				$('.ui-codinglist-info .per2').text((tstsum / (len - delsum - 1) * 100).toFixed(0));
+				$('.ui-codinglist-info .n_ing').text(ingsum);
+				$('.ui-codinglist-info .per3').text((ingsum / (len - delsum - 1) * 100).toFixed(0));
+				$('.ui-codinglist-info .n_wat').text(watsum);
+				$('.ui-codinglist-info .per4').text((watsum / (len - delsum - 1) * 100).toFixed(0));
+				$('.ui-codinglist-info .n_chk').text(chksum);
+				$('.ui-codinglist-info .per5').text((chksum / (len - delsum - 1) * 100).toFixed(0));
+			}
 
 			selectoption('uiCLstate', ctg_state);
 			selectoption('uiCLpub', ctg_pub);
@@ -6043,7 +6050,6 @@
 
 		}
 	}
-
 
 
 	/* ------------------------------------------------------------------------
