@@ -327,7 +327,26 @@ $plugins<span class="na">.uiChecked</span>({ <span class="s">
 			$(doc).ready(function(){
 				
 				console.log('page ready after')
-				$plugins.page.selection();
+				$plugins.uiSelection();
+					$plugins.uiSelection({ id:'uiChk2', all:true, callback:allCheckCallback });
+					$plugins.uiSelection({ id:'c3_0', all:true, callback:allCheckCallback });
+					$plugins.uiSelection({ id:'c3_4', callback:inpCheckCallback });
+					$plugins.uiSelection();
+					
+					function allCheckCallback(v){
+						console.log(v.id, v);
+					}
+
+					function inpCheckCallback(v){
+						console.log(v)
+						if (v.value) {
+							$('#abcd input').prop('disabled', false).prop('checked', true).removeAttr('disabled');
+							$('#abcd label').removeClass('disabled').addClass('checked');
+						} else {
+							$('#abcd input').prop('disabled', true).prop('checked', false).attr('disabled');
+							$('#abcd label').removeClass('checked').addClass('disabled');
+						}
+					}
 
 			});
 		})(jQuery, window, document);

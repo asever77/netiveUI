@@ -155,12 +155,36 @@
 					<div class="ui-acco-wrap">
 						<div class="ui-acco-tit">
 							<button type="button" class="ui-acco-btn">acco4-1<span class="ui-acco-arrow">열기</span></button>
-							<input type="checkbox" id="c1_1">
-							<label class="lb-check" for="c1_1" ><span>개인정보보호정책 동의함</span></label>
 							
+							<input type="checkbox" id="c3_0">
+							<label class="lb-check all" for="c3_0"><span>개인(신용)정보 선택 동의</span></label>
+
 						</div>
 						<div class="ui-acco-pnl">
-							개인 정보는 잘 보호하자.
+							<fieldset role="group">
+								<legend>약관동의 선택</legend>
+								<input type="checkbox" id="c3_1" checkgroup="c3_0">
+								<label class="lb-check" for="c3_1"><span>개인정보 필수적 제공</span></label>
+								<br>
+								<input type="checkbox" id="c3_2" checkgroup="c3_0">
+								<label class="lb-check" for="c3_2"><span>개인(신용)정보 선택적 수집,이용</span></label>
+								<br>
+								<input type="checkbox" id="c3_3" checkgroup="c3_0">
+								<label class="lb-check" for="c3_3"><span>(1)금융거래관련 상품서비스 안내를 위한 수집∙이용</span></label>
+								<br>
+								<input type="checkbox" id="c3_4" checkgroup="c3_0">
+								<label class="lb-check" for="c3_4"><span>(2)기타 부수서비스 안내 등을 위한 수집·이용</span></label>
+								<div id="abcd" style="margin:1.0rem 0">
+									<input type="checkbox" id="c4_4" disabled="disabled">
+									<label class="lb-check" for="c4_4"><span>전화</span></label>
+									<input type="checkbox" id="c4_5" disabled="disabled">
+									<label class="lb-check" for="c4_5"><span>SMS</span></label>
+									<input type="checkbox" id="c4_6" disabled="disabled">
+									<label class="lb-check" for="c4_6"><span>이메일/앱 푸쉬</span></label>
+									<input type="checkbox" id="c4_7" disabled="disabled">
+									<label class="lb-check" for="c4_7"><span>서면</span></label>
+								</div>
+							</fieldset>
 						</div>
 					</div>
 					<div class="ui-acco-wrap">
@@ -465,11 +489,33 @@ $plugins<span class="na">.uiAccordionToggle</span>({ <span class="s">
 					current:null, 
 					autoclose:false 
 				});
+
+
+
 				$plugins.uiAccordion({ 
 					id:'exeAcco5', 
 					current:'all', 
 					autoclose:false 
 				});
+
+				$plugins.uiSelection({ id:'c3_0', all:true, callback:allCheckCallback });
+				$plugins.uiSelection({ id:'c3_4', callback:inpCheckCallback });					
+					
+				function inpCheckCallback(v){
+					console.log(v)
+					if (v.value) {
+						$('#abcd input').prop('disabled', false).prop('checked', true).removeAttr('disabled');
+						$('#abcd label').removeClass('disabled').addClass('checked');
+					} else {
+						$('#abcd input').prop('disabled', true).prop('checked', false).attr('disabled');
+						$('#abcd label').removeClass('checked').addClass('disabled');
+					}
+				}
+				function allCheckCallback(v){
+					v.value 
+					? $plugins.uiAccordionToggle({ id:'exeAcco5', current:[0], state:'close' })
+					:'';
+				}
 
 				$plugins.uiSelection();
 			});

@@ -162,7 +162,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .ui-acco.type-b .ui-acco-btn{position: absolute; color:transparent; overflow:hidden; font-size:xx-small; line-height: 0;}
 .ui-acco.type-b .ui-acco-tit{height:40px;}
 .ui-acco.type-b .ui-acco-txt{position: relative; display:inline-block; padding:10px; z-index:2; text-decoration:none; color:#000}
-.ui-acco.type-b .lb-check{position: absolute; z-index: 2}
+.ui-acco.type-b .ui-acco-tit .lb-check{position: absolute; z-index: 2}
 
 /* ui-acco:ui-menu */
 .ui-acco,
