@@ -498,11 +498,11 @@ $plugins<span class="na">.uiAccordionToggle</span>({ <span class="s">
 					autoclose:false 
 				});
 
+				$plugins.uiSelection();
 				$plugins.uiSelection({ id:'c3_0', all:true, callback:allCheckCallback });
 				$plugins.uiSelection({ id:'c3_4', callback:inpCheckCallback });					
 					
 				function inpCheckCallback(v){
-					console.log(v)
 					if (v.value) {
 						$('#abcd input').prop('disabled', false).prop('checked', true).removeAttr('disabled');
 						$('#abcd label').removeClass('disabled').addClass('checked');
@@ -517,7 +517,7 @@ $plugins<span class="na">.uiAccordionToggle</span>({ <span class="s">
 					: $plugins.uiAccordionToggle({ id:'exeAcco5', current:[0], state:'open' });
 				}
 
-				$plugins.uiSelection();
+				
 			});
 		})(jQuery, window, document);
 	</script>
