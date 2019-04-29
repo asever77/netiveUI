@@ -482,7 +482,7 @@ td .placeholder{margin-top:5px}
 	.ui-m .tab-scroll .ui-tab-btns {border-top:1px solid #222; border-bottom:1px solid #222; overflow-x:scroll; overflow-y:hidden; -webkit-overflow-scrolling:touch; width:100%;}
 	.ui-m .tab-scroll-wrap {white-space:nowrap; display:flex; flex-wrap:nowrap;}
 	.ui-m .tab-scroll-wrap .ui-tab-btn {flex:0; border:0; background:#fff; border-bottom:3px solid #fff;}
-	.ui-m .tab-scroll-wrap .ui-tab-btn[aria-selected="true"] {border-bottom:3px solid #222;}
+	.ui-m .tab-scroll-wrap .ui-tab-btn.selected {border-bottom:3px solid #222;}
 	.ui-m .tab-scroll .ui-tab-pnls {border:0; margin-top:0;}
 
 

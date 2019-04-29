@@ -3069,7 +3069,8 @@
 		current: 0,
 		unres: false,
 		label: false,
-		callback: false
+		callback: false,
+		align : 'center'
 	};
 	function createUiTab(opt) {
 		var opt = opt === undefined ? {} : opt,
@@ -3079,6 +3080,7 @@
 			unres = opt.unres,
 			callback = opt.callback,
 			tabLabel = opt.label,
+			align = opt.align,
 			keys = $ui.option.keys,
 			$tab = $('#' + id),
 			$btns = $tab.children('.ui-tab-btns'),
@@ -3176,7 +3178,7 @@
 			value: ps_l[current], 
 			target: $btns,
 			speed: 0, 
-			ps: 'left' 
+			ps: align
 		});
 
 		//event
@@ -3187,7 +3189,7 @@
 			});
 
 		function evtClick() {
-			$ui.uiTabAct({ id: id, current: $(this).index() }); 
+			$ui.uiTabAct({ id: id, current: $(this).index(), align:align }); 
 		}
 		function evtKeys(e) {
 			var $this = $(this),
@@ -3217,22 +3219,22 @@
 			function upLeftKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-first') ? 
-				$ui.uiTabAct({ id: id, current: n - 1 }): 
-				$ui.uiTabAct({ id: id, current: m - 1 });
+				$ui.uiTabAct({ id: id, current: n - 1, align:align }): 
+				$ui.uiTabAct({ id: id, current: m - 1, align:align});
 			}
 			function downRightKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-last') ? 
-				$ui.uiTabAct({ id: id, current: n + 1 }): 
-				$ui.uiTabAct({ id: id, current: 0 });
+				$ui.uiTabAct({ id: id, current: n + 1, align:align }): 
+				$ui.uiTabAct({ id: id, current: 0, align:align });
 			}
 			function endKey(e) {
 				e.preventDefault();
-				$ui.uiTabAct({ id: id, current: m - 1 });
+				$ui.uiTabAct({ id: id, current: m - 1, align:align });
 			}
 			function homeKey(e) {
 				e.preventDefault();
-				$ui.uiTabAct({ id: id, current: 0 });
+				$ui.uiTabAct({ id: id, current: 0, align:align });
 			}
 		}
 	}
@@ -3244,6 +3246,7 @@
 			$pnls = $tab.children('.ui-tab-pnls'),
 			$pnl = $pnls.children('.ui-tab-pnl'),
 			ps_l = $btn.data('psl'),
+			align = opt.align,
 			opt = $.extend(true, {}, $tab.data('opt'), opt),
 			current = isNaN(opt.current) ? 0 : opt.current,
 			unres = opt.unres,
@@ -3253,11 +3256,14 @@
 		$btn.eq(current).append('<b class="hide">선택됨</b>');
 		$btn.removeClass('selected').eq(current).addClass('selected').focus();
 
+		console.log(align);
+
 		$plugins.uiScroll({ 
 			value: ps_l[current], 
+			btnwidth : $btn.outerWidth(),
 			target: $btns, 
 			speed: 300, 
-			ps: 'left' 
+			ps: align 
 		});
 
 		if (unres === false) {

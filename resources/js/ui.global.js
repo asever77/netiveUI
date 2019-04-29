@@ -659,6 +659,7 @@ if (!Object.keys){
 		speed: 0,
 		callback: false,
 		ps: 'top',
+		btnwidth: false,
 		focus: false,
 		target: false
 	};
@@ -672,6 +673,7 @@ if (!Object.keys){
 			s = opt.speed,
 			c = opt.callback,
 			p = opt.ps,
+			bw = opt.btnwidth,
 			overlap = false,
 			f = typeof opt.focus === 'string' ? $('#' + opt.focus) : opt.focus,
 			$target = opt.target === false ? $('html, body') : opt.target;
@@ -696,6 +698,20 @@ if (!Object.keys){
 		} else if (p === 'left') {
 			$target.stop().animate({ 
 				scrollLeft : v 
+			}, { 
+				duration: s,
+				step: function(now) { 
+					!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
+				},
+				complete: function(){
+					!!c ? c({ focus:f, complete:true }) : '';
+					!!f ? f.attr('tabindex', 0).focus() : '';
+				}
+			});
+		} else if (p === 'center') {
+			var w = $target.outerWidth();
+			$target.stop().animate({ 
+				scrollLeft : v - (w / 2) + (bw / 2)
 			}, { 
 				duration: s,
 				step: function(now) { 
