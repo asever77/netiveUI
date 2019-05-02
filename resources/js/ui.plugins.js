@@ -672,7 +672,8 @@
 	$ui.uiDatePicker.option = {
 		selector: '.ui-datepicker',
 		multi: false,
-		date_split: '-',
+		title: false,
+		date_split: '.',
 		openback: false,
 		closeback: false,
 		dual: true,
@@ -689,6 +690,7 @@
 			multi = opt.multi,
 			dual = opt.dual,
 			openback = opt.openback,
+			date_title = opt.title,
 			closeback = opt.closeback,
 			callback = opt.callback,
 			dateMonths = opt.dateMonths,
@@ -774,7 +776,7 @@
 				daysInMonth = Math.floor((nextMonth.getTime() - thisMonth.getTime()) / (1000 * 60 * 60 * 24)),
 				daysInMonth_prev = Math.floor((thisMonth.getTime() - prevMonth.getTime()) / (1000 * 60 * 60 * 24)),
 				$input = $('#' + calendarEl.inputId).eq(0),
-				tit = $input.attr('title'),
+				tit = !date_title ? $input.attr('title') : date_title,
 				_minDay = new Array(),
 				_maxDay = new Array(),
 				_calendarHtml = '',
@@ -807,7 +809,9 @@
 			_calendarHtml += '<select title="월 선택" id="sel_'+ calendarEl.inputId +'_month">';
 
 			for (var m = 1; m < 13; m++) {
-				_calendarHtml += m === month + 1 ? '<option value="'+ m +'" selected>'+ m +'월</option>': '<option value="'+ m +'">'+ m +'월</option>';
+				m < 10 ? m = '0' + m : '';
+				_calendarHtml += m === month + 1 ? '<option value="'+ Number(m) +'" selected>'+ m +'월</option>': '<option value="'+ Number(m) +'">'+ m +'월</option>';
+				m = Number(m);
 			}
 
 			_calendarHtml += '</select>';
@@ -3256,8 +3260,6 @@
 		$btn.eq(current).append('<b class="hide">선택됨</b>');
 		$btn.removeClass('selected').eq(current).addClass('selected').focus();
 
-		console.log(align);
-
 		$plugins.uiScroll({ 
 			value: ps_l[current], 
 			btnwidth : $btn.outerWidth(),
@@ -4534,6 +4536,7 @@
 		auto:true,
 		play:false,
 		gauge:true,
+		resize: true,
 		speed:300,
 		autoTime:3000,
 		callback: false,
@@ -4566,6 +4569,8 @@
 		if (!base.root.is('.load')) {
 			base.root.addClass('load');
 			uiSlideSet(base);
+
+			
 		}
 	}
 	function uiSlideSet(base){
@@ -4640,6 +4645,12 @@
 		uiSlideEvtType(base);
 		uiSlideEvt(base);
 
+		$(win).resize(function(){
+			base.itemwrap.find('.ui-slide-item[aria-hidden="true"]').css('left', base.itemwrap.outerWidth());
+			uiSlideReset(base);
+			uiSlideEvtType(base);
+			uiSlideEvt(base);
+		});
 		base.root.data('base', base);
 	}
 	function uiSlideDot(base) {
@@ -4653,7 +4664,7 @@
 
 		for (i = 0; i < base.opt.len; i++) {
 			selected = (base.opt.current === i) ? 'true' : 'false'; 
-			$(dotdiv).append('<button class="ui-slide-dot" type="button" role="tab" aria-selected="' + selected + '">' + base.item.eq(i).find(".ui-slide-itemtit").text() + '</button>');
+			$(dotdiv).append('<button class="ui-slide-dot" type="button" role="tab" aria-selected="' + selected + '"><span class="hide">' + base.item.eq(i).find(".ui-slide-itemtit").text() + '</span></button>');
 		}
 		base.root.prepend(dotwrap);
 		base.dotwrap = base.root.find('.ui-slide-dotwrap');
@@ -4791,7 +4802,7 @@
 				} else if ($this.hasClass('ui-slide-dot')) {
 					actfn($this.index(), base.opt.past < base.opt.current ? 'next' : 'prev');
 				} else if ($this.hasClass('ui-slide-auto')) {
-					$this.attr('state') === 'play' ? uiSlideAutoEvt(base, false) : uiSlideAutoEvt(base, true);
+					$this.attr('state') === 'play' && base.opt.auto ? uiSlideAutoEvt(base, false) : uiSlideAutoEvt(base, true);
 				}
 			}
 		});
@@ -4970,7 +4981,7 @@
 		base.evt.movX = parseInt(base.evt.offsetX - uiSlideGetTouches(ev).x, 10) * -1;
 		base.evt.movY = parseInt(base.evt.offsetY - uiSlideGetTouches(ev).y, 10) * -1;
 		
-		uiSlideAutoEvt(base, false);
+		base.opt.auto ? uiSlideAutoEvt(base, false) : '';
 
 		//single drag scope
 		if (Math.abs(base.evt.movX) > base.opt.w && !base.multi.is) {
@@ -5270,7 +5281,8 @@
 		base.evt.movY = 0;
 		base.root.data('base', base);
 		base.fade.opacity = 0;
-		base.gauge.bar.css('width', 0);
+		base.opt.gauge ? 
+		base.gauge.bar.css('width', 0) : '';
 		
 		(base.opt.nav) ? uiSlideNavTxt(base) : '';
 		(base.opt.dot) ? uiSlideDotChg(base) : ''; 
@@ -5309,7 +5321,7 @@
 		//함수실행
 		var base = $('#' + opt.id).data('base');
 
-		uiSlideAutoEvt(base, opt.play)
+		base.opt.auto ? uiSlideAutoEvt(base, opt.play) : '';
 
 	}
 
@@ -5728,7 +5740,7 @@
 				r2 = dataExecel.list[i].r2 || '';
 				r3 = dataExecel.list[i].r3 || '';
 				r4 = dataExecel.list[i].r4 || '';
-				overl = dataExecel.list[i].overlab || '';
+				overl = dataExecel.list[i].overlap || '';
 				root = dataExecel.list[i].root || '';
 
 				(d1 !== '') ? d1_ = dataExecel.list[i - 1 < 0 ? 0 : i].d1 : d1 = d1_;
@@ -6695,14 +6707,14 @@
 				$plugins.uiModalClose({ 
 					id: 'modalSystem',
 					remove: true, 
-					callback: opt.confirmCallback
+					closeback: opt.confirmCallback
 				});
 			});
 			$('#modalSystemBtn2, .btn-close').off('click.confirm').on('click.confirm', function () {
 				$plugins.uiModalClose({ 
 					id: 'modalSystem', 
 					remove: true, 
-					callback: opt.cancelCallback 
+					closeback: opt.cancelCallback 
 				});
 			});
 		},
