@@ -673,7 +673,7 @@
 		selector: '.ui-datepicker',
 		multi: false,
 		title: false,
-		date_split: '.',
+		date_split: '-',
 		openback: false,
 		closeback: false,
 		dual: true,
@@ -1729,6 +1729,9 @@
 			}
 			
 			$ui.uiModal.option.sctarray.push($(win).scrollTop());
+
+			console.log($ui.uiModal.option.sctarray)
+
 			open ? modalReady() : '';
 		}
 
@@ -2337,7 +2340,7 @@
 
 			if (opt.id !== '__modalAlert' && opt.id !== '__modalConfirm' && opt.id !== '__modalAction') {
 				$('html, body').stop().animate({
-					scrollTop: sct
+					scrollTop: Number($ui.uiModal.option.sctarray.slice(-1)[0])
 				}, 0, function () {
 					autofocus ? $(endfocus).attr('tabindex', 0).focus() : '';
 				});
