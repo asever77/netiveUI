@@ -419,11 +419,6 @@ input{ -webkit-appearance: none; -webkit-border-radius: 0;}
 .lb-base{display:inline-block; margin-bottom:3px; cursor:pointer;}
 .placeholder{display:block; color:#999; font-size:11px}
 
-.inp-datepicker{background:#fff; overflow:hidden; padding:0 0 0 10px; width:auto;}
-.inp-datepicker [class*="inp-"] {border:0; height:38px; padding:0; width:80px; text-align:center}
-.inp-datepicker .ui-datepicker-btn{border:0; padding:0; min-width:38px; height:38px;}
-.inp-datepicker .ui-datepicker-btn:focus,
-.inp-datepicker .ui-datepicker-btn:hover{border:0; outline:0}
 
 /* Removes the clear button from date inputs */
 input[type="date"]::-webkit-clear-button {display: none;}

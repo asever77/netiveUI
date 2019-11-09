@@ -51,16 +51,39 @@
 		
 	<script>
 		
-		if ($plugins.uiCookieGet({ name:'aaaaaa' })) {
-			$('#ddd').hide();
+
+		let marks = [100,90,80,80,70,70,50,40,30],
+			k = 4;
+
+		let ml = marks.length,
+			award = [],
+			rank = 0
+			i = 0;
+
+		for ( i; i < ml; i++ ){
+			
+			if ( rank < k && award.length < ml ) {
+				// 현재등수(rank)가 등수제한(k)보다 작고(<) && 상받는 아이수(award.length)가 전체인원수(ml)보다 작을때(<)
+				if ( i === 0 ) {
+					// 첫번째 등수의 점수는 무조건 => 상받는 점수(award) 추가, 현재등수(rank)도 추가
+					award.push(marks[i]);
+					rank++;
+				} else {
+					if ( marks[i] !== marks[i - 1] ) {
+						// 지금점수(marks[i])가 이전 점수(marks[i - 1]) 와 같지 않으면 => 상받는 점수(award) 추가, 현재등수(rank)도 추가
+						award.push(marks[i]);
+						rank++;
+					} else {
+						// 지금점수(marks[i])가 이전 점수(marks[i - 1]) 와 같다면 => 상받는 점수(award)만 추가
+						award.push(marks[i]);
+					}
+				}  
+			} else {
+				// 더이상 상받는 학생수 추가가 없을 시 중지
+				break;
+			}
+			console.log('상받는 학생수 : ' + award.length + ' / 상받는 등수 : ' +  rank + ' / 상받는 점수 : ' +  award) 
 		}
-
-		$plugins.uiCookieSet({ name:'aaaaaa', value:true, term:10 });
-
-		setTimeout(function(){
-			$('.aa').addClass('on');
-		},1000)
-
 
 	</script>
 </body>
