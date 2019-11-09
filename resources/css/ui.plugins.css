@@ -87,6 +87,10 @@
 .ui-slide-multi .ui-slide-itemwrap{width:auto; overflow:hidden; cursor:move;}
 .ui-slide-multi .ui-slide-item{float:left; position:relative; left:0 !important;}
 
+
+
+
+
 /* count number */
 .ui-count{display:inline-block; overflow:hidden; vertical-align:bottom;}
 .ui-count > div{display:inline-block; overflow:hidden; position:relative;}
