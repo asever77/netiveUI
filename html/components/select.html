@@ -64,10 +64,10 @@
 						</div>
 						<div class="in-item mgl-xxs">
 							<div class="ui-select type-bank" style="width:150px">
-								<select title="Palette 앨범" id="uiSel1" onchange="console.log(this.value)">
+								<select title="Palette 앨범" id="uiSel1" onchange="console.log(this.value);">
 									<option value="1">이 지금</option>
-									<option value="2">팔레트(Feat. G-DRAGON)</option>
-									<option value="3" selected>이런 엔딩</option>
+									<option value="2" selected>팔레트(Feat. G-DRAGON)</option>
+									<option value="3" >이런 엔딩</option>
 									<option value="4">사랑이 잘(with 오혁)</option>
 									<option value="5">잼잼</option>
 									<option value="6">Black Out</option>
@@ -202,26 +202,34 @@ $plugins.uiSelect({
 				console.log('page ready after');
 				$plugins.uiSelect();
 
-				$plugins.uiSelect({ 
-					id:'forSelLocal', 
-					current:0,
-					callback:function(v){console.log(1111111111111)} 
-				});
+				// $plugins.uiSelect({ 
+				// 	id:'forSelLocal', 
+				// 	current:0,
+				// 	callback:function(v){console.log(1111111111111)} 
+				// });
 
-				$plugins.uiSelect({ 
-					id:'uiSel1', 
-					current:4, 
-					callback:function(v){console.log(v)} 
-				});
+				// $plugins.uiSelect({ 
+				// 	id:'uiSel1', 
+				// 	current:4, 
+				// 	callback:function(v){console.log(v)} 
+				// });
 				
-				var opttxt = 5;
-				$('#changeOption').on('click', function(){
+				// var opttxt = 5;
+				// $('#changeOption').on('click', function(){
 
-					$('#uiSel2').append('<option value="'+ opttxt +'">'+ opttxt +'</option>');
-					opttxt = opttxt + 1;
+				// 	$('#uiSel2').append('<option value="'+ opttxt +'">'+ opttxt +'</option>');
+				// 	opttxt = opttxt + 1;
 
-					$plugins.uiSelect({ id:'uiSel2' });
-				});
+				// 	$plugins.uiSelect({ id:'uiSel2' });
+				// });
+
+			
+			 $(document).on('change', '.ui-select select', aaaa())
+
+
+			 function aaaa(){
+				 console.log(1111);
+			 }
 			});
 		})(jQuery, window, document);
 	</script>

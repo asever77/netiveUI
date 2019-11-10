@@ -51,16 +51,41 @@
 		
 	<script>
 		
-		if ($plugins.uiCookieGet({ name:'aaaaaa' })) {
-			$('#ddd').hide();
+		let marks = [7,7,7,7,7,7,6,10,9,8],
+         	k = 4;
+		marks.sort(function(a, b) { // 오름차순
+			return b - a;
+		});
+
+    	let ml = marks.length,
+			award = [],
+			rank = 0,
+			i = 0;
+
+		for ( i; i < ml; i++ ){
+			if ( rank < k && award.length < ml ) {
+				if ( i === 0 ) {
+					award.push(marks[i]);
+					rank++;
+				} else {
+					if ( marks[i] !== marks[i - 1] ) {
+						award.push(marks[i]);
+						rank++;
+					} else {
+						award.push(marks[i]);
+					}
+				}  
+			} else {
+				if (marks[i] === marks[i - 1]) {
+					award.push(marks[i]);
+				} else {
+					break;
+				}					
+			}
+			 
 		}
 
-		$plugins.uiCookieSet({ name:'aaaaaa', value:true, term:10 });
-
-		setTimeout(function(){
-			$('.aa').addClass('on');
-		},1000)
-
+		 console.log('상받는 학생수 : ' + award.length + ' / 상받는 등수 : ' +  rank + ' / 상받는 점수 : ' +  award)
 
 	</script>
 </body>
