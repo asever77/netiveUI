@@ -554,7 +554,7 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
 /* desktop */ 
 @media all and (min-width:960px) {
     /* Date Picker */
-    .ui-datepicker{display:inline-block; vertical-align:top;}
+    .ui-datepicker{display:inline-block; vertical-align:top; position:relative;}
     .ui-datepicker .inp-base{width:100px}
     .ui-datepicker .ui-datepicker-wrap{position:absolute; width:300px; margin-top:0 !important}
     .ui-datepicker .ui-datepicker-wrap.multi{width:602px;}
