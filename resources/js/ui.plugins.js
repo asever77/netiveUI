@@ -672,23 +672,22 @@
 	});
 	$ui.uiDatePicker.option = {
 		selector: '.ui-datepicker',
-		multi: false,
+		period: false,
 		title: false,
 		date_split: '-',
 		openback: false,
 		closeback: false,
-		dual: true,
+		dual: false,
 		callback: null,
 		shortDate: false, //DDMMYYYY
 		dateMonths: new Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'),
-		weekDay: new Array('일', '월', '화', '수', '목', '금', '토'),
-		remove: false
+		weekDay: new Array('일', '월', '화', '수', '목', '금', '토')
 	};
 	function createUiDatePicker(opt) {
 		var opt = $.extend(true, {}, $ui.uiDatePicker.option, opt),
 			date_split = opt.date_split,
 			selector = opt.selector,
-			multi = opt.multi,
+			period = opt.period,
 			dual = opt.dual,
 			openback = opt.openback,
 			date_title = opt.title,
@@ -697,7 +696,6 @@
 			dateMonths = opt.dateMonths,
 			weekDay = opt.weekDay,
 			shortDate = opt.shortDate,
-			remove = opt.remove,
 			$datepicker = $(selector),
 			date = new Date(),
 			dateToday = date,
@@ -707,7 +705,7 @@
 			idname = $datepicker.attr('id');
 
 		$ui.uiDatePicker.option.dual = dual;
-		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback: openback, closeback: closeback, multi: multi });
+		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback: openback, closeback: closeback, period: period });
 
 		//이달의 날짜 텍스트화
 		function textDate(d, m, y, whatday) {
@@ -731,6 +729,7 @@
 			var d = new Date(d);
 			return ($ui.option.partsAdd0(d.getDate()) + date_split + $ui.option.partsAdd0(d.getMonth() + 1) + date_split + d.getFullYear());
 		}
+
 		//input에 출력
 		function writeInputDateValue(calendarEl, obj, end) {
 			var d = $(obj).data("day"),
@@ -738,29 +737,21 @@
 				org_id = id,
 				opt = $("#" + id).closest('.ui-datepicker').data('opt');
 
-			!!end
-				? id = id + '_end'
-				: '';
+			!!end ? id = id + '_end' : '';
 
 			//DD.MM.YYYY로 설정
-			calendarEl.shortDate
-				? d = toDDMMYYYY(d)
-				: '';
+			calendarEl.shortDate ? d = toDDMMYYYY(d) : '';
 
 			$("#" + id).val(d);
 
 			//기간설정
-			d !== ''
-				? $("#" + id).closest('.field-inlabel').addClass('activated')
-				: '';
-
-			!!opt.callback
-				? opt.callback({ id: id, value: d, name: end ? $('#' + id).attr('name') : $('#' + org_id).attr('name')})
-				: '';
+			d !== '' ? $("#" + id).closest('.field-inlabel').addClass('activated') : '';
+			!!opt.callback ? opt.callback({ id: id, value: d, name: end ? $('#' + id).attr('name') : $('#' + org_id).attr('name')}) : '';
 		}
 
 		function calendarObject(opt) {
 			this.calId = opt.calId;
+			this.dpId = opt.dpId;
 			this.inputId = opt.inputId;
 			this.buttonId = opt.buttonId;
 			this.shortDate = opt.shortDate;
@@ -805,10 +796,15 @@
 			month === 2 ? daysInMonth = 31 : '';
 
 			/* datepicker-head -------------------- */
-			_calendarHtml += '<button type="button" class="btn-txt ui-datepicker-close"><span>닫기</span></button>';
+			_calendarHtml += '<button type="button" class="btn-close ui-datepicker-close"><span>닫기</span></button>';
 			_calendarHtml += '<div class="datepicker-head">';
 			/* title: datepicker-head-tit */
-			_calendarHtml += '<div class="datepicker-head-tit">' + tit + '</div>';
+			if (period && !date_title) {
+				_calendarHtml += '<div class="datepicker-head-tit">' + tit + ' ~ '+ $('#' + calendarEl.inputId + '_end').attr('title') +'</div>';
+			} else {
+				_calendarHtml += '<div class="datepicker-head-tit">' + tit + '</div>';
+			}
+			
 
 			/* 년월 선택: datepicker-head-select */
 			_calendarHtml += '<div class="datepicker-head-select">';
@@ -867,22 +863,29 @@
 			_calendarHtml += '<div class="datepicker-head-date">';
 
 
-			if (multi && dual) {
-				_calendarHtml += '<div class="datepicker-multi-head">';
+			if (dual) {
+				_calendarHtml += '<div class="datepicker-period-head">';
 				_calendarHtml += '<div class="n1">';
 				_calendarHtml += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
 				_calendarHtml += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
 				_calendarHtml += '</div>';
+				console.log(month)
 
 				_calendarHtml += '<div class="n2">';
-				_calendarHtml += '<span class="year2" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
-				_calendarHtml += '<span class="month2" data-m="' + dateMonths[month + 1] + '"><strong>' + dateMonths[month + 1] + '</strong>월</span>';
+
+				if (month === 11) {
+					_calendarHtml += '<span class="year2" data-y="' + (year + 1) + '"><strong>' + (year + 1) + '</strong>년</span> ';
+					_calendarHtml += '<span class="month2" data-m="' + dateMonths[0] + '"><strong>' + dateMonths[0] + '</strong>월</span>';
+				} else {
+					_calendarHtml += '<span class="year2" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
+					_calendarHtml += '<span class="month2" data-m="' + dateMonths[month + 1] + '"><strong>' + dateMonths[month + 1] + '</strong>월</span>';
+				}
 				_calendarHtml += '</div>';
 				_calendarHtml += '</div>';
+				
 			} else {
 				_calendarHtml += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
 				_calendarHtml += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
-
 			}
 
 			_calendarHtml += '<span class="hide">선택됨</span>';
@@ -891,9 +894,9 @@
 
 			/* datepicker-core -------------------- */
 			_calendarHtml += '<div class="datepicker-core"></div>';
-			_calendarHtml += '<div class="datepicker-foot">';
-			_calendarHtml += '<button type="button" class="btn-base-s ui-datepicker-close"><span>닫기</span></button>';
-			_calendarHtml += '</div>';
+			// _calendarHtml += '<div class="datepicker-foot">';
+			// _calendarHtml += '<button type="button" class="btn-base-s ui-datepicker-close"><span>닫기</span></button>';
+			// _calendarHtml += '</div>';
 
 
 			return _calendarHtml;
@@ -930,15 +933,13 @@
 
 			// 최소,최대 선택 가능
 			if (endminmax) {
+				$end.attr('data-min', $input.attr('data-min'));
 				$end.attr('data-min') !== undefined ? _minDay = $end.attr('data-min').split(date_split, 3) : _minDay[0] = 1910;
 				$end.attr('data-max') !== undefined ? _maxDay = $end.attr('data-max').split(date_split, 3) : _maxDay[0] = 2050;
-
-				console.log(_minDay, _maxDay)
 			} else {
 				$input.attr('data-min') !== undefined ? _minDay = $input.attr('data-min').split(date_split, 3) : _minDay[0] = 1910;
 				$input.attr('data-max') !== undefined ? _maxDay = $input.attr('data-max').split(date_split, 3) : _maxDay[0] = 2050;
 			}
-			
 
 			month === 2 ? daysInMonth = 31 : '';
 
@@ -947,7 +948,7 @@
 			$base.find('.datepicker-head-date').find('.year').data('y', year).find('strong').text(year);
 			$base.find('.datepicker-head-date').find('.month').data('m', dateMonths[month]).find('strong').text(dateMonths[month]);
 
-			if (multi) {
+			if (dual) {
 				if (month + 1 === 12) {
 					$base.find('.datepicker-head-date').find('.year2').data('y', year + 1).find('strong').text(year + 1);
 					$base.find('.datepicker-head-date').find('.month2').data('m', dateMonths[0]).find('strong').text(dateMonths[0]);
@@ -1030,12 +1031,12 @@
 
 			_calendarHtml += '</tr></tbody></table>';
 
-			// multi datepicker table
-			if (multi && dual) {
+			// period datepicker table
+			if (dual) {
 				empty_after = 0;
 				empty_before = daysInMonth - nextWeekDay;
 
-				_calendarHtml += '<table class="tbl-datepicker type-multi" data-date="' + year + '' + dateMonths[month + 1] + '">';
+				_calendarHtml += '<table class="tbl-datepicker type-period" data-date="' + year + '' + dateMonths[month + 1] + '">';
 				_calendarHtml += '<caption>' + year + '년 ' + dateMonths[month + 1] + '월 일자 선택</caption>';
 				_calendarHtml += '<colgroup>';
 				_calendarHtml += '<col span="7" class="n1">';
@@ -1124,84 +1125,84 @@
 		}
 
 		//달력 Hide&Remove
-		function hideCalendar(calendarEl) {
-			$("#" + calendarEl.calId).animate({
-				opacity: 0
-			}, 300, function () {
-				$(this).remove();
+		function hideCalendar() {
+			const $dp = $('.ui-datepicker.visible'),
+				$wrap = $dp.find('.datepicker-sec');
+			
+			$dp.removeClass('visible');
+			
+			$dp.on('transitionend', function(){
+				$wrap.remove();
 			});
+
 		}
 		function datepickerClose(calendarEl) {
-			var $btn = $('#' + calendarEl.calId).closest('.ui-datepicker').find('.ui-datepicker-btn');
-			setTimeout(function(){
-				$ui.uiDropdownToggle({
-					id: $btn.attr('id'),
-					eff_speed: $plugins.browser.mobile ? 400 : 100
-				});
-				$ui.uiScroll({ value: $btn.data('sct'), speed: 200 });
+			const $btn = $('#' + calendarEl.calId).closest('.ui-datepicker').find('.ui-datepicker-btn'),
+				$dp = $("#" + calendarEl.dpId),
+				$sec = $('#' + calendarEl.calId);
 
-				remove ? hideCalendar(calendarEl) : '';
-			}, 300);
+			$dp.removeClass('visible');
 
+			const closeback = !!$dp.data('opt').closeback ? $dp.data('opt').closeback : false;
+			closeback ? closeback() : '';
+
+			$dp.on('transitionend', function(){
+				//$ui.uiScroll({ value: $btn.data('sct'), speed: 200 });
+				$sec.remove();
+			});
 		}
 
-		//달력 Show
+		//달력 table
 		function reDisplayCalendar(calendarEl, v, endminmax) {
 			var $calWrap = $("#" + calendarEl.calId),
 				endminmax = endminmax === undefined ? false : endminmax;
 
-
 			if (endminmax) {
+				$calWrap.find('.tbl-datepicker').remove();
 				$calWrap.find('.datepicker-core').append(buildCore(date, calendarEl, v, endminmax));
-				$calWrap.find('.tbl-datepicker').eq(0).hide();
-				setTimeout(function(){
-					$calWrap.find('.tbl-datepicker').eq(0).remove();
-				},10);
 			} else {
 				$calWrap.find('.datepicker-core').empty().append(buildCore(date, calendarEl, v, false));
 			}
 
-			
-			dayMultiSelect(calendarEl);
+			dayPeriodSelect(calendarEl);
 		}
+		//달력 layout
 		function displayCalendar(calendarEl, v) {
-			var id_ = "#" + calendarEl.calId,
+			const id_ = "#" + calendarEl.calId,
+				$dp = $("#" + calendarEl.dpId),
 				$calWrap = $(id_);
-
+				
+			//date = new Date();
 			$calWrap.empty().append(buildCalendar(date, calendarEl, v));
-
 			reDisplayCalendar(calendarEl, v);
-			dayMultiSelect(calendarEl);
+			$dp.addClass('visible');
 			$ui.uiFocusTab({ selector: $calWrap, type: 'hold' });
 
 			//datepicker event--------------------------------------------------------
-			//select year & month
-			$calWrap.find('.datepicker-head-year select').off('change.uidpsel').on('change.uidpsel', function (e) {
+			$('.datepicker-head-year select').off('change.uidpsel').on('change.uidpsel', function (e) {
 				e.preventDefault();
 				yearMonthSelect(this, 'year');
 			});
-			$calWrap.find('.datepicker-head-month select').off('change.uidpsel').on('change.uidpsel', function (e) {
+			$('.datepicker-head-month select').off('change.uidpsel').on('change.uidpsel', function (e) {
 				e.preventDefault();
 				yearMonthSelect(this, 'month');
 			});
-			//next & prev month
-			$calWrap.find('.ui-datepicker-prev').off('click.uidatepicker').on('click.uidatepicker', function (e) {
+			$('.ui-datepicker-prev').off('click.uidatepicker').on('click.uidatepicker', function (e) {
 				e.preventDefault();
 				monthNextPrev(this, 'prev');
 			});
-			$calWrap.find('.ui-datepicker-next').off('click.uidatepicker').on('click.uidatepicker', function (e) {
+			$('.ui-datepicker-next').off('click.uidatepicker').on('click.uidatepicker', function (e) {
 				e.preventDefault();
 				monthNextPrev(this, 'next');
 			});
-			$calWrap.find('.ui-datepicker-prev-y').off('click.uidatepicker').on('click.uidatepicker', function (e) {
+			$('.ui-datepicker-prev-y').off('click.uidatepicker').on('click.uidatepicker', function (e) {
 				e.preventDefault();
 				yearNextPrev(this, 'prev');
 			});
-			$calWrap.find('.ui-datepicker-next-y').off('click.uidatepicker').on('click.uidatepicker', function (e) {
+			$('.ui-datepicker-next-y').off('click.uidatepicker').on('click.uidatepicker', function (e) {
 				e.preventDefault();
 				yearNextPrev(this, 'next');
 			});
-			//close
 			$('.ui-datepicker-close').off('click.uidayclose').on('click.uidayclose', function () {
 				datepickerClose(calendarEl);
 			});
@@ -1218,7 +1219,7 @@
 					dateTemp = v === 'year' ? new Date(_y, _m, 1) : new Date(_y, _m - 1, 1);
 
 				date = dateTemp;
-				reDisplayCalendar(calendarEl, v, multi && (!!$core.data('start') || !!$core.data('end')) ? true : false);
+				reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
 
 				v === 'year' ?
 					$calWrap.find('.datepicker-head-year select').eq(0).focus() :
@@ -1233,12 +1234,11 @@
 					_m = Number($currentDate.find('.month').data('m') - 1),
 					dateTemp = v === 'next' ? new Date(_y, _m + 1, 1) : new Date(_y, _m - 1, 1);
 
-				console.log($core.data('start'), $core.data('end'));
 				if ($this.hasClass('disabled')) {
 					alert($('#' + calendarEl.inputId).data(limit) + ' 을 벗어난 달은 선택이 불가능 합니다.');
 				} else {
 					date = dateTemp;
-					reDisplayCalendar(calendarEl, v, multi && (!!$core.data('start') || !!$core.data('end')) ? true : false);
+					reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
 					$this.eq(0).focus();
 				}
 			}
@@ -1255,48 +1255,39 @@
 					alert($('#' + calendarEl.inputId).data(limit) + ' 을 벗어난 년은 선택이 불가능 합니다.');
 				} else {
 					date = dateTemp;
-					reDisplayCalendar(calendarEl, v, multi && (!!$core.data('start') || !!$core.data('end')) ? true : false);
+					reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
 					$this.eq(0).focus();
 				}
 			}
 
-			if (multi) {
-				
-				$(doc)
-				.off('click.uidaysel').on('click.uidaysel', id_ + ' td button', function (e) {
+			if (period) {
+				$(doc).off('click.'+ id_).on('click.'+ id_, id_ + ' td button', function (e) {
 					e.preventDefault();
 					daySelectAct(calendarEl, this);
-				})
-				.off('mouseover.uidaysel').on('mouseover.uidaysel', id_ + ' td button', function () {
+				}).off('mouseover.'+ id_ +'sel').on('mouseover.'+ id_ +'sel', id_ + ' td button', function () {
 					dayHover(this);
-				})
-				.off('mouseover.uidaysel2').on('mouseover.uidaysel2', id_ + ' .type-multi td button', function () {
+				}).off('mouseover.'+ id_ +'sel2').on('mouseover.'+ id_ +'sel2', id_ + ' .type-period td button', function () {
 					monthHover(this);
-				})
-				.off('mouseleave.uidaysel3').on('mouseleave.uidaysel3', id_ + ' .tbl-datepicker', function () {
+				}).off('mouseleave.'+ id_ +'sel3').on('mouseleave.'+ id_ +'sel3', id_ + ' .tbl-datepicker', function () {
 					$('.tbl-datepicker').find('.hover').removeClass('hover');
 				});
-				$(doc).off('click.uitoday').on('click.uitoday', id_ + ' .datepicker-head-today button', function () {
-						date = new Date();
-						reDisplayCalendar(calendarEl);
-					})
-					.off('click.uitoday').on('click.uitoday', id_ + ' .btn-base', function () {
-						day_start ? writeInputDateValue(calendarEl, day_start) : '';
-						day_end ? writeInputDateValue(calendarEl, day_end, true) : '';
 
-						datepickerClose(calendarEl);
-					});
+				$(doc).off('click.'+ id_ +'today').on('click.'+ id_ +'today', id_ + ' .datepicker-head-today button', function () {
+					date = new Date();
+					reDisplayCalendar(calendarEl);
+				}).off('click.'+ id_ +'d').on('click.'+ id_ +'d', id_ + ' .btn-base', function () {
+					day_start ? writeInputDateValue(calendarEl, day_start) : '';
+					day_end ? writeInputDateValue(calendarEl, day_end, true) : '';
+
+					datepickerClose(calendarEl);
+				});
 			} else {
-				$(doc)
-				.off('click.uidaysel').on('click.uidaysel', id_ + ' td button', function () {
+				$(doc).off('click.'+ id_).on('click.'+ id_ , id_ + ' td button', function () {
 					var $this = $(this);
-
 					writeInputDateValue(calendarEl, $this);
 					datepickerClose(calendarEl);
-				})
-				.off('click.uitoday').on('click.uitoday', id_ + ' .datepicker-head-today button', function () {
+				}).off('click.'+ id_ +'today').on('click.'+ id_+'today', id_ + ' .datepicker-head-today button', function () {
 					date = new Date();
-
 					reDisplayCalendar(calendarEl);
 					$calWrap.find('td button.today').eq(0).focus();
 				});
@@ -1345,7 +1336,7 @@
 				prev_day = n_day < n_day_;
 
 			//첫클릭은 시작, 두번째는 종료
-			if (!$core.data('start')) {
+			if (!$core.data('start') && !$core.data('end')) {
 				$core.data('end', false);
 				$core.data('start', true);
 				$core.data('day', n_day);
@@ -1362,7 +1353,7 @@
 				//선택 및 반영
 				$core.addClass('state-ready');
 				$this.addClass('selected-start').attr('aria-selected', true);
-				if (!!$this.closest('table').hasClass('type-multi')) {
+				if (!!$this.closest('table').hasClass('type-period')) {
 					$this.closest('table').prev().find('tr').addClass('disabled').find('td').addClass('disabled').find('button');
 				}
 				$this.closest('td').addClass('on-start').prevAll().addClass('disabled').find('button');
@@ -1370,9 +1361,9 @@
 				$('.on-start').find('tr.on-start').find('button').attr('disabled');
 
 				$('#' + $this.closest('.ui-datepicker').find('.inp-base').attr('id') + '_end').val('');
+				
 				day_start = $this;
 				writeInputDateValue(calendarEl, $this);
-
 				reDisplayCalendar(calendarEl, $this, true);
 				//writeInputDateValue(calendarEl, $this, true);
 			} else if (next_day || sam_day) {
@@ -1381,9 +1372,12 @@
 				$core.data('end', true).data('endday', n_day);
 				$core.find('.selected-end').removeClass('selected-end').removeAttr('aria-selected');
 				$this.addClass('selected-end').attr('aria-selected', true);
+				$core.find('.on-ing').removeClass('on-ing');
+				$core.find('.on-end').removeClass('on-end');
 
 				$this.closest('td').addClass('on-end');
 				$this.closest('tr').addClass('on-end');
+				$core.find('.hover').addClass('on-ing');
 
 				$core.addClass('date-ing-on');
 				day_end = $this;
@@ -1408,7 +1402,7 @@
 
 				//선택 및 반영
 				$this.addClass('selected-start').attr('aria-selected', true);
-				if (!!$this.closest('table').hasClass('type-multi')) {
+				if (!!$this.closest('table').hasClass('type-period')) {
 					$this.closest('table').prev().find('tr').addClass('disabled').find('td').addClass('disabled').find('button');
 				}
 				$this.closest('td').addClass('on-start').prevAll().addClass('disabled').find('button');
@@ -1428,33 +1422,16 @@
 			var $this = $(this),
 				$btn = $this.find('.ui-datepicker-btn');
 
-			$this.find('.inp-base').prop('disabled', true);
+			//직접입력불가 설정
+			$this.find('.ui-datepicker-inp').prop('disabled', true);
 
 			callback = !!$this.data('callback') ? $this.data('callback') : callback;
-			if ($ui.browser.mobile) {
-				$ui.uiDropdown({
-					id: $btn.attr('id'),
-					ps: 'bottom',
-					eff: 'slideup',
-					dim: true,
-					eff_speed: 400,
-					openback: openback,
-					closeback: closeback
-				});
-				// $('#' + $btn.data('inp')).prop('readonly', true).attr('aria-hidden', true);
-			} else {
-				$ui.uiDropdown({
-					id: $btn.attr('id'),
-					ps: 'br',
-					openback: openback,
-					closeback: closeback
-				});
-			}
-			datepickerReady($btn);
 		});
 
 		//event
 		$datepicker.find('.ui-datepicker-btn').off('click.uidatepicker').on('click.uidatepicker', function () {
+			
+			
 			datepickerReady(this);
 		});
 		$datepicker.find('.inp-base').off('focus.uidpinp').on('focus.uidpinp', function () {
@@ -1466,27 +1443,36 @@
 		//datepicker ready
 		function datepickerReady(v) {
 			var $this = $(v),
-				dropid = $this.attr('id'),
-				inputId = $this.data('inp'),
+				$this_wrap = $this.closest('.ui-datepicker'),
+				$this_inp =  $this_wrap.find('.ui-datepicker-inp'),
+				dp_id = $this_wrap.attr('id'),
+				inputId = $this_inp.attr('id'),
 				regExp = /^([0-9]{4})-([0-9]{2})-([0-9]{2})/g,
-				_val = $('#' + inputId).val();
+				_val = $this_inp.val();
+				//_val = $('#' + inputId).val();
 
 			($ui.uiDatePicker.option.date_split === '.') ? regExp = /^([0-9]{4}).([0-9]{2}).([0-9]{2})/g : '';
+			
+			const openback = !!$this_wrap.data('opt').openback ? $this_wrap.data('opt').openback : false;
+			openback ? openback() : '';
 
+			hideCalendar();
+			$('#' + inputId + '_end').val('');
 			var reset = regExp.test(_val),
 				calspaceHTML = '';
 
 			$this.data('sct', $(doc).scrollTop());
-			!reset ? $('#' + inputId).val('') : '';
-			$this.closest('.ui-datepicker').find('.datepicker-sec').remove();
+			!reset ? $this_inp.val('') : '';
+			$this_wrap.find('.datepicker-sec').remove();
 
 			calVar = new calendarObject({
-				calId: "calWrap_" + dropid,
+				calId: "calWrap_" + dp_id,
+				dpId: dp_id,
 				inputId: inputId,
-				buttonId: "calBtn_" + dropid,
+				buttonId: "calBtn_" + dp_id,
 				shortDate: shortDate
 			});
-
+			(dual) ? $this_wrap.addClass('type-dual') : '';
 			calspaceHTML += '<div id="' + calVar.calId + '" class="datepicker-sec">';
 			calspaceHTML += '<div class="datepicker-wrap">';
 			calspaceHTML += '</div>';
@@ -1495,13 +1481,13 @@
 			$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').append(calspaceHTML);
 			displayCalendar(calVar, 'generate');
 
-			if (multi && dual) {
-				$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').addClass('multi');
+			if (period && dual) {
+				$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').addClass('period');
 			}
 		}
 
-		function dayMultiSelect(calendarEl) {
-			if (multi) {
+		function dayPeriodSelect(calendarEl) {
+			if (period) {
 				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + calendarEl.inputId).val() + '"]').addClass('selected-start').attr('aria-selected', true).closest('td').addClass('on-start').closest('tr').addClass('on-start').closest('table').addClass('on-start-tbl');
 				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + calendarEl.inputId + '_end').val() + '"]').addClass('selected-end').attr('aria-selected', true).closest('td').addClass('on-end').closest('tr').addClass('on-end').closest('table').addClass('on-end-tbl');
 
@@ -1512,7 +1498,6 @@
 					s = $('#' + calendarEl.inputId).val().replace(/\./g, '').substring(0, 6);
 					e = $('#' + calendarEl.inputId + '_end').val().replace(/\./g, '').substring(0, 6);
 				}
-
 				$datepicker.find('.tbl-datepicker').find('.on-start').prevAll().addClass('disabled').find('td').addClass('disabled');
 				$datepicker.find('.tbl-datepicker').find('.on-start').nextAll().addClass('hover-on').find('td').addClass('hover-on');
 				$datepicker.find('.tbl-datepicker').find('.on-end').prevAll().addClass('hover-on').find('td').addClass('hover-on');
@@ -1834,7 +1819,7 @@
 					break;
 			}
 
-			//single or multi modal
+			//single or period modal
 			layN = $('.ui-modal[opened="true"]').length;
 			opt.zindex !== undefined ? opt.zindex !== null ? zidx = opt.zindex : zidx = layN : zidx = layN;
 			$modal.css({
@@ -2775,189 +2760,215 @@
 		}
 	});
 	$ui.uiSelect.option = {
-		id: false, //select id
+		id: false, 
 		current: null,
 		customscroll: true,
 		vchecktype: false,
-		callback:false
+		callback: false
 	};
-	function createUiSelect(opt){
+	function createUiSelect(opt) {
 		var opt = opt === undefined ? {} : opt,
 			opt = $.extend(true, {}, $ui.uiSelect.option, opt),
-			current = opt.current, 
+			current = opt.current,
 			callback = opt.callback,
 			customscroll = opt.customscroll,
 			vchecktype = opt.vchecktype,
 			id = opt.id,
 			is_id = id === false ? false : true,
-			$ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.closest('.ui-select') : $('.ui-select'), 
-			
+			$ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.find('.ui-select') : $('.ui-select'),
+
 			keys = $ui.option.keys,
-			len = $ui_select.length, 
-			i = 0,
-			j = 0,
+			len = $ui_select.length,
 
 			_disabled = false,
 			_selected = false,
+			_hidden = false,
 			_val = '',
 			_txt = '',
-			
-			$sel, 
-			$sel_current, 
-			$opt, 
-			$opt_current, 
+			_hid = '',
+			hiddenCls = '',
+
+			$sel,
+			$sel_current,
+			$opt,
+			$opt_current,
+			optSet,
 
 			sel_id,
 			list_id,
 			opt_id,
 			opt_id_selected,
 			sel_n,
-			sel_tit, 
-			sel_dis, 
-			opt_len, 
+			sel_tit,
+			sel_dis,
+			opt_len,
 
 			id_opt,
 			id_optname,
-			idx, 
+			idx,
 			timer_opt,
-			timer, 
+			timer,
 			_option_wrap = '';
-		
+
 		//init
+		$ui.browser.mobile ? customscroll = false : '';
+
 		$ui_select.find('.ui-select-btn').remove();
 		$ui_select.find('.ui-select-wrap').remove();
 		$ui_select.find('.dim').remove();
-		
-		//set
-		for (i = 0; i < len; i++) {
+
+		//select set
+		for (var i = 0; i < len; i++) {
 			$sel_current = $ui_select.eq(i);
 			$sel = $sel_current.find('select');
-			$opt = $sel.find('option');
-			$sel.data('callback', callback);
-
 			sel_id = $sel.attr('id');
-			list_id = sel_id +'_list';
-			opt_id = sel_id +'_opt';
+			list_id = sel_id + '_list';
 			sel_dis = $sel.prop('disabled');
 			sel_tit = $sel.attr('title');
-			opt_len = $opt.length;
+			_hid = '';
 
-			customscroll ?
-			_option_wrap += '<div class="ui-select-wrap ui-scrollbar" id="'+ sel_id +'_scroll" style="min-width:'+ $sel_current.outerWidth() +'px">':
-			_option_wrap += '<div class="ui-select-wrap" style="min-width:'+ $sel_current.outerWidth() +'px">';
+			(!$sel.data('callback') || !!callback) ? $sel.data('callback', callback) : '';
+
+			customscroll
+				? _option_wrap += '<div class="ui-select-wrap ui-scrollbar" id="' + sel_id + '_scroll" style="min-width:' + $sel_current.outerWidth() + 'px">'
+				: _option_wrap += '<div class="ui-select-wrap" style="min-width:' + $sel_current.outerWidth() + 'px">';
 
 			$ui.browser.mobile ?
-			_option_wrap += '<div class="ui-select-opts" role="listbox" id="'+ list_id +'" aria-hidden="false">':
-			customscroll ?
-				_option_wrap += '<div class="ui-select-opts ui-scrollbar-item" role="listbox" id="'+ list_id +'" aria-hidden="false" tabindex="-1">':
-				_option_wrap += '<div class="ui-select-opts" role="listbox" id="'+ list_id +'" aria-hidden="false" tabindex="-1">';
+				_option_wrap += '<div class="ui-select-opts" role="listbox" id="' + list_id + '" aria-hidden="false">' :
+				customscroll ?
+					_option_wrap += '<div class="ui-select-opts ui-scrollbar-item" role="listbox" id="' + list_id + '" aria-hidden="false" tabindex="-1">' :
+					_option_wrap += '<div class="ui-select-opts" role="listbox" id="' + list_id + '" aria-hidden="false" tabindex="-1">';
 
-			for (j = 0; j < opt_len; j++) {
-				$opt_current = $opt.eq(j);
+			optSet = function (t){
+				(t !== undefined) ? $sel = $(t).closest('.ui-select').find('select') : '';
+				$opt = $sel.find('option');
+				opt_len = $opt.length;
+				sel_id = $sel.attr('id');
+				opt_id = sel_id + '_opt';
 
-				if (current !== null) {
-					if (current === j) {
-						_selected = true;
-						$opt_current.prop('selected', true).attr('selected');
+				for (var j = 0; j < opt_len; j++) {
+					$opt_current = $opt.eq(j);
+					_hidden = $opt_current.prop('hidden');
+
+					if (current !== null) {
+						if (current === j) {
+							_selected = true;
+							$opt_current.prop('selected', true).attr('selected');
+						} else {
+							_selected = false;
+							$opt_current.prop('selected', false).removeAttr('selected');
+						}
 					} else {
-						_selected = false;
-						$opt_current.prop('selected', false).removeAttr('selected');
-					}						
-				} else {
-					_selected = $opt_current.prop('selected');
+						_selected = $opt_current.prop('selected');
+					}
+
+					_disabled = $opt_current.prop('disabled');
+					_selected ? _val = $opt_current.val() : '';
+					_selected ? _txt = $opt_current.text() : '';
+					_selected && _hidden ? _hid = 'opt-hidden' : '';
+					hiddenCls =  _hidden ? 'hidden' : '';
+					_selected ? opt_id_selected = opt_id + '_' + j : '';
+					_selected ? sel_n = j : '';
+					id_optname = $sel.attr('id') + '_opt';
+					id_opt = id_optname + '_' + j;
+
+					if ($ui.browser.mobile) {
+						_disabled ?
+							_selected ?
+								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt disabled selected '+ hiddenCls + '" value="' + $opt_current.val() + '" disabled tabindex="-1">' :
+								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt disabled '+ hiddenCls + '" value="' + $opt_current.val() + '" disabled tabindex="-1">' :
+							_selected ?
+								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt selected '+ hiddenCls + '" value="' + $opt_current.val() + '">' :
+								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt '+ hiddenCls + '" value="' + $opt_current.val() + '">';
+					} else {
+						_disabled ?
+							_selected ?
+								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt disabled selected '+ hiddenCls + '" value="' + $opt_current.val() + '" disabled tabindex="-1">' :
+								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt disabled '+ hiddenCls + '" value="' + $opt_current.val() + '" disabled tabindex="-1">' :
+							_selected ?
+								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt selected '+ hiddenCls + '" value="' + $opt_current.val() + '" tabindex="-1">' :
+								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt '+ hiddenCls + '" value="' + $opt_current.val() + '" tabindex="-1">';
+					}
+
+					_option_wrap += '<span class="ui-select-txt">' + $opt_current.text() + '</span>';
+					_option_wrap += '</button>';
 				}
-				
-				_disabled = $opt_current.prop('disabled');
-				_selected ? _val = $opt_current.val() : '';
-				_selected ? _txt = $opt_current.text() : '';
-				_selected ? opt_id_selected = opt_id + '_' + j : '';
-				_selected ? sel_n = j : '';
 
-				id_optname = $sel.attr('id') + '_opt';
-				id_opt = id_optname + '_' + j;
-
-				if ($ui.browser.mobile) {
-					_disabled ?
-						_selected ?
-						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt disabled selected" value="'+ $opt_current.val() +'" disabled tabindex="-1">':
-						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt disabled" value="'+ $opt_current.val() +'" disabled tabindex="-1">':
-						_selected ?
-						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt selected" value="'+ $opt_current.val() +'">':
-						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt" value="'+ $opt_current.val() +'">';
-				} else {
-					_disabled ?
-						_selected ?
-						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt disabled selected" value="'+ $opt_current.val() +'" disabled tabindex="-1">':
-						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt disabled" value="'+ $opt_current.val() +'" disabled tabindex="-1">':
-						_selected ?
-						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt selected" value="'+ $opt_current.val() +'" tabindex="-1">':
-						_option_wrap += '<button type="button" role="option" id="'+ opt_id + '_' + j +'" class="ui-select-opt" value="'+ $opt_current.val() +'" tabindex="-1">';
-
+				if (t !== undefined) {
+					$sel.closest('.ui-select').find('.ui-select-opts button').remove();
+					$sel.closest('.ui-select').find('.ui-select-opts').append(_option_wrap);
+					_option_wrap = '';
+					eventFn();
 				}
-				
-				_option_wrap += '<span class="ui-select-txt">' + $opt_current.text() + '</span>';
-				_option_wrap += '</button>'; 
 			}
+			optSet();
 
-			_option_wrap += '</div>'; 
-			
-			$ui.browser.mobile ? _option_wrap += '<button type="button" class="btn-close"><span>닫기</span></button>': '';
-			$ui.browser.mobile ? _option_wrap += '<div class="dim"></div>': '';
-			_option_wrap += '</div>'; 
+			_option_wrap += '</div>';
 
-			var html_btn = '<input type="text" class="ui-select-btn" id="'+ sel_id +'_inp" role="combobox" aria-autocomplete="list" aria-owns="'+ list_id +'" aria-haspopup="true" aria-expanded="false" aria-activedescendant="'+ opt_id_selected +'" readonly value="'+ _txt +'" data-n="'+ sel_n +'" data-id="'+ sel_id +'" autocomplete="off"';
-			
-			!!vchecktype ?  html_btn += ' vchecktype='+ vchecktype +'>' : html_btn += '>';
+			$ui.browser.mobile ? _option_wrap += '<button type="button" class="btn-close"><span>닫기</span></button>' : '';
+			$ui.browser.mobile ? _option_wrap += '<div class="dim"></div>' : '';
+			_option_wrap += '</div>';
+
+			var html_btn = '<button type="button" class="ui-select-btn '+ _hid +'" id="' + sel_id + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + list_id + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + opt_id_selected + '" data-n="' + sel_n + '" data-id="' + sel_id + '"';
+			!!vchecktype
+				? html_btn += ' vchecktype=' + vchecktype + '>' + _txt + '</button>'
+				: html_btn += '>' + _txt + '</button>';
 
 			$sel_current.append(html_btn);
-			$sel.addClass('off').attr('aria-hidden',true).attr('tabindex', -1);
+			$sel.addClass('off').attr('aria-hidden', true).attr('tabindex', -1);
 			$sel_current.append(_option_wrap);
 			sel_dis ? $sel_current.find('.ui-select-btn').prop('disabled', true).addClass('disabled') : '';
 			_option_wrap = '';
+			html_btn = '';
 		}
 
 		//event
-		$(doc).on('click', '.dim-dropdown',function(){
-			if ($('body').data('select-open')) {
-				optBlur();
-			}
-		});
-		$('.ui-select-btn')
-			.off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
+		eventFn();
+		function eventFn(){
+			$(doc).off('click.dim').on('click.dim', '.dim-dropdown', function () {
+				if ($('body').data('select-open')) {
+					optBlur();
+				}
+			});
+			$('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
 				'click.ui': selectClick,
 				'keydown.ui': selectKey,
 				'mouseover.ui': selectOver,
 				'focus.ui': selectOver,
 				'mouseleave.ui': selectLeave
 			});
-		$('.ui-select-opt')
-			.off('click.ui mouseover.ui').on({
-				'click.ui':optClick,
-				'mouseover.ui':selectOver
+			$('.ui-select-opt').off('click.ui mouseover.ui').on({
+				'click.ui': optClick,
+				'mouseover.ui': selectOver
 			});
-		$('.ui-select-wrap').off('mouseleave.ui').on({'mouseleave.ui': selectLeave });
-		$('.ui-select select').off('change.ui').on({ 'change.ui':selectChange });
-		$('.ui-select-label').off('click.ui').on('click.ui', function(){
+			$('.ui-select-wrap').off('mouseleave.ui').on({ 'mouseleave.ui': selectLeave });
+			$('.ui-select-wrap').off('blur.ui').on({ 'blur.ui': optBlur });
+			$('.ui-select select').off('change.ui').on({ 'change.ui': selectChange });
+			$('.ui-select-label').off('click.ui').on('click.ui', function () {
 				var idname = $(this).attr('for');
 
-				setTimeout(function(){
-					$('#'+ idname +'_inp').focus();
-				},0);
+				setTimeout(function () {
+					$('#' + idname + '_inp').focus();
+				}, 0);
 			});
-		
+		}
 		function selectLeave() {
 			$('body').data('select-open', true);
 		}
-		function selectChange(){
-			//클릭으로 인한 실행과 change로 실행이 두번 실행됨... 한번 실행이 맞을 듯한데 그럼 select에 onchange일때는...
-			//$ui.uiSelectAct({ id:$(this).attr('id'), current:$(this).find('option:selected').index(), callback:$(this).data('callback'), original:true });
+		function selectChange() {
+			$(this).closest('.ui-select').data('fn');
+			$ui.uiSelectAct({
+				id:$(this).attr('id'),
+				current:$(this).find('option:selected').index(),
+				callback:$(this).data('callback'), original:true
+			});
 		}
 		function optBlur() {
 			optClose();
 		}
-		function selectClick(){
+		function selectClick() {
+			optSet(this);
 			var $btn = $(this);
-
 			$btn.data('sct', $(doc).scrollTop());
 			optExpanded(this);
 		}
@@ -2965,15 +2976,15 @@
 			var t = this,
 				sct = $(t).closest('.ui-select').find('.ui-select-btn').data('sct');
 
-			$ui.uiSelectAct({ id:$(t).closest('.ui-select').find('.ui-select-btn').data('id'), current:$(t).index() })
+			$ui.uiSelectAct({ id: $(t).closest('.ui-select').find('.ui-select-btn').data('id'), current: $(t).index() })
 			$(t).closest('.ui-select').find('.ui-select-btn').focus();
 			optClose();
-			$ui.uiScroll({ value:sct, speed:200 });
+			//$ui.uiScroll({ value: sct, speed: 200 });
 		}
-		function selectOver(){
+		function selectOver() {
 			$('body').data('select-open', false);
 		}
-		function selectKey(e){
+		function selectKey(e) {
 			var t = this,
 				$btn = $(this),
 				id = $btn.data('id'),
@@ -2984,53 +2995,34 @@
 				wrap_h = $wrap.outerHeight(),
 				len = $opt.length,
 				n_top = 0;
-			
-			if (e.altKey) {  
-				if (e.keyCode === keys.up) {      
-					optOpen(t);      
-				}    
-				e.keyCode === keys.down && optClose();   
-				return;
-			} 
-			
-			switch(e.keyCode){
-				case keys.up:
-					nn = n - 1 < 0 ? len - 1 : n - 1;
-					n_top = $opt.eq(nn).position().top;
-					optScroll($wrap, n_top, wrap_h, 'up');
-					optPrev(e, id, n, len);
-					break;
 
+			if (e.altKey) {
+				if (e.keyCode === keys.up) {
+					optOpen(t);
+				}
+				e.keyCode === keys.down && optClose();
+				return;
+			}
+
+			switch (e.keyCode) {
+				case keys.up:
 				case keys.left:
-					nn = n - 1 < 0 ? len - 1 : n - 1;
+					nn = n - 1 < 0 ? 0 : n - 1;
 					n_top = $opt.eq(nn).position().top;
 					optScroll($wrap, n_top, wrap_h, 'up');
 					optPrev(e, id, n, len);
 					break;
 
 				case keys.down:
-					nn = n + 1 > len - 1 ? 0 : n + 1;
-					n_top = $opt.eq(nn).position().top;
-					optScroll($wrap, n_top, wrap_h, 'down');
-					optNext(e, id, n, len);
-					break;
-
 				case keys.right:
-					nn = n + 1 > len - 1 ? 0 : n + 1;
+					nn = n + 1 > len - 1 ? len - 1 : n + 1;
 					n_top = $opt.eq(nn).position().top;
 					optScroll($wrap, n_top, wrap_h, 'down');
 					optNext(e, id, n, len);
 					break;
 			}
-
-			if (e.keyCode === keys.enter || e.keyCode === keys.space) {   
-				e.preventDefault();
-
-				$btn.data('sct', $(doc).scrollTop());
-				optExpanded(this);
-			}    
 		}
-		function optExpanded(t){
+		function optExpanded(t) {
 			if ($ui.browser.mobile) {
 				optOpen(t)
 			} else {
@@ -3038,28 +3030,24 @@
 					optClose();
 					optOpen(t);
 				} else {
-					optClose();	
-				}	
-			} 
-		}
-		function optScroll($wrap, n_top, wrap_h, key){
-			if (key === 'up') {
-				n_top < 0 ? $wrap.stop().animate({ 'scrollTop': $wrap.scrollTop() - wrap_h }) : n_top > wrap_h ? $wrap.stop().animate({ 'scrollTop': n_top }) : '';
-			} else {
-				n_top >= wrap_h ? $wrap.stop().animate({ 'scrollTop': $wrap.scrollTop() + wrap_h }) : n_top < 0 ? $wrap.stop().animate({ 'scrollTop': 0 }): '';
+					optClose();
+				}
 			}
 		}
-		function optPrev(e, id, n, len){
-			e.preventDefault();
-			n === 0 ? n = len - 1 : n = n - 1;
-			$ui.uiSelectAct({ id:id, current:n });
+		function optScroll($wrap, n_top, wrap_h, key) {
+			var oph = 56;
 		}
-		function optNext(e, id, n, len){
+		function optPrev(e, id, n, len) {
 			e.preventDefault();
-			n === len - 1 ? n = 0 : n = n + 1;
-			$ui.uiSelectAct({ id:id, current:n });
+			n === 0 ? n = 0 : n = n - 1;
+			$ui.uiSelectAct({ id: id, current: n });
 		}
-		function optOpen(t){
+		function optNext(e, id, n, len) {
+			e.preventDefault();
+			n === len - 1 ? n = len - 1 : n = n + 1;
+			$ui.uiSelectAct({ id: id, current: n });
+		}
+		function optOpen(t) {
 			var $body = $('body'),
 				_$sel = $(t),
 				_$uisel = _$sel.closest('.ui-select'),
@@ -3075,58 +3063,74 @@
 				win_h = $(win).outerHeight(),
 				clsname = 'bottom';
 
-			clsname = win_h - ((offtop - scrtop) + btn_h) > wraph ? 'bottom' : 'top' ;			
+			clsname = win_h - ((offtop - scrtop) + btn_h) > wraph ? 'bottom' : 'top';
 
 			$body.addClass('dim-dropdown');
-			$body.data('scrolling') === 'yes' ? $ui.uiScrollingCancel(): '';
+			$body.data('scrolling') === 'yes' ? $ui.uiScrollingCancel() : '';
 
-			if(!_$sel.data('expanded')){
+			$plugins.uiScrollBarReset({
+				id: _$wrap.attr('id')
+			});
+			
+
+			if (!_$sel.data('expanded')) {
 				_$sel.data('expanded', true).attr('aria-expanded', true);
 				_$uisel.addClass('on');
 				_$wrap.addClass('on ' + clsname).attr('aria-hidden', false);
 				_$opts.find('.ui-select-opt').eq(_$uisel.find(':checked').index());
-	
 				customscroll ? _$wrap.css('min-width', _$opts.outerWidth()) :
-				$ui.uiScroll({ target:_$wrap, value:Number(opt_h * _$uisel.find(':checked').index()), speed:0 });
+					$ui.uiScroll({ target: _$wrap, value: Number(opt_h * _$uisel.find(':checked').index()), speed: 0 });
 			}
 
-			customscroll ? $ui.uiScrollBar({ id:_$wrap.attr('id'), top:_$wrap.find('.selected').index() * _$wrap.find('.ui-select-opt').outerHeight() }) : '';
+			if (_$wrap.outerHeight() > _$opts.outerHeight()) {
+				_$wrap.css({
+					'min-height': _$opts.outerHeight(),
+					overflow: 'hidden'
+				});
+				$plugins.uiScrollBarReset({
+					id: _$wrap.attr('id')
+				});
+			} else {
+				customscroll
+					? $ui.uiScrollBar({
+						id: _$wrap.attr('id'),
+						top: _$wrap.find('.selected').index() * _$wrap.find('.ui-select-opt').outerHeight()
+					}) : '';
+			}
 		}
-		function optClose(){
+
+		function optClose() {
 			var $body = $('body'),
 				$select = $('.ui-select'),
 				$btn = $('.ui-select-btn'),
 				$wrap = $('.ui-select-wrap');
-			
-			$body.data('scrolling') === 'no' ? $ui.uiScrolling(): '';
+
+			$body.data('scrolling') === 'no' ? $ui.uiScrolling() : '';
 			$body.removeClass('dim-dropdown');
 			$btn.data('expanded', false).attr('aria-expanded', false);
 			$select.removeClass('on');
 			$wrap.removeClass('on top bottom').attr('aria-hidden', true);
 		}
 	}
-	function createUiSelectAct(opt){
+	function createUiSelectAct(opt) {
 		var id = typeof opt.id === 'string' ? opt.id : opt.id.attr('id'),
 			$uisel = typeof opt.id === 'string' ? $('#' + opt.id).closest('.ui-select') : opt.id.closest('.ui-select'),
 			$sel = $('#' + id),
 			$opt = $sel.find('option'),
 			$opt_ = $uisel.find('.ui-select-opt'),
-			callback = opt.callback === undefined ? false : opt.callback,
-			current= opt.current,
-			org= opt.original === undefined ? false : opt.original;
+			callback = opt.callback === undefined ?  $sel.data('callback') === undefined ? false : $sel.data('callback') : opt.callback,
+			current = opt.current,
+			org = opt.original === undefined ? false : opt.original;
 
-		!org ? $uisel.find('option').prop('selected', false).eq(current).prop('selected', true).change() : '';
+		!org ? $uisel.find('option').prop('selected', false).eq(current).prop('selected', true).trigger('change') : '';
 
-		$uisel.find('.ui-select-btn').val($opt.eq(current).text());
+		!$opt.eq(current).prop('hidden')
+			? $sel.closest('.ui-select').find('.ui-select-btn').removeClass('opt-hidden')
+			: $sel.closest('.ui-select').find('.ui-select-btn').addClass('opt-hidden');
+		$uisel.find('.ui-select-btn').text($opt.eq(current).text());
 		$opt_.removeClass('selected').eq(current).addClass('selected');
-		
-		if ($opt.eq(current).val() === 'direct') {
-			$uisel.find('.ui-select-btn').prop('readonly', false).val('').focus();
-		} else {
-			$uisel.find('.ui-select-btn').prop('readonly', true).focus();;
-		}
 
-		callback ? callback({ id:id, current:current, val:$opt.eq(current).val() }) : '';
+		callback ? callback({ id: id, current: current, val: $opt.eq(current).val() }) : '';
 	}
 
 

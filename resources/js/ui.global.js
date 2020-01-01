@@ -87,103 +87,129 @@ if (!Object.keys){
 	}()); 
 }
 
+//jQuery closest
+HTMLElement.prototype.closestByClass = function(className) {
+    var target = this;
+    while (!target.parentElement.classList.contains(className)) {
+        target = target.parentElement;
+        if (target.parentElement === null) {
+            throw new Error('Not found.');
+        }
+    }
+	console.log('closestByClass:', className, target);
+    return target;
+};
+
 //utils module
 ;(function ($, win, doc, undefined) {
-	console.log('global')
+	console.log('global');
 
 	'use strict';
 
-	var global = '$plugins', 
-		namespace = 'netiveUI.plugins',
-		easings = {
-			linear : function(t,b,c,d){return c*t/d+b;},
-			easeInQuad : function(t,b,c,d){return c*(t/=d)*t+b;},
-			easeOutQuad : function(t,b,c,d){return -c*(t/=d)*(t-2)+b;},
-			easeInOutQuad : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t+b;return -c/2*((--t)*(t-2)-1)+b;},
-			easeOutInQuad : function(t,b,c,d){if(t < d/2)return easings.easeOutQuad(t*2,b,c/2,d);return easings.easeInQuad((t*2)-d,b+c/2,c/2,d);},
-			easeInCubic : function(t,b,c,d){return c*(t/=d)*t*t+b;},
-			easeOutCubic : function(t,b,c,d){return c*((t=t/d-1)*t*t+1)+b;},
-			easeInOutCubic : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t+b;return c/2*((t-=2)*t*t+2)+b;},
-			easeOutInCubic : function(t,b,c,d){if(t<d/2)return easings.easeOutCubic(t*2,b,c/2,d);return easings.easeInCubic((t*2)-d,b+c/2,c/2,d);},
-			easeInQuart : function(t,b,c,d){return c*(t/=d)*t*t*t+b;},
-			easeOutQuart : function(t,b,c,d){return -c*((t=t/d-1)*t*t*t-1)+b;},
-			easeInOutQuart : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t+b;return -c/2*((t-=2)*t*t*t-2)+b;},
-			easeOutInQuart : function(t,b,c,d){if(t<d/2)return easings.easeOutQuart(t*2,b,c/2,d);return easings.easeInQuart((t*2)-d,b+c/2,c/2,d);},
-			easeInQuint : function(t,b,c,d){return c*(t/=d)*t*t*t*t+b;},
-			easeOutQuint : function(t,b,c,d){return c*((t=t/d-1)*t*t*t*t+1)+b;},
-			easeInOutQuint : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t*t+b;return c/2*((t-=2)*t*t*t*t+2)+b;},
-			easeOutInQuint : function(t,b,c,d){if(t<d/2)return easings.easeOutQuint(t*2,b,c/2,d);return easings.easeInQuint((t*2)-d,b+c/2,c/2,d);},
-			easeInSine : function(t,b,c,d){return -c*Math.cos(t/d*(Math.PI/2))+c+b;},
-			easeOutSine : function(t,b,c,d){return c*Math.sin(t/d*(Math.PI/2))+b;},
-			easeInOutSine : function(t,b,c,d){return -c/2*(Math.cos(Math.PI*t/d)-1)+b;},
-			easeOutInSine : function(t,b,c,d){if(t<d/2)return easings.easeOutSine(t*2,b,c/2,d);return easings.easeInSine((t*2)-d,b+c/2,c/2,d);},
-			easeInExpo : function(t,b,c,d){return (t==0)? b : c*Math.pow(2,10*(t/d-1))+b-c*0.001;},
-			easeOutExpo : function(t,b,c,d){return (t==d)? b+c : c*1.001*(-Math.pow(2,-10*t/d)+1)+b;},
-			easeInOutExpo : function(t,b,c,d){if(t==0)return b;if(t==d)return b+c;if((t/=d/2)<1)return c/2*Math.pow(2,10*(t-1))+b-c*0.0005;return c/2*1.0005*(-Math.pow(2,-10*--t)+2)+b;},
-			easeOutInExpo : function(t,b,c,d){if(t<d/2)return easings.easeOutExpo(t*2,b,c/2,d);return easings.easeInExpo((t*2)-d,b+c/2,c/2,d);},
-			easeInCirc : function(t,b,c,d){return -c*(Math.sqrt(1-(t/=d)*t)-1)+b;},
-			easeOutCirc : function(t,b,c,d){return c*Math.sqrt(1-(t=t/d-1)*t)+b;},
-			easeInOutCirc : function(t,b,c,d){if((t/=d/2)<1)return -c/2*(Math.sqrt(1-t*t)-1)+b;return c/2*(Math.sqrt(1-(t-=2)*t)+1)+b;},
-			easeOutInCirc : function(t,b,c,d){if (t<d/2)return easings.easeOutCirc(t*2,b,c/2,d);return easings.easeInCirc((t*2)-d,b+c/2,c/2,d);},		
-			easeInElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return -(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;},
-			easeOutElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return (a*Math.pow(2,-10*t)*Math.sin((t*d-s)*(2*Math.PI)/p)+c+b);},
-			easeInOutElastic : function(t,b,c,d,a,p){if(t==0)return b;if((t/=d/2)==2)return b+c;var s,p=d*(.3*1.5),a=0;var s,p=(!p||typeof(p)!='number')? d*(.3*1.5) : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);if(t<1)return -.5*(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;return a*Math.pow(2,-10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p)*.5+c+b;},
-			easeOutInElastic : function(t,b,c,d,a,p){if (t<d/2)return easings.easeOutElastic(t*2,b,c/2,d,a,p);return easings.easeInElastic((t*2)-d,b+c/2,c/2,d,a,p);},
-			easeInBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*(t/=d)*t*((s+1)*t-s)+b;},
-			easeOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*((t=t/d-1)*t*((s+1)*t+s)+1)+b;},
-			easeInOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;if((t/=d/2)<1)return c/2*(t*t*(((s*=(1.525))+1)*t-s))+b;return c/2*((t-=2)*t*(((s*=(1.525))+1)*t+s)+2)+b;},
-			easeOutInBack : function(t,b,c,d,s){if(t<d/2)return easings.easeOutBack(t*2,b,c/2,d,s);return easings.easeInBack((t*2)-d,b+c/2,c/2,d,s);},			
-			easeInBounce : function(t,b,c,d){return c-easings.easeOutBounce(d-t,0,c,d)+b;},
-			easeOutBounce : function(t,b,c,d){if((t/=d)<(1/2.75))return c*(7.5625*t*t)+b;else if(t<(2/2.75))return c*(7.5625*(t-=(1.5/2.75))*t+.75)+b;else if(t<(2.5/2.75))return c*(7.5625*(t-=(2.25/2.75))*t+.9375)+b;else return c*(7.5625*(t-=(2.625/2.75))*t+.984375)+b;},
-			easeInOutBounce : function(t,b,c,d){if(t<d/2)return easings.easeInBounce(t*2,0,c,d)*.5+b;else return easings.easeOutBounce(t*2-d,0,c,d)*.5+c*.5+b;},
-			easeOutInBounce : function(t,b,c,d){if(t<d/2)return easings.easeOutBounce(t*2,b,c/2,d);return easings.easeInBounce((t*2)-d,b+c/2,c/2,d);}
-		},
-		easing;
+	const global = '$plugins';
+	const namespace = 'netiveUI.plugins';
+	
+	//jquery easing add
+	const easings = {
+		linear : function(t,b,c,d){return c*t/d+b;},
+		easeInQuad : function(t,b,c,d){return c*(t/=d)*t+b;},
+		easeOutQuad : function(t,b,c,d){return -c*(t/=d)*(t-2)+b;},
+		easeInOutQuad : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t+b;return -c/2*((--t)*(t-2)-1)+b;},
+		easeOutInQuad : function(t,b,c,d){if(t < d/2)return easings.easeOutQuad(t*2,b,c/2,d);return easings.easeInQuad((t*2)-d,b+c/2,c/2,d);},
+		easeInCubic : function(t,b,c,d){return c*(t/=d)*t*t+b;},
+		easeOutCubic : function(t,b,c,d){return c*((t=t/d-1)*t*t+1)+b;},
+		easeInOutCubic : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t+b;return c/2*((t-=2)*t*t+2)+b;},
+		easeOutInCubic : function(t,b,c,d){if(t<d/2)return easings.easeOutCubic(t*2,b,c/2,d);return easings.easeInCubic((t*2)-d,b+c/2,c/2,d);},
+		easeInQuart : function(t,b,c,d){return c*(t/=d)*t*t*t+b;},
+		easeOutQuart : function(t,b,c,d){return -c*((t=t/d-1)*t*t*t-1)+b;},
+		easeInOutQuart : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t+b;return -c/2*((t-=2)*t*t*t-2)+b;},
+		easeOutInQuart : function(t,b,c,d){if(t<d/2)return easings.easeOutQuart(t*2,b,c/2,d);return easings.easeInQuart((t*2)-d,b+c/2,c/2,d);},
+		easeInQuint : function(t,b,c,d){return c*(t/=d)*t*t*t*t+b;},
+		easeOutQuint : function(t,b,c,d){return c*((t=t/d-1)*t*t*t*t+1)+b;},
+		easeInOutQuint : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t*t+b;return c/2*((t-=2)*t*t*t*t+2)+b;},
+		easeOutInQuint : function(t,b,c,d){if(t<d/2)return easings.easeOutQuint(t*2,b,c/2,d);return easings.easeInQuint((t*2)-d,b+c/2,c/2,d);},
+		easeInSine : function(t,b,c,d){return -c*Math.cos(t/d*(Math.PI/2))+c+b;},
+		easeOutSine : function(t,b,c,d){return c*Math.sin(t/d*(Math.PI/2))+b;},
+		easeInOutSine : function(t,b,c,d){return -c/2*(Math.cos(Math.PI*t/d)-1)+b;},
+		easeOutInSine : function(t,b,c,d){if(t<d/2)return easings.easeOutSine(t*2,b,c/2,d);return easings.easeInSine((t*2)-d,b+c/2,c/2,d);},
+		easeInExpo : function(t,b,c,d){return (t==0)? b : c*Math.pow(2,10*(t/d-1))+b-c*0.001;},
+		easeOutExpo : function(t,b,c,d){return (t==d)? b+c : c*1.001*(-Math.pow(2,-10*t/d)+1)+b;},
+		easeInOutExpo : function(t,b,c,d){if(t==0)return b;if(t==d)return b+c;if((t/=d/2)<1)return c/2*Math.pow(2,10*(t-1))+b-c*0.0005;return c/2*1.0005*(-Math.pow(2,-10*--t)+2)+b;},
+		easeOutInExpo : function(t,b,c,d){if(t<d/2)return easings.easeOutExpo(t*2,b,c/2,d);return easings.easeInExpo((t*2)-d,b+c/2,c/2,d);},
+		easeInCirc : function(t,b,c,d){return -c*(Math.sqrt(1-(t/=d)*t)-1)+b;},
+		easeOutCirc : function(t,b,c,d){return c*Math.sqrt(1-(t=t/d-1)*t)+b;},
+		easeInOutCirc : function(t,b,c,d){if((t/=d/2)<1)return -c/2*(Math.sqrt(1-t*t)-1)+b;return c/2*(Math.sqrt(1-(t-=2)*t)+1)+b;},
+		easeOutInCirc : function(t,b,c,d){if (t<d/2)return easings.easeOutCirc(t*2,b,c/2,d);return easings.easeInCirc((t*2)-d,b+c/2,c/2,d);},		
+		easeInElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return -(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;},
+		easeOutElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return (a*Math.pow(2,-10*t)*Math.sin((t*d-s)*(2*Math.PI)/p)+c+b);},
+		easeInOutElastic : function(t,b,c,d,a,p){if(t==0)return b;if((t/=d/2)==2)return b+c;var s,p=d*(.3*1.5),a=0;var s,p=(!p||typeof(p)!='number')? d*(.3*1.5) : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);if(t<1)return -.5*(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;return a*Math.pow(2,-10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p)*.5+c+b;},
+		easeOutInElastic : function(t,b,c,d,a,p){if (t<d/2)return easings.easeOutElastic(t*2,b,c/2,d,a,p);return easings.easeInElastic((t*2)-d,b+c/2,c/2,d,a,p);},
+		easeInBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*(t/=d)*t*((s+1)*t-s)+b;},
+		easeOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*((t=t/d-1)*t*((s+1)*t+s)+1)+b;},
+		easeInOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;if((t/=d/2)<1)return c/2*(t*t*(((s*=(1.525))+1)*t-s))+b;return c/2*((t-=2)*t*(((s*=(1.525))+1)*t+s)+2)+b;},
+		easeOutInBack : function(t,b,c,d,s){if(t<d/2)return easings.easeOutBack(t*2,b,c/2,d,s);return easings.easeInBack((t*2)-d,b+c/2,c/2,d,s);},			
+		easeInBounce : function(t,b,c,d){return c-easings.easeOutBounce(d-t,0,c,d)+b;},
+		easeOutBounce : function(t,b,c,d){if((t/=d)<(1/2.75))return c*(7.5625*t*t)+b;else if(t<(2/2.75))return c*(7.5625*(t-=(1.5/2.75))*t+.75)+b;else if(t<(2.5/2.75))return c*(7.5625*(t-=(2.25/2.75))*t+.9375)+b;else return c*(7.5625*(t-=(2.625/2.75))*t+.984375)+b;},
+		easeInOutBounce : function(t,b,c,d){if(t<d/2)return easings.easeInBounce(t*2,0,c,d)*.5+b;else return easings.easeOutBounce(t*2-d,0,c,d)*.5+c*.5+b;},
+		easeOutInBounce : function(t,b,c,d){if(t<d/2)return easings.easeOutBounce(t*2,b,c/2,d);return easings.easeInBounce((t*2)-d,b+c/2,c/2,d);}
+	};
+	let easing;
+	for (easing in easings) {
+		$.easing[easing] = (function(easingname) {
+			return function(x, t, b, c, d) {
+				return easings[easingname](t, b, c, d);
+			}
+		})(easing);
+	}
 
-	//IIFE - device & browser setup check
+	//html5 tag & device size class 
 	(function () {
-		var width = document.documentElement.offsetWidth,
-			devsize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360],
-			size_len = devsize.length,
-			sizeMode,
+		const devsize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360];
+		const html5tags = ['article', 'aside', 'details', 'figcaption', 'figure', 'footer', 'header', 'hgroup', 'nav', 'main', 'section', 'summary'];
+		
+		let width = document.documentElement.offsetWidth,
 			colClass = width > devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4',
-			html5tags = ['article', 'aside', 'details', 'figcaption', 'figure', 'footer', 'header', 'hgroup', 'nav', 'main', 'section', 'summary'],
 			i = 0,
+			size_len = devsize.length,
 			max = html5tags.length,
+			sizeMode,
 			timer;
 
-		deviceSizeClassName(width);
-
-		for (i = 0; i < max; i++) {
-			document.createElement(html5tags[i]);
-		}
-
-		document.documentElement.className += (' s' + sizeMode + ' ' +colClass);
-
-		$(win).resize(function () {
-			clearTimeout(timer);
-			timer = setTimeout(function () {
-				width = $(win).outerWidth();
-
-				deviceSizeClassName(width);
-
-				colClass = (width > devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4');
-				$('html').removeClass('s1920 s1600 s1440 s1280 s1024 s960 s840 s720 s600 s480 s400 s360 s300 col12 col8 col4').addClass(' s' + sizeMode + ' ' + colClass);
-			}, 100);
-		});
-
-		function deviceSizeClassName(w){
-			for (var j = 0; j < size_len; j++) {
-				if (w > devsize[j]) {
-					sizeMode = devsize[j];
+		const deviceSizeClassName = function(w) {
+			for (let i = 0; i < size_len; i++) {
+				if (w > devsize[i]) {
+					sizeMode = devsize[i];
 					break;
 				} else {
 					w < devsize[size_len - 1] ? sizeMode = 300 : '';
 				}
 			}
+		};
+
+		for (i = 0; i < max; i++) {
+			doc.createElement(html5tags[i]);
 		}
+
+		deviceSizeClassName(width);
+		doc.documentElement.className += ('s' + sizeMode + ' ' +colClass);
+		win.addEventListener('resize', function() {
+			clearTimeout(timer);
+			timer = setTimeout(function () {
+				let dcHtml = doc.querySelector('html');
+				
+				width = doc.body.offsetWidth; 
+				// document.body.offsetWidth === $(win).outerWidth()
+				// win.innerWidth : scroll 포함된 width (+17px)
+				// win.outerWidth === screen.availWidth 
+				deviceSizeClassName(width);
+
+				colClass = width > devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4';
+				dcHtml.classList.remove('s1920', 's1600', 's1440', 's1280', 's1024', 's960', 's840', 's720', 's600', 's480', 's400', 's360', 's300', 'col12', 'col8', 'col4');
+				dcHtml.classList.add('s' + sizeMode, colClass);
+			}, 100);
+		});
 	})();
-	
+
 	//requestAnimationFrame
 	win.requestAFrame = (function () {
 		return win.requestAnimationFrame || win.webkitRequestAnimationFrame || win.mozRequestAnimationFrame || win.oRequestAnimationFrame ||
@@ -199,15 +225,6 @@ if (!Object.keys){
 			};
 	})();
 
-	//jquery easing add
-	for (easing in easings) {
-		$.easing[easing] = (function(easingname) {
-			return function(x, t, b, c, d) {
-				return easings[easingname](t, b, c, d);
-			}
-		})(easing);
-	}
-
 	//global namespace
 	if (!!win[global]) {
 		throw new Error("already exists global!> " + global);
@@ -218,11 +235,11 @@ if (!Object.keys){
             }
         });
     }
-	console.log(win[global]);
-	//components option
+	
+	//components option 
 	win[global].option = {
 		keys: { 
-			'tab': 9, 'enter': 13, 'alt': 18, 'esc': 27, 'space': 32, 'pageup': 33, 'pagedown': 34, 'end': 35, 'home': 36, 'left': 37, 'up': 38, 'right': 39, 'down': 40,
+			'tab': 9, 'enter': 13, 'alt': 18, 'esc': 27, 'space': 32, 'pageup': 33, 'pagedown': 34, 'end': 35, 'home': 36, 'left': 37, 'up': 38, 'right': 39, 'down': 40
 		},
 		effect: {
             //http://cubic-bezier.com - css easing effect
@@ -257,36 +274,32 @@ if (!Object.keys){
 			easeInOutBack: '0.680, -0.550, 0.265, 1.550'
 		},
         uiComma: function(n){
-            var parts = n.toString().split(".");
+			//숫자 세자리수마다 , 붙이기
+            let parts = n.toString().split(".");
 
 			return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
         },
-        partsAdd0 :function(x, y, z) {
+        partsAdd0 :function(x) {
             //숫자 한자리수 일때 0 앞에 붙이기
-            var y = y === undefined ? 10 : y,
-                z = z === undefined ? '0' : z;
-
-            return ((x < 10) ? z + x : x);
+            return Number(x) < 10 ? '0' + x : x;
         }
 	};
 
-	
-
+	//
 	(function () {
-		var ua = navigator.userAgent,
+		const ua = navigator.userAgent,
 			ie = ua.match(/(?:msie ([0-9]+)|rv:([0-9\.]+)\) like gecko)/i),
 			deviceInfo = ['android', 'iphone', 'ipod', 'ipad', 'blackberry', 'windows ce', 'samsung', 'lg', 'mot', 'sonyericsson', 'nokia', 'opeara mini', 'opera mobi', 'webos', 'iemobile', 'kfapwi', 'rim', 'bb10'],
 			filter = "win16|win32|win64|mac|macintel",
 			uAgent = ua.toLowerCase(),
-			deviceInfo_len = deviceInfo.length,
-			browser = win[global].borwser,
-			support = $.support,
-			device = win[global].device,
+			deviceInfo_len = deviceInfo.length;
+
+		let browser = win[global].browser = {},
+			support = win[global].support = {},
 			i = 0,
 			version,
+			device,
 			j;
-
-		!browser ? win[global].browser = browser = {} : '';
 
 		for (i = 0; i < deviceInfo_len; i++) {
 			if (uAgent.match(deviceInfo[i]) != null) {
@@ -336,25 +349,17 @@ if (!Object.keys){
 
 		if (ie) {
 			browser.ie = ie = parseInt( ie[1] || ie[2] );
-			browser.oldie = false;
-			browser.ie9 = false;
-			( 9 > ie ) ? browser.oldie = true : ( 9 == ie ) ? browser.ie9 = true : '';
 			( 11 > ie ) ? support.pointerevents = false : '';
 			( 9 > ie ) ? support.svgimage = false : '';
 		} else {
 			browser.ie = false;
-			browser.oldie = false;
-			browser.ie9 = false;
 		}
 
-		//class 생성
-		$('html')
-		.addClass(browser.os)
-		.addClass(browser.chrome? 'chrome' : browser.firefox ? 'firefox' : browser.opera ? 'opera' : browser.safari ? 'safari' : browser.ie ? 'ie ie' + browser.ie : '')
-		.addClass(browser.ie && 8 > browser.ie ? 'oldie' : '')
-		.addClass(browser.ios ? "ios" : browser.android ? "android" : '')
-		.addClass(browser.mobile ? 'ui-m' : 'ui-d')
-		.addClass(browser.app ? 'ui-a' : '');
+		const clsBrowser = browser.chrome ? 'chrome' : browser.firefox ? 'firefox' : browser.opera ? 'opera' : browser.safari ? 'safari' : browser.ie ? 'ie ie' + browser.ie : 'other';
+		const clsMobileSystem = browser.ios ? "ios" : browser.android ? "android" : 'etc';
+		const clsMobile = browser.mobile ? browser.app ? 'ui-a ui-m' : 'ui-m' : 'ui-d';
+
+		doc.querySelector('html').classList.add(browser.os, clsBrowser, clsMobileSystem, clsMobile);
 	})();
 
 	win[global] = win[global].uiNameSpace(namespace, {
@@ -382,6 +387,9 @@ if (!Object.keys){
 		uiScrollBarAct: function (opt) {
 			return createuiScrollBarAct(opt);
 		},
+		uiScrollBarReset: function (opt) {
+			return createuiScrollBarReset(opt);
+		},
 		uiFocusTab: function (opt) {
 			return createUiFocusTab(opt);
 		},
@@ -406,8 +414,9 @@ if (!Object.keys){
 	});
     
     function createNameSpace(identifier, module) {
-		var w = win,
-			name = identifier.split('.'),
+		const name = identifier.split('.');
+
+		let	w = win,
 			p,
 			i = 0;
 
@@ -429,10 +438,11 @@ if (!Object.keys){
 		}
 		return w;
 	}
+
 	function createUiConsoleGuide(opt) {
 		if (!win[global].browser.ie) {
 			console.log('');
-			for (var i = 0; i < opt.length; i++) {
+			for (let i = 0; i < opt.length; i++) {
 				(i === 0) ? console.log("%c" + opt[i], "background:#333; color:#ffe400; font-size:12px"): console.log(opt[i]);
 			}
 			console.log('');
@@ -440,19 +450,17 @@ if (!Object.keys){
 	}
 
 	function createUiLabelAbove(){
-		$('.field-inlabel input').each(function(v){
-			var $this = $(this),
-				$field =  $this.closest('.field-inlabel');
+		const dcInp = document.querySelectorAll('.field-inlabel input'),
+			dcInp_len = dcInp.length;
 
-			$this.val() !== '' ? $field.addClass('activated') : $field.removeClass('activated');
+		for (let i = 0; i < dcInp_len; i++) {
+			let inpCurrent = dcInp[i];
 
-			$this.on('change', function(){	
-				var $this_ = $(this),
-					$field_ =  $this_.closest('.field-inlabel');
-
-				$this_.val() !== '' ? $field_.addClass('activated') : $field_.removeClass('activated');
-			})
-		})
+			inpCurrent.value !== '' ? inpCurrent.classList.add('activated') : inpCurrent.classList.remove('activated');
+			inpCurrent.addEventListener('change', evt => {
+				evt.target.value !== '' ? evt.target.classList.add('activated') : evt.target.classList.remove('activated');
+			});
+		}
 	}
 
 	win[global].uiValueCheck.option = {
@@ -468,7 +476,6 @@ if (!Object.keys){
 			error,
 			err;
 
-		console.log()
 		if (first && target.val().length === 0) {
 			return false;
 		}
@@ -477,11 +484,9 @@ if (!Object.keys){
 			reg_id = /^[a-z0-9][a-z0-9_\-]{4,19}$/,
 			reg_pw = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/,
 			reg_phone = /^((01[1|6|7|8|9])[1-9][0-9]{6,7})$|(010[1-9][0-9]{7})$/,
-			
 			reg_email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
 			reg_email_id = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^()[\]\\.,;:\s@\"]+)*)|(\".+\"))$/,
 			reg_email_address = /^((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i,
-
 			reg_kr = /^[가-힣]{2,}$/,
 			reg_en = /^[a-zA-Z]{2,}$/,
 			reg_tel = /^[0-9\*]+$/,
@@ -742,25 +747,61 @@ if (!Object.keys){
 
 	win[global].uiScrollBar.option = {
 		id: false,
+		callback:false,
 		top: 0
 	};
 	win[global].uiScrollBar.timer = {};
 	win[global].uiScrollBar.overlapExe = 0;
 	function createuiScrollBarAct(opt) {
-		var $this = $('#'+ opt.id),
-			$this_barwrap = $this.find('> .ui-scrollbar-barwrap');
+		var $this = $('#' + opt.id),
+			targetId = opt.targetid, 
+			$item = $this.find('> .ui-scrollbar-item'),
+			$bar = $this.find('> .ui-scrollbar-barwrap .ui-scrollbar-bar');
 
-		$this_barwrap.hide();
+		$item.css('top',0);
+		$bar.css('top',0);
+
+		var	item_h = $item.outerHeight(),
+			target_top = targetId === undefined ? 0 : $('#' + targetId).offset().top,
+			this_top =  $this.offset().top,
+			this_h = $this.outerHeight(),
+			barwrap_h = $this.find('> .ui-scrollbar-barwrap').outerHeight(true),
+			bar_h = $bar.outerHeight(true),
+			per ;
+
 		$this.data('tabmove', true);
+
+		if (item_h - (target_top - this_top) < this_h ) {
+			$item.css('top', (item_h - this_h) * -1);
+			$bar.css('top', Math.floor(barwrap_h - bar_h)  + 'px');
+		} else {
+			per = (target_top - this_top) / (item_h - this_h) * 100;
+			$item.css('top', (target_top - this_top) * -1);
+			$bar.css('top', Math.floor((barwrap_h - bar_h) / 100) * per + 'px');
+		}
+	}
+
+	function createuiScrollBarReset(opt){
+		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
+			sid = opt.id,
+			$base = !sid ? $('.ui-scrollbar') : $('#' + opt.id);
+
+		$base.data('ready',false);
+		$('.ui-scrollbar').off('keydown.bb');
+		$('.ui-scrollbar').off('mousewheel.aa DOMMouseScroll.aa');
+		$base.find('> .ui-scrollbar-barwrap').remove();
+		$base.find('> .ui-scrollbar-item').removeAttr('style');
+
 	}
 	function createuiScrollBar(opt) {
 		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
 			sid = opt.id,
-			$base = !sid ? $('.ui-scrollbar') :  $('#'+ opt.id),
+			$base = !sid ? $('.ui-scrollbar') : $('#' + opt.id),
+			callback = opt.callback,
 			bar_t,
 			bar_l;
 
-		$base.each(function(i){
+		$base.each(function (i) {
 			var $this = $(this);
 
 			if (win[global].uiHasScrollBar({ selector: $this }) && !$plugins.browser.mobile) {
@@ -776,32 +817,22 @@ if (!Object.keys){
 					item_h = $this.children('.ui-scrollbar-item').outerHeight(true),
 					max_y = item_h - wrap_h;
 
-					console.log('max_y: ', opt.top)
-				
-				// if ($bar.data('scrollxy') === 'x') {
-				// 	dragAct($bar, $item, e, x_s, l_s, s_w, w_sh, bar_unit, wrap_unit, 'x');
-				// } else {
-				// 	dragAct($bar, $item, e, y_s, t_s, s_h, w_sh, bar_unit, wrap_unit, 'y');
-				// }
-
-				wheelAct($this, opt.top * -1, wrap_h, item_h, max_y, true);
-			} 
+				wheelAct($this, Math.abs(opt.top * -1), wrap_h, item_h, max_y, true);
+			}
 		});
 		scrollbarEvent();
 
-		function scrollbarReady(wrap_this, i){
+		function scrollbarReady(wrap_this, i) {
 			var $wrap = wrap_this,
-				$item =  $wrap.children('.ui-scrollbar-item'),
+				$item = $wrap.children('.ui-scrollbar-item'),
 				html_scrollbar = '',
 				is_scrollY = win[global].uiHasScrollBar({ selector: wrap_this }) && !$plugins.browser.mobile,
 				is_scrollX = win[global].uiHasScrollBarX({ selector: wrap_this }) && !$plugins.browser.mobile;
-			
-			//set
-			console.log(!$wrap.data('ready') || !$wrap.attr('id'));
+
 			if (!$wrap.data('ready') || !$wrap.attr('id')) {
 				!$wrap.attr('id') ?
-				$wrap.css('overflow','hidden').attr('tabindex', 0).attr('id', 'uiScrollBar_'+ i).data('ready', true):
-				$wrap.css('overflow','hidden').attr('tabindex', 0).data('ready', true);
+					$wrap.css('overflow', 'hidden').attr('tabindex', 0).attr('id', 'uiScrollBar_' + i).data('ready', true) :
+					$wrap.css('overflow', 'hidden').attr('tabindex', 0).data('ready', true);
 
 				if (is_scrollY && $wrap.outerHeight() < $item.outerHeight()) {
 					html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
@@ -817,15 +848,15 @@ if (!Object.keys){
 				}
 
 				$wrap.prepend(html_scrollbar);
-				$wrap.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar').css('height', Math.floor($wrap.innerHeight() / ($item.outerHeight(true) / 100)) +'%');
-				
+				$wrap.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar').css('height', Math.floor($wrap.innerHeight() / ($item.outerHeight(true) / 100)) + '%');
+
 				if (is_scrollX) {
-					$wrap.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar').css('width', Math.floor($wrap.innerWidth() / ($item.outerWidth(true) / 100)) +'%');
+					$wrap.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar').css('width', Math.floor($wrap.innerWidth() / ($item.outerWidth(true) / 100)) + '%');
 				}
 			}
 		}
 
-		function scrollbarEvent(){
+		function scrollbarEvent() {
 			$('.ui-scrollbar').off('mouseover.uiscrbar focus.uiscrbar').on({
 				'mouseover.uiscrbar': mouseEventAct,
 				'focus.uiscrbar': keyEventAct
@@ -840,10 +871,9 @@ if (!Object.keys){
 				item_h = $this.children('.ui-scrollbar-item').outerHeight(true),
 				is_y = $this.find('.type-y').length,
 				max_y = item_h - wrap_h;
-				
-			//wheel event
+
 			if (is_y) {
-				$this.off('mousewheel.aa DOMMouseScroll.aa').on('mousewheel.aa DOMMouseScroll.aa', function(e){
+				$this.off('mousewheel.aa DOMMouseScroll.aa').on('mousewheel.aa DOMMouseScroll.aa', function (e) {
 					e.preventDefault();
 					e.stopPropagation();
 					if ($(this).data('tabmove')) {
@@ -857,14 +887,14 @@ if (!Object.keys){
 				});
 			}
 
-			//mouse drag event
-			$('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e){
+			$('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function (e) {
 				e.preventDefault();
+				$('body').addClass('scrollbar-move');
 				dragMoveAct(e, this);
 			});
 
 		}
-		function dragMoveAct(e, t){
+		function dragMoveAct(e, t) {
 			var $bar = $(t),
 				y_s = 0,
 				t_s = $bar.position().top,
@@ -872,7 +902,6 @@ if (!Object.keys){
 				x_s = 0,
 				l_s = $bar.position().left,
 				s_w = $bar.closest('.ui-scrollbar-barwrap').innerWidth() - $bar.outerWidth(true),
-				
 				$item = $bar.closest('.ui-scrollbar').children('.ui-scrollbar-item'),
 				bar_unit = s_h / 100,
 				wrap_unit = ($bar.closest('.ui-scrollbar').innerHeight() - $item.outerHeight(true)) / 100,
@@ -882,12 +911,12 @@ if (!Object.keys){
 			if ($bar.data('scrollxy') === 'x') {
 				bar_unit = s_w / 100;
 				wrap_unit = ($bar.closest('.ui-scrollbar').innerWidth() - $item.outerWidth(true)) / 100,
-				w_sh = $item.outerWidth(true) - $bar.closest('.ui-scrollbar').innerWidth()
+					w_sh = $item.outerWidth(true) - $bar.closest('.ui-scrollbar').innerWidth()
 			}
 
 			bar_t = $bar.position().top;
 			bar_l = $bar.position().left;
-			
+
 			if (e.touches === undefined) {
 				if (e.pageY !== undefined) {
 					y_s = e.pageY;
@@ -895,7 +924,6 @@ if (!Object.keys){
 				if (e.pageX !== undefined) {
 					x_s = e.pageX;
 				}
-				//ie
 				if (e.pageY === undefined) {
 					y_s = e.clientY;
 				}
@@ -903,31 +931,31 @@ if (!Object.keys){
 					x_s = e.clientX;
 				}
 			}
-			
-			$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function(e){
+
+			$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function (e) {
 				moving = true;
 				if ($bar.data('scrollxy') === 'x') {
 					dragAct($bar, $item, e, x_s, l_s, s_w, w_sh, bar_unit, wrap_unit, 'x');
 				} else {
 					dragAct($bar, $item, e, y_s, t_s, s_h, w_sh, bar_unit, wrap_unit, 'y');
 				}
-				
-			}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function(){
-				//moving ? act($this, minmax) : '';
+
+			}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function () {
+				$('body').removeClass('scrollbar-move');
 				$(doc).off('mousemove.bar mouseup.bar touchmove.bar');
 			});
 		}
-		function keyEventAct(e){
-			$('.ui-scrollbar').off('keydown.bb').on('keydown.bb', function(e){
+		function keyEventAct(e) {
+			$('.ui-scrollbar').off('keydown.bb').on('keydown.bb', function (e) {
 				var $this = $(this),
 					wrap_h = $this.innerHeight(),
 					item_h = $this.children('.ui-scrollbar-item').outerHeight(true),
 					max_y = item_h - wrap_h,
 					keys = win[global].option.keys;
 
-				switch(e.keyCode){
+				switch (e.keyCode) {
 					case keys.tab:
-						win[global].uiScrollBarAct({ 
+						win[global].uiScrollBarAct({
 							id: $this.attr('id')
 						});
 						break;
@@ -951,7 +979,7 @@ if (!Object.keys){
 				delta = -Math.max(-1, Math.min(1, wheelDelta)),
 				$this_barwrap = $this.find('> .ui-scrollbar-barwrap.type-y'),
 				$this_bar = $this_barwrap.find('> .ui-scrollbar-bar'),
-				$this_item =  $this.children('.ui-scrollbar-item'),
+				$this_item = $this.children('.ui-scrollbar-item'),
 				item_top = $this_item.position().top,
 				bar_space = $this_barwrap.innerHeight() - $this_bar.outerHeight(true),
 				sp = notmotion ? 0 : 300,
@@ -962,45 +990,55 @@ if (!Object.keys){
 			win[global].uiScrollBar.overlapExe = win[global].uiScrollBar.overlapExe + 1;
 
 			switch (win[global].uiScrollBar.overlapExe) {
-				case 1 : ms = 3; break;
-				case 2 : ms = 2; break;
-				case 3 : ms = 1.5; break;
-				case 4 : ms = 1; break;
-				default : ms = 0.5; break;
+				case 1: ms = 3; break;
+				case 2: ms = 2; break;
+				case 3: ms = 1.5; break;
+				case 4: ms = 1; break;
+				default: ms = 0.5; break;
 			}
 
 			delta > 0 ?
-				wh = item_top - (wrap_h / ms):
+				wh = item_top - (wrap_h / ms) :
 				wh = item_top + (wrap_h / ms);
 
 			v = Math.ceil(wh);
 
 			if (v > 0) {
 				v = 0;
-			} else if (Math.abs(v) > max_y){
+			} else if (Math.abs(v) > max_y) {
 				v = max_y * -1;
 				item_top = max_y * -1;
 			}
 
 			clearTimeout(win[global].uiScrollBar.timer);
-			win[global].uiScrollBar.timer = setTimeout(function(){
+			win[global].uiScrollBar.timer = setTimeout(function () {
 				var v_bar = (v / (max_y / 100)) * (bar_space / 100);
 
 				Math.ceil(v_bar) > bar_space ? v_bar = bar_space * -1 : '';
-				
-				$this_bar.stop().animate({
-					'top': v_bar * -1 +'px'
-				},sp);
 
-				$this_item.stop().animate({
-					'top': v +'px'
-				},sp, 'easeInOutQuad', function(){
-					win[global].uiScrollBar.overlapExe = 0;
-				});
-			},100);
+				if (v < 1 && $this_item.outerHeight() > $this.outerHeight()) {
+					$this_bar.css('opacity', 1);
+					$this_bar.stop().animate({
+						'top': v_bar * -1 + 'px'
+					}, sp);
+
+					$this_item.stop().animate({
+						'top': v + 'px'
+					}, sp, 'easeInOutQuad', function () {
+						win[global].uiScrollBar.overlapExe = 0;
+					});
+				} else {
+					$this_item.css('top',0);
+					$this_bar.css({ 
+						top:0, 
+						opacity: 0.5
+					});
+				}
+			}, 100);
+			!!callback ? callback(v) : '';
 		}
 
-		function dragAct(bar_this, item_this, e, y_s, t_s, s_h, w_sh, bar_unit, wrap_unit, ps){
+		function dragAct(bar_this, item_this, e, y_s, t_s, s_h, w_sh, bar_unit, wrap_unit, ps) {
 			var $bar = bar_this,
 				$item = item_this,
 				per = 0,
@@ -1023,24 +1061,34 @@ if (!Object.keys){
 					w = (e.clientX) - y_s + t_s;
 				}
 
+				
 				if (ps === 'y') {
 					v < 0 ? v = 0 : '';
 					s_h < v ? v = s_h : '';
-					$bar.css('top', v +'px');
-
 					per = Math.ceil(v / s_h * 100);
 					v_item = Math.ceil(wrap_unit * per);
-					$item.css('top', v_item +'px');
+
+					if (v_item < 1 && $item.outerHeight() > $item.closest('.ui-scrollbar').outerHeight()) {
+						$bar.css('opacity', 1);
+						$bar.css('top', v + 'px');
+						$item.css('top', v_item + 'px');
+					} else {
+						$item.css('top',0);
+						$bar.css({ 
+							top:0, 
+							opacity: 0.5
+						});
+					}
 				} else {
 					w < 0 ? w = 0 : '';
-					s_h < w ? w= s_h : '';
-					$bar.css('left', w +'px');
-
+					s_h < w ? w = s_h : '';
+					$bar.css('left', w + 'px');
 					per = Math.ceil(w / s_h * 100);
 					w_item = Math.ceil(wrap_unit * per);
-					$item.css('left', w_item +'px');
+					$item.css('left', w_item + 'px');
 				}
 			}
+			!!callback ? callback(v_item) : '';
 		}
 	}
 
