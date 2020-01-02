@@ -940,10 +940,8 @@
 			}
 
 			month === 2 ? daysInMonth = 31 : '';
-
 			
 			if (dual) {
-				console.log(dateMonths, (month + 2 > 11) ? (month + 2 < 12) ? 1 : 0 : month + 2);
 				$base.find('.ui-datepicker-prev span').text('이전 ' + dateMonths[(month - 2 < 0) ? (month - 2 < -1) ? 10 : 11 : month - 2] + '월로 이동');
 				$base.find('.ui-datepicker-next span').text('다음 ' + dateMonths[(month + 2 > 11) ? (month + 2 > 12) ? 1 : 0 : month + 2] + '월로 이동');
 			} else {
@@ -1089,9 +1087,9 @@
 					}
 
 					if ((year < _minDay[0]) || (year == _minDay[0] && dateMonths[month + 1] < _minDay[1]) || (year == _minDay[0] && dateMonths[month + 1] == _minDay[1] && dayCounter < _minDay[2])) {
-						_calendarHtml += '<span title="' + textDate(dayCounter, mm, year, true) + '">' + $ui.option.partsAdd0(dayCounter) + '</span></td>';
+						_calendarHtml += '<button type="button" disabled title="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'">' + $ui.option.partsAdd0(dayCounter) + '</button></td>';
 					} else if ((year > _maxDay[0]) || (year == _maxDay[0] && dateMonths[month + 1] > _maxDay[1]) || (year == _maxDay[0] && dateMonths[month + 1] == _maxDay[1] && dayCounter > _maxDay[2])) {
-						_calendarHtml += '<span title="' + textDate(dayCounter, mm, year, true) + '">' + $ui.option.partsAdd0(dayCounter) + '</span></td>';
+						_calendarHtml += '<button type="button" disabled title="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'">' + $ui.option.partsAdd0(dayCounter) + '</button></td>';
 					} else {
 						_calendarHtml += '<button type="button" title="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false) + '" value="' + dayCounter + '">' + $ui.option.partsAdd0(dayCounter) + '</button></td>';
 					}
@@ -5512,22 +5510,33 @@
 		}
 	}
 	function createUiCountStep(opt) {
-		var $base = $('#' + opt.id),
-			countNum = !!opt.value === true ? opt.value : $base.text(),
-			count = 0,
-			timer, diff, counter;
+		const $base = $('#' + opt.id);
+		const countNum = !!opt.value === true ? opt.value : $base.text();
+
+		let count = 0,
+			timer, diff, counter,
+			add = Math.ceil((countNum - count) / (countNum - count), -2),
+			j = 1,
+			v = 0,
+			s = 100;
 		
 		if ($base.data('ing') !== true) {
 			counter = function(){
+				j = v < 10? j = 0 : v < 10 ? j + 11 : v < 40 ? j +111 : v < 70 ? j + 1111 : j + 11111;
+				s = s < 0 ? s = 0 : s - 10;
 				diff = countNum - count;
-				(diff > 0) ? count += Math.ceil(diff / 20, -2) : '';
-				var n = $ui.option.uiComma(count);
+				(diff > 0) ? count += add + j : '';
+
+				let n = $ui.option.uiComma(count);
 				$base.text(n);
+				v = v + 1;
+
 				if(count < countNum) {
 					timer = setTimeout(function() { 
 						counter(); 
-					}, 1);
+					}, s);
 				} else {
+					$base.text($ui.option.uiComma(countNum));
 					clearTimeout(timer);
 				}
 			}

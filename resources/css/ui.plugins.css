@@ -65,6 +65,8 @@
 .tbl-datepicker td button:disabled:hover{font-weight:400 !important;}
 .tbl-datepicker td.hover:not(.disabled) button{color:#fff; background:#444;}
 .tbl-datepicker td.hover-on:not(.disabled) button{color:#fff; background:#444; }  
+.tbl-datepicker td.hover:not(.disabled) span{color:#fff; background:#444;}
+.tbl-datepicker td.hover-on:not(.disabled) span{color:#fff; background:#444; }  
 
 td button.today{color:#000; font-weight:900; background:#fff; border:1px solid transparent; text-decoration:underline;}
 
