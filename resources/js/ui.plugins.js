@@ -1568,6 +1568,10 @@
 		}
 		function act(){
 			const $modal = $('#' + id);
+
+			$('.ui-modal-simple').removeClass('current');
+			$modal.addClass('n' + $('.ui-modal-simple.open').length + ' current');
+			
 			!!full ? $modal.addClass('ready type-full') : $modal.addClass('ready type-normal');
 			//$('body').css('overflow', 'hidden');
 
@@ -1610,6 +1614,8 @@
 		let timer;
 
 		$modal.removeClass('open');
+		$('.ui-modal-simple.open.n' + ($('.ui-modal-simple.open').length - 1)).addClass('current');
+
 		clearTimeout(timer);
 		timer = setTimeout(function(){
 			$modal.removeClass('ready ps-bottom ps-top ps-center type-normal type-full');
