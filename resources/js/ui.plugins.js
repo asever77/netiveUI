@@ -1528,7 +1528,98 @@
 
 	}
 
+	
+	$ui = $ui.uiNameSpace(namespace, {
+		uiSimpleModalOpen: function (opt) {
+			return createUiSimpleModalOpen(opt);
+		},
+		uiSimpleModalClose: function (opt) {
+			return createUiSimpleModalClose(opt);
+		}
+	});
+	$ui.uiSimpleModalOpen.option = {
+		wrap: 'BODY',
+		full: false,
+		ps: 'center'
+	}
+	function createUiSimpleModalOpen(v) {
+		const opt = $.extend(true, {}, $ui.uiSimpleModalOpen.option, v),
+			wrap = opt.wrap,
+			id = opt.id,
+			src = opt.src,
+			full = opt.full,
+			ps = opt.ps,
+			endfocus = opt.endfocus === undefined ? document.activeElement : '#' + opt.endfocus,
+			callback = opt.callback === undefined ? false : opt.callback;
 
+		let timer;
+
+		if (!!src) {
+			$plugins.uiAjax({
+				id: wrap,
+				url: src,
+				add: true,
+				callback: function(){
+					act();
+				}
+			});
+		} else {
+			act();
+		}
+		function act(){
+			const $modal = $('#' + id);
+			!!full ? $modal.addClass('ready type-full') : $modal.addClass('ready type-normal');
+			//$('body').css('overflow', 'hidden');
+
+			switch (ps) {
+				case 'center' :
+					$modal.addClass('ps-center');
+					break;
+				case 'top' :
+					$modal.addClass('ps-top');
+					break;
+				case 'bottom' :
+					$modal.addClass('ps-bottom');
+					break;
+			}
+
+			clearTimeout(timer);
+			timer = setTimeout(function(){
+				$modal.addClass('open').data('endfocus', endfocus);
+				callback ? callback(opt) : '';
+
+				if ($modal.find('.ui-modal-cont').outerHeight() > $(win).outerHeight(true) - 20 && !full) {
+					$modal.find('.ui-modal-wrap').css('height', '100%');
+				}
+
+				//$modal.find('.ui-modal-head h1').attr('tabindex', '0').foucs();
+			},150);
+		}
+	}
+	$ui.uiSimpleModalClose.option = {
+		remove: false
+	}
+	function createUiSimpleModalClose(v) {
+		const opt = $.extend(true, {}, $ui.uiSimpleModalClose.option, v),
+			id = opt.id,
+			remove = opt.remove,
+			$modal = $('#' + id),
+			endfocus = opt.endfocus === undefined ? $modal.data('endfocus') : '#' + opt.endfocus,
+			callback = opt.callback === undefined ? false : opt.callback;
+		
+		let timer;
+
+		$modal.removeClass('open');
+		clearTimeout(timer);
+		timer = setTimeout(function(){
+			$modal.removeClass('ready ps-bottom ps-top ps-center type-normal type-full');
+			//$('body').css('overflow', 'initial');
+
+			callback ? callback(opt) : '';
+			remove ? $modal.remove() : '';
+			!!endfocus ? endfocus.focus() : '';
+		},150);
+	}
 
 	/* ------------------------------------------------------------------------
 	* name : modal layer popup

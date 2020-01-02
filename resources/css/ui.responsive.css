@@ -48,7 +48,7 @@
 
 /* desktop */ 
 @media all and (min-width:960px) {
-    .ui-d body:after{content:"desktop"; display:block; position:fixed; bottom:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5}
+    /* .ui-d body:after{content:"desktop"; display:block; position:fixed; bottom:0; right:0; padding:5px; background:#000; color:#fff; font-size:12px; z-index:1000; opacity:0.5} */
 
     /* global */
     [class*="tbl-base"] {table-layout:fixed; margin:10px 0; width:100%; position:relative; border-top:1px solid #c5c5c5; border-bottom:1px solid #c5c5c5;}

@@ -400,24 +400,47 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 
 
 /* base layer :z-index 1 ---------------------------------------------------------------------------------- */
+
+.ui-modal-simple{display:none; position:fixed; top:0; left:0; z-index:1; width:100%; height:100%; overflow:hidden; z-index:1000;}
+.ui-modal-simple.ready:after{content:""; display:block; width:100%; height:100%; position:fixed; z-index:0; background:rgba(0,0,0,.7); opacity:0; transition:opacity 0.15s ease-out;}
+.ui-modal-simple.ready{display:block;}
+.ui-modal-simple.open:after{opacity:1;}
+.ui-modal-simple .ui-modal-head{position:absolute; top:0; left:0; width:100%; height:40px; background:#444; color:#fff; padding:7px 35px 0 15px; border-bottom:1px solid #ccc;}
+.ui-modal-simple .ui-modal-head h1{font-size:16px; font-weight:500;}
+.ui-modal-simple .ui-modal-head .btn-close{position:absolute; right:9px; top:9px; border:0;}
+.ui-modal-simple .ui-modal-cont{overflow-y:auto; max-height:calc(100% - 40px); margin-top:40px;padding:20px 15px;}
+.ui-modal-simple .ui-modal-wrap{opacity:0; box-shadow:0 5px 10px rgba(0,0,0,0.5); position:absolute; z-index:1; background:#fff;}
+.ui-modal-simple.type-full .ui-modal-wrap{width:100%; height:100%; min-height:100%; position:relative; left:0; bottom:-200px; transition:opacity 0.2s ease-in, bottom 0.2s ease-in; overflow:hidden; border-radius:0;}
+.ui-modal-simple.open.type-full .ui-modal-wrap{bottom:0; opacity:1;}
+
+.ui-modal-simple.type-normal.ps-center .ui-modal-wrap{left:50%; top:50%; max-height:calc(100% - 20px); transform:translate(-50%, -50%) scale(0.9); transition:opacity 0.2s ease-in, transform 0.2s ease-in;}
+.ui-modal-simple.open.type-normal.ps-center .ui-modal-wrap{top:50%; opacity:1; transform:translate(-50%, -50%) scale(1); }
+
+.ui-modal-simple.type-normal.ps-top .ui-modal-wrap{left:50%; top:-100px; transform:translateX(-50%); transition:opacity 0.2s ease-in, top 0.2s ease-in;}
+.ui-modal-simple.open.type-normal.ps-top .ui-modal-wrap{top:10px; opacity:1;}
+
+.ui-modal-simple.type-normal.ps-bottom .ui-modal-wrap{left:50%; bottom:-100px; transform:translateX(-50%); transition:opacity 0.2s ease-in, bottom 0.2s ease-in;}
+.ui-modal-simple.open.type-normal.ps-bottom .ui-modal-wrap{bottom:10px; opacity:1;}
+
+
 /* ui modal :z-index 1 ~ 99 */
 .modal-backdrop{display:none; opacity:0; position:fixed; top:0; left:0; z-index:0; width:100%; height:200%; background-color:rgba(0,0,0,0.7);}
 .modal-open{overflow:hidden; padding-right:17px}
 .modal-open .base-layer{width:100%; height:100%; position:fixed; overflow:hidden;}
+
 .ui-modal{display:none; opacity:0; position:fixed; z-index:1; width:auto; height:auto; padding:0; transition:transform 0.15s ease-in; transform:scale(0.9);}
 .ui-modal.ps-top{top:-100%; transition:top 200ms}
 .ui-modal.view{transform:scale(1);}
- 
 .ui-modal.show{display:block; left:50%}
 .ui-modal.ps-center{top:40%}
 .ui-modal.ps-bottom{bottom:-25%}
 .ui-modal.type-full{left:0; top:0; width:100%; height:100%;}
 .ui-modal .btn-close{position:absolute; top:0; right:-28px; z-index:3;}
-.ui-modal-wrap{width:100%; height:100%; background-color:#fff; box-shadow:0 0 10px rgba(0,0,0,0.2)}
-.ui-modal-header{width:100%;}
-.ui-modal-header h1{font-size:20px; color:#fff; text-align:center; height:100%; padding:10px; background-color:#333333;}
-.ui-modal-cont{position:relative; overflow-y:auto; overflow-x:hidden; width:100%; margin:0; padding:15px; background-color:#fff;}
-.ui-modal-footer{position:absolute; bottom:0; width:100%; z-index:1; text-align:center; margin:0; padding:20px 0; border-top:1px solid #ccc; background:#fff;}
+.ui-modal .ui-modal-wrap{width:100%; height:100%; background-color:#fff; box-shadow:0 0 10px rgba(0,0,0,0.2)}
+.ui-modal .ui-modal-header{width:100%;}
+.ui-modal .ui-modal-header h1{font-size:20px; color:#fff; text-align:center; height:100%; padding:10px; background-color:#333333;}
+.ui-modal .ui-modal-cont{position:relative; overflow-y:auto; overflow-x:hidden; width:100%; margin:0; padding:15px; background-color:#fff;}
+.ui-modal .ui-modal-footer{position:absolute; bottom:0; width:100%; z-index:1; text-align:center; margin:0; padding:20px 0; border-top:1px solid #ccc; background:#fff;}
 
 .modal-full .base-layer{position:fixed; overflow-x:scroll; overflow-y:auto;  width:100%; height:100%; top:0; left:0; background:#fff}
 .modal-full .ui-modal{position:relative !important; top:0 !important; left:0 !important; margin:0 auto !important}
@@ -435,17 +458,15 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
 .modal-system .system-type-b:before{background-position:-125px -25px}
 .modal-system .system-type-c:before{background-position:-225px -25px}
 
-
-
     /* ui modal mobile */
     .ui-m .modal-open{padding:0}
     .ui-m .ui-modal{max-width:100%; padding:0 15px;}
     .ui-m .ui-modal.type-full{padding:0;}
-    .ui-m .ui-modal-wrap{height:100%; position:relative}
-    .ui-m .ui-modal-cont{background:#fff; padding:15px; height:auto; overflow:auto; font-size:15px;}
-    .ui-m .ui-modal-header{position:relative; border:0; top:0; left:0; z-index:1; padding:0; min-height:50px; max-height:100%;}
-    .ui-m .ui-modal-header h1{font-size:20px; padding:15px 45px 10px; background-color:#333333; width:100%; min-height:50px; height:100%;}
-    .ui-m .ui-modal-close{position:absolute; top:15px; right:10px; z-index:101; background-size:130px 130px; background-position:10px 10px;}
+    .ui-m .ui-modal .ui-modal-wrap{height:100%; position:relative}
+    .ui-m .ui-modal .ui-modal-cont{background:#fff; padding:15px; height:auto; overflow:auto; font-size:15px;}
+    .ui-m .ui-modal .ui-modal-header{position:relative; border:0; top:0; left:0; z-index:1; padding:0; min-height:50px; max-height:100%;}
+    .ui-m .ui-modal .ui-modal-header h1{font-size:20px; padding:15px 45px 10px; background-color:#333333; width:100%; min-height:50px; height:100%;}
+    .ui-m .ui-modal .ui-modal-close{position:absolute; top:15px; right:10px; z-index:101; background-size:130px 130px; background-position:10px 10px;}
     .ui-m .ui-modal-full .ui-modal-head{padding:0;}
     .ui-m .ui-modal-full .ui-modal-close{right:0;}
     .ui-m .ui-modal-full .ui-modal{position:relative; padding:0;}
@@ -454,7 +475,7 @@ a.ui-acco-btn .ui-acco-arrow {transform: rotate(-90deg);}
     .ui-m .ui-modal-full .ui-modal-head,
     .ui-m .ui-modal-full .ui-modal-close{position:fixed;}
     .ui-m .ui-modal-full .backdrop{background:rgba(255,255,255,1);}
-    .ui-m .ui-modal-wrap .btn-close{top:15px; right:15px}
+    .ui-m .ui-modal .ui-modal-wrap .btn-close{top:15px; right:15px}
 
 /* dropdowns:z-index 100 ~ 199 */
 .ui-drop{position:relative; display:inline-block;}

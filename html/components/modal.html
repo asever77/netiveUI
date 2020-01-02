@@ -19,7 +19,7 @@
 	<script src="/netiveUI/resources/js/ui.base.js"></script>
 </head>
 
-<body>
+<body id="BODY">
 	<div class="base-skip" id="baseSkip"></div>
 	<div class="base-layer" id="baseLayer"></div>
 	
@@ -99,6 +99,66 @@
 					<button type="button" class="btn-base" onclick="
 						$plugins.uiModal({ id:'modal_sample1', link:'/netiveUI/html/modal/modalSample1.html', ps:'top', remove:true, callback:$plugins.page.callback });
 					"><span>Ajax 기본 팝업(top)</span></button>
+				</div>
+
+				<h3 class="h3">simple type</h3>
+				<p>기본적인 모달 팝업 세팅 및 실행</p>
+				<div class="btn-wrap mgt-s txt-l">
+					<button type="button" class="btn-base" onclick="
+						$plugins.uiSimpleModalOpen({ 
+							id:'modal_sample1', 
+							src:'/netiveUI/html/modalSp/modalSample1.html', 
+							full: true,
+							openback: function() { console.log('open callback'); },
+							closeback: function(v) { console.log('close callback', v); },
+							callback:$plugins.page.callback 
+						});
+					"><span>Ajax 기본 팝업(full)</span></button>
+
+					<button type="button" class="btn-base" onclick="
+						$plugins.uiSimpleModalOpen({ 
+							id:'modal_sample1', 
+							src:'/netiveUI/html/modalSp/modalSample1.html', 
+							openback: function() { console.log('open callback'); },
+							closeback: function(v) { console.log('close callback', v); },
+							callback:$plugins.page.callback 
+						});
+					"><span>Ajax 기본 팝업(center)</span></button>
+
+					<button type="button" class="btn-base" onclick="
+						$plugins.uiSimpleModalOpen({ 
+							id:'modal_sample1', 
+							src:'/netiveUI/html/modalSp/modalSample1.html', 
+							ps: 'top',
+							openback: function() { console.log('open callback'); },
+							closeback: function(v) { console.log('close callback', v); },
+							callback:$plugins.page.callback 
+						});
+					"><span>Ajax 기본 팝업(top)</span></button>
+
+					<button type="button" class="btn-base" onclick="
+						$plugins.uiSimpleModalOpen({ 
+							id:'modal_sample1', 
+							src:'/netiveUI/html/modalSp/modalSample1.html', 
+							ps: 'bottom',
+							openback: function() { console.log('open callback'); },
+							closeback: function(v) { console.log('close callback', v); },
+							callback:$plugins.page.callback 
+						});
+					"><span>Ajax 기본 팝업(bottom)</span></button>
+
+					<button type="button" class="btn-base" onclick="
+						$plugins.uiSimpleModalOpen({ 
+							id:'modal_sample2', 
+							src:'/netiveUI/html/modalSp/modalSample2.html', 
+							remove:true, 
+							mpage: true,
+							openback: function() { console.log('open callback2'); },
+							closeback: function(v) { console.log('close callback2', v); },
+							width:700 
+						});
+					"><span>Ajax 기본 팝업(scroll)</span></button>
+
 				</div>
 
 				<h3 class="h3">System type</h3>
