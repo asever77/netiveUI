@@ -1095,29 +1095,31 @@
 				_calendarHtml += '</tr></tbody></table>';
 			}
 
+			//이전달 다시보기
 			function prevMonthday(weekDay) {
 				for (var week = 0; week < weekDay; week++) {
 					empty_before = empty_before + 1;
 
 					if (week === 0) {
-						_calendarHtml += '<td class="empty"><button type="button" disabled>' + empty_before + '</button></td>';
+						_calendarHtml += '<td class="empty"><button type="button" disabled>' + $ui.option.partsAdd0(empty_before) + '</button></td>';
 					} else if (week === 6) {
-						_calendarHtml += '<td class="empty"><button type="button" disabled>' + empty_before + '</button></td>';
+						_calendarHtml += '<td class="empty"><button type="button" disabled>' + $ui.option.partsAdd0(empty_before) + '</button></td>';
 					} else {
-						_calendarHtml += '<td class="empty"><button type="button" disabled>' + empty_before + '</button></td>';
+						_calendarHtml += '<td class="empty"><button type="button" disabled>' + $ui.option.partsAdd0(empty_before) + '</button></td>';
 					}
 				}
 			}
+			//다음달 미리보기
 			function nextMonthday(week_day) {
 				for (week_day = week_day; week_day < 7; week_day++) {
 					empty_after = empty_after + 1;
 
 					if (week_day === 0) {
-						_calendarHtml += '<td class="empty"><button type="button" disabled>' + empty_after + '</button></td>';
+						_calendarHtml += '<td class="empty"><button type="button" disabled>' + $ui.option.partsAdd0(empty_after) + '</button></td>';
 					} else if (week_day == 6) {
-						_calendarHtml += '<td class="empty"><button type="button" disabled>' + empty_after + '</button></td>';
+						_calendarHtml += '<td class="empty"><button type="button" disabled>' + $ui.option.partsAdd0(empty_after) + '</button></td>';
 					} else {
-						_calendarHtml += '<td class="empty"><button type="button" disabled>' + empty_after + '</button></td>';
+						_calendarHtml += '<td class="empty"><button type="button" disabled>' + $ui.option.partsAdd0(empty_after) + '</button></td>';
 					}
 				}
 			}
@@ -1417,22 +1419,18 @@
 			}
 		}
 
-		//dropdown 설정
-		$datepicker.each(function () {
-			var $this = $(this),
-				$btn = $this.find('.ui-datepicker-btn');
-
-			//직접입력불가 설정
-			$this.find('.ui-datepicker-inp').prop('disabled', true);
-
-			callback = !!$this.data('callback') ? $this.data('callback') : callback;
-		});
-
 		//event
 		$datepicker.find('.ui-datepicker-btn').off('click.uidatepicker').on('click.uidatepicker', function () {
-			
-			
-			datepickerReady(this);
+			const btn = $(this);
+
+			if (!btn.data('selected')) {
+				$('.ui-datepicker-btn').data('selected', false);
+				btn.data('selected', true);
+				datepickerReady(this);
+			} else {
+				btn.data('selected', false);
+				hideCalendar();
+			}
 		});
 		$datepicker.find('.inp-base').off('focus.uidpinp').on('focus.uidpinp', function () {
 			$(this).closest('.inp-datepicker').addClass('focus');
@@ -1458,7 +1456,7 @@
 
 			hideCalendar();
 			$('#' + inputId + '_end').val('');
-			var reset = regExp.test(_val),
+			let reset = regExp.test(_val),
 				calspaceHTML = '';
 
 			$this.data('sct', $(doc).scrollTop());
