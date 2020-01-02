@@ -67,6 +67,10 @@
 .tbl-datepicker td.hover-on:not(.disabled) button{color:#fff; background:#444; }  
 .tbl-datepicker td.hover:not(.disabled) span{color:#fff; background:#444;}
 .tbl-datepicker td.hover-on:not(.disabled) span{color:#fff; background:#444; }  
+.tbl-datepicker.off-tbl td.hover:not(.disabled) button{color:#444; background:transparent;}
+.tbl-datepicker.off-tbl td.hover-on:not(.disabled) button{color:#444; background:transparent; }  
+.tbl-datepicker.off-tbl td.hover:not(.disabled) button:hover{color:#fff; background:#444;}
+.tbl-datepicker.off-tbl td.hover-on:not(.disabled) button:hover{color:#fff; background:#444; }  
 
 td button.today{color:#000; font-weight:900; background:#fff; border:1px solid transparent; text-decoration:underline;}
 

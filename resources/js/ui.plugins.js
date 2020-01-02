@@ -1313,6 +1313,10 @@
 				$core = $this.closest('.datepicker-core'),
 				$tbl = $this.closest('.tbl-datepicker');
 
+			if ($tbl.hasClass('on-start-tbl')) {
+				$tbl.prev().addClass('off-tbl')
+			}
+
 			if (!!$core.data('start') && !$tbl.hasClass('on-start-tbl')) {
 				$tbl.prev().find('tr').addClass('hover').find('td').addClass('hover');
 			}
