@@ -1242,14 +1242,9 @@
 					_y = Number($currentDate.find('.year').data('y')),
 					_m = Number($currentDate.find('.month').data('m') - 1),
 					dateTemp = v === 'next' ? (dual) ? new Date(_y, _m + 2, 1) : new Date(_y, _m + 1, 1) : (dual) ? new Date(_y, _m - 2, 1) : new Date(_y, _m - 1, 1);
-
-				// if ($this.hasClass('disabled')) {
-				// 	alert($('#' + calendarEl.inputId).data(limit) + ' 을 벗어난 달은 선택이 불가능 합니다.');
-				// } else {
 					date = dateTemp;
 					reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
 					$this.eq(0).focus();
-				// }
 			}
 			function yearNextPrev(t, v) {
 				var $this = $(t),
@@ -1259,14 +1254,9 @@
 					_y = Number($currentDate.find('.year').data('y')),
 					_m = Number($currentDate.find('.month').data('m') - 1),
 					dateTemp = v === 'next' ? new Date(_y + 1, _m, 1) : new Date(_y - 1, _m, 1);
-
-				// if ($this.hasClass('disabled')) {
-				// 	alert($('#' + calendarEl.inputId).data(limit) + ' 을 벗어난 년은 선택이 불가능 합니다.');
-				// } else {
 					date = dateTemp;
 					reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
 					$this.eq(0).focus();
-				// }
 			}
 
 			if (period) {
@@ -1300,11 +1290,7 @@
 					reDisplayCalendar(calendarEl);
 					$calWrap.find('td button.today').eq(0).focus();
 				});
-			}
-
-			var _btnOffset = $("#" + calendarEl.buttonId).offset();
-			
-
+			}			
 			return false;
 		}
 
