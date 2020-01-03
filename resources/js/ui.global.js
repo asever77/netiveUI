@@ -393,6 +393,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 		uiFocusTab: function (opt) {
 			return createUiFocusTab(opt);
 		},
+		
 		uiPopup: function (opt) {
 			return createUiPopup(opt);
 		},
