@@ -684,7 +684,7 @@ td .placeholder{margin-top:5px;}
 [class*="btn-base"]{display:inline-block; padding:0 20px; min-height:40px; min-width:60px; border:1px solid #63686d; font-size:14px; text-align:center; background:#fff; vertical-align:top; color:#222; text-decoration:none; line-height:1;}
 div[class*="btn-base"],
 span[class*="btn-base"],
-a[class*="btn-base"]{padding:9px 20px 8px;}
+a[class*="btn-base"]{padding:12px 20px 8px;}
 [class*="btn-base"] span{vertical-align:middle; display:inline-block; line-height:1; margin-top:-3px;}
 [class*="btn-base"]:hover,
 [class*="btn-base"]:focus{border:1px solid #000; background:#eee;}
@@ -694,10 +694,10 @@ a[class*="btn-base"]{padding:9px 20px 8px;}
 
 /* base size */
 .btn-base-s{min-height:30px;} 
-a.btn-base-s{padding:4px 20px 3px;}
+a.btn-base-s{padding:7px 20px 3px;}
 .btn-base-m{min-height:40px;} 
 .btn-base-l{min-height:60px; font-size:16px;}
-a.btn-base-l{padding:17px 20px 16px;}
+a.btn-base-l{padding:21px 20px 16px;}
 
 /* button icon style */
 [class*="btn-base"].ico-print:after {content:""; display:inline-block; width:20px; height:20px; background:url(/netiveUI/resources/img/common/ico_btn.png) no-repeat -15px -15px; margin-left:5px; vertical-align:middle; margin-top:-3px;}

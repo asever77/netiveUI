@@ -513,7 +513,35 @@ button.ui-tooltip-btn:after{content:"?"; position:absolute; top:-1px; left:0; di
 .ui-tooltip.ps-lb .tt-arrow{left:0; top:-6px; transform:rotate(-45deg); margin-left:10px}
 .ui-tooltip.ps-rb .tt-arrow{right:0; top:-6px; transform:rotate(-45deg); margin-right:10px}
 
+/* table */
+[class*="ui-fixtd-n"]{display:none}
+[current="1"] col.ui-fixtd-n1 {display:block}
+[current="1"] .ui-fixtd-n1 {display:table-cell}
+[current="2"] col.ui-fixtd-n2 {display:block}
+[current="2"] .ui-fixtd-n2 {display:table-cell}
+[current="3"] col.ui-fixtd-n3 {display:block}
+[current="3"] .ui-fixtd-n3 {display:table-cell}
+[current="4"] col.ui-fixtd-n4 {display:block}
+[current="4"] .ui-fixtd-n4 {display:table-cell}
+[current="5"] col.ui-fixtd-n5 {display:block}
+[current="5"] .ui-fixtd-n5 {display:table-cell}
+[current="6"] col.ui-fixtd-n6 {display:block}
+[current="6"] .ui-fixtd-n6 {display:table-cell}
+[current="7"] col.ui-fixtd-n7 {display:block}
+[current="7"] .ui-fixtd-n7 {display:table-cell}
+[current="8"] col.ui-fixtd-n8 {display:block}
+[current="8"] .ui-fixtd-n8 {display:table-cell}
+[current="9"] col.ui-fixtd-n9 {display:block}
+[current="9"] .ui-fixtd-n9 {display:table-cell}
+[current="10"] col.ui-fixtd-n10 {display:block}
+[current="10"] .ui-fixtd-n10 {display:table-cell}
+[current="11"] col.ui-fixtd-n11 {display:block}
+[current="11"] .ui-fixtd-n11 {display:table-cell}
 
+/**/
+.ui-scrollbox-item{position: relative;}
+.ui-scrollbox-cont{position: relative; top:50px; opacity:0; transform:scale(0.9); transition:top 0.3s ease-in, opacity 0.5s ease-in, transform 0.4s ease-out;}
+.ui-scrollbox-item.visible .ui-scrollbox-cont{top:0; opacity:1; transform:scale(1);}
 /**/
 .capSct{width:100%; max-width:400px; margin:0 0 2.0rem; overflow:hidden; background:#fff}
 .capSct h1{font-size:1.8rem}

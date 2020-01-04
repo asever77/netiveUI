@@ -415,6 +415,9 @@ HTMLElement.prototype.closestByClass = function(className) {
 		uiTblScroll: function (opt) {
 			return createUiTblScroll(opt);
 		},
+		uiTblFixTd: function (opt) {
+			return createUiTblFixTd(opt);
+		},
 		uiCaption: function () {
 			return createUiCaption();
 		},
@@ -1293,6 +1296,50 @@ HTMLElement.prototype.closestByClass = function(className) {
 			}
 			customscroll ? win[global].uiScrollBar(): '';
 		}
+	}
+	function createUiTblFixTd(opt) {
+		const tbl = $('.ui-fixtd');
+
+		tbl.each(function(i){
+			const tbln = tbl.eq(i),
+			tbl_col = tbln.find('col'),
+			tbl_tr = tbln.find('tr'),
+			col_len = tbl_col.length,
+			fix_sum = col_len - tbln.attr('fix'),
+			len = tbl_tr.length,
+			tit = [];
+
+			tbln.attr('current', 1).attr('total', col_len);
+
+			for (let i = 0; i < len; i++) {
+				for (let j = 0; j < fix_sum; j++) {
+					let tr_this = tbl_tr.eq(i),
+						td_this = tr_this.find('> *').eq(j - fix_sum),
+						jj = (j + 1);
+
+					td_this.addClass('ui-fixtd-n' + jj).data('n', j);
+					if (tr_this.closest('thead').length) {
+						tit.push(td_this.text());
+						td_this.prepend('<button type="button" class="ui-fixtd-btn" data-btn="prev" data-idx="'+ jj +'">이전</button>');
+						td_this.append('<button type="button" class="ui-fixtd-btn" data-btn="next" data-idx="'+ jj +'">다음</button>');
+					}
+					tbl_col.eq(j - fix_sum).addClass('ui-fixtd-n' + jj);
+				}
+			}
+		});
+
+		tbl.find('.ui-fixtd-btn').off('click.uifixtd').on('click.uifixtd', function(){
+			const tbl_this = $(this).closest('.ui-fixtd'),
+				this_sum =  Number(tbl_this.attr('total') - tbl_this.attr('fix'));
+
+			let n = Number($(this).data('idx'));
+
+			if ($(this).data('btn') === 'next') {
+				tbl_this.attr('current', n + 1 > this_sum ? n = 1 : n + 1);
+			} else {
+				tbl_this.attr('current', n - 1 <= 0 ? n = this_sum : n - 1);
+			}
+		});
 	}
 	function createUiCaption(){
 		var $cp = $('.ui-caption');
