@@ -31,6 +31,7 @@
 
 				<h2 class="h2" id="scrollT1">Base Directory and file</h2>
 				<p>기본 파일 디렉토리 및 파일은 아래와 같이 구성한다.</p>
+				<div id="test"></div>
 				<button type="button" class="btn-base" onclick="document.body.webkitRequestFullscreen();"><span>전체화면2</span></button>
 				<button type="button" class="btn-base" onclick="document.exitFullscreen();"><span>전체화면 취소</span></button>
 	<div class="box-code">
@@ -206,7 +207,7 @@ project/
 			$plugins.common.pageid = 'G_01_01_00_00';
 			$(doc).ready(function(){
 				console.log('page ready after');
-
+				$('#test').text(document.body.webkitRequestFullscreen ? 'true' : 'false');
 			});
 		})(jQuery, window, document);
 	</script>
