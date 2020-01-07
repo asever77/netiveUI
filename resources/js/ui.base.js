@@ -70,6 +70,8 @@
     script_file += '<script src="/netiveUI/resources/js/ui.plugins.tab.js"></script>';
     script_file += '<script src="/netiveUI/resources/js/ui.plugins.tooltip.js"></script>';
 
+    script_file += '<script src="/netiveUI/resources/js/ui.plugins.scrollbox.js"></script>';
+
     
 
     $('head').append(script_file);

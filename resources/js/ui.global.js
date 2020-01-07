@@ -411,6 +411,18 @@ HTMLElement.prototype.closestByClass = function(className) {
 		},
 		uiLabelAbove: function(opt) {
 			return createUiLabelAbove(opt)
+		},
+		uiTblScroll: function (opt) {
+			return createUiTblScroll(opt);
+		},
+		uiTblFixTd: function (opt) {
+			return createUiTblFixTd(opt);
+		},
+		uiCaption: function () {
+			return createUiCaption();
+		},
+		uiError: function (opt) {
+			return createUiError(opt);
 		}
 	});
     
@@ -1223,4 +1235,176 @@ HTMLElement.prototype.closestByClass = function(className) {
 		expireDate.setDate(expireDate.getDate() + -1);
 		win[global].uiCookieSet({ name:opt.name, term:'-1' });
 	}
+
+	win[global].uiTblScroll.option = {
+		selector: '.ui-tblscroll',
+		customscroll: false,
+		rown: 5
+	}
+	function createUiTblScroll(opt){
+		var opt = opt === undefined ? {} : opt,
+			opt = $.extend(true, {}, win[global].uiTblScroll.option, opt),
+			$tbl = $(opt.selector),
+			rown = opt.rown,
+			customscroll = opt.customscroll,
+			len = $tbl.length,
+			$thead = '',
+			$tbody = '',
+			h = 0,
+			i = 0,
+			clone_colgroup,
+			clone_thead,
+			clone_tbl = '';
+
+		for (i = 0; i < len; i++) {
+			$tbl.eq(i).find('.tbl-scroll-thead').remove();
+			$tbl.eq(i).find('.tbl-scroll-tbody').removeAttr('style');
+
+			rown = !!$tbl.eq(i).data('row') ? $tbl.eq(i).data('row') : rown,
+			$tbody = $tbl.eq(i).find('.tbl-scroll-tbody');
+			clone_colgroup = $tbody.find('colgroup').clone();
+			clone_thead = $tbody.find('thead tr').clone();
+			h = 0;
+
+			clone_tbl += '<div class="tbl-scroll-thead">';
+			clone_tbl += '<table class="txt-c" aria-hidden="true" tabindex="-1">';
+			clone_tbl += '</table>';
+			clone_tbl += '</div>'
+
+			$tbl.eq(i).prepend(clone_tbl);
+			clone_tbl = '';
+			$tbl.eq(i).find('.tbl-scroll-thead table').append(clone_colgroup);
+			$tbl.eq(i).find('.tbl-scroll-thead table').append(clone_thead);
+			$thead = $tbl.eq(i).find('.tbl-scroll-thead');
+			$thead.find('th').each(function(){
+				$(this).replaceWith('<td>'+ $(this).text() +'</td>');
+			});
+
+			if ($tbody.find('tbody tr').length > rown) {
+				for (var j = 0; j < rown; j++) {
+					h = h + $tbody.find('tbody tr').eq(j).outerHeight();
+				}
+				
+				if (customscroll) {
+					$tbl.eq(i).removeClass('is-scr');
+					$tbody.addClass('ui-scrollbar').find('.tbl-base').addClass('ui-scrollbar-item');
+				} else {
+					$tbl.eq(i).addClass('is-scr');
+					$tbody.removeClass('ui-scrollbar').find('.tbl-base').removeClass('ui-scrollbar-item');
+				}
+				$tbody.css('max-height', h + 'px');
+			}
+			customscroll ? win[global].uiScrollBar(): '';
+		}
+	}
+	function createUiTblFixTd(opt) {
+		const tbl = $('.ui-fixtd');
+
+		tbl.each(function(i){
+			const tbln = tbl.eq(i),
+			tbl_col = tbln.find('col'),
+			tbl_tr = tbln.find('tr'),
+			col_len = tbl_col.length,
+			fix_sum = col_len - tbln.attr('fix'),
+			len = tbl_tr.length,
+			tit = [];
+
+			tbln.attr('current', 1).attr('total', col_len);
+
+			for (let i = 0; i < len; i++) {
+				for (let j = 0; j < fix_sum; j++) {
+					let tr_this = tbl_tr.eq(i),
+						td_this = tr_this.find('> *').eq(j - fix_sum),
+						jj = (j + 1);
+
+					td_this.addClass('ui-fixtd-n' + jj).data('n', j);
+					if (tr_this.closest('thead').length) {
+						tit.push(td_this.text());
+						td_this.prepend('<button type="button" class="ui-fixtd-btn" data-btn="prev" data-idx="'+ jj +'">이전</button>');
+						td_this.append('<button type="button" class="ui-fixtd-btn" data-btn="next" data-idx="'+ jj +'">다음</button>');
+					}
+					tbl_col.eq(j - fix_sum).addClass('ui-fixtd-n' + jj);
+				}
+			}
+		});
+
+		tbl.find('.ui-fixtd-btn').off('click.uifixtd').on('click.uifixtd', function(){
+			const tbl_this = $(this).closest('.ui-fixtd'),
+				this_sum =  Number(tbl_this.attr('total') - tbl_this.attr('fix'));
+
+			let n = Number($(this).data('idx'));
+
+			if ($(this).data('btn') === 'next') {
+				tbl_this.attr('current', n + 1 > this_sum ? n = 1 : n + 1);
+			} else {
+				tbl_this.attr('current', n - 1 <= 0 ? n = this_sum : n - 1);
+			}
+		});
+	}
+	function createUiCaption(){
+		var $cp = $('.ui-caption');
+
+		$cp.text('');
+		$cp.each(function(){
+			var $table = $(this).closest('table'),
+				isthead = !!$table.find('> thead').length,
+				$th = $(this).closest('table').find('> tbody th'),
+				th_len = $th.length,
+				i = 0,
+				cp_txt = '';
+			if (isthead) {
+				$th = $(this).closest('table').find('> thead th');
+				th_len = $th.length
+			}
+
+			for (i = 0; i < th_len; i++) {
+				if ($th.eq(i).text() !== '') {
+					cp_txt += $th.eq(i).text();
+				}
+				if (i < th_len - 1) {
+					cp_txt += ', ';
+				}
+			}
+			$(this).text(cp_txt + ' 정보입니다.');
+		});
+	}
+
+	/* ------------------------------------------------------------------------
+	 * error message v1.0 
+	 * $plugins.uiError
+	 * date : 2018-05-18
+	 * 에러 시 메시지 생성 및 스타일 변경
+	 * option
+	 * - opt.message : 'message text' / [string]
+	 * - opt.error : true or false / [string]
+	 * - opt.selector : 'id' or $(...) / [strong] or [object]
+	 * - opt.wrapper : '...' / [strong]
+	------------------------------------------------------------------------ */
+	function createUiError(opt){
+		var msg = opt.message, 
+			err = opt.error, 
+			$this = typeof opt.selector === 'string' ? $('#' + opt.selector) : opt.selector,
+			$wrap = opt.wrapper === undefined ? $this.parent() : $this.closest(opt.wrapper),
+			id = $this.attr('id'),
+			err_html = '<em class="ui-error-msg" aria-hidden="true" id="'+ id +'-error">'+ msg +'</em>';
+
+		//generate error message
+		$this.attr('aria-labelledby', id + '-error');
+
+		!$('#'+ id +'-error').length ? $wrap.append(err_html) : $wrap.find('.ui-error-msg').text(msg) ;
+		
+		//error 여부에 따른 설정
+		if (err) {
+			$('#'+ id +'-error').attr('aria-hidden', false);
+			$wrap.addClass('ui-error-true');
+			$this.addClass('ui-error-item');
+			$this.closest('.ui-select').addClass('ui-error-select');
+		} else {
+			$('#'+ id +'-error').attr('aria-hidden', true).remove();
+			$wrap.find('.ui-error-item').length === 1 ? $wrap.removeClass('ui-error-true') : '';
+			$this.removeClass('ui-error-item');
+			$this.closest('.ui-select').removeClass('ui-error-select');
+		}
+	}
+
 })(jQuery, window, document);	
