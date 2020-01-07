@@ -5,7 +5,7 @@
 //         script = document.createElement('script'),
 //         _reload;
 
-//     script.src = 'https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js';
+//     script.src = '/netiveUI/resources/js/lib/jquery-1.12.4.min.js';
 //     head.appendChild(script);
 
 //     // jquery load
