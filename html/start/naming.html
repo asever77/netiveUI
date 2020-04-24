@@ -278,7 +278,9 @@
 			console.log('page ready before')
 			$(doc).ready(function(){
 				$plugins.common.pageid = 'G_01_02_00_00';
-				console.log('page ready after')
+				console.log('page ready after');
+				
+				window.scrollTo(0,1);
 
 			});
 		})(jQuery, window, document);
