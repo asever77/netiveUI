@@ -279,8 +279,10 @@
 			$(doc).ready(function(){
 				$plugins.common.pageid = 'G_01_02_00_00';
 				console.log('page ready after');
-				
+				setTimeout(function(){
 				window.scrollTo(0,1);
+				});
+				
 
 			});
 		})(jQuery, window, document);
