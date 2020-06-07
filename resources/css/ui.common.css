@@ -109,9 +109,6 @@ p.bul-care:before {content:"※"; position:absolute; left:0; top:2px; font-weigh
 .txt-w6 {font-weight:700;}
 .txt-w7 {font-weight:900;}
 
-.txt-center
-.txt-left
-.txt-
 
 /* text:align */
 .txt-c {text-align:center !important;}
