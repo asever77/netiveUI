@@ -1,36 +1,9 @@
-<!doctype html>
-<html lang="ko">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="mobile-web-app-capable" content="yes">
+<input type="hidden" id="uiJsName" value="pageFloating">
 
-	<link rel="apple-touch-icon" href="/netiveUI/resources/img/common/ico_app.png" >
-	<link rel="shortcut icon" href="/netiveUI/resources/img/common/ico_favicon.ico"> 
-
-	<title>Netive UI</title>
-
-	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
-
-	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
-	<script src="/netiveUI/resources/js/ui.base.js"></script>
-</head>
-
-<body class="page-floating">
-	<div class="base-skip" id="baseSkip"></div>
-	<div class="base-layer" id="baseLayer"></div>
-	<div class="base-wrap" id="baseWrap">
-		<header class="base-header" id="baseHeader"></header>
-		<div class="base-body" id="baseBody">
-			<aside class="base-aside" id="baseAside"></aside>
-			<main class="base-main" id="baseMain" role="main">
-
-				<div class="tit-wrap">
-					<h1 class="h1" id="uiPageTit">Floating</h1>
-				</div>
+<div class="tit-catagory">Components</div>
+<div class="tit-wrap">
+	<h1 class="h1">Floating</h1>
+</div>
 				<p class="txt-s2">특정위치에서 고정되거나 고정되었던 오브젝트가 원위치로 돌아가는 설정</p>
 
 				<h2 class="h2">Examples</h2>
@@ -59,11 +32,13 @@
 						<div class="tst-obj">원위치 → 상단고정1</div>
 					</div>
 				</div>
+				<br><br>
 				<div class="ui-floating" id="exeFix2">
 					<div class="ui-floating-wrap">
 						<div class="tst-obj">원위치 → 상단고정2</div>
 					</div>
 				</div>
+				<br><br>
 				<div class="ui-floating" id="exeFix3">
 					<div class="ui-floating-wrap">
 						<div class="tst-obj">원위치 → 상단고정3</div>
@@ -77,11 +52,13 @@
 						<div class="tst-obj">하단고정 → 원위치1</div>
 					</div>
 				</div>
+				<br><br>
 				<div class="ui-floating" id="exeFix5">
 					<div class="ui-floating-wrap">
 						<div class="tst-obj">하단고정 → 원위치2</div>
 					</div>
-				</div>	
+				</div>
+				<br><br>
 				<div class="ui-floating" id="exeFix6">
 					<div class="ui-floating-wrap">
 						<div class="tst-obj">하단고정 → 원위치3</div>
@@ -224,25 +201,4 @@ $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix9', ps:'
 					</tr>
 				</tbody>
 				</table>
-			</main>
-		</div>
-		<footer class="base-footer" id="baseFooter"></footer>
-	</div>
-	
-	<!-- only page script -->
-	<script>
-		;(function($, win, doc, undefined) {
-			console.log('page ready before')
-			$plugins.common.pageid = 'G_03_08_00_00';
 
-			$(doc).ready(function(){
-				
-				console.log('page ready after')
-				$plugins.page.floating();
-
-			});
-		})(jQuery, window, document);
-	</script>
-
-</body>
-</html>

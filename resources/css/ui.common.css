@@ -1,7 +1,5 @@
 @charset "utf-8"; 
 
-/* 기본 공통요소 style */
-
 /* default */
 html, body {width:100%; height:100%;}
 html {font-size:62.5%;}
@@ -24,42 +22,17 @@ input, textarea, select {box-sizing:border-box; font-family:'Noto Sans KR', sans
 [class*="inp-"]::-webkit-search-cancel-button{display:none;}
 label{cursor:pointer;}
 
-/* base line-height */
-p{line-height:1.5;}
-
 /* html5 */
 article, aside, details, figcaption, figure, footer, header, main, hgroup, nav, section, summary {display:block; margin:0; padding:0; box-sizing:border-box;}
 
 /* common */
-caption{position:relative !important; width:0 !important; height:0 !important; z-index:-1 !important; color:transparent !important; overflow:hidden !important; font-size:xx-small !important; line-height:0 !important; min-height:0 !important; max-height:0 !important;}
+caption{position:relative !important; width:1px !important; height:1px !important; color:transparent !important; overflow:hidden !important; clip:rect(1px, 1px,1px, 1px); clip-path:inset(50%);}
 legend, 
 .hidden,
-.hide {position:absolute !important; width:0 !important; height:0 !important; z-index:-1 !important; color:transparent !important; overflow:hidden !important; font-size:xx-small !important; line-height:0 !important; min-height:0 !important; max-height:0 !important;}
+.hide { position:absolute !important; width:1px !important; height:1px !important; color:transparent !important; overflow:hidden !important; clip:rect(1px, 1px,1px, 1px); clip-path:inset(50%); }
 
 /* Google Material icons */
-.material-icons {font-family: 'Material Icons'; font-weight: normal; font-style: normal; font-size: 24px;  /* Preferred icon size */display:block; line-height: 1; text-transform: none; letter-spacing: normal; word-wrap: normal; white-space: nowrap; direction: ltr; 
-/* Support for all WebKit browsers. */
--webkit-font-smoothing: antialiased; 
-/* Support for Safari and Chrome. */
-text-rendering: optimizeLegibility; 
-/* Support for Firefox. */
--moz-osx-font-smoothing: grayscale; 
-/* Support for IE. */
-font-feature-settings: 'liga'; 
-;}
-
-/* base layout */
-.base-skip {position:fixed; z-index:100;}
-.base-layer {position:relative; z-index:20;}
-.base-wrap {position:relative; width:100%; height:100%; z-index:0; -webkit-overflow-scrolling:touch;}
-.base-aside,
-.base-main {display:inline-block;}
-
-/* h group */
-.tit-wrap {position:relative; width:100%; font-size:0;}
-.tit-wrap h1{display:inline-block;}
-.tit-wrap em{font-size:12px;display:inline-block; margin-left:10px; color:orangered;}
-.tit-wrap:after{content:""; display:block; clear:both;}
+.material-icons {font-family: 'Material Icons'; font-weight: normal; font-style: normal; font-size: 24px;  /* Preferred icon size */display:block; line-height: 1; text-transform: none; letter-spacing: normal; word-wrap: normal; white-space: nowrap; direction: ltr; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; -moz-osx-font-smoothing: grayscale; font-feature-settings: 'liga'; }
 
 /* ico_bullet */
 .bul-hyphen,
@@ -71,9 +44,11 @@ font-feature-settings: 'liga';
 .bul-hyphen > dd,
 p.bul-dot,
 p.bul-hyphen,
-p.bul-star {position:relative; margin-top:5px; padding-left:10px; line-height:1.5; display:block;}
-p.bul-care {position:relative; margin-top:5px; padding-left:15px; line-height:1.5; display:block;}
-p.bul-etc {position:relative; margin-top:5px; padding-left:20px; line-height:1.5; display:block;}
+p.bul-star,
+p.bul-care,
+p.bul-etc {position:relative; margin-top:5px; padding-left:10px; line-height:1.5; display:block;}
+p.bul-care {padding-left:15px;}
+p.bul-etc {padding-left:20px;}
 .bul-dot li li:first-child,
 .bul-dot li:first-child,
 .bul-hyphen li li:first-child,
@@ -100,6 +75,9 @@ p.bul-care:before {content:"※"; position:absolute; left:0; top:2px; font-weigh
 .bul-hyphen ul li:before{content:"·"; position:absolute; left:0; top:2px; font-weight:900; line-height:1.2;}
 .bul-etc > li {position:relative; margin-top:5px; padding-left:20px; line-height:1.5; display:block;}
 .bul-ico{position:relative; top:0; margin:0 0 0 -20px; width:20px; display:inline-block;}
+
+
+
 
 /* paragraph */
 .paragraph-a{position:relative; width:100%; margin-top:20px;}
@@ -130,6 +108,10 @@ p.bul-care:before {content:"※"; position:absolute; left:0; top:2px; font-weigh
 .txt-w5 {font-weight:500;}
 .txt-w6 {font-weight:700;}
 .txt-w7 {font-weight:900;}
+
+.txt-center
+.txt-left
+.txt-
 
 /* text:align */
 .txt-c {text-align:center !important;}
@@ -353,6 +335,8 @@ input[type="checkbox"] {opacity:0; filter:alpha(opacity=0); display:inline-block
 .lb-check:before {content:""; display:block; flex:0; min-width:20px; min-height:20px; margin-right:5px; box-sizing:border-box; border:2px solid #333; transition:box-shadow 0.5s, border 0.3s;}
 .lb-radio:before {border-radius:50%;}
 .lb-check:before {border-radius:3px;}
+:checked + .lb-radio:before,
+:checked + .lb-check:before,
 .lb-radio.checked:before,
 .lb-check.checked:before {border:6px solid #333;}
 .lb-radio.activated:before,
@@ -361,8 +345,12 @@ input[type="checkbox"] {opacity:0; filter:alpha(opacity=0); display:inline-block
 .lb-check:hover:before,
 .lb-radio:focus:before,
 .lb-check:focus:before {box-shadow:0 0 5px rgba(0,0,0,0.7);}
+:checked + .lb-radio,
+:checked + .lb-check,
 .lb-radio.checked,
 .lb-check.checked {color:#000;}
+:disabled + .lb-radio,
+:disabled + .lb-check,
 .lb-radio.disabled,
 .lb-check.disabled {opacity:0.3; filter:alpha(opacity=30); cursor:not-allowed;}
 .lb-radio span,
@@ -379,17 +367,24 @@ transition: -webkit-transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cu
 -o-transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms; 
 transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms; 
 ;}
+.field-inlabel input[value=""] + .field-inlabel-label{transform:translate(0, 9px); color:#888; font-size:14px;}
 .field-inlabel input.activated + .field-inlabel-label,
 .field-inlabel.activated input + .field-inlabel-label,
+.field-inlabel input:valid + .field-inlabel-label,
 .field-inlabel input:focus + .field-inlabel-label{transform:translate(0, -9px); color:#000; font-size:12px;}
+
 .field-inlabel .field-inlabel-label:after{content:""; position:absolute; top:8px; left:0; display:block; width:100%; height:1px; z-index:-1; border-top:1px solid #fff; 
 -o-transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(0.4, 0, 0.2, 1); 
 transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(0.4, 0, 0.2, 1); 
 ;}
+
 .field-inlabel input.activated + .field-inlabel-label:after,
 .field-inlabel.activated input + .field-inlabel-label:after,
+.field-inlabel input:valid + .field-inlabel-label:after,
 .field-inlabel input:focus + .field-inlabel-label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:2px solid #fff; transition-delay: 150ms;}
+.field-inlabel input:valid,
 .field-inlabel input:focus{background:rgb(245, 251, 253);}
+.field-inlabel input[value=""]{background:rgb(255,255,255);}
 .field-inlabel .ui-error-msg,
 .field-inlabel .placeholder{position: absolute; left:0; padding:0 10px; top:42px; line-height:1.2; margin:0;}
 .field-inlabel .ui-select .ui-error-msg{top:42px;}
@@ -445,22 +440,24 @@ select[disabled] {background-color:#f7f7f7; color:#888;}
 .box-base {position:relative; width:100%; margin:10px 0; padding:10px 20px; background:#fff; border:1px solid rgb(180, 180, 180);}
 
 /* table:base */
-[class*="tbl-base"] {margin:10px 0; width:100%; position:relative; border-top:1px solid #c5c5c5; border-bottom:1px solid #c5c5c5;}
-[class*="tbl-base"] > thead th {background:#f1f1f1; border-bottom:1px solid #e4e4e4; border-left:1px solid #e4e4e4; color:#000; padding:5px; font-weight:500; font-size:12px; height:40px;}
-[class*="tbl-base"] > tbody > tr > th,
-[class*="tbl-base"] > tbody > tr > td {border-top:1px solid #e4e4e4; border-left:1px solid #e4e4e4; color:#444; height:40px; padding:5px; font-weight:300; font-size:12px; word-break:break-all;}
-[class*="tbl-base"] > tbody > tr:first-child > th,
-[class*="tbl-base"] > tbody > tr:first-child > td {border-top:0;}
-[class*="tbl-base"] > thead > tr > th:first-child,
-[class*="tbl-base"] > tbody > tr > th:first-child,
-[class*="tbl-base"] > tbody > tr > td:first-child {border-left:0;}
-[class*="tbl-base"] > tbody > tr > th {background:#fff;}
-[class*="tbl-base"] > tbody > tr > td {vertical-align: top;}
+[class*="tbl-base"] {margin:0; width:100%; position:relative; border-top:1px solid #c5c5c5; border-bottom:1px solid #c5c5c5;}
+[class*="tbl-base"] > table{width:100%;}
+[class*="tbl-base"] > table > thead th {background:#f1f1f1; border-bottom:1px solid #e4e4e4; border-left:1px solid #e4e4e4; color:#000; padding:5px; font-weight:500; font-size:14px; height:40px;}
+[class*="tbl-base"] > table > tbody > tr > th,
+[class*="tbl-base"] > table > tbody > tr > td {border-top:1px solid #e4e4e4; border-left:1px solid #e4e4e4; color:#444; padding:5px; font-weight:300; font-size:14px; word-break:break-all; background:#fff;}
+[class*="tbl-base"] > table > tbody > tr:first-child > th,
+[class*="tbl-base"] > table > tbody > tr:first-child > td {border-top:0;}
+[class*="tbl-base"] > table > thead > tr > th:first-child,
+[class*="tbl-base"] > table > tbody > tr > th:first-child,
+[class*="tbl-base"] > table > tbody > tr > td:first-child {border-left:0;}
+[class*="tbl-base"] > table > tbody > tr > th {background:#fff;}
+.ui-tablescroll-wrap.tbl-base{border:0;}
+
 tbody.line-t{border-top:1px solid #c5c5c5;}
 td .placeholder{margin-top:5px;}
 
 /* table:base vertical */
-.tbl-base-v > tbody > th {background:#f1f1f1; border-bottom:1px solid #e4e4e4; border-left:1px solid #e4e4e4; color:#000; padding:5px 15px; font-weight:500; font-size:12px; height:40px;}
+.tbl-base-v > tbody > th {background:#f1f1f1; border-bottom:1px solid #e4e4e4; border-left:1px solid #e4e4e4; color:#000; padding:5px 15px; font-weight:500; font-size:14px; height:40px;}
 
 /* table:scroll */
 .tbl-scroll {width:100%; width:100%; border-bottom:1px solid #c5c5c5; border-top:1px solid #c5c5c5; margin:10px 0;}
@@ -700,7 +697,7 @@ a.btn-base-s{padding:7px 20px 3px;}
 a.btn-base-l{padding:21px 20px 16px;}
 
 /* button icon style */
-[class*="btn-base"].ico-print:after {content:""; display:inline-block; width:20px; height:20px; background:url(/netiveUI/resources/img/common/ico_btn.png) no-repeat -15px -15px; margin-left:5px; vertical-align:middle; margin-top:-3px;}
+[class*="btn-base"].ico-print:after {content:"print"; font-family:'Material Icons'; display:inline-block; width:20px; height:20px; margin-left:5px; vertical-align:middle; margin-top:-3px; font-size:20px;}
 
 /* base button :X close, del button ... */
 .btn-del,

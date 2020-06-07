@@ -1,36 +1,9 @@
-<!doctype html>
-<html lang="ko">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="mobile-web-app-capable" content="yes">
+<input type="hidden" id="uiJsName" value="pageSlider">
 
-	<link rel="apple-touch-icon" href="/netiveUI/resources/img/common/ico_app.png" >
-	<link rel="shortcut icon" href="/netiveUI/resources/img/common/ico_favicon.ico"> 
-
-	<title>Netive UI</title>
-
-	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
-
-	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
-	<script src="/netiveUI/resources/js/ui.base.js"></script>
-</head>
-
-<body class="page-slider">
-	<div class="base-skip" id="baseSkip"></div>
-	<div class="base-layer" id="baseLayer"></div>
-	<div class="base-wrap" id="baseWrap">
-		<header class="base-header" id="baseHeader"></header>
-		<div class="base-body" id="baseBody">
-			<aside class="base-aside" id="baseAside"></aside>
-			<main class="base-main" id="baseMain" role="main">
-				<div class="tit-wrap">
-					<h1 class="h1" id="uiPageTit"></h1>
-				</div>
-				
+<div class="tit-catagory">Components</div>
+<div class="tit-wrap">
+	<h1 class="h1">Slider</h1>
+</div>
 				<h2 class="h2">Examples</h2>
 				<h3 class="h3">Range slider</h3>
 					
@@ -363,25 +336,3 @@ $plugins<span class="na">.uiSlider</span>({ <span class="s"></span>
 					</tr>
 				</tbody>
 				</table>
-			</main>
-		</div>
-		<footer class="base-footer" id="baseFooter"></footer>
-	</div>
-
-	<!-- only page script -->
-	<script>
-		;(function($, win, doc, undefined) {
-			console.log('page ready before')
-			$plugins.common.pageid = 'G_03_19_00_00';
-
-			$(doc).ready(function(){
-				
-				console.log('page ready after')
-				$plugins.page.slider();
-
-			});
-		})(jQuery, window, document);
-	</script>
-
-</body>
-</html>

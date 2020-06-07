@@ -3,7 +3,7 @@
 	'use strict';
 
 	var $ui = win.$plugins,
-        namespace = 'netiveUI.plugins';
+        namespace = pluginsName;
 
     /* ------------------------------------------------------------------------
 	* name : Brick list

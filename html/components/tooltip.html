@@ -1,22 +1,3 @@
-<!doctype html>
-<html lang="ko">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="mobile-web-app-capable" content="yes">
-
-	<link rel="apple-touch-icon" href="/netiveUI/resources/img/common/ico_app.png" >
-	<link rel="shortcut icon" href="/netiveUI/resources/img/common/ico_favicon.ico"> 
-
-	<title>Netive UI</title>
-
-	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
-
-	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
-	<script src="/netiveUI/resources/js/ui.base.js"></script>
 
     <style>
     .tip-test0{width:250px;}
@@ -24,9 +5,7 @@
     </style>
 </head>
 
-<body class="page-tooltip">
-	<div class="base-skip" id="baseSkip"></div>
-	<div class="base-layer" id="baseLayer">
+
         <div class="ui-tooltip tip-test0" id="tt" role="tooltip" aria-hidden="true">
             <span class="tt-arrow"></span>
             <span>
@@ -43,16 +22,14 @@
             </span>
         </div>
 
-    </div>
-	<div class="base-wrap" id="baseWrap">
-		<header class="base-header" id="baseHeader"></header>
-        <div class="base-body" id="baseBody">
-			<aside class="base-aside" id="baseAside"></aside>
-            <main class="base-main" id="baseMain" role="main">
-                    
-                <div class="tit-wrap">
-					<h1 class="h1" id="uiPageTit">Dropdown</h1>
-				</div>
+
+<input type="hidden" id="uiJsName" value="pageTooltip">
+
+<div class="tit-catagory">Components</div>
+<div class="tit-wrap">
+	<h1 class="h1">Tooltip</h1>
+</div>
+
                 <p class="txt-s2">툴팁(말풍선)은 마우스오버나 포커스가 가는 즉시 동작하여 보충설명을 보여준다.<br>
                 항상 상위에 보이기 위해(z-index, overflow:hidden) baseLayer 위치에 생성한다.<br>
                 기본적으로 자동으로 툴팁 실행위치를 계산하여 더 많은 공간이 있는 위치를 선택하여 보여준다.</p>
@@ -100,25 +77,3 @@ $plugins<span class="na">.uiTooltip</span>({ <span class="s">id:'tt', visible:fa
 </pre>
 </div>
 
-            </main>
-        </div>
-		<footer class="base-footer" id="baseFooter"></footer>
-	</div>
-
-    <!-- only page script -->
-	<script>
-		;(function($, win, doc, undefined) {
-			console.log('page ready before');
-			$plugins.common.pageid = 'G_03_22_00_00';
-
-			$(doc).ready(function(){
-				
-				console.log('page ready after')
-				$plugins.page.tooltip();
-
-			});
-		})(jQuery, window, document);
-	</script>
-
-</body>
-</html>

@@ -1,36 +1,10 @@
-<!doctype html>
-<html lang="ko">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="mobile-web-app-capable" content="yes">
 
-	<link rel="apple-touch-icon" href="/netiveUI/resources/img/common/ico_app.png" >
-	<link rel="shortcut icon" href="/netiveUI/resources/img/common/ico_favicon.ico"> 
+<input type="hidden" id="uiJsName" value="pageCountNumber">
 
-	<title>Netive UI</title>
-
-	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
-
-	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
-	<script src="/netiveUI/resources/js/ui.base.js"></script>
-</head>
-
-<body class="page-count">
-	<div class="base-skip" id="baseSkip"></div>
-	<div class="base-layer" id="baseLayer"></div>
-	<div class="base-wrap" id="baseWrap">
-		<header class="base-header" id="baseHeader"></header>
-		<div class="base-body" id="baseBody">
-			<aside class="base-aside" id="baseAside"></aside>
-			<main class="base-main" id="baseMain" role="main">
-				<div class="tit-wrap">
-					<h1 class="h1" id="uiPageTit">카운트넘버</h1>
-					<em>2020-01-02 수정 : step count </em>
-				</div>
+<div class="tit-catagory">Components</div>
+<div class="tit-wrap">
+	<h1 class="h1">Count Number</h1>
+</div>
 
 				<h2 class="h2">Examples</h2>
 				<h3 class="h3">Step Count</h3>
@@ -87,25 +61,3 @@ $plugins.uiCountSlide({
 </code>
 </pre>
 </div>
-			</main>
-		</div>
-		<footer class="base-footer" id="baseFooter"></footer>
-	</div>
-	
-	<!-- only page script -->
-	<script>
-		;(function($, win, doc, undefined) {
-			console.log('page ready before')
-			$plugins.common.pageid = 'G_03_04_00_00';
-
-			$(doc).ready(function(){
-				
-				console.log('page ready after')
-				$plugins.uiCountStep({ id:'exeCount1', value: 504025 });
-       			$plugins.uiCountSlide({ id:'exeCount2', value: 5040.25 });
-			});
-		})(jQuery, window, document);
-	</script>
-
-</body>
-</html>

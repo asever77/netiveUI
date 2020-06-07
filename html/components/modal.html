@@ -1,111 +1,16 @@
-<!doctype html>
-<html lang="ko">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="mobile-web-app-capable" content="yes">
 
-	<link rel="apple-touch-icon" href="/netiveUI/resources/img/common/ico_app.png" >
-	<link rel="shortcut icon" href="/netiveUI/resources/img/common/ico_favicon.ico"> 
-
-	<title>Netive UI</title>
-
-	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
-
-	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
-	<script src="/netiveUI/resources/js/ui.base.js"></script>
-</head>
-
-<body id="BODY">
-	<div class="base-skip" id="baseSkip"></div>
-	<div class="base-layer" id="baseLayer"></div>
-	
-	<div class="base-wrap" id="baseWrap">
-		<header class="base-header" id="baseHeader"></header>
-		<div class="base-body" id="baseBody">
-			<aside class="base-aside" id="baseAside"></aside>
-			<main class="base-main" id="baseMain" role="main">
-				<div class="tit-wrap">
-					<h1 class="h1" id="uiPageTit"></h1>
-				</div>
+<div class="tit-catagory">Components</div>
+<div class="tit-wrap">
+	<h1 class="h1">Modal</h1>
+</div>
 				<p class="txt-s2">시스템 알림창, 컨텐츠창 사용</p>
 				
 				<h2 class="h2">Examples</h2>
-				<h3 class="h3">basic type</h3>
+			
 				<p>기본적인 모달 팝업 세팅 및 실행</p>
 				<div class="btn-wrap mgt-s txt-l">
 					<button type="button" class="btn-base" onclick="
-						$plugins.uiModal({ 
-							id:'modal_sample1', 
-							link:'/netiveUI/html/modal/modalSample1.html', 
-							remove:true, 
-							openback: function() { console.log('open callback'); },
-							closeback: function(v) { console.log('close callback', v); },
-							callback:$plugins.page.callback 
-						});
-					"><span>Ajax 기본 팝업(center)</span></button>
-
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiModal({ 
-							id:'modal_sample2', 
-							link:'/netiveUI/html/modal/modalSample2.html', 
-							remove:true, 
-							mpage: true,
-							openback: function() { console.log('open callback2'); },
-							closeback: function(v) { console.log('close callback2', v); },
-							width:700 
-						});
-					"><span>Ajax 기본 팝업(scroll)</span></button>
-
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiModal({ 
-							id:'modal_sample5', 
-							width: 600,
-							link:'/netiveUI/html/modal/modalSample5.html', 
-							mpage: true,
-							openback: function() { console.log('open callback3'); },
-							closeback: function(v) { console.log('close callback3', v); },
-							remove:true 
-						});
-					"><span>Ajax 기본 팝업(loading)</span></button>
-
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiModal({ id:
-							'modal_sample4', 
-							link:'/netiveUI/html/modal/modalSample4.html', 
-							remove:true, 
-							mpage: true,
-							openback: function() { console.log('open callback3'); },
-							closeback: function(v) { console.log('close callback3', v); },
-							open:false 
-						});
-					"><span>Ajax 기본 팝업(wait)</span></button>
-					
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiModal({ 
-							id:'modal_sample3', 
-							remove: true,
-							mpage: true,
-							iname : 'iframe_modal_sample3',
-							isrc: '/netiveUI/html/modal/modalSample3.html',
-							ititle:'아이프레임 팝업'
-						});
-					"><span>Ajax 기본 팝업(iframe)</span></button>
-
-
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiModal({ id:'modal_sample1', link:'/netiveUI/html/modal/modalSample1.html', ps:'top', remove:true, callback:$plugins.page.callback });
-					"><span>Ajax 기본 팝업(top)</span></button>
-				</div>
-
-				<h3 class="h3">simple type</h3>
-				<p>기본적인 모달 팝업 세팅 및 실행</p>
-				<div class="btn-wrap mgt-s txt-l">
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiSimpleModalOpen({ 
+						$plugins.uiModalOpen({ 
 							id:'modal_sample1', 
 							src:'/netiveUI/html/modalSp/modalSample1.html', 
 							full: true,
@@ -116,7 +21,7 @@
 					"><span>Ajax 기본 팝업(full)</span></button>
 
 					<button type="button" class="btn-base" onclick="
-						$plugins.uiSimpleModalOpen({ 
+						$plugins.uiModalOpen({ 
 							id:'modal_sample1', 
 							src:'/netiveUI/html/modalSp/modalSample1.html', 
 							openback: function() { console.log('open callback'); },
@@ -126,7 +31,35 @@
 					"><span>Ajax 기본 팝업(center)</span></button>
 
 					<button type="button" class="btn-base" onclick="
-						$plugins.uiSimpleModalOpen({ 
+						$plugins.uiModalOpen({ 
+							id:'modal_sample1_1', 
+							src:'/netiveUI/html/modalSp/modalSample1.html', 
+							openback: function() { console.log('open callback'); },
+							closeback: function(v) { console.log('close callback', v); },
+							callback:$plugins.page.callback 
+						});
+					"><span>기본 팝업(center)</span></button>
+					<section class="ui-modal-simple" id="modal_sample1_1" role="dialog" aria-hidden="true">
+						<div class="ui-modal-wrap">
+							<header class="ui-modal-head">
+								<h1 class="ui-modal-tit">제목2</h1>
+								<button type="button" class="btn-close" aria-label="close" onclick="$plugins.uiModalClose({ id:'modal_sample1_1', callback:function(v){ console.log(v); } });">닫기</button>
+							</header>
+							<div class="ui-modal-cont">
+								<p><a href="#">기본적인 모달 레이어 팝업</a></p>
+								<p>width, height 값은 콘텐츠 내용에 따라 자동으로 설정</p>
+								<p>특정 크기 값을 줄수도 있음.</p>
+								<div style="width:100%; height:1000px; background:lightsteelblue">스크롤 생성</div>
+								<input type="text" >
+							</div>
+						</div>
+					</section>
+
+
+
+
+					<button type="button" class="btn-base" onclick="
+						$plugins.uiModalOpen({ 
 							id:'modal_sample1', 
 							src:'/netiveUI/html/modalSp/modalSample1.html', 
 							ps: 'top',
@@ -137,7 +70,7 @@
 					"><span>Ajax 기본 팝업(top)</span></button>
 
 					<button type="button" class="btn-base" onclick="
-						$plugins.uiSimpleModalOpen({ 
+						$plugins.uiModalOpen({ 
 							id:'modal_sample1', 
 							src:'/netiveUI/html/modalSp/modalSample1.html', 
 							ps: 'bottom',
@@ -148,7 +81,7 @@
 					"><span>Ajax 기본 팝업(bottom)</span></button>
 
 					<button type="button" class="btn-base" onclick="
-						$plugins.uiSimpleModalOpen({ 
+						$plugins.uiModalOpen({ 
 							id:'modal_sample2', 
 							src:'/netiveUI/html/modalSp/modalSample2.html', 
 							remove:true, 
@@ -554,35 +487,3 @@ $plugins<span class="na">.uiModalClose</span>({ <span class="s">
 				</table>
 
 
-			</main>
-		</div>
-		<footer class="base-footer" id="baseFooter"></footer>
-	</div>
-	
-	<!-- only page script -->
-	<script>
-		;(function($, win, doc, undefined) {
-			console.log('page ready before')
-			$plugins.common.pageid = 'G_03_13_00_00';
-
-			$(doc).ready(function(){
-				
-				console.log('page ready after')
-				// $('.btn-base').on('click', function(){
-				// 	switch($(this).attr('id')){
-				// 	case 'modalOpen1':
-				// 		$plugins.uiModal({ id:'modal_sample1', link:'/netiveUI/html/modal/modalSample1.html', callback:$plugins.page.callback });
-				// 		break;
-				// 	case 'modalOpen2':
-				// 		$plugins.uiModal({ id:'modal_sample2', link:'/netiveUI/html/modal/modalSample2.html', callback:$plugins.page.callback, width:700 });
-				// 		break;
-				// 	}
-
-				// });
-
-			});
-		})(jQuery, window, document);
-	</script>
-
-</body>
-</html>

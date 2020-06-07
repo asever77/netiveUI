@@ -1,36 +1,11 @@
-<!doctype html>
-<html lang="ko">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="mobile-web-app-capable" content="yes">
 
-	<link rel="apple-touch-icon" href="/netiveUI/resources/img/common/ico_app.png" >
-	<link rel="shortcut icon" href="/netiveUI/resources/img/common/ico_favicon.ico"> 
+<input type="hidden" id="uiJsName" value="pageJsonCodingList">
 
-	<title>Netive UI</title>
+<div class="tit-catagory">Components</div>
+<div class="tit-wrap">
+	<h1 class="h1">Json Coding List</h1>
+</div>
 
-	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
-
-	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
-	<script src="/netiveUI/resources/js/ui.base.js"></script>
-</head>
-
-<body class="page-codinglist">
-	<div class="base-skip" id="baseSkip"></div>
-	<div class="base-layer" id="baseLayer"></div>
-	<div class="base-wrap" id="baseWrap">
-		<header class="base-header" id="baseHeader"></header>
-		<div class="base-body" id="baseBody">
-			<aside class="base-aside" id="baseAside"></aside>
-			<main class="base-main" id="baseMain" role="main">
-				
-				<div class="tit-wrap">
-					<h1 class="h1" id="uiPageTit"></h1>
-				</div>
 				<p class="txt-s2">IA엑셀 문서 기준으로 만들어진 json파일형식의 엑셀에서 변환한 json파일로 자동 생성 관리<br>
 				일정관리를 엑셀문서로 진행하여 공유</p>
 
@@ -118,25 +93,3 @@ $plugins<span class="na"></span>.uiCodinglist</span>({ <span class="si">id:'uiCo
 					</tr>
 				</tbody>
 				</table>
-
-			</main>
-		</div>
-	</div>
-
-	<!-- only page script -->
-	<script>
-		;(function($, win, doc, undefined) {
-			console.log('page ready before')
-			$plugins.common.pageid = 'G_03_10_00_00';
-
-			$(doc).ready(function(){
-				
-				console.log('page ready after')
-				$plugins.page.jsoncodinglist();
-
-			});
-		})(jQuery, window, document);
-	</script>
-
-</body>
-</html>

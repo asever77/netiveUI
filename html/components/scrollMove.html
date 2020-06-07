@@ -1,41 +1,17 @@
-<!doctype html>
-<html lang="ko">
-<head>
-	<meta charset="utf-8">
-	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
-	<meta name="apple-mobile-web-app-capable" content="yes">
-	<meta name="apple-mobile-web-app-status-bar-style" content="black">
-	<meta name="mobile-web-app-capable" content="yes">
 
-	<link rel="apple-touch-icon" href="/netiveUI/resources/img/common/ico_app.png" >
-	<link rel="shortcut icon" href="/netiveUI/resources/img/common/ico_favicon.ico"> 
-
-	<title>Netive UI</title>
-
-	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
-
-	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
-	<script src="/netiveUI/resources/js/ui.base.js"></script>
 	<style>
 		.ui-tab-btns{overflow-x:auto}
 		.ui-tab-btns .ui-tab-btn{width:200px}
 
 		.box-base.aa{background:url(/netiveUI/resources/img/dummy/@pattern.png) repeat 0 0; height:50vw}
 	</style>
-</head>
 
-<body class="page-scroll">
-	<div class="base-skip" id="baseSkip"></div>
-	<div class="base-layer" id="baseLayer"></div>
-	<div class="base-wrap" id="baseWrap">
-		<header class="base-header" id="baseHeader"></header>
-		<div class="base-body" id="baseBody">
-			<aside class="base-aside" id="baseAside"></aside>
-			<main class="base-main" id="baseMain" role="main">
-				<div class="tit-wrap">
-					<h1 class="h1" id="uiPageTit">scroll move</h1>
-				</div>
+<input type="hidden" id="uiJsName" value="pageScrollMove">
+
+<div class="tit-catagory">Components</div>
+<div class="tit-wrap">
+	<h1 class="h1">Scroll Move</h1>
+</div>
 				<p class="txt-s2">특정위치로 스크롤 이동 시 사용</p>
 				
 				<h2 class="h2">Examples</h2>
@@ -180,53 +156,4 @@ $plugins<span class="na">.uiScroll</span>({ <span class="s">
 				</table>
 				
 
-			</main>
-		</div>
-		<footer class="base-footer" id="baseFooter"></footer>
-	</div>
-	
-	<!-- only page script -->
-	<script>
-		;(function($, win, doc, undefined) {
-			console.log('page ready before')
-			$plugins.common.pageid = 'G_03_15_00_00';
-
-			$(doc).ready(function(){
-				
-				console.log('page ready after');
-
-				$plugins.uiTab({ id:'exeTab4', current:6 });
-
-				$('#scrolltop').on('click', function(){
-					$plugins.uiScroll({ value:0, speed:300, focus:'baseHeader', callback:callback });
-				});
-				
-				$('#scrolltop2').on('click', function(){
-					$plugins.uiScroll({ value:$(doc).outerHeight(), speed:300, callback:callback });
-				});
-				
-				$('#scrolltop3').on('click', function(){
-					console.log($(win).outerHeight(), $(doc).outerHeight())
-					$plugins.uiScroll({ value: ($(doc).outerHeight() / 2) - ($(win).outerHeight() / 2), speed:300, callback:callback });
-				});
-
-				$('#uiScrollLeft').on('click', function(){
-					$plugins.uiScroll({ 
-						value:$('.tab-scroll-wrap button').eq(5).position().left, 
-						target:$('#exeTab4 .ui-tab-btns'), 
-						speed:300, 
-						focus:$('#exeTab4 .tab-scroll-wrap button').eq(5), 
-						callback:callback, 
-						ps:'left' 
-					});
-				});
-				
-				function callback(v){
-					console.log(v);
-				}
-			});
-		})(jQuery, window, document);
-	</script>
-
-</body>
-</html>
+			

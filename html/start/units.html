@@ -1,0 +1,219 @@
+<div class="tit-catagory">
+	Getting Started
+</div>
+
+<div class="tit-wrap">
+	<h1 class="h1">Units</h1>
+</div>
+
+<h2 class="h2">Absolute Unit</h2>
+<div class="tbl-base type-discription">
+	<table>
+		<caption>절대 단위</caption>
+		<colgroup>
+		<col class="col-th">
+		<col class="col-auto">
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">단위</th>
+				<th scope="col">설명</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">cm</th>
+				<td>centimeters</td>
+			</tr>
+			<tr>
+				<th scope="row">mm</th>
+				<td>millimeters</td>
+			</tr>
+			<tr>
+				<th scope="row">in</th>
+				<td>inches (1in = 96px = 2.54cm)</td>
+			</tr>
+			<tr>
+				<th scope="row">px</th>
+				<td>pixels (1px = 1/96th of 1in) 저해상도와 고해상도에서 1px의 정의가 달라진다.</td>
+			</tr>
+			<tr>
+				<th scope="row">pt</th>
+				<td>points (1pt = 1/72 of 1in)</td>
+			</tr>
+			<tr>
+				<th scope="row">pc</th>
+				<td>picas (1pc = 12 pt)</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="test-unit mgt-s">
+	<div>
+		<p>100px</p>
+		<div style="width:100px; height:100px;"></div>
+	</div>
+	<div>
+		<p>75pt</p>
+		<div style="width:75pt; height:75pt;"></div>
+	</div>
+	<div>
+		<p>6.25pc</p>
+		<div style="width:6.25pc; height:6.25pc;"></div>
+	</div>
+	<div>
+		<p>2.646cm</p>
+		<div style="width:2.646cm; height:2.646cm;"></div>
+	</div>
+	<div>
+		<p>26.46mm</p>
+		<div style="width:26.46mm; height:26.46mm;"></div>
+	</div>
+	<div>
+		<p>1.0417in</p>
+		<div style="width:1.0417in; height:1.0417in;"></div>
+	</div>
+</div>
+<div class="test-unit in-wrap" >
+	<div class="in-item">
+		<p>1in</p>
+		<div style="width:1in; height:1in;"></div>
+	</div>
+	<div class="in-item">
+		<p>96px</p>
+		<div style="width:96px; height:96px;"></div>
+	</div>
+	<div class="in-item">
+		<p>72pt</p>
+		<div style="width:72pt; height:72pt;"></div>
+	</div>
+	<div class="in-item">
+		<p>6pc</p>
+		<div style="width:6pc; height:6pc;"></div>
+	</div>
+	<div class="in-item">
+		<p>2.54cm</p>
+		<div style="width:2.54cm; height:2.54cm;"></div>
+	</div>
+	<div class="in-item">
+		<p>25.4mm</p>
+		<div style="width:25.4mm; height:25.4mm;"></div>
+	</div>
+	
+</div>
+
+
+<h2 class="h2">Relative Unit - Font</h2>
+<div class="tbl-base type-discription">
+	<table>
+		<caption>폰트 크기에 따른 상대단위</caption>
+		<colgroup>
+		<col class="col-th">
+		<col class="col-auto">
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">단위</th>
+				<th scope="col">설명</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">em</th>
+				<td>요소의 글꼴 크기(대문자)에 상대적인 값(2em이란 현재 글꼴의 2배)</td>
+			</tr>
+			<tr>
+				<th scope="row">ex</th>
+				<td>x(소문자)의 높이의 상대적인 값</td>
+			</tr>
+			<tr>
+				<th scope="row">ch</th>
+				<td>'0'의 너비에 상대적인 값</td>
+			</tr>
+			<tr>
+				<th scope="row">rem</th>
+				<td>root 요소(html)의 글꼴 크기(대문자)에 상대적인 값(12px 기준으로 62.5% 지정)</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="test-unit in-wrap mgt-s" >
+	<div class="in-item">
+		<p>10em</p>
+		<div style="width:10em; height:10em; font-size:12px;">A</div>
+	</div>
+	<div class="in-item">
+		<p>10ex</p>
+		<div style="width:10ex; height:10ex; font-size:12px; ">x</div>
+	</div>
+	<div class="in-item">
+		<p>10ch</p>
+		<div style="width:10ch; height:10ch; font-size:12px; ">0</div>
+	</div>
+	<div class="in-item">
+		<p>10rem</p>
+		<div style="width:10rem; height:10rem; font-size:12px;"></div>
+	</div>
+</div>
+
+<h2 class="h2">Relative Unit - Browser</h2>
+<div class="tbl-base type-discription">
+	<table>
+		<caption>브라우저 창크기에 따른 상대단위</caption>
+		<colgroup>
+		<col class="col-th">
+		<col class="col-auto">
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">단위</th>
+				<th scope="col">설명</th>
+			</tr>
+		</thead>
+		<tbody class="line-t">
+			<tr>
+				<th scope="row">vw</th>
+				<td>브라우저 창 너비 1%</td>
+			</tr>
+			<tr>
+				<th scope="row">vh</th>
+				<td>브라우저 창 높이 1%</td>
+			</tr>
+			<tr>
+				<th scope="row">vmin</th>
+				<td>브라우저 창 높이와 너비의 최소값 1%</td>
+			</tr>
+			<tr>
+				<th scope="row">vmax</th>
+				<td>브라우저 창 높이와 너비의 최대값 1%</td>
+			</tr>
+			<tr>
+				<th scope="row">%</th>
+				<td>부모요소 기준의 비율</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="test-unit in-wrap mgt-s" >
+	<div class="in-item">
+		<p>10vw</p>
+		<div style="width:10vw; height:10vw;"></div>
+	</div>
+	<div class="in-item" style="width:10%; height:10%; padding-bottom:10%">
+		<p>10%</p>
+		<div style="width:100%; height:100%; padding-bottom:100%"></div>
+	</div>
+	<div class="in-item">
+		<p>10vh</p>
+		<div style="width:10vh; height:10vh;"></div>
+	</div>
+	<div class="in-item">
+		<p>10vmax</p>
+		<div style="width:10vmax; height:10vmax;"></div>
+	</div>
+	<div class="in-item">
+		<p>10vmin</p>
+		<div style="width:10vmin; height:10vmin;"></div>
+	</div>
+	
+</div>

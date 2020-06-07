@@ -2,13 +2,15 @@
 
 	'use strict';
 
+	console.log($plugins.uiNameSpace);
+
 	var $ui = win.$plugins,
-		namespace = 'netiveUI.plugins';
+		namespace = pluginsName;
 		
 	/* ------------------------------------------------------------------------
 	* name : accordion tab  
 	* Ver. : v1.0.0
-	* date : 2018-12-21
+	* date : 2020-05-17
 	* EXEC statement
 	* - $plugins.uiAccordion({ option });
 	* - $plugins.uiAccordionToggle({ option });
@@ -25,6 +27,7 @@
 	 	current: null,
 		autoclose: false,
 		callback: false,
+		add: false,
 		level: 3
 	};
 	function createUiAccordion(opt){
@@ -37,7 +40,8 @@
 			current = opt.current,
 			callback = opt.callback,
 			autoclose = opt.autoclose,
-			level = opt.lavel,
+			level = opt.level,
+			add = opt.add,
 			$acco = $('#' + id),
 			$wrap = $acco.children('.ui-acco-wrap'),
 			$pnl = $wrap.children('.ui-acco-pnl'),
@@ -46,20 +50,32 @@
 			len = $wrap.length, 
 			keys = $ui.option.keys,
 			i = 0, 
+			j = 0, 
+			k = 0, 
 			optAcco,
 			para = $ui.uiPara('acco'),
 			paras,
 			paraname;
-		
+
 		//set up
-		if (!!para) {
+		if (add) {
+			current = [];
+			$acco.find('.ui-acco-btn.selected').each(function(){
+				current.push($(this).closest('.ui-acco-wrap').index());
+			});
+
+			autoclose = $acco.data('opt').close;
+			callback = $acco.data('opt').callback;
+		}
+
+		if (!!para && !add) {
 			if (para.split('+').length > 1) {
 				//2개이상 설정
 				//acco=exeAcco1*2+exeAcco2*3
 				paras = para.split('+');
 
-				for (var i = 0; i < paras.length; i++ ) {
-					paraname = paras[i].split('*');
+				for (j = 0; j < paras.length; j++ ) {
+					paraname = paras[j].split('*');
 					opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
 				}
 			} else {
@@ -76,25 +92,29 @@
 
 		//set up
 		!$pnl ? $pnl = $tit.children('.ui-acco-pnl') : '';
-		$acco
-			.attr('role','presentation')
-			.data('opt', { 
-				id:id, 
-				close: autoclose, 
-				callback: callback
-			});
-		$tit.attr('role','heading')
-			.attr('aria-level', level);
+		$acco.attr('role','presentation').data('opt', { 
+			id: id, 
+			close: autoclose, 
+			callback: callback
+		});
+		$tit.attr('role','heading').attr('aria-level', level);
 		$pnl.attr('role','region');
 
 		for (i = 0; i < len; i++) {
-			var $accobtn = $wrap.eq(i).find('> .ui-acco-tit > .ui-acco-btn'),
-				$accotit = $wrap.eq(i).find('> .ui-acco-tit'),
-				$accopln = $wrap.eq(i).find('> .ui-acco-pnl');
+			var $wrap_i = $wrap.eq(i),
+				$accotit = $wrap_i.find('> .ui-acco-tit'),
+				$accopln = $wrap_i.find('> .ui-acco-pnl'),
+				$accobtn = $accotit.find('> .ui-acco-btn');
 			
-			!$accopln ? $accopln = $accotit.children('.ui-acco-pnl') : '';
-			$accotit.attr('id') === undefined ? $accobtn.attr('id', id + '-btn' + i) : '';
-			$accopln.attr('id') === undefined ? $accopln.attr('id', id + '-pnl' + i) : '';
+			if (!$accopln) {
+				$accopln = $accotit.children('.ui-acco-pnl');
+			}
+			if ($accotit.attr('id') === undefined) {
+				$accobtn.attr('id', id + '-btn' + i);
+			}
+			if ($accopln.attr('id') === undefined) {
+				$accopln.attr('id', id + '-pnl' + i);
+			}
 			
 			$accobtn
 				.data('selected', false)
@@ -110,16 +130,21 @@
 				.attr('aria-labelledby', $accobtn.attr('id'))
 				.attr('aria-hidden', true).hide();
 
-			i === 0 ? $accobtn.attr('acco-first', true) : '';
-			i === len - 1 ? $accobtn.attr('acco-last', true) : ''
+			if (i === 0) {
+				$accobtn.attr('acco-first', true);
+			}
+			if (i === len - 1) {
+				$accobtn.attr('acco-last', true);
+			}
 		}
 		
-		current !== null ? 
+		if (current !== null) {
 			$ui.uiAccordionToggle({ 
 				id: id, 
 				current: current, 
 				motion: false 
-			}) : '';
+			});
+		}
 
 		//event
 		$btn.off('click.uiaccotab keydown.uiaccotab')
@@ -262,7 +287,6 @@
 				act('up');
 			}
 		}
-		//모션
 		function act(v) {
 			var isDown = v === 'down',
 				a = isDown ? true : false, 
@@ -279,19 +303,20 @@
 					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden',true).stop().slideUp(speed);
 				});
 			}
+
 			if (current === 'all') {
 				$wrap.each(function(i){
 					$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', a)[cls]('selected').attr('aria-expanded', a)
 						.find('.ui-acco-arrow').text(txt);
 					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden', !a).stop()[updown](speed, function(){
-						$(this).css({ height: '', padding: '', margin: '' }); // 초기화
+						$(this).css({ height: '', padding: '', margin: '' }); //init
 					});
 				});
 			} else {
 				$btn.data('selected', a).attr('aria-expanded', a)[cls]('selected')
 					.find('.ui-acco-arrow').text(txt);
 				$pnl.attr('aria-hidden', !a).stop()[updown](speed, function(){
-					$(this).css({ height: '', padding: '', margin: '' }); // 초기화
+					$(this).css({ height: '', padding: '', margin: '' }); //init
 				});
 			}
 		}
