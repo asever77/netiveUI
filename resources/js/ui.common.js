@@ -47,25 +47,24 @@
             $plugins.common.menuAjax();
         },
         settingAside: function(){
-            var $aside = doc.querySelector('#baseAside'),
-                $main = doc.querySelector('#baseMain'),
-                $h2 = $main.querySelectorAll('.h2');
+            var $aside = $('#baseAside'),
+                $main = $('#baseMain'),
+                $h2 = $main.find('.h2');
 
             var asideUl = '<ul>';
             
-            if (!!$aside.querySelector('ul')){
-
-                var delAside = $aside.querySelector('ul');
-                delAside.parentNode.removeChild(delAside);
+            if (!!$aside.find('ul')){
+                var delAside = $aside.find('ul');
+                delAside.remove();
             }
 
             asideUl += '<li><a href="#">Top</a></li>'; 
-            $h2.forEach(function(h2, index){
-                h2.setAttribute('id', 'pageTit' + index);
-                asideUl += '<li><a href="#pageTit'+ index +'">'+ h2.innerText +'</a></li>';                
+            $h2.each(function(i){
+                $(this).attr('id', 'pageTit' + i);
+                asideUl += '<li><a href="#pageTit'+ i +'">'+ $(this).text() +'</a></li>';                
             });
-            asideUl += '</ul>'
-            $plugins.fn.appendHtml($aside, asideUl);
+            asideUl += '</ul>';
+            $aside.append(asideUl);
         },
         pageInit: function(v){
             var jsName = null;

@@ -6,7 +6,7 @@
         $plugins.uiFileUpload(); 
     }
 
-     $plugins.page.pageSlot = function(){
+    $plugins.page.pageSlot = function(){
         $plugins.uiSlot({ id: 'uiSlot1', current: 1, auto: false, single:false });
         $plugins.uiSlot({ id: 'uiSlot2', current: 4, auto: false, single:false });
         $plugins.uiSlot({ id: 'uiSlot3', current: 2, auto: false, single:false });
@@ -287,12 +287,14 @@
                 ps:'left' 
             });
         });
+
+        function callback(v){
+            console.log(v);
+        }
     }
     
     
-    function callback(v){
-        console.log(v);
-    }
+   
     $plugins.page.pageScrollBox = function(){
         $plugins.uiScrollBox({
             callback:function(v) {
@@ -424,9 +426,15 @@
     $plugins.page.pageBrickList = function(){
         $plugins.uiBrickList({ 
             id:'uiBrickList1', 
-            margin:0, 
             response:true
         });
+
+        $plugins.uiBrickList({ 
+            id:'uiBrickList2', 
+            fixCol: 3, 
+            response:true
+        });
+
         var img_array = [
             "/netiveUI/resources/img/dummy/@iu16.gif",
             "/netiveUI/resources/img/dummy/@iu15.jpg",
@@ -445,43 +453,43 @@
         }
 
         
-        $('.ui-bricklist .ui-add').on('click', function() {
+        $('.ui-add').on('click', function() {
             var add = '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>' +
                 '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>';
 
-            $(this).closest('.ui-bricklist').find('.ui-bricklist-wrap').append(add);
-            $plugins.uiBrickListAdd({ id:'uiBrickList1' });
+            $('#uiBrickList1').find('.ui-bricklist-wrap').append(add);
+            $plugins.uiBrickListItem({ id:'uiBrickList1' });
         });
         
     }

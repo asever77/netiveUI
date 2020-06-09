@@ -87,19 +87,6 @@ if (!Object.keys){
 	}()); 
 }
 
-//jQuery closest
-HTMLElement.prototype.closestByClass = function(className) {
-    var target = this;
-    while (!target.parentElement.classList.contains(className)) {
-        target = target.parentElement;
-        if (target.parentElement === null) {
-            throw new Error('Not found.');
-        }
-    }
-	console.log('closestByClass:', className, target);
-    return target;
-};
-
 //utils module
 var pluginsName = 'netiveUI.plugins';
 
@@ -409,44 +396,6 @@ var pluginsName = 'netiveUI.plugins';
 
 	})();
 
-	win[global].fn = {
-		appendHtml : function (el, str) {
-			var div = document.createElement('div');
-
-			div.innerHTML = str;
-			while (div.children.length > 0) {
-				el.appendChild(div.children[0]);
-			}
-		},
-		joinOption : function (a, b){
-			var opt = b === undefined ? {} : b,
-				opt_base = JSON.parse(JSON.stringify(a)),
-				opt_add = opt,
-				opt_ajax = Object.assign( opt_base, opt_add);
-	
-			return opt_ajax;
-		},
-		getElementIndex : function(element) {
-			return [].indexOf.call(element.parentNode.children, element);
-		},
-
-		//이벤트 중복 실행 방지
-		debounce : function(func, wait, immediate) {
-			var timeout;
-			return function() {
-				var context = this, args = arguments;
-				var later = function() {
-					timeout = null;
-					if (!immediate) func.apply(context, args);
-				};
-				var callNow = immediate && !timeout;
-				clearTimeout(timeout);
-				timeout = setTimeout(later, wait);
-				if (callNow) func.apply(context, args);
-			};
-		}
-	}
-
 	win[global] = win[global].uiNameSpace(namespace, {
 		uiConsoleGuide: function (opt) {
 			return createUiConsoleGuide(opt);
@@ -533,13 +482,11 @@ var pluginsName = 'netiveUI.plugins';
 		opt_visible ? showLoading() : hideLoading();
 
 		function showLoading(){
-			console.log(1111111111)
 			!$selector.find('.ui-loading').length && $selector.append(loading);			
 			$selector.data('loading', true);
 			$('.ui-loading').addClass('visible');			
 		}
 		function hideLoading(){		
-			console.log(22222222222)	
 			$selector.data('loading', false);
 			$('.ui-loading').removeClass('visible');
 
@@ -1866,18 +1813,24 @@ var pluginsName = 'netiveUI.plugins';
 		}
 	}
 
+	
 
+
+
+	/* ------------------------------------------------------------------------
+	* name : brick list
+	* date : 2020-06-09
+	------------------------------------------------------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
 		uiBrickList: function (opt) {
 			return createUiBrickList(opt);
 		},
-		uiBrickListAdd: function (opt) {
-			return createUiBrickListAdd(opt);
+		uiBrickListItem: function (opt) {
+			return createUiBrickListItem(opt);
 		}
 	});
 	win[global].uiBrickList.option = {
-		margin: 0,
-		actdelay: true,
+		fixCol: false,
 		response: true
 	}
 	function createUiBrickList(opt){
@@ -1887,109 +1840,137 @@ var pluginsName = 'netiveUI.plugins';
 			opt = $.extend(true, {}, win[global].uiBrickList.option, opt),
 			$base = $('#' + opt.id), 
 			$item = $base.find('.ui-bricklist-item').not('.disabled'),
-			mg = opt.margin,
+			fixCol = opt.fixCol,
 			re = opt.response,
-			actdelay = opt.actdelay,
-			wrap_w  = $base.outerWidth(),
-			item_w  = $item.outerWidth(),
-			item_sum = $item.length,
-			item_col = Math.floor(wrap_w / item_w) ,
-			item_row = (item_sum / item_col) + (item_sum % item_col) ? 1 : 0,
-			item_top = [],
-			delay_n = 0,
-			i = 0,
+			wrapW = $base.outerWidth(),
+			itemW = $item.outerWidth(),
+			itemSum = $item.length,
+			itemCol = Math.floor(wrapW / itemW),
+			itemRow = (itemSum / itemCol) + (itemSum % itemCol) ? 1 : 0,
+			itemTopArray = [],
 			timer;
 
-		$base.data('orgcol',item_col);
-
-		for (i = 0; i < item_col; i++) {
-			actdelay ? delay_n = i: delay_n = 0;
-			$item.eq(i).attr('role','listitem').css({
-				position: 'absolute',
-				left : (item_w + mg) * i,
-				top : 0
-			}).stop().delay(50 * i).animate({
-				top : 0
-			}, 300, function(){
-				$(this).addClass('on');
-			});
-			$(this).addClass('on');
-			item_top[i] = $item.eq(i).outerHeight() + mg;
-		}
-
-		setTimeout(function(){
-			for (i = 0; i < item_col; i++) {
-				item_top[i] = $item.eq(i).outerHeight() + mg;
+		if (!!fixCol) {
+			itemCol = fixCol;
+			if (!!re) {
+				itemW = wrapW / fixCol;
 			}
-			
-			$base.data('opt', { 
-					'wrap':wrap_w, 
-					'width':item_w, 
-					'top':item_top, 
-					'row':item_row, 
-					'col':item_col, 
-					'actdelay':actdelay,
-					'mg':mg
-				});
-			win[global].uiBrickListAdd({ id: opt.id, actdelay:actdelay });
-		},200);
-		
+		} 
+		$base.data('orgcol', itemCol);
+
+		//the number of columns 
+		for (var i = 0; i < itemCol; i++) {		
+			var $itemN = $item.eq(i);
+
+			$itemN.attr('role','listitem').css({
+				position: 'absolute',
+				left : itemW * i,
+				top : 0
+			});
+
+			if (!!fixCol && !!re) {
+				$itemN.css('width', itemW + 'px');
+			} 
+			itemTopArray[i] = 0;
+		}
+		//save option information
+		$base.data('opt', { 
+			'wrap': wrapW, 
+			'width': itemW, 
+			'itemTopArray': itemTopArray, 
+			'row': itemRow, 
+			'col': itemCol, 
+			'response': re,
+			'fixCol': fixCol,
+			'start': 0
+		});
+
+		win[global].uiBrickListItem({ id: opt.id });
+
 		if (re) {
 			$(win).off('resize.win').on('resize.win', function(){
-				var recol_n =  Math.floor($('#' + opt.id).outerWidth() / $('#' + opt.id).find('.ui-bricklist-item').outerWidth());
-				if ($base.data('orgcol') === recol_n && recol_n > 1) {
-					return false;
-				}
-				
+				var $uiBricklist = $('.ui-bricklist');
 				clearTimeout(timer);
 				timer = setTimeout(function(){
-					win[global].uiBrickList({ id : opt.id, margin: opt.margin, actdelay:false });
+					$uiBricklist.each(function(){
+						var $this = $(this);
+						var dataOpt = $this.data('opt');
+						var reColN = Math.floor($this.outerWidth() / $this.find('.ui-bricklist-item').outerWidth());
+
+						if ($this.data('orgcol') !== reColN || !!dataOpt.fixCol) {
+							win[global].uiBrickList({ 
+								id : $this.attr('id'),
+								fixCol: dataOpt.fixCol,
+								response: dataOpt.response
+							});
+							
+							$this.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
+						}
+					});
 				},300);
-				$base.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, item_top));
 			});
 		}	
 	}
-	function createUiBrickListAdd(opt){
+	function createUiBrickListItem(opt){
 		if (opt === undefined) { return false; }
 		
 		var $base = $('#' + opt.id), 
 			$item = $base.find('.ui-bricklist-item').not('.disabled'),
 			dataOpt = $base.data('opt'),
-			wrap_w = dataOpt.wrap,
-			actdelay = dataOpt.actdelay,
-			item_w = dataOpt.width,
-			item_sum = $item.length,
-			item_col = dataOpt.col,
-			item_row = dataOpt.row,
-			item_top = dataOpt.top,
-			mg = dataOpt.mg,
-			delay_n = 0,
-			i = item_col,
-			minH, nextN, item_h,timer;
+			fixCol = dataOpt.fixCol,
+			re = dataOpt.response,
+			wrapW = dataOpt.wrap,
+			itemW = dataOpt.width,
+			itemRow = dataOpt.row,
+			itemTopArray = dataOpt.itemTopArray,
+			itemSum = $item.length;
+		
+		$plugins.uiLoading({ visible:true });
 
-		clearTimeout(timer);
-		timer = setTimeout(function(){
-			for (i; i < item_sum; i++) {
-				actdelay ? delay_n = i: delay_n = 0;
-				minH = Math.min.apply(null, item_top);
-				nextN = item_top.indexOf(minH);
-				item_h = Number($item.eq(i).outerHeight() + mg);
-				$plugins.uiLoading({ visible:true });
-				$item.eq(i).css({
+		var n = dataOpt.start;
+		var setItem = function(){
+			var $itemN = $item.eq(n);
+			var $itemImg = $itemN.find('img');
+			
+			$itemImg.attr('src', $itemImg.attr('data-src'));
+			$itemImg.load(function(){
+				if (!!fixCol && !!re) {
+					$itemN.css('width', itemW + 'px');
+				} 
+				
+				var minH = Math.min.apply(null, itemTopArray);
+				var nextN = itemTopArray.indexOf(minH);
+				var itemH = Number($itemN.outerHeight());
+
+				$itemN.css({
 					position: 'absolute',
-					left : (item_w * nextN) + (mg * nextN),
-					top : item_top[nextN]
-				}).stop().delay(50 * i).animate({
-					 top : item_top[nextN]
-				},150, function(){
+					left : itemW * nextN,
+					top : itemTopArray[nextN]
+				}).addClass('on');
+				
+				itemTopArray[nextN] = Number(minH + itemH);
+				n = n + 1;
+
+				if (n < itemSum) {
+					$base.css('height', Math.max.apply(null, itemTopArray));
+					setItem();
+				} else {
 					$plugins.uiLoading({ visible:false });
-					$(this).addClass('on');
-				});
-				item_top[nextN] = Number(minH + item_h);
-			}
-			$base.data('opt', { 'wrap':wrap_w, 'width':item_w, 'top':item_top, 'row':item_row, 'col':i, 'mg':mg })
-			.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, item_top));
-		},300);
+					$base.data('opt', { 
+						'wrap': wrapW, 
+						'width':itemW, 
+						'itemTopArray':itemTopArray, 
+						'row':itemRow, 
+						'col':n, 
+						'response': re,
+						'fixCol': fixCol,
+						'start': itemSum 
+					}).find('.ui-bricklist-wrap')
+					.css('height', Math.max.apply(null, itemTopArray));
+				}
+			});
+		} 
+		setItem();
 	}
 
 
