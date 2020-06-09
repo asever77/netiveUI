@@ -336,7 +336,7 @@ p.bul-care:before {content:"※"; position:absolute; left:0; top:2px; font-weigh
 input[type="radio"],
 input[type="checkbox"] {opacity:0; filter:alpha(opacity=0); display:inline-block; position:absolute; z-index:-1; vertical-align:top; appearance:none; -moz-appearance:none; -webkit-appearance:none; margin:0;}
 .lb-radio,
-.lb-check {position:relative; display:inline-flex; vertical-align:top; align-items:center; min-height:40px; font-size:13px; padding:0; margin:0 10px 0; cursor:pointer; line-height:1;}
+.lb-check {position:relative; display:inline-flex; vertical-align:top; align-items:center; min-height:40px; font-size:13px; padding:0; margin:0; cursor:pointer; line-height:1;}
 .lb-radio:before,
 .lb-check:before {content:""; display:block; flex:0; min-width:20px; min-height:20px; margin-right:5px; box-sizing:border-box; border:2px solid #333; transition:box-shadow 0.5s, border 0.3s;}
 .lb-radio:before {border-radius:50%;}

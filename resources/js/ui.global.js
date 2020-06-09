@@ -88,15 +88,13 @@ if (!Object.keys){
 }
 
 //utils module
-var pluginsName = 'netiveUI.plugins';
-
 ;(function ($, win, doc, undefined) {
 	console.log('global');
 
 	'use strict';
 
 	var global = '$plugins';
-	var namespace = pluginsName;
+	var namespace = 'netiveUI.plugins';
 	
 	//global namespace
 	if (!!win[global]) {
@@ -107,8 +105,7 @@ var pluginsName = 'netiveUI.plugins';
                 return createNameSpace(identifier, module); 
             }
         });
-    }
-
+	}
 	function createNameSpace(identifier, module) {
 		var name = identifier.split('.'),
 			w = win,
@@ -259,7 +256,6 @@ var pluginsName = 'netiveUI.plugins';
 			};
 	})();
 
-	
 	//components option 
 	win[global].option = {
 		pageName: function() {
@@ -315,7 +311,7 @@ var pluginsName = 'netiveUI.plugins';
         }
 	};
 
-	//device set
+	// set device information
 	(function () {
 		var ua = navigator.userAgent,
 			ie = ua.match(/(?:msie ([0-9]+)|rv:([0-9\.]+)\) like gecko)/i),
@@ -396,69 +392,16 @@ var pluginsName = 'netiveUI.plugins';
 
 	})();
 
+
+	/* ------------------------
+	 * [base] loading
+	 * date : 2020-06-09
+	------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiConsoleGuide: function (opt) {
-			return createUiConsoleGuide(opt);
-		},
 		uiLoading: function (opt) {
 			return createUiLoading(opt);
-		},
-		uiAjax: function (opt) {
-			return createUiAjax(opt);
-		},
-		uiScroll: function (opt) {
-			return createUiScroll(opt);
-		},
-		uiPara: function (v) {
-			return createUiPara(v);
-		},
-		uiHasScrollBar: function (opt) {
-			return createUiHasScrollBar(opt);
-		},
-		uiHasScrollBarX: function (opt) {
-			return createUiHasScrollBarX(opt);
-		},
-		uiScrollBar: function (opt) {
-			return createuiScrollBar(opt);
-		},
-		uiScrollBarAct: function (opt) {
-			return createuiScrollBarAct(opt);
-		},
-		uiScrollBarReset: function (opt) {
-			return createuiScrollBarReset(opt);
-		},
-		uiFocusTab: function (opt) {
-			return createUiFocusTab(opt);
-		},
-		
-		uiPopup: function (opt) {
-			return createUiPopup(opt);
-		},
-        uiCookieSet: function (opt) {
-			return creaeteUiCookieSet(opt);
-		},
-		uiCookieGet: function (opt) {
-			return creaeteUiCookieGet(opt);
-		},
-		uiCookieDel: function (opt) {
-			return creaeteUiCookieDel(opt);
-		},
-		uiValueCheck: function(opt) {
-			return createUivalueCheck(opt)
-		},
-
-
-		
-		uiCaption: function () {
-			return createUiCaption();
-		},
-		uiError: function (opt) {
-			return createUiError(opt);
 		}
 	});
-    
-    
-
 	win[global].uiLoading.timer = {};
 	win[global].uiLoading.moment = true;
 	function createUiLoading(opt) {
@@ -529,6 +472,16 @@ var pluginsName = 'netiveUI.plugins';
 		// }
 	}
 
+
+	/* ------------------------
+	 * [base] console guide
+	 * date : 
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiConsoleGuide: function (opt) {
+			return createUiConsoleGuide(opt);
+		}
+	});
 	function createUiConsoleGuide(opt) {
 		if (!win[global].browser.ie) {
 			console.log('');
@@ -540,6 +493,15 @@ var pluginsName = 'netiveUI.plugins';
 	}
 
 
+	/* ------------------------
+	 * [base] valueCheck
+	 * date : 
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiValueCheck: function(opt) {
+			return createUivalueCheck(opt)
+		}
+	});
 	win[global].uiValueCheck.option = {
 		first: false
 	}
@@ -686,6 +648,15 @@ var pluginsName = 'netiveUI.plugins';
 	}
 
 
+	/* ------------------------
+	 * [base] Ajax
+	 * date : 2020-06-09
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiAjax: function (opt) {
+			return createUiAjax(opt);
+		}
+	});
 	win[global].uiAjax.option = {
 		page: true,
 		add: false,
@@ -699,7 +670,6 @@ var pluginsName = 'netiveUI.plugins';
 		async: true,
 		contType: 'application/x-www-form-urlencoded',
 		dataType: 'html'
-
 	};
 	function createUiAjax(opt) {
 		if (opt === undefined) {
@@ -761,7 +731,15 @@ var pluginsName = 'netiveUI.plugins';
 	}
 
 
-
+	/* ------------------------
+	 * [base] scroll move
+	 * date : 
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiScroll: function (opt) {
+			return createUiScroll(opt);
+		}
+	});
 	win[global].uiScroll.option = {
 		value: 0,
 		speed: 0,
@@ -833,6 +811,16 @@ var pluginsName = 'netiveUI.plugins';
 		}
 	}
 
+
+	/* ------------------------
+	 * [base] URL parameter
+	 * date : 
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiPara: function (v) {
+			return createUiPara(v);
+		}
+	});
 	function createUiPara(paraname){
 		var _tempUrl = win.location.search.substring(1),
 			_tempArray = _tempUrl.split('&'),
@@ -848,6 +836,22 @@ var pluginsName = 'netiveUI.plugins';
 		}
 	}
 
+
+	/* ------------------------
+	 * [base] scroll bar
+	 * date : 
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiScrollBar: function (opt) {
+			return createuiScrollBar(opt);
+		},
+		uiScrollBarAct: function (opt) {
+			return createuiScrollBarAct(opt);
+		},
+		uiScrollBarReset: function (opt) {
+			return createuiScrollBarReset(opt);
+		}
+	});
 	win[global].uiScrollBar.option = {
 		id: false,
 		callback:false,
@@ -883,7 +887,6 @@ var pluginsName = 'netiveUI.plugins';
 			$bar.css('top', Math.floor((barwrap_h - bar_h) / 100) * per + 'px');
 		}
 	}
-
 	function createuiScrollBarReset(opt){
 		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
 			sid = opt.id,
@@ -1196,6 +1199,18 @@ var pluginsName = 'netiveUI.plugins';
 	}
 
 
+	/* ------------------------
+	 * [base] scrolling or not
+	 * date : 
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiHasScrollBar: function (opt) {
+			return createUiHasScrollBar(opt);
+		},
+		uiHasScrollBarX: function (opt) {
+			return createUiHasScrollBarX(opt);
+		}
+	});
 	function createUiHasScrollBar(opt) {
 		var $this = opt.selector;
 		return ($this.prop('scrollHeight') == 0 && $this.prop('clientHeight') == 0) || ($this.prop('scrollHeight') > $this.prop('clientHeight'));
@@ -1206,6 +1221,15 @@ var pluginsName = 'netiveUI.plugins';
 	}
 
 
+	/* ------------------------
+	 * [base] focus scope
+	 * date : 
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiFocusTab: function (opt) {
+			return createUiFocusTab(opt);
+		}
+	});
 	win[global].uiFocusTab.option = {
 		focusitem : '.ui-select-tit, iframe, a:not([data-disabled]), button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), label, [role="button"]',
 		callback: false,
@@ -1271,6 +1295,15 @@ var pluginsName = 'netiveUI.plugins';
 	}
 
 
+	/* ------------------------
+	 * [base] window popup
+	 * date : 
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiPopup: function (opt) {
+			return createUiPopup(opt);
+		}
+	});
 	win[global].uiPopup.option = {
 		name: 'new popup',
 		width: 790,
@@ -1302,7 +1335,21 @@ var pluginsName = 'netiveUI.plugins';
 	}
 
 
-
+	/* ------------------------
+	 * [base] cookie
+	 * date : 
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiCookieSet: function (opt) {
+			return creaeteUiCookieSet(opt);
+		},
+		uiCookieGet: function (opt) {
+			return creaeteUiCookieGet(opt);
+		},
+		uiCookieDel: function (opt) {
+			return creaeteUiCookieDel(opt);
+		}
+	});
 	function creaeteUiCookieSet(opt){
 		var cookieset = opt.name + '=' + opt.value + ';',
 			expdate;
@@ -1327,10 +1374,15 @@ var pluginsName = 'netiveUI.plugins';
 	}
 
 
-
-
-
-	
+	/* ------------------------
+	 * [base] table caption
+	 * date : 
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiCaption: function () {
+			return createUiCaption();
+		}
+	});
 	function createUiCaption(){
 		var $cp = $('.ui-caption');
 
@@ -1359,17 +1411,21 @@ var pluginsName = 'netiveUI.plugins';
 		});
 	}
 
-	/* ------------------------------------------------------------------------
-	 * error message v1.0 
-	 * $plugins.uiError
-	 * date : 2018-05-18
-	 * 에러 시 메시지 생성 및 스타일 변경
+
+	/* ------------------------
+	 * [base] error message
+	 * date : 
 	 * option
 	 * - opt.message : 'message text' / [string]
 	 * - opt.error : true or false / [string]
 	 * - opt.selector : 'id' or $(...) / [strong] or [object]
 	 * - opt.wrapper : '...' / [strong]
-	------------------------------------------------------------------------ */
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiError: function (opt) {
+			return createUiError(opt);
+		}
+	});
 	function createUiError(opt){
 		var msg = opt.message, 
 			err = opt.error, 
@@ -1402,20 +1458,103 @@ var pluginsName = 'netiveUI.plugins';
 
 
 
-
-
-
-
-
-
-	/* ------------------------------------------------------------------------
-	* name : accordion tab  
-	* Ver. : v1.0.0
+	/* ------------------------
+	* table cell fix(horizontal)
 	* date : 2020-05-17
-	* EXEC statement
-	* - $plugins.uiAccordion({ option });
-	* - $plugins.uiAccordionToggle({ option });
-	------------------------------------------------------------------------ */
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiTableFixTd: function () {
+			return createUiTableFixTd();
+		}
+	});
+	function createUiTableFixTd() {
+		var tbl = $('.ui-fixtd');
+
+		tbl.each(function(i){
+			var tbln = $(this),
+				tbl_col = tbln.find('col'),
+				tbl_tr = tbln.find('tr'),
+				col_len = tbl_col.length,
+				fix_sum = col_len - tbln.attr('fix'),
+				len = tbl_tr.length,
+				tit = [];
+
+			console.log(col_len, fix_sum)
+
+			tbln.attr('current', 1).attr('total', col_len);
+
+			for (var i = 0; i < len; i++) {
+				for (var j = 0; j < fix_sum; j++) {
+					var tr_this = tbl_tr.eq(i),
+						td_this = tr_this.find('> *').eq(j - fix_sum),
+						jj = (j + 1);
+
+					td_this.addClass('ui-fixtd-n' + jj).data('n', j);
+					if (tr_this.closest('thead').length) {
+						tit.push(td_this.text());
+						td_this.prepend('<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="hide">이전</span></button>');
+						td_this.append('<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="hide">다음</span></button>');
+					}
+					tbl_col.eq(j - fix_sum).addClass('ui-fixtd-n' + jj);
+				}
+			}
+		});
+
+		tbl.find('.ui-fixtd-btn').off('click.uifixtd').on('click.uifixtd', function(){
+			var tbl_this = $(this).closest('.ui-fixtd'),
+				this_sum =  Number(tbl_this.attr('total') - tbl_this.attr('fix'));
+
+			var n = Number($(this).data('idx'));
+
+			if ($(this).data('btn') === 'next') {
+				tbl_this.attr('current', n + 1 > this_sum ? n = 1 : n + 1);
+			} else {
+				tbl_this.attr('current', n - 1 <= 0 ? n = this_sum : n - 1);
+			}
+		});
+	}
+
+
+	/* ------------------------
+	* table scroll(vertical)
+	* date : 2020-05-17
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiTableScroll: function () {
+			return createUiTableScroll();
+		}
+	});
+	function createUiTableScroll(){
+		var $tblWrap = $('.ui-tablescroll');
+
+		for (var i = 0, len = $tblWrap.length; i < len; i++) {
+			var $tbl = $tblWrap.eq(i),
+				_$tblWrap = $tbl.find('.ui-tablescroll-wrap'),
+				_$tbl = _$tblWrap.find('table'),
+				cloneTable = _$tbl.clone();
+			
+			if (!$tbl.find('.ui-tablescroll-clone').length) {
+				$tbl.prepend(cloneTable);
+
+				var $cloneTable = $tbl.find('> table:first-child'),
+					$cloneTableTh = $cloneTable.find('th');
+
+				$cloneTable.find('caption').remove();
+				$cloneTable.find('tbody').remove();
+				$cloneTable.addClass('ui-tablescroll-clone');
+				$cloneTable.attr('aria-hidden', true);
+				$cloneTableTh.each(function(){
+					$(this).attr('aria-hidden', true);
+				});
+			}
+		}
+	}
+
+
+	/* ------------------------
+	* accordion tab  
+	* date : 2020-05-17
+	------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
 		uiAccordion: function (opt) {
 			return createUiAccordion(opt);
@@ -1727,100 +1866,10 @@ var pluginsName = 'netiveUI.plugins';
 	}
 
 
-
-		
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiTableFixTd: function () {
-			return createUiTableFixTd();
-		}
-	});
-	function createUiTableFixTd() {
-		var tbl = $('.ui-fixtd');
-
-		tbl.each(function(i){
-			var tbln = $(this),
-				tbl_col = tbln.find('col'),
-				tbl_tr = tbln.find('tr'),
-				col_len = tbl_col.length,
-				fix_sum = col_len - tbln.attr('fix'),
-				len = tbl_tr.length,
-				tit = [];
-
-			console.log(col_len, fix_sum)
-
-			tbln.attr('current', 1).attr('total', col_len);
-
-			for (var i = 0; i < len; i++) {
-				for (var j = 0; j < fix_sum; j++) {
-					var tr_this = tbl_tr.eq(i),
-						td_this = tr_this.find('> *').eq(j - fix_sum),
-						jj = (j + 1);
-
-					td_this.addClass('ui-fixtd-n' + jj).data('n', j);
-					if (tr_this.closest('thead').length) {
-						tit.push(td_this.text());
-						td_this.prepend('<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="hide">이전</span></button>');
-						td_this.append('<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="hide">다음</span></button>');
-					}
-					tbl_col.eq(j - fix_sum).addClass('ui-fixtd-n' + jj);
-				}
-			}
-		});
-
-		tbl.find('.ui-fixtd-btn').off('click.uifixtd').on('click.uifixtd', function(){
-			var tbl_this = $(this).closest('.ui-fixtd'),
-				this_sum =  Number(tbl_this.attr('total') - tbl_this.attr('fix'));
-
-			var n = Number($(this).data('idx'));
-
-			if ($(this).data('btn') === 'next') {
-				tbl_this.attr('current', n + 1 > this_sum ? n = 1 : n + 1);
-			} else {
-				tbl_this.attr('current', n - 1 <= 0 ? n = this_sum : n - 1);
-			}
-		});
-	}
-
-
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiTableScroll: function () {
-			return createUiTableScroll();
-		}
-	});
-	function createUiTableScroll(){
-		var $tblWrap = $('.ui-tablescroll');
-
-		for (var i = 0, len = $tblWrap.length; i < len; i++) {
-			var $tbl = $tblWrap.eq(i),
-				_$tblWrap = $tbl.find('.ui-tablescroll-wrap'),
-				_$tbl = _$tblWrap.find('table'),
-				cloneTable = _$tbl.clone();
-			
-			if (!$tbl.find('.ui-tablescroll-clone').length) {
-				$tbl.prepend(cloneTable);
-
-				var $cloneTable = $tbl.find('> table:first-child'),
-					$cloneTableTh = $cloneTable.find('th');
-
-				$cloneTable.find('caption').remove();
-				$cloneTable.find('tbody').remove();
-				$cloneTable.addClass('ui-tablescroll-clone');
-				$cloneTable.attr('aria-hidden', true);
-				$cloneTableTh.each(function(){
-					$(this).attr('aria-hidden', true);
-				});
-			}
-		}
-	}
-
-	
-
-
-
-	/* ------------------------------------------------------------------------
+	/* ------------------------
 	* name : brick list
 	* date : 2020-06-09
-	------------------------------------------------------------------------ */
+	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
 		uiBrickList: function (opt) {
 			return createUiBrickList(opt);
@@ -1952,7 +2001,7 @@ var pluginsName = 'netiveUI.plugins';
 				n = n + 1;
 
 				if (n < itemSum) {
-					$base.css('height', Math.max.apply(null, itemTopArray));
+					$base.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
 					setItem();
 				} else {
 					$plugins.uiLoading({ visible:false });
@@ -1972,6 +2021,7 @@ var pluginsName = 'netiveUI.plugins';
 		} 
 		setItem();
 	}
+
 
 
 	/* ------------------------------------------------------------------------

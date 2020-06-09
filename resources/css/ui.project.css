@@ -70,8 +70,8 @@ code{padding:2px 4px; font-size:100%; background-color:#eee; border-radius:4px; 
 .box-code .na{color:#4f9fcf}
 .box-code .s{color:#d44950}
 .box-code .c{color:#999}
-.box-code b{font-weight:900; }
-
+.box-code b{font-weight:900 !important; color:#a12dd6 !important;}
+.box-code b *{font-weight:900 !important; color:#a12dd6 !important;}
 /* page */
 .tbl-grid01 .col-n1{width:auto}
 .tbl-grid01 .col-n2{width:20%}

@@ -454,6 +454,13 @@
 
         
         $('.ui-add').on('click', function() {
+            addList('uiBrickList1');
+        });
+        $('.ui-add2').on('click', function() {
+            addList('uiBrickList2');
+        });
+
+        function addList(v){
             var add = '<li class="ui-bricklist-item" role="listitem">' +
                 '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>' +
@@ -488,9 +495,9 @@
                 '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
                 '</li>';
 
-            $('#uiBrickList1').find('.ui-bricklist-wrap').append(add);
-            $plugins.uiBrickListItem({ id:'uiBrickList1' });
-        });
+            $('#' + v).find('.ui-bricklist-wrap').append(add);
+            $plugins.uiBrickListItem({ id: v });
+        }
         
     }
 
