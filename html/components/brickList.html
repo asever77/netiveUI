@@ -4,40 +4,41 @@
 <div class="tit-catagory">Components</div>
 <div class="tit-wrap">
 	<h1 class="h1">Brick List</h1>
+	<em>date : 2020.06.09</em>
 </div>
 <p class="txt-s2">벽돌을 쌓아 올리듯 비어있는 공간이 없이 정렬시키는 리스트이다.<br>
-가로 길이를 동일한 길이로 기준으로 맞추어 정리되며 옵션에서 margin 값으로 간격조절이 가능하다.</p>
+css의 가로 길이와 옵션의 fixCol 값으로 기준을 주는 두가지 방식으로 사용합니다.</p>
 
 <h2 class="h2">Examples</h2>
 <h3 class="h3">css 기준</h3>
 <p>ui-bricklist-item의 정해진 css width 값 기준으로 정렬</p>
-<div class="ui-bricklist mgt-s type-a" role="list" id="uiBrickList1">
+<div class="ui-bricklist mgt-s" id="uiBrickList1">
 	<ul class="ui-bricklist-wrap">
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu1.jpg" alt=""></div>
 		</li>					
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu2.jpg" alt=""></div>
 		</li>					
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu3.jpg" alt=""></div>
 		</li>						
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu4.jpg" alt=""></div>
 		</li>
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu5.jpg" alt=""></div>
 		</li>
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu6.jpg" alt=""></div>
 		</li>
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu7.jpg" alt=""></div>
 		</li>
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu8.jpg" alt=""></div>
 		</li>
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu9.jpg" alt=""></div>
 		</li>
 	</ul>
@@ -48,33 +49,33 @@
 
 <h3 class="h3">option 기준</h3>
 <p>option의 col 값 기준으로 정렬</p>
-<div class="ui-bricklist mgt-s type-b" role="list" id="uiBrickList2">
+<div class="ui-bricklist mgt-s" id="uiBrickList2">
 	<ul class="ui-bricklist-wrap">
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu1.jpg" alt=""></div>
 		</li>					
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu2.jpg" alt=""></div>
 		</li>					
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu3.jpg" alt=""></div>
 		</li>						
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu4.jpg" alt=""></div>
 		</li>
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu5.jpg" alt=""></div>
 		</li>
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu6.jpg" alt=""></div>
 		</li>
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu7.jpg" alt=""></div>
 		</li>
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu8.jpg" alt=""></div>
 		</li>
-		<li class="ui-bricklist-item" role="listitem">
+		<li class="ui-bricklist-item">
 			<div><img data-src="/netiveUI/resources/img/dummy/@iu9.jpg" alt=""></div>
 		</li>
 	</ul>
@@ -87,9 +88,9 @@
 <div class="box-code">
 <pre>
 <code>
-&lt;div class="ui-bricklist" role="list" id="uiBrickList1"&gt;
+&lt;div class="ui-bricklist" id="uiBrickList1"&gt;
 	&lt;ul class="ui-bricklist-wrap"&gt;
-		&lt;li class="ui-bricklist-item" role="listitem"&gt;
+		&lt;li class="ui-bricklist-item"&gt;
 			&lt;div&gt;&lt;img data-src="/netiveUI/resources/img/dummy/@iu1.jpg" alt=""&gt;&lt;/div&gt;
 			&lt;strong&gt;title&lt;/strong&gt;
 		&lt;/li&gt;
@@ -100,15 +101,40 @@
 </pre>
 </div>
 
+<h2 class="h2">CSS Style</h2>
+<h3 class="h3">base style</h3>
+<div class="box-code">
+<pre>
+<code>
+/* ui-bricklist : base */
+.ui-bricklist {position:relative; width:100%;}
+.ui-bricklist-wrap {margin:0; padding:0;}
+.ui-bricklist-item {width:150px; display:block; box-sizing:border-box; overflow:hidden;}
+.ui-bricklist-item img {width:100%; display:block}
+</code>
+</pre>
+</div>
+<h3 class="h3">style : netive UI</h3>
+<div class="box-code">
+<pre>
+<code>
+.ui-bricklist .ui-bricklist-wrap {background:#ececec;}
+.ui-bricklist .ui-bricklist-item {opacity:0; transform:scale(0.8); transition:transform 0.15s ease-in, opacity 0.3s ease-in, top 0.3s ease-in-out, left 0.3s ease-in-out;}
+.ui-bricklist .ui-bricklist-item.on {transform:scale(1); opacity:1;}
+.ui-bricklist .ui-bricklist-item {width:150px; color:#444; text-align:center;}
+</code>
+</pre>
+</div>
+
 <h2 class="h2">Javascript</h2>
 <h3 class="h3">$plugins.uiBrickList</h3>
 <div class="box-code">
 <pre>
 <code>
 $plugins<span class="na">.uiBrickList</span>({ <span class="s">
-	id:'uiBrickList1', 
+	id: 'uiBrickList1', 
 	fixCol: 3, 
-	response:true </span> 
+	response: true </span> 
 });
 </code>
 </pre>
