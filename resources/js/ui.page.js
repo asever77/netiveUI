@@ -2,6 +2,90 @@
     console.log('page.js');
 
     'use strict';
+
+    $plugins.page.pageBrickList = function(){
+        $plugins.uiBrickList({ 
+            id:'uiBrickList1', 
+            response:true
+        });
+
+        $plugins.uiBrickList({ 
+            id:'uiBrickList2', 
+            fixCol: 3, 
+            response:true
+        });
+
+        var img_array = [
+            "/netiveUI/resources/img/dummy/@iu16.gif",
+            "/netiveUI/resources/img/dummy/@iu15.jpg",
+            "/netiveUI/resources/img/dummy/@iu14.jpg",
+            "/netiveUI/resources/img/dummy/@iu13.gif",
+            "/netiveUI/resources/img/dummy/@iu12.jpg",
+            "/netiveUI/resources/img/dummy/@iu11.gif",
+            "/netiveUI/resources/img/dummy/@iu10.gif",
+            "/netiveUI/resources/img/dummy/@iu9.jpg",
+            "/netiveUI/resources/img/dummy/@iu8.jpg",
+            "/netiveUI/resources/img/dummy/@iu7.jpg"
+            ]
+        function randomNum(){
+            var n = Math.floor(Math.random() * 10);
+            return n;
+        }
+
+        
+        $('.ui-add').on('click', function() {
+            addList('uiBrickList1');
+        });
+        $('.ui-add2').on('click', function() {
+            addList('uiBrickList2');
+        });
+
+        function addList(v){
+            var add = '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>' +
+                '<li class="ui-bricklist-item" role="listitem">' +
+                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
+                '</li>';
+
+            $('#' + v).find('.ui-bricklist-wrap').append(add);
+            $plugins.uiBrickListItem({ id: v });
+        }
+        
+    }
+
+    $plugins.page.pageModal = function(){
+        console.log('modal')
+    }
+
+    
     $plugins.page.pageFileUpload = function(){
         $plugins.uiFileUpload(); 
     }
@@ -338,12 +422,10 @@
     $plugins.page.pageFloatingRange = function(){
         $plugins.uiFloatingRange({ 
             id:'uiflRange01', 
-            //add:'baseHeader' ,
             margin: 20
         });
         $plugins.uiFloatingRange({ 
             id:'uiflRange02', 
-            //add:'baseHeader' ,
             margin: 0
         });
     }
@@ -353,7 +435,14 @@
         $plugins.uiFloating({ id:'exeFix11', ps:'top', add:'exeFix12', fix:true });
         $plugins.uiFloating({ id:'exeFix10', ps:'top', add:'exeFix11', fix:true });
 
-        $plugins.uiFloating({ id:'exeFix1', ps:'top', fix:false });
+        $plugins.uiFloating({ 
+            id:'exeFix1', 
+            ps:'top', 
+            fix:false, 
+            callback:function(v){
+                console.log(v);
+            } 
+        });
         $plugins.uiFloating({ id:'exeFix2', ps:'top', add:'exeFix1', fix:false });
         $plugins.uiFloating({ id:'exeFix3', ps:'top', add:'exeFix2', fix:false });
         
@@ -366,15 +455,7 @@
         $plugins.uiFloating({ id:'exeFix8', ps:'bottom', add:'exeFix7', fix:false});
         $plugins.uiFloating({ id:'exeFix9', ps:'bottom', add:'exeFix8', fix:false });
 
-        // $plugins.uiFloating({ id:'exeFix4', ps:'bottom', fix:true });
-        // $plugins.uiFloating({ id:'exeFix3', ps:'bottom', fix:false });
-        /*
-        NETIVE.uiFloating.aside({ id: 'exeFix4', start: 200, end: 200 });
-        */
 
-        $('.uiBtnSize').on('click', function(){
-            !$(this).hasClass('big') ? $(this).addClass('big') : $(this).removeClass('big');
-        })
     }
 
     $plugins.page.pageCountNumber = function(){
@@ -389,13 +470,25 @@
 
         $plugins.uiDropdown({ 
             id:'uiDrop1', 
-            eff:'st', 
-            ps:'bc', 
-            _offset: true 
+            ps:'BL',
+            dropSrc:'/netiveUI/html/components/dropdown_ajax.html',
+            dropOffset: true,
+            dropExpanded: true,
+            openback: function(){
+                $plugins.uiTab({ id: 'exeTab1', current:0 });
+            }
         });
-        $plugins.uiDropdown({ id:'uiDrop2', eff:'sl', ps:'rt' });
-        $plugins.uiDropdown({ id:'uiDrop5', eff:'sl', ps:'rb'});
-        $plugins.uiTab({ id: 'exeTab1', current:0 });
+        $plugins.uiDropdown({ 
+            id:'uiDrop2', 
+            ps:'RT',
+            dim :true
+        });
+        $plugins.uiDropdown({ 
+            id:'uiDrop5', 
+            ps:'RB'
+        });
+
+        
     }
 
     $plugins.page.pageTab = function(){
@@ -423,83 +516,7 @@
         $plugins.uiTableFixTd();
     }
 
-    $plugins.page.pageBrickList = function(){
-        $plugins.uiBrickList({ 
-            id:'uiBrickList1', 
-            response:true
-        });
-
-        $plugins.uiBrickList({ 
-            id:'uiBrickList2', 
-            fixCol: 3, 
-            response:true
-        });
-
-        var img_array = [
-            "/netiveUI/resources/img/dummy/@iu16.gif",
-            "/netiveUI/resources/img/dummy/@iu15.jpg",
-            "/netiveUI/resources/img/dummy/@iu14.jpg",
-            "/netiveUI/resources/img/dummy/@iu13.gif",
-            "/netiveUI/resources/img/dummy/@iu12.jpg",
-            "/netiveUI/resources/img/dummy/@iu11.gif",
-            "/netiveUI/resources/img/dummy/@iu10.gif",
-            "/netiveUI/resources/img/dummy/@iu9.jpg",
-            "/netiveUI/resources/img/dummy/@iu8.jpg",
-            "/netiveUI/resources/img/dummy/@iu7.jpg"
-            ]
-        function randomNum(){
-            var n = Math.floor(Math.random() * 10);
-            return n;
-        }
-
-        
-        $('.ui-add').on('click', function() {
-            addList('uiBrickList1');
-        });
-        $('.ui-add2').on('click', function() {
-            addList('uiBrickList2');
-        });
-
-        function addList(v){
-            var add = '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img data-src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>';
-
-            $('#' + v).find('.ui-bricklist-wrap').append(add);
-            $plugins.uiBrickListItem({ id: v });
-        }
-        
-    }
+    
 
     $plugins.page.pageAccordion = function(){
         console.log('page.js-acco');
@@ -584,67 +601,7 @@
 
 
 
-    $plugins.page.brickList = function(){
-        //$('.ui-cardlist').imagesLoaded(function(){
-            $plugins.uiBrickList({ id:'uiBrickList1', margin:0, response:true });
-        //});
-        var img_array = [
-            "/netiveUI/resources/img/dummy/@iu16.gif",
-            "/netiveUI/resources/img/dummy/@iu15.jpg",
-            "/netiveUI/resources/img/dummy/@iu14.jpg",
-            "/netiveUI/resources/img/dummy/@iu13.gif",
-            "/netiveUI/resources/img/dummy/@iu12.jpg",
-            "/netiveUI/resources/img/dummy/@iu11.gif",
-            "/netiveUI/resources/img/dummy/@iu10.gif",
-            "/netiveUI/resources/img/dummy/@iu9.jpg",
-            "/netiveUI/resources/img/dummy/@iu8.jpg",
-            "/netiveUI/resources/img/dummy/@iu7.jpg"
-            ]
-        function randomNum(){
-            var n = Math.floor(Math.random() * 10);
-            return n;
-        }
-
-        
-        $('.ui-bricklist .ui-add').on('click', function() {
-            var add = '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>' +
-                '<li class="ui-bricklist-item" role="listitem">' +
-                '<div><img src="'+ img_array[randomNum()] +'" alt=""></div>' +
-                '</li>';
-
-            $(this).closest('.ui-bricklist').find('.ui-bricklist-wrap').append(add);
-            $plugins.uiBrickListAdd({ id:'uiBrickList1' });
-        });
-    }
+    
 
     $plugins.page.capture = function(){
         $('#uiCaptureBtn').on('click',function(){

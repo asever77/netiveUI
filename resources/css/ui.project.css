@@ -291,3 +291,6 @@ fieldset{margin:0}
 .ui-datepicker .ui-datepicker-btn:disabled{opacity:0.5}
 .ui-datepicker .ui-datepicker-btn:disabled:focus,
 .ui-datepicker .ui-datepicker-btn:disabled:hover{border:0; background:transparent; color:#666}
+
+/* dropdown */
+.ui-drop-pnl{width:400px}

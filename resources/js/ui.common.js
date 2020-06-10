@@ -3,10 +3,31 @@
     'use strict';
     
     $plugins.common = {
- 
         init: function(){
+            var fristHref = '/netiveUI/html/start/introduction.html';
 
-            var fristHref = '/netiveUI/html/start/introduction.html'
+            if (!!$plugins.uiPara('page')) {
+                switch($plugins.uiPara('page')) {
+                    case 'introduction' :
+                        fristHref = '/netiveUI/html/start/introduction.html';
+                        break;
+                    case 'accordion' :
+                        fristHref = '/netiveUI/html/components/accordion.html';
+                        break;
+                    case 'brickList' :
+                        fristHref = '/netiveUI/html/components/brickList.html';
+                        break;
+                    case 'dropdown' :
+                        fristHref = '/netiveUI/html/components/dropdown.html';
+                        break;
+                    case 'floating' :
+                        fristHref = '/netiveUI/html/components/floating.html';
+                        break;
+                    case 'floatingRange' :
+                        fristHref = '/netiveUI/html/components/floatingRange.html';
+                        break;
+                }
+            } 
 
             $plugins.uiAjax({ 
                 id:'baseHeader', 
@@ -20,6 +41,7 @@
                 page: true, 
                 loading: true,
                 callback: function(){
+                    $(win).off('scroll.win');
                     $plugins.common.pageInit(fristHref);
                     $plugins.common.settingAside();
                 }
@@ -69,6 +91,11 @@
         pageInit: function(v){
             var jsName = null;
 
+            if (!!doc.querySelector('#uiJsName')) {
+                jsName = doc.querySelector('#uiJsName').value;
+                $plugins.page[jsName]();
+            }
+
             if(typeof(history.pushState) == 'function') {
                 var renewURL = location.href;
                 
@@ -77,15 +104,16 @@
                 renewURL = renewURL[0];
                 renewURL = renewURL + v;
 
-                console.log(renewURL, v);
-                history.pushState(false, 'loading', '/netiveUI/html/index.html');
+                var paraUrl = v.split('.'),
+                    paraUrl = paraUrl[0].split('/'),
+                    paraUrl = paraUrl[paraUrl.length - 1];
+
+                var indexUrl = '/netiveUI/html/index.html?page=' + paraUrl;
+   
+                history.pushState(false, 'loading', indexUrl);
             }
 
-            if (!!doc.querySelector('#uiJsName')) {
-                jsName = doc.querySelector('#uiJsName').value;
-                console.log(jsName)
-                $plugins.page[jsName]();
-            }
+           
             
 
             // console.log(v.split('.html'), !!doc.querySelector('#uiPageJS'));
@@ -117,6 +145,7 @@
                     page: true, 
                     loading: true,
                     callback: function(){
+                        $(win).off('scroll.win');
                         $plugins.common.pageInit(href);
                         $plugins.common.settingAside();
                     }

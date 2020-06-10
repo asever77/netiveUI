@@ -686,11 +686,12 @@ if (!Object.keys){
 
 		var opt = opt === undefined ? {} : opt,
 			opt = $.extend(true, {}, win[global].uiAjax.option, opt),
-			$id = $('#' + opt.id),
+			$id = typeof opt.id === 'string' ? $('#' + opt.id) : typeof opt.id === 'object' ? opt.id : $('body'),
 			loading = opt.loading,
 			callback = opt.callback === undefined ? false : opt.callback,
 			errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
 
+			console.log( typeof opt.id);
 		if (loading) {
 			win[global].uiLoading({
 				visible: true
@@ -2023,6 +2024,706 @@ if (!Object.keys){
 	}
 
 
+	/* ------------------------
+	* name : dropdown
+	* date : 2020-06-10
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiDropdown: function (opt) {
+			return createUiDropdown(opt);
+		},
+		uiDropdownToggle: function (opt) {
+			return createUiDropdownToggle(opt);
+		},
+		uiDropdownHide: function () {
+			return createUiDropdownHide();
+		},
+	});
+	win[global].uiDropdown.option = {
+		ps: 'BL',
+		hold: true,
+		dropSpace: $('body'),
+		dropSrc: false,
+		dropOffset: false,
+		openback:false,
+		closeback:false
+	};
+	function createUiDropdown(opt){
+		if (opt === undefined || !$('#' + opt.id).length) {
+			return false;
+		}
+
+		var opt = $.extend(true, {}, win[global].uiDropdown.option, opt),
+			id = opt.id,
+			ps = opt.ps,
+			hold = opt.hold,
+			dropSpace = opt.dropSpace,
+			dropSrc = opt.dropSrc,
+			dropOffset = opt.dropOffset,
+			openback = opt.openback,
+			closeback = opt.closeback;
+
+		if (!!dropSrc && !$('[data-id="' + opt.id + '"]').length) {
+			$plugins.uiAjax({
+				id: dropSpace,
+				url: dropSrc,
+				add: true,
+				callback: function(){
+					setDropdown();
+				}
+			});
+		} else {
+			setDropdown();
+		}
+		
+		function setDropdown(){
+			var $btn = $('#' + id),
+				$pnl = $('[data-id="'+ id +'"]'); 
+
+			//set up
+			$btn.attr('aria-expanded', false)
+				.data('opt', { 
+					id: id, 
+					ps: ps,
+					hold: hold, 
+					openback: openback,
+					closeback: closeback,
+					dropOffset: dropOffset
+				});
+			$pnl.attr('aria-hidden', true).attr('aria-labelledby', id).addClass(ps)
+				.data('opt', { 
+					id: id, 
+					ps: ps,
+					hold: hold, 
+					openback: openback,
+					closeback: closeback,
+					dropOffset: dropOffset
+				});
+			
+			//event
+			$btn.off('click.dp').on('click.dp', function(e){
+				action(this);
+			});
+			$(doc).find('.ui-drop-close').off('click.dp').on('click.dp', function(e){
+				var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
+
+				win[global].uiDropdownToggle({ id: pnl_opt.id });
+				$('#' + pnl_opt.id).focus();
+			})
+
+			//dropdown 영역 외에 클릭 시 
+			$(doc).off('click.dpb').on('click.dpb', function(e){
+				if (!!$('body').data('dropdownOpened')){
+					if ($(doc).find('.ui-drop-pnl').has(e.target).length < 1) {
+						win[global].uiDropdownHide();
+					}
+				}
+			});
+
+			function action(t) {
+				var $this = $(t),
+					btn_opt = $this.data('opt');
+
+				$this.data('sct', $(doc).scrollTop());
+				win[global].uiDropdownToggle({ 
+					id: btn_opt.id 
+				});
+			}
+		}
+	}
+	function createUiDropdownToggle(opt){
+		if (opt === undefined) {
+			return false;
+		}
+		
+		var id = opt.id,
+			$btn = $('#' + id),
+			$pnl = $('.ui-drop-pnl[data-id="'+ id +'"]'),
+			defaults = $btn.data('opt'),
+			opt = $.extend(true, {}, defaults, opt),
+			
+			ps = opt.ps,
+			openback = opt.openback,
+			closeback = opt.closeback,
+			hold = opt.hold,
+			state = opt.state,
+			dropOffset = opt.dropOffset,
+			btnExpanded =  $btn.attr('aria-expanded'),
+			is_modal = !!$btn.closest('.ui-modal').length,
+
+			btn_w = Math.ceil($btn.outerWidth()),
+			btn_h = Math.ceil($btn.outerHeight()),
+			btn_t = Math.ceil($btn.position().top) + parseInt($btn.css('margin-top')),
+			btn_l = Math.ceil($btn.position().left) + parseInt($btn.css('margin-left')),
+			pnl_w = Math.ceil($pnl.outerWidth()),
+			pnl_h = Math.ceil($pnl.outerHeight());
+
+		//dropOffset: ture 이거나 modal안의 dropdown 일때 position -> offset 으로 위치 값 변경
+		if (dropOffset || is_modal) {
+			btn_t = Math.ceil($btn.offset().top);
+			btn_l = Math.ceil($btn.offset().left);
+			is_modal ? btn_t = btn_t - $(win).scrollTop(): '';
+		}
+
+		//test 
+		!!$btn.attr('data-ps') ? ps = $btn.attr('data-ps') : '';
+		
+		if (state === 'open') {
+			btnExpanded = 'false';
+		} else if (state === 'close') {
+			btnExpanded = 'true';
+		}
+
+		btnExpanded === 'false' ? pnlShow(): pnlHide();
+
+		console.log('state', state);
+
+		function pnlShow(){
+			var drop_inner = $btn.closest('.ui-drop-pnl').data('id');
+			
+			//dropdown in dropdown 인 경우
+			if (!!drop_inner) {
+				$('.ui-drop').not('#' + drop_inner).attr('aria-expanded', false);
+				$('.ui-drop-pnl').not('[data-id="' + drop_inner +'"]')
+						.attr('aria-hidden', true)
+						.attr('tabindex', -1)
+						.removeAttr('style');
+			} else {
+				win[global].uiDropdownHide();
+			}
+
+			$btn.attr('aria-expanded', true);
+			$pnl.attr('aria-hidden', false).attr('tabindex', 0).addClass('on');
+
+			//focus hold or sense
+			hold ?	
+				win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
+				win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
+
+			switch (ps) {
+				case 'BL': 
+					$pnl.css({ 
+						top: btn_t + btn_h, 
+						left: btn_l
+					}); 
+					break;
+				case 'BC': 
+					$pnl.css({ top: btn_t + btn_h, left: btn_l - ((pnl_w - btn_w) / 2) }); 
+					break;
+				case 'BR': 
+					$pnl.css({ top: btn_t + btn_h, left: btn_l - (pnl_w - btn_w) }); 
+					break;
+				case 'TL': 
+					$pnl.css({ top: btn_t - pnl_h, left: btn_l }); 
+					break;
+				case 'TC': 
+					$pnl.css({ top: btn_t - pnl_h, left: btn_l - ((pnl_w - btn_w) / 2) }); 
+					break;
+				case 'TR': 
+					$pnl.css({ top: btn_t - pnl_h, left: btn_l - (pnl_w - btn_w) }); 
+					break;
+				case 'RT': 
+					$pnl.css({ top: btn_t, left: btn_l + btn_w }); 
+					break;
+				case 'RM': 
+					$pnl.css({ top: btn_t - ((pnl_h - btn_h) / 2), left:  btn_l + btn_w  }); 
+					break;
+				case 'RB': 
+					$pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l + btn_w }); 
+					break;
+				case 'LT': 
+					$pnl.css({ top: btn_t, left: btn_l - pnl_w }); 
+					break;
+				case 'LM': 
+					$pnl.css({ top: btn_t - ((pnl_h - btn_h) / 2), left: btn_l - pnl_w  }); 
+					break;
+				case 'LB': 
+					$pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l - pnl_w }); 
+					break; 
+				case 'CM': 
+					$pnl.css({ top: '50%', left: '50%', marginTop: (pnl_h / 2 ) * -1, marginLeft: (pnl_w / 2 ) * -1 }); 
+					break;
+			}
+
+			setTimeout(function(){
+				$('body').data('dropdownOpened',true).addClass('dropdownOpened');
+				setTimeout(function(){
+					$pnl.focus();
+				},0);
+			},0);
+
+			!!openback ? openback() : '';			
+		}
+		function pnlHide(){
+			if ($pnl.closest('.ui-drop-pnl').length < 1) {
+				$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
+			}
+			$btn.attr('aria-expanded', false).focus();
+			$pnl.attr('aria-hidden', true).attr('tabindex', -1).removeClass('on');
+	
+			!!closeback ? closeback() : '';
+		}
+	}
+	function createUiDropdownHide(){
+		$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
+		$('.ui-drop').attr('aria-expanded', false);
+		$('.ui-drop-pnl[aria-hidden="false"]').each(function(){
+			var $pnl = $(this),
+				defaults = $pnl.data('opt'),
+				opt = $.extend(true, {}, defaults),
+				closeback = opt.closeback;
+			
+			$pnl.attr('aria-hidden', true).attr('tabindex', -1).removeClass('on');
+			!!closeback ? closeback() : '';
+		});	
+	}
+	
+
+	/* ------------------------
+	* name : object floating
+	* date : 2020-06-10
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiFloating: function (opt) {
+			return createUiFloating(opt);
+		}
+	});
+	win[global].uiFloating.option = {
+		ps: 'bottom',
+		add: false,
+		fix: true,
+		callback: false
+	};
+	function createUiFloating(opt) {
+		var opt = opt === undefined ? {} : opt,
+			opt = $.extend(true, {}, win[global].uiFloating.option, opt),
+			id = opt.id,
+			ps = opt.ps,
+			add = opt.add,
+			fix = opt.fix,
+			callback = opt.callback,
+			$id = $('#' + id),
+			$idwrap = $id.find('.ui-floating-wrap'),
+			$add = $('#' + add),
+			$addwrap = $add.find('.ui-floating-wrap').length ? $add.find('.ui-floating-wrap') : $add,
+			c = 'ui-fixed-' + ps,
+			timer;
+		
+		!!fix ? $id.addClass(c) : '';
+		
+		if ($id.length) {
+			clearTimeout(timer);
+			timer = setTimeout(act, 300);
+		}
+		
+		$(win).on('scroll.win', function(){
+			if ($id.length) {
+				act();
+				clearTimeout(timer);
+				timer = setTimeout(act, 500);
+			}
+		});
+		
+		function act(){
+			var tt = Math.ceil($id.offset().top),
+				th = Math.ceil($idwrap.outerHeight()),
+				st = $(win).scrollTop(),
+				wh = Math.ceil( win[global].browser.mobile ? window.screen.height : $(win).outerHeight() ),
+				dh = Math.ceil($(doc).outerHeight()),
+				lh = (!!add) ? $add.outerHeight() : 0 ,
+				lt = (!!add) ? dh - ($add.offset().top).toFixed(0) : 0,
+				lb = 0, 
+				_lb;
+			
+			$idwrap.removeAttr('style');
+			$id.data('fixbottom', th);
+
+			if (!!add) {
+				if ($add.data('fixbottom') === undefined) {
+					$add.data('fixbottom', th + $addwrap.outerHeight());
+				}
+			}
+
+			!!add ? lh = lh + Number($add.data('fixtop') === undefined ? 0 : $add.data('fixtop')) : '';
+			!!callback ? callback({ id:id, scrolltop:st, boundaryline: tt - lh }) : '';
+			$id.css('height', th);
+
+			// 상단으로 고정
+			if (ps === 'top') {
+				// 고정 > 흐름
+				if (fix === true) {
+					if (tt - lh <= st) { 
+						$id.removeClass(c).data('fixtop', false);
+						$idwrap.removeAttr('style');
+					} else { 
+						$id.addClass(c).data('fixtop', lh);
+						$idwrap.css('top', lh);
+					}
+				} 
+				// 흐름 > 고정	
+				else {
+					if (tt - lh <= st) { 
+						$id.addClass(c).data('fixtop', lh);
+						$idwrap.css('top', lh);
+					} else { 
+						$id.removeClass(c).data('fixtop', false);
+						$idwrap.removeAttr('style');
+					}
+				}
+			} 
+			// 하단으로 고정
+			else if (ps === 'bottom') {
+				if (!!add) { 
+					lb = th + Number($add.data('fixbottom'));
+					$id.data('fixbottom', lb);
+				}
+				_lb = (lb - th < 0) ? 0 : lb - th;
+				// 고정 > 흐름
+				if (fix === true) {
+					if (tt + th + _lb - wh <= st) { 
+						$id.removeClass(c);
+						$idwrap.removeAttr('style');
+					} else {
+						$id.addClass(c)
+						$idwrap.css('bottom', _lb);
+					}
+						
+				// 흐름 > 고정		
+				} else {
+					if (tt + th + _lb - wh <= st) {
+						$id.addClass(c);
+						$idwrap.css('bottom', _lb);
+					} else {
+						$id.removeClass(c);
+						$idwrap.removeAttr('style');
+					}
+				}
+			}
+		}
+	}
+
+
+	/* ------------------------
+	* name : object floating Range
+	* date : 2020-06-10
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiFloatingRange: function (opt) {
+			return createUiFloatingRange(opt);
+		}
+	});
+	win[global].uiFloatingRange.option = {
+		margin: 0
+	};
+	function createUiFloatingRange(opt) {
+		var opt = opt === undefined ? {} : opt,
+			opt = $.extend(true, {}, win[global].uiFloatingRange.option, opt),
+			id = opt.id,
+			mg = opt.margin,
+			$range = $('#' + id),
+			$item = $range.find('.ui-floating-range-item'),
+			item_h = $item.outerHeight(),
+			range_t = $range.offset().top,
+			range_h = $range.outerHeight(),
+			win_scrt = $(win).scrollTop(),
+			itemTop = $item.position().top;
+						
+		$(win).on('scroll.win', function(){
+			act();
+		});
+		
+		function act(){
+			range_t = $range.offset().top;
+			range_h = $range.outerHeight();
+			win_scrt = $(win).scrollTop();
+			
+			if (range_t <= (win_scrt - itemTop + mg)) {
+				if ((range_t + range_h) - item_h < (win_scrt + mg)) {
+					$item.css('top', range_h - item_h - itemTop);
+				} else {
+					$item.css('top', (win_scrt - itemTop + mg) - range_t );
+				}
+			} else {
+				$item.css('top', 0);
+			}
+		}
+	}
+
+
+
+	/* ------------------------
+	* name : modal
+	* date : 2020-06-10
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+        uiModalOpen: function (opt) {
+            return createUiModalOpen(opt);
+        },
+        uiModalClose: function (opt) {
+            return createUiModalClose(opt);
+        }
+    });
+	win[global].uiModalOpen.option = {
+        wrap: 'baseWrap',
+        full: false,
+        ps: 'center',
+		remove: false,
+        w: false,
+		h: false,
+		editmode: false,
+    }
+    function createUiModalOpen(v) {
+        var opt = $.extend(true, {}, win[global].uiModalOpen.option, v),
+            wrap = opt.wrap,
+            id = opt.id,
+            src = opt.src,
+            full = opt.full,
+            ps = opt.ps,
+			remove = opt.remove,
+            w = opt.width,
+			h = opt.height,
+			editmode = opt.editmode,
+			scr_t = $(win).scrollTop(),
+            endfocus = opt.endfocus === undefined ? document.activeElement : '#' + opt.endfocus,
+            callback = opt.callback === undefined ? false : opt.callback,
+			closeCallback = opt.closeCallback === undefined ? false : opt.closeCallback,
+			timer;
+
+        if (!!src && !$('#' + opt.id).length) {
+            $plugins.uiAjax({
+                id: wrap,
+                url: src,
+                add: true,
+                callback: function(){
+                    act();
+                }
+            });
+        } else {
+            act();
+        }
+
+        function act(){
+            var $modal = $('#' + id);
+
+            $('.ui-modal-simple').removeClass('current');
+			$("html, body").addClass('not-scroll');
+			$('#baseMain').css('margin-top', '-' + scr_t + 'px');
+
+			try {
+				var p_h = $(parent.window).outerHeight(true);
+				!win[global].breakpoint ? $plugins.common.menuShowHide(false) : '';
+				parent.$('#uiBrochureIframe').css('height', p_h + 'px');
+			} catch(err) { }
+			
+			$modal.attr('n', $('.ui-modal-simple.open').length).addClass('n' + $('.ui-modal-simple.open').length + ' current').data('scrolltop', scr_t).data('closecallback', closeCallback);
+            !!w ? $modal.find('.ui-modal-cont').css('width', w) : '';
+			!!h ? $modal.find('.ui-modal-cont').css('height', h) : '';
+            !!full ? $modal.addClass('ready type-full') : $modal.addClass('ready type-normal');
+            $('html').addClass('is-modal');
+			
+			editmode ? ps = 'edit' : '';
+
+            switch (ps) {
+                case 'center' :
+                    $modal.addClass('ps-center');
+                    break;
+                case 'top' :
+                    $modal.addClass('ps-top');
+                    break;
+                case 'bottom' :
+                    $modal.addClass('ps-bottom');
+                    break;
+				case 'bottom' :
+                    $modal.addClass('ps-edit');
+                    break;
+            }
+
+            clearTimeout(timer);
+            timer = setTimeout(function(){
+
+                $modal.addClass('open').data('endfocus', endfocus);
+                callback ? callback(opt) : '';
+
+				$('html').off('click.uimodaldim').on('click.uimodaldim', function(e){
+					if(!$(e.target).closest('.ui-modal-wrap').length) {
+						var openN = [];
+						$('.ui-modal-simple.open').each(function(){
+							$(this).attr('n') !== undefined ?
+								openN.push($(this).attr('n')) : '';
+						});
+
+						$plugins.uiModalClose({ 
+							id: $('.ui-modal-simple.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id'), 
+							remove: remove,
+							callback: closeCallback
+						});
+					}
+				});
+
+				// if (!$modal.find('.ui-modal-close').length) {
+				// 	// $modal.append('<button type="button" class="ui-modal-close type-trans"><span class="hidden">modal close</span></button>');
+				// 	// $('.ui-modal-close').off('click.uimodal').on('click.uimodal', function(){
+				// 	// 	$plugins.uiModalClose({ 
+				// 	// 		id: $(this).closest('.ui-modal-simple').attr('id'), 
+				// 	// 		remove: remove,
+				// 	// 		callback: closeCallback
+				// 	// 	});
+				// 	// });
+				// }
+
+                // if ($modal.find('.ui-modal-wrap').outerHeight() > $(win).outerHeight(true) - 20) {
+				// 	if (!full) {
+				// 		$modal.find('.ui-modal-cont').css('height', '100%');
+				// 	} else {
+				// 		$modal.find('.ui-modal-wrap').css('height', 'calc(100% - 60px)');
+				// 	}
+                // } 
+
+				$plugins.uiScrollBarReset();
+
+				if( $(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight() && $plugins.breakpoint) {
+					$modal.addClass('is-over');
+				} else {
+					$modal.removeClass('is-over');
+				}
+
+				if ($('#' + id ).hasClass('type-copybook')) {
+					$plugins.uiScrollBarCancel();
+				}
+
+			},150);
+
+			$(doc).find('.btn-bar').off('click.updownc').on('click.updownc', function(e){
+				var $modal = $('#' + $(this).closest('.ui-modal-simple').attr('id')),
+					$wr = $modal.find('.ui-modal-wrap');
+  
+				if (!$modal.find('.ui-modal-wrap.full').length) {
+					$wr.addClass('full');
+				} else {
+					$wr.removeClass('full');
+				}
+				win[global].uiScrollBarReset();
+			});
+
+			$(doc).find('.ui-modalclose').off('click.close').on('click.close', function(e){
+				var $modal = $('#' + $(this).closest('.ui-modal-simple').attr('id'));
+				// 	$wr = $modal.find('.ui-modal-wrap');
+
+				$plugins.uiModalClose({ 
+					id: $(this).closest('.ui-modal-simple').attr('id'), 
+					remove: remove,
+					callback: closeCallback
+				});
+				
+			});
+
+			if ($plugins.browser.mobile) {
+				$(doc).find('.ui-modal-head').off('mousedown.updown touchstart.updown').on('mousedown.updown touchstart.updown', function(e){
+					//e.preventDefault();
+					var $this = $(this),
+						y, y_s, moving = false,
+						wrap_h2 = $this.closest('.ui-modal-wrap').outerHeight();
+
+					(e.touches !== undefined) ? y_s =  e.touches[0].pageY : '';
+					if (e.touches === undefined) {
+						(e.pageY !== undefined) ? y_s = e.pageY : '';
+						(e.pageY === undefined) ? y_s = e.clientY : '';
+					}
+
+					$(doc).find('.ui-modal-head').off('mousemove.updown touchmove.updown').on('mousemove.updown touchmove.updown', function(e){
+						moving = true;
+
+						(e.touches !== undefined) ? y =  e.touches[0].pageY : '';
+						if (e.touches === undefined) {
+							(e.pageY !== undefined) ? y = e.pageY : '';
+							(e.pageY === undefined) ? y = e.clientY : '';
+						}
+
+						var m_y = y - y_s; 
+
+						$(this).closest('.ui-modal-wrap').css('height', wrap_h2 - m_y + 'px');
+					}).off('mouseup.sliderend touchcancel.updown touchend.updown').on('mouseup.sliderend touchcancel.updown touchend.updown', function(e){
+						if (moving) {
+							if (y_s > y) {
+								$modal.find('.ui-modal-wrap').removeAttr('style').addClass('full');
+							} else {
+								$modal.find('.ui-modal-wrap').removeAttr('style').removeClass('full');
+								
+								win[global].uiModalClose({
+									id : $this.closest('.ui-modal-simple').attr('id'),
+									remove: remove,
+									callback: closeCallback
+								});
+							} 
+						}  
+						$(doc).find('.ui-modal-head').off('mousemove.updown mouseup.sliderend touchmove.updown');
+					});
+				});
+			}
+        }
+    }
+    win[global].uiModalClose.option = {
+        remove: false
+    }
+    function createUiModalClose(v) {
+        var opt = $.extend(true, {}, win[global].uiModalClose.option, v),
+            id = opt.id,
+            remove = opt.remove,
+            $modal = $('#' + id),
+            endfocus = opt.endfocus === undefined ? $modal.data('endfocus') : '#' + opt.endfocus,
+            callback = opt.callback === undefined ? false : opt.callback;
+        
+        var timer;
+
+        $modal.removeClass('open');
+		if (!$('.ui-modal-simple.open').length) {
+			$('html').off('click.uimodaldim');
+			$('html').removeClass('is-modal');
+		}
+        $('.ui-modal-simple.open.n' + ($('.ui-modal-simple.open').length - 1)).addClass('current');
+		
+		$("html, body").removeClass('not-scroll');
+		$('#baseMain').removeAttr('style');
+
+
+		//!$plugins.common.iframeReSize.sub ? $plugins.common.iframeFull(false) : '';
+		
+		win[global].uiScroll({
+			value: Number($modal.data('scrolltop'))
+		});
+		
+        clearTimeout(timer);
+        timer = setTimeout(function(){
+            $modal.removeClass('ready ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
+			$modal.removeAttr('n');
+            //$('body').css('overflow', 'initial');
+			
+            callback ? callback(opt) : '';
+            remove ? $modal.remove() : '';
+            !!endfocus ? endfocus.focus() : '';
+			!win[global].breakpoint ? $plugins.common.menuShowHide(true) : '';
+			if (id === 'modalVideo') {
+				if (!!$('#modalVideo video').attr('id')) {
+                    var myPlayer = bc($('#modalVideo video').attr('id'));
+                    myPlayer.pause();
+                }
+			}
+			// if (!$plugins.parentHeadHide) {
+			// 	$plugins.common.parentScrollTopInfo(false);
+			// }
+        },150);
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 	/* ------------------------------------------------------------------------
 	* name : date picker
@@ -3118,361 +3819,7 @@ if (!Object.keys){
 
 
 
-	/* ------------------------------------------------------------------------
-	* name : dropdown
-	* Ver. : v1.0.0
-	* date : 2018-12-21
-	* EXEC statement
-	* - $plugins.uidropdown({ option });
-	* - $plugins.uiDropdownToggle({ option });
-	* - $plugins.uiDropdownHide();
-	------------------------------------------------------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiDropdown: function (opt) {
-			return createUiDropdown(opt);
-		},
-		uiDropdownToggle: function (opt) {
-			return createUiDropdownToggle(opt);
-		},
-		uiDropdownHide: function () {
-			return createUiDropdownHide();
-		},
-	});
-	win[global].uiDropdown.option = {
-		eff: 'base',
-		ps: 'bl',
-		hold: true,
-		auto: false,
-		back_close: true,
-		openback:false,
-		closeback:false,
-		dim : false,
-		_offset: false,
-		_close: true,
-		_expanded: false,
-		eff_ps: 10,
-		eff_speed: 100
-	};
-	function createUiDropdown(opt){
-		if (opt === undefined || !$('#' + opt.id).length) {
-			return false;
-		}
 
-		var opt = $.extend(true, {}, win[global].uiDropdown.option, opt),
-			id = opt.id,
-			eff = opt.eff,
-			auto = opt.auto,
-			ps = opt.ps,
-			hold = opt.hold,
-			back_close = opt.back_close,
-			dim = opt.dim,
-			openback = opt.openback,
-			closeback = opt.closeback,
-			_offset = opt._offset,
-			_close = opt._close,
-			_expanded = opt._expanded,
-			eff_ps = opt.eff_ps,
-			eff_speed = opt.eff_speed,
-			$btn = $('#' + id),
-			$pnl = $('[data-id="'+ id +'"]'); 
-				
-		//set up
-
-		if (auto) {
-			if (Math.abs($(win).scrollTop() - $btn.offset().top - $btn.outerHeight()) < Math.abs($(win).scrollTop() +  $(win).outerHeight() / 1.5)) {
-				ps = 'bc';
-				eff = 'st';
-			} else {
-				ps = 'tc';
-				eff = 'sb';
-			}
-		}
-		$btn.attr('aria-expanded', false)
-			.data('opt', { 
-				id: id, 
-				eff: eff, 
-				ps: ps,
-				hold: hold, 
-				auto: auto,
-				dim: dim,
-				openback: openback,
-				closeback: closeback,
-				_offset: _offset, 
-				_close :_close, 
-				_expanded: _expanded,
-				eff_ps: eff_ps,
-				eff_speed: eff_speed
-			});
-		$pnl.attr('aria-hidden', true).attr('aria-labelledby', id).addClass(ps)
-			.data('opt', { 
-				id: id, 
-				eff: eff, 
-				ps: ps,
-				hold: hold, 
-				auto: auto,
-				dim : dim,
-				openback: openback,
-				closeback: closeback,
-				_offset: _offset, 
-				_close: _close, 
-				_expanded: _expanded,
-				eff_ps: eff_ps,
-				eff_speed: eff_speed
-			});
-		
-		//event
-		$btn.off('click.dropdown').on('click.dropdown', function(e){
-			console.log(111111111111)
-			action(this);
-		});
-		$(doc)
-		.off('click.dropdownclose').on('click.dropdownclose', '.ui-drop-close', function(e){
-			var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
-
-			pnl_opt._expanded = true;
-			win[global].uiDropdownToggle({ id: pnl_opt.id });
-			$('#' + pnl_opt.id).focus();
-		})
-		.off('click.bd').on('click.bd', function(e){
-			//dropdown 영역 외에 클릭 시 판단
-			if (!!$('body').data('dropdownOpened')){
-				console.log($(doc).find('.ui-drop-pnl').has(e.target).length, )
-				if ($(doc).find('.ui-drop-pnl').has(e.target).length < 1) {
-					win[global].uiDropdownHide();
-				}
-			}
-		});
-
-		!back_close ? $(doc).off('click.bd') : '';
-
-		function action(t) {
-			var $this = $(t),
-				btn_opt = $this.data('opt');
-
-			$this.data('sct', $(doc).scrollTop());
-			win[global].uiDropdownToggle({ id: btn_opt.id });
-		}
-	}
-	function createUiDropdownToggle(opt){
-		if (opt === undefined) {
-			return false;
-		}
-		
-		var id = opt.id,
-			$btn = $('#' + id),
-			$pnl = $('.ui-drop-pnl[data-id="'+ id +'"]'),
-			defaults = $btn.data('opt'),
-			opt = $.extend(true, {}, defaults, opt),
-			eff = opt.eff,
-			auto = opt.auto,
-			ps = opt.ps,
-			dim = opt.dim,
-			openback = opt.openback,
-			closeback = opt.closeback,
-			hold = opt.hold,
-			_offset = opt._offset,
-			_close = opt._close,
-			_expanded =  $btn.attr('aria-expanded'),
-			eff_ps = opt.eff_ps, 
-			eff_speed = opt.eff_speed,
-			is_modal = !!$btn.closest('.ui-modal').length,
-			btn_w = Math.ceil($btn.outerWidth()),
-			btn_h = Math.ceil($btn.outerHeight()),
-			btn_t = Math.ceil($btn.position().top),
-			btn_l = Math.ceil($btn.position().left),
-			pnl_w = Math.ceil($pnl.outerWidth()),
-			pnl_h = Math.ceil($pnl.outerHeight());
-
-		//_offset: ture 이거나 modal안의 dropdown 일때 position -> offset 으로 위치 값 변경
-		if (_offset || is_modal) {
-			btn_t = Math.ceil($btn.offset().top);
-			btn_l = Math.ceil($btn.offset().left);
-			is_modal ? btn_t = btn_t - $(win).scrollTop(): '';
-		}
-
-		//test 
-		!!$btn.attr('data-ps') ? ps = $btn.attr('data-ps') : '';
-
-		//위치 자동 설정
-		if (auto) {
-			if (Math.abs($(win).scrollTop() - $btn.offset().top - $btn.outerHeight()) < Math.abs($(win).scrollTop() +  $(win).outerHeight() / 1.5)) {
-				ps = 'bc';
-				eff = 'st';
-			} else {
-				ps = 'tc';
-				eff = 'sb';
-			}
-		}
-		
-		_expanded === 'false' ? pnlShow(): pnlHide();
-
-		function pnlShow(){
-			var org_t, 
-				org_l,
-				drop_inner = $btn.closest('.ui-drop-pnl').data('id');
-			
-			//다른 dropdown 닫기가 활성화일때
-			if (_close) {
-				//dropdown in dropdown 인 경우
-				if (!!drop_inner) {
-					$('.ui-drop').not('#' + drop_inner).attr('aria-expanded', false);
-					$('.ui-drop-pnl').not('[data-id="' + drop_inner +'"]').attr('aria-hidden', true).attr('tabindex', -1).removeAttr('style');
-				} else {
-					win[global].uiDropdownHide();
-				}
-			}
-
-			$btn.attr('aria-expanded', true);
-			$pnl.attr('aria-hidden', false).attr('tabindex', 0).addClass('on');
-
-			//focus hold or sense
-			hold ?	
-				win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
-				win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
-
-			switch (ps) {
-				case 'bl': $pnl.css({ top: btn_t + btn_h, left: btn_l }); 
-					break;
-				case 'bc': $pnl.css({ top: btn_t + btn_h, left: btn_l - ((pnl_w - btn_w) / 2) }); 
-					break;
-				case 'br': $pnl.css({ top: btn_t + btn_h, left: btn_l - (pnl_w - btn_w) }); 
-					break;
-				case 'tl': $pnl.css({ top: btn_t - pnl_h, left: btn_l }); 
-					break;
-				case 'tc': $pnl.css({ top: btn_t - pnl_h, left: btn_l - ((pnl_w - btn_w) / 2) }); 
-					break;
-				case 'tr': $pnl.css({ top: btn_t - pnl_h, left: btn_l - (pnl_w - btn_w) }); 
-					break;
-				case 'rt': $pnl.css({ top: btn_t, left: btn_l + btn_w }); 
-					break;
-				case 'rm': $pnl.css({ top: btn_t - ((pnl_h - btn_h) / 2), left:  btn_l + btn_w  }); 
-					break;
-				case 'rb': $pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l + btn_w }); 
-					break;
-				case 'lt': $pnl.css({ top: btn_t, left: btn_l - pnl_w }); 
-					break;
-				case 'lm': $pnl.css({ top: btn_t - ((pnl_h - btn_h) / 2), left: btn_l - pnl_w  }); 
-					break;
-				case 'lb': $pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l - pnl_w }); 
-					break; 
-				case 'center': $pnl.css({ top: '50%', left: '50%', marginTop: (pnl_h / 2 ) * -1, marginLeft: (pnl_w / 2 ) * -1 }); 
-					break;
-			}
-			
-			org_t = parseInt($pnl.css('top')),
-			org_l = parseInt($pnl.css('left'));
-			
-			switch (eff) {
-				case 'base': $pnl.stop().show(0); 
-					break;
-				case 'fade': $pnl.stop().fadeIn(eff_speed); 
-					break;
-				case 'st': $pnl.css({ top: org_t - eff_ps, opacity: 0, display: 'block' }).stop().animate({ top: org_t, opacity: 1 }, eff_speed); 
-					break;
-				case 'sb': $pnl.css({ top: org_t + eff_ps, opacity: 0, display: 'block' }).stop().animate({ top: org_t, opacity: 1 }, eff_speed); 
-					break;
-				case 'sl': $pnl.css({ left: org_l + eff_ps, opacity: 0, display: 'block' }).stop().animate({ left: org_l, opacity: 1 }, eff_speed); 
-					break;
-				case 'sr': $pnl.css({ left: org_l - eff_ps, opacity: 0, display: 'block' }).stop().animate({ left: org_l, opacity: 1 }, eff_speed); 
-					break;
-			}
-
-			setTimeout(function(){
-				$('body').data('dropdownOpened',true).addClass('dropdownOpened');
-			},0);
-
-			!!openback ? openback() : '';
-			!!dim ? dimShow($pnl) : '';
-			
-		}
-		function pnlHide(){
-			var org_t = parseInt($pnl.css('top')),
-				org_l = parseInt($pnl.css('left'));
-			
-			if ($pnl.closest('.ui-drop-box').length < 1) {
-				$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
-			}
-			$btn.attr('aria-expanded', false).focus();
-			$pnl.attr('aria-hidden', true).attr('tabindex', -1).removeClass('on');
-			
-			switch (eff) {
-				case 'base': $pnl.stop().hide(0, pnlHideEnd); 
-					break;
-				case 'fade': $pnl.stop().fadeOut(eff_speed, pnlHideEnd); 
-					break;
-				case 'st': $pnl.stop().animate({ top: org_t - eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
-					break;
-				case 'sb': $pnl.stop().animate({ top: org_t + eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
-					break;
-				case 'sl': $pnl.stop().animate({ left: org_l + eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
-					break;
-				case 'sr': $pnl.stop().animate({ left: org_l - eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
-					break;
-			}
-
-			function pnlHideEnd(){
-				$pnl.hide().removeAttr('style'); 
-			}
-
-			!!closeback ? closeback() : '';
-			!!dim ? dimHide() : '';
-		}
-
-		
-	}
-	function dimShow(t){
-		$(t).after('<div class="ui-drop-dim"></div>');
-		$('.ui-drop-dim').stop().animate({
-			opacity:0.7
-		})
-	}
-	function dimHide(){
-		$('.ui-drop-dim').stop().animate({
-			opacity:0
-		},200, function(){
-			$(this).remove();
-		});
-	}
-	function createUiDropdownHide(){
-		$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
-		$('.ui-drop').attr('aria-expanded', false);
-		
-		$('.ui-drop-pnl[aria-hidden="false"]').each(function(){
-			var $pnl = $(this),
-				defaults = $pnl.data('opt'),
-				opt = $.extend(true, {}, defaults),
-				eff = opt.eff,
-				eff_ps = opt.eff_ps,
-				closeback = opt.closeback,
-				eff_speed = opt.eff_speed,
-				org_t = parseInt($pnl.css('top')),
-				org_l = parseInt($pnl.css('left'));
-			
-			switch (eff) {
-				case 'base': $pnl.stop().hide(0, pnlHideEnd); 
-					break;
-				case 'fade': $pnl.stop().fadeOut(eff_speed, pnlHideEnd); 
-					break;
-				case 'st': $pnl.stop().animate({ top: org_t - eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
-					break;
-				case 'sb': $pnl.stop().animate({ top: org_t + eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
-					break;
-				case 'sl': $pnl.stop().animate({ left: org_l + eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
-					break;
-				case 'sr': $pnl.stop().animate({ left: org_l - eff_ps, opacity: 0 }, eff_speed, pnlHideEnd); 
-					break;
-			}
-
-			function pnlHideEnd(){
-				$pnl.hide().removeAttr('style'); 
-			}
-			$pnl.attr('aria-hidden', true).attr('tabindex', -1);
-			!!closeback ? closeback() : '';
-		});	
-
-		
-		dimHide();
-	}
 
 
 
@@ -3594,187 +3941,7 @@ if (!Object.keys){
 	}
 
 
-	 /* ------------------------------------------------------------------------
-	* name : object floating
-	* Ver. : v1.0.0
-	* date : 2018-12-21
-	* EXEC statement
-	* - $plugins.uiFloating({ option });
-	------------------------------------------------------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiFloating: function (opt) {
-			return createUiFloating(opt);
-		}
-	});
-	win[global].uiFloating.option = {
-		ps: 'bottom',
-		add: false,
-		fix: true,
-		callback: false
-	};
-	function createUiFloating(opt) {
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiFloating.option, opt),
-			id = opt.id,
-			ps = opt.ps,
-			add = opt.add,
-			fix = opt.fix,
-			callback = opt.callback,
-			$id = $('#' + id),
-			$idwrap = $id.find('.ui-floating-wrap'),
-			$add = $('#' + add),
-			$addwrap = $add.find('.ui-floating-wrap').length ? $add.find('.ui-floating-wrap') : $add,
-			c = 'ui-fixed-' + ps,
-			timer;
-		
-		!!fix ? $id.addClass(c) : '';
-		
-		if ($id.length) {
-			clearTimeout(timer);
-			timer = setTimeout(act, 300);
-		}
-		
-		$(win).off('scroll.'+ id ).on('scroll.'+ id, function(){
-			if ($id.length) {
-				act();
-				clearTimeout(timer);
-				timer = setTimeout(act, 500);
-			}
-		});
-		
-		function act(){
-			var tt = Math.ceil($id.offset().top),
-				th = Math.ceil($idwrap.outerHeight()),
-				st = $(win).scrollTop(),
-				wh = Math.ceil( win[global].browser.mobile ? window.screen.height : $(win).outerHeight() ),
-				dh = Math.ceil($(doc).outerHeight()),
-				lh = (!!add) ? $add.outerHeight() : 0 ,
-				lt = (!!add) ? dh - ($add.offset().top).toFixed(0) : 0,
-				lb = 0, 
-				_lb;
-			
-			$idwrap.removeAttr('style');
-			$id.data('fixbottom', th);
-
-			if (!!add) {
-				if ($add.data('fixbottom') === undefined) {
-					$add.data('fixbottom', th + $addwrap.outerHeight());
-				}
-			}
-
-			!!add ? lh = lh + Number($add.data('fixtop') === undefined ? 0 : $add.data('fixtop')) : '';
-			!!callback ? callback({ id:id, scrolltop:st, boundaryline: tt - lh }) : '';
-			$id.css('height', th);
-
-			// 상단으로 고정
-			if (ps === 'top') {
-				// 고정 > 흐름
-				if (fix === true) {
-					if (tt - lh <= st) { 
-						$id.removeClass(c).data('fixtop', false);
-						$idwrap.removeAttr('style');
-					} else { 
-						$id.addClass(c).data('fixtop', lh);
-						$idwrap.css('top', lh);
-					}
-				} 
-				// 흐름 > 고정	
-				else {
-					if (tt - lh <= st) { 
-						$id.addClass(c).data('fixtop', lh);
-						$idwrap.css('top', lh);
-					} else { 
-						$id.removeClass(c).data('fixtop', false);
-						$idwrap.removeAttr('style');
-					}
-				}
-			} 
-			// 하단으로 고정
-			else if (ps === 'bottom') {
-				if (!!add) { 
-					lb = th + Number($add.data('fixbottom'));
-					$id.data('fixbottom', lb);
-				}
-				_lb = (lb - th < 0) ? 0 : lb - th;
-				// 고정 > 흐름
-				if (fix === true) {
-					if (tt + th + _lb - wh <= st) { 
-						$id.removeClass(c);
-						$idwrap.removeAttr('style');
-					} else {
-						$id.addClass(c)
-						$idwrap.css('bottom', _lb);
-					}
-						
-				// 흐름 > 고정		
-				} else {
-					if (tt + th + _lb - wh <= st) {
-						$id.addClass(c);
-						$idwrap.css('bottom', _lb);
-					} else {
-						$id.removeClass(c);
-						$idwrap.removeAttr('style');
-					}
-				}
-			}
-		}
-	}
-
-
-	/* ------------------------------------------------------------------------
-	* name : object floating Range
-	* Ver. : v1.0.0
-	* date : 2018-12-21
-	* EXEC statement
-	* - $plugins.uiFloatingRange({ option });
-	------------------------------------------------------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiFloatingRange: function (opt) {
-			return createUiFloatingRange(opt);
-		}
-	});
-	win[global].uiFloatingRange.option = {
-		add: false,
-		margin: 0
-	};
-	function createUiFloatingRange(opt) {
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiFloatingRange.option, opt),
-			id = opt.id,
-			add = opt.add,
-			mg = opt.margin,
-			$range = $('#' + id),
-			$item = $range.find('.ui-floating-range-item'),
-			$add = add ? $('#' + add) : null,
-			item_h = $item.outerHeight(),
-			range_t = $range.offset().top,
-			range_h = $range.outerHeight(),
-			win_scrt = $(win).scrollTop(),
-			add_h = add ? $add.outerHeight() : 0,
-			add_t = add ? $add.position().top : 0;
-						
-		$(win).off('scroll.'+ id ).on('scroll.'+ id, function(){
-			act();
-		});
-		
-		function act(){
-			range_t = $range.offset().top;
-			range_h = $range.outerHeight();
-			win_scrt = $(win).scrollTop();
-			add_h = $add === null ? 0 : $add.outerHeight();
-			add_t = $add === null ? 0 : add.position().top;
-			
-			if (range_t <= (win_scrt + add_h + add_t + mg)) {
-				if ((range_t + range_h) - item_h < (win_scrt + add_h + add_t + mg)) {
-					$item.css('top', range_h - item_h );
-				} else {
-					$item.css('top', (win_scrt + add_h + add_t + mg) - range_t );
-				}
-			} else {
-				$item.css('top', 0);
-			}
-		}
-	}
+	
 
 
 
@@ -3838,264 +4005,7 @@ if (!Object.keys){
 	}
 
 
-	 win[global] = win[global].uiNameSpace(namespace, {
-        uiModalOpen: function (opt) {
-            return createUiModalOpen(opt);
-        },
-        uiModalClose: function (opt) {
-            return createUiModalClose(opt);
-        }
-    });
-	win[global].uiModalOpen.option = {
-        wrap: 'baseWrap',
-        full: false,
-        ps: 'center',
-		remove: false,
-        w: false,
-		h: false,
-		editmode: false,
-    }
-    function createUiModalOpen(v) {
-        var opt = $.extend(true, {}, win[global].uiModalOpen.option, v),
-            wrap = opt.wrap,
-            id = opt.id,
-            src = opt.src,
-            full = opt.full,
-            ps = opt.ps,
-			remove = opt.remove,
-            w = opt.width,
-			h = opt.height,
-			editmode = opt.editmode,
-			scr_t = $(win).scrollTop(),
-            endfocus = opt.endfocus === undefined ? document.activeElement : '#' + opt.endfocus,
-            callback = opt.callback === undefined ? false : opt.callback,
-			closeCallback = opt.closeCallback === undefined ? false : opt.closeCallback,
-			timer;
-
-        if (!!src && !$('#' + opt.id).length) {
-            $plugins.uiAjax({
-                id: wrap,
-                url: src,
-                add: true,
-                callback: function(){
-                    act();
-                }
-            });
-        } else {
-            act();
-        }
-
-        function act(){
-            var $modal = $('#' + id);
-
-            $('.ui-modal-simple').removeClass('current');
-			$("html, body").addClass('not-scroll');
-			$('#baseMain').css('margin-top', '-' + scr_t + 'px');
-
-			try {
-				var p_h = $(parent.window).outerHeight(true);
-				!win[global].breakpoint ? $plugins.common.menuShowHide(false) : '';
-				parent.$('#uiBrochureIframe').css('height', p_h + 'px');
-			} catch(err) { }
-			
-			$modal.attr('n', $('.ui-modal-simple.open').length).addClass('n' + $('.ui-modal-simple.open').length + ' current').data('scrolltop', scr_t).data('closecallback', closeCallback);
-            !!w ? $modal.find('.ui-modal-cont').css('width', w) : '';
-			!!h ? $modal.find('.ui-modal-cont').css('height', h) : '';
-            !!full ? $modal.addClass('ready type-full') : $modal.addClass('ready type-normal');
-            $('html').addClass('is-modal');
-			
-			editmode ? ps = 'edit' : '';
-
-            switch (ps) {
-                case 'center' :
-                    $modal.addClass('ps-center');
-                    break;
-                case 'top' :
-                    $modal.addClass('ps-top');
-                    break;
-                case 'bottom' :
-                    $modal.addClass('ps-bottom');
-                    break;
-				case 'bottom' :
-                    $modal.addClass('ps-edit');
-                    break;
-            }
-
-            clearTimeout(timer);
-            timer = setTimeout(function(){
-
-                $modal.addClass('open').data('endfocus', endfocus);
-                callback ? callback(opt) : '';
-
-				$('html').off('click.uimodaldim').on('click.uimodaldim', function(e){
-					if(!$(e.target).closest('.ui-modal-wrap').length) {
-						var openN = [];
-						$('.ui-modal-simple.open').each(function(){
-							$(this).attr('n') !== undefined ?
-								openN.push($(this).attr('n')) : '';
-						});
-
-						$plugins.uiModalClose({ 
-							id: $('.ui-modal-simple.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id'), 
-							remove: remove,
-							callback: closeCallback
-						});
-					}
-				});
-
-				// if (!$modal.find('.ui-modal-close').length) {
-				// 	// $modal.append('<button type="button" class="ui-modal-close type-trans"><span class="hidden">modal close</span></button>');
-				// 	// $('.ui-modal-close').off('click.uimodal').on('click.uimodal', function(){
-				// 	// 	$plugins.uiModalClose({ 
-				// 	// 		id: $(this).closest('.ui-modal-simple').attr('id'), 
-				// 	// 		remove: remove,
-				// 	// 		callback: closeCallback
-				// 	// 	});
-				// 	// });
-				// }
-
-                // if ($modal.find('.ui-modal-wrap').outerHeight() > $(win).outerHeight(true) - 20) {
-				// 	if (!full) {
-				// 		$modal.find('.ui-modal-cont').css('height', '100%');
-				// 	} else {
-				// 		$modal.find('.ui-modal-wrap').css('height', 'calc(100% - 60px)');
-				// 	}
-                // } 
-
-				$plugins.uiScrollBarReset();
-
-				if( $(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight() && $plugins.breakpoint) {
-					$modal.addClass('is-over');
-				} else {
-					$modal.removeClass('is-over');
-				}
-
-				if ($('#' + id ).hasClass('type-copybook')) {
-					$plugins.uiScrollBarCancel();
-				}
-
-			},150);
-
-			$(doc).find('.btn-bar').off('click.updownc').on('click.updownc', function(e){
-				var $modal = $('#' + $(this).closest('.ui-modal-simple').attr('id')),
-					$wr = $modal.find('.ui-modal-wrap');
-  
-				if (!$modal.find('.ui-modal-wrap.full').length) {
-					$wr.addClass('full');
-				} else {
-					$wr.removeClass('full');
-				}
-				win[global].uiScrollBarReset();
-			});
-
-			$(doc).find('.ui-modalclose').off('click.close').on('click.close', function(e){
-				var $modal = $('#' + $(this).closest('.ui-modal-simple').attr('id'));
-				// 	$wr = $modal.find('.ui-modal-wrap');
-
-				$plugins.uiModalClose({ 
-					id: $(this).closest('.ui-modal-simple').attr('id'), 
-					remove: remove,
-					callback: closeCallback
-				});
-				
-			});
-
-			if ($plugins.browser.mobile) {
-				$(doc).find('.ui-modal-head').off('mousedown.updown touchstart.updown').on('mousedown.updown touchstart.updown', function(e){
-					//e.preventDefault();
-					var $this = $(this),
-						y, y_s, moving = false,
-						wrap_h2 = $this.closest('.ui-modal-wrap').outerHeight();
-
-					(e.touches !== undefined) ? y_s =  e.touches[0].pageY : '';
-					if (e.touches === undefined) {
-						(e.pageY !== undefined) ? y_s = e.pageY : '';
-						(e.pageY === undefined) ? y_s = e.clientY : '';
-					}
-
-					$(doc).find('.ui-modal-head').off('mousemove.updown touchmove.updown').on('mousemove.updown touchmove.updown', function(e){
-						moving = true;
-
-						(e.touches !== undefined) ? y =  e.touches[0].pageY : '';
-						if (e.touches === undefined) {
-							(e.pageY !== undefined) ? y = e.pageY : '';
-							(e.pageY === undefined) ? y = e.clientY : '';
-						}
-
-						var m_y = y - y_s; 
-
-						$(this).closest('.ui-modal-wrap').css('height', wrap_h2 - m_y + 'px');
-					}).off('mouseup.sliderend touchcancel.updown touchend.updown').on('mouseup.sliderend touchcancel.updown touchend.updown', function(e){
-						if (moving) {
-							if (y_s > y) {
-								$modal.find('.ui-modal-wrap').removeAttr('style').addClass('full');
-							} else {
-								$modal.find('.ui-modal-wrap').removeAttr('style').removeClass('full');
-								
-								win[global].uiModalClose({
-									id : $this.closest('.ui-modal-simple').attr('id'),
-									remove: remove,
-									callback: closeCallback
-								});
-							} 
-						}  
-						$(doc).find('.ui-modal-head').off('mousemove.updown mouseup.sliderend touchmove.updown');
-					});
-				});
-			}
-        }
-    }
-    win[global].uiModalClose.option = {
-        remove: false
-    }
-    function createUiModalClose(v) {
-        var opt = $.extend(true, {}, win[global].uiModalClose.option, v),
-            id = opt.id,
-            remove = opt.remove,
-            $modal = $('#' + id),
-            endfocus = opt.endfocus === undefined ? $modal.data('endfocus') : '#' + opt.endfocus,
-            callback = opt.callback === undefined ? false : opt.callback;
-        
-        var timer;
-
-        $modal.removeClass('open');
-		if (!$('.ui-modal-simple.open').length) {
-			$('html').off('click.uimodaldim');
-			$('html').removeClass('is-modal');
-		}
-        $('.ui-modal-simple.open.n' + ($('.ui-modal-simple.open').length - 1)).addClass('current');
-		
-		$("html, body").removeClass('not-scroll');
-		$('#baseMain').removeAttr('style');
-
-
-		//!$plugins.common.iframeReSize.sub ? $plugins.common.iframeFull(false) : '';
-		
-		win[global].uiScroll({
-			value: Number($modal.data('scrolltop'))
-		});
-		
-        clearTimeout(timer);
-        timer = setTimeout(function(){
-            $modal.removeClass('ready ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
-			$modal.removeAttr('n');
-            //$('body').css('overflow', 'initial');
-			
-            callback ? callback(opt) : '';
-            remove ? $modal.remove() : '';
-            !!endfocus ? endfocus.focus() : '';
-			!win[global].breakpoint ? $plugins.common.menuShowHide(true) : '';
-			if (id === 'modalVideo') {
-				if (!!$('#modalVideo video').attr('id')) {
-                    var myPlayer = bc($('#modalVideo video').attr('id'));
-                    myPlayer.pause();
-                }
-			}
-			// if (!$plugins.parentHeadHide) {
-			// 	$plugins.common.parentScrollTopInfo(false);
-			// }
-        },150);
-    }
+	
 
 
 
@@ -4564,7 +4474,6 @@ if (!Object.keys){
             len = $('.ui-scrollbox-item').length;
 
         if ($(win).outerHeight() > $('.ui-scrollbox-item').eq(0).offset().top) {
-            console.log(111111111)
             $('.ui-scrollbox-item').eq(0).addClass('visible');
             callback({ current:0, visible: true});
         }
