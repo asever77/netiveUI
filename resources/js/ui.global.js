@@ -2453,7 +2453,7 @@ if (!Object.keys){
 
 	/* ------------------------
 	* name : modal
-	* date : 2020-06-10
+	* date : 2020-06-11
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
         uiModalOpen: function (opt) {
@@ -2464,122 +2464,153 @@ if (!Object.keys){
         }
     });
 	win[global].uiModalOpen.option = {
-        wrap: 'baseWrap',
+		type: 'normal',
+        wrap: $('body'),
         full: false,
-        ps: 'center',
+		ps: 'center',
+		src: false,
 		remove: false,
-        w: false,
-		h: false,
-		editmode: false,
+        modalWidth: false,
+		modalHeight: false,
+		innerScroll: false,
+		mg: 10
     }
-    function createUiModalOpen(v) {
-        var opt = $.extend(true, {}, win[global].uiModalOpen.option, v),
-            wrap = opt.wrap,
+    function createUiModalOpen(opt) {
+		console.log(opt.modalHeight)
+
+        var opt = $.extend(true, {}, win[global].uiModalOpen.option, opt),
+			wrap = typeof opt.wrap === 'object' ? opt.wrap : $('#' + opt.wrap),
+			type = opt.type,
             id = opt.id,
             src = opt.src,
             full = opt.full,
-            ps = opt.ps,
+			ps = opt.ps,
+			mg = opt.mg,
 			remove = opt.remove,
-            w = opt.width,
-			h = opt.height,
-			editmode = opt.editmode,
+            w = opt.modalWidth,
+			h = opt.modalHeight,
+			innerScroll = opt.innerScroll,
 			scr_t = $(win).scrollTop(),
             endfocus = opt.endfocus === undefined ? document.activeElement : '#' + opt.endfocus,
             callback = opt.callback === undefined ? false : opt.callback,
 			closeCallback = opt.closeCallback === undefined ? false : opt.closeCallback,
 			timer;
 
-        if (!!src && !$('#' + opt.id).length) {
-            $plugins.uiAjax({
-                id: wrap,
-                url: src,
-                add: true,
-                callback: function(){
-                    act();
-                }
-            });
-        } else {
-            act();
-        }
+		if (type === 'normal') {
+			if (!!src && !$('#' + opt.id).length) {
+				$plugins.uiAjax({
+					id: wrap,
+					url: src,
+					add: true,
+					callback: function(){
+						act();
+					}
+				});
+			} else {
+				act();
+			}
+		} else {
+			makeSystemModal();
+		}
+
+		function makeSystemModal(){
+			var htmlSystem = '';
+
+			htmlSystem += '<section class="ui-modal" id="modal_sample1">';
+			htmlSystem += '<div class="ui-modal-wrap">';
+			
+		}
+
+        
 
         function act(){
-            var $modal = $('#' + id);
+			var $modal = $('#' + id);
+			var $modalWrap = $modal.find('> .ui-modal-wrap');
+			var $modalBody = $modalWrap.find('> .ui-modal-body');
+			var $modalHeader = $modalWrap.find('> .ui-modal-header');
+			var $modalFooter = $modalWrap.find('> .ui-modal-footer');
+			var headerH = 0;
+			var footerH = 0;
 
-            $('.ui-modal-simple').removeClass('current');
-			$("html, body").addClass('not-scroll');
-			$('#baseMain').css('margin-top', '-' + scr_t + 'px');
-
-			try {
-				var p_h = $(parent.window).outerHeight(true);
-				!win[global].breakpoint ? $plugins.common.menuShowHide(false) : '';
-				parent.$('#uiBrochureIframe').css('height', p_h + 'px');
-			} catch(err) { }
+            $('.ui-modal').removeClass('current');
+			$('body').addClass('not-scroll');
 			
-			$modal.attr('n', $('.ui-modal-simple.open').length).addClass('n' + $('.ui-modal-simple.open').length + ' current').data('scrolltop', scr_t).data('closecallback', closeCallback);
-            !!w ? $modal.find('.ui-modal-cont').css('width', w) : '';
-			!!h ? $modal.find('.ui-modal-cont').css('height', h) : '';
-            !!full ? $modal.addClass('ready type-full') : $modal.addClass('ready type-normal');
+			$modal
+				.attr('tabindex', '0')
+				.attr('n', $('.ui-modal.open').length)
+				.attr('role', 'dialog')
+				.addClass('n' + $('.ui-modal.open').length + ' current')
+				.data('scrolltop', scr_t)
+				.data('closecallback', closeCallback);
+
+           
             $('html').addClass('is-modal');
 			
-			editmode ? ps = 'edit' : '';
-
             switch (ps) {
                 case 'center' :
-                    $modal.addClass('ps-center');
+                    $modal.addClass('ready ps-center');
                     break;
                 case 'top' :
-                    $modal.addClass('ps-top');
+                    $modal.addClass('ready ps-top');
                     break;
                 case 'bottom' :
-                    $modal.addClass('ps-bottom');
-                    break;
-				case 'bottom' :
-                    $modal.addClass('ps-edit');
-                    break;
+                    $modal.addClass('ready ps-bottom');
+					break;
             }
 
+			if (innerScroll) {
+				headerH = $modalHeader.length ? $modalHeader.outerHeight() : 0;
+				footerH = $modalFooter.length ? $modalFooter.outerHeight() : 0;
+
+				if (!h) {
+					$modalBody
+						.addClass('is-scrollable')
+						.css({
+							'max-height' : 'calc(100vh - '+ (headerH + footerH + (mg * 2)) +'px)',
+							'overflow-y' : 'auto',
+							'height' : '100%'
+						});
+				} else {
+					$modalBody
+						.addClass('is-scrollable')
+						.css({
+							'overflow-y' : 'auto',
+							'height' : h + 'px'
+						});
+				}
+				
+			} else {
+				!!w && $modalWrap.css('width', w);
+				!!h && $modalBody.css({ 'height': h + 'px', 'overflow-y' : 'auto' });
+			}
+			
             clearTimeout(timer);
             timer = setTimeout(function(){
-
+				win[global].uiFocusTab({ 
+					selector: $modal, 
+					type:'hold' 
+				});
                 $modal.addClass('open').data('endfocus', endfocus);
                 callback ? callback(opt) : '';
 
 				$('html').off('click.uimodaldim').on('click.uimodaldim', function(e){
 					if(!$(e.target).closest('.ui-modal-wrap').length) {
 						var openN = [];
-						$('.ui-modal-simple.open').each(function(){
-							$(this).attr('n') !== undefined ?
-								openN.push($(this).attr('n')) : '';
+						
+						$('.ui-modal.open').each(function(){
+							var thisN = $(this).attr('n');
+
+							thisN !== undefined ?
+								openN.push(thisN) : '';
 						});
 
 						$plugins.uiModalClose({ 
-							id: $('.ui-modal-simple.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id'), 
+							id: $('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id'), 
 							remove: remove,
 							callback: closeCallback
 						});
 					}
 				});
-
-				// if (!$modal.find('.ui-modal-close').length) {
-				// 	// $modal.append('<button type="button" class="ui-modal-close type-trans"><span class="hidden">modal close</span></button>');
-				// 	// $('.ui-modal-close').off('click.uimodal').on('click.uimodal', function(){
-				// 	// 	$plugins.uiModalClose({ 
-				// 	// 		id: $(this).closest('.ui-modal-simple').attr('id'), 
-				// 	// 		remove: remove,
-				// 	// 		callback: closeCallback
-				// 	// 	});
-				// 	// });
-				// }
-
-                // if ($modal.find('.ui-modal-wrap').outerHeight() > $(win).outerHeight(true) - 20) {
-				// 	if (!full) {
-				// 		$modal.find('.ui-modal-cont').css('height', '100%');
-				// 	} else {
-				// 		$modal.find('.ui-modal-wrap').css('height', 'calc(100% - 60px)');
-				// 	}
-                // } 
-
-				$plugins.uiScrollBarReset();
 
 				if( $(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight() && $plugins.breakpoint) {
 					$modal.addClass('is-over');
@@ -2587,79 +2618,16 @@ if (!Object.keys){
 					$modal.removeClass('is-over');
 				}
 
-				if ($('#' + id ).hasClass('type-copybook')) {
-					$plugins.uiScrollBarCancel();
-				}
-
 			},150);
 
-			$(doc).find('.btn-bar').off('click.updownc').on('click.updownc', function(e){
-				var $modal = $('#' + $(this).closest('.ui-modal-simple').attr('id')),
-					$wr = $modal.find('.ui-modal-wrap');
-  
-				if (!$modal.find('.ui-modal-wrap.full').length) {
-					$wr.addClass('full');
-				} else {
-					$wr.removeClass('full');
-				}
-				win[global].uiScrollBarReset();
-			});
 
 			$(doc).find('.ui-modalclose').off('click.close').on('click.close', function(e){
-				var $modal = $('#' + $(this).closest('.ui-modal-simple').attr('id'));
-				// 	$wr = $modal.find('.ui-modal-wrap');
-
 				$plugins.uiModalClose({ 
-					id: $(this).closest('.ui-modal-simple').attr('id'), 
+					id: $(this).closest('.ui-modal').attr('id'), 
 					remove: remove,
 					callback: closeCallback
 				});
-				
 			});
-
-			if ($plugins.browser.mobile) {
-				$(doc).find('.ui-modal-head').off('mousedown.updown touchstart.updown').on('mousedown.updown touchstart.updown', function(e){
-					//e.preventDefault();
-					var $this = $(this),
-						y, y_s, moving = false,
-						wrap_h2 = $this.closest('.ui-modal-wrap').outerHeight();
-
-					(e.touches !== undefined) ? y_s =  e.touches[0].pageY : '';
-					if (e.touches === undefined) {
-						(e.pageY !== undefined) ? y_s = e.pageY : '';
-						(e.pageY === undefined) ? y_s = e.clientY : '';
-					}
-
-					$(doc).find('.ui-modal-head').off('mousemove.updown touchmove.updown').on('mousemove.updown touchmove.updown', function(e){
-						moving = true;
-
-						(e.touches !== undefined) ? y =  e.touches[0].pageY : '';
-						if (e.touches === undefined) {
-							(e.pageY !== undefined) ? y = e.pageY : '';
-							(e.pageY === undefined) ? y = e.clientY : '';
-						}
-
-						var m_y = y - y_s; 
-
-						$(this).closest('.ui-modal-wrap').css('height', wrap_h2 - m_y + 'px');
-					}).off('mouseup.sliderend touchcancel.updown touchend.updown').on('mouseup.sliderend touchcancel.updown touchend.updown', function(e){
-						if (moving) {
-							if (y_s > y) {
-								$modal.find('.ui-modal-wrap').removeAttr('style').addClass('full');
-							} else {
-								$modal.find('.ui-modal-wrap').removeAttr('style').removeClass('full');
-								
-								win[global].uiModalClose({
-									id : $this.closest('.ui-modal-simple').attr('id'),
-									remove: remove,
-									callback: closeCallback
-								});
-							} 
-						}  
-						$(doc).find('.ui-modal-head').off('mousemove.updown mouseup.sliderend touchmove.updown');
-					});
-				});
-			}
         }
     }
     win[global].uiModalClose.option = {
@@ -2675,18 +2643,13 @@ if (!Object.keys){
         
         var timer;
 
-        $modal.removeClass('open');
-		if (!$('.ui-modal-simple.open').length) {
+        $modal.removeClass('open').addClass('close');
+		if (!$('.ui-modal.open').length) {
 			$('html').off('click.uimodaldim');
 			$('html').removeClass('is-modal');
 		}
-        $('.ui-modal-simple.open.n' + ($('.ui-modal-simple.open').length - 1)).addClass('current');
-		
-		$("html, body").removeClass('not-scroll');
-		$('#baseMain').removeAttr('style');
+        $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1)).addClass('current');
 
-
-		//!$plugins.common.iframeReSize.sub ? $plugins.common.iframeFull(false) : '';
 		
 		win[global].uiScroll({
 			value: Number($modal.data('scrolltop'))
@@ -2694,23 +2657,16 @@ if (!Object.keys){
 		
         clearTimeout(timer);
         timer = setTimeout(function(){
-            $modal.removeClass('ready ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
+			$modal.find('.ui-modal-wrap').removeAttr('style');
+			$modal.find('.ui-modal-body').removeAttr('style');
+			$modal.removeClass('ready is-over current close ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
 			$modal.removeAttr('n');
-            //$('body').css('overflow', 'initial');
-			
+			if (!$('.ui-modal.open').length) {
+				$("html, body").removeClass('not-scroll');
+			}
             callback ? callback(opt) : '';
             remove ? $modal.remove() : '';
             !!endfocus ? endfocus.focus() : '';
-			!win[global].breakpoint ? $plugins.common.menuShowHide(true) : '';
-			if (id === 'modalVideo') {
-				if (!!$('#modalVideo video').attr('id')) {
-                    var myPlayer = bc($('#modalVideo video').attr('id'));
-                    myPlayer.pause();
-                }
-			}
-			// if (!$plugins.parentHeadHide) {
-			// 	$plugins.common.parentScrollTopInfo(false);
-			// }
         },150);
     }
 

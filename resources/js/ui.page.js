@@ -82,7 +82,22 @@
     }
 
     $plugins.page.pageModal = function(){
-        console.log('modal')
+        $('.btn-base').off('click.modal').on('click.modal', function(){
+            var $btn = $(this);
+            console.log($btn.attr('modal-height'))
+            $plugins.uiModalOpen({ 
+                id: $btn.attr('modal-id'), 
+                ps: $btn.attr('modal-ps') === undefined ? 'center' : $btn.attr('modal-ps'), 
+                src: $btn.attr('modal-src') === undefined ? false : $btn.attr('modal-src'), 
+                modalWidth: $btn.attr('modal-width') === undefined ? false : $btn.attr('modal-width'), 
+                modalHeight: $btn.attr('modal-height') === undefined ? false : $btn.attr('modal-height'), 
+                innerScroll : $btn.attr('modal-scroll') === undefined ? false : $btn.attr('modal-scroll') === 'true' && true, 
+                openback: function(v) { console.log('open callback', v); },
+                closeback: function(v) { console.log('close callback', v); },
+                callback: function(v) { console.log('callback', v); }
+            });
+        })
+        
     }
 
     
@@ -411,9 +426,6 @@
         });
     }
 
-    $plugins.page.pageModal = function(){
-        $plugins.uiInputClear();
-    }
 
     $plugins.page.pageInputClear = function(){
         $plugins.uiInputClear();

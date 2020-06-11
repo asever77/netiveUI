@@ -1,19 +1,24 @@
 @charset "utf-8";
-
-/* ui-loading : base */
-.ui-loading {display:block; position:fixed; z-index:100; width:100%; height:100%; opacity:0; top:0; left:0; background:rgba(0,0,0,0.5);}
-.ui-loading.visible {animation-name:loadingShow; animation-duration:.5s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
-.ui-loading {animation-name:loadingHide; animation-duration:.5s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
-@keyframes loadingShow {
+@keyframes fadeIn {
     0% {z-index:0;}
     1% {opacity:0;}
     100% {opacity:1;}
 }
-@keyframes loadingHide {
+@keyframes fadeOut {
     0% {opacity:1;}
     99% {opacity:0;}
     100% {z-index:-1;}
 }
+@keyframes timeAni {
+    0% {transform:rotate(0)}
+    100% {transform:rotate(360deg)}
+}
+
+
+/* ui-loading : base */
+.ui-loading {display:block; position:fixed; z-index:100; width:100%; height:100%; opacity:0; top:0; left:0; background:rgba(0,0,0,0.5);}
+.ui-loading.visible {animation-name:fadeIn; animation-duration:.5s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
+.ui-loading {animation-name:fadeOut; animation-duration:.5s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
 /* ui-loading : netvie UI style(time) */
 .ui-loading {background:rgba(0,0,0,0.5); }
 .ui-loading-wrap {position:absolute; width:80px; height:80px; top:50%; left:50%; margin:-40px 0 0 -40px; border-radius:50%; border:1px solid rgba(255,255,255,0.5); background:rgba(0,0,0,0.1); box-shadow:0 0 8px rgba(0,0,0,0.2);}
@@ -23,11 +28,6 @@
 .ui-loading-wrap:before {content:""; display:block; position:absolute; left:50%; top:40px; margin-left:-30px; border-radius:1px; width:60px; height:1px; background:linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 100%);}
 .ui-loading-wrap:after {animation-name:timeAni; animation-duration:12s; animation-iteration-count:infinite; animation-timing-function:linear}
 .ui-loading-wrap:before {animation-name:timeAni; animation-duration:1.2s; animation-iteration-count:infinite; animation-timing-function:linear}
-@keyframes timeAni {
-    0% {transform:rotate(0)}
-    100% {transform:rotate(360deg)}
-}
-
 
 
 /* ui-acco : base */
@@ -54,7 +54,6 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-acco-tit-wrap {padding:10px;text-decoration:none; color:#000;}
 
 
-
 /* ui-bricklist : base */
 .ui-bricklist {position:relative; width:100%;}
 .ui-bricklist-wrap {margin:0; padding:0;}
@@ -65,7 +64,6 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-bricklist .ui-bricklist-item {opacity:0; transform:scale(0.8); transition:transform 0.15s ease-in, opacity 0.3s ease-in, top 0.3s ease-in-out, left 0.3s ease-in-out;}
 .ui-bricklist .ui-bricklist-item.on {transform:scale(1); opacity:1;}
 .ui-bricklist .ui-bricklist-item {width:150px; color:#444; text-align:center;}
-
 
 
 /* ui-drop : base */
@@ -97,7 +95,55 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-floating-range-item {width:100%;}
 
 
+/* base layer :z-index 1 ---------------------------------------------------------------------------------- */
+.ui-modal.n1 {z-index:201;}
+.ui-modal.n2 {z-index:202;}
+.ui-modal.n3 {z-index:203;}
+.ui-modal.n4 {z-index:204;}
+.ui-modal.n5 {z-index:205;}
 
+.ui-modal {display:none; position:fixed; top:0; left:0; z-index:200; width:100%; height:100%; overflow:hidden; overflow-y:scroll; }
+.ui-modal.ready {display:flex;}
+.ui-modal.ready.current:after{content:""; display:block; position:fixed; top:0; left:0; width:100%; height:100%; opacity:0; background:rgba(0,0,0,.5); }
+.ui-modal.ready.open.current:after {animation-name:fadeIn; animation-duration:.3s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
+.ui-modal.ready.close:after {animation-name:fadeOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
+
+.ui-modal-wrap {opacity:0; box-shadow:0 5px 10px rgba(0,0,0,0.5); position:relative; z-index:1; background:#fff;}
+.ui-modal-wrap {width:400px}
+
+.ui-modal.ps-center.is-over {align-items:flex-start;}
+.ui-modal.ps-center.is-over .ui-modal-wrap {margin:20px 0;}
+.ui-modal.ps-center {justify-content:center; align-items:center;}
+.ui-modal.ps-center .ui-modal-wrap {transition:opacity 0.2s ease-in, top 0.2s ease-in; top:-300px;}
+.ui-modal.open.ps-center .ui-modal-wrap {opacity:1;top:0; }
+
+.ui-modal.ps-top {justify-content:center; align-items:flex-start;}
+.ui-modal.ps-top .ui-modal-wrap {top:-100px; transition:opacity 0.2s ease-in, top 0.2s ease-in;}
+.ui-modal.open.ps-top .ui-modal-wrap {top:10px; opacity:1;}
+
+.ui-modal.ps-bottom {justify-content:center; align-items:flex-end;}
+.ui-modal.ps-bottom .ui-modal-wrap {bottom:-100px; transition:opacity 0.2s ease-in, bottom 0.2s ease-in;}
+.ui-modal.open.ps-bottom .ui-modal-wrap {bottom:10px; opacity:1;}
+
+
+.ui-modal.type-full .ui-modal-wrap {width:100%; height:100%; min-height:100%; position:relative; left:0; bottom:-200px; transition:opacity 0.2s ease-in, bottom 0.2s ease-in; overflow:hidden; border-radius:0;}
+.ui-modal.open.type-full .ui-modal-wrap {bottom:0; opacity:1;}
+
+
+
+
+
+.ui-modal-header {position:relative; top:0; left:0; width:100%; height:40px; background:#444; color:#fff; padding:7px 35px 0 15px; border-bottom:1px solid #ccc;}
+.ui-modal-header h1 {font-size:16px; font-weight:500;}
+.ui-modal-header .btn-close {position:absolute; right:9px; top:9px; border:0;}
+.ui-modal-body {position:relative; margin-top:0; padding:20px 15px;}
+.ui-modal-footer {position:relative; margin-top:0; padding:10px 15px;}
+.ui-modal-footer .btn-wrap{margin:0;}
+
+/* ui modal :z-index 1 ~ 99 */
+.modal-backdrop {display:none; opacity:0; position:fixed; top:0; left:0; z-index:0; width:100%; height:200%; background-color:rgba(0,0,0,0.7);}
+.modal-open {overflow:hidden; padding-right:17px}
+.modal-open .base-layer {width:100%; height:100%; position:fixed; overflow:hidden;}
 
 
 
@@ -511,41 +557,8 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 .ui-console-wrap .ui-console-item:last-child:after {display:none;}
 
 
-/* base layer :z-index 1 ---------------------------------------------------------------------------------- */
-.ui-modal-simple.n1 {z-index:1001;}
-.ui-modal-simple.n2 {z-index:1002;}
-.ui-modal-simple.n3 {z-index:1003;}
-.ui-modal-simple.n4 {z-index:1004;}
-.ui-modal-simple.n5 {z-index:1005;}
 
-.ui-modal-simple {display:none; position:fixed; top:0; left:0; z-index:1; width:100%; height:100%; overflow:hidden; z-index:1000;}
-.ui-modal-simple.ready:after {content:""; display:block; width:100%; height:100%; position:fixed; z-index:0; background:rgba(0,0,0,.7); opacity:0; transition:opacity 0.15s ease-out;}
-.ui-modal-simple.ready {display:block;}
-.ui-modal-simple.open.current:after {opacity:1;}
-
-
-
-.ui-modal-simple .ui-modal-head {position:absolute; top:0; left:0; width:100%; height:40px; background:#444; color:#fff; padding:7px 35px 0 15px; border-bottom:1px solid #ccc;}
-.ui-modal-simple .ui-modal-head h1 {font-size:16px; font-weight:500;}
-.ui-modal-simple .ui-modal-head .btn-close {position:absolute; right:9px; top:9px; border:0;}
-.ui-modal-simple .ui-modal-cont {overflow-y:auto; max-height:calc(100% - 40px); margin-top:40px;padding:20px 15px;}
-.ui-modal-simple .ui-modal-wrap {opacity:0; box-shadow:0 5px 10px rgba(0,0,0,0.5); position:absolute; z-index:1; background:#fff;}
-.ui-modal-simple.type-full .ui-modal-wrap {width:100%; height:100%; min-height:100%; position:relative; left:0; bottom:-200px; transition:opacity 0.2s ease-in, bottom 0.2s ease-in; overflow:hidden; border-radius:0;}
-.ui-modal-simple.open.type-full .ui-modal-wrap {bottom:0; opacity:1;}
-.ui-modal-simple.type-normal.ps-center .ui-modal-wrap {left:50%; top:50%; max-height:calc(100% - 20px); transform:translate(-50%, -50%) scale(0.9); transition:opacity 0.2s ease-in, transform 0.2s ease-in;}
-.ui-modal-simple.open.type-normal.ps-center .ui-modal-wrap {top:50%; opacity:1; transform:translate(-50%, -50%) scale(1); }
-.ui-modal-simple.type-normal.ps-top .ui-modal-wrap {left:50%; top:-100px; transform:translateX(-50%); transition:opacity 0.2s ease-in, top 0.2s ease-in;}
-.ui-modal-simple.open.type-normal.ps-top .ui-modal-wrap {top:10px; opacity:1;}
-.ui-modal-simple.type-normal.ps-bottom .ui-modal-wrap {left:50%; bottom:-100px; transform:translateX(-50%); transition:opacity 0.2s ease-in, bottom 0.2s ease-in;}
-.ui-modal-simple.open.type-normal.ps-bottom .ui-modal-wrap {bottom:10px; opacity:1;}
-
-
-/* ui modal :z-index 1 ~ 99 */
-.modal-backdrop {display:none; opacity:0; position:fixed; top:0; left:0; z-index:0; width:100%; height:200%; background-color:rgba(0,0,0,0.7);}
-.modal-open {overflow:hidden; padding-right:17px}
-.modal-open .base-layer {width:100%; height:100%; position:fixed; overflow:hidden;}
-
-.ui-modal {display:none; opacity:0; position:fixed; z-index:1; width:auto; height:auto; padding:0; transition:transform 0.15s ease-in; transform:scale(0.9);}
+/* .ui-modal {display:none; opacity:0; position:fixed; z-index:1; width:auto; height:auto; padding:0; transition:transform 0.15s ease-in; transform:scale(0.9);}
 .ui-modal.ps-top {top:-100%; transition:top 200ms}
 .ui-modal.view {transform:scale(1);}
 .ui-modal.show {display:block; left:50%}
@@ -565,7 +578,7 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 .modal-full .ui-modal .ui-modal-wrap .btn-close {position:absolute; right:14px; top:14px; }
 .modal-full .ui-modal .ui-modal-footer,
 .modal-full .ui-modal {box-shadow:none !important; }
-.modal-full .ui-modal .ui-modal-footer {position:relative}
+.modal-full .ui-modal .ui-modal-footer {position:relative} */
 
 .modal-system .ui-modal-cont {text-align:center; padding:20px; font-size:16px;}
 .modal-system .btn-wrap {margin-top:20px;}

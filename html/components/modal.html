@@ -5,194 +5,107 @@
 <div class="tit-wrap">
 	<h1 class="h1">Modal</h1>
 </div>
-				<p class="txt-s2">시스템 알림창, 컨텐츠창 사용</p>
-				
-				<h2 class="h2">Examples</h2>
-			
-				<p>기본적인 모달 팝업 세팅 및 실행</p>
-				<div class="btn-wrap mgt-s txt-l">
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiModalOpen({ 
-							id:'modal_sample1', 
-							src:'/netiveUI/html/modalSp/modalSample1.html', 
-							full: true,
-							openback: function() { console.log('open callback'); },
-							closeback: function(v) { console.log('close callback', v); },
-							callback:$plugins.page.callback 
-						});
-					"><span>Ajax 기본 팝업(full)</span></button>
+<p class="txt-s2">시스템 알림창, 컨텐츠창 사용</p>
 
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiModalOpen({ 
-							id:'modal_sample1', 
-							src:'/netiveUI/html/modalSp/modalSample1.html', 
-							openback: function() { console.log('open callback'); },
-							closeback: function(v) { console.log('close callback', v); },
-							callback:$plugins.page.callback 
-						});
-					"><span>Ajax 기본 팝업(center)</span></button>
+<h2 class="h2">Examples</h2>
 
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiModalOpen({ 
-							id:'modal_sample1_1', 
-							src:'/netiveUI/html/modalSp/modalSample1.html', 
-							openback: function() { console.log('open callback'); },
-							closeback: function(v) { console.log('close callback', v); },
-							callback:$plugins.page.callback 
-						});
-					"><span>기본 팝업(center)</span></button>
-					<section class="ui-modal-simple" id="modal_sample1_1" role="dialog" aria-hidden="true">
-						<div class="ui-modal-wrap">
-							<header class="ui-modal-head">
-								<h1 class="ui-modal-tit">제목2</h1>
-								<button type="button" class="btn-close" aria-label="close" onclick="$plugins.uiModalClose({ id:'modal_sample1_1', callback:function(v){ console.log(v); } });">닫기</button>
-							</header>
-							<div class="ui-modal-cont">
-								<p><a href="#">기본적인 모달 레이어 팝업</a></p>
-								<p>width, height 값은 콘텐츠 내용에 따라 자동으로 설정</p>
-								<p>특정 크기 값을 줄수도 있음.</p>
-								<div style="width:100%; height:1000px; background:lightsteelblue">스크롤 생성</div>
-								<input type="text" >
-							</div>
-						</div>
-					</section>
+<h3 class="h3">Base Modal</h3>
+<p>기본적인 모달 팝업 세팅 및 실행</p>
+<div class="btn-wrap mgt-s txt-l">
+	<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modalSp/modalSample1.html"><span>Ajax / center</span></button>
+	<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modalSp/modalSample1.html" modal-scroll="true"><span>Ajax / center / scroll</span></button>
+	<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="/netiveUI/html/modalSp/modalSample2.html" modal-ps="top"><span>Ajax / top</span></button>
+	<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="/netiveUI/html/modalSp/modalSample2.html" modal-ps="bottom"><span>Ajax / bottom</span></button>
+	<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modalSp/modalSample1.html" modal-height="500"><span>Ajax / center / scroll / height)</span></button>
+	<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modalSp/modalSample1.html" modal-width="800"><span>Ajax / center / scroll / width)</span></button>
+</div>
+
+<h3 class="h3">System Modal</h3>
+<p>system 모달 팝업 세팅 및 실행</p>
+type 'alert', 'confirm'
+button btnConfirm, btnCancel
+zindex
+styleClass 
+confirmCallBack 
+cancelCallBack
+
+<div class="btn-wrap mgt-s txt-l">
+	<button type="button" class="btn-base" onclick="
+		$plugins.uiModal({
+			type : 'alert',
+			btn_alert : '확인',
+			cont_text : '확인하세요',
+			width : 310,
+			zindex : null,
+			state : '알림',
+			confirmCallback: function(){console.log('alert 확인')}
+		});
+	"><span>알림(alert)</span></button>
 
 
 
+	<button type="button" class="btn-base" onclick="
+		$plugins.modal.system({
+			type : 'alert',
+			btn_alert : '확인',
+			cont_text : '확인하세요',
+			width : 310,
+			zindex : null,
+			state : '알림',
+			confirmCallback: function(){console.log('alert 확인')}
+		});
+	"><span>알림(alert)</span></button>
 
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiModalOpen({ 
-							id:'modal_sample1', 
-							src:'/netiveUI/html/modalSp/modalSample1.html', 
-							ps: 'top',
-							openback: function() { console.log('open callback'); },
-							closeback: function(v) { console.log('close callback', v); },
-							callback:$plugins.page.callback 
-						});
-					"><span>Ajax 기본 팝업(top)</span></button>
+	<button type="button" class="btn-base" onclick="
+		$plugins.modal.system({
+			type : 'confirm',
+			btn_confirm_yes : '확인',
+			btn_confirm_no : '취소',
+			cont_text : '둘중에 하나를 선택하세요<br> 오직 하나만~',
+			zindex : 100,
+			state : '선택',
+			confirmCallback: function(){console.log('confirm 확인')},
+			cancelCallback: function(){console.log('confirm 취소')}
+		});
+	"><span>선택(confirm)</span></button>
 
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiModalOpen({ 
-							id:'modal_sample1', 
-							src:'/netiveUI/html/modalSp/modalSample1.html', 
-							ps: 'bottom',
-							openback: function() { console.log('open callback'); },
-							closeback: function(v) { console.log('close callback', v); },
-							callback:$plugins.page.callback 
-						});
-					"><span>Ajax 기본 팝업(bottom)</span></button>
-
-					<button type="button" class="btn-base" onclick="
-						$plugins.uiModalOpen({ 
-							id:'modal_sample2', 
-							src:'/netiveUI/html/modalSp/modalSample2.html', 
-							remove:true, 
-							mpage: true,
-							openback: function() { console.log('open callback2'); },
-							closeback: function(v) { console.log('close callback2', v); },
-							width:700 
-						});
-					"><span>Ajax 기본 팝업(scroll)</span></button>
-
-				</div>
-
-				<h3 class="h3">System type</h3>
-				<p>system 모달 팝업 세팅 및 실행</p>
-				<div class="btn-wrap mgt-s txt-l">
-					<button type="button" class="btn-base" onclick="
-						$plugins.modal.system({
-							type : 'alert',
-							btn_alert : '확인',
-							cont_text : '확인하세요',
-							width : 310,
-							zindex : null,
-							state : '알림',
-							confirmCallback: function(){console.log('alert 확인')}
-						});
-					"><span>알림(alert)</span></button>
-
-					<button type="button" class="btn-base" onclick="
-						$plugins.modal.system({
-							type : 'confirm',
-							btn_confirm_yes : '확인',
-							btn_confirm_no : '취소',
-							cont_text : '둘중에 하나를 선택하세요<br> 오직 하나만~',
-							zindex : 100,
-							state : '선택',
-							confirmCallback: function(){console.log('confirm 확인')},
-							cancelCallback: function(){console.log('confirm 취소')}
-						});
-					"><span>선택(confirm)</span></button>
-
-					<button type="button" class="btn-base" onclick="
-						$plugins.modal.system({
-							type : 'alert',
-							btn_alert : '확인',
-							cont_text : '오류가 있습니다.',
-							width : 310,
-							state : '오류',
-							confirmCallback: function(){console.log('alert 확인')}
-						});
-					"><span>오류(confirm)</span></button>
-				</div>
+	<button type="button" class="btn-base" onclick="
+		$plugins.modal.system({
+			type : 'alert',
+			btn_alert : '확인',
+			cont_text : '오류가 있습니다.',
+			width : 310,
+			state : '오류',
+			confirmCallback: function(){console.log('alert 확인')}
+		});
+	"><span>오류(confirm)</span></button>
+</div>
 
 
-				<h2 class="h2">HTML Structure</h2>
-				<h3 class="h3">base type</h3>
-				<div class="markup-modal">
-					<section class="ui-modal" id="modal_name" role="dialog" aria-hidden="true" style="height:321px">
-						<div class="ui-modal-wrap">
-							<header class="ui-modal-header">
-								<h1 class="ui-modal-tit"><span>제목</span></h1>
-							</header>
-							<div class="ui-modal-cont" style="height:200px">
-								내용...
-							</div>
-							<div class="ui-modal-footer">
-								<button type="button" class="btn-base" onclick="$plugins.uiModalClose({ id:'modal_name', callback:function(){ console.log('확인'); } });">확인</button>
-							</div>
-							<button type="button" class="ui-modal-close btn-close" aria-label="close" >닫기</button>
-						</div>
-					</section>
-				</div>
+<h2 class="h2">HTML Structure</h2>
+<h3 class="h3">base type</h3>
 <div class="box-code">
 <pre>
 <code>
-<span class="c">&lt;div class="base-layer" id="baseLayer"&gt;</span>
-	&lt;section <span class="na">class=</span><span class="s">"ui-modal"</span> <span class="na">id=</span><span class="s">"modal_name"</span> <span class="na">role=</span><span class="s">"dialog"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span>&gt;
-		&lt;div <span class="na">class=</span><span class="s">"ui-modal-wrap"</span>&gt;
-			&lt;header <span class="na">class=</span><span class="s">"ui-modal-header"</span>&gt;
-				&lt;h1 <span class="na">class=</span><span class="s">"ui-modal-tit"</span>&gt;&lt;span&gt;title&lt;/span&gt;&lt;/h1&gt;
-			&lt;/header&gt;
-			&lt;div <span class="na">class=</span><span class="s">"ui-modal-cont"</span>&gt;
-				....
-			&lt;/div&gt;
-			&lt;div <span class="na">class=</span><span class="s">"ui-modal-footer"</span>&gt;
-				&lt;button type="button" class="btn-base"&gt;확인&lt;/button&gt;
-			&lt;/div&gt;
+&lt;section <span class="na">class=</span><span class="s">"ui-modal"</span> <span class="na">id=</span><span class="s">"modal_name"</span> <span class="na">role=</span><span class="s">"dialog"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span>&gt;
+	&lt;div <span class="na">class=</span><span class="s">"ui-modal-wrap"</span>&gt;
+		&lt;header <span class="na">class=</span><span class="s">"ui-modal-header"</span>&gt;
+			&lt;h1 <span class="na">class=</span><span class="s">"ui-modal-tit"</span>&gt;&lt;span&gt;title&lt;/span&gt;&lt;/h1&gt;
 			&lt;button type="button" <span class="na">class=</span><span class="s">"ui-modal-close btn-close"</span>&gt;닫기&lt;/button&gt;
+		&lt;/header&gt;
+		&lt;div <span class="na">class=</span><span class="s">"ui-modal-cont"</span>&gt;
+			....
 		&lt;/div&gt;
-	&lt;/section&gt;
-<span class="c">&lt;/div&gt;</span>
+		&lt;div <span class="na">class=</span><span class="s">"ui-modal-footer"</span>&gt;
+			....
+		&lt;/div&gt;
+	&lt;/div&gt;
+&lt;/section&gt;
 </code>
 </pre>
 </div>
-				<h3 class="h3">system type</h3>
-				<div class="markup-modal">
-					<section class="ui-modal modal-system" id="modalSystem2" role="dialog" aria-hidden="true">
-						<div class="ui-modal-wrap">
-							<div class="ui-modal-cont">
-								<div id="modalSystemTxt2">
-									시스템적으로 알려드리는 메시지입니다.
-								</div>
-								<div class="btn-wrap">
-									<button type="button" class="btn-base" id="modalSystemBtn12">확인</button>
-								</div>
-							</div>
-							<button type="button" class="ui-modal-close btn-close" aria-label="close" >닫기</button>
-						</div>
-					</section>
-				</div>
+
+
 <div class="box-code">
 <pre>
 <code>
@@ -214,8 +127,8 @@
 </pre>
 </div>
 
-				<h2 class="h2">Javascript</h2>
-				<h3 class="h3">$plugins.uiModal</h3>
+<h2 class="h2">Javascript</h2>
+<h3 class="h3">$plugins.uiModal</h3>
 <div class="box-code">
 <pre>
 <code>

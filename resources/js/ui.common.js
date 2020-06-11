@@ -26,6 +26,9 @@
                     case 'floatingRange' :
                         fristHref = '/netiveUI/html/components/floatingRange.html';
                         break;
+                    case 'modal' :
+                        fristHref = '/netiveUI/html/components/modal.html';
+                        break;
                 }
             } 
 
