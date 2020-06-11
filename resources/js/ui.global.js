@@ -411,6 +411,7 @@ if (!Object.keys){
 			$selector = opt_id === null ? $('body') : typeof opt.id === 'string' ? $('#' + opt.id) : opt.id,
 			txt = opt.txt === undefined ? null : opt.txt;
 
+		$('.ui-loading').not('.visible').remove();
 		opt_id === null ?
 			loading += '<div class="ui-loading">':
 			loading += '<div class="ui-loading" style="position:absolute">';
@@ -432,44 +433,7 @@ if (!Object.keys){
 		function hideLoading(){		
 			$selector.data('loading', false);
 			$('.ui-loading').removeClass('visible');
-
 		}
-
-		
-
-
-
-		// var loading = '',
-		// 	$selector = opt.id === undefined ? $('body') : opt.id === '' ? $('body') : typeof opt.id === 'string' ? $('#' + opt.id) : opt.id,
-		// 	txt = opt.txt === undefined ? 'Loading' : opt.txt;
-
-		// opt.id === undefined ?
-		// 	loading += '<div class="ui-loading">':
-		// 	loading += '<div class="ui-loading" style="position:absolute">';
-		// loading += '<div class="ui-loading-wrap">';
-		// loading += '<strong class="ui-loading-txt"><span>'+ txt +'</span></strong>';
-		// loading += '</div>';
-		// loading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="$plugins.uiLoading({ visible:false });"><span>$plugins.uiLoading({ visible:false })</span></button>';
-		// loading += '</div>';
-
-		// clearTimeout(win[global].uiLoading.timer);
-		// opt.visible === true && !$('body').data('loading') ? showLoading() : opt.visible === false ? hideLoading() : '';
-		
-		// function showLoading(){
-		// 	clearTimeout(win[global].uiLoading.timer);
-		// 	$('body').data('loading', true);
-		// 	$selector.prepend(loading);
-		// 	$selector.find('.ui-loading').stop().animate({ 'opacity':1 });
-		// }
-		// function hideLoading(){
-		// 	clearTimeout(win[global].uiLoading.timer);
-		// 	win[global].uiLoading.timer = setTimeout(function(){
-		// 		$selector.find('.ui-loading').stop().animate({ 'opacity':0 }, function(){
-		// 			$('.ui-loading').remove();
-		// 			$('body').data('loading', false);
-		// 		});
-		// 	},100);
-		// }
 	}
 
 
@@ -1975,7 +1939,8 @@ if (!Object.keys){
 			itemTopArray = dataOpt.itemTopArray,
 			itemSum = $item.length;
 		
-		$plugins.uiLoading({ visible:true });
+		console.log('loading')
+		$plugins.uiLoading({ id: opt.id, visible:true });
 
 		var n = dataOpt.start;
 		var setItem = function(){
@@ -2649,7 +2614,7 @@ if (!Object.keys){
 							$plugins.uiModalClose({ 
 								id: currentID, 
 								remove: remove,
-								callback: closeCallback
+								closeCallback: closeCallback
 							});
 						}
 					}
@@ -2668,7 +2633,7 @@ if (!Object.keys){
 				$plugins.uiModalClose({ 
 					id: $(this).closest('.ui-modal').attr('id'), 
 					remove: remove,
-					callback: closeCallback
+					closeCallback: closeCallback
 				});
 			});
 			$(doc).find('.ui-modal-confirm').off('click.callback').on('click.callback', function(e){
@@ -2694,10 +2659,10 @@ if (!Object.keys){
             remove = opt.remove,
             $modal = $('#' + id),
             endfocus = opt.endfocus === undefined ? $modal.data('endfocus') : '#' + opt.endfocus,
-            callback = opt.callback === undefined ? false : opt.callback;
+            closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') ===undefined ? false : $modal.data('closecallback') : opt.closeCallback;
         
-        var timer;
-
+		var timer;
+		
         $modal.removeClass('open').addClass('close');
 		if (!$('.ui-modal.open').length) {
 			$('html').off('click.uimodaldim');
@@ -2719,7 +2684,7 @@ if (!Object.keys){
 			if (!$('.ui-modal.open').length) {
 				$("html, body").removeClass('not-scroll');
 			}
-            callback ? callback(opt) : '';
+            closeCallback ? closeCallback(opt) : '';
             remove ? $modal.remove() : '';
             !!endfocus ? endfocus.focus() : '';
         },150);

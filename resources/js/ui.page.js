@@ -92,8 +92,7 @@
                 modalWidth: $btn.attr('modal-width') === undefined ? false : $btn.attr('modal-width'), 
                 modalHeight: $btn.attr('modal-height') === undefined ? false : $btn.attr('modal-height'), 
                 innerScroll : $btn.attr('modal-scroll') === undefined ? false : $btn.attr('modal-scroll') === 'true' && true, 
-                openback: function(v) { console.log('open callback', v); },
-                closeback: function(v) { console.log('close callback', v); },
+                closeCallback: function(v) { console.log('close callback', v); },
                 callback: function(v) { console.log('callback', v); }
             });
         })
