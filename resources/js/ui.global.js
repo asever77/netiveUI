@@ -2434,7 +2434,7 @@ if (!Object.keys){
 	win[global].uiModalOpen.option = {
 		type: 'normal',
         wrap: $('body'),
-        full: false,
+        mobileFull: false,
 		ps: 'center',
 		src: false,
 		remove: false,
@@ -2462,7 +2462,7 @@ if (!Object.keys){
 			type = opt.type,
             id = opt.id,
             src = opt.src,
-            full = opt.full,
+            mobileFull = opt.mobileFull,
 			ps = opt.ps,
 			mg = opt.mg,
 			remove = opt.remove,
@@ -2470,7 +2470,7 @@ if (!Object.keys){
 			h = opt.modalHeight,
 			innerScroll = opt.innerScroll,
 			scr_t = $(win).scrollTop(),
-            endfocus = opt.endfocus === false ? document.activeElement : '#' + opt.endfocus,
+            endfocus = opt.endfocus === false ? document.activeElement : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus,
             callback = opt.callback,
 			closeCallback = opt.closeCallback,
 			timer;
@@ -2497,6 +2497,7 @@ if (!Object.keys){
 				act();
 			}
 		} else {
+			endfocus = null;
 			remove = true;
 			id = 'uiSystemModal';
 			makeSystemModal();
@@ -2548,7 +2549,11 @@ if (!Object.keys){
 				.data('scrolltop', scr_t)
 				.data('closecallback', closeCallback);
 
-           
+            if (mobileFull && !$plugins.breakpoint) {
+				$modal.addClass('type-full');
+				mg = 0;
+			} 
+
             $('html').addClass('is-modal');
 			
             switch (ps) {
@@ -2595,8 +2600,11 @@ if (!Object.keys){
 					selector: $modal, 
 					type:'hold' 
 				});
+
                 $modal.addClass('open').data('endfocus', endfocus);
-                callback ? callback(opt) : '';
+
+				!!sZindex && $modal.css('z-index', sZindex);
+                callback && callback(opt);
 
 				$('html').off('click.uimodaldim').on('click.uimodaldim', function(e){
 					if(!$(e.target).closest('.ui-modal-wrap').length) {
@@ -2610,6 +2618,7 @@ if (!Object.keys){
 						});
 						
 						var currentID = $('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id');
+
 						if (currentID !== 'uiSystemModal') {
 							$plugins.uiModalClose({ 
 								id: currentID, 
@@ -2620,14 +2629,10 @@ if (!Object.keys){
 					}
 				});
 
-				if( $(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight()) {
-					$modal.addClass('is-over');
-				} else {
+				$(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight() ?
+					$modal.addClass('is-over'):
 					$modal.removeClass('is-over');
-				}
-
 			},150);
-
 
 			$(doc).find('.ui-modalclose').off('click.close').on('click.close', function(e){
 				$plugins.uiModalClose({ 
@@ -2645,7 +2650,8 @@ if (!Object.keys){
         }
     }
     win[global].uiModalClose.option = {
-        remove: false
+        remove: false,
+		endfocus: false
 	}
 	function createUiSystemModalClose(){
 		$plugins.uiModalClose({ 
@@ -2658,11 +2664,11 @@ if (!Object.keys){
             id = opt.id,
             remove = opt.remove,
             $modal = $('#' + id),
-            endfocus = opt.endfocus === undefined ? $modal.data('endfocus') : '#' + opt.endfocus,
-            closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') ===undefined ? false : $modal.data('closecallback') : opt.closeCallback;
+			endfocus = opt.endfocus === false ? $modal.data('endfocus') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus,
+            closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') === undefined ? false : $modal.data('closecallback') : opt.closeCallback;
         
 		var timer;
-		
+
         $modal.removeClass('open').addClass('close');
 		if (!$('.ui-modal.open').length) {
 			$('html').off('click.uimodaldim');

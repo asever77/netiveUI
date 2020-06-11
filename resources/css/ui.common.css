@@ -37,6 +37,7 @@ caption{position:relative !important; width:1px !important; height:1px !importan
 legend, .hidden, .hide { position:absolute !important; width:1px !important; height:1px !important; color:transparent !important; overflow:hidden !important; clip:rect(1px, 1px,1px, 1px); clip-path:inset(50%); }
 
 .not-scroll {overflow:hidden; padding-right:17px;}
+.ui-m .not-scroll{padding-right:0;}
 
 /* Google Material icons */
 .material-icons {font-family: 'Material Icons'; font-weight: normal; font-style: normal; font-size: 24px;  /* Preferred icon size */display:block; line-height: 1; text-transform: none; letter-spacing: normal; word-wrap: normal; white-space: nowrap; direction: ltr; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; -moz-osx-font-smoothing: grayscale; font-feature-settings: 'liga'; }

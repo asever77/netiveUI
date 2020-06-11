@@ -89,6 +89,7 @@
                 id: $btn.attr('modal-id'), 
                 ps: $btn.attr('modal-ps') === undefined ? 'center' : $btn.attr('modal-ps'), 
                 src: $btn.attr('modal-src') === undefined ? false : $btn.attr('modal-src'), 
+                mobileFull: $btn.attr('modal-mobilefull') === undefined ? false : $btn.attr('modal-mobilefull') === 'true' && true, 
                 modalWidth: $btn.attr('modal-width') === undefined ? false : $btn.attr('modal-width'), 
                 modalHeight: $btn.attr('modal-height') === undefined ? false : $btn.attr('modal-height'), 
                 innerScroll : $btn.attr('modal-scroll') === undefined ? false : $btn.attr('modal-scroll') === 'true' && true, 
