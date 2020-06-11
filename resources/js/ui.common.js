@@ -29,6 +29,9 @@
                     case 'modal' :
                         fristHref = '/netiveUI/html/components/modal.html';
                         break;
+                    case 'scrollBar' :
+                        fristHref = '/netiveUI/html/components/scrollBar.html';
+                        break;
                 }
             } 
 

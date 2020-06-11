@@ -105,7 +105,7 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-modal {display:none; position:fixed; top:0; left:0; z-index:200; width:100%; height:100%; overflow:hidden; overflow-y:scroll; }
 .ui-modal.ready {display:flex;}
 .ui-modal.ready.current:after{content:""; display:block; position:fixed; top:0; left:0; width:100%; height:100%; opacity:0; background:rgba(0,0,0,.5); }
-.ui-modal.ready.open.current:after {animation-name:fadeIn; animation-duration:.3s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
+.ui-modal.ready.open.current:after {animation-name:fadeIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
 .ui-modal.ready.close:after {animation-name:fadeOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
 
 .ui-modal-wrap {opacity:0; box-shadow:0 5px 10px rgba(0,0,0,0.5); position:relative; z-index:1; background:#fff;}
@@ -115,7 +115,7 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-modal.ps-center.is-over .ui-modal-wrap {margin:20px 0;}
 .ui-modal.ps-center {justify-content:center; align-items:center;}
 .ui-modal.ps-center .ui-modal-wrap {transition:opacity 0.2s ease-in, top 0.2s ease-in; top:-300px;}
-.ui-modal.open.ps-center .ui-modal-wrap {opacity:1;top:0; }
+.ui-modal.open.ps-center .ui-modal-wrap {opacity:1; top:0;}
 
 .ui-modal.ps-top {justify-content:center; align-items:flex-start;}
 .ui-modal.ps-top .ui-modal-wrap {top:-100px; transition:opacity 0.2s ease-in, top 0.2s ease-in;}
@@ -125,26 +125,28 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-modal.ps-bottom .ui-modal-wrap {bottom:-100px; transition:opacity 0.2s ease-in, bottom 0.2s ease-in;}
 .ui-modal.open.ps-bottom .ui-modal-wrap {bottom:10px; opacity:1;}
 
+.ui-modal.ps-center.type-system .ui-modal-wrap {transition:opacity 0.2s ease-in; top:0; }
+.ui-modal.open.ps-center.type-system .ui-modal-wrap {opacity:1; top:0;}
+
+.type-system .ui-modal-wrap {width:250px; text-align:center; font-size:14px;}
+.type-system .ui-modal-wrap strong{font-weight:900;}
 
 .ui-modal.type-full .ui-modal-wrap {width:100%; height:100%; min-height:100%; position:relative; left:0; bottom:-200px; transition:opacity 0.2s ease-in, bottom 0.2s ease-in; overflow:hidden; border-radius:0;}
 .ui-modal.open.type-full .ui-modal-wrap {bottom:0; opacity:1;}
-
-
-
 
 
 .ui-modal-header {position:relative; top:0; left:0; width:100%; height:40px; background:#444; color:#fff; padding:7px 35px 0 15px; border-bottom:1px solid #ccc;}
 .ui-modal-header h1 {font-size:16px; font-weight:500;}
 .ui-modal-header .btn-close {position:absolute; right:9px; top:9px; border:0;}
 .ui-modal-body {position:relative; margin-top:0; padding:20px 15px;}
-.ui-modal-footer {position:relative; margin-top:0; padding:10px 15px;}
+.ui-modal-footer {position:relative; margin-top:0; padding:0 15px 10px;}
 .ui-modal-footer .btn-wrap{margin:0;}
 
 /* ui modal :z-index 1 ~ 99 */
-.modal-backdrop {display:none; opacity:0; position:fixed; top:0; left:0; z-index:0; width:100%; height:200%; background-color:rgba(0,0,0,0.7);}
+/* .modal-backdrop {display:none; opacity:0; position:fixed; top:0; left:0; z-index:0; width:100%; height:200%; background-color:rgba(0,0,0,0.7);}
 .modal-open {overflow:hidden; padding-right:17px}
 .modal-open .base-layer {width:100%; height:100%; position:fixed; overflow:hidden;}
-
+ */
 
 
 
@@ -580,16 +582,16 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 .modal-full .ui-modal {box-shadow:none !important; }
 .modal-full .ui-modal .ui-modal-footer {position:relative} */
 
-.modal-system .ui-modal-cont {text-align:center; padding:20px; font-size:16px;}
+/* .modal-system .ui-modal-cont {text-align:center; padding:20px; font-size:16px;}
 .modal-system .btn-wrap {margin-top:20px;}
 .modal-system .ui-modal-cont:before {content:""; display:inline-block; width:50px; height:50px; background:url(/netiveUI/resources/img/common/ico_modal.png) no-repeat -25px -25px; margin-bottom:20px;}
 
 .modal-system .system-type-a:before {background-position:-25px -25px}
 .modal-system .system-type-b:before {background-position:-125px -25px}
-.modal-system .system-type-c:before {background-position:-225px -25px}
+.modal-system .system-type-c:before {background-position:-225px -25px} */
 
     /* ui modal mobile */
-    .ui-m .modal-open {padding:0}
+    /* .ui-m .modal-open {padding:0}
     .ui-m .ui-modal {max-width:100%; padding:0 15px;}
     .ui-m .ui-modal.type-full {padding:0;}
     .ui-m .ui-modal .ui-modal-wrap {height:100%; position:relative}
@@ -605,7 +607,7 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
     .ui-m .ui-modal-full .ui-modal-head,
     .ui-m .ui-modal-full .ui-modal-close {position:fixed;}
     .ui-m .ui-modal-full .backdrop {background:rgba(255,255,255,1);}
-    .ui-m .ui-modal .ui-modal-wrap .btn-close {top:15px; right:15px}
+    .ui-m .ui-modal .ui-modal-wrap .btn-close {top:15px; right:15px} */
 
 
 

@@ -82,7 +82,7 @@
     }
 
     $plugins.page.pageModal = function(){
-        $('.btn-base').off('click.modal').on('click.modal', function(){
+        $('.test-modal .btn-base').off('click.modal').on('click.modal', function(){
             var $btn = $(this);
             console.log($btn.attr('modal-height'))
             $plugins.uiModalOpen({ 

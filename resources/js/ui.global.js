@@ -2461,6 +2461,9 @@ if (!Object.keys){
         },
         uiModalClose: function (opt) {
             return createUiModalClose(opt);
+		},
+		uiSystemModalClose: function () {
+            return createUiSystemModalClose();
         }
     });
 	win[global].uiModalOpen.option = {
@@ -2473,7 +2476,18 @@ if (!Object.keys){
         modalWidth: false,
 		modalHeight: false,
 		innerScroll: false,
-		mg: 10
+		mg: 10,
+		callback:false,
+		closeCallback:false,
+		endfocus:false,
+
+		sMessage: '',
+		sBtnConfirmTxt: 'Ok',
+		sBtnCancelTxt: 'Cancel',
+		sZindex: false,
+		sClass: 'type-system',
+		sConfirmCallback: false,
+		sCancelCallback: false
     }
     function createUiModalOpen(opt) {
 		console.log(opt.modalHeight)
@@ -2491,11 +2505,19 @@ if (!Object.keys){
 			h = opt.modalHeight,
 			innerScroll = opt.innerScroll,
 			scr_t = $(win).scrollTop(),
-            endfocus = opt.endfocus === undefined ? document.activeElement : '#' + opt.endfocus,
-            callback = opt.callback === undefined ? false : opt.callback,
-			closeCallback = opt.closeCallback === undefined ? false : opt.closeCallback,
+            endfocus = opt.endfocus === false ? document.activeElement : '#' + opt.endfocus,
+            callback = opt.callback,
+			closeCallback = opt.closeCallback,
 			timer;
-
+		
+		var sMessage = opt.sMessage,
+			sBtnConfirmTxt = opt.sBtnConfirmTxt,
+			sBtnCancelTxt = opt.sBtnCancelTxt,
+			sZindex = opt.sZindex,
+			sClass = opt.sClass,
+			sConfirmCallback = opt.sConfirmCallback,
+			sCancelCallback = opt.sCancelCallback;
+		
 		if (type === 'normal') {
 			if (!!src && !$('#' + opt.id).length) {
 				$plugins.uiAjax({
@@ -2510,18 +2532,36 @@ if (!Object.keys){
 				act();
 			}
 		} else {
+			remove = true;
+			id = 'uiSystemModal';
 			makeSystemModal();
 		}
 
 		function makeSystemModal(){
 			var htmlSystem = '';
-
-			htmlSystem += '<section class="ui-modal" id="modal_sample1">';
-			htmlSystem += '<div class="ui-modal-wrap">';
 			
-		}
+			htmlSystem += '<div class="ui-modal type-system '+ sClass +'" id="uiSystemModal">';
+			htmlSystem += '<div class="ui-modal-wrap">';
+			htmlSystem += '<div class="ui-modal-body">';
+			htmlSystem += sMessage;
+			htmlSystem += '</div>';
+			htmlSystem += '<div class="ui-modal-footer">';
+			htmlSystem += '<div class="btn-wrap">';
 
-        
+			if (type === 'confirm') {
+				htmlSystem += '<button type="button" class="btn-base ui-modal-cancel"><span>'+ sBtnCancelTxt +'</span></button>';
+			}
+
+			htmlSystem += '<button type="button" class="btn-base ui-modal-confirm"><span>'+ sBtnConfirmTxt +'</span></button>';	
+			htmlSystem += '</div>';
+			htmlSystem += '</div>';
+			htmlSystem += '</div>';
+			htmlSystem += '</div>';
+
+			$('body').append(htmlSystem);
+			htmlSystem = '';
+			act();
+		}
 
         function act(){
 			var $modal = $('#' + id);
@@ -2603,16 +2643,19 @@ if (!Object.keys){
 							thisN !== undefined ?
 								openN.push(thisN) : '';
 						});
-
-						$plugins.uiModalClose({ 
-							id: $('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id'), 
-							remove: remove,
-							callback: closeCallback
-						});
+						
+						var currentID = $('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id');
+						if (currentID !== 'uiSystemModal') {
+							$plugins.uiModalClose({ 
+								id: currentID, 
+								remove: remove,
+								callback: closeCallback
+							});
+						}
 					}
 				});
 
-				if( $(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight() && $plugins.breakpoint) {
+				if( $(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight()) {
 					$modal.addClass('is-over');
 				} else {
 					$modal.removeClass('is-over');
@@ -2628,11 +2671,23 @@ if (!Object.keys){
 					callback: closeCallback
 				});
 			});
+			$(doc).find('.ui-modal-confirm').off('click.callback').on('click.callback', function(e){
+				sConfirmCallback();
+			});
+			$(doc).find('.ui-modal-cancel').off('click.callback').on('click.callback', function(e){
+				sCancelCallback();
+			});
         }
     }
     win[global].uiModalClose.option = {
         remove: false
-    }
+	}
+	function createUiSystemModalClose(){
+		$plugins.uiModalClose({ 
+			id: 'uiSystemModal', 
+			remove: true
+		});
+	}
     function createUiModalClose(v) {
         var opt = $.extend(true, {}, win[global].uiModalClose.option, v),
             id = opt.id,
