@@ -3,10 +3,37 @@
     'use strict';
     
     $plugins.common = {
- 
         init: function(){
+            var fristHref = '/netiveUI/html/start/introduction.html';
 
-            var fristHref = '/netiveUI/html/start/introduction.html'
+            if (!!$plugins.uiPara('page')) {
+                switch($plugins.uiPara('page')) {
+                    case 'introduction' :
+                        fristHref = '/netiveUI/html/start/introduction.html';
+                        break;
+                    case 'accordion' :
+                        fristHref = '/netiveUI/html/components/accordion.html';
+                        break;
+                    case 'brickList' :
+                        fristHref = '/netiveUI/html/components/brickList.html';
+                        break;
+                    case 'dropdown' :
+                        fristHref = '/netiveUI/html/components/dropdown.html';
+                        break;
+                    case 'floating' :
+                        fristHref = '/netiveUI/html/components/floating.html';
+                        break;
+                    case 'floatingRange' :
+                        fristHref = '/netiveUI/html/components/floatingRange.html';
+                        break;
+                    case 'modal' :
+                        fristHref = '/netiveUI/html/components/modal.html';
+                        break;
+                    case 'scrollBar' :
+                        fristHref = '/netiveUI/html/components/scrollBar.html';
+                        break;
+                }
+            } 
 
             $plugins.uiAjax({ 
                 id:'baseHeader', 
@@ -20,6 +47,7 @@
                 page: true, 
                 loading: true,
                 callback: function(){
+                    $(win).off('scroll.win');
                     $plugins.common.pageInit(fristHref);
                     $plugins.common.settingAside();
                 }
@@ -47,28 +75,32 @@
             $plugins.common.menuAjax();
         },
         settingAside: function(){
-            var $aside = doc.querySelector('#baseAside'),
-                $main = doc.querySelector('#baseMain'),
-                $h2 = $main.querySelectorAll('.h2');
+            var $aside = $('#baseAside'),
+                $main = $('#baseMain'),
+                $h2 = $main.find('.h2');
 
             var asideUl = '<ul>';
             
-            if (!!$aside.querySelector('ul')){
-
-                var delAside = $aside.querySelector('ul');
-                delAside.parentNode.removeChild(delAside);
+            if (!!$aside.find('ul')){
+                var delAside = $aside.find('ul');
+                delAside.remove();
             }
 
             asideUl += '<li><a href="#">Top</a></li>'; 
-            $h2.forEach(function(h2, index){
-                h2.setAttribute('id', 'pageTit' + index);
-                asideUl += '<li><a href="#pageTit'+ index +'">'+ h2.innerText +'</a></li>';                
+            $h2.each(function(i){
+                $(this).attr('id', 'pageTit' + i);
+                asideUl += '<li><a href="#pageTit'+ i +'">'+ $(this).text() +'</a></li>';                
             });
-            asideUl += '</ul>'
-            $plugins.fn.appendHtml($aside, asideUl);
+            asideUl += '</ul>';
+            $aside.append(asideUl);
         },
         pageInit: function(v){
             var jsName = null;
+
+            if (!!doc.querySelector('#uiJsName')) {
+                jsName = doc.querySelector('#uiJsName').value;
+                $plugins.page[jsName]();
+            }
 
             if(typeof(history.pushState) == 'function') {
                 var renewURL = location.href;
@@ -78,15 +110,16 @@
                 renewURL = renewURL[0];
                 renewURL = renewURL + v;
 
-                console.log(renewURL, v);
-                history.pushState(false, 'loading', '/netiveUI/html/index.html');
+                var paraUrl = v.split('.'),
+                    paraUrl = paraUrl[0].split('/'),
+                    paraUrl = paraUrl[paraUrl.length - 1];
+
+                var indexUrl = '/netiveUI/html/index.html?page=' + paraUrl;
+   
+                history.pushState(false, 'loading', indexUrl);
             }
 
-            if (!!doc.querySelector('#uiJsName')) {
-                jsName = doc.querySelector('#uiJsName').value;
-                console.log(jsName)
-                $plugins.page[jsName]();
-            }
+           
             
 
             // console.log(v.split('.html'), !!doc.querySelector('#uiPageJS'));
@@ -118,6 +151,7 @@
                     page: true, 
                     loading: true,
                     callback: function(){
+                        $(win).off('scroll.win');
                         $plugins.common.pageInit(href);
                         $plugins.common.settingAside();
                     }

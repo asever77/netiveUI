@@ -14,7 +14,7 @@
 .tit-wrap em{font-size:12px;display:block;}
 .tit-wrap:after{content:""; display:block; clear:both;}
 
-.tit-catagory{position: fixed; top:-6vw; left:-3vw; font-size:30vw; font-weight:900; color:#000; line-height:1; opacity:0.025; z-index:-1;}
+.tit-catagory{position: fixed; top:-6vw; left:-3vw; font-size:30vw; font-weight:900; color:#000; line-height:1; opacity:0.025; z-index:-1; display:none;}
 
 /* base */
 p{color:#333}
@@ -70,8 +70,8 @@ code{padding:2px 4px; font-size:100%; background-color:#eee; border-radius:4px; 
 .box-code .na{color:#4f9fcf}
 .box-code .s{color:#d44950}
 .box-code .c{color:#999}
-.box-code b{font-weight:900; }
-
+.box-code b{font-weight:900 !important; color:#a12dd6 !important;}
+.box-code b *{font-weight:900 !important; color:#a12dd6 !important;}
 /* page */
 .tbl-grid01 .col-n1{width:auto}
 .tbl-grid01 .col-n2{width:20%}
@@ -291,3 +291,6 @@ fieldset{margin:0}
 .ui-datepicker .ui-datepicker-btn:disabled{opacity:0.5}
 .ui-datepicker .ui-datepicker-btn:disabled:focus,
 .ui-datepicker .ui-datepicker-btn:disabled:hover{border:0; background:transparent; color:#666}
+
+/* dropdown */
+.ui-drop-pnl{width:400px}
