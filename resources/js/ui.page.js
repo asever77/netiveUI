@@ -403,8 +403,8 @@
     }
 
     $plugins.page.pageScrollBar = function(){
-        $plugins.uiScrollBar();
-        $plugins.uiScrollBar({ id:'scrbar1', top:20 });
+        //$plugins.uiScrollBar();
+        //$plugins.uiScrollBar({ id:'scrbar1', top:20 });
     }
 
     $plugins.page.pageJsonCodingList = function(){

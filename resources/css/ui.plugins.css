@@ -95,7 +95,7 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-floating-range-item {width:100%;}
 
 
-/* base layer :z-index 1 ---------------------------------------------------------------------------------- */
+/* ui modal : base */
 .ui-modal.n1 {z-index:201;}
 .ui-modal.n2 {z-index:202;}
 .ui-modal.n3 {z-index:203;}
@@ -129,7 +129,7 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-modal-body {position:relative; margin-top:0; padding:20px 15px;}
 .ui-modal-footer {position:relative; margin-top:0; padding:10px 15px}
 .ui-modal-footer .btn-wrap{margin:0;}
-
+/* ui modal : mobile */
 .ui-m .ui-modal.type-full.ps-center{justify-content:center; align-items:flex-start;}
 .ui-m .ui-modal.type-full .ui-modal-wrap {margin:0; width:100%; height:auto; min-height:100%; position:relative; left:0; top:auto; bottom:-100vh; transition:opacity 0.2s ease-in, bottom 0.2s ease-in; overflow:hidden; border-radius:0;}
 .ui-m .ui-modal.open.type-full .ui-modal-wrap {bottom:0; opacity:1; top:auto;}
@@ -139,11 +139,23 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-m .ui-modal.ps-center.is-over .ui-modal-wrap {margin:0;}
 
 
-/* ui modal :z-index 1 ~ 99 */
-/* .modal-backdrop {display:none; opacity:0; position:fixed; top:0; left:0; z-index:0; width:100%; height:200%; background-color:rgba(0,0,0,0.7);}
-.modal-open {overflow:hidden; padding-right:17px}
-.modal-open .base-layer {width:100%; height:100%; position:fixed; overflow:hidden;}
- */
+/* ui scroll bar : base */
+.ui-scrollbar {position:relative; overflow:hidden;}
+.ui-scrollbar-item.ready{position:absolute; top:0; left:0; width:100%; height:100% !important; overflow:scroll !important;}
+.ui-scrollbar-item::-webkit-scrollbar,
+.ui-scrollbar::-webkit-scrollbar{width:0; height:0;}
+
+
+.ui-scrollbar-item {position:absolute; /* background-attachment: fixed; */}
+.ie .ui-bgscroll {transition:background-position 0.3s} 
+
+.ui-scrollbar-barwrap.type-y {position:absolute; top:0; right:0; width:10px; height:100%; background:rgba(0,0,0,0.1); z-index:100;}
+.type-y .ui-scrollbar-barwrap-scope {position: relative; top:0; left:0; width:100%;}
+.type-y .ui-scrollbar-bar {position:absolute; top:0; right:2px; width:6px; margin:0; height:20px; background:#fff; opacity:1; border-radius:2px;}
+.ui-scrollbar:hover .ui-scrollbar-bar {opacity:1; box-shadow:0 0 5px rgba(0,0,0,0.3)}
+
+.ui-scrollbar-barwrap.type-x {position:absolute; bottom:0; left:0; width:100%; height:10px; background:rgba(0,0,0,0.1); z-index:100;}
+.type-x .ui-scrollbar-bar {position:absolute; top:2px; left:0; width:20px; margin:0; height:6px; background:#fff; opacity:1; border-radius:2px;}
 
 
 
@@ -377,7 +389,6 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 .ui-select-wrap.bottom {top:39px}
 .ui-select-wrap {display:none; position:absolute; z-index:100; left:0; width:auto; border:1px solid #000; background:#fff; overflow-y:auto; max-height:162px}
 .ui-select-wrap.ui-scrollbar {position: absolute; min-height:162px}
-.ui-scrollbar-item {overflow:hidden;}
 .ui-select-opt {display:block; float:left; width:100%; padding:5px 20px 5px 10px; height:40px; text-align:left; background:#fff; white-space:nowrap}
 .ui-select-opt.selected {font-weight:700; text-decoration:underline; background:#444; color:#fff;}
 .ui-select-opts input:focus,
@@ -703,12 +714,3 @@ button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; d
 
 }
 
-.ui-scrollbar-barwrap.type-y {position:absolute; top:0; right:0; width:10px; height:100%; background:rgba(0,0,0,0.1); z-index:100;}
-.type-y .ui-scrollbar-bar {position:absolute; top:0; right:2px; width:6px; margin:2px 0; height:20px; background:#fff; opacity:1; border-radius:2px;}
-.ui-scrollbar:hover .ui-scrollbar-bar {opacity:1; box-shadow:0 0 5px rgba(0,0,0,0.3)}
-.ui-scrollbar {position:relative; overflow:auto;}
-.ui-scrollbar-item {position: absolute; /* background-attachment: fixed; */}
-.ie .ui-bgscroll {transition:background-position 0.3s} 
-
-.ui-scrollbar-barwrap.type-x {position:absolute; bottom:0; left:0; width:100%; height:10px; background:rgba(0,0,0,0.1); z-index:100;}
-.type-x .ui-scrollbar-bar {position:absolute; top:2px; left:0; width:20px; margin:0 2px; height:6px; background:#fff; opacity:1; border-radius:2px;}
