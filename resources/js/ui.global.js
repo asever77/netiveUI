@@ -804,29 +804,21 @@ if (!Object.keys){
 
 	/* ------------------------
 	 * [base] scroll bar
-	 * date : 
+	 * date : 2020.06.12
 	------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
 		uiScrollBar: function (opt) {
 			return createuiScrollBar(opt);
-		},
-		uiScrollBarAct: function (opt) {
-			return createuiScrollBarAct(opt);
-		},
-		uiScrollBarReset: function (opt) {
-			return createuiScrollBarReset(opt);
 		}
 	});
 	win[global].uiScrollBar.option = {
 		id: false,
-		callback:false,
-		top: 0
+		callback:false
 	};
-	win[global].uiScrollBar.timer = {};
-	win[global].uiScrollBar.overlapExe = 0;
 	function createuiScrollBar(opt) {
 		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
 			id = opt.id,
+			callback = opt.callback,
 			$base = !id ? $('.ui-scrollbar') : $('[scroll-id="' + id +'"]');
 
 		$base.each(function (i) {
@@ -834,16 +826,21 @@ if (!Object.keys){
 		});
 
 		function scrollbarReady(t, i) {
-			var $wrap = t,
-				$item = $wrap.children('.ui-scrollbar-item'),
-				$itemWrap = $item.children('.ui-scrollbar-wrap'),
-				html_scrollbar = '';
+			var $wrap = t;
+			console.log(callback);
+			$wrap.data('callback', callback);
+			$wrap.find('> .ui-scrollbar-item').contents().unwrap();
+			$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
+			$wrap.children('.ui-scrollbar-barwrap').remove();
+			$wrap.wrapInner('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap"></div></div>');
+
+			var	$item = $wrap.children('.ui-scrollbar-item');
+			var	$itemWrap = $item.children('.ui-scrollbar-wrap');
+
+			var	html_scrollbar = '';
 
 			//reset
-			$wrap.data('ready', false);
-			$wrap.children('.ui-scrollbar-barwrap').remove();
-			$item.removeClass('ready');
-
+			$wrap.data('ready', false).removeClass('ready');
 
 			win[global].uiLoading({
 				id: $wrap,
@@ -855,23 +852,24 @@ if (!Object.keys){
 				wrapH = $wrap.innerHeight(),
 				wrapW = $wrap.innerWidth();
 
+			
 			$item.data('opt', {'itemH':itemH, 'itemW':itemW, 'wrapH':wrapH, 'wrapW':wrapW });
 
 			if (!$wrap.data('ready') || !$wrap.attr('scroll-id')) {
 				!$wrap.attr('scroll-id') ?
-					$wrap.css('overflow', 'hidden').attr('scroll-id', 'uiScrollBar_' + i).data('ready', true) :
-					$wrap.css('overflow', 'hidden').data('ready', true);
+					$wrap.css('overflow', 'hidden').attr('scroll-id', 'uiScrollBar_' + i).data('ready', true).addClass('ready') :
+					$wrap.css('overflow', 'hidden').data('ready', true).addClass('ready');
 
-				$item.addClass('ready').attr('tabindex', 0);
+				$item.attr('tabindex', 0);
 
 				if (wrapH < itemH) {
 					html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
-					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">세로 스크롤버튼</span></button>';
+					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">scroll</span></button>';
 					html_scrollbar += '</div>';
 				}
 				if (wrapW < itemW) {
 					html_scrollbar += '<div class="ui-scrollbar-barwrap type-x" >';
-					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="x"><span class="hide">가로 스크롤버튼</span></button>';
+					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="x"><span class="hide">scroll</span></button>';
 					html_scrollbar += '</div>';
 				}
 
@@ -886,17 +884,15 @@ if (!Object.keys){
 				$barX.css('width', barW + '%').data('width', barW);
 
 				scrollEvent($item);
-				
-				
-				var timer;
-				timer = setTimeout(function(){
+				setTimeout(function(){
 					var opt = $item.data('opt');
-
+					
+					console.log(opt.itemH, $itemWrap.outerHeight())
 					if (opt.itemH !== $itemWrap.outerHeight()) {
 						$plugins.uiScrollBar({
-							id:$wrap.attr('scroll-id')
+							id: $wrap.attr('scroll-id'),
+							callback: callback
 						});
-						clearTimeout(timer);
 					}
 
 					win[global].uiLoading({
@@ -912,15 +908,13 @@ if (!Object.keys){
 				$(doc).find('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
 					dragMoveAct(e, this);
 				});
-
 			}
-		}
-		
-		
+		}		
 		function scrollEvent(t){
 			var $this = $(t),
-				$barY = $this.closest('.ui-scrollbar').find('> .type-y .ui-scrollbar-bar'),
-				$barX = $this.closest('.ui-scrollbar').find('> .type-x .ui-scrollbar-bar');
+				$wrap = $this.closest('.ui-scrollbar'),
+				$barY = $wrap.find('> .type-y .ui-scrollbar-bar'),
+				$barX = $wrap.find('> .type-x .ui-scrollbar-bar');
 			
 			var opt = $this.data('opt'),
 				itemH = opt.itemH,
@@ -938,34 +932,32 @@ if (!Object.keys){
 				wPer = Math.round(scrL / (itemW - wrapW) * 100),
 				_wPer = (barW / 100) * wPer;
 
+			var callback = $wrap.data('callback');
+
 			$barY.css('top', hPer - _hPer + '%');
 			$barX.css('left', wPer - _wPer + '%');
-		}
 
+			if (!!callback) {
+				hPer === 100 && callback(); 
+			}
+		}
 		function dragMoveAct(e, t) {
 			var $bar = $(t),
 				$uiScrollbar = $bar.closest('.ui-scrollbar'),
 				$barWrap = $bar.closest('.ui-scrollbar-barwrap'),
-				$item = $uiScrollbar.find('> .ui-scrollbar-item'),
+				$wrap = $bar.closest('.ui-scrollbar'),
+				$item = $uiScrollbar.find('> .ui-scrollbar-item');
 
-				y_s = 0,
-				t_s = $bar.position().top,
-				off_t = $barWrap.offset().top,
+			var off_t = $barWrap.offset().top,
 				w_h = $barWrap.innerHeight(),
-				s_h = w_h - $bar.outerHeight(true),
-				
-				x_s = 0,
-				l_s = $bar.position().left,
 				off_l = $barWrap.offset().left,
 				w_w = $barWrap.innerWidth(),
-				s_w = w_w - $bar.outerWidth(true),
-
 				barH = $bar.data('height'),
 				barW = $bar.data('width'),
-
 				opt = $item.data('opt'),
-
 				moving = false;
+
+			var yRPer, xRPer;
 						
 			$('body').addClass('scrollbar-move');
 
@@ -997,8 +989,8 @@ if (!Object.keys){
 				xR < 0 ? xR = 0 : '';
 				xR > w_w ? xR = w_w : '';
 
-				var yRPer = Math.round(yR / w_h * 100);
-				var xRPer = Math.round(xR / w_w * 100);
+				yRPer = Math.round(yR / w_h * 100);
+				xRPer = Math.round(xR / w_w * 100);
 				var nPerY = yRPer - Math.round(barH / 100 * yRPer);
 				var nPerX = xRPer - Math.round(barW / 100 * xRPer);
 
@@ -1008,52 +1000,17 @@ if (!Object.keys){
 				$item.scrollLeft(opt.itemW * nPerX / 100);
 
 			}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function () {
+				var callback = $wrap.data('callback');
+
+				if (!!callback) {
+					yRPer === 100 && callback(); 
+				}
+
 				$('body').removeClass('scrollbar-move');
 				$(doc).off('mousemove.bar mouseup.bar touchmove.bar');
 			});
 		}
 	}
-	function createuiScrollBarAct(opt) {
-		var $this = $('#' + opt.id),
-			targetId = opt.targetid, 
-			$item = $this.find('> .ui-scrollbar-item'),
-			$bar = $this.find('> .ui-scrollbar-barwrap .ui-scrollbar-bar');
-
-		$item.css('top',0);
-		$bar.css('top',0);
-
-		var	item_h = $item.outerHeight(),
-			target_top = targetId === undefined ? 0 : $('#' + targetId).offset().top,
-			this_top =  $this.offset().top,
-			this_h = $this.outerHeight(),
-			barwrap_h = $this.find('> .ui-scrollbar-barwrap').outerHeight(true),
-			bar_h = $bar.outerHeight(true),
-			per ;
-
-		$this.data('tabmove', true);
-
-		if (item_h - (target_top - this_top) < this_h ) {
-			$item.css('top', (item_h - this_h) * -1);
-			$bar.css('top', Math.floor(barwrap_h - bar_h)  + 'px');
-		} else {
-			per = (target_top - this_top) / (item_h - this_h) * 100;
-			$item.css('top', (target_top - this_top) * -1);
-			$bar.css('top', Math.floor((barwrap_h - bar_h) / 100) * per + 'px');
-		}
-	}
-	function createuiScrollBarReset(opt){
-		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
-			sid = opt.id,
-			$base = !sid ? $('.ui-scrollbar') : $('#' + opt.id);
-
-		$base.data('ready',false);
-		$('.ui-scrollbar').off('keydown.bb');
-		$('.ui-scrollbar').off('mousewheel.aa DOMMouseScroll.aa');
-		$base.find('> .ui-scrollbar-barwrap').remove();
-		$base.find('> .ui-scrollbar-item').removeAttr('style');
-
-	}
-	
 
 
 	/* ------------------------
@@ -4743,10 +4700,6 @@ if (!Object.keys){
 			$body.addClass('dim-dropdown');
 			$body.data('scrolling') === 'yes' ? win[global].uiScrollingCancel() : '';
 
-			$plugins.uiScrollBarReset({
-				id: _$wrap.attr('id')
-			});
-			
 
 			if (!_$sel.data('expanded')) {
 				_$sel.data('expanded', true).attr('aria-expanded', true);
@@ -4761,9 +4714,6 @@ if (!Object.keys){
 				_$wrap.css({
 					'min-height': _$opts.outerHeight(),
 					overflow: 'hidden'
-				});
-				$plugins.uiScrollBarReset({
-					id: _$wrap.attr('id')
 				});
 			} else {
 				customscroll

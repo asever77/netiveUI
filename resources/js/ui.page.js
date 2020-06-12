@@ -403,7 +403,11 @@
     }
 
     $plugins.page.pageScrollBar = function(){
-        $plugins.uiScrollBar();
+        $plugins.uiScrollBar({
+            callback: function(){
+                console.log('end')
+            }
+        });
         //$plugins.uiScrollBar({ id:'scrbar1', top:20 });
     }
 
