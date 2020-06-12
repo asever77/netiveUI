@@ -146,7 +146,7 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-scrollbar::-webkit-scrollbar{width:0; height:0;}
 
 
-.ui-scrollbar-item {position:absolute; /* background-attachment: fixed; */}
+.ui-scrollbar-item {position:absolute;}
 .ie .ui-bgscroll {transition:background-position 0.3s} 
 
 .ui-scrollbar-barwrap.type-y {position:absolute; top:0; right:0; width:10px; height:100%; background:rgba(0,0,0,0.1); z-index:100;}

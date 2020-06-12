@@ -827,7 +827,7 @@ if (!Object.keys){
 	function createuiScrollBar(opt) {
 		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
 			id = opt.id,
-			$base = !id ? $('.ui-scrollbar') : $('#' + id);
+			$base = !id ? $('.ui-scrollbar') : $('[scroll-id="' + id +'"]');
 
 		$base.each(function (i) {
 			scrollbarReady($(this), i);
@@ -836,7 +836,19 @@ if (!Object.keys){
 		function scrollbarReady(t, i) {
 			var $wrap = t,
 				$item = $wrap.children('.ui-scrollbar-item'),
+				$itemWrap = $item.children('.ui-scrollbar-wrap'),
 				html_scrollbar = '';
+
+			//reset
+			$wrap.data('ready', false);
+			$wrap.children('.ui-scrollbar-barwrap').remove();
+			$item.removeClass('ready');
+
+
+			win[global].uiLoading({
+				id: $wrap,
+				visible: true
+			});
 
 			var itemH = $item.outerHeight(true),
 				itemW = $item.outerWidth(true),
@@ -872,17 +884,39 @@ if (!Object.keys){
 
 				$barY.css('height', barH + '%').data('height', barH);
 				$barX.css('width', barW + '%').data('width', barW);
+
+				scrollEvent($item);
+				
+				
+				var timer;
+				timer = setTimeout(function(){
+					var opt = $item.data('opt');
+
+					if (opt.itemH !== $itemWrap.outerHeight()) {
+						$plugins.uiScrollBar({
+							id:$wrap.attr('scroll-id')
+						});
+						clearTimeout(timer);
+					}
+
+					win[global].uiLoading({
+						id: $wrap,
+						visible: false
+					});
+				}, 1000);
+
+				//event
+				$(doc).find('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
+					scrollEvent(this);
+				});
+				$(doc).find('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
+					dragMoveAct(e, this);
+				});
+
 			}
 		}
 		
-		//event
-		$('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
-			scrollEvent(this);
-		});
-		$('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
-			dragMoveAct(e, this);
-		});
-
+		
 		function scrollEvent(t){
 			var $this = $(t),
 				$barY = $this.closest('.ui-scrollbar').find('> .type-y .ui-scrollbar-bar'),
