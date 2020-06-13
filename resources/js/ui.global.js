@@ -843,13 +843,12 @@ if (!Object.keys){
 			var	$itemWrap = $item.children('.ui-scrollbar-wrap');
 
 			var cssDisplay = $wrap.css('display'),
-				cssPadding = $wrap.css('padding'),
-				cssMargin = $wrap.css('margin');
+				cssPadding = $wrap.css('padding');
 
+			console.log('cssPadding', cssPadding);
 			$itemWrap.css({
 				display: cssDisplay,
-				padding: cssPadding,
-				cssMargin: cssMargin
+				padding: cssPadding
 			});
 
 			var	html_scrollbar = '';
@@ -893,8 +892,6 @@ if (!Object.keys){
 				$barY.css('height', barH + '%').data('height', barH);
 				$barX.css('width', barW + '%').data('width', barW);
 				
-				
-
 				scrollEvent($item);
 				setTimeout(function(){
 					var opt = $item.data('opt');
@@ -917,7 +914,7 @@ if (!Object.keys){
 						}
 						
 					} else {
-						$wrap.css('height', hn + 'px');
+						// $wrap.css('height', hn + 'px');
 						$wrap.addClass('view-scrollbar');
 					}
 				}, 500);
