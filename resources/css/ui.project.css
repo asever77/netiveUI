@@ -294,3 +294,10 @@ fieldset{margin:0}
 
 /* dropdown */
 .ui-drop-pnl{width:400px}
+
+.scrollbox-test .ui-scrollbox-cont{padding:60px 0; background:#f1f1f1; margin:10px 0;}
+.scrollbox-test b{display:block; width:100%; text-align:center; font-weight: 900; font-size:20vw; opacity: 0.3;}
+
+/* .ui-modal-body.ui-scrollbar{padding:0} */
+.ui-scrollbar.test1{padding:10px; margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:200px; border:1px dashed #ccc;}
+.ui-scrollbar.test2{padding:80px; margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:200px; border:1px dashed #ccc;}

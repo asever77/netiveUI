@@ -94,7 +94,12 @@
                 modalHeight: $btn.attr('modal-height') === undefined ? false : $btn.attr('modal-height'), 
                 innerScroll : $btn.attr('modal-scroll') === undefined ? false : $btn.attr('modal-scroll') === 'true' && true, 
                 closeCallback: function(v) { console.log('close callback', v); },
-                callback: function(v) { console.log('callback', v); }
+                callback: function(v) { 
+                    $plugins.uiScrollBar({
+                        id: $('#' + $btn.attr('modal-id')).find('.ui-scrollbar')
+                    })
+                    console.log('callback', v); 
+                }
             });
         })
         
@@ -722,19 +727,20 @@
         }
     }
 
-    $plugins.page.modal = function(){
-        $('.btn-base').on('click', function(){
-            switch($(this).attr('id')){
-            case 'modalOpen1':
-                $plugins.uiModal({ id:'modal_sample1', link:'/netiveUI/html/modal/modalSample1.html', callback:$plugins.page.callback });
-                break;
-            case 'modalOpen2':
-                $plugins.uiModal({ id:'modal_sample2', link:'/netiveUI/html/modal/modalSample2.html', callback:$plugins.page.callback, width:700 });
-                break;
-            }
 
-        });
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     $plugins.page.popup = function(){
        

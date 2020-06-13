@@ -819,7 +819,7 @@ if (!Object.keys){
 		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
 			id = opt.id,
 			callback = opt.callback,
-			$base = !id ? $('.ui-scrollbar') : $('[scroll-id="' + id +'"]');
+			$base = !id ? $('.ui-scrollbar') : typeof id === 'object' ? id : $('[scroll-id="' + id +'"]');
 
 		$base.each(function (i) {
 			scrollbarReady($(this), i);
@@ -827,33 +827,43 @@ if (!Object.keys){
 
 		function scrollbarReady(t, i) {
 			var $wrap = t;
-			console.log(callback);
-			$wrap.data('callback', callback);
+
+			$wrap.css('height', $wrap.outerHeight() + 'px')
+				.removeClass('ready')
+				.data('callback', callback)
+				.data('ready', false);
+
 			$wrap.find('> .ui-scrollbar-item').contents().unwrap();
 			$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
 			$wrap.children('.ui-scrollbar-barwrap').remove();
+
 			$wrap.wrapInner('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap"></div></div>');
 
 			var	$item = $wrap.children('.ui-scrollbar-item');
 			var	$itemWrap = $item.children('.ui-scrollbar-wrap');
 
-			var	html_scrollbar = '';
+			var cssDisplay = $wrap.css('display'),
+				cssPadding = $wrap.css('padding'),
+				cssMargin = $wrap.css('margin');
 
-			//reset
-			$wrap.data('ready', false).removeClass('ready');
-
-			win[global].uiLoading({
-				id: $wrap,
-				visible: true
+			$itemWrap.css({
+				display: cssDisplay,
+				padding: cssPadding,
+				cssMargin: cssMargin
 			});
+
+			var	html_scrollbar = '';
+			var isScrollX, isScrollY;
+			
+			//reset
 
 			var itemH = $item.outerHeight(true),
 				itemW = $item.outerWidth(true),
 				wrapH = $wrap.innerHeight(),
 				wrapW = $wrap.innerWidth();
 
-			
 			$item.data('opt', {'itemH':itemH, 'itemW':itemW, 'wrapH':wrapH, 'wrapW':wrapW });
+
 
 			if (!$wrap.data('ready') || !$wrap.attr('scroll-id')) {
 				!$wrap.attr('scroll-id') ?
@@ -882,24 +892,35 @@ if (!Object.keys){
 
 				$barY.css('height', barH + '%').data('height', barH);
 				$barX.css('width', barW + '%').data('width', barW);
+				
+				
 
 				scrollEvent($item);
 				setTimeout(function(){
 					var opt = $item.data('opt');
+					var h = opt.itemH;
+					var hn = $itemWrap.outerHeight(true);
+					var w = opt.itemW;
+					var wn = $itemWrap.outerWidth(true);
 					
-					console.log(opt.itemH, $itemWrap.outerHeight())
-					if (opt.itemH !== $itemWrap.outerHeight()) {
-						$plugins.uiScrollBar({
-							id: $wrap.attr('scroll-id'),
-							callback: callback
-						});
-					}
+					console.log(w,wn,h > hn)
 
-					win[global].uiLoading({
-						id: $wrap,
-						visible: false
-					});
-				}, 1000);
+					if (h !== hn && h < hn) {
+						if (h - 5 === hn) {
+							$wrap.addClass('view-scrollbar');
+						} else {
+							$wrap.addClass('view-scrollbar');
+							$plugins.uiScrollBar({
+								id: $wrap.attr('scroll-id'),
+								callback: callback
+							});
+						}
+						
+					} else {
+						$wrap.css('height', hn + 'px');
+						$wrap.addClass('view-scrollbar');
+					}
+				}, 500);
 
 				//event
 				$(doc).find('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
@@ -954,29 +975,30 @@ if (!Object.keys){
 				w_w = $barWrap.innerWidth(),
 				barH = $bar.data('height'),
 				barW = $bar.data('width'),
-				opt = $item.data('opt'),
-				moving = false;
+				opt = $item.data('opt');
 
 			var yRPer, xRPer;
-						
+
+			var $btn = e.target;
+			var isXY = $btn.getAttribute('data-scrollxy');
+			console.log($btn.getAttribute('data-scrollxy'))
+
 			$('body').addClass('scrollbar-move');
 
 			$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function (e) {
-				moving = true;
 				var y_m, 
 					x_m;
 				
 				if (e.touches === undefined) {
 					if (e.pageY !== undefined) {
 						y_m = e.pageY;
-					}
-					if (e.pageX !== undefined) {
-						x_m = e.pageX;
-					}
-					if (e.pageY === undefined) {
+					} else if (e.pageY === undefined) {
 						y_m = e.clientY;
 					}
-					if (e.pageX === undefined) {
+
+					if (e.pageX !== undefined) {
+						x_m = e.pageX;
+					} else if (e.pageX === undefined) {
 						x_m = e.clientX;
 					}
 				}
@@ -989,15 +1011,20 @@ if (!Object.keys){
 				xR < 0 ? xR = 0 : '';
 				xR > w_w ? xR = w_w : '';
 
-				yRPer = Math.round(yR / w_h * 100);
-				xRPer = Math.round(xR / w_w * 100);
-				var nPerY = yRPer - Math.round(barH / 100 * yRPer);
-				var nPerX = xRPer - Math.round(barW / 100 * xRPer);
+				yRPer = yR / w_h * 100;
+				xRPer = xR / w_w * 100;
+				var nPerY = (yRPer - (barH / 100 * yRPer)).toFixed(2);
+				var nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
 
-				$bar.css('top', nPerY + '%');
-				$bar.css('left', nPerX + '%');
-				$item.scrollTop(opt.itemH * nPerY / 100);
-				$item.scrollLeft(opt.itemW * nPerX / 100);
+				if (isXY === 'y') {
+					$bar.css('top', nPerY + '%');
+					$item.scrollTop(opt.itemH * nPerY / 100);
+				} else {
+					$bar.css('left', nPerX + '%');
+					$item.scrollLeft(opt.itemW * nPerX / 100);
+				}
+				
+				
 
 			}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function () {
 				var callback = $wrap.data('callback');
@@ -2544,6 +2571,71 @@ if (!Object.keys){
     }
 
 
+	/* ------------------------
+	* name : scroll box
+	* date : 2020-06-13
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiScrollBox: function (opt) {
+			return createUiScrollBox(opt);
+		}
+	});
+    function createUiScrollBox(opt) {
+		var $wrap = $('.ui-scrollbox'),
+			$item = $wrap.find('> .ui-scrollbox-item'),
+            len = $item.length,
+			i = 0;
+
+		var checkVisible = function (){
+			if ($(win).outerHeight() > $item.eq(i).offset().top && i < len) {
+				$item.eq(i).addClass('visible');
+				i = i + 1;
+				checkVisible();
+			}
+		}
+		checkVisible();
+
+        $(win).off('scroll.win').on('scroll.win', act);
+
+		function act() {
+			var $win = $(win),
+                win_h = $win.outerHeight(),
+                scr_t = $win.scrollTop(),
+                add_h = (win_h / 6),
+				$wrap = $('.ui-scrollbox'),
+				$item = $wrap.find('> .ui-scrollbox-item');
+
+			var n = i;
+            var itemCheck = function () {
+                var $itemN = $item.eq(n);
+
+                if (n >= len) {
+                    return false;
+                }
+
+                Math.abs(win_h - $itemN.offset().top) + add_h < scr_t ?
+                    itemShow():
+					itemHide();
+
+				// Math.abs(win_h - $itemN.offset().top) + add_h < scr_t ?
+                //     itemShow():
+				// 	$(win).outerHeight() > $itemN.offset().top + 65 ? 
+				// 		itemShow():
+				// 		itemHide();
+                    
+				function itemShow(){
+					$itemN.addClass('visible');
+					n = n + 1;
+					itemCheck();
+				}
+				function itemHide(){
+					$itemN.removeClass('visible');
+				}
+            }
+			itemCheck();
+			
+		}
+    }
 
 
 
@@ -4305,75 +4397,7 @@ if (!Object.keys){
 	}
 
 
-	/* ------------------------------------------------------------------------
-	* name : accordion tab  
-	* Ver. : v1.0.0
-	* date : 2018-12-21
-	* EXEC statement
-	* - $plugins.uiAccordion({ option });
-	* - $plugins.uiAccordionToggle({ option });
-	------------------------------------------------------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiScrollBox: function (opt) {
-			return createUiScrollBox(opt);
-		}
-	});
-
-    function createUiScrollBox(opt) {
-        var callback = opt.callback,
-            len = $('.ui-scrollbox-item').length;
-
-        if ($(win).outerHeight() > $('.ui-scrollbox-item').eq(0).offset().top) {
-            $('.ui-scrollbox-item').eq(0).addClass('visible');
-            callback({ current:0, visible: true});
-        }
-
-        $(win).off('scroll.win').on('scroll.win', function(){
-            var $win = $(win),
-                $body = $('body'),
-                win_h = $win.outerHeight(),
-                scr_t = $win.scrollTop(),
-                add_h = (win_h / 6),
-                item = $('.ui-scrollbox-item');
-
-            var n = 0;
-
-            if (Math.abs(win_h - item.eq(0).offset().top) + add_h < scr_t) {
-                item.eq(0).addClass('visible');
-                n = 0;
-                callback({ current: n, visible:true });
-                itemCheck();
-            } else {
-                if ($(win).outerHeight() > $('.ui-scrollbox-item').eq(0).offset().top + 65) {
-                    item.eq(0).addClass('visible');
-                    n = 0;
-                    callback({ current: n, visible:true });
-                    itemCheck();
-                } else {
-                    callback({ current: n, visible:false });
-                    item.eq(0).removeClass('visible');
-                }
-            }
-
-            function itemCheck() {
-                n = n + 1;
-                var items = item.eq(n);
-
-                if (n >= len) {
-                    return false;
-                }
-
-                if (Math.abs(win_h - items.offset().top) + add_h < scr_t) {
-                    items.addClass('visible');
-                    callback({ current: n, visible:true });
-                    itemCheck();
-                } else {
-                    items.removeClass('visible');
-                    callback({ current: n, visible:false });
-                }
-            }
-        })
-    }
+	
 	
 	/* ------------------------------------------------------------------------
 	* name : select(radio & checkbox)

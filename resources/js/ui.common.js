@@ -32,8 +32,14 @@
                     case 'scrollBar' :
                         fristHref = '/netiveUI/html/components/scrollBar.html';
                         break;
-                     case 'scrollBox' :
+                    case 'scrollBox' :
                         fristHref = '/netiveUI/html/components/scrollBox.html';
+                        break;
+                    case 'loading' :
+                        fristHref = '/netiveUI/html/components/loading.html';
+                        break;
+                    case 'tab' :
+                        fristHref = '/netiveUI/html/components/tab.html';
                         break;
                 }
             } 
