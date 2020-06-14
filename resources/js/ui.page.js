@@ -513,11 +513,28 @@
     }
 
     $plugins.page.pageTab = function(){
-        $plugins.uiTab({ id:'exeTab1', current:0, label:'인증서', callback:tabCallback });
-        $plugins.uiTab({ id:'exeTab12', current:0, label:'인증서2', callback:tabCallback });
-        $plugins.uiTab({ id:'exeTab2', current:2, unres:true, callback: tabCallback2  });
+        $plugins.uiTab({ 
+            id:'exeTab1', 
+            current:0, 
+            callback:tabCallback 
+        });
+        $plugins.uiTab({ 
+            id:'exeTab12', 
+            current:0, 
+            callback:tabCallback 
+        });
+        $plugins.uiTab({ 
+            id:'exeTab2', 
+            current:2, 
+            onePanel:true, 
+            callback: tabCallback2 
+        });
 
-        $plugins.uiTab({ id:'exeTab4', current:0, callback: tabCallback2  });
+        $plugins.uiTab({ 
+            id:'exeTab4', 
+            current:0, 
+            callback: tabCallback2 
+        });
         
         function tabCallback(v){
             console.log(v);
@@ -526,7 +543,7 @@
             $('#'+ v.id).find('.ui-tab-tit').text($('#'+ v.id).find('.ui-tab-btn').eq(v.current).text());
             console.log(v);
         }
-        
+        $plugins.uiScrollBar();
         $('.ui-tab-btns').on('scroll', function(){
             //console.log($(this).scrollLeft());
         });
