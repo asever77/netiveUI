@@ -813,11 +813,13 @@ if (!Object.keys){
 	});
 	win[global].uiScrollBar.option = {
 		id: false,
-		callback:false
+		callback:false,
+		space: false
 	};
 	function createuiScrollBar(opt) {
 		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
 			id = opt.id,
+			space = opt.space,
 			callback = opt.callback,
 			$base = !id ? $('.ui-scrollbar') : typeof id === 'object' ? id : $('[scroll-id="' + id +'"]');
 
@@ -827,42 +829,45 @@ if (!Object.keys){
 
 		function scrollbarReady(t, i) {
 			var $wrap = t;
-
-			$wrap.css('height', $wrap.outerHeight() + 'px')
-				.removeClass('ready')
+			var	html_scrollbar = '';
+			var isScrollX, isScrollY;
+			
+			$wrap.removeClass('ready')
 				.data('callback', callback)
 				.data('ready', false);
-
 			$wrap.find('> .ui-scrollbar-item').contents().unwrap();
 			$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
 			$wrap.children('.ui-scrollbar-barwrap').remove();
+
+			var wrapW = $wrap.innerWidth();
+			var wrapH = $wrap.innerHeight();
 
 			$wrap.wrapInner('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap"></div></div>');
 
 			var	$item = $wrap.children('.ui-scrollbar-item');
 			var	$itemWrap = $item.children('.ui-scrollbar-wrap');
 
+			//style 상속
 			var cssDisplay = $wrap.css('display'),
 				cssPadding = $wrap.css('padding');
-
-			console.log('cssPadding', cssPadding);
 			$itemWrap.css({
 				display: cssDisplay,
 				padding: cssPadding
 			});
 
-			var	html_scrollbar = '';
-			var isScrollX, isScrollY;
+			if (!space) {
+				cssDisplay === 'inline-block' && $itemWrap.css('display','block');
+				$itemWrap.css('width','100%');
+			} 
+
+			var itemW = $item.outerWidth(true);
+
+			!space && $item.css('width','100%');
+			$wrap.css('overflow','hidden');
+
+			var itemH = $item.outerHeight(true);
 			
-			//reset
-
-			var itemH = $item.outerHeight(true),
-				itemW = $item.outerWidth(true),
-				wrapH = $wrap.innerHeight(),
-				wrapW = $wrap.innerWidth();
-
 			$item.data('opt', {'itemH':itemH, 'itemW':itemW, 'wrapH':wrapH, 'wrapW':wrapW });
-
 
 			if (!$wrap.data('ready') || !$wrap.attr('scroll-id')) {
 				!$wrap.attr('scroll-id') ?
@@ -870,13 +875,15 @@ if (!Object.keys){
 					$wrap.css('overflow', 'hidden').data('ready', true).addClass('ready');
 
 				$item.attr('tabindex', 0);
-
+				$wrap.css('height', wrapH + 'px');
 				if (wrapH < itemH) {
+					space && $item.addClass('scroll-y-padding');
 					html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
 					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">scroll</span></button>';
 					html_scrollbar += '</div>';
 				}
 				if (wrapW < itemW) {
+					space && $item.addClass('scroll-x-padding');
 					html_scrollbar += '<div class="ui-scrollbar-barwrap type-x" >';
 					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="x"><span class="hide">scroll</span></button>';
 					html_scrollbar += '</div>';
@@ -900,7 +907,7 @@ if (!Object.keys){
 					var w = opt.itemW;
 					var wn = $itemWrap.outerWidth(true);
 					
-					console.log(w,wn,h > hn)
+					//console.log(w,wn,h > hn)
 
 					if (h !== hn && h < hn) {
 						if (h - 5 === hn) {
