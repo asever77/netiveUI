@@ -2,6 +2,13 @@
     console.log('page.js');
 
     'use strict';
+
+    $plugins.page.pagePrint = function(){
+        $('#prtTest').off('click.print').on('click.print', function(){
+            $plugins.uiPrint({ id:'prtSct' });
+        });
+        
+    }
     $plugins.page.pageTableCaption = function(){
         $plugins.uiCaption();
     }
@@ -603,6 +610,33 @@
     }
     
     $plugins.page.pageDatePicker = function(){
+
+        $('.day-start').each(function(){
+            var today = new Date(); 
+            var year = today.getFullYear(); // 년도
+            var month = today.getMonth() + 1;  // 월
+            var date = today.getDate();  // 날짜
+            var day = today.getDay();  // 요일
+            month = Number(month) < 10 ? '0'+ month : month;
+            $(this).attr('data-min', year + '-' + month + '-'+ date);
+            
+            today.setDate(today.getDate() + 15)
+            $(this).attr('data-max', year + '-' + month + '-'+ today.getDate());
+        });
+        $('.day-end').each(function(){
+            var today = new Date(); 
+            var year = today.getFullYear(); // 년도
+            var month = today.getMonth() + 1;  // 월
+            var date = today.getDate();  // 날짜
+            var day = today.getDay();  // 요일
+            month = Number(month) < 10 ? '0'+ month : month;
+            today.setDate(today.getDate() + 5);
+            $(this).attr('data-min', year + '-' + month + '-'+ today.getDate());
+            var month2 = today.getMonth() + 3;  // 월   
+            month2 = Number(month2) < 10 ? '0'+ month2 : month2;
+            $(this).attr('data-max', year + '-' + month2 + '-'+ date);
+        });
+
         $plugins.uiDatePicker({ 
             selector:'#uiDatePicker1', 
             openback: function(){

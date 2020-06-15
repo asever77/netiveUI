@@ -61,7 +61,7 @@ if (!Object.keys){
 				'hasOwnProperty',
 				'isPrototypeOf',
 				'propertyIsEnumerable',
-				'constructor'
+				'varructor'
 			],
 			dontEnumsLength = dontEnums.length;
 		
@@ -2880,40 +2880,231 @@ if (!Object.keys){
 	}   
 
 
+	/* ------------------------
+	* name : print
+	* date : 2020-06-14
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiPrint: function (opt) {
+			return createUiPrint(opt);
+		}
+	});
+	function createUiPrint(opt) {
+		var $print = typeof opt.id === 'object' ? opt.id : $('[print-id="'+ opt.id+'"]'),
+			$body = $('body'),
+			clone = $print.clone(),
+			html = '<div class="ui-print"></div>';
+		
+		function preview_print(){ 
+			var webBrowser ='<OBJECT ID="previewWeb" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
+			
+			doc.body.insertAdjacentHTML('beforeEnd', webBrowser);
+			previewWeb.ExecWB(7,1);
+			previewWeb.outerHTML='';
+		} 
+
+		if (self !== top) {
+			parent.$body.append(html);
+			parent.$('.ui-print').append(clone);
+			
+			win[global].browser.ie ? preview_print() : win.parent.print();
+
+			setTimeout(function () {
+				parent.$('.ui-print').remove();
+			}, 0);
+		} else {
+			$body.addClass('ui-print-ing').append(html);
+
+			$('.ui-print').append(clone);
+			
+			win[global].browser.ie ? preview_print() : win.print();
+			
+			setTimeout(function () {
+				$body.removeClass('ui-print-ing')
+				$('.ui-print').remove();
+			}, 0);
+		}
+	}
 
 
+	/* ------------------------
+	* name : tooltip
+	* date : 2020-06-15
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiTooltip: function (opt) {
+			return createUiTooltip(opt);
+		}
+	});
+	win[global].uiTooltip.option = {
+		visible: null,
+		id: false,
+		ps: false
+	};
+	function createUiTooltip(opt){
+		var opt = opt === undefined ? {} : opt,
+			opt = $.extend(true, {}, win[global].uiTooltip.option, opt);
+
+		var $btn = $('.ui-tooltip-btn'),
+			$tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false,
+			visible = opt.visible,
+			id = opt.id ? $tip.attr('id') : '',
+			
+			sp = 10,
+			ps = opt.ps,
+			timer,
+			class_ps = 'ps-ct ps-cb ps-lt ps-lb ps-rt ps-rb';
+
+		if (visible !== null) {
+			visible ? tooltipSet(id) : tooltipHide();
+		}
+
+		// $btn
+		// .on('click', function(e){
+		// 	e.preventDefault();
+		// 	tooltipSet($(this).attr('aria-describedby'));
+		// });
+
+		$btn
+		.off('mouseover.ui focus.ui').on('mouseover.ui focus.ui', function(e){
+			e.preventDefault();
+			tooltipSet(this);
+		})
+		.off('mouseleave.ui ').on('mouseleave.ui', function(){
+			tooltipHideDelay();
+
+			$('.ui-tooltip').on('mouseover.ui', function(){
+				clearTimeout(timer);
+			}).on('mouseleave.ui', function(e){
+				tooltipHideDelay();
+			});
+		});
+
+		$btn
+		.off('touchstart.uitooltip').on('touchstart.uitooltip', function(e){
+			e.preventDefault();
+			var $this = $(this);
+
+			if (!$this.data('view')){
+				$this.data('view', true);
+				tooltipHide();
+				tooltipSet(this);
+			} else {
+				$this.data('view', false);
+				tooltipHide();
+			}
+
+			// $(doc).off('click.bdd').on('click.bdd', function(e){
+			// 	//dropdown 영역 외에 클릭 시 판단
+			// 	if (!!$('body').data('dropdownOpened')){
+			// 		if ($('.ui-tooltip').has(e.target).length < 1) {
+			// 			tooltipHide();
+			// 		}
+			// 	}
+			// });
+		});
+
+		function tooltipSet(v) {
+			var $t = $(v);
+			var $win = $(win);
+			var $doc = $(doc);
+			var id = $t.attr('aria-describedby');
+			var src = $t.data('src');
+
+			var off_t = $t.offset().top;
+			var off_l =$t.offset().left;
+			var w = $t.outerWidth();
+			var h = $t.outerHeight();
+			var bw = $win.innerWidth();
+			var bh = $win.innerHeight();
+			var st = $doc.scrollTop();
+			var sl = $doc.scrollLeft();
+			
+			if (!!src && !$('#' + id).length) {
+				$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><div class="ui-tooltip-arrow"></div>')
+
+				$plugins.uiAjax({
+					id: $('#' + id),
+					url: src,
+					add: true,
+					callback: function(){
+						act();
+					}
+				});
+			} else {
+				act();
+			}
+			
+			function act(){
+				$('#' + id).removeClass(class_ps);	
+				tooltipShow(off_t, off_l, w, h, bw, bh, st, sl, id, false);
+			}
+		}
+		function tooltipHide() {
+			$('.ui-tooltip').removeAttr('style').attr('aria-hidden', true).removeClass(class_ps);
+		}
+		function tooltipHideDelay(){
+			timer = setTimeout(tooltipHide, 100);
+		}
+
+		function tooltipShow(off_t, off_l, w, h, bw, bh, st, sl, id) {
+			var $id = $('#' + id),
+				pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false,
+				psl = (bw / 2 > (off_l - sl) + (w / 2)) ? true : false,
+				tw = $id.outerWidth(),
+				th = $id.outerHeight(),
+				ps_l, ps_r, cursorCls = 'ps-';
+				
+			if (psl) {
+				if (off_l - sl > tw / 2) {
+					cursorCls += 'c';
+					ps_l = off_l - (tw / 2) + (w / 2);
+				} else {
+					cursorCls += 'l';
+					ps_l = off_l;
+				}
+			} else {
+				if (bw - (off_l - sl + w) > tw / 2) {
+					cursorCls += 'c';
+					ps_r = Math.ceil(off_l) - (tw / 2) + (w / 2);
+				} else {
+					cursorCls += 'r';
+					ps_r = off_l - tw + w;
+				}
+			}
+
+			ps ? cursorCls = 'ps-l' : '';
+			ps ? ps_l = off_l : '';
+			ps ? psl = true : '';
+			pst ? cursorCls += 'b' : cursorCls += 't';
+
+			if (!!$id.attr('modal')) {
+				if (!win[global].browser.oldie) {
+					ps_l = ps_l;
+					ps_r = ps_r;
+				}
+
+				win[global].browser.ie ? '' : off_t = off_t;
+			}
+
+			if (!!$id.closest('.type-fixed-bottom').length) {
+				off_t = off_t - $('ui-modal-tit').outerHeight();
+			}
+
+			$id.addClass(cursorCls).attr('aria-hidden', false).css({ 
+				display:'block'
+			}).css({
+				top : pst ? off_t + h + sp : off_t - th - sp,
+				left : psl ? ps_l : ps_r
+			});
+		}
+	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	
-
-
-
-
-	/* ------------------------------------------------------------------------
+	/* ------------------------
 	* name : date picker
-	* Ver. : v2.0
-	* date : 2020-01-02
-	* EXEC statement
-	* - $plugins.uiDatePicker({ option });
-	------------------------------------------------------------------------ */
+	* date : 2020-06-15
+	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
 		uiDatePicker: function (opt) {
 			return createUiDatePicker(opt);
@@ -3107,14 +3298,13 @@ if (!Object.keys){
 
 			if (dual) {
 				_calendarHtml += '<div class="datepicker-period-head">';
+
 				_calendarHtml += '<div class="n1">';
 				_calendarHtml += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
 				_calendarHtml += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
 				_calendarHtml += '</div>';
-				console.log(month)
 
 				_calendarHtml += '<div class="n2">';
-
 				if (month === 11) {
 					_calendarHtml += '<span class="year2" data-y="' + (year + 1) + '"><strong>' + (year + 1) + '</strong>년</span> ';
 					_calendarHtml += '<span class="month2" data-m="' + dateMonths[0] + '"><strong>' + dateMonths[0] + '</strong>월</span>';
@@ -3123,6 +3313,7 @@ if (!Object.keys){
 					_calendarHtml += '<span class="month2" data-m="' + dateMonths[month + 1] + '"><strong>' + dateMonths[month + 1] + '</strong>월</span>';
 				}
 				_calendarHtml += '</div>';
+
 				_calendarHtml += '</div>';
 				
 			} else {
@@ -3384,7 +3575,7 @@ if (!Object.keys){
 
 		//달력 Hide&Remove
 		function hideCalendar() {
-			const $dp = $('.ui-datepicker.visible'),
+			var $dp = $('.ui-datepicker.visible'),
 				$wrap = $dp.find('.datepicker-sec');
 			
 			$dp.removeClass('visible');
@@ -3395,13 +3586,13 @@ if (!Object.keys){
 
 		}
 		function datepickerClose(calendarEl) {
-			const $btn = $('#' + calendarEl.calId).closest('.ui-datepicker').find('.ui-datepicker-btn'),
+			var $btn = $('#' + calendarEl.calId).closest('.ui-datepicker').find('.ui-datepicker-btn'),
 				$dp = $("#" + calendarEl.dpId),
 				$sec = $('#' + calendarEl.calId);
 
 			$dp.removeClass('visible');
 			$dp.find('.ui-datepicker-btn').data('selected',false);
-			const closeback = !!$dp.data('opt').closeback ? $dp.data('opt').closeback : false;
+			var closeback = !!$dp.data('opt').closeback ? $dp.data('opt').closeback : false;
 			closeback ? closeback() : '';
 
 			$dp.on('transitionend', function(){
@@ -3426,7 +3617,7 @@ if (!Object.keys){
 		}
 		//달력 layout
 		function displayCalendar(calendarEl, v) {
-			const id_ = "#" + calendarEl.calId,
+			var id_ = "#" + calendarEl.calId,
 				$dp = $("#" + calendarEl.dpId),
 				$calWrap = $(id_);
 				
@@ -3667,7 +3858,7 @@ if (!Object.keys){
 
 		//event
 		$datepicker.find('.ui-datepicker-btn').off('click.uidatepicker').on('click.uidatepicker', function () {
-			const btn = $(this);
+			var btn = $(this);
 
 			if (!btn.data('selected')) {
 				$('.ui-datepicker-btn').data('selected', false);
@@ -3697,14 +3888,14 @@ if (!Object.keys){
 
 			(win[global].uiDatePicker.option.date_split === '.') ? regExp = /^([0-9]{4}).([0-9]{2}).([0-9]{2})/g : '';
 			
-			const openback = !!$this_wrap.data('opt').openback ? $this_wrap.data('opt').openback : false;
+			var openback = !!$this_wrap.data('opt').openback ? $this_wrap.data('opt').openback : false;
 			openback ? openback() : '';
 
 			hideCalendar();
 			// $('#' + inputId + '_end').val('');
 			// period ? $('#' + inputId).val('') : '';
 
-			let reset = regExp.test(_val),
+			var reset = regExp.test(_val),
 				calspaceHTML = '';
 
 			$this.data('sct', $(doc).scrollTop());
@@ -3775,6 +3966,55 @@ if (!Object.keys){
 			}
 		}
 	}  
+
+
+	/* ------------------------
+	* name : input cancel
+	* date : 2020-06-15
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiInputClear: function () {
+			return createUiInputClear();
+		}
+	});
+	function createUiInputClear(){
+		var $inp = $('.ui-inpcancel');
+
+		$inp.each(function(i){
+			var $this = $(this);
+			var $cancel = $this.next('.ui-inpcancel-btn');
+
+			$this.val() === '' ?
+				$cancel.remove():
+				$cancel.length === 0 ?
+				$this.after('<button type="button" class="ui-inpcancel-btn" data-id="'+ $this.attr('id') +'"><span>cancel</span></button>') : '';
+
+			$inp.eq(i).off('keyup.inpcancel').on('keyup.inpcancel', function(){
+				var _$this = $(this);
+
+				if (_$this.val() === '') {
+					_$this.next('.ui-inpcancel-btn').remove();
+				} else {
+					!!$('.ui-inpcancel-btn[data-id="'+ _$this.attr('id') +'"]').length ? '' :
+					_$this.after('<button type="button" class="ui-inpcancel-btn" data-id="'+ _$this.attr('id') +'"><span>cancel</span></button>');
+				}
+			});
+		});
+
+		//event
+		$(doc).off('click.inpcancel').on('click.inpcancel', '.ui-inpcancel-btn', function(){
+			$('#' + $(this).data('id')).val('').focus();
+			$(this).remove();
+		});
+	}
+
+
+
+
+
+
+
+
 
 
 
@@ -3868,10 +4108,10 @@ if (!Object.keys){
 		}
 	}
 	function createUiCountStep(opt) {
-		const $base = $('#' + opt.id);
-		const countNum = !!opt.value === true ? opt.value : $base.text();
+		var $base = $('#' + opt.id);
+		var countNum = !!opt.value === true ? opt.value : $base.text();
 
-		let count = 0,
+		var count = 0,
 			timer, diff, counter,
 			add = Math.ceil((countNum - count) / (countNum - count), -2),
 			j = 1,
@@ -3885,7 +4125,7 @@ if (!Object.keys){
 				diff = countNum - count;
 				(diff > 0) ? count += add + j : '';
 
-				let n = win[global].option.uiComma(count);
+				var n = win[global].option.uiComma(count);
 				$base.text(n);
 				v = v + 1;
 
@@ -3907,54 +4147,17 @@ if (!Object.keys){
 
 
 
+	
+
 	/* ------------------------------------------------------------------------
-	 * input form
-	 * input value clear button v1.0 
-	 * $plugins.uiInputClear
-	 * date : 2018-05-18
-	 * input value 값 입력 시 clear버튼 생성
-	 * 
 	 * input placeholder v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiInputClear: function () {
-			return createUiInputClear();
-		},
 		uiPlaceholder: function () {
 			return createUiPlaceholder();
 		}
 	});
-	function createUiInputClear(){
-		var $inp = $('.ui-inpcancel');
-
-		$inp.each(function(i){
-			var $this = $(this);
-
-			$this.val() === '' ?
-				$this.next('.ui-btn-cancel').remove():
-				$this.next('.ui-btn-cancel').length === 0 ?
-				$this.after('<button type="button" class="ui-btn-cancel" data-id="'+ $this.attr('id') +'"><span>입력내용 지우기</span></button>') : '';
-
-			//이벤트 부분 each함수 밖으로 거내보자.
-			$inp.eq(i).off('keyup.inpcancel').on('keyup.inpcancel', function(){
-				var _$this = $(this);
-
-				if (_$this.val() === '') {
-					_$this.next('.ui-btn-cancel').remove();
-				} else {
-					!!$('.ui-btn-cancel[data-id="'+ _$this.attr('id') +'"]').length ? '' :
-					_$this.after('<button type="button" class="ui-btn-cancel" data-id="'+ _$this.attr('id') +'"><span>입력내용 지우기</span></button>');
-				}
-			});
-		});
-
-		//event
-		$(doc).off('click.inpcancel').on('click.inpcancel', '.ui-btn-cancel', function(){
-			$('#' + $(this).data('id')).val('').focus();
-			$(this).remove();
-		});
-	}
 	function createUiPlaceholder(){
 		var $ph = $('[placeholder]'),
 			phname = '';
@@ -4367,55 +4570,7 @@ if (!Object.keys){
 
 
 
-	/* ------------------------------------------------------------------------
-	* name : print
-	* Ver. : v1.0.0
-	* date : 2018-12-21
-	* EXEC statement
-	* - $plugins.uiPrint({ option });
-	------------------------------------------------------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiPrint: function (opt) {
-			return createUiPrint(opt);
-		}
-	});
-	function createUiPrint(opt) {
-		var $print = $('#' + opt.id),
-			clone = $print.clone(),
-			html = '';
-
-		html += '<div class="base-print" id="basePrint"></div>';
-		
-		function preview_print(){ 
-			var webBrowser ='<OBJECT ID="previewWeb" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
-			
-			doc.body.insertAdjacentHTML('beforeEnd', webBrowser);
-			previewWeb.ExecWB(7,1);
-			previewWeb.outerHTML='';
-		} 
-
-		if (self !== top) {
-			parent.$('body').append(html);
-			parent.$('.base-print').append(clone);
-			
-			win[global].browser.ie ? preview_print() : win.parent.print();
-
-			setTimeout(function () {
-				parent.$('.base-print').remove();
-			}, 0);
-		} else {
-			$('body').addClass('print-ing').append(html);
-			$('.base-print').append(clone);
-			
-			win[global].browser.ie ? preview_print() : win.print();
-			
-			setTimeout(function () {
-				$('body').removeClass('print-ing')
-				$('.base-print').remove();
-			}, 0);
-		}
-	}
-
+	
 
 	
 	
@@ -5643,7 +5798,7 @@ if (!Object.keys){
 		acc: false, //select 연결
 		stepname: false,
 		callback: false,
-
+		
 		tooltip: false,
 		unit: '',
 		txt_s:'',
@@ -5663,8 +5818,9 @@ if (!Object.keys){
 			$btn = $wrap.find('button'),
 			$btn_s = $wrap.find('.ui-slider-btn-s'),
 			$btn_e = $wrap.find('.ui-slider-btn-e'),
-			$bar = $bg.find('.ui-slider-bar'),
-			vertical = opt.vertical,
+			$bar = $bg.find('.ui-slider-bar');
+
+		var vertical = opt.vertical,
 			range = opt.range,
 			rev = opt.reverse,
 			stepname = opt.stepname,
@@ -6062,163 +6218,7 @@ if (!Object.keys){
 	}
 
 
-	/* ------------------------------------------------------------------------
-	* name : tooltip
-	* Ver. : v1.0.0
-	* date : 2018-12-21
-	* EXEC statement
-	* - $plugins.uiTooltip();
-	* - $plugins.uiTooltip({ option });
-	------------------------------------------------------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiTooltip: function (opt) {
-			return createUiTooltip(opt);
-		}
-	});
-	win[global].uiTooltip.option = {
-		visible: null,
-		id: false,
-		ps: false
-	};
-	function createUiTooltip(opt){
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiTooltip.option, opt),
-			$btn = $('.ui-tooltip-btn'),
-			$tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false,
-			visible = opt.visible,
-			id = opt.id ? $tip.attr('id') : '',
-			
-			sp = 10,
-			ps = opt.ps,
-			off_t, off_l, w, h, bw, bh, st, sl, timer,
-			class_ps = 'ps-ct ps-cb ps-lt ps-lb ps-rt ps-rb';
-
-		if (visible !== null) {
-			visible ? tooltipSet(id) : tooltipHide();
-		}
-
-		// $btn
-		// .on('click', function(e){
-		// 	e.preventDefault();
-		// 	tooltipSet($(this).attr('aria-describedby'));
-		// });
-
-		$btn
-		.off('mouseover.ui focus.ui').on('mouseover.ui focus.ui', function(e){
-			e.preventDefault();
-			tooltipSet($(this).attr('aria-describedby'));
-		})
-		.off('mouseleave.ui ').on('mouseleave.ui', function(){
-			tooltipHideDelay();
-
-			$('.ui-tooltip')
-				.on('mouseover.ui', function(){
-					clearTimeout(timer);
-				})
-				.on('mouseleave.ui', function(e){
-					tooltipHideDelay();
-				});
-		})
-
-		$btn
-		.off('touchstart.uitooltip').on('touchstart.uitooltip', function(e){
-			e.preventDefault();
-			if (!$(this).data('view')){
-				$(this).data('view', true);
-				tooltipHide();
-				tooltipSet($(this).attr('aria-describedby'));
-			} else {
-				$(this).data('view', false);
-				tooltipHide();
-			}
-
-			// $(doc).off('click.bdd').on('click.bdd', function(e){
-			// 	//dropdown 영역 외에 클릭 시 판단
-			// 	if (!!$('body').data('dropdownOpened')){
-			// 		if ($('.ui-tooltip').has(e.target).length < 1) {
-			// 			tooltipHide();
-			// 		}
-			// 	}
-			// });
-		});
-
-		function tooltipSet(v) {
-			var $t = $('[aria-describedby="'+ v +'"]');
-
-			$('#' + v).removeClass(class_ps);
-
-			id = v;
-			off_t = $t.offset().top;
-			off_l =$t.offset().left;
-			w = $t.outerWidth();
-			h = $t.outerHeight();
-			bw = $(win).innerWidth();
-			bh = $(win).innerHeight();
-			st = $(doc).scrollTop();
-			sl = $(doc).scrollLeft();
-			
-			tooltipShow(off_t, off_l, w, h, bw, bh, st, sl, id, false);
-		}
-		function tooltipHide() {
-			$('.ui-tooltip').removeAttr('style').attr('aria-hidden', true).removeClass(class_ps);
-		}
-		function tooltipHideDelay(){
-			timer = setTimeout(tooltipHide, 100);
-		}
-
-		function tooltipShow(off_t, off_l, w, h, bw, bh, st, sl, id) {
-			var $id = $('#' + id),
-				pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false,
-				psl = (bw / 2 > (off_l - sl) + (w / 2)) ? true : false,
-				tw = $id.outerWidth(),
-				th = $id.outerHeight(),
-				ps_l, ps_r, cursorCls = 'ps-';
-				
-			if (psl) {
-				if (off_l - sl > tw / 2) {
-					cursorCls += 'c';
-					ps_l = off_l - (tw / 2) + (w / 2);
-				} else {
-					cursorCls += 'l';
-					ps_l = off_l;
-				}
-			} else {
-				if (bw - (off_l - sl + w) > tw / 2) {
-					cursorCls += 'c';
-					ps_r = Math.ceil(off_l) - (tw / 2) + (w / 2);
-				} else {
-					cursorCls += 'r';
-					ps_r = off_l - tw + w;
-				}
-			}
-
-			ps ? cursorCls = 'ps-l' : '';
-			ps ? ps_l = off_l : '';
-			ps ? psl = true : '';
-			pst ? cursorCls += 'b' : cursorCls += 't';
-
-			if (!!$id.attr('modal')) {
-				if (!win[global].browser.oldie) {
-					ps_l = ps_l;
-					ps_r = ps_r;
-				}
-
-				win[global].browser.ie ? '' : off_t = off_t;
-			}
-
-			if (!!$id.closest('.type-fixed-bottom').length) {
-				off_t = off_t - $('ui-modal-tit').outerHeight();
-			}
-
-			$id.addClass(cursorCls).attr('aria-hidden', false).css({ 
-				display:'block'
-			}).css({
-				top : pst ? off_t + h + sp : off_t - th - sp,
-				left : psl ? ps_l : ps_r
-			});
-		}
-	}
-
+	
 
 	/* ------------------------------------------------------------------------
 	* name : file upload

@@ -11,7 +11,82 @@
 <h2 class="h2">Examples</h2>
 <p>특정 col 고정하여 col수가 많은 data 테이블일 경우 사용</p>
 <p>display:none 으로 숨겨진 cell에 관하여 접근성부분은 고려해봐야 할듯...</p>
-<div class="ui-fixtd tbl-base txt-c" fix="3">
+<div class="tbl-base txt-c">
+	<table>
+		<caption>
+			<strong>기본 테이블</strong>
+			<p class="ui-caption"></p>
+		</caption>
+		<colgroup>
+		<col class="col-1">
+		<col class="col-2">
+		<col class="col-3">
+		<col class="col-4">
+		<col class="col-4">
+		<col class="col-4">
+		<col class="col-4">
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">고정영역 1</th>
+				<th scope="col">고정영역 2</th>
+				<th scope="col">고정영역 3</th>
+				<th scope="col">가변영역 1</th>
+				<th scope="col">가변영역 2</th>
+				<th scope="col">가변영역 3</th>
+				<th scope="col">가변영역 4</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<th scope="row">고정내용 1</th>
+				<th scope="row">고정내용 2</th>
+				<th scope="row">고정내용 3</th>
+				<td>2018.03.20</td>
+				<td>2018.03.21</td>
+				<td>2018.03.22</td>
+				<td>2018.03.23</td>
+			</tr>
+			<tr>
+				<th scope="row">고정내용 1</th>
+				<th scope="row">고정내용 2</th>
+				<th scope="row">고정내용 3</th>
+				<td>2018.03.20</td>
+				<td>2018.03.21</td>
+				<td>2018.03.22</td>
+				<td>2018.03.23</td>
+			</tr>
+			<tr>
+				<th scope="row">고정내용 1</th>
+				<th scope="row">고정내용 2</th>
+				<th scope="row">고정내용 3</th>
+				<td>2018.03.20</td>
+				<td>2018.03.21</td>
+				<td>2018.03.22</td>
+				<td>2018.03.23</td>
+			</tr>
+			<tr>
+				<th scope="row">고정내용 1</th>
+				<th scope="row">고정내용 2</th>
+				<th scope="row">고정내용 3</th>
+				<td>2018.03.20</td>
+				<td>2018.03.21</td>
+				<td>2018.03.22</td>
+				<td>2018.03.23</td>
+			</tr>
+			<tr>
+				<th scope="row">고정내용 1</th>
+				<th scope="row">고정내용 2</th>
+				<th scope="row">고정내용 3</th>
+				<td>2018.03.20</td>
+				<td>2018.03.21</td>
+				<td>2018.03.22</td>
+				<td>2018.03.23</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<div class="ui-fixtd tbl-base txt-c mgt-s" fix="3">
 	<table>
 		<caption>
 			<strong>기본 테이블</strong>

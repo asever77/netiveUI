@@ -305,3 +305,7 @@ fieldset{margin:0}
 /* .ui-modal-body.ui-scrollbar{padding:0} */
 .ui-scrollbar.test1{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:217px; border:1px dashed #ccc;}
 .ui-scrollbar.test2{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:217px; border:1px dashed #ccc;}
+
+.tip-test0{width:250px;}
+.tip-test3{width:400px;}
+.tip-test1{width:100px;}

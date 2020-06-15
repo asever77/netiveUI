@@ -1,28 +1,3 @@
-
-    <style>
-    .tip-test0{width:250px;}
-    .tip-test1{width:100px;}
-    </style>
-</head>
-
-
-        <div class="ui-tooltip tip-test0" id="tt" role="tooltip" aria-hidden="true">
-            <span class="tt-arrow"></span>
-            <span>
-                <em>국내전용 5,000원</em>(기본연회비 5,000원)<br>
-                <em>국내외겸용(UnionPay) 5,000원</em>(기본연회비 5,000원)<br>
-                <em>국내외겸용(VISA) 10,000원</em>(기본연회비 5,000원 + 제휴연회비 5,000원)<br>
-                <em>가족카드 연회비 없음</em>
-            </span>
-        </div>
-        <div class="ui-tooltip tip-test1" id="tt2" role="tooltip" aria-hidden="true">
-            <span class="tt-arrow"></span>
-            <span>
-                asf asf asf  fasd f asfsadfa sfasf asdf asfdasdfa fdasdf afa sfasf asdf asfdasdfa fdasdf a fasd f asfsadfa sfasf asdf asfdasdfa fdasdf a
-            </span>
-        </div>
-
-
 <input type="hidden" id="uiJsName" value="pageTooltip">
 
 <div class="tit-catagory">Components</div>
@@ -30,50 +5,75 @@
 	<h1 class="h1">Tooltip</h1>
 </div>
 
-                <p class="txt-s2">툴팁(말풍선)은 마우스오버나 포커스가 가는 즉시 동작하여 보충설명을 보여준다.<br>
-                항상 상위에 보이기 위해(z-index, overflow:hidden) baseLayer 위치에 생성한다.<br>
-                기본적으로 자동으로 툴팁 실행위치를 계산하여 더 많은 공간이 있는 위치를 선택하여 보여준다.</p>
-                
-                <h2 class="h2">Examples</h2>                
-                <h3 class="h3">a태그일 경우 기본 스타일</h3>
-                <div class="box-base">
-                    <p>간략한 설명을 위해 <a href="#tt" aria-describedby="tt" class="ui-tooltip-btn">툴팁</a>기능을 사용합니다.</p>
-                </div> 
+<p class="txt-s2">툴팁(말풍선)은 마우스오버나 포커스가 가는 즉시 동작하여 보충설명을 보여준다.<br>
+항상 상위에 보이기 위해(z-index, overflow:hidden) baseLayer 위치에 생성한다.<br>
+기본적으로 자동으로 툴팁 실행위치를 계산하여 더 많은 공간이 있는 위치를 선택하여 보여준다.</p>
 
-                <h3 class="h3">button태그일 경우 기본 스타일</h3>
-                <div class="box-base">
-                    <p>간략한 설명을 위해 툴팁 <button type="button" aria-describedby="tt2" class="ui-tooltip-btn">툴팁 설명</button> 기능을 사용합니다.</p>
-                </div>
+<h2 class="h2">Examples</h2>				
+<h3 class="h3">a태그일 경우 기본 스타일</h3>
+<div class="box-base">
+	<p>간략한 설명을 위해 
+		<a href="#tt" aria-describedby="tt" class="ui-tooltip-btn" data-src="/netiveUI/html/components/tooltip_ajax.html">툴팁</a>기능을 
+		<a href="#tt" aria-describedby="tt" class="ui-tooltip-btn" data-src="/netiveUI/html/components/tooltip_ajax.html">사용</a>합니다.</p>
+</div> 
 
-                <h2 class="h2">HTML Structure</h2>
+<h3 class="h3">button태그일 경우 기본 스타일</h3>
+<div class="box-base">
+	<p>간략한 설명을 위해 툴팁 <button type="button" aria-describedby="tt2" class="ui-tooltip-btn" data-src="/netiveUI/html/components/tooltip_ajax2.html">툴팁 설명</button> 기능을 사용합니다.</p>
+</div>
+
+<h2 class="h2">HTML Structure</h2>
 <div class="box-code">
 <pre>
 <code>
-&lt;div <span class="na">class=</span><span class="s">"base-layer"</span> <span class="na">id=</span><span class="s">"baseLayer"</span>&gt;
-    &lt;div <span class="na">class=</span><span class="s">"ui-tooltip"</span> <span class="na">id=</span><span class="s">"tt"</span> <span class="na">role=</span><span class="s">"tooltip"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span>&gt;
-        ....
-    &lt;/div&gt;
+//툴팁 자동생성 하거나 미리 넣어도 됨.
+&lt;div <span class="na">class=</span><span class="s">"ui-tooltip"</span> <span class="na">id=</span><span class="s">"tt"</span> <span class="na">role=</span><span class="s">"tooltip"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span>&gt;
+	....
 &lt;/div&gt;
 
-&lt;div <span class="na">class=</span><span class="s">"base-wrap"</span>&gt;
-    &lt;a <span class="na">href=</span><span class="s">"#tt"</span> <span class="na">aria-describedby=</span><span class="s">"tt"</span> <span class="na">class=</span><span class="s">"ui-tooltip-btn"</span>&gt;툴팁&lt;/a&gt; 
-    &lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">aria-describedby=</span><span class="s">"tt"</span> <span class="na">class=</span><span class="s">"ui-tooltip-btn"</span>&gt;툴팁&lt;/button&gt; 
-&lt;/div&gt;
+//툴팁 버튼 ajax 로 불러오기
+&lt;a <span class="na">href=</span><span class="s">"#tt"</span> <span class="na">aria-describedby=</span><span class="s">"tt"</span> <span class="na">class=</span><span class="s">"ui-tooltip-btn"</span> <span class="na">data-class=</span><span class="s">"tip-test0"</span> <span class="na">data-src=</span><span class="s">"/netiveUI/html/Components/tooltip_ajax.html"</span>&gt;tooltip&lt;/a&gt; 
+&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">aria-describedby=</span><span class="s">"tt"</span> <span class="na">class=</span><span class="s">"ui-tooltip-btn"</span> <span class="na">data-class=</span><span class="s">"tip-test0"</span> <span class="na">data-src=</span><span class="s">"/netiveUI/html/Components/tooltip_ajax.html"</span>&gt;tooltip&lt;/button&gt; 
+
+//툴팁 버튼 
+&lt;a <span class="na">href=</span><span class="s">"#tt"</span> <span class="na">aria-describedby=</span><span class="s">"tt"</span> <span class="na">class=</span><span class="s">"ui-tooltip-btn"</span> <span class="na">data-class=</span><span class="s">"tip-test0"</span>&gt;tooltip&lt;/a&gt; 
+&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">aria-describedby=</span><span class="s">"tt"</span> <span class="na">class=</span><span class="s">"ui-tooltip-btn"</span> <span class="na">data-class=</span><span class="s">"tip-test0"</span>&gt;tooltip&lt;/button&gt; 
 </code>
 </pre>
 </div>	
-                
+				
 
-
-                <h2 class="h2">Javascript</h2>
-                <h3 class="h3">$plugins.uiTooltip</h3>
+<h2 class="h2">CSS Style</h2>
+<h3 class="h3">base style</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiTooltip</span>();
-$plugins<span class="na">.uiTooltip</span>({ <span class="s">id:'tt', visible:true</span> });
-$plugins<span class="na">.uiTooltip</span>({ <span class="s">id:'tt', visible:false</span> });
+.ui-tooltip {display:none; position:absolute; z-index:200; font-size:11px; border:1px solid #555; padding:10px; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.3)}
+.ui-tooltip-btn {cursor:help;}
+button.ui-tooltip-btn {position:relative; width:14px; height:14px; border-radius:7px; border:1px solid #222; background:#fff; color:transparent; overflow:hidden; font-size:xx-small;}
+button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; display:block; width:100%; height:100%; font-size:10px; color:#222; font-weight:700}
+.ui-tooltip.ps-ct .ui-tooltip-arrow,
+.ui-tooltip.ps-cb .ui-tooltip-arrow,
+.ui-tooltip.ps-lt .ui-tooltip-arrow,
+.ui-tooltip.ps-lb .ui-tooltip-arrow,
+.ui-tooltip.ps-rt .ui-tooltip-arrow,
+.ui-tooltip.ps-rb .ui-tooltip-arrow {content:""; position:absolute; display:block; width:10px; height:10px; background:#fff; border-top:1px solid #222; border-right:1px solid #222}
+.ui-tooltip.ps-ct .ui-tooltip-arrow {left:50%; bottom:-6px; transform:rotate(135deg); margin-left:-5px}
+.ui-tooltip.ps-lt .ui-tooltip-arrow {left:0; bottom:-6px; transform:rotate(135deg); margin-left:10px}
+.ui-tooltip.ps-rt .ui-tooltip-arrow {right:0; bottom:-6px; transform:rotate(135deg); margin-right:10px}
+.ui-tooltip.ps-cb .ui-tooltip-arrow {left:50%; top:-6px; transform:rotate(-45deg); margin-left:-5px}
+.ui-tooltip.ps-lb .ui-tooltip-arrow {left:0; top:-6px; transform:rotate(-45deg); margin-left:10px}
+.ui-tooltip.ps-rb .ui-tooltip-arrow {right:0; top:-6px; transform:rotate(-45deg); margin-right:10px}
 </code>
 </pre>
 </div>
 
+<h2 class="h2">Javascript</h2>
+<h3 class="h3">$plugins.uiTooltip</h3>
+<div class="box-code">
+<pre>
+<code>
+$plugins<span class="na">.uiTooltip</span>();
+</code>
+</pre>
+</div>

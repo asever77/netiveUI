@@ -50,6 +50,22 @@
                     case 'tableScroll' :
                         fristHref = '/netiveUI/html/components/tableScroll.html';
                         break;
+
+                    case 'print' :
+                        fristHref = '/netiveUI/html/components/print.html';
+                        break;
+                    case 'popup' :
+                        fristHref = '/netiveUI/html/components/popup.html';
+                        break;
+                    case 'tooltip' :
+                        fristHref = '/netiveUI/html/components/tooltip.html';
+                        break;
+                    case 'datePicker' :
+                        fristHref = '/netiveUI/html/components/datePicker.html';
+                        break;
+                    case 'inputClear' :
+                        fristHref = '/netiveUI/html/components/inputClear.html';
+                        break;
                 }
             } 
 
@@ -175,7 +191,7 @@
                         $plugins.uiScroll({ 
                             value:0, 
                             speed:300, 
-                            focus:  $('#baseMain h1') 
+                            focus:  $('#baseMain h1').eq(0)
                         });
                     }
                 });
