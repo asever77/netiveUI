@@ -303,9 +303,13 @@ fieldset{margin:0}
 .scrollbox-test b{display:block; width:100%; text-align:center; font-weight: 900; font-size:20vw; opacity: 0.3;}
 
 /* .ui-modal-body.ui-scrollbar{padding:0} */
-.ui-scrollbar.test1{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:217px; border:1px dashed #ccc;}
+.ui-scrollbar.test1{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:50%; border:1px dashed #ccc;}
 .ui-scrollbar.test2{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:217px; border:1px dashed #ccc;}
-
+.ui-scrollbar.test3{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:150px; border:1px dashed #ccc;}
+.ui-scrollbar.test4{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:40%; border:1px dashed #ccc;}
+.ui-scrollbar.test5{margin:10px 10px 0 0; display:inline-block; vertical-align:top; height:400px; width:200px; border:1px dashed #ccc;}
+.ui-scrollbar.test6{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:400px; width:300px; border:1px dashed #ccc;}
+.ui-scrollbar.test7{display:inline-block; height:300px; width:120px; border:1px dashed #ddd;}
 .tip-test0{width:250px;}
 .tip-test3{width:400px;}
 .tip-test1{width:100px;}
