@@ -66,6 +66,10 @@
                     case 'inputClear' :
                         fristHref = '/netiveUI/html/components/inputClear.html';
                         break;
+
+                    case 'layout' :
+                        fristHref = '/netiveUI/html/contents/layout.html';
+                        break;
                 }
             } 
 

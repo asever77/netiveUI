@@ -3,6 +3,9 @@
 
     'use strict';
 
+    $plugins.page.pageLayout = function(){
+
+    }
     $plugins.page.pagePrint = function(){
         $('#prtTest').off('click.print').on('click.print', function(){
             $plugins.uiPrint({ id:'prtSct' });
@@ -689,6 +692,7 @@
 
 
     
+
 
     $plugins.page.capture = function(){
         $('#uiCaptureBtn').on('click',function(){

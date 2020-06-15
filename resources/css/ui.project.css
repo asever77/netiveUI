@@ -309,3 +309,40 @@ fieldset{margin:0}
 .tip-test0{width:250px;}
 .tip-test3{width:400px;}
 .tip-test1{width:100px;}
+
+.coln8,
+.coln4,
+.coln12{display:none}
+
+html.col8 .coln8,
+html.col4 .coln4,
+html.col12 .coln12{display:inline-block}
+
+.fx-wrap,
+.fl-wrap,
+.in-wrap {
+    border: 1px solid #222;
+    background: #f1f1f1;
+}
+
+.in-item,
+[class*="fx-item"],
+.fl-item-r,
+.fl-item-l {
+    border: 1px dashed #ccc;
+    padding: 10px;
+    background: #fff;
+}
+
+.test-flex1 [class*="fx-item"]:nth-child(1) {
+    min-height: 90px;
+    padding-top: 15px
+}
+
+.test-flex1 [class*="fx-item"]:nth-child(2) {
+    min-height: 60px;
+}
+
+.test-flex1 [class*="fx-item"]:nth-child(3) {
+    min-height: 30px;
+}

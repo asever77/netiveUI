@@ -1,35 +1,5 @@
 
-<style>
-    .fx-wrap,
-    .fl-wrap,
-    .in-wrap {
-        border: 1px solid #222;
-        background: #f1f1f1;
-    }
-
-    .in-item,
-    [class*="fx-item"],
-    .fl-item-r,
-    .fl-item-l {
-        border: 1px dashed #ccc;
-        padding: 10px;
-        background: #fff;
-    }
-
-    .test-flex1 [class*="fx-item"]:nth-child(1) {
-        min-height: 90px;
-        padding-top: 15px
-    }
-
-    .test-flex1 [class*="fx-item"]:nth-child(2) {
-        min-height: 60px;
-    }
-
-    .test-flex1 [class*="fx-item"]:nth-child(3) {
-        min-height: 30px;
-    }
-</style>
-
+<input type="hidden" id="uiJsName" value="pageLayout">
 <div class="tit-catagory">
 	Contents Design
 </div>
@@ -63,9 +33,9 @@
     <pre>
 <code>
 &lt;div class="in-wrap"&gt;
-&lt;div class="in-item"&gt;...&lt;/div&gt;
-&lt;div class="in-item"&gt;...&lt;/div&gt;
-&lt;div class="in-item"&gt;...&lt;/div&gt;
+	&lt;div class="in-item"&gt;...&lt;/div&gt;
+	&lt;div class="in-item"&gt;...&lt;/div&gt;
+	&lt;div class="in-item"&gt;...&lt;/div&gt;
 &lt;/div&gt;
 </code>
 </pre>
@@ -84,9 +54,9 @@
     <pre>
 <code>
 &lt;div class="fl-wrap"&gt;
-&lt;div class="fl-item-l"&gt;...&lt;/div&gt;
-&lt;div class="fl-item-l"&gt;...&lt;/div&gt;
-&lt;div class="fl-item-r"&gt;...&lt;/div&gt;
+	&lt;div class="fl-item-l"&gt;...&lt;/div&gt;
+	&lt;div class="fl-item-l"&gt;...&lt;/div&gt;
+	&lt;div class="fl-item-r"&gt;...&lt;/div&gt;
 &lt;/div&gt;
 </code>
 </pre>
@@ -198,14 +168,14 @@
     </div>
 </div>
 
-<h2 class="h2">Base Grid</h2>
+<h2 class="h2">Grid Layout</h2>
 <div class="box-code">
 <pre>
 <code>
 &lt;div <span class="na">class=</span><span class="s">"grid-wrap"</span>&gt;
-&lt;div <span class="na">class=</span><span class="s">"grid-col"</span> <span class="na">grid=</span><span class="s">"1-1-1"</span>&gt;
-....
-&lt;/div&gt;
+	&lt;div <span class="na">class=</span><span class="s">"grid-col"</span> <span class="na">grid=</span><span class="s">"1-1-1"</span>&gt;
+	....
+	&lt;/div&gt;
 &lt;/div&gt;
 </code>
 </pre>
@@ -235,18 +205,18 @@
 	<div class="grid-col" grid="12-1-1"><b>12</b><b>1</b><b>1</b></div>
 </div>
 
-<h2 class="h2">Inner Grid</h2>
+<h3 class="h3">Inner Grid</h3>
 <p>그리드 안의 그리드일 경우 아래와 같이 코딩한다.</p>
 <div class="box-code">
 <pre>
 <code>
 &lt;div <span class="na">class=</span><span class="s">"grid-wrap"</span>&gt;
-&lt;div <span class="na">class=</span><span class="s">"grid-col"</span> <span class="na">grid=</span><span class="s">"12-8-4"</span>&gt;
-&lt;div <span class="na">class=</span><span class="s">"grid-row"</span>&gt;
-&lt;div <span class="na">class=</span><span class="s">"grid-col"</span> <span class="na">grid=</span><span class="s">"6-4-2"</span>&gt;
-&lt;div <span class="na">class=</span><span class="s">"grid-col"</span> <span class="na">grid=</span><span class="s">"6-4-2"</span>&gt;
-&lt;/div&gt;
-&lt;/div&gt;
+	&lt;div <span class="na">class=</span><span class="s">"grid-col"</span> <span class="na">grid=</span><span class="s">"12-8-4"</span>&gt;
+		&lt;div <span class="na">class=</span><span class="s">"grid-row"</span>&gt;
+			&lt;div <span class="na">class=</span><span class="s">"grid-col"</span> <span class="na">grid=</span><span class="s">"6-4-2"</span>&gt;&lt;/div&gt;
+			&lt;div <span class="na">class=</span><span class="s">"grid-col"</span> <span class="na">grid=</span><span class="s">"6-4-2"</span>&gt;&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
 &lt;/div&gt;
 </code>
 </pre>
