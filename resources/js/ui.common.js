@@ -44,6 +44,12 @@
                     case 'tableCaption' :
                         fristHref = '/netiveUI/html/components/tableCaption.html';
                         break;
+                    case 'tableCellFix' :
+                        fristHref = '/netiveUI/html/components/tableCellFix.html';
+                        break;
+                    case 'tableScroll' :
+                        fristHref = '/netiveUI/html/components/tableScroll.html';
+                        break;
                 }
             } 
 

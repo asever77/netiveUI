@@ -5,6 +5,18 @@
     $plugins.page.pageTableCaption = function(){
         $plugins.uiCaption();
     }
+    $plugins.page.pageTableCellFix = function(){
+        $plugins.uiTableFixTd();
+    }
+    $plugins.page.pageTableScroll = function(){
+        $plugins.uiTableScroll({
+            callback:function(){
+                $plugins.uiScrollBar({
+                    id: 'tblScrollTest1'
+                });
+            }
+        });
+    }
 
     $plugins.page.pageBrickList = function(){
         $plugins.uiBrickList({ 
@@ -554,8 +566,7 @@
     }
 
     $plugins.page.pageTable = function(){
-        $plugins.uiTableScroll();
-        $plugins.uiTableFixTd();
+       
     }
 
     

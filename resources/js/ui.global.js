@@ -879,6 +879,9 @@ if (!Object.keys){
 				$wrap.css('height', wrapH + 'px');
 				if (wrapH < itemH) {
 					space && $item.addClass('scroll-y-padding');
+					if (!space) {
+						!!$wrap.parent('.ui-tablescroll').length && $wrap.parent('.ui-tablescroll').addClass('not-space');
+					}
 					html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
 					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">scroll</span></button>';
 					html_scrollbar += '</div>';
@@ -1300,10 +1303,6 @@ if (!Object.keys){
 	}
 
 
-
-
-
-
 	/* ------------------------
 	* table cell fix(horizontal)
 	* date : 2020-05-17
@@ -1314,48 +1313,45 @@ if (!Object.keys){
 		}
 	});
 	function createUiTableFixTd() {
-		var tbl = $('.ui-fixtd');
+		var $tbl = $('.ui-fixtd');
 
-		tbl.each(function(i){
-			var tbln = $(this),
-				tbl_col = tbln.find('col'),
-				tbl_tr = tbln.find('tr'),
-				col_len = tbl_col.length,
-				fix_sum = col_len - tbln.attr('fix'),
-				len = tbl_tr.length,
-				tit = [];
+		$tbl.each(function(i){
+			var $tbln = $(this);
+			var $tbl_col = $tbln.find('col');
+			var $tbl_tr = $tbln.find('tr');
+			var col_len = $tbl_col.length;
+			var fix_sum = col_len - $tbln.attr('fix');
+			var len = $tbl_tr.length;
+			var tit = [];
 
-			console.log(col_len, fix_sum)
-
-			tbln.attr('current', 1).attr('total', col_len);
+			$tbln.attr('current', 1).attr('total', col_len);
 
 			for (var i = 0; i < len; i++) {
 				for (var j = 0; j < fix_sum; j++) {
-					var tr_this = tbl_tr.eq(i),
-						td_this = tr_this.find('> *').eq(j - fix_sum),
-						jj = (j + 1);
+					var $tr_this = $tbl_tr.eq(i);
+					var $td_this = $tr_this.find('> *').eq(j - fix_sum);
+					var jj = (j + 1);
 
-					td_this.addClass('ui-fixtd-n' + jj).data('n', j);
-					if (tr_this.closest('thead').length) {
-						tit.push(td_this.text());
-						td_this.prepend('<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="hide">이전</span></button>');
-						td_this.append('<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="hide">다음</span></button>');
+					$td_this.addClass('ui-fixtd-n' + jj).data('n', j);
+					if ($tr_this.closest('thead').length) {
+						tit.push($td_this.text());
+						$td_this.prepend('<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="hide">previous</span></button>');
+						$td_this.append('<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="hide">next</span></button>');
 					}
-					tbl_col.eq(j - fix_sum).addClass('ui-fixtd-n' + jj);
+					$tbl_col.eq(j - fix_sum).addClass('ui-fixtd-n' + jj);
 				}
 			}
 		});
 
-		tbl.find('.ui-fixtd-btn').off('click.uifixtd').on('click.uifixtd', function(){
-			var tbl_this = $(this).closest('.ui-fixtd'),
-				this_sum =  Number(tbl_this.attr('total') - tbl_this.attr('fix'));
-
+		$tbl.find('.ui-fixtd-btn').off('click.uifixtd').on('click.uifixtd', function(){
+			var $tbl_this = $(this).closest('.ui-fixtd');
+			var this_sum =  Number($tbl_this.attr('total') - $tbl_this.attr('fix'));
 			var n = Number($(this).data('idx'));
 
 			if ($(this).data('btn') === 'next') {
-				tbl_this.attr('current', n + 1 > this_sum ? n = 1 : n + 1);
+				$tbl_this.attr('current', n + 1 > this_sum ? n = 1 : n + 1);
 			} else {
-				tbl_this.attr('current', n - 1 <= 0 ? n = this_sum : n - 1);
+				$tbl_this.attr('current', n - 1 <= 0 ? n = this_sum : n - 1);
 			}
 		});
 	}
@@ -1366,11 +1362,16 @@ if (!Object.keys){
 	* date : 2020-05-17
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiTableScroll: function () {
-			return createUiTableScroll();
+		uiTableScroll: function (opt) {
+			return createUiTableScroll(opt);
 		}
 	});
-	function createUiTableScroll(){
+	win[global].uiTableScroll.option = {
+		callback:false
+	};
+	function createUiTableScroll(opt){
+		var opt = $.extend(true, {}, win[global].uiAccordion.option, opt);
+		var callback = opt.callback;
 		var $tblWrap = $('.ui-tablescroll');
 
 		for (var i = 0, len = $tblWrap.length; i < len; i++) {
@@ -1394,6 +1395,8 @@ if (!Object.keys){
 				});
 			}
 		}
+
+		!!callback && callback();
 	}
 
 

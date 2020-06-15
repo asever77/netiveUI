@@ -188,17 +188,44 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-tab-btn:first-child {border-left:1px solid #ccc;}
 .ui-tab-btn.selected {background:#fff; color:#000; border-bottom:1px solid #fff; font-weight:400;}
 .ui-tab-pnl {width:100%; padding:10px; top:0; left:0; background:#fff;  border:1px solid #ccc; border-top:0} 
-/* ui-tab :eff */
+/* ui-tab : eff */
 .ui-tab.eff-fade > .ui-tab-pnls > .ui-tab-pnl {animation-name:fadeIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
 .ui-tab.eff-fade > .ui-tab-pnls > .ui-tab-pnl[aria-hidden="false"] {animation-name:fadeIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
 
 
-
+/* ui-fixtd */
+.ui-fixtd-btn {vertical-align:middle; display:inline-block; }
+.ui-fixtd-btn.prev:after {content:"keyboard_arrow_left";font-family:'Material Icons'; font-size:20px; margin-right:5px}
+.ui-fixtd-btn.next:after {content:"keyboard_arrow_right";font-family:'Material Icons'; font-size:20px; margin-left:5px}
+[class*="ui-fixtd-n"] {display:none}
+[current="1"] col.ui-fixtd-n1 {display:block}
+[current="1"] .ui-fixtd-n1 {display:table-cell}
+[current="2"] col.ui-fixtd-n2 {display:block}
+[current="2"] .ui-fixtd-n2 {display:table-cell}
+[current="3"] col.ui-fixtd-n3 {display:block}
+[current="3"] .ui-fixtd-n3 {display:table-cell}
+[current="4"] col.ui-fixtd-n4 {display:block}
+[current="4"] .ui-fixtd-n4 {display:table-cell}
+[current="5"] col.ui-fixtd-n5 {display:block}
+[current="5"] .ui-fixtd-n5 {display:table-cell}
+[current="6"] col.ui-fixtd-n6 {display:block}
+[current="6"] .ui-fixtd-n6 {display:table-cell}
+[current="7"] col.ui-fixtd-n7 {display:block}
+[current="7"] .ui-fixtd-n7 {display:table-cell}
+[current="8"] col.ui-fixtd-n8 {display:block}
+[current="8"] .ui-fixtd-n8 {display:table-cell}
+[current="9"] col.ui-fixtd-n9 {display:block}
+[current="9"] .ui-fixtd-n9 {display:table-cell}
+[current="10"] col.ui-fixtd-n10 {display:block}
+[current="10"] .ui-fixtd-n10 {display:table-cell}
+[current="11"] col.ui-fixtd-n11 {display:block}
+[current="11"] .ui-fixtd-n11 {display:table-cell}
 
 
 /* ui-tblscroll */
 .ui-tablescroll {position: relative;}
 .ui-tablescroll-wrap {overflow-y:auto; height:200px; width:100%; }
+.tbl-base.not-space .ui-tablescroll-clone{width:100%;}
 .tbl-base .ui-tablescroll-clone {position:absolute; width:calc(100% - 17px); top:0; left:0; z-index:1;}
 
 .tbl-test1 col.n1 {width:100px}
@@ -207,9 +234,7 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .tbl-test1 col.n4 {width:150px}
 .tbl-test1 col.n5 {width:150px}
 
-.ui-fixtd-btn {vertical-align:middle; display:inline-block; }
-.ui-fixtd-btn.prev:after {content:"keyboard_arrow_left";font-family:'Material Icons'; font-size:20px; margin-right:5px}
-.ui-fixtd-btn.next:after {content:"keyboard_arrow_right";font-family:'Material Icons'; font-size:20px; margin-left:5px}
+
 
 
 
@@ -663,30 +688,6 @@ button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; d
 .ui-tooltip.ps-lb .tt-arrow {left:0; top:-6px; transform:rotate(-45deg); margin-left:10px}
 .ui-tooltip.ps-rb .tt-arrow {right:0; top:-6px; transform:rotate(-45deg); margin-right:10px}
 
-/* table */
-[class*="ui-fixtd-n"] {display:none}
-[current="1"] col.ui-fixtd-n1 {display:block}
-[current="1"] .ui-fixtd-n1 {display:table-cell}
-[current="2"] col.ui-fixtd-n2 {display:block}
-[current="2"] .ui-fixtd-n2 {display:table-cell}
-[current="3"] col.ui-fixtd-n3 {display:block}
-[current="3"] .ui-fixtd-n3 {display:table-cell}
-[current="4"] col.ui-fixtd-n4 {display:block}
-[current="4"] .ui-fixtd-n4 {display:table-cell}
-[current="5"] col.ui-fixtd-n5 {display:block}
-[current="5"] .ui-fixtd-n5 {display:table-cell}
-[current="6"] col.ui-fixtd-n6 {display:block}
-[current="6"] .ui-fixtd-n6 {display:table-cell}
-[current="7"] col.ui-fixtd-n7 {display:block}
-[current="7"] .ui-fixtd-n7 {display:table-cell}
-[current="8"] col.ui-fixtd-n8 {display:block}
-[current="8"] .ui-fixtd-n8 {display:table-cell}
-[current="9"] col.ui-fixtd-n9 {display:block}
-[current="9"] .ui-fixtd-n9 {display:table-cell}
-[current="10"] col.ui-fixtd-n10 {display:block}
-[current="10"] .ui-fixtd-n10 {display:table-cell}
-[current="11"] col.ui-fixtd-n11 {display:block}
-[current="11"] .ui-fixtd-n11 {display:table-cell}
 
 /**/
 
