@@ -2,6 +2,9 @@
     console.log('page.js');
 
     'use strict';
+    $plugins.page.pageTableCaption = function(){
+        $plugins.uiCaption();
+    }
 
     $plugins.page.pageBrickList = function(){
         $plugins.uiBrickList({ 
@@ -516,6 +519,7 @@
         $plugins.uiTab({ 
             id:'exeTab1', 
             current:0, 
+            effect: 'eff-fade',
             callback:tabCallback 
         });
         $plugins.uiTab({ 

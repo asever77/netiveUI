@@ -2650,20 +2650,22 @@ if (!Object.keys){
 		uiTab: function (opt) {
 			return createUiTab(opt);
 		},
-		uiTabAct: function (opt) {
-			return createUiTabAct(opt);
+		uiTabAction: function (opt) {
+			return createuiTabAction(opt);
 		}
 	});
 	win[global].uiTab.option = {
 		current: 0,
 		onePanel: false,
 		callback: false,
+		effect: false,
 		align : 'center'
 	};
 	function createUiTab(opt) {
 		var opt = opt === undefined ? {} : opt,
 			opt = $.extend(true, {}, win[global].uiTab.option, opt),
 			id = opt.id,
+			effect = opt.effect,
 			current = isNaN(opt.current) ? 0 : opt.current,
 			onePanel = opt.onePanel,
 			callback = opt.callback,
@@ -2704,11 +2706,14 @@ if (!Object.keys){
 		}
 
 		//set up
+		!!effect && $tab.addClass(effect);
 		$tab.data('opt', opt);
 		$btns.attr('role','tablist');
 		$btn.attr('role','tab');
 		$pnl.attr('role','tabpanel');
 		
+		console.log($tab.attr('class'));
+
 		var ps_l = [];
 
 		for (var i = 0; i < len; i++) {
@@ -2724,7 +2729,6 @@ if (!Object.keys){
 			var cls = isCurrent ? 'addClass' : 'removeClass';
 			var attrs = isCurrent ? 'removeAttr' : 'attr';
 			
-
 			//make ID
 			$btnN.attr('id') === undefined ? $btnN.attr('id', id + 'Btn' + tabN) : '';
 			$pnlN.attr('id') === undefined ? $pnlN.attr('id', id + 'Pnl' + tabN) : '';
@@ -2753,9 +2757,7 @@ if (!Object.keys){
 			i === len - 1 ? $btnN.attr('tab-last', true) : ''
 		}
 
-		
 		callback ? callback(opt) : '';
-
 		$btn.data('psl', ps_l).data('len', len);
 
 		win[global].uiScroll({ 
@@ -2773,7 +2775,7 @@ if (!Object.keys){
 			});
 
 		function evtClick() {
-			win[global].uiTabAct({ 
+			win[global].uiTabAction({ 
 				id: id, 
 				current: Number($(this).data('tabnum')), 
 				align:align 
@@ -2807,26 +2809,26 @@ if (!Object.keys){
 			function upLeftKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-first') ? 
-				win[global].uiTabAct({ id: id, current: n - 1, align:align }): 
-				win[global].uiTabAct({ id: id, current: m - 1, align:align});
+				win[global].uiTabAction({ id: id, current: n - 1, align:align }): 
+				win[global].uiTabAction({ id: id, current: m - 1, align:align});
 			}
 			function downRightKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-last') ? 
-				win[global].uiTabAct({ id: id, current: n + 1, align:align }): 
-				win[global].uiTabAct({ id: id, current: 0, align:align });
+				win[global].uiTabAction({ id: id, current: n + 1, align:align }): 
+				win[global].uiTabAction({ id: id, current: 0, align:align });
 			}
 			function endKey(e) {
 				e.preventDefault();
-				win[global].uiTabAct({ id: id, current: m - 1, align:align });
+				win[global].uiTabAction({ id: id, current: m - 1, align:align });
 			}
 			function homeKey(e) {
 				e.preventDefault();
-				win[global].uiTabAct({ id: id, current: 0, align:align });
+				win[global].uiTabAction({ id: id, current: 0, align:align });
 			}
 		}
 	}
-	function createUiTabAct(opt) {
+	function createuiTabAction(opt) {
 		var id = opt.id,
 			$tab = $('#' + id),
 			$btns = $tab.children('.ui-tab-btns'),
@@ -2836,14 +2838,16 @@ if (!Object.keys){
 			$target = $btns;
 
 		var ps_l = $btn.data('psl'),
-			align = opt.align,
+			
 			opt = $.extend(true, {}, $tab.data('opt'), opt),
 			current = isNaN(opt.current) ? 0 : opt.current,
 			onePanel = opt.onePanel,
+			align = opt.align,
 			callback = opt.callback;
 
 		//$btn.eq(current).append('<b class="hide">선택됨</b>');
-		
+		console.log('current', current, align, ps_l[current]);
+
 		current = $btns.find('.ui-tab-btn[data-tabnum="'+ current +'"]').index();
 		$btn.removeClass('selected').eq(current).addClass('selected').focus();
 

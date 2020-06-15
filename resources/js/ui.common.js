@@ -41,6 +41,9 @@
                     case 'tab' :
                         fristHref = '/netiveUI/html/components/tab.html';
                         break;
+                    case 'tableCaption' :
+                        fristHref = '/netiveUI/html/components/tableCaption.html';
+                        break;
                 }
             } 
 
@@ -163,6 +166,11 @@
                         $(win).off('scroll.win');
                         $plugins.common.pageInit(href);
                         $plugins.common.settingAside();
+                        $plugins.uiScroll({ 
+                            value:0, 
+                            speed:300, 
+                            focus:  $('#baseMain h1') 
+                        });
                     }
                 });
             });

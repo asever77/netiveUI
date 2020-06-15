@@ -7,7 +7,7 @@
 </div>
 
 <h2 class="h2">Examples</h2>
-<h3 class="h3">기본 탭</h3>
+<h3 class="h3">Base Tab</h3>
 <div class="ui-tab" id="exeTab1">
 	<div class="ui-tab-btns">
 		<div class="btn-wrap">
@@ -56,33 +56,6 @@
 	</div>
 </div>
 
-<div style="width:500px">
-	<div class="ui-tab type-scroll" id="exeTab4">
-		<div class="ui-tab-btns ui-scrollbar">
-			<div class="btn-wrap">
-				<button type="button" class="ui-tab-btn"><span>주유/정비</span></button>
-				<button type="button" class="ui-tab-btn"><span>외식</span></button>
-				<button type="button" class="ui-tab-btn"><span>편의/쇼핑</span></button>
-				<button type="button" class="ui-tab-btn"><span>영화/도서</span></button>
-				<button type="button" class="ui-tab-btn"><span>보험/금융</span></button>
-				<button type="button" class="ui-tab-btn"><span>게임</span></button>
-				<button type="button" class="ui-tab-btn"><span>문화</span></button>
-				<button type="button" class="ui-tab-btn"><span>여행</span></button>
-			</div>
-		</div>
-		<div class="ui-tab-pnls">
-			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">주유/정비</h1></section>
-			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">외식</h1></section>
-			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">편의/쇼핑</h1></section>
-			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">영화/도서</h1></section>
-			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">보험/금융</h1></section>
-			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">게임</h1></section>
-			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">문화</h1></section>
-			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">여행</h1></section>
-		</div>
-	</div>
-</div>
-
 <h3 class="h3">One Panel</h3>
 <p>하나의 패널로 사용.  (onePanel: true)</p>
 <div class="ui-tab" id="exeTab2">
@@ -101,15 +74,46 @@
 	</div>
 </div>
 
+<h3 class="h3">Scroll Tab</h3>
+<p>가로 스크롤이 있는 경우 사용. (.type-scroll)</p>
+<div style="width:500px">
+	<div class="ui-tab type-scroll" id="exeTab4">
+		<div class="ui-tab-btns ui-scrollbar">
+			<div class="btn-wrap">
+				<button type="button" class="ui-tab-btn"><span>주유/정비</span></button>
+				<button type="button" class="ui-tab-btn"><span>외식</span></button>
+				<button type="button" class="ui-tab-btn"><span>편의/쇼핑</span></button>
+				<button type="button" class="ui-tab-btn"><span>영화/도서</span></button>
+				<button type="button" class="ui-tab-btn"><span>보험/금융</span></button>
+				<button type="button" class="ui-tab-btn"><span>게임</span></button>
+				<button type="button" class="ui-tab-btn"><span>문화</span></button>
+				<button type="button" class="ui-tab-btn"><span>여행</span></button>
+			</div>
+		</div>
+		<div class="ui-tab-pnls">
+			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">주유/정비 내용</h1></section>
+			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">외식 내용</h1></section>
+			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">편의/쇼핑 내용</h1></section>
+			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">영화/도서 내용</h1></section>
+			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">보험/금융 내용</h1></section>
+			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">게임 내용</h1></section>
+			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">문화 내용</h1></section>
+			<section class="ui-tab-pnl"><h1 class="ui-tab-tit">여행 내용</h1></section>
+		</div>
+	</div>
+</div>
+
 <h2 class="h2">HTML Structure</h2>
 <div class="box-code">
 <pre>
 <code>
+//Base Tab
 &lt;div <span class="na">class=</span><span class="s">"ui-tab"</span> <span class="na">id=</span><span class="s">"exeTab1"</span>&gt;
 	&lt;div <span class="na">class=</span><span class="s">"ui-tab-btns"</span>&gt;
 		&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
 			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭1&lt;/i&gt;&lt;/button&gt;
 			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭2&lt;/i&gt;&lt;/button&gt;
+			...
 		&lt;/div&gt;
 	&lt;/div&gt;
 	&lt;div <span class="na">class=</span><span class="s">"ui-tab-pnls"</span>&gt;
@@ -121,15 +125,94 @@
 			&lt;h1 <span class="na">class=</span><span class="s">"ui-tab-tit"</span>&gt;탭2&lt;/h1&gt;
 			탭2 내용
 		&lt;/section&gt;
+		...
+	&lt;/div&gt;
+&lt;/div&gt;
+
+//One Panel Tab
+&lt;div <span class="na">class=</span><span class="s">"ui-tab"</span> <span class="na">id=</span><span class="s">"exeTab1"</span>&gt;
+	&lt;div <span class="na">class=</span><span class="s">"ui-tab-btns"</span>&gt;
+		&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
+			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭1&lt;/i&gt;&lt;/button&gt;
+			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭2&lt;/i&gt;&lt;/button&gt;
+			...
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div <span class="na">class=</span><span class="s">"ui-tab-pnls"</span>&gt;
+		&lt;section <span class="na">class=</span><span class="s">"ui-tab-pnl"</span>&gt;
+			&lt;h1 <span class="na">class=</span><span class="s">"ui-tab-tit"</span>&gt;탭1&lt;/h1&gt;
+			탭 내용
+		&lt;/section&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+
+//Scroll Tab
+&lt;div <span class="na">class=</span><span class="s">"ui-tab type-scroll"</span> <span class="na">id=</span><span class="s">"exeTab1"</span>&gt;
+	&lt;div <span class="na">class=</span><span class="s">"ui-tab-btns"</span>&gt;
+		&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
+			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭1&lt;/i&gt;&lt;/button&gt;
+			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭2&lt;/i&gt;&lt;/button&gt;
+			...
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div <span class="na">class=</span><span class="s">"ui-tab-pnls"</span>&gt;
+		&lt;section <span class="na">class=</span><span class="s">"ui-tab-pnl"</span>&gt;
+			&lt;h1 <span class="na">class=</span><span class="s">"ui-tab-tit"</span>&gt;탭1&lt;/h1&gt;
+			탭1 내용
+		&lt;/section&gt;
+		&lt;section <span class="na">class=</span><span class="s">"ui-tab-pnl"</span>&gt;
+			&lt;h1 <span class="na">class=</span><span class="s">"ui-tab-tit"</span>&gt;탭2&lt;/h1&gt;
+			탭2 내용
+		&lt;/section&gt;
+		...
 	&lt;/div&gt;
 &lt;/div&gt;
 </code>
 </pre>
 </div>	
 
+<h2 class="h2">CSS Style</h2>
+<h3 class="h3">base style</h3>
+<div class="box-code">
+<pre>
+<code>
+.ui-tab {position:relative; margin:10px 0}
+.ui-tab.type-scroll .ui-tab-btns{overflow:auto;}
+.ui-tab.type-scroll .ui-tab-btns .btn-wrap{display:flex; flex-wrap:nowrap; margin:0;}
+.ui-tab.type-scroll .ui-tab-btns .btn-wrap .ui-tab-btn{flex:1; min-width:100px}
+.ui-tab-btns {position:relative; overflow:hidden; z-index:1}
+.ui-tab-btns:after {content:""; display:block; position:absolute; bottom:0; left:0; z-index:1; clear:both; width:100%; height:1px; background:#ccc;}
+.ui-tab-btn {box-sizing:border-box; float:left; position:relative; z-index:0}
+.ui-tab-btn:hover span,
+.ui-tab-btn:focus span {border-bottom:1px solid #666;}
+.ui-tab-btn.selected {z-index:2;}
+.ui-tab-btn.selected:hover span,
+.ui-tab-btn.selected:focus span {border-bottom:1px solid #fff;}
+.ui-tab-pnls {box-sizing:border-box; position:relative; width:100%;}
+.ui-tab-pnl {box-sizing:border-box; top:0; left:0;}
+.ui-tab-pnl,
+.ui-tab-pnl[aria-hidden='true'] {visibility:hidden; position:absolute; opacity:0; display:none}
+.ui-tab-pnl.selected,
+.ui-tab-pnl[aria-hidden='false'] {visibility:visible; position:relative; opacity:1; z-index:1; display:block}
+</code>
+</pre>
+</div>
+<h3 class="h3">style : netive UI</h3>
+<div class="box-code">
+<pre>
+<code>
+.ui-tab-btn {padding:10px 20px 9px; min-height:40px; background:#ececec; border:1px solid #ccc; border-left:0; font-size:14px;}
+.ui-tab-btn:first-child {border-left:1px solid #ccc;}
+.ui-tab-btn.selected {background:#fff; color:#000; border-bottom:1px solid #fff; font-weight:400;}
+.ui-tab-pnl {width:100%; padding:10px; top:0; left:0; background:#fff;  border:1px solid #ccc; border-top:0} 
+.ui-tab.eff-fade > .ui-tab-pnls > .ui-tab-pnl {animation-name:fadeIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
+.ui-tab.eff-fade > .ui-tab-pnls > .ui-tab-pnl[aria-hidden="false"] {animation-name:fadeIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
+</code>
+</pre>
+</div>
 
-				<h2 class="h2">Javascript</h2>
-				<h3 class="h3">$plugins.uiTab</h3>
+<h2 class="h2">Javascript</h2>
+<h3 class="h3">$plugins.uiTab</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -137,135 +220,147 @@ $plugins<span class="na">.uiTab</span>({ <span class="s">
 	id:'exeTab1', 
 	current:0, 
 	onePanel: false,
+	effect: false,
+	align : 'center',
 	callback:function(v){...}</span> 
 });
 </code>
 </pre>
 </div>	
-				<table class="tbl-base type-option">
-					<caption>옵션 설명</caption>
-					<colgroup>
-						<col class="n1">
-						<col class="n2">
-						<col class="n3">
-						<col class="n4">
-					</colgroup>
-					<thead>
-						<tr>
-							<th scope="col">옵션명</th>
-							<th scope="col">유형</th>
-							<th scope="col">기본</th>
-							<th scope="col">설명</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr class="nec">
-							<th scope="row">id:</th>
-							<td>[string]</td>
-							<td>'name'</td>
-							<td>(필수) ui-tab의 아이디명 기입</td>
-						</tr>
-						<tr>
-							<th scope="row">current:</th>
-							<td>[number]</td>
-							<td>0</td>
-							<td>처음 열린패널 선택</td>
-						</tr>
-						<tr>
-							<th scope="row">onePanel :</th>
-							<td>[boolean]</td>
-							<td>false</td>
-							<td>탭 선택 시 컨텐츠 변경 여부
-								<ul>
-								<li>true : one panel</li>
-								<li>false : multiple panel</li>
-								</ul>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">callback:</th>
-							<td>[function]</td>
-							<td>function</td>
-							<td>콜백값으로 아이디와 현재선택 index값</td>
-						</tr>
-					</tbody>
-				</table>
+<div class="tbl-base type-option">
+	<table>
+		<caption>옵션 설명</caption>
+		<colgroup>
+			<col class="n1">
+			<col class="n2">
+			<col class="n3">
+			<col class="n4">
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">옵션명</th>
+				<th scope="col">유형</th>
+				<th scope="col">기본</th>
+				<th scope="col">설명</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="nec">
+				<th scope="row">id:</th>
+				<td>[string]</td>
+				<td>'name'</td>
+				<td>(필수) ui-tab의 아이디명 기입</td>
+			</tr>
+			<tr>
+				<th scope="row">current:</th>
+				<td>[number]</td>
+				<td>0</td>
+				<td>처음 열린패널 선택</td>
+			</tr>
+			<tr>
+				<th scope="row">onePanel :</th>
+				<td>[boolean]</td>
+				<td>false</td>
+				<td>탭 선택 시 컨텐츠 변경 여부
+					<ul>
+					<li>true : one panel</li>
+					<li>false : multiple panel</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">effect :</th>
+				<td>[string]</td>
+				<td>false</td>
+				<td>class 추가 (eff-fade)</td>
+			</tr>
+			<tr>
+				<th scope="row">align :</th>
+				<td>[string]</td>
+				<td>center</td>
+				<td>가로 스크롤이 있을 경우 선택된 탭의 위치 기준
+					<ul>
+					<li>center : 중앙에 위치</li>
+					<li>left : 좌측에 위치</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">callback:</th>
+				<td>[function]</td>
+				<td>function</td>
+				<td>콜백값으로 아이디와 현재선택 index값</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 
-				<h3 class="h3">$plugins.uiTabAct</h3>
+<h3 class="h3">$plugins.uiTabAction</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiTabAct</span>({ <span class="s">
+$plugins<span class="na">.uiTabAction</span>({ <span class="s">
 	id:'exeTab1', 
 	current:0, 
-	callback:function(v){...}</span> 
+	callback:function(v){ console.log(v); }</span> 
 });
 </code>
 </pre>
 </div>
-				<table class="tbl-base type-option">
-					<caption>옵션 설명</caption>
-					<colgroup>
-						<col class="n1">
-						<col class="n2">
-						<col class="n3">
-						<col class="n4">
-					</colgroup>
-					<thead>
-						<tr>
-							<th scope="col">옵션명</th>
-							<th scope="col">유형</th>
-							<th scope="col">기본</th>
-							<th scope="col">설명</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr class="nec">
-							<th scope="row">id:</th>
-							<td>[string]</td>
-							<td>'name'</td>
-							<td>(필수) ui-tab의 아이디명 기입</td>
-						</tr>
-						<tr>
-							<th scope="row">current:</th>
-							<td>[number]</td>
-							<td>0</td>
-							<td>처음 열린패널 선택</td>
-						</tr>
-						<tr>
-							<th scope="row">unres :</th>
-							<td>[boolean]</td>
-							<td>false</td>
-							<td>탭 선택 시 컨텐츠 변경 여부
-								<ul>
-								<li>true : 미변경</li>
-								<li>false : 변경</li>
-								</ul>
-							</td>
-						</tr>
-						<tr>
-							<th scope="row">callback:</th>
-							<td>[function]</td>
-							<td>function</td>
-							<td>콜백값으로 아이디와 현재선택 index값</td>
-						</tr>
-					</tbody>
-				</table>
 
+<div class="tbl-base type-option">
+	<table>
+		<caption>옵션 설명</caption>
+		<colgroup>
+			<col class="n1">
+			<col class="n2">
+			<col class="n3">
+			<col class="n4">
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">옵션명</th>
+				<th scope="col">유형</th>
+				<th scope="col">기본</th>
+				<th scope="col">설명</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="nec">
+				<th scope="row">id:</th>
+				<td>[string]</td>
+				<td>'name'</td>
+				<td>(필수) ui-tab의 아이디명 기입</td>
+			</tr>
+			<tr>
+				<th scope="row">current:</th>
+				<td>[number]</td>
+				<td>0</td>
+				<td>처음 열린패널 선택</td>
+			</tr>
+			<tr>
+				<th scope="row">unres :</th>
+				<td>[boolean]</td>
+				<td>false</td>
+				<td>탭 선택 시 컨텐츠 변경 여부
+					<ul>
+					<li>true : 미변경</li>
+					<li>false : 변경</li>
+					</ul>
+				</td>
+			</tr>
+			<tr>
+				<th scope="row">callback:</th>
+				<td>[function]</td>
+				<td>function</td>
+				<td>콜백값으로 아이디와 현재선택 index값</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
 				
-<div class="box-code">
-<pre>
-<code>
-$plugins<span class="na">.uiTab</span>({ <span class="s">
-	id:'exeTab1', 
-	current:0, 
-	unres:true, 
-	callback:function(v){...}</span> 
-});
-</code>
-</pre>
-</div>
-				<h3 class="h3">parameter 값으로 탭 선택방법</h3>
+
+<h3 class="h3">parameter 값으로 탭 선택방법</h3>
 <div class="box-code">
 <pre><code>
 single 선택

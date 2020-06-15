@@ -11,6 +11,7 @@
 /* h group */
 .tit-wrap {position:relative; width:100%; font-size:0; }
 .tit-wrap h1{display:block;}
+.tit-wrap h1:focus{outline: 0;}
 .tit-wrap em{font-size:12px;display:block;}
 .tit-wrap:after{content:""; display:block; clear:both;}
 
@@ -190,7 +191,10 @@ animation-fill-mode:none}
 .type-option .un th,
 .type-option .un td{opacity:0.7}
 
-
+.type-option col.n1 {width:15%;}
+.type-option col.n2 {width:15%;}
+.type-option col.n3 {width:15%;}
+.type-option col.n4 {width:auto;}
 
 .markup-modal .ui-modal{display: block; position: relative; opacity: 1; width:400px; margin:30px 0}
 
