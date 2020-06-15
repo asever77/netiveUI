@@ -70,6 +70,9 @@
                     case 'layout' :
                         fristHref = '/netiveUI/html/contents/layout.html';
                         break;
+                    case 'button' :
+                        fristHref = '/netiveUI/html/contents/button.html';
+                        break;
                 }
             } 
 

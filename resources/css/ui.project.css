@@ -318,17 +318,17 @@ html.col8 .coln8,
 html.col4 .coln4,
 html.col12 .coln12{display:inline-block}
 
-.fx-wrap,
-.fl-wrap,
-.in-wrap {
+.page-layout .fx-wrap,
+.page-layout .fl-wrap,
+.page-layout .in-wrap {
     border: 1px solid #222;
     background: #f1f1f1;
 }
 
-.in-item,
-[class*="fx-item"],
-.fl-item-r,
-.fl-item-l {
+.page-layout .in-item,
+.page-layout [class*="fx-item"],
+.page-layout .fl-item-r,
+.page-layout .fl-item-l {
     border: 1px dashed #ccc;
     padding: 10px;
     background: #fff;

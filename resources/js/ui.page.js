@@ -3,9 +3,9 @@
 
     'use strict';
 
-    $plugins.page.pageLayout = function(){
+    $plugins.page.pageLayout = function(){ }
+    $plugins.page.pageButton = function(){ }
 
-    }
     $plugins.page.pagePrint = function(){
         $('#prtTest').off('click.print').on('click.print', function(){
             $plugins.uiPrint({ id:'prtSct' });
