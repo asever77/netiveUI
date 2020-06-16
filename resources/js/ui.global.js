@@ -1156,6 +1156,7 @@ if (!Object.keys){
 		
 		clearTimeout(timer);
 		timer = setTimeout(function(){
+			alert($item.attr('type'))
 			!focusnot ? $item.eq(0).focus() : '';
 		},1000);
 		timer = '';
