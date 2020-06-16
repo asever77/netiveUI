@@ -432,6 +432,9 @@ if (!Object.keys){
 		function hideLoading(){		
 			$selector.data('loading', false);
 			$('.ui-loading').removeClass('visible');
+			setTimeout(function(){
+				$('.ui-loading').remove();
+			},300);
 		}
 	}
 
@@ -2759,8 +2762,6 @@ if (!Object.keys){
 		$btn.attr('role','tab');
 		$pnl.attr('role','tabpanel');
 		
-		console.log($tab.attr('class'));
-
 		var ps_l = [];
 
 		for (var i = 0; i < len; i++) {
@@ -2824,7 +2825,7 @@ if (!Object.keys){
 		function evtClick() {
 			win[global].uiTabAction({ 
 				id: id, 
-				current: Number($(this).data('tabnum')), 
+				current: $(this).index(), 
 				align:align 
 			}); 
 		}
@@ -2852,7 +2853,7 @@ if (!Object.keys){
 				case keys.home: homeKey(e);
 				break;
 			}
-
+			console.log(n,m)
 			function upLeftKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-first') ? 
@@ -2895,11 +2896,11 @@ if (!Object.keys){
 		//$btn.eq(current).append('<b class="hide">선택됨</b>');
 		console.log('current', current, align, ps_l[current]);
 
-		current = $btns.find('.ui-tab-btn[data-tabnum="'+ current +'"]').index();
+		var currentPnl = $btns.find('.ui-tab-btn[data-tabnum="'+ current +'"]').index();
 		$btn.removeClass('selected').eq(current).addClass('selected').focus();
 
 		var $btnN = $btn.eq(current),
-			btnId = $btnN.attr('id');
+			btnId = $btn.eq(currentPnl).attr('id');
 
 		if ($btns.hasClass('ui-scrollbar')) {
 			$target = $btns.find('> .ui-scrollbar-item');

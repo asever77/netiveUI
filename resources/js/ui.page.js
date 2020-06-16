@@ -563,11 +563,11 @@
         });
         
         function tabCallback(v){
-            console.log(v);
+            //console.log(v);
         }
         function tabCallback2(v){
             $('#'+ v.id).find('.ui-tab-tit').text($('#'+ v.id).find('.ui-tab-btn').eq(v.current).text());
-            console.log(v);
+            //console.log(v);
         }
         $plugins.uiScrollBar();
         $('.ui-tab-btns').on('scroll', function(){
