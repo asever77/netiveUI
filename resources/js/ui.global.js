@@ -820,6 +820,7 @@ if (!Object.keys){
 		space: false,
 		remove: false
 	};
+	sessionStorage.setItem('scrollbarID', 0);
 	win[global].uiScrollBar.timer = {}
 	function createuiScrollBar(opt) {
 		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
@@ -921,7 +922,7 @@ if (!Object.keys){
 			
 			var idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
 
-			idN = idN === undefined ? 0 : idN;
+			//idN = idN === undefined ? 0 : idN;
 			
 			if (!$wrap.data('ready') || !$wrap.attr('scroll-id')) {
 				
@@ -988,6 +989,7 @@ if (!Object.keys){
 			if (opt === undefined) {
 				return false;
 			}
+
 			var itemH = opt.itemH,
 				itemW = opt.itemW,
 				wrapH = opt.wrapH,
@@ -4650,35 +4652,33 @@ if (!Object.keys){
 			keys = win[global].option.keys,
 			len = $ui_select.length,
 
+			btnTxt = '',
+			hiddenClass = '',
 			_disabled = false,
 			_selected = false,
 			_hidden = false,
 			_val = '',
 			_txt = '',
 			_hid = '',
-			hiddenCls = '',
+			_hiddenCls = '',
 
 			$sel,
-			$sel_current,
-			$opt,
-			$opt_current,
-			optSet,
-
-			sel_id,
-			list_id,
-			opt_id,
-			opt_id_selected,
-			sel_n,
-			sel_tit,
-			sel_dis,
-			opt_len,
+			$selectCurrent,
+	
+			selectID,
+			listID,
+			optionSelectedID,
+			selectN,
+			selectTitle,
+			selectDisabled,
 
 			id_opt,
 			id_optname,
 			idx,
 			timer_opt,
 			timer,
-			_option_wrap = '';
+			htmlOption = '',
+			htmlButton = '' ;
 
 		//init
 		win[global].browser.mobile ? customscroll = false : '';
@@ -4687,109 +4687,132 @@ if (!Object.keys){
 		$ui_select.find('.ui-select-wrap').remove();
 		$ui_select.find('.dim').remove();
 
+		var idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
+
 		//select set
 		for (var i = 0; i < len; i++) {
-			$sel_current = $ui_select.eq(i);
-			$sel = $sel_current.find('select');
-			sel_id = $sel.attr('id');
-			list_id = sel_id + '_list';
-			sel_dis = $sel.prop('disabled');
-			sel_tit = $sel.attr('title');
-			_hid = '';
-
+			$selectCurrent = $ui_select.eq(i);
+			$sel = $selectCurrent.find('select');
+			
+			selectID = $sel.attr('id');
+			listID = selectID + '_list';
+			selectDisabled = $sel.prop('disabled');
+			selectTitle = $sel.attr('title');
+			hiddenClass = '';
+			
 			(!$sel.data('callback') || !!callback) ? $sel.data('callback', callback) : '';
 
-			customscroll
-				? _option_wrap += '<div class="ui-select-wrap ui-scrollbar" id="' + sel_id + '_scroll" style="min-width:' + $sel_current.outerWidth() + 'px">'
-				: _option_wrap += '<div class="ui-select-wrap" style="min-width:' + $sel_current.outerWidth() + 'px">';
-
-			win[global].browser.mobile ?
-				_option_wrap += '<div class="ui-select-opts" role="listbox" id="' + list_id + '" aria-hidden="false">' :
-				customscroll ?
-					_option_wrap += '<div class="ui-select-opts ui-scrollbar-item" role="listbox" id="' + list_id + '" aria-hidden="false" tabindex="-1">' :
-					_option_wrap += '<div class="ui-select-opts" role="listbox" id="' + list_id + '" aria-hidden="false" tabindex="-1">';
-
-			optSet = function (t){
-				(t !== undefined) ? $sel = $(t).closest('.ui-select').find('select') : '';
-				$opt = $sel.find('option');
-				opt_len = $opt.length;
-				sel_id = $sel.attr('id');
-				opt_id = sel_id + '_opt';
-
-				for (var j = 0; j < opt_len; j++) {
-					$opt_current = $opt.eq(j);
-					_hidden = $opt_current.prop('hidden');
-
-					if (current !== null) {
-						if (current === j) {
-							_selected = true;
-							$opt_current.prop('selected', true).attr('selected');
-						} else {
-							_selected = false;
-							$opt_current.prop('selected', false).removeAttr('selected');
-						}
-					} else {
-						_selected = $opt_current.prop('selected');
-					}
-
-					_disabled = $opt_current.prop('disabled');
-					_selected ? _val = $opt_current.val() : '';
-					_selected ? _txt = $opt_current.text() : '';
-					_selected && _hidden ? _hid = 'opt-hidden' : '';
-					hiddenCls =  _hidden ? 'hidden' : '';
-					_selected ? opt_id_selected = opt_id + '_' + j : '';
-					_selected ? sel_n = j : '';
-					id_optname = $sel.attr('id') + '_opt';
-					id_opt = id_optname + '_' + j;
-
-					if (win[global].browser.mobile) {
-						_disabled ?
-							_selected ?
-								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt disabled selected '+ hiddenCls + '" value="' + $opt_current.val() + '" disabled tabindex="-1">' :
-								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt disabled '+ hiddenCls + '" value="' + $opt_current.val() + '" disabled tabindex="-1">' :
-							_selected ?
-								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt selected '+ hiddenCls + '" value="' + $opt_current.val() + '">' :
-								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt '+ hiddenCls + '" value="' + $opt_current.val() + '">';
-					} else {
-						_disabled ?
-							_selected ?
-								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt disabled selected '+ hiddenCls + '" value="' + $opt_current.val() + '" disabled tabindex="-1">' :
-								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt disabled '+ hiddenCls + '" value="' + $opt_current.val() + '" disabled tabindex="-1">' :
-							_selected ?
-								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt selected '+ hiddenCls + '" value="' + $opt_current.val() + '" tabindex="-1">' :
-								_option_wrap += '<button type="button" role="option" id="' + opt_id + '_' + j + '" class="ui-select-opt '+ hiddenCls + '" value="' + $opt_current.val() + '" tabindex="-1">';
-					}
-
-					_option_wrap += '<span class="ui-select-txt">' + $opt_current.text() + '</span>';
-					_option_wrap += '</button>';
-				}
-
-				if (t !== undefined) {
-					$sel.closest('.ui-select').find('.ui-select-opts button').remove();
-					$sel.closest('.ui-select').find('.ui-select-opts').append(_option_wrap);
-					_option_wrap = '';
-					eventFn();
-				}
+			if (customscroll) {
+				htmlOption += '<div class="ui-select-wrap ui-scrollbar" scroll-id="uiSelectScrollBar_'+ idN +'">';
+				idN = idN + 1;
+				sessionStorage.setItem('scrollbarID', idN);
+			} else {
+				htmlOption += '<div class="ui-select-wrap" style="min-width:' + $selectCurrent.outerWidth() + 'px">';
 			}
-			optSet();
 
-			_option_wrap += '</div>';
+			htmlOption += '<div class="ui-select-opts" role="listbox" id="' + listID + '" aria-hidden="false">';
 
-			win[global].browser.mobile ? _option_wrap += '<button type="button" class="btn-close"><span>닫기</span></button>' : '';
-			win[global].browser.mobile ? _option_wrap += '<div class="dim"></div>' : '';
-			_option_wrap += '</div>';
+			setOption();
 
-			var html_btn = '<button type="button" class="ui-select-btn '+ _hid +'" id="' + sel_id + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + list_id + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + opt_id_selected + '" data-n="' + sel_n + '" data-id="' + sel_id + '"';
+			htmlOption += '</div>';
+
+			win[global].browser.mobile ? htmlOption += '<button type="button" class="btn-close"><span>close</span></button>' : '';
+			win[global].browser.mobile ? htmlOption += '<div class="dim"></div>' : '';
+			htmlOption += '</div>';
+
+			htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '"';
 			!!vchecktype
-				? html_btn += ' vchecktype=' + vchecktype + '>' + _txt + '</button>'
-				: html_btn += '>' + _txt + '</button>';
+				? htmlButton += ' vchecktype=' + vchecktype + '>' + btnTxt + '</button>'
+				: htmlButton += '>' + btnTxt + '</button>';
 
-			$sel_current.append(html_btn);
-			$sel.addClass('off').attr('aria-hidden', true).attr('tabindex', -1);
-			$sel_current.append(_option_wrap);
-			sel_dis ? $sel_current.find('.ui-select-btn').prop('disabled', true).addClass('disabled') : '';
-			_option_wrap = '';
-			html_btn = '';
+			$selectCurrent.append(htmlButton);
+			$sel.addClass('hidden').attr('aria-hidden', true).attr('tabindex', -1);
+			$selectCurrent.append(htmlOption);
+
+			selectDisabled ? $selectCurrent.find('.ui-select-btn').prop('disabled', true).addClass('disabled') : '';
+
+			htmlOption = '';
+			htmlButton = '';
+		}
+		
+		function setOption(t, v){
+			var _$sel = (t !== undefined) ? $(t).closest('.ui-select').find('select') : $sel;
+			var _$option = _$sel.find('option');
+			var _$optionCurrent = _$option.eq(0);
+
+			selectID = _$sel.attr('id');
+
+			var _optionID = selectID + '_opt';
+			var _optLen = _$option.length;
+			var _current = current;
+			var _selected = false;
+			var _disabled = false;
+			var _hidden = false;
+			var _val = false;
+			var _hiddenCls;
+			var _optionIdName;
+
+			if (v !== undefined) {
+				_current = v;
+			}
+
+			for (var j = 0; j < _optLen; j++) {
+				_$optionCurrent = _$option.eq(j);
+				_hidden = _$optionCurrent.prop('hidden');
+
+				if (_current !== null) {
+					if (_current === j) {
+						_selected = true;
+						_$optionCurrent.prop('selected', true);
+					} else {
+						_selected = false;
+						_$optionCurrent.prop('selected', false);
+					}
+				} else {
+					_selected = _$optionCurrent.prop('selected');
+				}
+
+				_disabled = _$optionCurrent.prop('disabled');
+				_hiddenCls =  _hidden ? 'hidden' : '';
+
+				if (_selected) {
+					_val = _$optionCurrent.val()
+					btnTxt = _$optionCurrent.text()
+					optionSelectedID = _optionID + '_' + j
+					selectN = j
+				}
+
+				_selected && _hidden ? hiddenClass = 'opt-hidden' : '';
+				_optionIdName = _optionID + '_' + j;
+
+				if (win[global].browser.mobile) {
+					_disabled ?
+						_selected ?
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+						_selected ?
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '">' :
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '">';
+				} else {
+					_disabled ?
+						_selected ?
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+						_selected ?
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" >' :
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" >';
+				}
+
+				htmlOption += '<span class="ui-select-txt">' + _$optionCurrent.text() + '</span>';
+				htmlOption += '</button>';
+			}
+
+			if (t !== undefined) {
+				_$sel.closest('.ui-select').find('.ui-select-opts button').remove();
+				_$sel.closest('.ui-select').find('.ui-select-opts').append(htmlOption);
+				htmlOption = '';
+				eventFn();
+			}
 		}
 
 		//event
@@ -4800,56 +4823,62 @@ if (!Object.keys){
 					optBlur();
 				}
 			});
-			$('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
+			$(doc).find('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
 				'click.ui': selectClick,
 				'keydown.ui': selectKey,
 				'mouseover.ui': selectOver,
 				'focus.ui': selectOver,
 				'mouseleave.ui': selectLeave
 			});
-			$('.ui-select-opt').off('click.ui mouseover.ui').on({
+			$(doc).find('.ui-select-opt').off('click.ui mouseover.ui').on({
 				'click.ui': optClick,
 				'mouseover.ui': selectOver
 			});
-			$('.ui-select-wrap').off('mouseleave.ui').on({ 'mouseleave.ui': selectLeave });
-			$('.ui-select-wrap').off('blur.ui').on({ 'blur.ui': optBlur });
-			$('.ui-select select').off('change.ui').on({ 'change.ui': selectChange });
-			$('.ui-select-label').off('click.ui').on('click.ui', function () {
+			$(doc).find('.ui-select-wrap').off('mouseleave.ui').on({ 'mouseleave.ui': selectLeave });
+			$(doc).find('.ui-select-wrap').off('blur.ui').on({ 'blur.ui': optBlur });
+			$(doc).find('.ui-select-label').off('click.ui').on('click.ui', function () {
 				var idname = $(this).attr('for');
 
 				setTimeout(function () {
 					$('#' + idname + '_inp').focus();
 				}, 0);
 			});
+			$(doc).find('.ui-select select').off('change.ui').on({ 'change.ui': selectChange });
 		}
 		function selectLeave() {
 			$('body').data('select-open', true);
 		}
 		function selectChange() {
-			$(this).closest('.ui-select').data('fn');
+			var $this = $(this);
+			$this.closest('.ui-select').data('fn');
+
 			win[global].uiSelectAct({
-				id:$(this).attr('id'),
-				current:$(this).find('option:selected').index(),
-				callback:$(this).data('callback'), original:true
+				id:$this .attr('id'),
+				current: $this.find('option:selected').index(),
+				callback: $this.data('callback'), original:true
 			});
 		}
 		function optBlur() {
 			optClose();
 		}
 		function selectClick() {
-			optSet(this);
 			var $btn = $(this);
 			$btn.data('sct', $(doc).scrollTop());
+
+			setOption(this, $btn.closest('.ui-select').find('option:selected').index() );
 			optExpanded(this);
 		}
 		function optClick() {
 			var t = this,
 				sct = $(t).closest('.ui-select').find('.ui-select-btn').data('sct');
 
-			win[global].uiSelectAct({ id: $(t).closest('.ui-select').find('.ui-select-btn').data('id'), current: $(t).index() })
+			win[global].uiSelectAct({ 
+				id: $(t).closest('.ui-select').find('.ui-select-btn').data('id'), 
+				current: $(t).index() 
+			});
+
 			$(t).closest('.ui-select').find('.ui-select-btn').focus();
 			optClose();
-			//win[global].uiScroll({ value: sct, speed: 200 });
 		}
 		function selectOver() {
 			$('body').data('select-open', false);
@@ -4858,9 +4887,10 @@ if (!Object.keys){
 			var t = this,
 				$btn = $(this),
 				id = $btn.data('id'),
-				$opt = $('#' + id + '_list').find('.ui-select-opt'),
-				$wrap = $('#' + id + '_list').closest('.ui-select-wrap'),
-				n = Number($('#' + id + '_list').find('.selected').index()),
+				$list = $('#' + id + '_list'),
+				_$option = $list.find('.ui-select-opt'),
+				$wrap = $list.closest('.ui-select-wrap'),
+				n = Number($list.find('.selected').index()),
 				nn,
 				wrap_h = $wrap.outerHeight(),
 				len = $opt.length,
@@ -4938,28 +4968,27 @@ if (!Object.keys){
 			$body.addClass('dim-dropdown');
 			$body.data('scrolling') === 'yes' ? win[global].uiScrollingCancel() : '';
 
-
 			if (!_$sel.data('expanded')) {
+				console.log(_$sel, _$uisel.find('select').val(), _$uisel.find(':selected').index())
 				_$sel.data('expanded', true).attr('aria-expanded', true);
 				_$uisel.addClass('on');
 				_$wrap.addClass('on ' + clsname).attr('aria-hidden', false);
-				_$opts.find('.ui-select-opt').eq(_$uisel.find(':checked').index());
-				customscroll ? _$wrap.css('min-width', _$opts.outerWidth()) :
-					win[global].uiScroll({ target: _$wrap, value: Number(opt_h * _$uisel.find(':checked').index()), speed: 0 });
+				_$opts.find('.ui-select-opt').eq(_$uisel.find(':selected').index());
+
+				// customscroll ? _$wrap.css('min-width', _$opts.outerWidth()) :
+				// 	win[global].uiScroll({ target: _$wrap, value: Number(opt_h * _$uisel.find(':checked').index()), speed: 0 });
 			}
 
-			if (_$wrap.outerHeight() > _$opts.outerHeight()) {
-				_$wrap.css({
-					'min-height': _$opts.outerHeight(),
-					overflow: 'hidden'
-				});
-			} else {
-				customscroll
-					? win[global].uiScrollBar({
-						id: _$wrap.attr('id'),
-						top: _$wrap.find('.selected').index() * _$wrap.find('.ui-select-opt').outerHeight()
-					}) : '';
-			}
+			win[global].uiScrollBar({
+				id : _$wrap
+			});
+
+			// if (_$wrap.outerHeight() > _$opts.outerHeight()) {
+			// 	_$wrap.css({
+			// 		'min-height': _$opts.outerHeight(),
+			// 		overflow: 'hidden'
+			// 	});
+			// }
 		}
 
 		function optClose() {
@@ -4976,6 +5005,7 @@ if (!Object.keys){
 		}
 	}
 	function createUiSelectAct(opt) {
+		console.log('act');
 		var id = typeof opt.id === 'string' ? opt.id : opt.id.attr('id'),
 			$uisel = typeof opt.id === 'string' ? $('#' + opt.id).closest('.ui-select') : opt.id.closest('.ui-select'),
 			$sel = $('#' + id),
@@ -4984,12 +5014,10 @@ if (!Object.keys){
 			callback = opt.callback === undefined ?  $sel.data('callback') === undefined ? false : $sel.data('callback') : opt.callback,
 			current = opt.current,
 			org = opt.original === undefined ? false : opt.original;
-
-		!org ? $uisel.find('option').prop('selected', false).eq(current).prop('selected', true) : '';
-		//!org ? $uisel.find('option').prop('selected', false).eq(current).prop('selected', true).trigger('change') : '';
+			//!org && $uisel.find('option').prop('selected', false).eq(current).prop('selected', true);
+		!org && $uisel.find('option').prop('selected', false).eq(current).prop('selected', true).trigger('change');
 		//trigger 오류 확인필요
-
-
+		
 		!$opt.eq(current).prop('hidden')
 			? $sel.closest('.ui-select').find('.ui-select-btn').removeClass('opt-hidden')
 			: $sel.closest('.ui-select').find('.ui-select-btn').addClass('opt-hidden');

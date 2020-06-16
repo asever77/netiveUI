@@ -5,72 +5,71 @@
 	<h1 class="h1">Select</h1>
 </div>
 
-				<h2 class="h2">Examples</h2>
-				<h3 class="h3">CSS Design</h3>
-				<p>CSS로 스타일 표현하나 IE등 일부 브라우저에서는 지원을 안함.</p>
-				<fieldset class="mgt-s">
-					<legend>기본 스타일</legend>
-					<select title="년도 선택" id="sel1">
-						<option value="1" selected>2018</option>
-						<option value="2">2017</option>
-						<option value="3">2016</option>
-						<option value="4">2015</option>
-					</select>
-				</fieldset>
+<h2 class="h2">Examples</h2>
+<h3 class="h3">CSS Design</h3>
+<p>CSS로 스타일 표현하나 IE등 일부 브라우저에서는 지원을 안함.</p>
+<fieldset class="mgt-s">
+	<legend>기본 스타일</legend>
+	<select title="년도 선택" id="sel1">
+		<option value="1" selected>2018</option>
+		<option value="2">2017</option>
+		<option value="3">2016</option>
+		<option value="4">2015</option>
+	</select>
+</fieldset>
 
-				<h3 class="h3">Custom Select</h3>
-				<p>모든 브라우저에서 동일한 UI와 디자인으로 접근 가능. option도 디자인 표현이 가능 </p>			
-				<div class="in-wrap mgt-s">
-					<fieldset >
-						<legend>지역선택</legend>
+<h3 class="h3">Custom Select</h3>
+<p>모든 브라우저에서 동일한 UI와 디자인으로 접근 가능. option도 디자인 표현이 가능 </p>			
+<div class="in-wrap mgt-s">
+	<fieldset >
+		<legend>지역선택</legend>
 
-						<div class="in-item">
-							<label for="forSelLocal" class="lb-tit ui-select-label">아이유 앨범</label>
-							<div class="ui-select type-tel">
-								<select title="Palette 선택" id="forSelLocal">
-									<option value="1">이 지금</option>
-									<option value="2">팔레트</option>
-									<option value="3" selected>이런 엔딩</option>
-									<option value="4">사랑이 잘</option>
-								</select>
-							</div>
-						</div>
-						<div class="in-item mgl-xxs">
-							<div class="ui-select type-bank" style="width:150px">
-								<select title="Palette 앨범" id="uiSel1" onchange="console.log(this.value);">
-									<option value="1">이 지금</option>
-									<option value="2" selected>팔레트(Feat. G-DRAGON)</option>
-									<option value="3" >이런 엔딩</option>
-									<option value="4">사랑이 잘(with 오혁)</option>
-									<option value="5">잼잼</option>
-									<option value="6">Black Out</option>
-									<option value="7">마침표</option>
-									<option value="8">밤편지(Through the Night)</option>
-									<option value="9">그렇게 사랑은</option>
-									<option value="10">이름에게</option>
-								</select>
-							</div>
-						</div>
-					</fieldset>
-				</div>
-				<div class="in-wrap mgt-s">
-					<div class="in-item">
-						<button type="button" class="btn-base" id="changeOption">동적 셀렉트 옵션 변경</button>
-					</div>
-					<div class="in-item mgl-xxs">
-						<div class="ui-select" style="width:100px">
-							<select title="구 선택" id="uiSel2" onchange="console.log(this.value)">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3">3</option>
-								<option value="4">4</option>
+		<div class="in-item">
+			<label for="forSelLocal" class="lb-tit ui-select-label">아이유 앨범</label>
+			<div class="ui-select type-tel">
+				<select title="Palette 선택" id="forSelLocal">
+					<option value="1">이 지금</option>
+					<option value="2">팔레트</option>
+					<option value="3">이런 엔딩</option>
+					<option value="4">사랑이 잘</option>
+				</select>
+			</div>
+		</div>
+		<div class="in-item mgl-xxs">
+			<div class="ui-select type-bank">
+				<select title="Palette 앨범" id="uiSel1" onchange="console.log(this.value);">
+					<option value="1">이 지금</option>
+					<option value="2">팔레트(Feat. G-DRAGON)</option>
+					<option value="3">이런 엔딩</option>
+					<option value="4">사랑이 잘(with 오혁)</option>
+					<option value="5">잼잼</option>
+					<option value="6">Black Out</option>
+					<option value="7">마침표</option>
+					<option value="8">밤편지(Through the Night)</option>
+					<option value="9">그렇게 사랑은</option>
+					<option value="10">이름에게</option>
+				</select>
+			</div>
+		</div>
+	</fieldset>
+</div>
+<div class="in-wrap mgt-s">
+	<div class="in-item">
+		<button type="button" class="btn-base" id="changeOption">동적 셀렉트 옵션 변경</button>
+	</div>
+	<div class="in-item mgl-xxs">
+		<div class="ui-select" style="width:100px">
+			<select title="구 선택" id="uiSel2" onchange="alert(this.value)" >
+				<option value="1">1</option>
+				<option value="2">2</option>
+				<option value="3">3</option>
+				<option value="4">4</option>
+			</select>
+		</div>
+	</div>
+</div>
 
-							</select>
-						</div>
-					</div>
-				</div>
-
-				<h2 class="h2">HTML Structure</h2>
+<h2 class="h2">HTML Structure</h2>
 <div class="box-code">
 <pre>
 <code>

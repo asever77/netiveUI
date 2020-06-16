@@ -11,6 +11,7 @@
                     case 'introduction' :
                         fristHref = '/netiveUI/html/start/introduction.html';
                         break;
+
                     case 'accordion' :
                         fristHref = '/netiveUI/html/components/accordion.html';
                         break;
@@ -50,7 +51,6 @@
                     case 'tableScroll' :
                         fristHref = '/netiveUI/html/components/tableScroll.html';
                         break;
-
                     case 'print' :
                         fristHref = '/netiveUI/html/components/print.html';
                         break;
@@ -66,6 +66,9 @@
                     case 'inputClear' :
                         fristHref = '/netiveUI/html/components/inputClear.html';
                         break;
+                    case 'select' :
+                        fristHref = '/netiveUI/html/components/select.html';
+                        break;
 
                     case 'layout' :
                         fristHref = '/netiveUI/html/contents/layout.html';
@@ -73,6 +76,7 @@
                     case 'button' :
                         fristHref = '/netiveUI/html/contents/button.html';
                         break;
+                   
                 }
             } 
 

@@ -368,26 +368,16 @@
 
         $plugins.uiSelect({ 
             id:'uiSel1', 
-            current:4, 
+            current:1, 
             callback:function(v){console.log(v)} 
         });
         
         var opttxt = 5;
         $('#changeOption').on('click', function(){
-
             $('#uiSel2').append('<option value="'+ opttxt +'">'+ opttxt +'</option>');
             opttxt = opttxt + 1;
-
-            $plugins.uiSelect({ id:'uiSel2' });
         });
 
-
-        $(document).on('change', '.ui-select select', aaaa())
-
-
-        function aaaa(){
-            console.log(2);
-        }
     }
 
     $plugins.page.pageScrollMove = function(){
