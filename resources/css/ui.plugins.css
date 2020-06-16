@@ -201,12 +201,14 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-scrollbar.ready .ui-scrollbar::-webkit-scrollbar{width:0; height:0;}
 .ie .ui-scrollbar.ready > .ui-scrollbar-item {width:calc(100% + 17px) !important; height:calc(100% + 17px) !important;} 
 .ui-scrollbar-barwrap{opacity:0;}
-.ui-scrollbar-barwrap.type-y {position:absolute; top:0; right:0; width:10px; height:100%; background:rgba(0,0,0,0.1); z-index:100; border-top: 2px solid transparent; border-bottom: 2px solid transparent;}
-.ui-scrollbar-barwrap.type-x {position:absolute; bottom:0; left:0; width:100%; height:10px; background:rgba(0,0,0,0.1); z-index:100; border-left: 2px solid transparent; border-right: 2px solid transparent;}
+.ui-scrollbar-barwrap.type-y {display:none; position:absolute; top:0; right:0; width:10px; height:100%; background:rgba(0,0,0,0.1); z-index:100; border-top: 2px solid transparent; border-bottom: 2px solid transparent;}
+.ui-scrollbar-barwrap.type-x {display:none; position:absolute; bottom:0; left:0; width:100%; height:10px; background:rgba(0,0,0,0.1); z-index:100; border-left: 2px solid transparent; border-right: 2px solid transparent;}
 .type-y .ui-scrollbar-bar {position:absolute; top:0; right:2px; width:6px; margin:0; height:20px; background:#fff; opacity:1; border-radius:2px;}
 .type-x .ui-scrollbar-bar {position:absolute; top:2px; left:0; width:20px; margin:0; height:6px; background:#fff; opacity:1; border-radius:2px;}
 .ui-scrollbar:hover .ui-scrollbar-bar {opacity:1; box-shadow:0 0 5px rgba(0,0,0,0.3)}
 .view-scrollbar > .ui-scrollbar-barwrap{animation-name:fadeIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
+.view-y > .ui-scrollbar-barwrap.type-y{display:block; }
+.view-x > .ui-scrollbar-barwrap.type-x{display:block; }
 
 /* ui scroll box : base */
 .ui-scrollbox-item {position:relative;}

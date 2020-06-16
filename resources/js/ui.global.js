@@ -817,39 +817,86 @@ if (!Object.keys){
 	win[global].uiScrollBar.option = {
 		id: false,
 		callback:false,
-		space: false
+		space: false,
+		remove: false
 	};
+	win[global].uiScrollBar.timer = {}
 	function createuiScrollBar(opt) {
 		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
 			id = opt.id,
 			space = opt.space,
 			callback = opt.callback,
+			remove = opt.remove,
 			$base = !id ? $('.ui-scrollbar') : typeof id === 'object' ? id : $('[scroll-id="' + id +'"]');
 		
 		var imgLoaded = 0;
 
 		$base.each(function () {
-			scrollbarReady($(this));
+			!remove ? scrollbarReady($(this)) : scrollbarRemove($(this));
 		});
+		function scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space){
+			var $wrap = t;
+			var	$item = $wrap.children('.ui-scrollbar-item');
 
+			if (!$item.length) {
+				return false;
+			}
+
+			var nWrapH = $wrap.outerHeight();
+			var nWrapW = $wrap.outerWidth();
+			var nItemH = $item.prop('scrollHeight');
+			var nItemW = $item.prop('scrollWidth');
+
+			var changeH = (itemH !== nItemH || wrapH !== nWrapH);
+			var changeW = (itemW !== nItemW || wrapW !== nWrapW);
+
+			if (changeH || changeW) {
+				var barH = Math.floor(nWrapH / (nItemH / 100));
+				var barW = Math.floor(nWrapW / (nItemW / 100));
+				var $barY = $wrap.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+				var $barX = $wrap.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+
+				changeH && $barY.css('height', barH + '%').data('height', barH);
+				changeW && $barX.css('width', barW + '%').data('width', barW);
+				
+				(nWrapH < nItemH) ? $wrap.addClass('view-y') : $wrap.removeClass('view-y');
+				(nWrapW < nItemW) ? $wrap.addClass('view-x') : $wrap.removeClass('view-x');
+
+				$wrap.data('opt', {'itemH':nItemH, 'itemW':nItemW, 'wrapH':nWrapH, 'wrapW':nWrapW });
+				eventFn();
+				scrollEvent($item, space);
+			}
+
+			var timer;
+			clearTimeout(timer);
+			timer = setTimeout(function(){
+				scrollbarUpdate(t, nWrapH, nWrapW, nItemH, nItemW);
+			}, 300);
+		}
+		function scrollbarRemove(t){
+			var $wrap = t;
+
+			$wrap.removeClass('ready view-scrollbar').data('callback', callback).data('ready', false).removeAttr('style');
+			$wrap.find('> .ui-scrollbar-item').contents().unwrap();
+			$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
+			$wrap.find('> .ui-scrollbar-barwrap').remove();
+		}
 		function scrollbarReady(t) {
 			var $wrap = t;
 			var	html_scrollbar = '';
 
-			//$wrap.removeAttr('style');
 			$wrap.removeClass('ready').data('callback', callback).data('ready', false);
 			$wrap.find('> .ui-scrollbar-item').contents().unwrap();
 			$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
-			$wrap.children('.ui-scrollbar-barwrap').remove();
+			$wrap.find('> .ui-scrollbar-barwrap').remove();
 
 			var wrapW = $wrap.innerWidth();
 			var wrapH = $wrap.outerHeight();
 
 			$wrap.wrapInner('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap"></div></div>');
 
-			var	$item = $wrap.children('.ui-scrollbar-item');
-			var	$itemWrap = $item.children('.ui-scrollbar-wrap');
-			var len = $itemWrap.find('img').length;
+			var	$item = $wrap.find('> .ui-scrollbar-item');
+			var	$itemWrap = $item.find('> .ui-scrollbar-wrap');
 
 			var cssDisplay = $wrap.css('display');
 			var cssPadding = $wrap.css('padding');
@@ -864,133 +911,84 @@ if (!Object.keys){
 				$itemWrap.css('width','100%');
 			} 
 
-			var itemW = $item.outerWidth(true);
-
 			!space && $item.css('width','100%');
 			$wrap.css('overflow','hidden');
 
-			var itemH = $item.outerHeight(true);
+			var itemW =  $item.prop('scrollWidth');
+			var itemH =$item.prop('scrollHeight');
 			
-			$item.data('opt', {'itemH':itemH, 'itemW':itemW, 'wrapH':wrapH, 'wrapW':wrapW });
+			$wrap.data('opt', {'itemH':itemH, 'itemW':itemW, 'wrapH':wrapH, 'wrapW':wrapW });
 			
 			var idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
 
 			idN = idN === undefined ? 0 : idN;
-
+			
 			if (!$wrap.data('ready') || !$wrap.attr('scroll-id')) {
+				
 				if (!$wrap.attr('scroll-id')) {
-					$wrap.css('overflow', 'hidden').attr('scroll-id', 'uiScrollBar_' + idN).data('ready', true).addClass('ready');
+					$wrap.attr('scroll-id', 'uiScrollBar_' + idN).data('ready', true).addClass('ready');
 					idN = idN + 1;
 					sessionStorage.setItem('scrollbarID', idN);
 				} else {
-					$wrap.css('overflow', 'hidden').data('ready', true).addClass('ready');
+					$wrap.data('ready', true).addClass('ready');
 				}
 
 				$item.attr('tabindex', 0);
 				$wrap.css('height', wrapH + 'px');
-
-				if (wrapH < itemH) {
-					space && $item.addClass('scroll-y-padding');
-					if (!space) {
-						!!$wrap.parent('.ui-tablescroll').length && $wrap.parent('.ui-tablescroll').addClass('not-space');
-					}
-					html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
-					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">scroll</span></button>';
-					html_scrollbar += '</div>';
-				}
-				if (wrapW < itemW) {
-					space && $item.addClass('scroll-x-padding');
-					html_scrollbar += '<div class="ui-scrollbar-barwrap type-x" >';
-					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="x"><span class="hide">scroll</span></button>';
-					html_scrollbar += '</div>';
-				}
-
-				$wrap.prepend(html_scrollbar);
 				
+				if (space) {
+					$item.addClass('scroll-y-padding');
+					$item.addClass('scroll-x-padding');
+				} else {
+					!!$wrap.parent('.ui-tablescroll').length && $wrap.parent('.ui-tablescroll').addClass('not-space');
+				}
+
+				html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
+				html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">scroll</span></button>';
+				html_scrollbar += '</div>';
+				html_scrollbar += '<div class="ui-scrollbar-barwrap type-x" >';
+				html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="x"><span class="hide">scroll</span></button>';
+				html_scrollbar += '</div>';
+				
+				$wrap.prepend(html_scrollbar);
+
+				(wrapH < itemH) ? $wrap.addClass('view-y') : $wrap.removeClass('view-y');
+				(wrapW < itemW) ? $wrap.addClass('view-x') : $wrap.removeClass('view-x');
+
 				var barH = Math.floor(wrapH / (itemH / 100));
 				var barW = Math.floor(wrapW / (itemW / 100));
 				var $barY = $wrap.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
 				var $barX = $wrap.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 				
-
 				$barY.css('height', barH + '%').data('height', barH);
 				$barX.css('width', barW + '%').data('width', barW);
-				
+				$wrap.addClass('view-scrollbar');
+
 				scrollEvent($item);
-
-				if (!!len) {
-					$item.find('img').each(function(){
-						$(this).load(function(){
-							console.log($wrap.attr('scroll-id'), len, imgLoaded)
-							if (len > imgLoaded) {
-								console.log('ing....');
-								imgLoaded = imgLoaded + 1;
-								$wrap.addClass('view-scrollbar');
-								scrollbarReady(t);
-							} else {
-								console.log('end....');
-								scrollBarReCheck();
-							}
-						});
-					});
-				} else {
-					scrollBarReCheck();
-				}
-
-				//event
-				var timerResize;
-				$(win).off('resize.uiscr').on('resize.uiscr', function(){
-					$wrap.addClass('view-scrollbar');
-					clearTimeout(timerResize);
-					timerResize = setTimeout(function(){
-						$('.ui-scrollbar').each(function () {
-							scrollbarReady($(this));
-						});
-					},300);
-				});
-				$(doc).find('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
-					scrollEvent(this);
-				});
-				$(doc).find('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
-					dragMoveAct(e, this);
-				});
+				scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space);
+				eventFn();
 			}
-
-			function scrollBarReCheck(){
-				setTimeout(function(){
-					console.log('timer', $item, $item.data('opt'));
-					var opt = $item.data('opt');
-					if (opt !== undefined) {
-						var h = opt.itemH;
-						var hn = $itemWrap.outerHeight(true);
-						var w = opt.itemW;
-						var wn = $itemWrap.outerWidth(true);
-
-						if (h !== hn && h < hn) {
-							if (h - 5 === hn) {
-								$wrap.addClass('view-scrollbar');
-							} else {
-								$wrap.addClass('view-scrollbar');
-								$plugins.uiScrollBar({
-									id: $wrap.attr('scroll-id'),
-									callback: callback
-								});
-							}
-						} else {
-							$wrap.addClass('view-scrollbar');
-						}
-					} 
-				}, 500);
-			}
-		}		
+		}	
+		function eventFn(){
+			$(doc).find('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
+				scrollEvent(this);
+			});
+			$(doc).find('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
+				dragMoveAct(e, this);
+			});
+		}	
 		function scrollEvent(t){
 			var $this = $(t),
 				$wrap = $this.closest('.ui-scrollbar'),
 				$barY = $wrap.find('> .type-y .ui-scrollbar-bar'),
 				$barX = $wrap.find('> .type-x .ui-scrollbar-bar');
 			
-			var opt = $this.data('opt'),
-				itemH = opt.itemH,
+			var opt = $wrap.data('opt');
+
+			if (opt === undefined) {
+				return false;
+			}
+			var itemH = opt.itemH,
 				itemW = opt.itemW,
 				wrapH = opt.wrapH,
 				wrapW = opt.wrapW;
@@ -1027,14 +1025,12 @@ if (!Object.keys){
 				w_w = $barWrap.innerWidth(),
 				barH = $bar.data('height'),
 				barW = $bar.data('width'),
-				opt = $item.data('opt');
+				opt = $wrap.data('opt');
 
 			var yRPer, xRPer;
-
 			var $btn = e.target;
 			var isXY = $btn.getAttribute('data-scrollxy');
-			console.log($btn.getAttribute('data-scrollxy'))
-
+			
 			$('body').addClass('scrollbar-move');
 
 			$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function (e) {
@@ -1075,8 +1071,6 @@ if (!Object.keys){
 					$bar.css('left', nPerX + '%');
 					$item.scrollLeft(opt.itemW * nPerX / 100);
 				}
-				
-				
 
 			}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function () {
 				var callback = $wrap.data('callback');
