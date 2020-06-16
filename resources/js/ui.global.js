@@ -187,7 +187,7 @@ if (!Object.keys){
 	(function () {
 		var devsize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360];
 		var html5tags = ['article', 'aside', 'details', 'figcaption', 'figure', 'footer', 'header', 'hgroup', 'nav', 'main', 'section', 'summary'];
-		var width = document.documentElement.offsetWidth,
+		var width = $('html').offsetWidth,
 			colClass = width >= devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4',
 			i = 0,
 			size_len = devsize.length,
@@ -215,13 +215,13 @@ if (!Object.keys){
 
 		deviceSizeClassName(width);
 		var sizeCls = 's' + sizeMode;
-
-		doc.documentElement.classList.add(sizeCls);
-		doc.documentElement.classList.add(colClass);
+		
+		$()
+		$('html').addClass(sizeCls).addClass(colClass);
 		win.addEventListener('resize', function() {
 			clearTimeout(timer);			
 			timer = setTimeout(function () {
-				var dcHtml = doc.querySelector('html');
+				var $html = $('html');
 				
 				width = win.innerWidth; 
 				// document.body.offsetWidth === $(win).outerWidth()
@@ -230,13 +230,12 @@ if (!Object.keys){
 				deviceSizeClassName(width);
 
 				colClass = width >= devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4';
-				dcHtml.classList.remove('s1920', 's1600', 's1440', 's1280', 's1024', 's940', 's840', 's720', 's600', 's480', 's400', 's360', 's300', 'col12', 'col8', 'col4');
+				$html.removeClass('s1920', 's1600', 's1440', 's1280', 's1024', 's940', 's840', 's720', 's600', 's480', 's400', 's360', 's300', 'col12', 'col8', 'col4');
 				win[global].breakpoint = width >= devsize[5] ? true : false;
 
 				deviceSizeClassName(width);
 				sizeCls = 's' + sizeMode;
-				dcHtml.classList.add(sizeCls);
-				dcHtml.classList.add(colClass);
+				$html.addClass(sizeCls).addClass(colClass);
 			}, 100);
 		});
 	})();
@@ -845,17 +844,13 @@ if (!Object.keys){
 
 			$wrap.wrapInner('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap"></div></div>');
 
-			console.log('$item', $wrap.children('.ui-scrollbar-item'))
-
 			var	$item = $wrap.children('.ui-scrollbar-item');
 			var	$itemWrap = $item.children('.ui-scrollbar-wrap');
 			var len = $itemWrap.find('img').length;
 
-			//style 상속
 			var cssDisplay = $wrap.css('display');
 			var cssPadding = $wrap.css('padding');
 
-			
 			$itemWrap.css({
 				display: cssDisplay,
 				padding: cssPadding
@@ -923,41 +918,20 @@ if (!Object.keys){
 				if (!!len) {
 					$item.find('img').each(function(){
 						$(this).load(function(){
-							console.log(len, imgLoaded)
+							console.log($wrap.attr('scroll-id'), len, imgLoaded)
 							if (len > imgLoaded) {
+								console.log('ing....');
 								imgLoaded = imgLoaded + 1;
 								$wrap.addClass('view-scrollbar');
 								scrollbarReady(t);
 							} else {
-								$wrap.addClass('view-scrollbar');
+								console.log('end....');
+								scrollBarReCheck();
 							}
 						});
 					});
 				} else {
-					setTimeout(function(){
-						console.log('timer', $item, $item.data('opt'));
-						var opt = $item.data('opt');
-						if (opt !== undefined) {
-							var h = opt.itemH;
-							var hn = $itemWrap.outerHeight(true);
-							var w = opt.itemW;
-							var wn = $itemWrap.outerWidth(true);
-
-							if (h !== hn && h < hn) {
-								if (h - 5 === hn) {
-									$wrap.addClass('view-scrollbar');
-								} else {
-									$wrap.addClass('view-scrollbar');
-									$plugins.uiScrollBar({
-										id: $wrap.attr('scroll-id'),
-										callback: callback
-									});
-								}
-							} else {
-								$wrap.addClass('view-scrollbar');
-							}
-						} 
-					}, 500);
+					scrollBarReCheck();
 				}
 
 				//event
@@ -977,6 +951,33 @@ if (!Object.keys){
 				$(doc).find('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
 					dragMoveAct(e, this);
 				});
+			}
+
+			function scrollBarReCheck(){
+				setTimeout(function(){
+					console.log('timer', $item, $item.data('opt'));
+					var opt = $item.data('opt');
+					if (opt !== undefined) {
+						var h = opt.itemH;
+						var hn = $itemWrap.outerHeight(true);
+						var w = opt.itemW;
+						var wn = $itemWrap.outerWidth(true);
+
+						if (h !== hn && h < hn) {
+							if (h - 5 === hn) {
+								$wrap.addClass('view-scrollbar');
+							} else {
+								$wrap.addClass('view-scrollbar');
+								$plugins.uiScrollBar({
+									id: $wrap.attr('scroll-id'),
+									callback: callback
+								});
+							}
+						} else {
+							$wrap.addClass('view-scrollbar');
+						}
+					} 
+				}, 500);
 			}
 		}		
 		function scrollEvent(t){
@@ -1156,7 +1157,7 @@ if (!Object.keys){
 		clearTimeout(timer);
 		timer = setTimeout(function(){
 			!focusnot ? $item.eq(0).focus() : '';
-		},0);
+		},1000);
 		timer = '';
 
 		$focus.find('.ui-fctab-s').off('keydown.holds').on('keydown.holds', function (e) {
@@ -2616,7 +2617,7 @@ if (!Object.keys){
             closeCallback ? closeCallback(opt) : '';
             remove ? $modal.remove() : '';
             !!endfocus ? endfocus.focus() : '';
-        },150);
+        },210);
     }
 
 
