@@ -1156,9 +1156,8 @@ if (!Object.keys){
 		
 		clearTimeout(timer);
 		timer = setTimeout(function(){
-			alert($item.attr('type'))
 			!focusnot ? $item.eq(0).focus() : '';
-		},1000);
+		},300);
 		timer = '';
 
 		$focus.find('.ui-fctab-s').off('keydown.holds').on('keydown.holds', function (e) {
