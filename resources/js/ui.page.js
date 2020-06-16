@@ -2,22 +2,33 @@
     console.log('page.js');
 
     'use strict';
+    
+    $plugins.page.pageUnits = function(){};
+    $plugins.page.pagePlaceholder = function(){};
+    $plugins.page.pageNaming = function(){};
+    $plugins.page.pageMargin = function(){};
+    $plugins.page.pageIntroduction = function(){};
+    $plugins.page.pageDevice = function(){};
+    $plugins.page.pageTypography = function(){};
+    $plugins.page.pageLayout = function(){};
+    $plugins.page.pageButton = function(){};
 
-    $plugins.page.pageLayout = function(){ }
-    $plugins.page.pageButton = function(){ }
+    $plugins.page.pageBulletList = function(){};
 
     $plugins.page.pagePrint = function(){
         $('#prtTest').off('click.print').on('click.print', function(){
             $plugins.uiPrint({ id:'prtSct' });
         });
-        
-    }
+    };
+
     $plugins.page.pageTableCaption = function(){
         $plugins.uiCaption();
-    }
+    };
+
     $plugins.page.pageTableCellFix = function(){
         $plugins.uiTableFixTd();
-    }
+    };
+
     $plugins.page.pageTableScroll = function(){
         $plugins.uiTableScroll({
             callback:function(){
@@ -26,7 +37,7 @@
                 });
             }
         });
-    }
+    };
 
     $plugins.page.pageBrickList = function(){
         $plugins.uiBrickList({ 
@@ -104,7 +115,7 @@
             $plugins.uiBrickListItem({ id: v });
         }
         
-    }
+    };
 
     $plugins.page.pageModal = function(){
         $('.test-modal .btn-base').off('click.modal').on('click.modal', function(){
@@ -424,8 +435,8 @@
 
     $plugins.page.pageScrollBar = function(){
         $plugins.uiScrollBar({
-            callback: function(){
-                console.log('end')
+            infiniteCallback: function(){
+                console.log('infiniteCallback')
             }
         });
         //$plugins.uiScrollBar({ id:'scrbar1', top:20 });

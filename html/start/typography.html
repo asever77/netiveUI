@@ -1,3 +1,5 @@
+<input type="hidden" id="uiJsName" value="pageTypography">
+
 <div class="tit-catagory">
 	Getting Started
 </div>
@@ -6,7 +8,7 @@
 	<h1 class="h1">Typography</h1>
 </div>
 
-<h2 class="h2">서체</h2>
+<h2 class="h2">Font</h2>
 <p>기본 서체로 Noto입니다. Noto는 안드로이드 프로요부터 Roboto를 커버하지 못하는 모든 언어를 위한 표준서체가 되었습니다.</p>
 <div class="box-base">
     <dl class="list-define font">
@@ -27,7 +29,7 @@
     </dl>
 </div>
 
-<h2 class="h2">스타일</h2>
+<h2 class="h2">Style</h2>
 <p>너무 다양한 크기와 스타일은 사용자와 레이아웃을 혼란스럽게 하는 요소입니다. 지정된 크기와 스타일로 제한을 줘서 균형과 사용성을 높이도록 합니다.</p>
 <div class="box-base" style="background:#fdff7a; border-color:#abad52">
     <span class="guide-line"></span>
@@ -48,4 +50,91 @@
     <p class="txt2">일반적인 텍스트 일반적인 텍스트일반적인 텍스트일반적인 텍스트일반적인 <br>텍스트일반적인 텍스트일반적인 텍스트일반적인 텍스트일반적인 <br>텍스트일반적인 텍스트</p>
     <span class="guide-line"></span>
 </div>
+
+
+<h2 class="h2">CSS</h2>
+<div class="box-code">
+<pre>
+<code>
+//google icons font & local font
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url(ui.font.css); 
+
+//ui.font.css
+@charset "utf-8";
+
+@font-face{
+	font-family:'Noto Sans KR';
+	src: url('/netiveUI/resources/font/notokr-thin.eot');/* IE 호환성 보기 */
+	src: url('/netiveUI/resources/font/notokr-thin.eot?#iefix') format('embedded-opentype'),/* IE 6 ~ 8 */
+		url('/netiveUI/resources/font/notokr-thin.woff2') format('woff2'),/* WOFF2 지원 브라우저 */
+		url('/netiveUI/resources/font/notokr-thin.woff') format('woff'),/* 모던 브라우저 */
+		url('/netiveUI/resources/font/notokr-thin.svg#notokr-thin') format('svg');/* 구 모바일 브라우저 */
+	font-weight: 100;
+	font-style: normal;
+}
+@font-face{
+	font-family:'Noto Sans KR';
+	src: url('/netiveUI/resources/font/notokr-light.eot');
+	src: url('/netiveUI/resources/font/notokr-light.eot?#iefix') format('embedded-opentype'),
+		url('/netiveUI/resources/font/notokr-light.woff2') format('woff2'),
+		url('/netiveUI/resources/font/notokr-light.woff') format('woff'),
+		url('/netiveUI/resources/font/notokr-light.svg#notokr-light') format('svg');
+	font-weight: 200;
+	font-style: normal;
+}
+@font-face{
+	font-family:'Noto Sans KR';
+	src: url('/netiveUI/resources/font/notokr-demilight.eot');
+	src: url('/netiveUI/resources/font/notokr-demilight.eot?#iefix') format('embedded-opentype'),
+		url('/netiveUI/resources/font/notokr-demilight.woff2') format('woff2'),
+		url('/netiveUI/resources/font/notokr-demilight.woff') format('woff'),
+		url('/netiveUI/resources/font/notokr-demilight.svg#notokr-demilight') format('svg');
+	font-weight: 300;
+	font-style: normal;
+}
+@font-face{
+	font-family:'Noto Sans KR';
+	src: url('/netiveUI/resources/font/notokr-regular.eot');
+	src: url('/netiveUI/resources/font/notokr-regular.eot?#iefix') format('embedded-opentype'),
+		url('/netiveUI/resources/font/notokr-regular.woff2') format('woff2'),
+		url('/netiveUI/resources/font/notokr-regular.woff') format('woff'),
+		url('/netiveUI/resources/font/notokr-regular.svg#notokr-regular') format('svg');
+	font-weight: 400;
+	font-style: normal;
+}
+@font-face{
+	font-family:'Noto Sans KR';
+	src: url('/netiveUI/resources/font/notokr-medium.eot');
+	src: url('/netiveUI/resources/font/notokr-medium.eot?#iefix') format('embedded-opentype'),
+		url('/netiveUI/resources/font/notokr-medium.woff2') format('woff2'),
+		url('/netiveUI/resources/font/notokr-medium.woff') format('woff'),
+		url('/netiveUI/resources/font/notokr-medium.svg#notokr-medium') format('svg');
+	font-weight: 500;
+	font-style: normal;
+}
+@font-face{
+	font-family:'Noto Sans KR';
+	src: url('/netiveUI/resources/font/notokr-bold.eot');
+	src: url('/netiveUI/resources/font/notokr-bold.eot?#iefix') format('embedded-opentype'),
+		url('/netiveUI/resources/font/notokr-bold.woff2') format('woff2'),
+		url('/netiveUI/resources/font/notokr-bold.woff') format('woff'),
+		url('/netiveUI/resources/font/notokr-bold.svg#notokr-bold') format('svg');
+	font-weight: 700;
+	font-style: normal;
+}
+@font-face{
+	font-family:'Noto Sans KR';
+	src: url('/netiveUI/resources/font/notokr-black.eot');
+	src: url('/netiveUI/resources/font/notokr-black.eot?#iefix') format('embedded-opentype'),
+		url('/netiveUI/resources/font/notokr-black.woff2') format('woff2'),
+		url('/netiveUI/resources/font/notokr-black.woff') format('woff'),
+		url('/netiveUI/resources/font/notokr-black.svg#notokr-black') format('svg');
+	font-weight: 900;
+	font-style: normal;
+}
+</code>
+</pre>
+</div>
+
 

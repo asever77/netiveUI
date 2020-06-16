@@ -11,6 +11,29 @@
                     case 'introduction' :
                         fristHref = '/netiveUI/html/start/introduction.html';
                         break;
+                    case 'typography' :
+                        fristHref = '/netiveUI/html/start/typography.html';
+                        break;
+                    case 'device' :
+                        fristHref = '/netiveUI/html/start/device.html';
+                        break;
+                    case 'margin' :
+                        fristHref = '/netiveUI/html/start/margin.html';
+                        break;
+                    case 'naming' :
+                        fristHref = '/netiveUI/html/start/naming.html';
+                        break;
+                    case 'placeholder' :
+                        fristHref = '/netiveUI/html/start/placeholder.html';
+                        break;
+                    case 'units' :
+                        fristHref = '/netiveUI/html/start/units.html';
+                        break;
+
+                     case 'bulletList' :
+                        fristHref = '/netiveUI/html/contents/bulletList.html';
+                        break;
+  
 
                     case 'accordion' :
                         fristHref = '/netiveUI/html/components/accordion.html';

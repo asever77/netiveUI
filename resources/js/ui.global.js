@@ -230,7 +230,7 @@ if (!Object.keys){
 				deviceSizeClassName(width);
 
 				colClass = width >= devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4';
-				$html.removeClass('s1920', 's1600', 's1440', 's1280', 's1024', 's940', 's840', 's720', 's600', 's480', 's400', 's360', 's300', 'col12', 'col8', 'col4');
+				$html.removeClass('s1920 s1600 s1440 s1280 s1024 s940 s840 s720 s600 s480 s400 s360 s300 col12 col8 col4');
 				win[global].breakpoint = width >= devsize[5] ? true : false;
 
 				deviceSizeClassName(width);
@@ -732,6 +732,7 @@ if (!Object.keys){
 			$target = opt.target === false ? $('html, body') : opt.target;
 		
 		if (p === 'top') {
+			console.log('v', v)
 			$target.stop().animate({ 
 				scrollTop : v 
 			}, { 
@@ -817,6 +818,7 @@ if (!Object.keys){
 	win[global].uiScrollBar.option = {
 		id: false,
 		callback:false,
+		infiniteCallback:false,
 		space: false,
 		remove: false
 	};
@@ -827,11 +829,10 @@ if (!Object.keys){
 			id = opt.id,
 			space = opt.space,
 			callback = opt.callback,
+			infiniteCallback = opt.infiniteCallback,
 			remove = opt.remove,
 			$base = !id ? $('.ui-scrollbar') : typeof id === 'object' ? id : $('[scroll-id="' + id +'"]');
 		
-		var imgLoaded = 0;
-
 		$base.each(function () {
 			!remove ? scrollbarReady($(this)) : scrollbarRemove($(this));
 		});
@@ -869,6 +870,7 @@ if (!Object.keys){
 			}
 
 			var timer;
+
 			clearTimeout(timer);
 			timer = setTimeout(function(){
 				scrollbarUpdate(t, nWrapH, nWrapW, nItemH, nItemW);
@@ -877,7 +879,7 @@ if (!Object.keys){
 		function scrollbarRemove(t){
 			var $wrap = t;
 
-			$wrap.removeClass('ready view-scrollbar').data('callback', callback).data('ready', false).removeAttr('style');
+			$wrap.removeClass('ready view-scrollbar').removeData('infiniteCallback').removeData('ready').removeAttr('style');
 			$wrap.find('> .ui-scrollbar-item').contents().unwrap();
 			$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
 			$wrap.find('> .ui-scrollbar-barwrap').remove();
@@ -886,7 +888,7 @@ if (!Object.keys){
 			var $wrap = t;
 			var	html_scrollbar = '';
 
-			$wrap.removeClass('ready').data('callback', callback).data('ready', false);
+			$wrap.removeClass('ready').data('infiniteCallback', infiniteCallback).data('ready', false);
 			$wrap.find('> .ui-scrollbar-item').contents().unwrap();
 			$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
 			$wrap.find('> .ui-scrollbar-barwrap').remove();
@@ -964,7 +966,7 @@ if (!Object.keys){
 				$barY.css('height', barH + '%').data('height', barH);
 				$barX.css('width', barW + '%').data('width', barW);
 				$wrap.addClass('view-scrollbar');
-
+				!!callback && callback(); 
 				scrollEvent($item);
 				scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space);
 				eventFn();
@@ -1005,13 +1007,13 @@ if (!Object.keys){
 				wPer = Math.round(scrL / (itemW - wrapW) * 100),
 				_wPer = (barW / 100) * wPer;
 
-			var callback = $wrap.data('callback');
+			var _infiniteCallback = $wrap.data('infiniteCallback');
 
 			$barY.css('top', hPer - _hPer + '%');
 			$barX.css('left', wPer - _wPer + '%');
 
-			if (!!callback) {
-				hPer === 100 && callback(); 
+			if (!!_infiniteCallback) {
+				hPer === 100 && _infiniteCallback(); 
 			}
 		}
 		function dragMoveAct(e, t) {
@@ -1075,10 +1077,10 @@ if (!Object.keys){
 				}
 
 			}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function () {
-				var callback = $wrap.data('callback');
+				var _infiniteCallback = $wrap.data('infiniteCallback');
 
-				if (!!callback) {
-					yRPer === 100 && callback(); 
+				if (!!_infiniteCallback) {
+					yRPer === 100 && _infiniteCallback(); 
 				}
 
 				$('body').removeClass('scrollbar-move');
@@ -4050,6 +4052,401 @@ if (!Object.keys){
 	}
 
 
+	/* ------------------------
+	* name : select
+	* date : 2020-06-16
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiSelect: function (opt) {
+			return createUiSelect(opt);
+		},
+		uiSelectAction: function (opt) {
+			return createuiSelectAction(opt);
+		}
+	});
+	win[global].uiSelect.option = {
+		id: false, 
+		current: null,
+		customscroll: true,
+		callback: false
+	};
+	function createUiSelect(opt) {
+		var opt = opt === undefined ? {} : opt,
+			opt = $.extend(true, {}, win[global].uiSelect.option, opt),
+			current = opt.current,
+			callback = opt.callback,
+			customscroll = opt.customscroll,
+			id = opt.id,
+			is_id = id === false ? false : true,
+			$ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.find('.ui-select') : $('.ui-select'),
+			keys = win[global].option.keys,
+			len = $ui_select.length;
+
+		var $sel,
+			$selectCurrent,
+			selectID,
+			listID,
+			optionSelectedID,
+			selectN,
+			selectTitle,
+			selectDisabled,
+			btnTxt = '',
+			hiddenClass = '',
+			htmlOption = '',
+			htmlButton = '' ;
+
+		//init
+		win[global].browser.mobile ? customscroll = false : '';
+
+		$ui_select.find('.ui-select-btn').remove();
+		$ui_select.find('.ui-select-wrap').remove();
+		$ui_select.find('.dim').remove();
+
+		var idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
+
+		//select set
+		for (var i = 0; i < len; i++) {
+			$selectCurrent = $ui_select.eq(i);
+			$sel = $selectCurrent.find('select');
+			
+			selectID = $sel.attr('id');
+			listID = selectID + '_list';
+			selectDisabled = $sel.prop('disabled');
+			selectTitle = $sel.attr('title');
+			hiddenClass = '';
+			
+			(!$sel.data('callback') || !!callback) && $sel.data('callback', callback);
+
+			if (customscroll) {
+				htmlOption += '<div class="ui-select-wrap ui-scrollbar" scroll-id="uiSelectScrollBar_'+ idN +'">';
+				idN = idN + 1;
+				sessionStorage.setItem('scrollbarID', idN);
+			} else {
+				htmlOption += '<div class="ui-select-wrap" style="min-width:' + $selectCurrent.outerWidth() + 'px">';
+			}
+
+			htmlOption += '<strong class="ui-select-title">'+ selectTitle +'</strong>';
+
+			htmlOption += '<div class="ui-select-opts" role="listbox" id="' + listID + '" aria-hidden="false">';
+
+			setOption();
+
+			htmlOption += '</div>';
+			htmlOption += '</div>';
+
+			htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '"><span>' + btnTxt + '</span></button>';
+
+			$selectCurrent.append(htmlButton);
+			$sel.addClass('hidden').attr('aria-hidden', true).attr('tabindex', -1);
+			$selectCurrent.append(htmlOption);
+
+			selectDisabled ? $selectCurrent.find('.ui-select-btn').prop('disabled', true).addClass('disabled') : '';
+
+			htmlOption = '';
+			htmlButton = '';
+		}
+		
+		function setOption(t, v){
+			var _$sel = (t !== undefined) ? $(t).closest('.ui-select').find('select') : $sel;
+			var _$option = _$sel.find('option');
+			var _$optionCurrent = _$option.eq(0);
+
+			selectID = _$sel.attr('id');
+
+			var _optionID = selectID + '_opt';
+			var _optLen = _$option.length;
+			var _current = current;
+			var _selected = false;
+			var _disabled = false;
+			var _hidden = false;
+			var _val = false;
+			var _hiddenCls;
+			var _optionIdName;
+
+			if (v !== undefined) {
+				_current = v;
+			}
+
+			for (var j = 0; j < _optLen; j++) {
+				_$optionCurrent = _$option.eq(j);
+				_hidden = _$optionCurrent.prop('hidden');
+
+				if (_current !== null) {
+					
+					if (_current === j) {
+						_selected = true;
+						_$optionCurrent.prop('selected', true);
+					} else {
+						_selected = false;
+						_$optionCurrent.prop('selected', false);
+					}
+
+				} else {
+					_selected = _$optionCurrent.prop('selected');
+				}
+
+				_disabled = _$optionCurrent.prop('disabled');
+				_hiddenCls =  _hidden ? 'hidden' : '';
+
+				if (_selected) {
+					_val = _$optionCurrent.val();
+					btnTxt = _$optionCurrent.text();
+					optionSelectedID = _optionID + '_' + j;
+					selectN = j;
+				}
+
+				_selected && _hidden ? hiddenClass = 'opt-hidden' : '';
+				_optionIdName = _optionID + '_' + j;
+
+				if (win[global].browser.mobile) {
+					_disabled ?
+						_selected ?
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+						_selected ?
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '">' :
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '">';
+				} else {
+					_disabled ?
+						_selected ?
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+						_selected ?
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" >' :
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" >';
+				}
+
+				htmlOption += '<span class="ui-select-txt">' + _$optionCurrent.text() + '</span>';
+				htmlOption += '</button>';
+			}
+
+			if (t !== undefined) {
+				_$sel.closest('.ui-select').find('.ui-select-opts button').remove();
+				_$sel.closest('.ui-select').find('.ui-select-opts').append(htmlOption);
+				htmlOption = '';
+				eventFn();
+			}
+		}
+
+		//event
+		eventFn();
+		function eventFn(){
+			$(doc).off('click.dim').on('click.dim', '.dim-dropdown', function () {
+				if ($('body').data('select-open')) {
+					optBlur();
+				}
+			});
+			$(doc).find('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
+				'click.ui': selectClick,
+				'keydown.ui': selectKey,
+				'mouseover.ui': selectOver,
+				'focus.ui': selectOver,
+				'mouseleave.ui': selectLeave
+			});
+			$(doc).find('.ui-select-opt').off('click.ui mouseover.ui').on({
+				'click.ui': optClick,
+				'mouseover.ui': selectOver
+			});
+			$(doc).find('.ui-select-wrap').off('mouseleave.ui').on({ 'mouseleave.ui': selectLeave });
+			$(doc).find('.ui-select-wrap').off('blur.ui').on({ 'blur.ui': optBlur });
+			$(doc).find('.ui-select-label').off('click.ui').on('click.ui', function () {
+				var idname = $(this).attr('for');
+
+				setTimeout(function () {
+					$('#' + idname + '_inp').focus();
+				}, 0);
+			});
+			$(doc).find('.ui-select select').off('change.ui').on({ 'change.ui': selectChange });
+		}
+		function selectLeave() {
+			$('body').data('select-open', true);
+		}
+		function selectChange() {
+			var $this = $(this);
+			$this.closest('.ui-select').data('fn');
+
+			win[global].uiSelectAction({
+				id:$this .attr('id'),
+				current: $this.find('option:selected').index(),
+				callback: $this.data('callback'), original:true
+			});
+		}
+		function optBlur() {
+			optClose();
+		}
+		function selectClick() {
+			var $btn = $(this);
+			$btn.data('sct', $(doc).scrollTop());
+
+			setOption(this, $btn.closest('.ui-select').find('option:selected').index() );
+			optExpanded(this);
+		}
+		function optClick() {
+			var t = this,
+				sct = $(t).closest('.ui-select').find('.ui-select-btn').data('sct');
+
+			win[global].uiSelectAction({ 
+				id: $(t).closest('.ui-select').find('.ui-select-btn').data('id'), 
+				current: $(t).index() 
+			});
+
+			$(t).closest('.ui-select').find('.ui-select-btn').focus();
+			optClose();
+		}
+		function selectOver() {
+			$('body').data('select-open', false);
+		}
+		function selectKey(e) {
+			var t = this,
+				$btn = $(this),
+				id = $btn.data('id'),
+				$list = $('#' + id + '_list'),
+				$wrap = $list.closest('.ui-select-wrap'),
+
+				n = Number($list.find('.selected').index()),
+				nn,
+				wrap_h = $wrap.outerHeight(),
+				len = $opt.length,
+				n_top = 0;
+
+			if (e.altKey) {
+				if (e.keyCode === keys.up) {
+					optOpen(t);
+				}
+
+				e.keyCode === keys.down && optClose();
+				return;
+			}
+
+			switch (e.keyCode) {
+				case keys.up:
+				case keys.left:
+					nn = n - 1 < 0 ? 0 : n - 1;
+					n_top = $opt.eq(nn).position().top;
+					optScroll($wrap, n_top, wrap_h, 'up');
+					optPrev(e, id, n, len);
+					break;
+
+				case keys.down:
+				case keys.right:
+					nn = n + 1 > len - 1 ? len - 1 : n + 1;
+					n_top = $opt.eq(nn).position().top;
+					optScroll($wrap, n_top, wrap_h, 'down');
+					optNext(e, id, n, len);
+					break;
+			}
+		}
+		function optExpanded(t) {
+			if (win[global].browser.mobile) {
+				optOpen(t)
+			} else {
+				if ($(t).attr('aria-expanded') === 'false') {
+					optClose();
+					optOpen(t);
+				} else {
+					optClose();
+				}
+			}
+		}
+		function optScroll($wrap, n_top, wrap_h, key) {
+			var oph = 56;
+		}
+		function optPrev(e, id, n, len) {
+			e.preventDefault();
+			n === 0 ? n = 0 : n = n - 1;
+			win[global].uiSelectAction({ id: id, current: n });
+		}
+		function optNext(e, id, n, len) {
+			e.preventDefault();
+			n === len - 1 ? n = len - 1 : n = n + 1;
+			win[global].uiSelectAction({ id: id, current: n });
+		}
+		function optOpen(t) {
+			var $body = $('body'),
+				_$sel = $(t),
+				_$uisel = _$sel.closest('.ui-select'),
+				_$wrap = _$uisel.find('.ui-select-wrap'),
+				_$opts = _$wrap.find('.ui-select-opts'),
+				_$opt = _$opts.find('.ui-select-opt');
+
+			var offtop = _$uisel.offset().top,
+				scrtop = $(doc).scrollTop(),
+				wraph = _$wrap.outerHeight(),
+				btn_h = _$sel.outerHeight(),
+				opt_h = _$opt.outerHeight(),
+				win_h = $(win).outerHeight(),
+				className = win_h - ((offtop - scrtop) + btn_h) > wraph ? 'bottom' : 'top';
+
+			$body.addClass('dim-dropdown');
+
+			if (!_$sel.data('expanded')) {
+				_$sel.data('expanded', true).attr('aria-expanded', true);
+				_$uisel.addClass('on');
+				_$wrap.addClass('on ' + className).attr('aria-hidden', false);
+				_$opts.find('.ui-select-opt').eq(_$uisel.find(':selected').index());
+			}
+			
+			if (customscroll) {
+				win[global].uiScrollBar({
+					id : _$wrap
+				});
+				win[global].uiScroll({ 
+					value: Number(opt_h * _$uisel.find(':checked').index()), 
+					target: _$wrap.find('> .ui-scrollbar-item'), 
+					speed: 0, 
+					ps: 'top' 
+				});
+			} else {
+
+			}
+			
+		}
+
+		function optClose() {
+			var $body = $('body');
+			var $select = $('.ui-select');
+			var $btn = $('.ui-select-btn');
+			var $wrap = $('.ui-select-wrap');
+
+			$body.data('scrolling') === 'no' ? win[global].uiScrolling() : '';
+			$body.removeClass('dim-dropdown');
+			$btn.data('expanded', false).attr('aria-expanded', false);
+			$select.removeClass('on');
+			$wrap.removeClass('on top bottom').attr('aria-hidden', true);
+		}
+	}
+	function createuiSelectAction(opt) {
+		console.log(opt.id)
+		var id = typeof opt.id === 'string' ? opt.id : opt.id.attr('id'),
+			$sel = $('#' + id),
+			$uiSelect = $sel.closest('.ui-select');
+
+		var dataCallback = $sel.data('callback'),
+			callback = opt.callback === undefined ? dataCallback === undefined ? false : dataCallback : opt.callback,
+			current = opt.current,
+			org = opt.original === undefined ? false : opt.original;
+
+		//!org && $uiSelect.find('option').prop('selected', false).eq(current).prop('selected', true);
+		!org && $uiSelect.find('option').prop('selected', false).eq(current).prop('selected', true).trigger('change');
+		//trigger 오류 확인필요
+		
+		var $optCurrent = $sel.find('option').eq(current);
+		var $selButton = $sel.closest('.ui-select').find('.ui-select-btn');
+
+		!$optCurrent.prop('hidden')
+			?  $selButton.removeClass('opt-hidden')
+			:  $selButton.addClass('opt-hidden');
+
+		$uiSelect.find('.ui-select-btn span').text($optCurrent.text());
+		$uiSelect.find('.ui-select-opt').removeClass('selected').eq(current).addClass('selected');
+
+		callback && callback({ 
+			id: id, 
+			current: current, 
+			val: $optCurrent.val() 
+		});
+	}
+
 
 
 
@@ -4615,419 +5012,7 @@ if (!Object.keys){
 
 	
 	
-	/* ------------------------------------------------------------------------
-	* name : select(radio & checkbox)
-	* Ver. : v1.0.0
-	* date : 2018-12-21
-	* EXEC statement
-	* - $plugins.uiSelect({ option });
-	* - $plugins.uiSelectAct({ option });
-	------------------------------------------------------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiSelect: function (opt) {
-			return createUiSelect(opt);
-		},
-		uiSelectAct: function (opt) {
-			return createUiSelectAct(opt);
-		}
-	});
-	win[global].uiSelect.option = {
-		id: false, 
-		current: null,
-		customscroll: true,
-		vchecktype: false,
-		callback: false
-	};
-	function createUiSelect(opt) {
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiSelect.option, opt),
-			current = opt.current,
-			callback = opt.callback,
-			customscroll = opt.customscroll,
-			vchecktype = opt.vchecktype,
-			id = opt.id,
-			is_id = id === false ? false : true,
-			$ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.find('.ui-select') : $('.ui-select'),
-
-			keys = win[global].option.keys,
-			len = $ui_select.length,
-
-			btnTxt = '',
-			hiddenClass = '',
-			_disabled = false,
-			_selected = false,
-			_hidden = false,
-			_val = '',
-			_txt = '',
-			_hid = '',
-			_hiddenCls = '',
-
-			$sel,
-			$selectCurrent,
 	
-			selectID,
-			listID,
-			optionSelectedID,
-			selectN,
-			selectTitle,
-			selectDisabled,
-
-			id_opt,
-			id_optname,
-			idx,
-			timer_opt,
-			timer,
-			htmlOption = '',
-			htmlButton = '' ;
-
-		//init
-		win[global].browser.mobile ? customscroll = false : '';
-
-		$ui_select.find('.ui-select-btn').remove();
-		$ui_select.find('.ui-select-wrap').remove();
-		$ui_select.find('.dim').remove();
-
-		var idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
-
-		//select set
-		for (var i = 0; i < len; i++) {
-			$selectCurrent = $ui_select.eq(i);
-			$sel = $selectCurrent.find('select');
-			
-			selectID = $sel.attr('id');
-			listID = selectID + '_list';
-			selectDisabled = $sel.prop('disabled');
-			selectTitle = $sel.attr('title');
-			hiddenClass = '';
-			
-			(!$sel.data('callback') || !!callback) ? $sel.data('callback', callback) : '';
-
-			if (customscroll) {
-				htmlOption += '<div class="ui-select-wrap ui-scrollbar" scroll-id="uiSelectScrollBar_'+ idN +'">';
-				idN = idN + 1;
-				sessionStorage.setItem('scrollbarID', idN);
-			} else {
-				htmlOption += '<div class="ui-select-wrap" style="min-width:' + $selectCurrent.outerWidth() + 'px">';
-			}
-
-			htmlOption += '<div class="ui-select-opts" role="listbox" id="' + listID + '" aria-hidden="false">';
-
-			setOption();
-
-			htmlOption += '</div>';
-
-			win[global].browser.mobile ? htmlOption += '<button type="button" class="btn-close"><span>close</span></button>' : '';
-			win[global].browser.mobile ? htmlOption += '<div class="dim"></div>' : '';
-			htmlOption += '</div>';
-
-			htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '"';
-			!!vchecktype
-				? htmlButton += ' vchecktype=' + vchecktype + '>' + btnTxt + '</button>'
-				: htmlButton += '>' + btnTxt + '</button>';
-
-			$selectCurrent.append(htmlButton);
-			$sel.addClass('hidden').attr('aria-hidden', true).attr('tabindex', -1);
-			$selectCurrent.append(htmlOption);
-
-			selectDisabled ? $selectCurrent.find('.ui-select-btn').prop('disabled', true).addClass('disabled') : '';
-
-			htmlOption = '';
-			htmlButton = '';
-		}
-		
-		function setOption(t, v){
-			var _$sel = (t !== undefined) ? $(t).closest('.ui-select').find('select') : $sel;
-			var _$option = _$sel.find('option');
-			var _$optionCurrent = _$option.eq(0);
-
-			selectID = _$sel.attr('id');
-
-			var _optionID = selectID + '_opt';
-			var _optLen = _$option.length;
-			var _current = current;
-			var _selected = false;
-			var _disabled = false;
-			var _hidden = false;
-			var _val = false;
-			var _hiddenCls;
-			var _optionIdName;
-
-			if (v !== undefined) {
-				_current = v;
-			}
-
-			for (var j = 0; j < _optLen; j++) {
-				_$optionCurrent = _$option.eq(j);
-				_hidden = _$optionCurrent.prop('hidden');
-
-				if (_current !== null) {
-					if (_current === j) {
-						_selected = true;
-						_$optionCurrent.prop('selected', true);
-					} else {
-						_selected = false;
-						_$optionCurrent.prop('selected', false);
-					}
-				} else {
-					_selected = _$optionCurrent.prop('selected');
-				}
-
-				_disabled = _$optionCurrent.prop('disabled');
-				_hiddenCls =  _hidden ? 'hidden' : '';
-
-				if (_selected) {
-					_val = _$optionCurrent.val()
-					btnTxt = _$optionCurrent.text()
-					optionSelectedID = _optionID + '_' + j
-					selectN = j
-				}
-
-				_selected && _hidden ? hiddenClass = 'opt-hidden' : '';
-				_optionIdName = _optionID + '_' + j;
-
-				if (win[global].browser.mobile) {
-					_disabled ?
-						_selected ?
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
-						_selected ?
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '">' :
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '">';
-				} else {
-					_disabled ?
-						_selected ?
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
-						_selected ?
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" >' :
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" >';
-				}
-
-				htmlOption += '<span class="ui-select-txt">' + _$optionCurrent.text() + '</span>';
-				htmlOption += '</button>';
-			}
-
-			if (t !== undefined) {
-				_$sel.closest('.ui-select').find('.ui-select-opts button').remove();
-				_$sel.closest('.ui-select').find('.ui-select-opts').append(htmlOption);
-				htmlOption = '';
-				eventFn();
-			}
-		}
-
-		//event
-		eventFn();
-		function eventFn(){
-			$(doc).off('click.dim').on('click.dim', '.dim-dropdown', function () {
-				if ($('body').data('select-open')) {
-					optBlur();
-				}
-			});
-			$(doc).find('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
-				'click.ui': selectClick,
-				'keydown.ui': selectKey,
-				'mouseover.ui': selectOver,
-				'focus.ui': selectOver,
-				'mouseleave.ui': selectLeave
-			});
-			$(doc).find('.ui-select-opt').off('click.ui mouseover.ui').on({
-				'click.ui': optClick,
-				'mouseover.ui': selectOver
-			});
-			$(doc).find('.ui-select-wrap').off('mouseleave.ui').on({ 'mouseleave.ui': selectLeave });
-			$(doc).find('.ui-select-wrap').off('blur.ui').on({ 'blur.ui': optBlur });
-			$(doc).find('.ui-select-label').off('click.ui').on('click.ui', function () {
-				var idname = $(this).attr('for');
-
-				setTimeout(function () {
-					$('#' + idname + '_inp').focus();
-				}, 0);
-			});
-			$(doc).find('.ui-select select').off('change.ui').on({ 'change.ui': selectChange });
-		}
-		function selectLeave() {
-			$('body').data('select-open', true);
-		}
-		function selectChange() {
-			var $this = $(this);
-			$this.closest('.ui-select').data('fn');
-
-			win[global].uiSelectAct({
-				id:$this .attr('id'),
-				current: $this.find('option:selected').index(),
-				callback: $this.data('callback'), original:true
-			});
-		}
-		function optBlur() {
-			optClose();
-		}
-		function selectClick() {
-			var $btn = $(this);
-			$btn.data('sct', $(doc).scrollTop());
-
-			setOption(this, $btn.closest('.ui-select').find('option:selected').index() );
-			optExpanded(this);
-		}
-		function optClick() {
-			var t = this,
-				sct = $(t).closest('.ui-select').find('.ui-select-btn').data('sct');
-
-			win[global].uiSelectAct({ 
-				id: $(t).closest('.ui-select').find('.ui-select-btn').data('id'), 
-				current: $(t).index() 
-			});
-
-			$(t).closest('.ui-select').find('.ui-select-btn').focus();
-			optClose();
-		}
-		function selectOver() {
-			$('body').data('select-open', false);
-		}
-		function selectKey(e) {
-			var t = this,
-				$btn = $(this),
-				id = $btn.data('id'),
-				$list = $('#' + id + '_list'),
-				_$option = $list.find('.ui-select-opt'),
-				$wrap = $list.closest('.ui-select-wrap'),
-				n = Number($list.find('.selected').index()),
-				nn,
-				wrap_h = $wrap.outerHeight(),
-				len = $opt.length,
-				n_top = 0;
-
-			if (e.altKey) {
-				if (e.keyCode === keys.up) {
-					optOpen(t);
-				}
-				e.keyCode === keys.down && optClose();
-				return;
-			}
-
-			switch (e.keyCode) {
-				case keys.up:
-				case keys.left:
-					nn = n - 1 < 0 ? 0 : n - 1;
-					n_top = $opt.eq(nn).position().top;
-					optScroll($wrap, n_top, wrap_h, 'up');
-					optPrev(e, id, n, len);
-					break;
-
-				case keys.down:
-				case keys.right:
-					nn = n + 1 > len - 1 ? len - 1 : n + 1;
-					n_top = $opt.eq(nn).position().top;
-					optScroll($wrap, n_top, wrap_h, 'down');
-					optNext(e, id, n, len);
-					break;
-			}
-		}
-		function optExpanded(t) {
-			if (win[global].browser.mobile) {
-				optOpen(t)
-			} else {
-				if ($(t).attr('aria-expanded') === 'false') {
-					optClose();
-					optOpen(t);
-				} else {
-					optClose();
-				}
-			}
-		}
-		function optScroll($wrap, n_top, wrap_h, key) {
-			var oph = 56;
-		}
-		function optPrev(e, id, n, len) {
-			e.preventDefault();
-			n === 0 ? n = 0 : n = n - 1;
-			win[global].uiSelectAct({ id: id, current: n });
-		}
-		function optNext(e, id, n, len) {
-			e.preventDefault();
-			n === len - 1 ? n = len - 1 : n = n + 1;
-			win[global].uiSelectAct({ id: id, current: n });
-		}
-		function optOpen(t) {
-			var $body = $('body'),
-				_$sel = $(t),
-				_$uisel = _$sel.closest('.ui-select'),
-				_$wrap = _$uisel.find('.ui-select-wrap'),
-				_$opts = _$wrap.find('.ui-select-opts'),
-				_$opt = _$opts.find('.ui-select-opt'),
-
-				offtop = _$uisel.offset().top,
-				scrtop = $(doc).scrollTop(),
-				wraph = _$wrap.outerHeight(),
-				btn_h = _$sel.outerHeight(),
-				opt_h = _$opt.outerHeight(),
-				win_h = $(win).outerHeight(),
-				clsname = 'bottom';
-
-			clsname = win_h - ((offtop - scrtop) + btn_h) > wraph ? 'bottom' : 'top';
-
-			$body.addClass('dim-dropdown');
-			$body.data('scrolling') === 'yes' ? win[global].uiScrollingCancel() : '';
-
-			if (!_$sel.data('expanded')) {
-				console.log(_$sel, _$uisel.find('select').val(), _$uisel.find(':selected').index())
-				_$sel.data('expanded', true).attr('aria-expanded', true);
-				_$uisel.addClass('on');
-				_$wrap.addClass('on ' + clsname).attr('aria-hidden', false);
-				_$opts.find('.ui-select-opt').eq(_$uisel.find(':selected').index());
-
-				// customscroll ? _$wrap.css('min-width', _$opts.outerWidth()) :
-				// 	win[global].uiScroll({ target: _$wrap, value: Number(opt_h * _$uisel.find(':checked').index()), speed: 0 });
-			}
-
-			win[global].uiScrollBar({
-				id : _$wrap
-			});
-
-			// if (_$wrap.outerHeight() > _$opts.outerHeight()) {
-			// 	_$wrap.css({
-			// 		'min-height': _$opts.outerHeight(),
-			// 		overflow: 'hidden'
-			// 	});
-			// }
-		}
-
-		function optClose() {
-			var $body = $('body'),
-				$select = $('.ui-select'),
-				$btn = $('.ui-select-btn'),
-				$wrap = $('.ui-select-wrap');
-
-			$body.data('scrolling') === 'no' ? win[global].uiScrolling() : '';
-			$body.removeClass('dim-dropdown');
-			$btn.data('expanded', false).attr('aria-expanded', false);
-			$select.removeClass('on');
-			$wrap.removeClass('on top bottom').attr('aria-hidden', true);
-		}
-	}
-	function createUiSelectAct(opt) {
-		console.log('act');
-		var id = typeof opt.id === 'string' ? opt.id : opt.id.attr('id'),
-			$uisel = typeof opt.id === 'string' ? $('#' + opt.id).closest('.ui-select') : opt.id.closest('.ui-select'),
-			$sel = $('#' + id),
-			$opt = $sel.find('option'),
-			$opt_ = $uisel.find('.ui-select-opt'),
-			callback = opt.callback === undefined ?  $sel.data('callback') === undefined ? false : $sel.data('callback') : opt.callback,
-			current = opt.current,
-			org = opt.original === undefined ? false : opt.original;
-			//!org && $uisel.find('option').prop('selected', false).eq(current).prop('selected', true);
-		!org && $uisel.find('option').prop('selected', false).eq(current).prop('selected', true).trigger('change');
-		//trigger 오류 확인필요
-		
-		!$opt.eq(current).prop('hidden')
-			? $sel.closest('.ui-select').find('.ui-select-btn').removeClass('opt-hidden')
-			: $sel.closest('.ui-select').find('.ui-select-btn').addClass('opt-hidden');
-		$uisel.find('.ui-select-btn').text($opt.eq(current).text());
-		$opt_.removeClass('selected').eq(current).addClass('selected');
-
-		callback ? callback({ id: id, current: current, val: $opt.eq(current).val() }) : '';
-	}
-
-
 
 	/* ------------------------------------------------------------------------
 	 * slide(carousel) v1.0 

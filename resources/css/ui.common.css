@@ -45,13 +45,15 @@ legend, .hidden, .hide { position:absolute !important; width:1px !important; hei
 
 
 
-/* ico_bullet */
+/* bullet list */
 .bul-hyphen,
 .bul-dot,
 .bul-etc {margin:10px 0;}
 .bul-dot li,
+.bul-dot > div > dd,
 .bul-dot > dd,
 .bul-hyphen li,
+.bul-hyphen > div > dd,
 .bul-hyphen > dd,
 p.bul-dot,
 p.bul-hyphen,
@@ -87,7 +89,10 @@ p.bul-care:before {content:"※"; position:absolute; left:0; top:2px; font-weigh
 .bul-etc > li {position:relative; margin-top:5px; padding-left:20px; line-height:1.5; display:block;}
 .bul-ico{position:relative; top:0; margin:0 0 0 -20px; width:20px; display:inline-block;}
 
-
+dl.bul-dot > div{margin-top:15px}
+dl.bul-dot > div:first-child{margin-top:0;}
+dl.bul-hyphen > div{margin-top:15px}
+dl.bul-hyphen > div:first-child{margin-top:0;}
 
 
 /* paragraph */
