@@ -396,12 +396,12 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 /* $plugins.uiSelect */
 .ui-select {position:relative; display:inline-block;}
 .ui-select select {width:100%;}
-.ui-select-btn {display:inline-block; position:relative; text-align:left; vertical-align:top; width:100%; height:40px; padding:0 35px 0 10px; border-radius:2px; border:1px solid #c9c9c9; font-size:14px; cursor:pointer; outline:0; box-sizing:border-box; text-overflow:ellipsis;}
+.ui-select-btn {display:inline-block; position:relative; text-align:left; vertical-align:top; width:100%; height:40px; padding:0 35px 0 10px; border-radius:2px; border:1px solid #c9c9c9; font-size:14px; cursor:pointer; outline:0; box-sizing:border-box; text-overflow:ellipsis; background-color:#fff;}
 .ui-select-btn:after {content:"keyboard_arrow_down"; font-family: 'Material Icons'; display:block; position:absolute; right:10px; top:50%; margin-top:-10px; width:18px; height:20px; float:right; overflow:hidden; color:#000; font-size:20px; line-height: 1;}
 .ui-select-btn span {display:inline-block; width:100%; text-align:left; word-break:nowrap; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; text-align:left}
 .ui-select-btn[aria-expanded="true"],
 .ui-select-btn:focus,
-.ui-select-btn:active {border-color:#000; box-shadow:0 0 5px rgba(0,0,0,0.7)}
+.ui-select-btn:active {border-color:#000; /*box-shadow:0 0 5px rgba(0,0,0,0.7)*/}
 .ui-select-btn[aria-expanded="true"]:after,
 .ui-select-btn:focus:after,
 .ui-select-btn:active:after{content:"keyboard_arrow_up";}
@@ -413,6 +413,7 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 .ui-select-opts{overflow:hidden; width:100%;}
 .ui-select-opt {display:block; float:left; width:100%; padding:5px 20px 5px 10px; font-size:14px; height:40px; text-align:left; background:#fff; white-space:nowrap}
 .ui-select-opt.selected {font-weight:700; text-decoration:underline; background:#444; color:#fff;}
+.ui-select-opt.disabled {opacity: 0.5;}
 .ui-select-opts input:focus,
 .ui-d .ui-select-opt:focus,
 .ui-d .ui-select-opt:hover {background:#444; color:#fff;}

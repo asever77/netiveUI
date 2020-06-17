@@ -100,11 +100,11 @@ if (!Object.keys){
 	if (!!win[global]) {
 		throw new Error("already exists global!> " + global);
 	} else {
-        win[global] = createNameSpace(namespace, {
-            uiNameSpace: function (identifier, module) { 
-                return createNameSpace(identifier, module); 
-            }
-        });
+		win[global] = createNameSpace(namespace, {
+			uiNameSpace: function (identifier, module) { 
+				return createNameSpace(identifier, module); 
+			}
+		});
 	}
 	function createNameSpace(identifier, module) {
 		var name = identifier.split('.'),
@@ -267,7 +267,7 @@ if (!Object.keys){
 			'tab': 9, 'enter': 13, 'alt': 18, 'esc': 27, 'space': 32, 'pageup': 33, 'pagedown': 34, 'end': 35, 'home': 36, 'left': 37, 'up': 38, 'right': 39, 'down': 40
 		},
 		effect: {
-            //http://cubic-bezier.com - css easing effect
+			//http://cubic-bezier.com - css easing effect
 			linear: '0.250, 0.250, 0.750, 0.750',
 			ease: '0.250, 0.100, 0.250, 1.000',
 			easeIn: '0.420, 0.000, 1.000, 1.000',
@@ -298,16 +298,16 @@ if (!Object.keys){
 			easeInOutCirc: '0.785, 0.135, 0.150, 0.860',
 			easeInOutBack: '0.680, -0.550, 0.265, 1.550'
 		},
-        uiComma: function(n){
+		uiComma: function(n){
 			//숫자 세자리수마다 , 붙이기
-            var parts = n.toString().split(".");
+			var parts = n.toString().split(".");
 
 			return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
-        },
-        partsAdd0 :function(x) {
-            //숫자 한자리수 일때 0 앞에 붙이기
-            return Number(x) < 10 ? '0' + x : x;
-        }
+		},
+		partsAdd0 :function(x) {
+			//숫자 한자리수 일때 0 앞에 붙이기
+			return Number(x) < 10 ? '0' + x : x;
+		}
 	};
 
 	// set device information
@@ -403,33 +403,43 @@ if (!Object.keys){
 	});
 	win[global].uiLoading.timer = {};
 	win[global].uiLoading.moment = true;
+	win[global].uiLoading.option = {
+		id: null,
+		visible: true,
+		txt : null
+	}
 	function createUiLoading(opt) {
-		var loading = '',
-			opt_visible = opt.visible,
-			opt_id = opt.id === undefined || opt.id === '' ? null : opt.id,
-			$selector = opt_id === null ? $('body') : typeof opt.id === 'string' ? $('#' + opt.id) : opt.id,
-			txt = opt.txt === undefined ? null : opt.txt;
+		var opt = $.extend(true, {}, win[global].uiLoading.option, opt),
+			id = opt.id,
+			loadingVisible = opt.visible,
+			txt = opt.txt;
+	
+		var	$selector = id === null ? $('body') : typeof id === 'string' ? $('#' + id) : id;
+		var htmlLoading = '';
 
 		$('.ui-loading').not('.visible').remove();
-		opt_id === null ?
-			loading += '<div class="ui-loading">':
-			loading += '<div class="ui-loading" style="position:absolute">';
-				loading += '<div class="ui-loading-wrap">';
-				txt !== null ?
-					loading += '<strong class="ui-loading-txt"><span>'+ txt +'</span></strong>':
-					loading += '';
-				loading += '</div>';
-				loading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="$plugins.uiLoading({ visible:false });"><span>$plugins.uiLoading({ visible:false })</span></button>';
-		loading += '</div>';
 
-		opt_visible ? showLoading() : hideLoading();
+		id === null ?
+			htmlLoading += '<div class="ui-loading">':
+			htmlLoading += '<div class="ui-loading" style="position:absolute">';
+		htmlLoading += '<div class="ui-loading-wrap">';
+
+		txt !== null ?
+			htmlLoading += '<strong class="ui-loading-txt"><span>'+ txt +'</span></strong>':
+			htmlLoading += '';
+		htmlLoading += '</div>';
+		htmlLoading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="$plugins.uiLoading({ visible:false });"><span>$plugins.uiLoading({ visible:false })</span></button>';
+		htmlLoading += '</div>';
+
+		loadingVisible ? showLoading() : hideLoading();
 
 		function showLoading(){
-			!$selector.find('.ui-loading').length && $selector.append(loading);			
+			!$selector.find('.ui-loading').length && $selector.append(htmlLoading);	
+			htmlLoading = '';		
 			$selector.data('loading', true);
 			$('.ui-loading').addClass('visible');			
 		}
-		function hideLoading(){		
+		function hideLoading(){
 			$selector.data('loading', false);
 			$('.ui-loading').removeClass('visible');
 			setTimeout(function(){
@@ -1300,6 +1310,91 @@ if (!Object.keys){
 			}
 			$(this).text(cp_txt + ' 정보입니다.');
 		});
+	}
+
+
+	/* ------------------------
+	 * [base] in label
+	 * date : 
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiInLabel: function () {
+			return createUiInLabel();
+		}
+	});
+	function createUiInLabel(){
+		var $input = $('.field-inlabel input.inp-base');
+		var $select = $('.field-inlabel select');
+
+		$input.each(function(){
+			checkValue(this);
+		});
+
+		$select.each(function(){
+			console.log('select value: ', $(this).val())
+			if ($(this).val() === null) {
+				$(this).closest('.ui-select')
+				$(this).closest('.ui-select').addClass('is-null');
+			} else {
+				$(this).closest('.ui-select').removeClass('is-null').addClass('activated');
+			}
+		});
+
+		$input.off('keydown.inlabel blur.inlabel').on('keydown.inlabel blur.inlabel', function(){
+			 checkValue(this);
+		});
+		
+		$select.off('focus.inlabel').on('focus.inlabel', function(){
+			$(this).closest('.ui-select').addClass('activated');
+		});
+
+		$(doc).find('.field-inlabel .ui-select-btn').off('focus.inlabel').on('focus.inlabel', function(){
+			console.log(2222222222)
+			checkValueSelectBtn(this)
+		});
+		$(doc).find('.field-inlabel .ui-select-btn').off('blur.inlabel').on('blur.inlabel', function(){
+			checkValueSelectBtn(this, 'blur')
+		});
+
+		$select.off('blur.inlabel').on('blur.inlabel', function(){
+			checkValueSelect(this)
+		});
+
+		$select.off('change.inlabel').on('change.inlabel', function(){
+			console.log(111111);
+			checkValueSelect(this)
+		});
+
+		function checkValueSelectBtn(v, s){
+			var $this = $(v).closest('.ui-select').find('select');
+			var eBlur = !!s ? true : false;
+
+			if ($this.val() === null) {
+				eBlur ?
+				$this.closest('.ui-select').removeClass('activated').addClass('is-null'):
+				$this.closest('.ui-select').addClass('activated').removeClass('is-null');
+			} else {
+				eBlur ?
+				$this.closest('.ui-select').removeClass('is-null').addClass('activated'):
+				$this.closest('.ui-select').addClass('activated');
+			}
+		}
+
+		function checkValueSelect(v){
+			var $this = $(v);
+
+			if ($this.val() === null) {
+				$this.closest('.ui-select').removeClass('activated').addClass('is-null');
+			} else {
+				$this.closest('.ui-select').removeClass('is-null').addClass('activated');
+			}
+		}
+
+		function checkValue(v){
+			var $this = $(v);
+
+			!!$this.val() ? $this.addClass('activated') : $this.removeClass('activated');
+		}
 	}
 
 
@@ -2348,24 +2443,24 @@ if (!Object.keys){
 	* date : 2020-06-11
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-        uiModalOpen: function (opt) {
-            return createUiModalOpen(opt);
-        },
-        uiModalClose: function (opt) {
-            return createUiModalClose(opt);
+		uiModalOpen: function (opt) {
+			return createUiModalOpen(opt);
+		},
+		uiModalClose: function (opt) {
+			return createUiModalClose(opt);
 		},
 		uiSystemModalClose: function () {
-            return createUiSystemModalClose();
-        }
-    });
+			return createUiSystemModalClose();
+		}
+	});
 	win[global].uiModalOpen.option = {
 		type: 'normal',
-        wrap: $('body'),
-        mobileFull: false,
+		wrap: $('body'),
+		mobileFull: false,
 		ps: 'center',
 		src: false,
 		remove: false,
-        modalWidth: false,
+		modalWidth: false,
 		modalHeight: false,
 		innerScroll: false,
 		mg: 10,
@@ -2380,23 +2475,23 @@ if (!Object.keys){
 		sClass: 'type-system',
 		sConfirmCallback: false,
 		sCancelCallback: false
-    }
-    function createUiModalOpen(opt) {
-        var opt = $.extend(true, {}, win[global].uiModalOpen.option, opt),
+	}
+	function createUiModalOpen(opt) {
+		var opt = $.extend(true, {}, win[global].uiModalOpen.option, opt),
 			wrap = typeof opt.wrap === 'object' ? opt.wrap : $('#' + opt.wrap),
 			type = opt.type,
-            id = opt.id,
-            src = opt.src,
-            mobileFull = opt.mobileFull,
+			id = opt.id,
+			src = opt.src,
+			mobileFull = opt.mobileFull,
 			ps = opt.ps,
 			mg = opt.mg,
 			remove = opt.remove,
-            w = opt.modalWidth,
+			w = opt.modalWidth,
 			h = opt.modalHeight,
 			innerScroll = opt.innerScroll,
 			scr_t = $(win).scrollTop(),
-            endfocus = opt.endfocus === false ? document.activeElement : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus,
-            callback = opt.callback,
+			endfocus = opt.endfocus === false ? document.activeElement : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus,
+			callback = opt.callback,
 			closeCallback = opt.closeCallback,
 			timer;
 		
@@ -2454,7 +2549,7 @@ if (!Object.keys){
 			act();
 		}
 
-        function act(){
+		function act(){
 			var $modal = $('#' + id);
 			var $modalWrap = $modal.find('> .ui-modal-wrap');
 			var $modalBody = $modalWrap.find('> .ui-modal-body');
@@ -2463,7 +2558,7 @@ if (!Object.keys){
 			var headerH = 0;
 			var footerH = 0;
 
-            $('.ui-modal').removeClass('current');
+			$('.ui-modal').removeClass('current');
 			$('body').addClass('not-scroll');
 			
 			$modal
@@ -2474,24 +2569,24 @@ if (!Object.keys){
 				.data('scrolltop', scr_t)
 				.data('closecallback', closeCallback);
 
-            if (mobileFull && !$plugins.breakpoint) {
+			if (mobileFull && !$plugins.breakpoint) {
 				$modal.addClass('type-full');
 				mg = 0;
 			} 
 
-            $('html').addClass('is-modal');
+			$('html').addClass('is-modal');
 			
-            switch (ps) {
-                case 'center' :
-                    $modal.addClass('ready ps-center');
-                    break;
-                case 'top' :
-                    $modal.addClass('ready ps-top');
-                    break;
-                case 'bottom' :
-                    $modal.addClass('ready ps-bottom');
+			switch (ps) {
+				case 'center' :
+					$modal.addClass('ready ps-center');
 					break;
-            }
+				case 'top' :
+					$modal.addClass('ready ps-top');
+					break;
+				case 'bottom' :
+					$modal.addClass('ready ps-bottom');
+					break;
+			}
 
 			if (innerScroll) {
 				headerH = $modalHeader.length ? $modalHeader.outerHeight() : 0;
@@ -2519,17 +2614,17 @@ if (!Object.keys){
 				!!h && $modalBody.css({ 'height': h + 'px', 'overflow-y' : 'auto' });
 			}
 			
-            clearTimeout(timer);
-            timer = setTimeout(function(){
+			clearTimeout(timer);
+			timer = setTimeout(function(){
 				win[global].uiFocusTab({ 
 					selector: $modal, 
 					type:'hold' 
 				});
 
-                $modal.addClass('open').data('endfocus', endfocus);
+				$modal.addClass('open').data('endfocus', endfocus);
 
 				!!sZindex && $modal.css('z-index', sZindex);
-                callback && callback(opt);
+				callback && callback(opt);
 
 				$('html').off('click.uimodaldim').on('click.uimodaldim', function(e){
 					if(!$(e.target).closest('.ui-modal-wrap').length) {
@@ -2572,10 +2667,10 @@ if (!Object.keys){
 			$(doc).find('.ui-modal-cancel').off('click.callback').on('click.callback', function(e){
 				sCancelCallback();
 			});
-        }
-    }
-    win[global].uiModalClose.option = {
-        remove: false,
+		}
+	}
+	win[global].uiModalClose.option = {
+		remove: false,
 		endfocus: false
 	}
 	function createUiSystemModalClose(){
@@ -2584,30 +2679,30 @@ if (!Object.keys){
 			remove: true
 		});
 	}
-    function createUiModalClose(v) {
-        var opt = $.extend(true, {}, win[global].uiModalClose.option, v),
-            id = opt.id,
-            remove = opt.remove,
-            $modal = $('#' + id),
+	function createUiModalClose(v) {
+		var opt = $.extend(true, {}, win[global].uiModalClose.option, v),
+			id = opt.id,
+			remove = opt.remove,
+			$modal = $('#' + id),
 			endfocus = opt.endfocus === false ? $modal.data('endfocus') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus,
-            closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') === undefined ? false : $modal.data('closecallback') : opt.closeCallback;
-        
+			closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') === undefined ? false : $modal.data('closecallback') : opt.closeCallback;
+		
 		var timer;
 
-        $modal.removeClass('open').addClass('close');
+		$modal.removeClass('open').addClass('close');
 		if (!$('.ui-modal.open').length) {
 			$('html').off('click.uimodaldim');
 			$('html').removeClass('is-modal');
 		}
-        $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1)).addClass('current');
+		$('.ui-modal.open.n' + ($('.ui-modal.open').length - 1)).addClass('current');
 
 		
 		win[global].uiScroll({
 			value: Number($modal.data('scrolltop'))
 		});
 		
-        clearTimeout(timer);
-        timer = setTimeout(function(){
+		clearTimeout(timer);
+		timer = setTimeout(function(){
 			$modal.find('.ui-modal-wrap').removeAttr('style');
 			$modal.find('.ui-modal-body').removeAttr('style');
 			$modal.removeClass('ready is-over current close ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
@@ -2615,11 +2710,11 @@ if (!Object.keys){
 			if (!$('.ui-modal.open').length) {
 				$("html, body").removeClass('not-scroll');
 			}
-            closeCallback ? closeCallback(opt) : '';
-            remove ? $modal.remove() : '';
-            !!endfocus ? endfocus.focus() : '';
-        },210);
-    }
+			closeCallback ? closeCallback(opt) : '';
+			remove ? $modal.remove() : '';
+			!!endfocus ? endfocus.focus() : '';
+		},210);
+	}
 
 
 	/* ------------------------
@@ -2631,10 +2726,10 @@ if (!Object.keys){
 			return createUiScrollBox(opt);
 		}
 	});
-    function createUiScrollBox(opt) {
+	function createUiScrollBox(opt) {
 		var $wrap = $('.ui-scrollbox'),
 			$item = $wrap.find('> .ui-scrollbox-item'),
-            len = $item.length,
+			len = $item.length,
 			i = 0;
 
 		var checkVisible = function (){
@@ -2646,34 +2741,34 @@ if (!Object.keys){
 		}
 		checkVisible();
 
-        $(win).off('scroll.win').on('scroll.win', act);
+		$(win).off('scroll.win').on('scroll.win', act);
 
 		function act() {
 			var $win = $(win),
-                win_h = $win.outerHeight(),
-                scr_t = $win.scrollTop(),
-                add_h = (win_h / 6),
+				win_h = $win.outerHeight(),
+				scr_t = $win.scrollTop(),
+				add_h = (win_h / 6),
 				$wrap = $('.ui-scrollbox'),
 				$item = $wrap.find('> .ui-scrollbox-item');
 
 			var n = i;
-            var itemCheck = function () {
-                var $itemN = $item.eq(n);
+			var itemCheck = function () {
+				var $itemN = $item.eq(n);
 
-                if (n >= len) {
-                    return false;
-                }
+				if (n >= len) {
+					return false;
+				}
 
-                Math.abs(win_h - $itemN.offset().top) + add_h < scr_t ?
-                    itemShow():
+				Math.abs(win_h - $itemN.offset().top) + add_h < scr_t ?
+					itemShow():
 					itemHide();
 
 				// Math.abs(win_h - $itemN.offset().top) + add_h < scr_t ?
-                //     itemShow():
+				//	 itemShow():
 				// 	$(win).outerHeight() > $itemN.offset().top + 65 ? 
 				// 		itemShow():
 				// 		itemHide();
-                    
+					
 				function itemShow(){
 					$itemN.addClass('visible');
 					n = n + 1;
@@ -2682,11 +2777,11 @@ if (!Object.keys){
 				function itemHide(){
 					$itemN.removeClass('visible');
 				}
-            }
+			}
 			itemCheck();
 			
 		}
-    }
+	}
 
 
 
@@ -4302,9 +4397,10 @@ if (!Object.keys){
 				id = $btn.data('id'),
 				$list = $('#' + id + '_list'),
 				$wrap = $list.closest('.ui-select-wrap'),
+				$opt = $wrap.find('.ui-select-opt'),
 
 				n = Number($list.find('.selected').index()),
-				nn,
+				nn = 0,
 				wrap_h = $wrap.outerHeight(),
 				len = $opt.length,
 				n_top = 0;

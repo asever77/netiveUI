@@ -461,9 +461,16 @@
         });
     }
 
+    $plugins.page.pageInputFormat = function(){
+        $plugins.uiInputClear();
+        $plugins.uiInLabel();
+        
+    }
 
     $plugins.page.pageInputClear = function(){
         $plugins.uiInputClear();
+        
+  
     }
 
     $plugins.page.pageFloatingRange = function(){

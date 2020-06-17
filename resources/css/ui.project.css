@@ -350,3 +350,9 @@ html.col12 .coln12{display:inline-block}
 .test-flex1 [class*="fx-item"]:nth-child(3) {
     min-height: 30px;
 }
+
+
+.in-item:first-child,
+.in-item + .in-item{margin-right:10px}
+.wrap-inp input{margin-top:10px;}
+.wrap-inp input:first-child{margin-top:0;}
