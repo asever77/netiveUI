@@ -316,12 +316,7 @@ button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; d
 
 
 /* ui date picker */
-
-
-
-
 .ui-datepicker {display:inline-block; vertical-align:top; position:relative; padding:0; width:auto; }
-
 .ui-datepicker-btn{border:0; padding:0 7px 0 0; text-align:right; min-width:35px; height:100%; position:absolute; top:0; right:0; background-color:transparent; }
 .ui-datepicker-btn:after {content:'date_range'; font-family:'Material Icons'; font-size:20px; word-break:keep-all;}
 .ui-datepicker-btn:focus,
@@ -329,12 +324,9 @@ button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; d
 .ui-datepicker-btn:disabled{opacity:0.5}
 .ui-datepicker-btn:disabled:focus,
 .ui-datepicker-btn:disabled:hover{border:0; background:transparent; color:#666}
-
-
 .ui-datepicker-inp {height:40px; padding:0 40px 0 10px; border:1px solid #ccc; width:100%; text-align:left; }
 .ui-datepicker-inp:disabled{background:#fff;}
-
-.ui-datepicker-wrap {position:absolute; width:200px; margin-top:0 !important; z-index:1; top:45px; left:0; transform: translate(0, 0); opacity:0; transition:top 0.1s ease-out, opacity 0.1s ease-out}
+.ui-datepicker-wrap {position:absolute; width:200px; margin-top:0 !important; z-index:10; top:45px; left:0; transform: translate(0, 0); opacity:0; transition:top 0.1s ease-out, opacity 0.1s ease-out}
 .ui-datepicker.type-dual .ui-datepicker-wrap {width:460px}
 .ui-datepicker.type-dual .ui-datepicker-wrap table {width:210px; float:left}
 .ui-datepicker.type-dual .ui-datepicker-wrap table + table {float:right}
@@ -342,7 +334,6 @@ button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; d
 .ui-datepicker .btn-close {position:absolute; top:6px; right:6px; z-index:1;}
 .ui-datepicker .btn-close:before,
 .ui-datepicker .btn-close:after {background:#222;}
-
 .datepicker-sec {width:100%; height:100%; border:solid 1px #63686d; background:#fff; }
 .datepicker-sec select {border:0; width:auto; padding-right:30px;}
 .datepicker-sec .cal-wrapper {padding:10px; min-width:450px; width:auto !important; width:450px; overflow:hidden; }
@@ -432,10 +423,71 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 .ui-d .ui-select-opt:focus,
 .ui-d .ui-select-opt:hover {background:#444; color:#fff;}
 .ui-select-title {display:none; position:absolute; top:0; left:0;}
-
 .ui-select.type-tel {width:150px}
 .ui-select.type-bank {width:200px}
 .ui-select.type-card {width:200px}
+
+
+/* in label style */
+.field-inlabel {position:relative; padding:0 0 40px; display:inline-block; vertical-align:top;}
+.field-inlabel > *{vertical-align:top;}
+.field-inlabel .field-inlabel-label{position:absolute; top:0; left:10px; transform:translate(0, 9px); font-size:14px; color:#888; cursor:text; 
+transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms; z-index:1;}
+.field-inlabel .inp-base + .field-inlabel-label{transform:translate(0, 9px); color:#888; font-size:14px;}
+.field-inlabel .inp-base.activated + .field-inlabel-label,
+.field-inlabel.activated .inp-base + .field-inlabel-label,
+.field-inlabel .inp-base:focus + .field-inlabel-label{transform:translate(0, -9px); color:#000; font-size:12px;}
+.field-inlabel .inp-base:focus{background:rgb(245, 251, 253);}
+.field-inlabel .ui-select.is-null.activated select{color:#000}
+.field-inlabel .ui-select.is-null .ui-select-btn,
+.field-inlabel .ui-select.is-null select{color:transparent}
+.field-inlabel .ui-select.is-null select option{color:#000}
+.field-inlabel .ui-select select{outline:0;}
+.field-inlabel .ui-select + .field-inlabel-label{transform:translate(0, 9px); color:#888; font-size:14px;}
+.field-inlabel .ui-select.activated + .field-inlabel-label{transform:translate(0, -9px); color:#000; font-size:12px;}
+.field-inlabel .ui-select.activated + .field-inlabel-label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:3px solid #fff; transition-delay: 150ms;}
+/*line*/
+.field-inlabel .field-inlabel-label:after{content:""; position:absolute; top:8px; left:0; display:block; width:100%; height:1px; z-index:-1; border-top:3px solid #fff; 
+transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(0.4, 0, 0.2, 1);}
+.field-inlabel .inp-base.activated + .field-inlabel-label:after,
+.field-inlabel.activated .inp-base + .field-inlabel-label:after,
+.field-inlabel .inp-base:valid + .field-inlabel-label:after,
+.field-inlabel .inp-base:focus + .field-inlabel-label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:3px solid #fff; transition-delay: 150ms;}
+.field-inlabel .ui-error-msg,
+.field-inlabel .placeholder{position: absolute; left:0; padding:0 10px; bottom:23px; line-height:1.2; margin:0;}
+.field-inlabel .ui-select .ui-error-msg{top:42px;}
+.field-inlabel.ui-error-true .placeholder{display:none;}
+.field-inlabel .inp-base::-webkit-input-placeholder{color:transparent;}
+.field-inlabel .inp-base:-ms-input-placeholder{color:transparent;}
+.field-inlabel .inp-base::placeholder {color:transparent;}
+.field-inlabel .inp-base:focus::-webkit-input-placeholder{color:#999;}
+.field-inlabel .inp-base:focus:-ms-input-placeholder{color:#999;}
+.field-inlabel .inp-base:focus::placeholder {color:#999;}
+.field-outlabel {position:relative; padding:20px 0 30px; display:inline-block; vertical-align:top;}
+.field-outlabel label{position:absolute; top:0; display:block; margin-bottom:2px; padding-left:10px;}
+.field-outlabel .ui-error-msg,
+.field-outlabel .placeholder{position: absolute; left:0; padding:0 10px; top:65px; line-height:1.2; margin:0;}
+.field-outlabel .ui-select .ui-error-msg{top:65px;}
+.field-outlabel.ui-error-true .placeholder{display:none;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 .material-icons {
   font-family: 'Material Icons';

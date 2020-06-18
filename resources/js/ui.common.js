@@ -98,6 +98,9 @@
 					case 'select' :
 						fristHref = '/netiveUI/html/components/select.html';
 						break;
+					case 'innerLabel' :
+						fristHref = '/netiveUI/html/components/innerLabel.html';
+						break;
 
 					case 'layout' :
 						fristHref = '/netiveUI/html/contents/layout.html';

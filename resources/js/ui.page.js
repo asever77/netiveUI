@@ -2,7 +2,14 @@
     console.log('page.js');
 
     'use strict';
-    
+
+    $plugins.page.pageInnerLabel = function(){
+        $plugins.uiInputClear();
+        $plugins.uiSelect();
+        $plugins.uiDatePicker();
+        $plugins.uiInnerLabel();
+    };
+
     $plugins.page.pageUnits = function(){};
     $plugins.page.pagePlaceholder = function(){};
     $plugins.page.pageNaming = function(){};
@@ -462,10 +469,7 @@
     }
 
     $plugins.page.pageInputFormat = function(){
-        $plugins.uiInputClear();
-        $plugins.uiSelect();
-        $plugins.uiDatePicker();
-        $plugins.uiInLabel();
+       
         
         
     }

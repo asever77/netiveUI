@@ -202,6 +202,46 @@
 		</tbody>
 	</table>
 </div>
+<div class="box-code">
+<pre>
+<code>
+&lt;div class="tbl-base txt-c"&gt;
+	&lt;table&gt;
+		&lt;caption&gt;
+			&lt;strong&gt;목록형 기본 테이블&lt;/strong&gt;
+			&lt;p class="ui-caption"&gt;&lt;/p&gt;
+		&lt;/caption&gt;
+		&lt;col class="col-1"&gt;
+		&lt;col class="col-2"&gt;
+		&lt;col class="col-3"&gt;
+		&lt;col class="col-4"&gt;
+		&lt;col class="col-5"&gt;
+		&lt;thead&gt;
+			&lt;tr&gt;
+				&lt;th scope="col"&gt;번호&lt;/th&gt;
+				&lt;th scope="col"&gt;제목&lt;/th&gt;
+				&lt;th scope="col"&gt;이름&lt;/th&gt;
+				&lt;th scope="col"&gt;아이디&lt;/th&gt;
+				&lt;th scope="col"&gt;날짜&lt;/th&gt;
+			&lt;/tr&gt;
+		&lt;/thead&gt;
+		&lt;tbody&gt;
+			&lt;tr&gt;
+				&lt;td colspan="5"&gt;내용이 없습니다.&lt;/td&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;td&gt;1&lt;/td&gt;
+				&lt;td class="txt-l"&gt;제목이 들어가는 공간입니다.&lt;/td&gt;
+				&lt;td&gt;이순신&lt;/td&gt;
+				&lt;td&gt;lss&lt;/td&gt;
+				&lt;td&gt;2018.03.20&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/tbody&gt;
+	&lt;/table&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
 
 <h3 class="h3">자료형</h3>
 <p>일반적인 자료 유형의 테이블.</p>
@@ -284,42 +324,40 @@
 		</tbody>
 	</table>
 </div>
+<div class="box-code">
+<pre>
+<code>
+&lt;div class="tbl-base"&gt;
+	&lt;table&gt;
+		&lt;caption&gt;
+			&lt;strong&gt;특정 임플란트 치조골 이식술 정보&lt;/strong&gt;
+			&lt;p class="ui-caption"&gt;&lt;/p&gt;
+		&lt;/caption&gt;
 
-<h3 class="h3">정보 입력 </h3>
-<form id="fmField" name="fmField" action="" method="post">
-	<div class="tbl-base">
-		<table>
-			<caption>
-				<strong>기본 테이블</strong>
-				<p class="ui-caption"></p>
-			</caption>
+		&lt;colgroup&gt;
+			&lt;col class="col-auto"&gt;
+			&lt;col class="col-auto" span="2"&gt;
+		&lt;/colgroup&gt;
 
-			<colgroup>
-				<col class="col-th">
-				<col class="col-auto">
-			</colgroup>
-			<colgroup>
-				<col class="col-th">
-				<col class="col-auto">
-			</colgroup>
-
-			<tbody>
-				<tr>
-					<th scope="row">
-						<label for="formName">이름</label>
-					</th>
-					<td>
-						<input class="inp-base" id="formName" type="text" value="" placeholder="한글로 입력하세요.">
-					</td>
-
-					<th scope="row">
-						<label for="formID">아이디</label>
-					</th>
-					<td>
-						<input class="inp-base" name="formID" type="text" value="" placeholder="영문으로 입력하세요.">
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</form>
+		&lt;thead&gt;
+			&lt;tr&gt;
+				&lt;th scope="col" rowspan="2"&gt;구분&lt;/th&gt;
+				&lt;th scope="colgroup" colspan="2"&gt;지급금액&lt;/th&gt;
+			&lt;/tr&gt;
+			&lt;tr&gt;
+				&lt;th scope="col"&gt;보장개시일 (책임개시일)부터 가입 후 2년 미만&lt;/th&gt;
+				&lt;th scope="col"&gt;가입 후 2년 이상&lt;/th&gt;
+			&lt;/tr&gt;
+		&lt;/thead&gt;
+		&lt;tbody&gt;
+			&lt;tr&gt;
+				&lt;th scope="row"&gt;골이식술(BBG)&lt;/th&gt;
+				&lt;td&gt;가입금액의 15%&lt;/td&gt;
+				&lt;td&gt;가입금액의 30%&lt;/td&gt;
+			&lt;/tr&gt;
+		&lt;/tbody&gt;
+	&lt;/table&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>

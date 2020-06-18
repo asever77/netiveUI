@@ -1318,14 +1318,14 @@ if (!Object.keys){
 	 * date : 
 	------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiInLabel: function () {
-			return createUiInLabel();
+		uiInnerLabel: function () {
+			return createUiInnerLabel();
 		}
 	});
-	function createUiInLabel(){
-		var $input = $('.field-inlabel input.inp-base');
+	function createUiInnerLabel(){
+		var $input = $('.field-inlabel .inp-base');
 		var $select = $('.field-inlabel select');
-		var $datepicker = $('.field-inlabel .ui-datepicker input.inp-base');
+		var $datepicker = $('.field-inlabel .ui-datepicker .inp-base');
 
 		//set
 		$input.each(function(){
@@ -1342,27 +1342,6 @@ if (!Object.keys){
 		$input.off('keydown.inlabel blur.inlabel').on('keydown.inlabel blur.inlabel', function(){
 			checkValue(this, 'input');
 		});
-
-		function checkValue(v, type){
-			var $this = $(v);
-			var $wrap;
-
-			if (type === 'select') {
-				$wrap = $this.closest('.ui-select');
-			} else if (type === 'datepicker'){
-				$wrap = $this.closest('.ui-datepicker');
-			}
-
-			if (type === 'input') {
-				!!$this.val() ? $this.addClass('activated') : $this.removeClass('activated');
-			} else {
-				($this.val() === null) ?
-					$wrap.addClass('is-null'):
-					$wrap.removeClass('is-null').addClass('activated');
-			}
-		}
-
-		
 		//event select
 		$select
 			.off('focus.inlabel').on('focus.inlabel', function(){
@@ -1382,6 +1361,24 @@ if (!Object.keys){
 				checkValueSelectBtn(this, 'blur')
 			});
 
+		function checkValue(v, type){
+			var $this = $(v);
+			var $wrap;
+
+			if (type === 'select') {
+				$wrap = $this.closest('.ui-select');
+			} else if (type === 'datepicker'){
+				$wrap = $this.closest('.ui-datepicker');
+			}
+
+			if (type === 'input') {
+				!!$this.val() ? $this.addClass('activated') : $this.removeClass('activated');
+			} else {
+				($this.val() === null) ?
+					$wrap.addClass('is-null'):
+					$wrap.removeClass('is-null').addClass('activated');
+			}
+		}
 		function checkValueSelectBtn(v, s){
 			var $this = $(v).closest('.ui-select').find('select');
 			var $wrap = $this.closest('.ui-select');
@@ -1397,7 +1394,6 @@ if (!Object.keys){
 				$wrap.addClass('activated');
 			}
 		}
-
 		function checkValueSelect(v){
 			var $this = $(v);
 			var $wrap = $this.closest('.ui-select');

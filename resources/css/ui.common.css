@@ -377,76 +377,17 @@ input[type="checkbox"] {opacity:0; filter:alpha(opacity=0); display:inline-block
 
 
 
-/* in label style */
-.field-inlabel {position:relative; padding:0 0 40px; display:inline-block; vertical-align:top;}
-.field-inlabel > *{vertical-align:top;}
-.field-inlabel .field-inlabel-label{position:absolute; top:0; left:10px; transform:translate(0, 9px); font-size:14px; color:#888; cursor:text; 
-transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms; z-index:1;}
 
-.field-inlabel input + .field-inlabel-label{transform:translate(0, 9px); color:#888; font-size:14px;}
-.field-inlabel input.activated + .field-inlabel-label,
-.field-inlabel.activated input + .field-inlabel-label,
-.field-inlabel input:focus + .field-inlabel-label{transform:translate(0, -9px); color:#000; font-size:12px;}
-
-.field-inlabel textarea + .field-inlabel-label{transform:translate(0, 9px); color:#888; font-size:14px;}
-.field-inlabel textarea.activated + .field-inlabel-label,
-.field-inlabel.activated textarea + .field-inlabel-label,
-.field-inlabel textarea:focus + .field-inlabel-label{transform:translate(0, -9px); color:#000; font-size:12px;}
-
-.field-inlabel .ui-select.is-null.activated select{color:#000}
-.field-inlabel .ui-select.is-null .ui-select-btn,
-.field-inlabel .ui-select.is-null select{color:transparent}
-.field-inlabel .ui-select.is-null select option{color:#000}
-.field-inlabel .ui-select select{outline:0;}
-.field-inlabel .ui-select + .field-inlabel-label{transform:translate(0, 9px); color:#888; font-size:14px;}
-.field-inlabel .ui-select.activated + .field-inlabel-label{transform:translate(0, -9px); color:#000; font-size:12px;}
-.field-inlabel .ui-select.activated + .field-inlabel-label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:3px solid #fff; transition-delay: 150ms;}
-
-/*line*/
-.field-inlabel .field-inlabel-label:after{content:""; position:absolute; top:8px; left:0; display:block; width:100%; height:1px; z-index:-1; border-top:3px solid #fff; 
-transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(0.4, 0, 0.2, 1);}
-.field-inlabel input.activated + .field-inlabel-label:after,
-.field-inlabel.activated input + .field-inlabel-label:after,
-.field-inlabel input:valid + .field-inlabel-label:after,
-.field-inlabel input:focus + .field-inlabel-label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:3px solid #fff; transition-delay: 150ms;}
-
-.field-inlabel input:focus{background:rgb(245, 251, 253);}
-
-
-
-
-
-
-
-
-
-
-.field-inlabel .ui-error-msg,
-.field-inlabel .placeholder{position: absolute; left:0; padding:0 10px; bottom:23px; line-height:1.2; margin:0;}
-.field-inlabel .ui-select .ui-error-msg{top:42px;}
-.field-inlabel.ui-error-true .placeholder{display:none;}
-.field-inlabel input::-webkit-input-placeholder{color:transparent;}
-.field-inlabel input:-ms-input-placeholder{color:transparent;}
-.field-inlabel input::placeholder {color:transparent;}
-.field-inlabel input:focus::-webkit-input-placeholder{color:#999;}
-.field-inlabel input:focus:-ms-input-placeholder{color:#999;}
-.field-inlabel input:focus::placeholder {color:#999;}
-
-
-.field-outlabel {position:relative; padding:20px 0 30px; display:inline-block; vertical-align:top;}
-.field-outlabel label{position:absolute; top:0; display:block; margin-bottom:2px; padding-left:10px;}
-.field-outlabel .ui-error-msg,
-.field-outlabel .placeholder{position: absolute; left:0; padding:0 10px; top:65px; line-height:1.2; margin:0;}
-.field-outlabel .ui-select .ui-error-msg{top:65px;}
-.field-outlabel.ui-error-true .placeholder{display:none;}
 
 /* base form:input text */
 textarea,
 input{ -webkit-appearance: none; -webkit-border-radius: 0;}
 .inp-error {border-color:red !important;}
+
 [class*="inp-"] {display:inline-block; vertical-align:top; width:100%; border:1px solid #c9c9c9; border-radius:2px; height:40px; padding:0 10px; outline:0; margin:0;}
 [class*="inp-"]:focus{border-color:#000;}
 [class*="inp-"]::-webkit-search-cancel-button{display:none;}
+textarea.inp-base{padding:10px; height:100px;}
 
 .inp-mmdd {width:50px;}
 .inp-date {width:100px;}
