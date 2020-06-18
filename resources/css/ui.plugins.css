@@ -316,19 +316,33 @@ button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; d
 
 
 /* ui date picker */
-.form-dpmulti .inp-base {width:130px}
-.ui-datepicker {display:inline-block; vertical-align:top; position:relative;}
+
+
+
+
+.ui-datepicker {display:inline-block; vertical-align:top; position:relative; padding:0; width:auto; }
+
+.ui-datepicker-btn{border:0; padding:0 7px 0 0; text-align:right; min-width:35px; height:100%; position:absolute; top:0; right:0; background-color:transparent; }
 .ui-datepicker-btn:after {content:'date_range'; font-family:'Material Icons'; font-size:20px; word-break:keep-all;}
-.ui-datepicker .inp-base {width:130px}
-.ui-datepicker-wrap {position:absolute; width:200px;}
+.ui-datepicker-btn:focus,
+.ui-datepicker-btn:hover{border:0; background:transparent; color:#000}
+.ui-datepicker-btn:disabled{opacity:0.5}
+.ui-datepicker-btn:disabled:focus,
+.ui-datepicker-btn:disabled:hover{border:0; background:transparent; color:#666}
+
+
+.ui-datepicker-inp {height:40px; padding:0 40px 0 10px; border:1px solid #ccc; width:100%; text-align:left; }
+.ui-datepicker-inp:disabled{background:#fff;}
+
+.ui-datepicker-wrap {position:absolute; width:200px; margin-top:0 !important; z-index:1; top:45px; left:0; transform: translate(0, 0); opacity:0; transition:top 0.1s ease-out, opacity 0.1s ease-out}
 .ui-datepicker.type-dual .ui-datepicker-wrap {width:460px}
 .ui-datepicker.type-dual .ui-datepicker-wrap table {width:210px; float:left}
 .ui-datepicker.type-dual .ui-datepicker-wrap table + table {float:right}
-.ui-datepicker .ui-datepicker-wrap {position:absolute; width:230px; margin-top:0 !important; z-index:1; top:45px; left:0; transform: translate(0, 0); opacity:0; transition:top 0.1s ease-out, opacity 0.1s ease-out}
 .ui-datepicker.visible .ui-datepicker-wrap {opacity:1; top:40px;}
 .ui-datepicker .btn-close {position:absolute; top:6px; right:6px; z-index:1;}
 .ui-datepicker .btn-close:before,
 .ui-datepicker .btn-close:after {background:#222;}
+
 .datepicker-sec {width:100%; height:100%; border:solid 1px #63686d; background:#fff; }
 .datepicker-sec select {border:0; width:auto; padding-right:30px;}
 .datepicker-sec .cal-wrapper {padding:10px; min-width:450px; width:auto !important; width:450px; overflow:hidden; }
@@ -398,7 +412,7 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 .ui-select select {width:100%;}
 .ui-select-btn {display:inline-block; position:relative; text-align:left; vertical-align:top; width:100%; height:40px; padding:0 35px 0 10px; border-radius:2px; border:1px solid #c9c9c9; font-size:14px; cursor:pointer; outline:0; box-sizing:border-box; text-overflow:ellipsis; background-color:#fff;}
 .ui-select-btn:after {content:"keyboard_arrow_down"; font-family: 'Material Icons'; display:block; position:absolute; right:10px; top:50%; margin-top:-10px; width:18px; height:20px; float:right; overflow:hidden; color:#000; font-size:20px; line-height: 1;}
-.ui-select-btn span {display:inline-block; width:100%; text-align:left; word-break:nowrap; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; text-align:left}
+.ui-select-btn span {display:inline-block; width:100%; text-align:left; word-break:nowrap; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; text-align:left; margin-top:6px;}
 .ui-select-btn[aria-expanded="true"],
 .ui-select-btn:focus,
 .ui-select-btn:active {border-color:#000; /*box-shadow:0 0 5px rgba(0,0,0,0.7)*/}

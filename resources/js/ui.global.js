@@ -1325,75 +1325,88 @@ if (!Object.keys){
 	function createUiInLabel(){
 		var $input = $('.field-inlabel input.inp-base');
 		var $select = $('.field-inlabel select');
+		var $datepicker = $('.field-inlabel .ui-datepicker input.inp-base');
 
+		//set
 		$input.each(function(){
-			checkValue(this);
+			checkValue(this, 'input');
 		});
-
 		$select.each(function(){
-			console.log('select value: ', $(this).val())
-			if ($(this).val() === null) {
-				$(this).closest('.ui-select')
-				$(this).closest('.ui-select').addClass('is-null');
-			} else {
-				$(this).closest('.ui-select').removeClass('is-null').addClass('activated');
-			}
+			checkValue(this, 'select');
+		});
+		$datepicker.each(function(){
+			checkValue(this, 'datepicker');
 		});
 
+		//event input
 		$input.off('keydown.inlabel blur.inlabel').on('keydown.inlabel blur.inlabel', function(){
-			 checkValue(this);
+			checkValue(this, 'input');
 		});
+
+		function checkValue(v, type){
+			var $this = $(v);
+			var $wrap;
+
+			if (type === 'select') {
+				$wrap = $this.closest('.ui-select');
+			} else if (type === 'datepicker'){
+				$wrap = $this.closest('.ui-datepicker');
+			}
+
+			if (type === 'input') {
+				!!$this.val() ? $this.addClass('activated') : $this.removeClass('activated');
+			} else {
+				($this.val() === null) ?
+					$wrap.addClass('is-null'):
+					$wrap.removeClass('is-null').addClass('activated');
+			}
+		}
+
 		
-		$select.off('focus.inlabel').on('focus.inlabel', function(){
-			$(this).closest('.ui-select').addClass('activated');
-		});
-
-		$(doc).find('.field-inlabel .ui-select-btn').off('focus.inlabel').on('focus.inlabel', function(){
-			console.log(2222222222)
-			checkValueSelectBtn(this)
-		});
-		$(doc).find('.field-inlabel .ui-select-btn').off('blur.inlabel').on('blur.inlabel', function(){
-			checkValueSelectBtn(this, 'blur')
-		});
-
-		$select.off('blur.inlabel').on('blur.inlabel', function(){
-			checkValueSelect(this)
-		});
-
-		$select.off('change.inlabel').on('change.inlabel', function(){
-			console.log(111111);
-			checkValueSelect(this)
-		});
+		//event select
+		$select
+			.off('focus.inlabel').on('focus.inlabel', function(){
+				$(this).closest('.ui-select').addClass('activated');
+			})
+			.off('blur.inlabel').on('blur.inlabel', function(){
+				checkValueSelect(this)
+			})
+			.off('change.inlabel').on('change.inlabel', function(){
+				checkValueSelect(this)
+			});
+		$(doc).find('.field-inlabel .ui-select-btn')
+			.off('focus.inlabel').on('focus.inlabel', function(){
+				checkValueSelectBtn(this)
+			})
+			.off('blur.inlabel').on('blur.inlabel', function(){
+				checkValueSelectBtn(this, 'blur')
+			});
 
 		function checkValueSelectBtn(v, s){
 			var $this = $(v).closest('.ui-select').find('select');
+			var $wrap = $this.closest('.ui-select');
 			var eBlur = !!s ? true : false;
 
 			if ($this.val() === null) {
 				eBlur ?
-				$this.closest('.ui-select').removeClass('activated').addClass('is-null'):
-				$this.closest('.ui-select').addClass('activated').removeClass('is-null');
+				$wrap.removeClass('activated').addClass('is-null'):
+				$wrap.addClass('activated').removeClass('is-null');
 			} else {
 				eBlur ?
-				$this.closest('.ui-select').removeClass('is-null').addClass('activated'):
-				$this.closest('.ui-select').addClass('activated');
+				$wrap.removeClass('is-null').addClass('activated'):
+				$wrap.addClass('activated');
 			}
 		}
 
 		function checkValueSelect(v){
 			var $this = $(v);
+			var $wrap = $this.closest('.ui-select');
 
 			if ($this.val() === null) {
-				$this.closest('.ui-select').removeClass('activated').addClass('is-null');
+				$wrap.removeClass('activated').addClass('is-null');
 			} else {
-				$this.closest('.ui-select').removeClass('is-null').addClass('activated');
+				$wrap.removeClass('is-null').addClass('activated');
 			}
-		}
-
-		function checkValue(v){
-			var $this = $(v);
-
-			!!$this.val() ? $this.addClass('activated') : $this.removeClass('activated');
 		}
 	}
 
@@ -4016,9 +4029,12 @@ if (!Object.keys){
 		//datepicker ready
 		function datepickerReady(v) {
 			var $this = $(v),
-				$this_wrap = $this.closest('.ui-datepicker'),
-				$this_inp =  $this_wrap.find('.ui-datepicker-inp'),
-				dp_id = $this_wrap.attr('id'),
+				$datepicker = $this.closest('.ui-datepicker'),
+				dataPeriod = $datepicker.attr('data-period'),
+				dataDual = $datepicker.attr('data-dual'),
+				dataTitle = $datepicker.attr('data-title'),
+				$this_inp =  $datepicker.find('.ui-datepicker-inp'),
+				dp_id = $datepicker.attr('id'),
 				inputId = $this_inp.attr('id'),
 				regExp = /^([0-9]{4})-([0-9]{2})-([0-9]{2})/g,
 				_val = $this_inp.val();
@@ -4026,20 +4042,31 @@ if (!Object.keys){
 
 			(win[global].uiDatePicker.option.date_split === '.') ? regExp = /^([0-9]{4}).([0-9]{2}).([0-9]{2})/g : '';
 			
-			var openback = !!$this_wrap.data('opt').openback ? $this_wrap.data('opt').openback : false;
+			var openback = !!$datepicker.data('opt').openback ? $datepicker.data('opt').openback : false;
 			openback ? openback() : '';
 
 			hideCalendar();
 			// $('#' + inputId + '_end').val('');
 			// period ? $('#' + inputId).val('') : '';
 
+			if (!!dataPeriod) {
+				period = dataPeriod;
+			}
+			if (!!dataDual) {
+				dual = dataDual;
+			}
+			if (!!dataTitle) {
+				date_title = dataTitle;
+			}
+
+			console.log(dataPeriod, dataDual)
 			var reset = regExp.test(_val),
 				calspaceHTML = '';
 
 			$this.data('sct', $(doc).scrollTop());
 			!reset ? $this_inp.val('') : '';
 			date = new Date();
-			$this_wrap.find('.datepicker-sec').remove();
+			$datepicker.find('.datepicker-sec').remove();
 
 			calVar = new calendarObject({
 				calId: "calWrap_" + dp_id,
@@ -4048,7 +4075,7 @@ if (!Object.keys){
 				buttonId: "calBtn_" + dp_id,
 				shortDate: shortDate
 			});
-			(dual) ? $this_wrap.addClass('type-dual') : '';
+			(dual) ? $datepicker.addClass('type-dual') : '';
 			calspaceHTML += '<div id="' + calVar.calId + '" class="datepicker-sec">';
 			calspaceHTML += '<div class="datepicker-wrap">';
 			calspaceHTML += '</div>';
@@ -4205,10 +4232,15 @@ if (!Object.keys){
 			$sel = $selectCurrent.find('select');
 			
 			selectID = $sel.attr('id');
+
+			selectID === undefined && $sel.attr('id', 'uiSelect_' + idN);
+
 			listID = selectID + '_list';
 			selectDisabled = $sel.prop('disabled');
 			selectTitle = $sel.attr('title');
 			hiddenClass = '';
+
+			console.log(selectID);
 			
 			(!$sel.data('callback') || !!callback) && $sel.data('callback', callback);
 
@@ -4299,16 +4331,16 @@ if (!Object.keys){
 							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
 							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
 						_selected ?
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '">' :
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '">';
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">' :
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">';
 				} else {
 					_disabled ?
 						_selected ?
 							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
 							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
 						_selected ?
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" >' :
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" >';
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">' :
+							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">';
 				}
 
 				htmlOption += '<span class="ui-select-txt">' + _$optionCurrent.text() + '</span>';
@@ -4397,10 +4429,12 @@ if (!Object.keys){
 				id = $btn.data('id'),
 				$list = $('#' + id + '_list'),
 				$wrap = $list.closest('.ui-select-wrap'),
+				$opts = $wrap.find('.ui-select-opts'),
 				$opt = $wrap.find('.ui-select-opt'),
 
 				n = Number($list.find('.selected').index()),
 				nn = 0,
+				nnn = 0,
 				wrap_h = $wrap.outerHeight(),
 				len = $opt.length,
 				n_top = 0;
@@ -4418,7 +4452,9 @@ if (!Object.keys){
 				case keys.up:
 				case keys.left:
 					nn = n - 1 < 0 ? 0 : n - 1;
-					n_top = $opt.eq(nn).position().top;
+					nnn = Math.abs($opts.position().top);
+					n_top = $opt.eq(nn).position().top + nnn;
+
 					optScroll($wrap, n_top, wrap_h, 'up');
 					optPrev(e, id, n, len);
 					break;
@@ -4426,7 +4462,9 @@ if (!Object.keys){
 				case keys.down:
 				case keys.right:
 					nn = n + 1 > len - 1 ? len - 1 : n + 1;
-					n_top = $opt.eq(nn).position().top;
+					nnn = Math.abs($opts.position().top);
+					n_top = $opt.eq(nn).position().top + nnn;
+					
 					optScroll($wrap, n_top, wrap_h, 'down');
 					optNext(e, id, n, len);
 					break;
@@ -4445,7 +4483,14 @@ if (!Object.keys){
 			}
 		}
 		function optScroll($wrap, n_top, wrap_h, key) {
-			var oph = 56;
+			console.log(n_top, wrap_h, key)
+
+			win[global].uiScroll({ 
+				value: Number(n_top), 
+				target: $wrap.find('> .ui-scrollbar-item'), 
+				speed: 0, 
+				ps: 'top' 
+			});
 		}
 		function optPrev(e, id, n, len) {
 			e.preventDefault();
@@ -4512,7 +4557,6 @@ if (!Object.keys){
 		}
 	}
 	function createuiSelectAction(opt) {
-		console.log(opt.id)
 		var id = typeof opt.id === 'string' ? opt.id : opt.id.attr('id'),
 			$sel = $('#' + id),
 			$uiSelect = $sel.closest('.ui-select');

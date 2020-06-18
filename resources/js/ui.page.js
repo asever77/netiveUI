@@ -374,13 +374,13 @@
         $plugins.uiSelect({ 
             id:'forSelLocal', 
             current:0,
-            callback:function(v){console.log(1111111111111)} 
+            callback:function(v){ } 
         });
 
         $plugins.uiSelect({ 
             id:'uiSel1', 
             current:1, 
-            callback:function(v){console.log(v)} 
+            callback:function(v){ } 
         });
         
         var opttxt = 5;
@@ -463,7 +463,10 @@
 
     $plugins.page.pageInputFormat = function(){
         $plugins.uiInputClear();
+        $plugins.uiSelect();
+        $plugins.uiDatePicker();
         $plugins.uiInLabel();
+        
         
     }
 
@@ -629,10 +632,21 @@
             var date = today.getDate();  // 날짜
             var day = today.getDay();  // 요일
             month = Number(month) < 10 ? '0'+ month : month;
+            date = Number(date) < 10 ? '0'+ date : date;
+           
             $(this).attr('data-min', year + '-' + month + '-'+ date);
             
-            today.setDate(today.getDate() + 15)
-            $(this).attr('data-max', year + '-' + month + '-'+ today.getDate());
+            today.setDate(today.getDate() + 15);
+
+            if (today.getDate() < Number(date)) {
+                month = Number(month) + 1; 
+                month = Number(month) < 10 ? '0'+ month : month;
+            }
+            date = today.getDate();
+            date = Number(date) < 10 ? '0'+ date : date;
+            console.log()
+
+            $(this).attr('data-max', year + '-' + month + '-'+ date);
         });
         $('.day-end').each(function(){
             var today = new Date(); 
