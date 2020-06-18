@@ -406,11 +406,13 @@ if (!Object.keys){
 	win[global].uiLoading.option = {
 		id: null,
 		visible: true,
-		txt : null
+		txt : null,
+		styleClass : 'orbit' //time
 	}
 	function createUiLoading(opt) {
 		var opt = $.extend(true, {}, win[global].uiLoading.option, opt),
 			id = opt.id,
+			styleClass = opt.styleClass,
 			loadingVisible = opt.visible,
 			txt = opt.txt;
 	
@@ -420,8 +422,8 @@ if (!Object.keys){
 		$('.ui-loading').not('.visible').remove();
 
 		id === null ?
-			htmlLoading += '<div class="ui-loading">':
-			htmlLoading += '<div class="ui-loading" style="position:absolute">';
+			htmlLoading += '<div class="ui-loading '+ styleClass +'">':
+			htmlLoading += '<div class="ui-loading '+ styleClass +'" style="position:absolute">';
 		htmlLoading += '<div class="ui-loading-wrap">';
 
 		txt !== null ?
