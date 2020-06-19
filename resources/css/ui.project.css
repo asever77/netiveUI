@@ -344,7 +344,8 @@ html.col12 .coln12{display:inline-block}
 }
 
 
-.in-item:first-child,
-.in-item + .in-item{margin-right:10px}
+.box-base .in-item:first-child,
+.box-base .in-item + .in-item{margin-right:10px}
+
 .wrap-inp input{margin-top:10px;}
 .wrap-inp input:first-child{margin-top:0;}

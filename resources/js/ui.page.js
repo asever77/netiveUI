@@ -648,7 +648,6 @@
             }
             date = today.getDate();
             date = Number(date) < 10 ? '0'+ date : date;
-            console.log()
 
             $(this).attr('data-max', year + '-' + month + '-'+ date);
         });
@@ -658,14 +657,20 @@
             var month = today.getMonth() + 1;  // 월
             var date = today.getDate();  // 날짜
             var day = today.getDay();  // 요일
+
             month = Number(month) < 10 ? '0'+ month : month;
             today.setDate(today.getDate() + 5);
             $(this).attr('data-min', year + '-' + month + '-'+ today.getDate());
+
             var month2 = today.getMonth() + 3;  // 월   
             month2 = Number(month2) < 10 ? '0'+ month2 : month2;
             $(this).attr('data-max', year + '-' + month2 + '-'+ date);
         });
 
+        $('#uiDatePicker1mInp').attr('data-min', '2000-01');
+        $('#uiDatePicker1mInp').attr('data-max', '2030-12');
+        
+        $plugins.uiDatePicker();
         $plugins.uiDatePicker({ 
             selector:'#uiDatePicker1', 
             openback: function(){
