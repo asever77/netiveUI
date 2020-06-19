@@ -405,34 +405,46 @@
     }
 
     $plugins.page.pageScrollMove = function(){
-        $plugins.uiTab({ id:'exeTab4', current:6 });
+        $plugins.uiTab({ id:'exeTab4', current:0 });
 
-        $('#scrolltop').on('click', function(){
-            $plugins.uiScroll({ value:0, speed:300, focus:'baseHeader', callback:callback });
+         $('#scrolltop').on('click', function(){
+            $plugins.uiScroll({ 
+                target:$('#testBoxScroll'),
+                value: 0, 
+                speed: 300, 
+                focus: $('.tit-wrap h1')
+            });
         });
         
         $('#scrolltop2').on('click', function(){
-            $plugins.uiScroll({ value:$(doc).outerHeight(), speed:300, callback:callback });
-        });
-        
-        $('#scrolltop3').on('click', function(){
-            console.log($(win).outerHeight(), $(doc).outerHeight())
-            $plugins.uiScroll({ value: ($(doc).outerHeight() / 2) - ($(win).outerHeight() / 2), speed:300, callback:callback });
-        });
-
-        $('#uiScrollLeft').on('click', function(){
             $plugins.uiScroll({ 
-                value:$('.tab-scroll-wrap button').eq(5).position().left, 
-                target:$('#exeTab4 .ui-tab-btns'), 
-                speed:300, 
-                focus:$('#exeTab4 .tab-scroll-wrap button').eq(5), 
-                callback:callback, 
-                ps:'left' 
+                target:$('#testBoxScroll'),
+                value:$('#testBoxScroll').prop('scrollHeight'), 
+                speed:300 
             });
         });
-
-        function callback(v){
-            console.log(v);
+        
+        $('.text-scroll-left button').on('click', function(){
+            var n = $(this).attr('data-n');
+            $plugins.uiScroll({ 
+                value:$('.test-scroll-left button').eq(n).position().left, 
+                target:$('.test-scroll-left'), 
+                speed:300, 
+                addLeft: $('.test-scroll-left button').eq(n).outerWidth() / 2,
+                focus:$('.test-scroll-left button').eq(n), 
+                callback:callback(n), 
+                ps:'center' 
+            });
+        });
+        $plugins.uiScrollBox({
+            id : 'scrollBoxTest1',
+            scope : $('#testBoxScroll'),
+            callback:function(v) {
+                console.log(v);
+            }
+        });
+        function callback(n){            
+            console.log(n);
         }
     }
     

@@ -12,7 +12,7 @@
 <div class="in-wrap">
     <div class="in-item">
         <label class="lb-base" for="mem_이름">이름</label>
-        <input type="text" id="mem_이름" vchecktype="kr" class="inp-base" value="" placeholder="한글로만 1자 이상 입력하세요." required >
+        <input type="text" id="mem_이름" vchecktype="kr" class="inp-base" value="" placeholder="한글로만 1자 이상 입력하세요." >
     </div>
 </div>
 
@@ -21,37 +21,22 @@
 <div class="box-code">
 <pre>
 <code>
-<span class="c">//value 값이 없는 경우</span>
-&lt;input type="text" id="a7" class="inp-base ui-inpcancel"&gt;
+<span class="c">//스크립트 실행 전</span>
+&lt;input type="text" id="mem_이름" vchecktype="kr" class="inp-base" value="" placeholder="한글로만 1자 이상 입력하세요."&gt;
 
-<span class="c">//value 값 입력 시 생성</span>
-&lt;input type="text" id="a7" class="inp-base ui-inpcancel" value="test"&gt;
-&lt;button type="button" class="ui-inpcancel-btn" data-id="a7"&gt;&lt;span&gt;cancel&lt;/span&gt;&lt;/button&gt;
-</code>
-</pre>
-</div>
-
-<h2 class="h2">CSS Style</h2>
-<h3 class="h3">base style</h3>
-<div class="box-code">
-<pre>
-<code>
-.ui-inpcancel-btn {display:inline-block; position:absolute; margin-left:-40px; width:40px; height:40px; }
-.ui-inpcancel-btn span {position:relative; display:block; left:14px; width:16px; height:16px; background:transparent; color:transparent; overflow:hidden; font-size:xx-small}
-.ui-inpcancel-btn span:after {content:""; position:absolute; top:50%; left:0; margin-top:-1px; display:block; width:100%; height:2px; background:#000; border-radius:1px; 
--webkit-transform:rotate(45deg); -moz-transform:rotate(45deg); -o-transform:rotate(45deg); transform:rotate(45deg);}
-.ui-inpcancel-btn span:before {content:""; position:absolute; top:0; left:50%; margin-left:-1px; display:block; width:2px; height:100%; background:#000; border-radius:1px; 
--webkit-transform:rotate(45deg); -moz-transform:rotate(45deg); -o-transform:rotate(45deg); transform:rotate(45deg);}
+<span class="c">//스크립트 실행 후</span>
+&lt;span class="hide ui-placeholder"&gt;한글로만 1자 이상 입력하세요.&lt;/span&gt;
+&lt;input type="text" id="mem_이름" vchecktype="kr" class="inp-base" value="" placeholder="한글로만 1자 이상 입력하세요."&gt;
 </code>
 </pre>
 </div>
 
 <h2 class="h2">Javascript</h2>
-<h3 class="h3">$plugins.uiInputClear</h3>
+<h3 class="h3">$plugins.uiPlaceholder</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins.uiInputClear();
+$plugins.uiPlaceholder();
 </code>
 </pre>
 </div>

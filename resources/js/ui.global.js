@@ -716,9 +716,9 @@ if (!Object.keys){
 		speed: 0,
 		callback: false,
 		ps: 'top',
-		btnwidth: false,
+		addLeft: false,
 		focus: false,
-		target: false
+		target: 'html, body'
 	};
 	function createUiScroll(opt){
 		if (opt === undefined) {
@@ -726,21 +726,21 @@ if (!Object.keys){
 		}
 
 		var opt = $.extend(true, {}, win[global].uiScroll.option, opt),
-			v = opt.value,
+			psVal = opt.value,
 			s = opt.speed,
 			c = opt.callback,
 			p = opt.ps,
-			bw = opt.btnwidth,
+			addLeft = opt.addLeft,
 			overlap = false,
 			f = typeof opt.focus === 'string' ? $('#' + opt.focus) : opt.focus,
-			$target = opt.target === false ? $('html, body') : opt.target;
+			$target = typeof opt.target === 'string' ? $(opt.target) : opt.target;
 		
 		if (p === 'top') {
 			$target.stop().animate({ 
-				scrollTop : v 
-			}, { 
-				duration: s,
-				step: function(now) { 
+					scrollTop : psVal 
+				}, { 
+					duration: s,
+					step: function(now) { 
 					!!c && now !== 0 ? c({ scrolltop:Math.ceil(now), complete:false }) : '';
 				},
 				complete: function(){
@@ -754,11 +754,11 @@ if (!Object.keys){
 			});
 		} else if (p === 'left') {
 			$target.stop().animate({ 
-				scrollLeft : v 
-			}, { 
-				duration: s,
-				step: function(now) { 
-					!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
+					scrollLeft : psVal
+				}, { 
+					duration: s,
+					step: function(now) { 
+						!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
 				},
 				complete: function(){
 					!!c ? c({ focus:f, complete:true }) : '';
@@ -767,9 +767,9 @@ if (!Object.keys){
 			});
 		} else if (p === 'center') {
 			var w = $target.outerWidth();
-			console.log($target, v - (w / 2) + (bw / 2));
+
 			$target.stop().animate({ 
-				scrollLeft : v - (w / 2) + (bw / 2)
+				scrollLeft : psVal - (w / 2) + addLeft
 			}, { 
 				duration: s,
 				step: function(now) { 
@@ -2723,14 +2723,24 @@ if (!Object.keys){
 			return createUiScrollBox(opt);
 		}
 	});
+	win[global].uiScrollBox.option = {
+		id : null,
+		scope : 'window'
+	}
 	function createUiScrollBox(opt) {
-		var $wrap = $('.ui-scrollbox'),
-			$item = $wrap.find('> .ui-scrollbox-item'),
+		
+		var opt = $.extend(true, {}, win[global].uiScrollBox.option, opt),
+			$scope = opt.scope === 'window' ? $(win) : opt.scope,
+			$scrollBox = opt.id === null ? $('.ui-scrollbox') : $('#' + opt.id),
+			$item = $scrollBox.find('> .ui-scrollbox-item'),
 			len = $item.length,
 			i = 0;
 
+
 		var checkVisible = function (){
-			if ($(win).outerHeight() > $item.eq(i).offset().top && i < len) {
+			var itemTop = opt.scope === 'window' ? $item.eq(i).offset().top : $item.eq(i).position().top;
+
+			if ($scope.outerHeight() > itemTop && i < len) {
 				$item.eq(i).addClass('visible');
 				i = i + 1;
 				checkVisible();
@@ -2738,34 +2748,28 @@ if (!Object.keys){
 		}
 		checkVisible();
 
-		$(win).off('scroll.win').on('scroll.win', act);
+		$scope.off('scroll.win').on('scroll.win', act);
 
 		function act() {
-			var $win = $(win),
-				win_h = $win.outerHeight(),
-				scr_t = $win.scrollTop(),
-				add_h = (win_h / 6),
-				$wrap = $('.ui-scrollbox'),
-				$item = $wrap.find('> .ui-scrollbox-item');
+			var scopeH = $scope.outerHeight(),
+				scopeT = $scope.scrollTop(),
+				addH = (scopeH / 6),
+				$scrollBox = $('.ui-scrollbox'),
+				$item = $scrollBox.find('> .ui-scrollbox-item');
 
 			var n = i;
 			var itemCheck = function () {
 				var $itemN = $item.eq(n);
+				var itemTop = opt.scope === 'window' ?  $itemN.offset().top :  $itemN.position().top;
 
 				if (n >= len) {
 					return false;
 				}
 
-				Math.abs(win_h - $itemN.offset().top) + add_h < scr_t ?
+				Math.abs(scopeH - itemTop) + addH < scopeT ?
 					itemShow():
 					itemHide();
 
-				// Math.abs(win_h - $itemN.offset().top) + add_h < scr_t ?
-				//	 itemShow():
-				// 	$(win).outerHeight() > $itemN.offset().top + 65 ? 
-				// 		itemShow():
-				// 		itemHide();
-					
 				function itemShow(){
 					$itemN.addClass('visible');
 					n = n + 1;
@@ -2998,7 +3002,7 @@ if (!Object.keys){
 
 		win[global].uiScroll({ 
 			value: ps_l[current], 
-			btnwidth : $btn.outerWidth(),
+			addLeft : $btn.outerWidth(),
 			target: $target, 
 			speed: 300, 
 			ps: align 
@@ -4847,7 +4851,6 @@ if (!Object.keys){
 				return diff;
 			}
 
-			
 			var len = dataExecel.list.length,
 				i = 0,
 				state, date, enddate, moddate, pub, dev, id, idm, memo, overl,
@@ -4934,10 +4937,8 @@ if (!Object.keys){
 
 				endsum = (state === "완료") ? endsum + 1 : endsum;
 				tstsum = (state === "검수") ? tstsum + 1 : tstsum;
-				ingsum = (state === "진행") ? ingsum + 1 : ingsum;
 				delsum = (state === "제외") ? delsum + 1 : delsum;
 				watsum = (state === "대기") ? watsum + 1 : watsum;
-				chksum = (state === "체크") ? chksum + 1 : chksum;
 
 				var x = (i === 0) ? 0 : i - 1;
 
@@ -4951,8 +4952,6 @@ if (!Object.keys){
 				c8 = (dataExecel.list[i].d8 !== dataExecel.list[x].d8) ? ' c8' : '';
 
 				cls2 = 
-					state === '체크' ? 'chk' : 
-					state === '진행' ? 'ing' : 
 					state === '완료' ? 'end' : 
 					state === '검수' ? 'tst' : 
 					state === '제외' ? 'del' : 
@@ -5068,11 +5067,9 @@ if (!Object.keys){
 			var info = '';
 			info += '<dl class="ui-codinglist-state"><dt>'+ today +'</dt><dd>'
 			info += '<ul class="ui-codinglist-info">';
-			info += '<li>진행율(완료+검수+체크) : <span class="n_all">0</span> / <span class="total">0</span> (<span class="per0">0</span>%)</li>';
+			info += '<li>진행율(완료+검수) : <span class="n_all">0</span> / <span class="total">0</span> (<span class="per0">0</span>%)</li>';
 			info += '<li>완료 : <span class="n_end">0</span> (<span class="per1">0</span>%)</li>';
 			info += '<li>검수 : <span class="n_tst">0</span> (<span class="per2">0</span>%)</li>';
-			info += '<li>체크 : <span class="n_chk">0</span> (<span class="per5">0</span>%)</li>';
-			info += '<li>진행 : <span class="n_ing">0</span> (<span class="per3">0</span>%)</li>';
 			info += '<li>대기 : <span class="n_wat">0</span> (<span class="per4">0</span>%)</li>';
 			info += '</ul></dd></dl>';
 
@@ -5106,18 +5103,14 @@ if (!Object.keys){
 
 			if (!$('.ui-codinglist-info .total').data('data')) {
 				$('.ui-codinglist-info .total').data('data', true).text(len - delsum - 1);
-				$('.ui-codinglist-info .n_all').text(endsum + tstsum + chksum);
-				$('.ui-codinglist-info .per0').text(((endsum + tstsum + chksum) / (len - delsum - 1) * 100).toFixed(0));
+				$('.ui-codinglist-info .n_all').text(endsum + tstsum);
+				$('.ui-codinglist-info .per0').text(((endsum + tstsum) / (len - delsum - 1) * 100).toFixed(0));
 				$('.ui-codinglist-info .n_end').text(endsum);
 				$('.ui-codinglist-info .per1').text((endsum / (len - delsum - 1) * 100).toFixed(0));
 				$('.ui-codinglist-info .n_tst').text(tstsum);
 				$('.ui-codinglist-info .per2').text((tstsum / (len - delsum - 1) * 100).toFixed(0));
-				$('.ui-codinglist-info .n_ing').text(ingsum);
-				$('.ui-codinglist-info .per3').text((ingsum / (len - delsum - 1) * 100).toFixed(0));
 				$('.ui-codinglist-info .n_wat').text(watsum);
 				$('.ui-codinglist-info .per4').text((watsum / (len - delsum - 1) * 100).toFixed(0));
-				$('.ui-codinglist-info .n_chk').text(chksum);
-				$('.ui-codinglist-info .per5').text((chksum / (len - delsum - 1) * 100).toFixed(0));
 			}
 
 			selectoption('uiCLstate', ctg_state);

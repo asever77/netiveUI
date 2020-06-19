@@ -349,3 +349,8 @@ html.col12 .coln12{display:inline-block}
 
 .wrap-inp input{margin-top:10px;}
 .wrap-inp input:first-child{margin-top:0;}
+
+.test-scroll-left{width:500px; overflow-x: scroll;}
+.test-scroll-left .btn-wrap{display:flex;}
+.test-scroll-left .btn-wrap button{flex:0; min-width:150px;}
+.test-scroll-left .btn-wrap button:focus{background:#000; color:#fff;}

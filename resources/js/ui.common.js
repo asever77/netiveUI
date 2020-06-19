@@ -39,6 +39,9 @@
 					case 'inputFormat' :
 						fristHref = '/netiveUI/html/contents/inputFormat.html';
 						break;
+					case 'inputPlaceholder' :
+						fristHref = '/netiveUI/html/components/inputPlaceholder.html';
+						break;
 
 
 					case 'accordion' :
@@ -100,6 +103,9 @@
 						break;
 					case 'innerLabel' :
 						fristHref = '/netiveUI/html/components/innerLabel.html';
+						break;
+					case 'scrollMove' :
+						fristHref = '/netiveUI/html/components/scrollMove.html';
 						break;
 
 					case 'layout' :
