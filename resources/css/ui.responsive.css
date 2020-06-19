@@ -88,6 +88,8 @@
     .header-nav .dep-2-wrap{padding-bottom:30px;}
     .header-nav .dep-2-btn {display:inline-block; width:100%; font-size:12px; font-weight:300; color:#b4b4b4; margin:0; letter-spacing:0; text-decoration:none; margin-bottom:5px; text-align:left; outline:none;}
     .header-nav .modify .dep-2-btn{color:#000}
+    .header-nav .dep-2-btn:hover span,
+    .header-nav .dep-2-btn:focus span{text-decoration:underline;}
     .header-nav .dep-2-btn span {display:inline-block; vertical-align:top; width:calc(100% - 20px)}
     .header-nav .dep-2-btn:before{content:"-"; display:inline-block; margin-right:5px; width:10px; line-height:1.3; vertical-align:top;}
     .header-nav .dep-2-btn.selected{font-weight:500;}

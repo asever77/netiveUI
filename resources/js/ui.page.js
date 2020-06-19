@@ -3,11 +3,17 @@
 
     'use strict';
 
+    $plugins.page.pageInputPlaceholder = function(){
+        $plugins.uiPlaceholder();
+    };
+    
     $plugins.page.pageInnerLabel = function(){
         $plugins.uiInputClear();
+        $plugins.uiPlaceholder();
         $plugins.uiSelect();
         $plugins.uiDatePicker();
         $plugins.uiInnerLabel();
+
     };
 
     $plugins.page.pageUnits = function(){};
@@ -736,29 +742,7 @@
         $plugins.uiCountSlide({ id:'exeCount2', value: 5040.25 });
     }
 
-    $plugins.page.datePicker = function(){
-        $plugins.uiDatePicker({ 
-            selector:'#uiDatePicker1', 
-            openback: function(){
-                console.log('open callback gg');
-                $('#baseHeader').stop().animate({
-                    top:-50
-                },200)
-            },
-            closeback: function(){
-                console.log('close callback gg');
-                 $('#baseHeader').stop().animate({
-                    top:0
-                },200)
-            }
-        });
-        $plugins.uiDatePicker({ selector:'#uiDatePicker2' });
-    }
-
-    $plugins.page.dropdown = function(){
-        
-    }
-
+    
     $plugins.page.fileupload = function(){
 
         /* 파일 업로드 */
@@ -766,118 +750,7 @@
  
     }
 
-    $plugins.page.floating = function(){
-        
-    }
-
-    $plugins.page.inputformat = function(){
-        var n = 3;
-        
-        
-        // $('#uiErrorOn').on('click', function(){
-        //     n = 3;
-        //     $plugins.uiError({ selector:'a9', error:true, message:'9 오류메세지 내용' });
-        //     $plugins.uiError({ selector:'a10', error:true, message:'10 오류메세지 내용' });
-        //     $plugins.uiError({ selector:'a11', error:true, message:'11 오류메세지 내용' });
-        // });
-        // $('#uiErrorOff').on('click', function(){
-        //     if (n === 3) {
-        //         n = 2;
-        //         $plugins.uiError({ selector:'a9', error:false });    
-        //     } else if (n === 2) {
-        //         n = 1;
-        //         $plugins.uiError({ selector:'a10', error:false });
-        //     } else {
-        //         $plugins.uiError({ selector:'a11', error:false });
-        //     }
-            
-        // });
-    }
-
-    $plugins.page.jsoncodinglist = function(){
-        
-    }
-
-    $plugins.page.jsonmenu = function(){
-
-        $plugins.uiMenu({ id:'uiTest', url:'/netiveUI/resources/data/menu.json', ctg:'전체', selected:'G_01_03_02_00', callback:fncallback });
-        function fncallback(opt){
-            var d1 = opt.d1,
-                d2 = opt.d2,
-                d3 = opt.d3,
-                current = opt.current,
-                navi = opt.navi,
-                navi_len = navi.length,
-                html_navi = '',
-                $menu = $('#uiTest');
-
-            $menu.append(d1).append(d2).append(d3);
-            $menu.find('.dep-2-wrap').each(function(){
-                var menu_html = this;
-
-                $(menu_html).data('dep1')
-                $('.dep-1[data-n="'+ $(menu_html).data('dep1') +'"]').append(menu_html);
-            });
-            $menu.find('.dep-3-wrap').each(function(){
-                var menu_html = this;
-
-                $(menu_html).data('dep1')
-                $('.dep-1[data-n="'+ $(menu_html).data('dep1') +'"]').find('.dep-2[data-n="'+ $(menu_html).data('dep2') +'"]').append(menu_html);
-            });
-            $menu.find('.dep-1-wrap').removeClass('hide');
-        }
-    }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    $plugins.page.popup = function(){
-       
-    }
-
-    $plugins.page.scrollmove = function(){
-        
-    }
     
-    $plugins.page.select = function(){
-        $plugins.uiSelect();
-    }
-
-    $plugins.page.selection = function(){
-        $plugins.uiSelection();
-        $plugins.uiSelection({ id:'uiChk2', all:true, callback:allCheckCallback });
-        $plugins.uiSelection({ id:'c3_0', all:true, callback:allCheckCallback });
-        $plugins.uiSelection({ id:'c3_4', callback:inpCheckCallback });
-        $plugins.uiSelection();
-        
-        function allCheckCallback(v){
-            console.log(v.id, v);
-        }
-
-        function inpCheckCallback(v){
-            console.log(v)
-            if (v.value) {
-                $('#abcd input').prop('disabled', false).prop('checked', true).removeAttr('disabled');
-                $('#abcd label').removeClass('disabled').addClass('checked');
-            } else {
-                $('#abcd input').prop('disabled', true).prop('checked', false).attr('disabled');
-                $('#abcd label').removeClass('checked').addClass('disabled');
-            }
-        }
-    }
-
     $plugins.page.slide = function(){
         $plugins.uiSlide();
         $plugins.uiSlide({ id:'slide1', current:0, loop:false, dot:true, eff:'slide', speed:300, callback:callback});
@@ -892,32 +765,7 @@
         }
     }
 
-    $plugins.page.slider = function(){
-        
-
-    }
-
-    $plugins.page.slot = function(){
-        
-    }
-
-    $plugins.page.tab = function(){
-        
-    }
-
-    $plugins.page.table = function(){
-        $plugins.uiTblScroll();
-        $plugins.uiTblScroll({ selector:'#uiTblSroll1',rown:4 });
-        
-        $plugins.uiDatePicker();
-        $plugins.uiSelection();
-        $plugins.uiSelect();
-        $plugins.uiSelection({ id:'uiChk2', all:true });
-    }   
-
-    $plugins.page.tooltip = function(){
-        $plugins.uiTooltip();
-    }
+    
         
 
 

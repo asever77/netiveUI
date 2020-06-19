@@ -651,14 +651,6 @@ if (!Object.keys){
 	};
 	function createUiAjax(opt) {
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
-				global + ".uiAjax({ id:'아이디명', url:'링크주소', add:true/false, page:true/false, callback:function(){...} );",
-				"- id: #을 제외한 아이디명만 입력(!필수)",
-				"- url: 링크 주소 입력(!필수)",
-				"- page: true일 경우 html추가 및 값 전달, false일 경우 값만 전달, (!선택 - 기본값 true)",
-				"- add: false일 경우 삭제추가, true일 경우 추가(!선택 - 기본값 false)",
-				"- callback: 콜백함수 (!선택)",
-			]);
 			return false;
 		}
 
@@ -744,7 +736,6 @@ if (!Object.keys){
 			$target = opt.target === false ? $('html, body') : opt.target;
 		
 		if (p === 'top') {
-			console.log('v', v)
 			$target.stop().animate({ 
 				scrollTop : v 
 			}, { 
@@ -1141,11 +1132,6 @@ if (!Object.keys){
 	};
 	function createUiFocusTab(opt){
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
-				global + ".uiFocusHold({ id:'css셀렉트' );",
-				"- selector: css셀렉터 형식 예) '#aaa', '.aa .bb' ...(!필수)",
-				"※  지정한 특정영역에서 tab 이동 시 포커스 홀딩 "
-			]);
 			return false;
 		}
 		
@@ -4828,14 +4814,49 @@ if (!Object.keys){
 		function callback(v) {
 			dataExecel = v;
 
+			var today = new Date();
+			today = getFormatDate(today); 
+
+			function getFormatDate(date){
+				var year = date.getFullYear();
+				var month = (1 + date.getMonth());
+				month = month >= 10 ? month : '0' + month;
+				var day = date.getDate();
+				day = day >= 10 ? day : '0' + day;
+				return  year + '-' + month + '-' + day;
+			}
+			function changeFormatDate(date){
+				var year = date.substring(0,4);
+				var month = date.substring(5,6); 
+				month = month >= 10 ? month : '0' + month;
+				var day = date.substring(6,8);
+				day = day >= 10 ? day : '0' + day; 
+				return year + '-' + month + '-' + day; 
+			}
+
+			function dateDiff(_date1, _date2) {
+				var diffDate_1 = _date1 instanceof Date ? _date1 :new Date(_date1);
+				var diffDate_2 = _date2 instanceof Date ? _date2 :new Date(_date2);
+				diffDate_1 =new Date(diffDate_1.getFullYear(), diffDate_1.getMonth()+1, diffDate_1.getDate());
+				diffDate_2 =new Date(diffDate_2.getFullYear(), diffDate_2.getMonth()+1, diffDate_2.getDate());
+				var isAbs = diffDate_2.getTime() - diffDate_1.getTime() < 0 ? '' : '-';
+				var diff = Math.abs(diffDate_2.getTime() - diffDate_1.getTime());
+
+				diff = isAbs + Math.ceil(diff / (1000 * 3600 * 24));
+			
+				return diff;
+			}
+
+			
 			var len = dataExecel.list.length,
 				i = 0,
-				state, date, enddate, pub, dev, id, idm, pop, tab, memo, overl, full, ifm,
+				state, date, enddate, moddate, pub, dev, id, idm, memo, overl,
 				d1, d2, d3, d4, d5, d6, d7, d8,
 				r1, r2, r3, r4,
 				d1_, d2_, d3_, d4_, d5_, d6_, d7_, d8_,
-				c1, c2, c3, c4, c5, c6, c7, c8,
-				endsum = 0, delsum = 0, tstsum = 0, ingsum = 0, watsum = 0, chksum = 0, num = -1,
+				c1, c2, c3, c4, c5, c6, c7, c8;
+
+			var	endsum = 0, delsum = 0, tstsum = 0, ingsum = 0, watsum = 0, chksum = 0, num = -1,
 				ctg_state = [],
 				ctg_pub = [],
 				ctg_dev = [],
@@ -4854,14 +4875,12 @@ if (!Object.keys){
 				state = dataExecel.list[i].state || '';
 				date = dataExecel.list[i].date || '';
 				enddate = dataExecel.list[i].enddate || '';
+				moddate = dataExecel.list[i].moddate || '';
 				pub = dataExecel.list[i].pub || '';
 				dev = dataExecel.list[i].dev || '';
 				id = dataExecel.list[i].id || '';
 				idm = dataExecel.list[i].idm || '';
-				full = dataExecel.list[i].full || '';
-				pop = dataExecel.list[i].modal || '';
-				ifm = dataExecel.list[i].ifm || '';
-				tab = dataExecel.list[i].tab || '';
+
 				memo = dataExecel.list[i].memo || '';
 				d1 = dataExecel.list[i].d1 || '';
 				d2 = dataExecel.list[i].d2 || '';
@@ -4951,16 +4970,18 @@ if (!Object.keys){
 				if (state !== '제외' && i === 0) {
 					table += '<table>';
 					table += '<caption>코딩리스트</caption>';
+
 					table += '<colgroup>';
-					table += '<col class="col-1">';
-					table += '<col class="col-2">';
-					table += '<col class="col-3">';
-					table += '<col class="col-4">';
-					//table += '<col class="col-5">';
-					table += '<col class="col-6">';
-					table += '<col class="col-7">';
-					table += '<col class="col-8">';
+					table += '<col class="col-1">';//상태
+					table += '<col class="col-2">';//일정
+					table += '<col class="col-3">';//완료일
+					table += '<col class="col-3">';//수정일
+					table += '<col class="col-4">';//퍼블담당자
+					table += '<col class="col-4">';//개발담당자
+
+					table += '<col class="col-8">';//화면아이디
 					table += '</colgroup>';
+
 					table += '<colgroup>';
 					(dataExecel.list[i].d1 !== undefined) ? table += '<col class="col-9">' : '';
 					(dataExecel.list[i].d2 !== undefined) ? table += '<col class="col-9">' : '';
@@ -4971,15 +4992,17 @@ if (!Object.keys){
 					(dataExecel.list[i].d7 !== undefined) ? table += '<col class="col-9">' : '';
 					(dataExecel.list[i].d8 !== undefined) ? table += '<col class="col-9">' : '';
 					table += '</colgroup>';
-					table += '<col class="col-10">';
+
+					table += '<col class="col-10">';//메모
+
 					table += '<thead>';
 					table += '<th scope="col">' + state + '</th>';
 					table += '<th scope="col">' + date + '</th>';
 					table += '<th scope="col">' + enddate + '</th>';
+					table += '<th scope="col">' + moddate + '</th>';
 					table += '<th scope="col">' + pub + '</th>';
-					//table += '<th scope="col">' + dev + '</th>';
-					table += '<th scope="col">' + pop + '</th>';
-					table += '<th scope="col">' + tab + '</th>';
+					table += '<th scope="col">' + dev + '</th>';
+
 					table += '<th scope="col">' + id + '</th>';
 					(dataExecel.list[i].d1 !== undefined) ? table += '<th scope="col">' + d1 + '</th>' : '';
 					(dataExecel.list[i].d2 !== undefined) ? table += '<th scope="col">' + d2 + '</th>' : '';
@@ -4995,44 +5018,35 @@ if (!Object.keys){
 				}
 				else if (state !== '제외') {
 					num = num + 1;
+
+					if (!(date === '미정' || date === '일정' || date === undefined) && state !== '완료' && state !== '검수' && state !== '체크') {
+						var dateStart = date;
+						dateStart = changeFormatDate(dateStart)
+
+						var care = dateDiff(dateStart, new Date());
+	
+						if (care < 3 && care >= 0) {
+							cls = cls + ' sch_care';
+						} else if (care < 0) {
+							cls = cls + ' sch_warn';
+						}
+	
+					}
+
+
 					win[global].browser.mobile ?
 						table += '<tr class="' + cls + '" >' :
 						table += '<tr class="' + cls + '">';
 					table += '<td class="state"><span>' + state + '</span></td>';
 					table += '<td class="date"><span>' + date + '</span></td>';
 					table += '<td class="enddate"><span>' + enddate + '</span></td>';
+					table += '<td class="enddate"><span>' + moddate + '</span></td>';
 					table += '<td class="name pub"><span>' + pub + '</span></td>';
-					//table += '<td class="name dev"><span>' + dev + '</span></td>';
-
-					var popIs = !!pop ? 'P' : '',
-						tabIs = tab === 'S' ? 'S' : tab === '' ? '' : 'T',
-						full = !!full ? true : false;
-
-					table += '<td class="txt-c"><span>' + popIs + '</span></td>';
-					table += '<td class="txt-c"><span>' + tabIs + '</span></td>';
-					console.log(pop)
-					//if (!pop) {
-						table += id !== '' ? overl !== '' ? tabIs === 'T' ?
-							'<td class="id ico_pg"><span><a href="' + root + '/' + overl + '.html?tab=' + (tab - 1) + '" target="coding">' + overl + '</a></span><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><a href="' + root + '/' + overl + '.html" target="coding">' + overl + '</a></span><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
-							'<td class="id "><span></span></td>';
-					/*} else {
-						table += id !== '' ? overl !== '' ? ifm === '' ? pop === '1' ? tabIs === 'T' ?
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html?tab=' + (tab - 1) + '\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, terms_tit:\'약관제목\', terms_url:\'/terms/' + overl + '.html\' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ iframe:true, isrc:\'/modal/' + overl + '_iframe.html\', iname:\'name_' + overl + '\', id:\'modal_' + overl + '\', full:' + full + ' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
-							(ifm === '') ?
-								(pop === '1') ?
-									tabIs === 'T' ?
-										'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html?tab=' + (tab - 1) + '\'});">' + id + '</button></td>' :
-										'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html\' });">' + id + '</button></td>' :
-									'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, terms_tit:\'약관제목\', terms_url:\'/terms/' + id + '.html\' });">' + id + '</button></td>' :
-								'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ iframe:true, isrc:\'/modal/' + id + '_iframe.html\', iname:\'name_' + id + '\', id:\'modal_' + id + '\', full:' + full + ' });">' + id + '</button></td>' :
-							'<td class="id "><span></span></td>';
-					}
-					*/
+					table += '<td class="name dev"><span>' + dev + '</span></td>';
+					table += id !== '' ?
+						'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
+						'<td class="id "><span></span></td>';	
+					
 					(dataExecel.list[i].d1 !== '') ? table += '<td class="d d1"><span>' + d1 + '</span></td>' : table += '<td class="d"></td>';
 					(dataExecel.list[i].d2 !== '') ? table += '<td class="d d2"><span>' + d2 + '</span></td>' : table += '<td class="d"></td>';
 					(dataExecel.list[i].d3 !== '') ? table += '<td class="d d3"><span>' + d3 + '</span></td>' : table += '<td class="d"></td>';
@@ -5051,7 +5065,8 @@ if (!Object.keys){
 			$('#' + opt.id).html(table);
 			table = '';
 
-			var info = ''
+			var info = '';
+			info += '<dl class="ui-codinglist-state"><dt>'+ today +'</dt><dd>'
 			info += '<ul class="ui-codinglist-info">';
 			info += '<li>진행율(완료+검수+체크) : <span class="n_all">0</span> / <span class="total">0</span> (<span class="per0">0</span>%)</li>';
 			info += '<li>완료 : <span class="n_end">0</span> (<span class="per1">0</span>%)</li>';
@@ -5059,7 +5074,7 @@ if (!Object.keys){
 			info += '<li>체크 : <span class="n_chk">0</span> (<span class="per5">0</span>%)</li>';
 			info += '<li>진행 : <span class="n_ing">0</span> (<span class="per3">0</span>%)</li>';
 			info += '<li>대기 : <span class="n_wat">0</span> (<span class="per4">0</span>%)</li>';
-			info += '</ul>';
+			info += '</ul></dd></dl>';
 
 			var sel = '';
 			sel += '<div class="ui-codinglist-sel mgb-xxxs">';
@@ -5076,9 +5091,9 @@ if (!Object.keys){
 			sel += '<select id="uiCLDate" data-ctg="date">';
 			sel += '<option value="0">일정선택</option>';
 			sel += '</select>';
-			sel += '<select id="uiCLdepth" data-ctg="d2">';
-			sel += '<option value="0">메뉴선택</option>';
-			sel += '</select>';
+			// sel += '<select id="uiCLdepth" data-ctg="d2">';
+			// sel += '<option value="0">메뉴선택</option>';
+			// sel += '</select>';
 			sel += '</div>';
 			sel += '<div class="box-srch mgb-xxxs">';
 			sel += '<div class="srch-area">';
@@ -5140,7 +5155,7 @@ if (!Object.keys){
 					for (j; j < alen; j++) {
 						if (v) {
 							if (j < alen - 1) {
-								optionHtml += '<option value="' + optionArray[j] + '">' + optionArray[j] + ' [' + optionSum[j + 1] + ']</option>';
+								optionHtml += '<option value="' + optionArray[j] + '">' + optionArray[j] + ' [' + optionSum[j + 1] + ']건</option>';
 							}
 						} else {
 							optionHtml += '<option value="' + optionArray[j] + '">' + optionArray[j] + '</option>';
@@ -6533,13 +6548,6 @@ if (!Object.keys){
 	win[global].uiSlot.play = {}
 	function createUiSlot(opt){
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
-				global + ".uiSlot({ id:'아이디명', auto:true/false, single:true/false });",
-				"- id: #을 제외한 아이디명만 입력(!필수)",
-				"- auto: true일 경우 자동실행, (!선택 - 기본값 false)",
-				"- single: true일 경우 하나만 노출, false일 경우 걸쳐보이는...(!선택 - 기본값 true)",
-				"※  슬롯머신효과"
-			]);
 			return false;
 		}
 		
@@ -6602,11 +6610,6 @@ if (!Object.keys){
 	function createUiSlotStart(opt){
 		//option guide
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
-				global + ".uiSlotStart({ id:'아이디명' });",
-				"- id: #을 제외한 아이디명만 입력(!필수)",
-				"※  슬롯머신 시작"
-			]);
 			return false;
 		}
 		
@@ -6636,12 +6639,6 @@ if (!Object.keys){
 	function createUiSlotStop(opt){
 		//option guide
 		if (opt === undefined) {
-			win[global].uiConsoleGuide([
-				global + ".uiSlotStop({ id:'아이디명', callback:function(result){...} });",
-				"- id: #을 제외한 아이디명만 입력(!필수)",
-				"- callback: 콜백함수 선택값 전달 (!선택)",
-				"※  슬롯머신 정지"
-			]);
 			return false;
 		}
 		

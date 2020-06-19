@@ -685,6 +685,7 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 
 /* ui codinglist */
 .ui-codinglist {width:100%; margin:30px 0 0}
+.ui-codinglist-state dt{font-size:20px; font-weight:600}
 .ui-codinglist table {width:100%; }
 .ui-codinglist table a,
 .ui-codinglist table button {font-size:12px; letter-spacing:-0.07em; color:#5a5a5a; text-decoration:none}
@@ -692,12 +693,12 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 .ui-codinglist th,
 .ui-codinglist td {border:1px solid #e4e4e4; padding:3px 10px; text-align:left; font-weight:400; font-size:12px;}
 .ui-codinglist col {width:auto;}
-.ui-codinglist col.col1 {width:55px;}
-.ui-codinglist col.col2,
-.ui-codinglist col.col3,
-.ui-codinglist col.col4 {width:65px;}
-.ui-codinglist col.col5 {width:40px;}
-.ui-codinglist col.col8 {background:#f2f2f2;}
+.ui-codinglist col.col-1 {width:55px;}
+.ui-codinglist col.col-2,
+.ui-codinglist col.col-3,
+.ui-codinglist col.col-4 {width:65px;}
+.ui-codinglist col.col-5 {width:40px;}
+.ui-codinglist col.col-8 {width:100px; background:#f2f2f2;}
 .ui-codinglist thead th:nth-child(1),
 .ui-codinglist thead th:nth-child(2),
 .ui-codinglist thead th:nth-child(3),
@@ -718,14 +719,16 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 .ui-codinglist .c6 .d6,
 .ui-codinglist .c7 .d7,
 .ui-codinglist .c8 .d8 {color:#000;}
+.ui-codinglist .sch_warn{background:black !important;}
+.ui-codinglist .sch_warn * {color:goldenrod !important;}
 .ui-codinglist .hidden span {display:none;}
 .ui-codinglist .hidden {border:0 !important; display:none;}
-.ui-codinglist .ing {background:#f0faff;}
-.ui-codinglist .ing td {border-bottom:1px solid #b9dff3;}
+.ui-codinglist .sch_care {background:#f0faff;}
+.ui-codinglist .sch_care td {border-bottom:1px solid #b9dff3;}
 .ui-codinglist .tst {background:#fff9da;}
 .ui-codinglist .tst td {border:1px solid #fdea86;}
 .ui-codinglist .trm {background:#f9d5e2;}
-.ui-codinglist .end {background:#dbd0ff;}
+.ui-codinglist .end {background:#ece6ff;}
 .ui-codinglist .end td {border:1px solid #c9bbf7;}
 .ui-codinglist .end a,
 .ui-codinglist .end button {color:#6d4bde !important;}

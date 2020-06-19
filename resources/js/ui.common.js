@@ -108,6 +108,9 @@
 					case 'button' :
 						fristHref = '/netiveUI/html/contents/button.html';
 						break;
+					case 'jsonCodingList' :
+						fristHref = '/netiveUI/html/components/jsonCodingList.html';
+						break;
 				   
 				}
 			} 
