@@ -392,6 +392,12 @@ if (!Object.keys){
 	})();
 
 
+	/* **************************************************************************************************** */
+	/* **************************************************************************************************** */
+	/* **************************************************************************************************** */
+	/* **************************************************************************************************** */
+
+
 	/* ------------------------
 	 * [base] loading
 	 * date : 2020-06-09
@@ -429,6 +435,7 @@ if (!Object.keys){
 		txt !== null ?
 			htmlLoading += '<strong class="ui-loading-txt"><span>'+ txt +'</span></strong>':
 			htmlLoading += '';
+
 		htmlLoading += '</div>';
 		htmlLoading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="$plugins.uiLoading({ visible:false });"><span>$plugins.uiLoading({ visible:false })</span></button>';
 		htmlLoading += '</div>';
@@ -439,11 +446,11 @@ if (!Object.keys){
 			!$selector.find('.ui-loading').length && $selector.append(htmlLoading);	
 			htmlLoading = '';		
 			$selector.data('loading', true);
-			$('.ui-loading').addClass('visible');			
+			$('.ui-loading').addClass('visible').removeClass('close');			
 		}
 		function hideLoading(){
 			$selector.data('loading', false);
-			$('.ui-loading').removeClass('visible');
+			$('.ui-loading').removeClass('visible').addClass('close');	
 			setTimeout(function(){
 				$('.ui-loading').remove();
 			},300);
@@ -471,7 +478,7 @@ if (!Object.keys){
 	}
 
 
-	/* ------------------------
+	/* --------------------------------------------------------------------------------------------------------
 	 * [base] valueCheck
 	 * date : 
 	------------------------ */
@@ -810,7 +817,7 @@ if (!Object.keys){
 
 
 	/* ------------------------
-	 * [base] scroll bar
+	 * scroll bar
 	 * date : 2020.06.12
 	------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
@@ -1094,7 +1101,7 @@ if (!Object.keys){
 
 
 	/* ------------------------
-	 * [base] scrolling or not
+	 * [base] scroll or not
 	 * date : 
 	------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
@@ -1107,10 +1114,12 @@ if (!Object.keys){
 	});
 	function createuiHasScrollBarY(opt) {
 		var $this = opt.selector;
+
 		return ($this.prop('scrollHeight') == 0 && $this.prop('clientHeight') == 0) || ($this.prop('scrollHeight') > $this.prop('clientHeight'));
 	}
 	function createUiHasScrollBarX(opt) {
 		var $this = opt.selector;
+
 		return ($this.prop('scrollWidth') == 0 && $this.prop('clientWidth') == 0) || ($this.prop('scrollWidth') > $this.prop('clientWidth'));
 	}
 
@@ -1185,7 +1194,7 @@ if (!Object.keys){
 
 
 	/* ------------------------
-	 * [base] window popup
+	 * window popup
 	 * date : 
 	------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
@@ -1225,7 +1234,7 @@ if (!Object.keys){
 
 
 	/* ------------------------
-	 * [base] cookie
+	 * cookie
 	 * date : 
 	------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
@@ -1264,7 +1273,7 @@ if (!Object.keys){
 
 
 	/* ------------------------
-	 * [base] table caption
+	 * table caption
 	 * date : 
 	------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
@@ -1302,7 +1311,7 @@ if (!Object.keys){
 
 
 	/* ------------------------
-	 * [base] in label
+	 * in label
 	 * date : 
 	------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
@@ -1396,7 +1405,7 @@ if (!Object.keys){
 
 
 	/* ------------------------
-	 * [base] error message
+	 * error message
 	 * date : 
 	 * option
 	 * - opt.message : 'message text' / [string]
@@ -1437,58 +1446,27 @@ if (!Object.keys){
 	}
 
 
+
 	/* ------------------------
-	* table cell fix(horizontal)
-	* date : 2020-05-17
-	------------------------ */	
+	 * input placeholder
+	 * date : 
+	------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiTableFixTd: function () {
-			return createUiTableFixTd();
+		uiPlaceholder: function () {
+			return createUiPlaceholder();
 		}
 	});
-	function createUiTableFixTd() {
-		var $tbl = $('.ui-fixtd');
+	function createUiPlaceholder(){
+		var $ph = $('[placeholder]'),
+			phname = '';
 
-		$tbl.each(function(i){
-			var $tbln = $(this);
-			var $tbl_col = $tbln.find('col');
-			var $tbl_tr = $tbln.find('tr');
-			var col_len = $tbl_col.length;
-			var fix_sum = col_len - $tbln.attr('fix');
-			var len = $tbl_tr.length;
-			var tit = [];
-
-			$tbln.attr('current', 1).attr('total', col_len);
-
-			for (var i = 0; i < len; i++) {
-				for (var j = 0; j < fix_sum; j++) {
-					var $tr_this = $tbl_tr.eq(i);
-					var $td_this = $tr_this.find('> *').eq(j - fix_sum);
-					var jj = (j + 1);
-
-					$td_this.addClass('ui-fixtd-n' + jj).data('n', j);
-					if ($tr_this.closest('thead').length) {
-						tit.push($td_this.text());
-						$td_this.prepend('<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="hide">previous</span></button>');
-						$td_this.append('<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="hide">next</span></button>');
-					}
-					$tbl_col.eq(j - fix_sum).addClass('ui-fixtd-n' + jj);
-				}
-			}
-		});
-
-		$tbl.find('.ui-fixtd-btn').off('click.uifixtd').on('click.uifixtd', function(){
-			var $tbl_this = $(this).closest('.ui-fixtd');
-			var this_sum =  Number($tbl_this.attr('total') - $tbl_this.attr('fix'));
-			var n = Number($(this).data('idx'));
-
-			if ($(this).data('btn') === 'next') {
-				$tbl_this.attr('current', n + 1 > this_sum ? n = 1 : n + 1);
-			} else {
-				$tbl_this.attr('current', n - 1 <= 0 ? n = this_sum : n - 1);
-			}
+		$('.ui-placeholder').remove();
+		$ph.each(function(){
+			phname = $(this).attr('placeholder');
+			$(this).before('<span class="hide ui-placeholder">' + phname + '</span>')
 		});
 	}
+
 
 
 	/* ------------------------
@@ -2434,7 +2412,6 @@ if (!Object.keys){
 	}
 
 
-
 	/* ------------------------
 	* name : modal
 	* date : 2020-06-11
@@ -2727,15 +2704,13 @@ if (!Object.keys){
 		id : null,
 		scope : 'window'
 	}
-	function createUiScrollBox(opt) {
-		
+	function createUiScrollBox(opt) {	
 		var opt = $.extend(true, {}, win[global].uiScrollBox.option, opt),
 			$scope = opt.scope === 'window' ? $(win) : opt.scope,
 			$scrollBox = opt.id === null ? $('.ui-scrollbox') : $('#' + opt.id),
 			$item = $scrollBox.find('> .ui-scrollbox-item'),
 			len = $item.length,
 			i = 0;
-
 
 		var checkVisible = function (){
 			var itemTop = opt.scope === 'window' ? $item.eq(i).offset().top : $item.eq(i).position().top;
@@ -2780,10 +2755,8 @@ if (!Object.keys){
 				}
 			}
 			itemCheck();
-			
 		}
 	}
-
 
 
 	/* ------------------------
@@ -4198,7 +4171,7 @@ if (!Object.keys){
 			$this.val() === '' ?
 				$cancel.remove():
 				$cancel.length === 0 ?
-				$this.after('<button type="button" class="ui-inpcancel-btn" data-id="'+ $this.attr('id') +'"><span>cancel</span></button>') : '';
+				$this.after('<button type="button" class="ui-inpcancel-btn" data-id="'+ $this.attr('id') +'"><span>clear</span></button>') : '';
 
 			$inp.eq(i).off('keyup.inpcancel').on('keyup.inpcancel', function(){
 				var _$this = $(this);
@@ -4207,7 +4180,7 @@ if (!Object.keys){
 					_$this.next('.ui-inpcancel-btn').remove();
 				} else {
 					!!$('.ui-inpcancel-btn[data-id="'+ _$this.attr('id') +'"]').length ? '' :
-					_$this.after('<button type="button" class="ui-inpcancel-btn" data-id="'+ _$this.attr('id') +'"><span>cancel</span></button>');
+					_$this.after('<button type="button" class="ui-inpcancel-btn" data-id="'+ _$this.attr('id') +'"><span>clear</span></button>');
 				}
 			});
 		});
@@ -4216,6 +4189,60 @@ if (!Object.keys){
 		$(doc).off('click.inpcancel').on('click.inpcancel', '.ui-inpcancel-btn', function(){
 			$('#' + $(this).data('id')).val('').focus();
 			$(this).remove();
+		});
+	}
+	
+
+	/* ------------------------
+	* table cell fix(horizontal)
+	* date : 2020-05-17
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiTableFixTd: function () {
+			return createUiTableFixTd();
+		}
+	});
+	function createUiTableFixTd() {
+		var $tbl = $('.ui-fixtd');
+
+		$tbl.each(function(i){
+			var $tbln = $(this);
+			var $tbl_col = $tbln.find('col');
+			var $tbl_tr = $tbln.find('tr');
+			var col_len = $tbl_col.length;
+			var fix_sum = col_len - $tbln.attr('fix');
+			var len = $tbl_tr.length;
+			var tit = [];
+
+			$tbln.attr('current', 1).attr('total', col_len);
+
+			for (var i = 0; i < len; i++) {
+				for (var j = 0; j < fix_sum; j++) {
+					var $tr_this = $tbl_tr.eq(i);
+					var $td_this = $tr_this.find('> *').eq(j - fix_sum);
+					var jj = (j + 1);
+
+					$td_this.addClass('ui-fixtd-n' + jj).data('n', j);
+					if ($tr_this.closest('thead').length) {
+						tit.push($td_this.text());
+						$td_this.prepend('<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="hide">previous</span></button>');
+						$td_this.append('<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="hide">next</span></button>');
+					}
+					$tbl_col.eq(j - fix_sum).addClass('ui-fixtd-n' + jj);
+				}
+			}
+		});
+
+		$tbl.find('.ui-fixtd-btn').off('click.uifixtd').on('click.uifixtd', function(){
+			var $tbl_this = $(this).closest('.ui-fixtd');
+			var this_sum =  Number($tbl_this.attr('total') - $tbl_this.attr('fix'));
+			var n = Number($(this).data('idx'));
+
+			if ($(this).data('btn') === 'next') {
+				$tbl_this.attr('current', n + 1 > this_sum ? n = 1 : n + 1);
+			} else {
+				$tbl_this.attr('current', n - 1 <= 0 ? n = this_sum : n - 1);
+			}
 		});
 	}
 
@@ -4634,174 +4661,10 @@ if (!Object.keys){
 	}
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	 /* ------------------------------------------------------------------------
-	* name : count number
-	* Ver. : v1.0.0
-	* date : 2018-12-21
-	* EXEC statement
-	* - $plugins.uiCountStep({ option });
-	* - $plugins.uiCountSlide({ option });
-	------------------------------------------------------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {	
-		uiCountStep: function (opt) {
-			return createUiCountStep(opt);
-		},
-		uiCountSlide: function (opt) {
-			return createUiCountSlide(opt);
-		}
-	});
-	function createUiCountSlide(opt){
-		var $base = $('#' + opt.id),
-			countNum = !!opt.value === true ? opt.value : $base.text(),
-			base_h = $base.outerHeight(),
-			textNum = 0,
-			len = countNum.toString().length,
-			speed = !!opt.speed === true ? opt.speed + 's' : '1.0s',
-			eff  = !!opt.eff === true ? opt.eff : 'easeOutQuart',
-			transitionEnd = 'transitionend webkitTransitionEnd oTransitionEnd otransitionend',
-			i = 0,
-			nn = 1,
-			step, re, timer, r;
-			
-		if ($base.data('ing') !== true) {
-			textNum = win[global].option.uiComma(countNum);
-			base_h === 0 ? base_h = $base.text('0').outerHeight() : '';
-			$base.data('ing',true).empty().css('height', base_h);
-			len = textNum.length;
-			step = len;
-			re = Math.ceil(len / 9); 
-			(step < 9) ? step = 9 - len : step = 1;	
-
-			// 숫자 단위만큼 
-			for (i; i < len; i++) {
-				var n = Number(textNum.substr(i, 1)),
-					$thisNum, $base_div;
-				
-				if (isNaN(n)) {
-					// 숫자가 아닐때 ', . ' 
-					$base.append('<div class="n' + i + '"><div class="ui-count-og" style="top:' + base_h + 'px">' + textNum.substr(i, 1) + '</div></div>');
-					$base.find('.n' + i).append('<span>' + textNum.substr(i, 1) + '</span>');
-				}
-				else {
-					// 숫자일때
-					$base.append('<div class="n' + i + '"><div class="ui-count-og" style="top:' + base_h + 'px">' + n + '</div></div>');
-					$base.find('.n' + i).append('<span>9<br>8<br>7<br>6<br>5<br>4<br>3<br>2<br>1<br>0<br>' + n + '</span>');
-					step = step + 1;
-				}
-				
-				$base_div = $base.children('.n' + i);
-				$base_div.find('span').wrapAll('<div class="ui-count-num" style="top:' + base_h + 'px; transition:top '+ speed +' cubic-bezier(' + win[global].option.effect[eff] + ');"></div>');
-				$thisNum = $base_div.find('.ui-count-num');
-				$thisNum.data('height', $thisNum.height()); 
-			}
-
-			r = len;
-			timer = setInterval(function() {
-				count(r)
-				r = r - 1; 
-				(r < 0) ? clearInterval(timer) : '';
-			},150);
-			
-			
-		}
-		function count(r){
-			var $current_num = $base.children('.n' + r).find('.ui-count-num'),
-				num_h = Number($current_num.data('height'));
-			$current_num.css('top', (num_h - base_h) * -1); 
-			
-			if (r === 0) {
-				$current_num.one(transitionEnd, function(){
-					$base.text(textNum).data('ing', false);
-				});
-			}
-		}
-	}
-	function createUiCountStep(opt) {
-		var $base = $('#' + opt.id);
-		var countNum = !!opt.value === true ? opt.value : $base.text();
-
-		var count = 0,
-			timer, diff, counter,
-			add = Math.ceil((countNum - count) / (countNum - count), -2),
-			j = 1,
-			v = 0,
-			s = 100;
-		
-		if ($base.data('ing') !== true) {
-			counter = function(){
-				j = v < 10? j = 0 : v < 10 ? j + 11 : v < 40 ? j +111 : v < 70 ? j + 1111 : j + 11111;
-				s = s < 0 ? s = 0 : s - 10;
-				diff = countNum - count;
-				(diff > 0) ? count += add + j : '';
-
-				var n = win[global].option.uiComma(count);
-				$base.text(n);
-				v = v + 1;
-
-				if(count < countNum) {
-					timer = setTimeout(function() { 
-						counter(); 
-					}, s);
-				} else {
-					$base.text(win[global].option.uiComma(countNum));
-					clearTimeout(timer);
-				}
-			}
-			counter();
-		}
-	}
-
-
-	
-
-
-
-	
-
-	/* ------------------------------------------------------------------------
-	 * input placeholder v1.0 
-	 * date : 2018-04-21
-	------------------------------------------------------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiPlaceholder: function () {
-			return createUiPlaceholder();
-		}
-	});
-	function createUiPlaceholder(){
-		var $ph = $('[placeholder]'),
-			phname = '';
-
-		$('.ui-placeholder').remove();
-		$ph.each(function(){
-			phname = $(this).attr('placeholder');
-			$(this).before('<span class="hide ui-placeholder">' + phname + '</span>')
-		});
-	}
-
-
-	
-
-
-
-	/* ------------------------------------------------------------------------
-	 * json coding list v1.0 
-	 * date : 2018-04-21
-	------------------------------------------------------------------------ */
+	/* ------------------------
+	* name : coding list
+	* date : 2020-06-20
+	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
 		uiCodinglist: function (opt) {
 			return createUiCodinglist(opt);
@@ -5182,7 +5045,6 @@ if (!Object.keys){
 				$('#' + opt.id + ' tr').removeClass('hidden');
 				$('.ui-codinglist-sel select').find('option:eq(0)').prop('selected', true);
 			});
-
 			$('.ui-codinglist table a, .ui-codinglist table button').off('click.uicoding').on('click.uicoding', function () {
 				$(this).closest('tr').addClass('selected').siblings().removeClass('selected');
 			});
@@ -5206,17 +5068,245 @@ if (!Object.keys){
 			});
 
 			win[global].uiInputClear();
+		}
+	}
 
+
+	
+	/* ------------------------
+	* name : file uploadt
+	* date : 2020-06-20
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiFileUpload: function (opt) {
+			return createUiFileUpload(opt);
+		}
+	});
+	function createUiFileUpload(opt){
+		$(doc).on('change', '.ui-file-inp', function(){
+				upload(this);
+			})
+			.on('click', '.ui-file-del', function(){
+				fileDel(this);
+			});
+			
+		//fn
+		function upload(t){
+			var $this = $(t),
+				files= $this[0].files,
+				id = $this.attr('id'),
+				len = files.length,
+				$list = $('.ui-file-list[aria-labelledby="'+ id +'"]');
+
+			$list.find('.ui-file-item').remove();
+			$list.find('.ui-file-del').remove();
+			for (var i = 0; i < len; i++) {
+				$list.append('<div class="ui-file-item n'+ i +'">'+ files[i].name +'</div>');
+
+			}
+			$list.append('<button type="button" class="ui-file-del"><span class="hide">Delete attachment</span></button>');
+		}
+		function fileDel(t){
+			var $this = $(t),
+				$list = $this.closest('.ui-file-list'),
+				id = $list.attr('aria-labelledby'),
+				$id = $('#' + id);
+
+			win[global].browser.ie ?
+				$id.replaceWith( $id.clone(true) ) : $id.val(''); 
+			$list.find('.ui-file-item').remove();
+			$this.remove();
 		}
 	}
 
 
 
-	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	 /* ------------------------------------------------------------------------
+	* name : count number
+	* Ver. : v1.0.0
+	* date : 2018-12-21
+	* EXEC statement
+	* - $plugins.uiCountStep({ option });
+	* - $plugins.uiCountSlide({ option });
+	------------------------------------------------------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {	
+		uiCountStep: function (opt) {
+			return createUiCountStep(opt);
+		},
+		uiCountSlide: function (opt) {
+			return createUiCountSlide(opt);
+		}
+	});
+	function createUiCountSlide(opt){
+		var $base = $('#' + opt.id),
+			countNum = !!opt.value === true ? opt.value : $base.text(),
+			base_h = $base.outerHeight(),
+			textNum = 0,
+			len = countNum.toString().length,
+			speed = !!opt.speed === true ? opt.speed + 's' : '1.0s',
+			eff  = !!opt.eff === true ? opt.eff : 'easeOutQuart',
+			transitionEnd = 'transitionend webkitTransitionEnd oTransitionEnd otransitionend',
+			i = 0,
+			nn = 1,
+			step, re, timer, r;
+			
+		if ($base.data('ing') !== true) {
+			textNum = win[global].option.uiComma(countNum);
+			base_h === 0 ? base_h = $base.text('0').outerHeight() : '';
+			$base.data('ing',true).empty().css('height', base_h);
+			len = textNum.length;
+			step = len;
+			re = Math.ceil(len / 9); 
+			(step < 9) ? step = 9 - len : step = 1;	
+
+			// 숫자 단위만큼 
+			for (i; i < len; i++) {
+				var n = Number(textNum.substr(i, 1)),
+					$thisNum, $base_div;
+				
+				if (isNaN(n)) {
+					// 숫자가 아닐때 ', . ' 
+					$base.append('<div class="n' + i + '"><div class="ui-count-og" style="top:' + base_h + 'px">' + textNum.substr(i, 1) + '</div></div>');
+					$base.find('.n' + i).append('<span>' + textNum.substr(i, 1) + '</span>');
+				}
+				else {
+					// 숫자일때
+					$base.append('<div class="n' + i + '"><div class="ui-count-og" style="top:' + base_h + 'px">' + n + '</div></div>');
+					$base.find('.n' + i).append('<span>9<br>8<br>7<br>6<br>5<br>4<br>3<br>2<br>1<br>0<br>' + n + '</span>');
+					step = step + 1;
+				}
+				
+				$base_div = $base.children('.n' + i);
+				$base_div.find('span').wrapAll('<div class="ui-count-num" style="top:' + base_h + 'px; transition:top '+ speed +' cubic-bezier(' + win[global].option.effect[eff] + ');"></div>');
+				$thisNum = $base_div.find('.ui-count-num');
+				$thisNum.data('height', $thisNum.height()); 
+			}
+
+			r = len;
+			timer = setInterval(function() {
+				count(r)
+				r = r - 1; 
+				(r < 0) ? clearInterval(timer) : '';
+			},150);
+			
+			
+		}
+		function count(r){
+			var $current_num = $base.children('.n' + r).find('.ui-count-num'),
+				num_h = Number($current_num.data('height'));
+			$current_num.css('top', (num_h - base_h) * -1); 
+			
+			if (r === 0) {
+				$current_num.one(transitionEnd, function(){
+					$base.text(textNum).data('ing', false);
+				});
+			}
+		}
+	}
+	function createUiCountStep(opt) {
+		var $base = $('#' + opt.id);
+		var countNum = !!opt.value === true ? opt.value : $base.text();
+
+		var count = 0,
+			timer, diff, counter,
+			add = Math.ceil((countNum - count) / (countNum - count), -2),
+			j = 1,
+			v = 0,
+			s = 100;
+		
+		if ($base.data('ing') !== true) {
+			counter = function(){
+				j = v < 10? j = 0 : v < 10 ? j + 11 : v < 40 ? j +111 : v < 70 ? j + 1111 : j + 11111;
+				s = s < 0 ? s = 0 : s - 10;
+				diff = countNum - count;
+				(diff > 0) ? count += add + j : '';
+
+				var n = win[global].option.uiComma(count);
+				$base.text(n);
+				v = v + 1;
+
+				if(count < countNum) {
+					timer = setTimeout(function() { 
+						counter(); 
+					}, s);
+				} else {
+					$base.text(win[global].option.uiComma(countNum));
+					clearTimeout(timer);
+				}
+			}
+			counter();
+		}
+	}
+
 
 	
-	
-	
+
+
 
 	/* ------------------------------------------------------------------------
 	 * slide(carousel) v1.0 
@@ -6473,58 +6563,6 @@ if (!Object.keys){
 		}
 	}
 
-
-	
-
-	/* ------------------------------------------------------------------------
-	* name : file upload
-	* Ver. : v1.0.0
-	* date : 2018-12-21
-	* EXEC statement
-	* - $plugins.uiFileUpload({ option });
-	------------------------------------------------------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiFileUpload: function (opt) {
-			return createUiFileUpload(opt);
-		}
-	});
-	function createUiFileUpload(opt){
-		$(doc).on('change', '.ui-file-inp', function(){
-				upload(this);
-			})
-			.on('click', '.ui-file-del', function(){
-				fileDel(this);
-			});
-			
-		//fn
-		function upload(t){
-			var $this = $(t),
-				v = $this[0].files,
-				id = $this.attr('id'),
-				len = v.length,
-				$list = $('.ui-file-list[aria-labelledby="'+ id +'"]');
-
-			$list.find('.ui-file-item').remove();
-			$list.find('.ui-file-del').remove();
-			for (var i = 0; i < len; i++) {
-				$list.append('<div class="ui-file-item n'+ i +'">'+ v[i].name +'</div>');
-				
-			}
-			$list.append('<button type="button" class="ui-file-del btn-del">첨부파일 삭제</button>');
-		}
-		function fileDel(t){
-			var $this = $(t),
-				$list = $this.closest('.ui-file-list'),
-				id = $list.attr('aria-labelledby'),
-				$id = $('#' + id);
-
-			win[global].browser.ie ?
-				$id.replaceWith( $id.clone(true) ) : $id.val(''); 
-			$list.find('.ui-file-item').remove();
-			$this.remove();
-		}
-		
-	}
 
 
 	win[global] = win[global].uiNameSpace(namespace, {

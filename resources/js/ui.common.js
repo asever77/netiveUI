@@ -107,6 +107,9 @@
 					case 'scrollMove' :
 						fristHref = '/netiveUI/html/components/scrollMove.html';
 						break;
+					case 'countNumber' :
+						fristHref = '/netiveUI/html/components/countNumber.html';
+						break;
 
 					case 'layout' :
 						fristHref = '/netiveUI/html/contents/layout.html';
@@ -116,6 +119,9 @@
 						break;
 					case 'jsonCodingList' :
 						fristHref = '/netiveUI/html/components/jsonCodingList.html';
+						break;
+					case 'fileUpload' :
+						fristHref = '/netiveUI/html/components/fileUpload.html';
 						break;
 				   
 				}
