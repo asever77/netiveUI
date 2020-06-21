@@ -24,6 +24,13 @@
     $plugins.page.pageDevice = function(){};
     $plugins.page.pageTypography = function(){};
     $plugins.page.pageLayout = function(){};
+    $plugins.page.pageLoading = function(){
+        $plugins.uiLoading({ visible:true });
+        $plugins.uiLoading({ visible:true });
+        $plugins.uiLoading({ visible:false });
+        $plugins.uiLoading({ visible:true });
+        $plugins.uiLoading({ visible:false });
+    };
     $plugins.page.pageButton = function(){};
 
     $plugins.page.pageBulletList = function(){};
@@ -300,6 +307,10 @@
             acc:true, 
             callback:sliderCallback
         });
+
+
+
+
         $plugins.uiSlider({ 
             id:"uiSlider2", 
             vertical:false, 
@@ -539,7 +550,7 @@
 
     $plugins.page.pageCountNumber = function(){
         $plugins.uiCountStep({ id:'exeCount1', value: 504025 });
-        $plugins.uiCountSlide({ id:'exeCount2', value: 5040.25 });
+        $plugins.uiCountSlot({ id:'exeCount2', value: 1965040.25 });
     }
 
     $plugins.page.pageDropdown = function(){

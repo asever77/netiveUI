@@ -123,6 +123,9 @@
 					case 'fileUpload' :
 						fristHref = '/netiveUI/html/components/fileUpload.html';
 						break;
+					case 'slider' :
+						fristHref = '/netiveUI/html/components/slider.html';
+						break;
 				   
 				}
 			} 

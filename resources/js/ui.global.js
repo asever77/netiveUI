@@ -407,8 +407,8 @@ if (!Object.keys){
 			return createUiLoading(opt);
 		}
 	});
-	win[global].uiLoading.timer = {};
-	win[global].uiLoading.moment = true;
+	win[global].uiLoading.timerShow = {};
+	win[global].uiLoading.timerHide = {};
 	win[global].uiLoading.option = {
 		id: null,
 		visible: true,
@@ -440,7 +440,23 @@ if (!Object.keys){
 		htmlLoading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="$plugins.uiLoading({ visible:false });"><span>$plugins.uiLoading({ visible:false })</span></button>';
 		htmlLoading += '</div>';
 
-		loadingVisible ? showLoading() : hideLoading();
+		if(loadingVisible) {
+			clearTimeout(win[global].uiLoading.timerShow);
+			clearTimeout(win[global].uiLoading.timerHide);
+			win[global].uiLoading.timerShow = setTimeout(function(){
+				console.log('show');
+				showLoading();
+			},300);
+			
+		}
+		if(!loadingVisible) {
+			clearTimeout(win[global].uiLoading.timerShow);
+			win[global].uiLoading.timerHide = setTimeout(function(){
+				console.log('hide');
+				hideLoading();
+			},300)
+			
+		}	
 
 		function showLoading(){
 			!$selector.find('.ui-loading').length && $selector.append(htmlLoading);	
@@ -450,8 +466,9 @@ if (!Object.keys){
 		}
 		function hideLoading(){
 			$selector.data('loading', false);
-			$('.ui-loading').removeClass('visible').addClass('close');	
+			$('.ui-loading').addClass('close');	
 			setTimeout(function(){
+				$('.ui-loading').removeClass('visible')
 				$('.ui-loading').remove();
 			},300);
 		}
@@ -5118,91 +5135,21 @@ if (!Object.keys){
 			$this.remove();
 		}
 	}
+	
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-	 /* ------------------------------------------------------------------------
+	/* ------------------------
 	* name : count number
-	* Ver. : v1.0.0
-	* date : 2018-12-21
-	* EXEC statement
-	* - $plugins.uiCountStep({ option });
-	* - $plugins.uiCountSlide({ option });
-	------------------------------------------------------------------------ */
+	* date : 2020-06-20
+	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {	
 		uiCountStep: function (opt) {
 			return createUiCountStep(opt);
 		},
-		uiCountSlide: function (opt) {
-			return createUiCountSlide(opt);
+		uiCountSlot: function (opt) {
+			return createUiCountSlot(opt);
 		}
 	});
-	function createUiCountSlide(opt){
+	function createUiCountSlot(opt){
 		var $base = $('#' + opt.id),
 			countNum = !!opt.value === true ? opt.value : $base.text(),
 			base_h = $base.outerHeight(),
@@ -5212,8 +5159,10 @@ if (!Object.keys){
 			eff  = !!opt.eff === true ? opt.eff : 'easeOutQuart',
 			transitionEnd = 'transitionend webkitTransitionEnd oTransitionEnd otransitionend',
 			i = 0,
-			nn = 1,
-			step, re, timer, r;
+			step, 
+			// re, 
+			timer, 
+			r;
 			
 		if ($base.data('ing') !== true) {
 			textNum = win[global].option.uiComma(countNum);
@@ -5221,7 +5170,7 @@ if (!Object.keys){
 			$base.data('ing',true).empty().css('height', base_h);
 			len = textNum.length;
 			step = len;
-			re = Math.ceil(len / 9); 
+			// re = Math.ceil(len / 9); 
 			(step < 9) ? step = 9 - len : step = 1;	
 
 			// 숫자 단위만큼 
@@ -5302,6 +5251,73 @@ if (!Object.keys){
 			counter();
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
 
 
 	
@@ -6241,10 +6257,12 @@ if (!Object.keys){
 
 		//graph step & select option setting
 		for (var i = 0; i < step + 1; i++) {
-			txt_e2 = (i === step) ? opt.txt_e : '';
-			txt_s2 = (i === 0) ? opt.txt_s : '';
+			txt_s2 = (i === 0) && opt.txt_s;
+			txt_e2 = (i === step) && opt.txt_e;
+			
 			txt_val = parseInt(min + (unit_sum * i));
 			now_sum.push(txt_val);
+
 			if (stepname) {
 				$divwrap.append('<span class="ui-slider-div n'+ i +'" style="'+ dir +':' + step_w * i + '%; '+ siz +':' + div_w + 'px; margin-'+ dir +':' + (div_w / 2) * -1 + 'px"><em>' + stepname[i] + '</em></div>');
 			} else {
@@ -6252,6 +6270,7 @@ if (!Object.keys){
 			}
 			
 			sliderstep.push(parseInt(min + (unit_sum * i)));
+
 			if (stepname) {
 				if (acc) {
 					if (now_s === txt_val) {
@@ -6439,6 +6458,7 @@ if (!Object.keys){
 		}
 		function perStep(v){
 			var n = ((v % step_w) >= step_w / 2) ? 1 : 0;
+			
 			return (Math.floor(v / step_w) + n) * step_w;
 		}
 		function per($this, e, minmax){
