@@ -252,7 +252,7 @@
 		menuAjax: function(){
 			$('.dep-2-btn').off('click.ajax').on('click.ajax', function(){
 				var href = this.getAttribute('data-href');
-
+				$plugins.common.navOpen();
 				$plugins.uiAjax({ 
 					id: 'baseMain', 
 					url: href, 
