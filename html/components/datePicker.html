@@ -2,65 +2,65 @@
 
 <div class="tit-catagory">Components Form</div>
 <div class="tit-wrap">
-	<h1 class="h1">Date Picker</h1>
+	<h1 class="h-1">Date Picker</h1>
 </div>
 
-<p class="txt-s2">날짜 선택이나 기간 선택할때 사용한다.</p>
+<p class="txts-m">날짜 선택이나 기간 선택할때 사용한다.</p>
 
-<h2 class="h2">Examples</h2>
-<h3 class="h3">Base Date Picker</h3>
+<h2 class="h-2">Examples</h2>
+<h3 class="h-3">Base Date Picker</h3>
 
-<h4 class="h4">single</h4>
+<h4 class="h-4">single</h4>
 <div class="ui-datepicker" id="uiDatePicker1" data-title="test1">
 	<input type="tel" id="uiDatePicker1Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-12-05" data-max="2022-12-30" title="시작일">
 	<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
 	<div class="ui-datepicker-wrap"></div>
 </div>
 
-<h4 class="h4">dual</h4>
+<h4 class="h-4">dual</h4>
 <div class="ui-datepicker" id="uiDatePicker2" data-dual="true" data-title="test2">
 	<input type="tel" id="uiDatePicker2Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-11-05" data-max="2022-12-30" title="시작일">
 	<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
 	<div class="ui-datepicker-wrap"></div>
 </div>
 
-<h4 class="h4">Month single</h4>
+<h4 class="h-4">Month single</h4>
 <div class="ui-datepicker" id="uiDatePicker1m" data-title="test" data-type="month">
 	<input type="tel" id="uiDatePicker1mInp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2000-12" data-max="2020-12" title="시작일">
 	<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
 	<div class="ui-datepicker-wrap"></div>
 </div>
 
-<h3 class="h3">Period Date picker</h3>
-<h4 class="h4">single</h4>
+<h3 class="h-3">Period Date picker</h3>
+<h4 class="h-4">single</h4>
 <div class="form-dpmulti">		
 	<div class="ui-datepicker" id="uiDatePicker3" data-period="true" data-dual="false" data-title="test3">
 		<input type="tel" id="uiDatePicker3Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2020-06-01" data-max="2020-07-15" title="시작일">					
 		<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
 		<div class="ui-datepicker-wrap"></div>
 	</div>
-	<span class="txt-mark">~</span>
+	<span class="field-text">~</span>
 	<div class="ui-datepicker">
 		<input type="tel" id="uiDatePicker3Inp_end" class="ui-datepicker-inp inp-base day-end" value="" data-min="2020-06-01" data-max="2020-12-30" title="종료일" readonly>
 		<button type="button" class="ui-datepicker-btn" disabled aria-label="종료일 선택"></button>
 	</div>
 </div>	
-<h4 class="h4">dual</h4>
+<h4 class="h-4">dual</h4>
 <div class="form-dpmulti">		
 	<div class="ui-datepicker" id="uiDatePicker4" data-period="true" data-dual="true" data-title="test4">
 		<input type="tel" id="uiDatePicker4Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2019-12-01" data-max="2020-02-15" title="시작일">					
 		<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
 		<div class="ui-datepicker-wrap"></div>
 	</div>
-	<span class="txt-mark">~</span>
+	<span class="field-text">~</span>
 	<div class="ui-datepicker">
 		<input type="tel" id="uiDatePicker4Inp_end" class="ui-datepicker-inp inp-base day-end" value="" data-min="2019-12-01" data-max="2020-12-30" title="종료일" readonly>
 		<button type="button" class="ui-datepicker-btn" disabled aria-label="종료일 선택"></button>
 	</div>
 </div>	
 
-<h2 class="h2">HTML Structure</h2>
-<h3 class="h3">Base type</h3>
+<h2 class="h-2">HTML Structure</h2>
+<h3 class="h-3">Base type</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -73,7 +73,7 @@
 </pre>
 </div>
 
-<h3 class="h3">Period type</h3>			
+<h3 class="h-3">Period type</h3>			
 <div class="box-code">
 <pre>
 <code>
@@ -84,7 +84,7 @@
 		&lt;button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"&gt;&lt;/button&gt;
 		&lt;div class="ui-datepicker-wrap"&gt;&lt;/div&gt;
 	&lt;/div&gt;
-	&lt;span class="txt-mark"&gt;~&lt;/span&gt;
+	&lt;span class="field-text"&gt;~&lt;/span&gt;
 	&lt;div class="ui-datepicker"&gt;
 		&lt;input class="ui-datepicker-inp inp-base" type="tel" value="" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="uiDatePicker2Inp_end" readonly&gt;
 		&lt;button type="button" class="ui-datepicker-btn" aria-label="종료일 선택" disabled&gt;&lt;/button&gt;
@@ -104,7 +104,7 @@
 				<th scope="col">설명</th>
 			</tr>
 		</thead>
-		<tbody class="txt-l">
+		<tbody class="txta-l">
 			<tr>
 				<th scope="row" rowspan="3">.ui-datepicker</th>
 				<th scope="row">data-period</th>
@@ -121,7 +121,7 @@
 				<td>false</td>
 				<td>달력 제목 설정. script에서 옵션값 대신 줄 수 있음</td>
 			</tr>
-		<tbody class="txt-l">
+		<tbody class="txta-l">
 			<tr>
 				<th scope="row" rowspan="4">input type="tel"</th>
 				<th scope="row">data-min</th>
@@ -149,8 +149,8 @@
 </div>
 
 
-<h2 class="h2">CSS Style</h2>
-<h3 class="h3">base style</h3>
+<h2 class="h-2">CSS Style</h2>
+<h3 class="h-3">base style</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -223,8 +223,8 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 </pre>
 </div>
 
-<h2 class="h2">Javascript</h2>
-<h3 class="h3">$plugins.uiDatePicker</h3>
+<h2 class="h-2">Javascript</h2>
+<h3 class="h-3">$plugins.uiDatePicker</h3>
 <div class="box-code">
 <pre>
 <code>

@@ -8,11 +8,8 @@
 @import url(ui.font.css); 
 
 /* common */
-@import url(ui.plugins.css);
 @import url(ui.common.css);
+@import url(ui.plugins.css);
 
 /* project */
 @import url(ui.project.css);
-
-/* responsive */
-@import url(ui.responsive.css);

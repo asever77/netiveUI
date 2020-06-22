@@ -140,7 +140,7 @@
 				id: 'baseMain', 
 				url: fristHref, 
 				page: true, 
-				loading: true,
+				effect: true,
 				callback: function(){
 					$(win).off('scroll.win');
 					$plugins.common.pageInit(fristHref);
@@ -169,11 +169,23 @@
 				autoclose: false
 			});
 			$plugins.common.menuAjax();
+
+			$('.ui-nav').on('click', $plugins.common.navOpen)
+		},
+		navOpen: function(){
+			var $body = $('body');
+
+			if (!$body.hasClass('nav-open')) {
+				$body.addClass('nav-open')
+			} else {
+				$body.removeClass('nav-open')
+			}
+			
 		},
 		settingAside: function(){
 			var $aside = $('#baseAside'),
 				$main = $('#baseMain'),
-				$h2 = $main.find('.h2');
+				$h2 = $main.find('.h-2');
 
 			var asideUl = '<ul>';
 			
@@ -245,16 +257,18 @@
 					id: 'baseMain', 
 					url: href, 
 					page: true, 
-					loading: true,
-					callback: function(){
+					effect: true,
+					callback: function(v){
+						$plugins.uiScroll({ 
+							value:0, 
+							speed:0, 
+							focus:  $('#baseMain h1').eq(0)
+						});
+						
 						$(win).off('scroll.win');
 						$plugins.common.pageInit(href);
 						$plugins.common.settingAside();
-						$plugins.uiScroll({ 
-							value:0, 
-							speed:300, 
-							focus:  $('#baseMain h1').eq(0)
-						});
+						
 					}
 				});
 			});

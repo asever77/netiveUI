@@ -3973,9 +3973,9 @@ modify		:
 			} else {
 				for (i; i < max; i++) {
 					list += '<tr>';
-					list += '<td class="txt-l">' + j_data[i].tit + '</td>';
+					list += '<td class="txta-l">' + j_data[i].tit + '</td>';
 					if ($global.uiCheck.mobile) {
-						list += '<td class="txt-l">' + j_data[i].date + '</td>';
+						list += '<td class="txta-l">' + j_data[i].date + '</td>';
 						list += '<td><a href="/m/helpdesk/MP060702_002.html?winnerfile=' + j_data[i].file + '" class="btn-normal"><span>당첨자 보기</span></a></td>';
 					} else {
 						list += '<td>' + j_data[i].date + '</td>';
@@ -4194,23 +4194,23 @@ modify		:
 					table += '<col class="col1">';
 					table += '<col class="col2">';
 					table += '<col class="col3">';
-					table += '<col class="col4">';
-					table += '<col class="col4">';
+					table += '<col class="col-4">';
+					table += '<col class="col-4">';
 					//table += '<col class="col5">';
 					//table += '<col class="col7">';
 					table += '<col class="col6">';
 					table += '<col class="col6">';
-					table += '<col class="col4">';
+					table += '<col class="col-4">';
 					table += '</colgroup>';
 					table += '<colgroup>';
-					(dataExecel.list[i].d1 !== undefined) ? table += '<col class="col8 n1">' : '';
-					(dataExecel.list[i].d2 !== undefined) ? table += '<col class="col8 n2">' : '';
-					(dataExecel.list[i].d3 !== undefined) ? table += '<col class="col8 n3">' : '';
-					(dataExecel.list[i].d4 !== undefined) ? table += '<col class="col8 n4">' : '';
-					(dataExecel.list[i].d5 !== undefined) ? table += '<col class="col8 n5">' : '';
-					(dataExecel.list[i].d6 !== undefined) ? table += '<col class="col8 n6">' : '';
-					(dataExecel.list[i].d7 !== undefined) ? table += '<col class="col8 n7">' : '';
-					(dataExecel.list[i].d8 !== undefined) ? table += '<col class="col8 n8">' : '';
+					(dataExecel.list[i].d1 !== undefined) ? table += '<col class="col-8 n1">' : '';
+					(dataExecel.list[i].d2 !== undefined) ? table += '<col class="col-8 n2">' : '';
+					(dataExecel.list[i].d3 !== undefined) ? table += '<col class="col-8 n3">' : '';
+					(dataExecel.list[i].d4 !== undefined) ? table += '<col class="col-8 n4">' : '';
+					(dataExecel.list[i].d5 !== undefined) ? table += '<col class="col-8 n5">' : '';
+					(dataExecel.list[i].d6 !== undefined) ? table += '<col class="col-8 n6">' : '';
+					(dataExecel.list[i].d7 !== undefined) ? table += '<col class="col-8 n7">' : '';
+					(dataExecel.list[i].d8 !== undefined) ? table += '<col class="col-8 n8">' : '';
 					table += '</colgroup>';
 					table += '<col class="col9">';
 					table += '<thead>';
@@ -4258,8 +4258,8 @@ modify		:
 						full = !!full ? true : false;
 
 					//table += '<td class="root"><span>' + root + '/</span></td>';
-					table += '<td class="txt-c"><span>' + popIs + '</span></td>';
-					table += '<td class="txt-c"><span>' + tabIs + '</span></td>';
+					table += '<td class="txta-c"><span>' + popIs + '</span></td>';
+					table += '<td class="txta-c"><span>' + tabIs + '</span></td>';
 
 					if (!pop) {
 						table += (id !== '') ?

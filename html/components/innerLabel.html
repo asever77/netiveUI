@@ -2,16 +2,16 @@
 
 <div class="tit-catagory">Contents</div>
 <div class="tit-wrap">
-	<h1 class="h1">Inner Label</h1>
+	<h1 class="h-1">Inner Label</h1>
 </div>
 
-<h2 class="h2">Examples</h2>
+<h2 class="h-2">Examples</h2>
 <p>입력란 안에 label이 들어가는 스타일로 좁은 공간이나 모바일 환경에서 많이 사용한다.</p>
 <div class="box-base">
 	<div class="in-wrap">
 		<div class="in-item" style="background: #eee">
 			<div class="field-inlabel">
-				<em class="placeholder">Helper Text</em>
+				<em class="field-placeholder">Helper Text</em>
 				<em class="ui-error-msg">Error message</em>
 				<input type="text" id="test_a1" class="inp-base" value="" placeholder="placeholder text">
 				<label class="field-inlabel-label" for="test_a1">Label Title</label>
@@ -20,7 +20,7 @@
 
 		<div class="in-item" style="background: #eee">
 			<div class="field-inlabel ui-error-true">
-				<em class="placeholder">Helper Text</em>
+				<em class="field-placeholder">Helper Text</em>
 				<em class="ui-error-msg">Error message</em>
 				<input type="text" id="test_a2" class="inp-base" value="23" placeholder="placeholder text">
 				<label class="field-inlabel-label" for="test_a2">Label Title</label>
@@ -30,7 +30,7 @@
 	<div class="in-wrap">
 		<div class="in-item" style="background: #eee">
 			<div class="field-inlabel">
-				<em class="placeholder">Helper Text</em>
+				<em class="field-placeholder">Helper Text</em>
 				<em class="ui-error-msg">Error message</em>
 				<div class="ui-select">
 					<select title="카드번호 선택" id="test_a3_s">
@@ -46,7 +46,7 @@
 
 		<div class="in-item" style="background: #eee">
 			<div class="field-inlabel">
-				<em class="placeholder">Helper Text</em>
+				<em class="field-placeholder">Helper Text</em>
 				<em class="ui-error-msg">Error message</em>
 				<div class="ui-select">
 					<select title="카드번호 선택" id="test_a4_s">
@@ -63,7 +63,7 @@
 	<div class="in-wrap">
 		<div class="in-item" style="background: #eee">
 			<div class="field-inlabel">
-				<em class="placeholder">Helper Text</em>
+				<em class="field-placeholder">Helper Text</em>
 				<em class="ui-error-msg">Error message</em>
 				<div class="ui-datepicker" id="test_a5_s" data-period="true" data-dual="true" data-title="테스트">
 					<input type="tel" id="test_a5_s2" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-12-05" data-max="2022-12-30" title="시작일" placeholder="placeholder text" readonly>
@@ -72,9 +72,9 @@
 					<div class="ui-datepicker-wrap"></div>
 				</div>
 			</div>
-			<span class="txt-mark">~</span>
+			<span class="field-text">~</span>
 			<div class="field-inlabel">
-				<em class="placeholder">Helper Text</em>
+				<em class="field-placeholder">Helper Text</em>
 				<em class="ui-error-msg">Error message</em>
 				<div class="ui-datepicker">
 					<input type="tel" id="test_a5_s2_end" class="ui-datepicker-inp inp-base day-end" value="" data-min="2019-12-01" data-max="2020-12-30" title="종료일" readonly>
@@ -87,7 +87,7 @@
 	<div class="in-wrap">
 		<div class="in-item" style="background: #eee">
 			<div class="field-inlabel">
-				<em class="placeholder">Helper Text</em>
+				<em class="field-placeholder">Helper Text</em>
 				<em class="ui-error-msg">Error message</em>
 				<textarea name="form_address" class="inp-base" placeholder="100글자 이내로 입력하세요." id="test_a7"></textarea>
 				<label class="field-inlabel-label" for="test_a7">Label Title</label>
@@ -96,7 +96,7 @@
 
 		<div class="in-item" style="background: #eee">
 			<div class="field-inlabel">
-				<em class="placeholder">Helper Text</em>
+				<em class="field-placeholder">Helper Text</em>
 				<em class="ui-error-msg">Error message</em>
 				<textarea name="form_address" class="inp-base" placeholder="100글자 이내로 입력하세요." id="test_a8">....</textarea>
 				<label class="field-inlabel-label" for="test_a8">Label Title</label>
@@ -105,20 +105,20 @@
 	</div>
 </div>
 
-<h2 class="h2">HTML Structure</h2>
+<h2 class="h-2">HTML Structure</h2>
 <div class="box-code">
 <pre>
 <code>
 //base input
 &lt;div class="field-inlabel"&gt;
-	&lt;em class="placeholder"&gt;Helper Text&lt;/em&gt;
+	&lt;em class="field-placeholder"&gt;Helper Text&lt;/em&gt;
 	&lt;input type="text" id="test_a1" class="inp-base" value="" placeholder="placeholder text"&gt;
 	&lt;label for="test_a1"&gt;Label Title&lt;/label&gt;
 &lt;/div&gt;
 
 //select
 &lt;div class="field-inlabel"&gt;
-	&lt;em class="placeholder"&gt;Helper Text&lt;/em&gt;
+	&lt;em class="field-placeholder"&gt;Helper Text&lt;/em&gt;
 	&lt;div class="ui-select"&gt;
 		&lt;select title="카드번호 선택" id="test_a3_s"&gt;
 			&lt;option disabled selected&gt;선택하세요&lt;/option&gt;
@@ -132,7 +132,7 @@
 
 //datepicker
 &lt;div class="field-inlabel"&gt;
-	&lt;em class="placeholder"&gt;Helper Text&lt;/em&gt;
+	&lt;em class="field-placeholder"&gt;Helper Text&lt;/em&gt;
 	&lt;div class="ui-datepicker" id="test_a5_s" data-period="true" data-dual="true" data-title="테스트"&gt;
 		&lt;input type="tel" id="test_a5_s2" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-12-05" data-max="2022-12-30" title="시작일" placeholder="placeholder text" readonly&gt;
 		&lt;label class="field-inlabel-label" for="test_a5_s2"&gt;Label Title&lt;/label&gt;
@@ -143,7 +143,7 @@
 
 //textarea
 &lt;div class="field-inlabel"&gt;
-	&lt;em class="placeholder"&gt;Helper Text&lt;/em&gt;
+	&lt;em class="field-placeholder"&gt;Helper Text&lt;/em&gt;
 	&lt;em class="ui-error-msg"&gt;Error message&lt;/em&gt;
 	&lt;textarea name="form_address" class="inp-base" placeholder="100글자 이내로 입력하세요." id="test_a7"&gt;&lt;/textarea&gt;
 	&lt;label class="field-inlabel-label" for="test_a7"&gt;Label Title&lt;/label&gt;
@@ -152,8 +152,8 @@
 </pre>
 </div>
 
-<h2 class="h2">CSS Style</h2>
-<h3 class="h3">base style</h3>
+<h2 class="h-2">CSS Style</h2>
+<h3 class="h-3">base style</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -202,8 +202,8 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 </div>
 
 
-<h2 class="h2">Javascript</h2>
-<h3 class="h3">$plugins.uiInnerLabel</h3>
+<h2 class="h-2">Javascript</h2>
+<h3 class="h-3">$plugins.uiInnerLabel</h3>
 <div class="box-code">
 <pre>
 <code>

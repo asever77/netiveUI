@@ -555,7 +555,7 @@
 
     $plugins.page.pageDropdown = function(){
         $('.drop-ps-change').on('change', function(){
-            $(this).closest('.form-item').find('.ui-drop').attr('data-ps', $(this).val());
+            $(this).closest('.mgt-s').find('.ui-drop').attr('data-ps', $(this).val());
         });
 
         $plugins.uiDropdown({ 

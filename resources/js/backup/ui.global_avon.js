@@ -198,7 +198,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 		var devsize = [1920, 1600, 1440, 1280, 1024, 940, 840, 720, 600, 480, 400, 360];
 		var html5tags = ['article', 'aside', 'details', 'figcaption', 'figure', 'footer', 'header', 'hgroup', 'nav', 'main', 'section', 'summary'];
 		var width = document.documentElement.offsetWidth,
-			colClass = width >= devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4',
+			colClass = width >= devsize[5] ? 'col-12' : width > devsize[8] ? 'col-8' : 'col-4',
 			i = 0,
 			size_len = devsize.length,
 			max = html5tags.length,
@@ -239,8 +239,8 @@ HTMLElement.prototype.closestByClass = function(className) {
 				// win.outerWidth === screen.availWidth 
 				deviceSizeClassName(width);
 
-				colClass = width >= devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4';
-				dcHtml.classList.remove('s1920', 's1600', 's1440', 's1280', 's1024', 's940', 's840', 's720', 's600', 's480', 's400', 's360', 's300', 'col12', 'col8', 'col4');
+				colClass = width >= devsize[5] ? 'col-12' : width > devsize[8] ? 'col-8' : 'col-4';
+				dcHtml.classList.remove('s1920', 's1600', 's1440', 's1280', 's1024', 's940', 's840', 's720', 's600', 's480', 's400', 's360', 's300', 'col-12', 'col-8', 'col-4');
 				win[global].breakpoint = width >= devsize[5] ? true : false;
 
 				deviceSizeClassName(width);
@@ -1493,7 +1493,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 			h = 0;
 
 			clone_tbl += '<div class="tbl-scroll-thead">';
-			clone_tbl += '<table class="txt-c" aria-hidden="true" tabindex="-1">';
+			clone_tbl += '<table class="txta-c" aria-hidden="true" tabindex="-1">';
 			clone_tbl += '</table>';
 			clone_tbl += '</div>'
 
@@ -1723,7 +1723,7 @@ HTMLElement.prototype.closestByClass = function(className) {
             var $modal = $('#' + id);
 
             $('.ui-modal-simple').removeClass('current');
-			$("html, body").addClass('not-scroll');
+			$("html, body").addClass('scroll-no');
 			$('#baseMain').css('margin-top', '-' + scr_t + 'px');
 
 			try {
@@ -1899,7 +1899,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 		}
         $('.ui-modal-simple.open.n' + ($('.ui-modal-simple.open').length - 1)).addClass('current');
 		
-		$("html, body").removeClass('not-scroll');
+		$("html, body").removeClass('scroll-no');
 		$('#baseMain').removeAttr('style');
 
 

@@ -205,8 +205,8 @@
 						tabIs = tab === 'S' ? 'S' : tab === '' ? '' : 'T',
 						full = !!full ? true : false;
 
-					table += '<td class="txt-c"><span>' + popIs + '</span></td>';
-					table += '<td class="txt-c"><span>' + tabIs + '</span></td>';
+					table += '<td class="txta-c"><span>' + popIs + '</span></td>';
+					table += '<td class="txta-c"><span>' + tabIs + '</span></td>';
 					console.log(pop)
 					//if (!pop) {
 						table += id !== '' ? overl !== '' ? tabIs === 'T' ?

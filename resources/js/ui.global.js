@@ -188,7 +188,7 @@ if (!Object.keys){
 		var devsize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360];
 		var html5tags = ['article', 'aside', 'details', 'figcaption', 'figure', 'footer', 'header', 'hgroup', 'nav', 'main', 'section', 'summary'];
 		var width = $('html').offsetWidth,
-			colClass = width >= devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4',
+			colClass = width >= devsize[5] ? 'col-12' : width > devsize[8] ? 'col-8' : 'col-4',
 			i = 0,
 			size_len = devsize.length,
 			max = html5tags.length,
@@ -229,8 +229,8 @@ if (!Object.keys){
 				// win.outerWidth === screen.availWidth 
 				deviceSizeClassName(width);
 
-				colClass = width >= devsize[5] ? 'col12' : width > devsize[8] ? 'col8' : 'col4';
-				$html.removeClass('s1920 s1600 s1440 s1280 s1024 s940 s840 s720 s600 s480 s400 s360 s300 col12 col8 col4');
+				colClass = width >= devsize[5] ? 'col-12' : width > devsize[8] ? 'col-8' : 'col-4';
+				$html.removeClass('s1920 s1600 s1440 s1280 s1024 s940 s840 s720 s600 s480 s400 s360 s300 col-12 col-8 col-4');
 				win[global].breakpoint = width >= devsize[5] ? true : false;
 
 				deviceSizeClassName(width);
@@ -663,6 +663,7 @@ if (!Object.keys){
 		page: true,
 		add: false,
 		prepend: false,
+		effect: false,
 		loading:false,
 		callback: false,
 		errorCallback: false,
@@ -678,18 +679,23 @@ if (!Object.keys){
 			return false;
 		}
 
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiAjax.option, opt),
-			$id = typeof opt.id === 'string' ? $('#' + opt.id) : typeof opt.id === 'object' ? opt.id : $('body'),
-			loading = opt.loading,
-			callback = opt.callback === undefined ? false : opt.callback,
-			errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
+		var opt = opt === undefined ? {} : opt;
+		var opt = $.extend(true, {}, win[global].uiAjax.option, opt);
+		var $id = typeof opt.id === 'string' ? $('#' + opt.id) : typeof opt.id === 'object' ? opt.id : $('body');
+		var loading = opt.loading;
+		var effect = opt.effect;
+		var callback = opt.callback === undefined ? false : opt.callback;
+		var errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
 
-			console.log( typeof opt.id);
 		if (loading) {
 			win[global].uiLoading({
 				visible: true
 			});
+		}
+
+		if (effect) {
+			$id.removeClass('changeover action');
+			$id.addClass('changeover');
 		}
 
 		$.ajax({
@@ -716,8 +722,14 @@ if (!Object.keys){
 						visible: false
 					});
 				}
-				opt.page ? opt.add ? opt.prepend ? $id.prepend(v) : $id.append(v) : $id.html(v) : '';
-				callback ? callback(v) : '';
+
+				if (opt.page) {
+					opt.add ? opt.prepend ? $id.prepend(v) : $id.append(v) : $id.html(v);
+					callback && callback();
+					effect && $id.addClass('action');
+				} else {
+					callback && callback(v);
+				}
 			},
 			complete: function(v){
 				//console.log(v);
@@ -2550,7 +2562,7 @@ if (!Object.keys){
 			var footerH = 0;
 
 			$('.ui-modal').removeClass('current');
-			$('body').addClass('not-scroll');
+			$('body').addClass('scroll-no');
 			
 			$modal
 				.attr('tabindex', '0')
@@ -2699,7 +2711,7 @@ if (!Object.keys){
 			$modal.removeClass('ready is-over current close ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
 			$modal.removeAttr('n');
 			if (!$('.ui-modal.open').length) {
-				$("html, body").removeClass('not-scroll');
+				$("html, body").removeClass('scroll-no');
 			}
 			closeCallback ? closeCallback(opt) : '';
 			remove ? $modal.remove() : '';
@@ -2751,9 +2763,10 @@ if (!Object.keys){
 
 			var n = i;
 			var itemCheck = function () {
-				var $itemN = $item.eq(n);
-				var itemTop = opt.scope === 'window' ?  $itemN.offset().top :  $itemN.position().top;
 
+				var $itemN = $item.eq(n >= len ? len - 1 : n);
+				var itemTop = opt.scope === 'window' ? $itemN.offset().top : $itemN.position().top;
+				
 				if (n >= len) {
 					return false;
 				}
@@ -2768,6 +2781,7 @@ if (!Object.keys){
 					itemCheck();
 				}
 				function itemHide(){
+					n = n - 1;
 					$itemN.removeClass('visible');
 				}
 			}
