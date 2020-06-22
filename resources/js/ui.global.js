@@ -187,7 +187,7 @@ if (!Object.keys){
 	(function () {
 		var devsize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360];
 		var html5tags = ['article', 'aside', 'details', 'figcaption', 'figure', 'footer', 'header', 'hgroup', 'nav', 'main', 'section', 'summary'];
-		var width = $('html').offsetWidth,
+		var width = $('html').outerWidth(),
 			colClass = width >= devsize[5] ? 'col-12' : width > devsize[8] ? 'col-8' : 'col-4',
 			i = 0,
 			size_len = devsize.length,
@@ -200,6 +200,7 @@ if (!Object.keys){
 		var deviceSizeClassName = function(w) {
 			for (var i = 0; i < size_len; i++) {
 				if (w >= devsize[i]) {
+					
 					sizeMode = devsize[i];
 					win[global].breakpoint = width >= devsize[5] ? true : false;
 					break;
@@ -872,6 +873,10 @@ if (!Object.keys){
 			remove = opt.remove,
 			$base = !id ? $('.ui-scrollbar') : typeof id === 'object' ? id : $('[scroll-id="' + id +'"]');
 		
+		if (win[global].support.touch) {
+			return false;
+		} 
+
 		$base.each(function () {
 			!remove ? scrollbarReady($(this)) : scrollbarRemove($(this));
 		});

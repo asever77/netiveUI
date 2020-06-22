@@ -323,11 +323,7 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-tablescroll-wrap.tbl-base{border:0;}
 .tbl-base.not-space .ui-tablescroll-clone{width:100%;}
 .tbl-base .ui-tablescroll-clone {position:absolute; width:calc(100% - 17px); top:0; left:0; z-index:1;}
-.tbl-test1 col.n1 {width:100px}
-.tbl-test1 col.n2 {width:auto}
-.tbl-test1 col.n3 {width:200px}
-.tbl-test1 col.n4 {width:150px}
-.tbl-test1 col.n5 {width:150px}
+.ui-m .tbl-base .ui-tablescroll-clone{width:100%;}
 
 
 /* ui-printui-print*/

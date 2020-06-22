@@ -21,7 +21,7 @@
 /* layout */
 .base-header{position:relative; top:0; left:0; z-index:2; width:100%; padding:0;}
 .base-body{position:relative; width:100%;}
-.base-aside{display:block; position:fixed; bottom:30px; right:0; width:130px; padding:0 10px; z-index: 1; border-left:1px solid #e2e2e2}
+.base-aside{display:none;}
 .base-main{position:relative; z-index:0; width:100%; padding:0 20px; font-size:14px;}
 .base-footer{padding:30px 20px; text-align:center;}
 
@@ -60,7 +60,7 @@
 .header-nav .dep-2-btn.selected:before{content:"+ "; }
 .header-nav .ui-acco-pnl-wrap,
 .header-nav .ui-acco-pnl{background:transparent; padding:0}
-.base-aside a{font-size:12px; display:block; margin:0 0 3px; color:#555}
+
 
 
 
@@ -75,21 +75,22 @@
 
 /* common */
 .tit-catagory{display:block; margin:8vh 0 0; color:#888;}
-.tit-wrap{margin:0 0 0 -1.5vw;}
+.tit-wrap{margin:0 0 0 -1px;}
 .tit-wrap em{font-size:12px; margin-top:10px; color:#999}
 .tit-wrap .h-1{outline:0; display: inline-block; position: relative;}
-.tit-wrap .h-1:focus:after{content:""; position:absolute; left:0; width:100%; bottom:18px; display:block; border-bottom:1px dashed #000; opacity:0.4; }
+.tit-wrap .h-1:focus:after{content:""; position:absolute; left:0; width:100%; bottom:9px; display:block; border-bottom:1px dashed #000; opacity:0.4; }
 
 
 .h-1 {font-size:50px; margin:0; line-height: 1.2;}
-.h-2 {font-size:30px; margin:20px 0 7px;}
-.h-3 {font-size:24px; margin:15px 0 7px;}
-.h-4 {font-size:20px; margin:10px 0 7px;}
-.h-5 {font-size:18px; margin:10px 0 5px;}
-.h-6 {font-size:18px; margin:10px 0 5px;}
+.h-2 {font-size:24px; margin:20px 0 7px;}
+.h-3 {font-size:20px; margin:15px 0 7px;}
+.h-4 {font-size:18px; margin:10px 0 7px;}
+.h-5 {font-size:16px; margin:10px 0 5px;}
+.h-6 {font-size:16px; margin:10px 0 5px;}
 
-
-
+.tbl-base table > thead > tr > th { padding:5px 10px; font-size:12px; text-align:left;}
+.tbl-base table > tbody > tr > th,
+.tbl-base table > tbody > tr > td { padding:5px 10px; font-weight:300; font-size:12px; text-align:left;}
 .col-th{width:130px}
 p + .tbl-base { margin-top:10px; }
 
@@ -110,17 +111,26 @@ p + .tbl-base { margin-top:10px; }
 .test-unit > div > div{display:block; background:rgba(0,0,0,0.05); color:#222; border:1px dashed #ccc;}
 .test-unit > div{display:inline-block;margin:10px 10px 0 0; vertical-align: top}
 
-.type-zindex col.n1{ width:140px; }
-.type-zindex col.n2{ width:140px; }
-.type-zindex col.n3{ width:140px; }
+.type-zindex col.n1{ width:20%; }
+.type-zindex col.n2{ width:20%; }
+.type-zindex col.n3{ width:20%; }
 .type-zindex col.n4{ width:auto; }
-.type-zindexlayer col.n1{ width:140px; }
-.type-zindexlayer col.n2{ width:140px; }
-.type-zindexlayer col.n3{ width:140px; }
-.type-zindexlayer col.n4{ width:auto; }
+.type-discription .col-th{width:25%;}
+.tbl-test1 col.n1 {width:auto}
+.tbl-test1 col.n2 {width:auto}
+.tbl-test1 col.n3 {width:auto}
+.tbl-test1 col.n4 {width:auto}
+.tbl-test1 col.n5 {width:auto}
 
-.type-discription .col-th{width:140px;}
-.type-discription .col-auto{width:auto;}
+.tab-test-scroll{width:100%;}
+
+
+
+
+
+
+
+
 
 .tst-obj{width:100%; margin:0 auto; height:50px; font-size:15px; color:#000; text-align:center; padding-top:10px; border:1px dashed rgba(201,187,247, 0.5); background:rgba(201,187,247, 0.1); }
 .ui-d .page-floating .ui-floating.ui-fixed-bottom .ui-floating-wrap,
@@ -166,10 +176,11 @@ p + .tbl-base { margin-top:10px; }
 .type-option .un th,
 .type-option .un td{opacity:0.7}
 
-.type-option col.n1 {width:15%;}
-.type-option col.n2 {width:15%;}
-.type-option col.n3 {width:15%;}
+.type-option col.n1 {width:auto;}
+.type-option col.n2 {width:auto;}
+.type-option col.n3 {width:auto;}
 .type-option col.n4 {width:auto;}
+.type-option col.n5 {width:auto;}
 
 .markup-modal .ui-modal{display: block; position: relative; opacity: 1; width:400px; margin:30px 0}
 
@@ -351,5 +362,18 @@ html.col-12 .coln12{display:inline-block}
 	.h-4 {font-size:20px; margin:10px 0 7px;}
 	.h-5 {font-size:18px; margin:20px 0 5px;}
 	.h-6 {font-size:18px; margin:20px 0 5px;}
+
+	.type-zindex col.n1{ width:140px; }
+	.type-zindex col.n2{ width:140px; }
+	.type-zindex col.n3{ width:140px; }
+	.type-zindex col.n4{ width:auto; }
+	.tbl-test1 col.n1 {width:100px}
+	.tbl-test1 col.n2 {width:auto}
+	.tbl-test1 col.n3 {width:200px}
+	.tbl-test1 col.n4 {width:150px}
+	.tbl-test1 col.n5 {width:150px}
+	.type-discription .col-th{width:140px;}
+
+	.tab-test-scroll{width:500px;}
 
 }
