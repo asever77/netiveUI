@@ -466,11 +466,17 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 .ui-select.type-bank {width:200px}
 .ui-select.type-card {width:200px}
 
-.ui-m .ui-select-wrap.on {display:block}
-.ui-m .ui-select-wrap.top {bottom:0; top:auto;}
-.ui-m .ui-select-wrap.bottom {bottom:0; top:auto;}
-.ui-m .ui-select-wrap {display:none; position:fixed; z-index:100; left:0; bottom:0; width:100%; border:0; border-top:1px solid #000; background:#fff; overflow-y:auto; max-height:162px}
-
+.ui-m .ui-select-wrap.on {display:block; }
+.ui-m .ui-select-title,
+.ui-m .ui-select-wrap.top,
+.ui-m .ui-select-wrap.bottom {bottom:-300px; top:auto; animation-name:slideUpIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:ease-in-out; animation-fill-mode: forwards;}
+.ui-m .ui-select-wrap {display:none; position:fixed; z-index:100; left:0; bottom:-300px; width:100%; border:0; border-top:1px solid #000; background:#2b2b2b; overflow-y:auto; max-height:200px}
+.ui-m .ui-select-title{position:fixed; margin-bottom:200px; left:0; top:auto; display:block; width:100%; height:40px; background:#222; color:#fff; padding:8px 10px 4px; text-align: center;}
+.ui-m .ui-select-opts{padding:80px 0;}
+.ui-m .ui-select-opts:after{content:""; display:block; position: fixed; bottom:118px; border-top:1px solid #555; width:100%; height:1px; z-index: 0;}
+.ui-m .ui-select-opts:before{content:""; display:block; position: fixed; bottom:78px; border-top:1px solid #555;width:100%; height:1px; z-index: 0;}
+.ui-m .ui-select-opt{text-align:center; z-index: 1; position: relative; background:transparent; color:rgba(255,255,255,0.7)}
+.ui-m .ui-select-opt.selected{color:rgba(255,255,255,1); background-color:rgba(0,0,0,0.1)}
 
 /* in label style */
 .field-inlabel {position:relative; padding:0 0 40px; display:inline-block; vertical-align:top;}

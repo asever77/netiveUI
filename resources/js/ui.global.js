@@ -4518,16 +4518,20 @@ if (!Object.keys){
 			optExpanded(this);
 		}
 		function optClick() {
-			var t = this,
-				sct = $(t).closest('.ui-select').find('.ui-select-btn').data('sct');
+			var t = this;
+			var idx =  $(t).index();
 
-			win[global].uiSelectAction({ 
-				id: $(t).closest('.ui-select').find('.ui-select-btn').data('id'), 
-				current: $(t).index() 
-			});
+			if (customscroll) {
+				win[global].uiSelectAction({ 
+					id: $(t).closest('.ui-select').find('.ui-select-btn').data('id'), 
+					current: idx 
+				});
 
-			$(t).closest('.ui-select').find('.ui-select-btn').focus();
-			optClose();
+				$(t).closest('.ui-select').find('.ui-select-btn').focus();
+				optClose();
+			} else {
+				scrollSelect(idx, $(t).closest('.ui-select').find('.ui-select-wrap') );
+			}
 		}
 		function selectOver() {
 			$('body').data('select-open', false);
@@ -4592,11 +4596,9 @@ if (!Object.keys){
 			}
 		}
 		function optScroll($wrap, n_top, wrap_h, key) {
-			console.log(n_top, wrap_h, key)
-
 			win[global].uiScroll({ 
 				value: Number(n_top), 
-				target: $wrap.find('> .ui-scrollbar-item'), 
+				target: customscroll ? $wrap.find('> .ui-scrollbar-item') : $wrap, 
 				speed: 0, 
 				ps: 'top' 
 			});
@@ -4647,9 +4649,56 @@ if (!Object.keys){
 					ps: 'top' 
 				});
 			} else {
-
+				win[global].uiScroll({ 
+					value: Number(opt_h * _$uisel.find(':checked').index()), 
+					target: _$wrap, 
+					speed: 0, 
+					ps: 'top' 
+				});
 			}
-			
+
+			var timerScroll = null;
+
+			_$wrap.off('touchstart.uiscroll').on('touchstart.uiscroll', function(e){
+				//e.preventDefault();
+				var $this = $(this);
+				var getScrollTop = $this.scrollTop();
+				var currentN = 0;
+				clearTimeout(timerScroll);
+
+				$this.stop();
+				
+				_$wrap.off('touchmove.uiscroll').on('touchmove.uiscroll', function(e){
+					getScrollTop = $this.scrollTop();
+					console.log(getScrollTop)	
+				}).off('touchcancel.uiscroll touchend.uiscroll').on('touchcancel.uiscroll touchend.uiscroll', function(e){
+					var _$this = $(this);
+
+					function scrollCompare(){
+						timerScroll = setTimeout(function(){
+							if (getScrollTop !== _$wrap.scrollTop()) {
+								getScrollTop = _$wrap.scrollTop();
+								scrollCompare();
+							} else {
+								currentN = Math.floor((Math.floor(getScrollTop) + 20) / 40);
+								scrollSelect(currentN, _$this );
+							}
+						},100);
+					} 
+					scrollCompare();
+					_$wrap.off('touchmove.uiscroll');
+				});
+			});
+		}
+
+		function scrollSelect(v, _$this){
+			_$this.stop().animate({
+				scrollTop : 40 * v
+			}, 100);
+			win[global].uiSelectAction({ 
+				id: _$this.closest('.ui-select').find('.ui-select-btn').data('id'), 
+				current: v
+			});
 		}
 
 		function optClose() {
@@ -4688,6 +4737,8 @@ if (!Object.keys){
 
 		$uiSelect.find('.ui-select-btn span').text($optCurrent.text());
 		$uiSelect.find('.ui-select-opt').removeClass('selected').eq(current).addClass('selected');
+
+		win[global].browser.mobile && $uiSelect.find('.ui-select-opt').eq(current).focus();
 
 		callback && callback({ 
 			id: id, 
