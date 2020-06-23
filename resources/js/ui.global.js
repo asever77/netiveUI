@@ -4362,12 +4362,14 @@ if (!Object.keys){
 			}
 
 			htmlOption += '<strong class="ui-select-title">'+ selectTitle +'</strong>';
+			
 
 			htmlOption += '<div class="ui-select-opts" role="listbox" id="' + listID + '" aria-hidden="false">';
 
 			setOption();
 
 			htmlOption += '</div>';
+			htmlOption += '<button type="button" class="ui-select-confirm"><span>확인</span></strong>';
 			htmlOption += '</div>';
 
 			htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '"><span>' + btnTxt + '</span></button>';
