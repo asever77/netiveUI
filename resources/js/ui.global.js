@@ -3439,7 +3439,7 @@ if (!Object.keys){
 				htmlHead += '</select>';
 				htmlHead += '</div>';
 				htmlHead += '</div>';
-				htmlHead += '</div>';
+		
 			} else if (type === 'month') {
 				htmlHead += '<div class="datepicker-head-select">';
 				htmlHead += '<div class="ui-select">';
@@ -3572,6 +3572,8 @@ if (!Object.keys){
 
 			dateMonthsNext === undefined ? dateMonthsNext = 1 : '';
 
+			console.log('buildCore111111', date);
+
 			// 최소,최대 선택 가능
 			if (endMinMax) {
 				$end.attr('data-min', $input.attr('data-min'));
@@ -3655,8 +3657,11 @@ if (!Object.keys){
 			mm = win[global].option.partsAdd0(mm);
 			week_day = firstWeekDay;
 
+			console.log('buildCore', dayCounter, daysInMonth);
+
 			//현재 달
 			for (var dayCounter = 1; dayCounter <= daysInMonth; dayCounter++) {
+				
 				week_day %= 7;
 				week_day === 0 ? daysInMonth - dayCounter < 7 ? htmlCalendar += '</tr>' : htmlCalendar += '</tr><tr>' : '';
 
@@ -3879,6 +3884,7 @@ if (!Object.keys){
 					dateTemp = v === 'year' ? new Date(_y, _m, 1) : new Date(_y, _m - 1, 1);
 
 				date = dateTemp;
+				
 				reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
 
 				v === 'year' ?
@@ -3893,9 +3899,11 @@ if (!Object.keys){
 					_y = Number($currentDate.find('.year').data('y')),
 					_m = Number($currentDate.find('.month').data('m') - 1),
 					dateTemp = v === 'next' ? (dual) ? new Date(_y, _m + 2, 1) : new Date(_y, _m + 1, 1) : (dual) ? new Date(_y, _m - 2, 1) : new Date(_y, _m - 1, 1);
-					date = dateTemp;
-					reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
-					$this.eq(0).focus();
+
+				date = dateTemp;
+
+				reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
+				$this.eq(0).focus();
 			}
 			function yearNextPrev(t, v) {
 				var $this = $(t),
@@ -3905,9 +3913,10 @@ if (!Object.keys){
 					_y = Number($currentDate.find('.year').data('y')),
 					_m = Number($currentDate.find('.month').data('m') - 1),
 					dateTemp = v === 'next' ? new Date(_y + 1, _m, 1) : new Date(_y - 1, _m, 1);
-					date = dateTemp;
-					reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
-					$this.eq(0).focus();
+
+				date = dateTemp;
+				reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
+				$this.eq(0).focus();
 			}
 
 			if (period) {

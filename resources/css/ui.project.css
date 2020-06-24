@@ -330,8 +330,8 @@ html.col-12 .coln12{display:inline-block}
 	.header-wrap .logo{animation-name:slideLeftOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:ease-out; animation-fill-mode: forwards;}
 	.nav-open .header-wrap .logo{animation-name:slideLeftIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:ease-out; animation-fill-mode: forwards;
 	}
-	.header-nav{animation-name:navLeftOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:ease-in-out; animation-fill-mode: forwards;}
-	.nav-open .header-nav{display:block;animation-name:navLeftIn; animation-duration:.5s; animation-iteration-count:1; animation-timing-function:ease-in-out; animation-fill-mode: forwards;}
+	.header-nav{animation-name:navLeftOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:ease-out; animation-fill-mode: forwards;}
+	.nav-open .header-nav{display:block;animation-name:navLeftIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:ease-out; animation-fill-mode: forwards;}
 
 	.btn-menu{animation-name:slideLeftOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:ease-out; animation-fill-mode: forwards;}
 	.nav-open .btn-menu{animation-name:slideLeftIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:ease-out; animation-fill-mode: forwards;}
