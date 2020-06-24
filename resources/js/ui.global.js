@@ -4469,34 +4469,36 @@ if (!Object.keys){
 		//event
 		eventFn();
 		function eventFn(){
-			$(doc).find('.dim-select').off('click.dim').on('click.dim', function () {
+			var $doc = $(doc);
+
+			$doc.find('.dim-select').off('click.dim').on('click.dim', function () {
 				console.log($('body').data('select-open'));
 				if ($('body').data('select-open')) {
 					optBlur();
 				}
 			});
-			$(doc).find('.ui-select-confirm').off('click.cfm').on('click.cfm', optClose);
-			$(doc).find('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
+			$doc.find('.ui-select-confirm').off('click.cfm').on('click.cfm', optClose);
+			$doc.find('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
 				'click.ui': selectClick,
 				'keydown.ui': selectKey,
 				'mouseover.ui': selectOver,
 				'focus.ui': selectOver,
 				'mouseleave.ui': selectLeave
 			});
-			$(doc).find('.ui-select-opt').off('click.ui mouseover.ui').on({
+			$doc.find('.ui-select-opt').off('click.ui mouseover.ui').on({
 				'click.ui': optClick,
 				'mouseover.ui': selectOver
 			});
-			$(doc).find('.ui-select-wrap').off('mouseleave.ui').on({ 'mouseleave.ui': selectLeave });
-			$(doc).find('.ui-select-wrap').off('blur.ui').on({ 'blur.ui': optBlur });
-			$(doc).find('.ui-select-label').off('click.ui').on('click.ui', function () {
+			$doc.find('.ui-select-wrap').off('mouseleave.ui').on({ 'mouseleave.ui': selectLeave });
+			$doc.find('.ui-select-wrap').off('blur.ui').on({ 'blur.ui': optBlur });
+			$doc.find('.ui-select-label').off('click.ui').on('click.ui', function () {
 				var idname = $(this).attr('for');
 
 				setTimeout(function () {
 					$('#' + idname + '_inp').focus();
 				}, 0);
 			});
-			$(doc).find('.ui-select select').off('change.ui').on({ 'change.ui': selectChange });
+			$doc.find('.ui-select select').off('change.ui').on({ 'change.ui': selectChange });
 		}
 
 		function selectLeave() {
@@ -4662,6 +4664,8 @@ if (!Object.keys){
 				});
 			}
 
+			openScrollMove(_$uisel);
+
 			var timerScroll = null;
 			var touchMoving = false;
 
@@ -4710,16 +4714,34 @@ if (!Object.keys){
 			});
 		}
 
+		function openScrollMove(_$uisel){
+			var __$uiSel = _$uisel;
+			var __scrollTop = Math.floor($(doc).scrollTop());
+			var __winH = $(win).outerHeight();
+			var __$uiSelBtn = __$uiSel.find('.ui-select-btn');
+			var __btnTop = __$uiSelBtn.offset().top;
+			var __btnH = __$uiSelBtn.outerHeight();
+			var a = Math.floor(__btnTop - __scrollTop);
+			var b = __winH - 240;
+
+			__$uiSel.data('orgtop', __scrollTop);
+
+			(a > b) && $('html, body').scrollTop(a - b + __btnH + 10 + __scrollTop);
+		}
+
+
 		function optClose() {
 			var $body = $('body');
-			var $select = $('.ui-select');
 			var $btn = $('.ui-select-btn[aria-expanded="true"]');
-			var $wrap = $('.ui-select-wrap');
+			var $select = $btn.closest('.ui-select');
+			var $wrap = $select.find('.ui-select-wrap');
+			var orgTop = $select.data('orgtop');
 
 			$body.removeClass('dim-select');
 			$btn.data('expanded', false).attr('aria-expanded', false).focus();
 			$select.removeClass('on');
 			$wrap.removeClass('on top bottom').attr('aria-hidden', true);
+			$('html, body').scrollTop(orgTop);
 		}
 	}
 	function createuiSelectAction(opt) {
