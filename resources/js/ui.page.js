@@ -404,7 +404,9 @@
         $plugins.uiSelect({ 
             id:'uiSel1', 
             current:1, 
-            callback:function(v){ } 
+            callback:function(v){ 
+                $('#baseWrap').css('display','block');
+            } 
         });
         
         var opttxt = 5;

@@ -4469,11 +4469,13 @@ if (!Object.keys){
 		//event
 		eventFn();
 		function eventFn(){
-			$(doc).off('click.dim').on('click.dim', '.dim-dropdown', function () {
+			$(doc).find('.dim-select').off('click.dim').on('click.dim', function () {
+				console.log($('body').data('select-open'));
 				if ($('body').data('select-open')) {
 					optBlur();
 				}
 			});
+			$(doc).find('.ui-select-confirm').off('click.cfm').on('click.cfm', optClose);
 			$(doc).find('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
 				'click.ui': selectClick,
 				'keydown.ui': selectKey,
@@ -4496,6 +4498,7 @@ if (!Object.keys){
 			});
 			$(doc).find('.ui-select select').off('change.ui').on({ 'change.ui': selectChange });
 		}
+
 		function selectLeave() {
 			$('body').data('select-open', true);
 		}
@@ -4631,7 +4634,7 @@ if (!Object.keys){
 				win_h = $(win).outerHeight(),
 				className = win_h - ((offtop - scrtop) + btn_h) > wraph ? 'bottom' : 'top';
 
-			$body.addClass('dim-dropdown');
+			$body.addClass('dim-select');
 
 			if (!_$sel.data('expanded')) {
 				_$sel.data('expanded', true).attr('aria-expanded', true);
@@ -4660,21 +4663,25 @@ if (!Object.keys){
 			}
 
 			var timerScroll = null;
+			var touchMoving = false;
 
 			_$wrap.off('touchstart.uiscroll').on('touchstart.uiscroll', function(e){
-				//e.preventDefault();
 				var $this = $(this);
 				var getScrollTop = $this.scrollTop();
 				var currentN = 0;
 				clearTimeout(timerScroll);
+				touchMoving = false;
 
 				$this.stop();
 				
 				_$wrap.off('touchmove.uiscroll').on('touchmove.uiscroll', function(e){
+					touchMoving = true;
 					getScrollTop = $this.scrollTop();
 					console.log(getScrollTop)	
 				}).off('touchcancel.uiscroll touchend.uiscroll').on('touchcancel.uiscroll touchend.uiscroll', function(e){
 					var _$this = $(this);
+
+					
 
 					function scrollCompare(){
 						timerScroll = setTimeout(function(){
@@ -4687,7 +4694,7 @@ if (!Object.keys){
 							}
 						},100);
 					} 
-					scrollCompare();
+					touchMoving && scrollCompare();
 					_$wrap.off('touchmove.uiscroll');
 				});
 			});
@@ -4706,12 +4713,11 @@ if (!Object.keys){
 		function optClose() {
 			var $body = $('body');
 			var $select = $('.ui-select');
-			var $btn = $('.ui-select-btn');
+			var $btn = $('.ui-select-btn[aria-expanded="true"]');
 			var $wrap = $('.ui-select-wrap');
 
-			$body.data('scrolling') === 'no' ? win[global].uiScrolling() : '';
-			$body.removeClass('dim-dropdown');
-			$btn.data('expanded', false).attr('aria-expanded', false);
+			$body.removeClass('dim-select');
+			$btn.data('expanded', false).attr('aria-expanded', false).focus();
 			$select.removeClass('on');
 			$wrap.removeClass('on top bottom').attr('aria-hidden', true);
 		}
