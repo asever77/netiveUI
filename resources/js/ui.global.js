@@ -3884,7 +3884,7 @@ if (!Object.keys){
 					dateTemp = v === 'year' ? new Date(_y, _m, 1) : new Date(_y, _m - 1, 1);
 
 				date = dateTemp;
-				
+
 				reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
 
 				v === 'year' ?
@@ -4123,8 +4123,6 @@ if (!Object.keys){
 				date_title = dataTitle;
 			}
 
-			console.log(dataPeriod, dataDual)
-
 			var reset = regExp.test(_val),
 				htmlWrap = '';
 
@@ -4140,9 +4138,6 @@ if (!Object.keys){
 				buttonId: "calBtn_" + dp_id,
 				shortDate: shortDate
 			});
-			console.log('dual', dual);
-
-			
 
 			htmlWrap += '<div id="' + calVar.calId + '" class="datepicker-sec">';
 			htmlWrap += '<div class="datepicker-wrap">';
@@ -4162,10 +4157,7 @@ if (!Object.keys){
 		function dayPeriodSelect(calendarEl) {
 			if (period) {
 				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + calendarEl.inputId).val() + '"]').addClass('selected-start').attr('aria-selected', true).closest('td').addClass('on-start').closest('tr').addClass('on-start').closest('table').addClass('on-start-tbl');
-
 				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + calendarEl.inputId + '_end').val() + '"]').addClass('selected-end').attr('aria-selected', true).closest('td').addClass('on-end').closest('tr').addClass('on-end').closest('table').addClass('on-end-tbl');
-
-				console.log('end val', $('#' + calendarEl.inputId + '_end').val());
 
 				var s = $('#' + calendarEl.inputId).val().replace(/\-/g, '').substring(0, 6),
 					e = $('#' + calendarEl.inputId + '_end').val().replace(/\-/g, '').substring(0, 6);

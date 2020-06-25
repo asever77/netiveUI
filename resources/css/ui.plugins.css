@@ -429,7 +429,18 @@ button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; d
 .tbl-datepicker.off-tbl td.hover:not(.disabled) button:hover {color:#fff; background:#444;}
 .tbl-datepicker.off-tbl td.hover-on:not(.disabled) button:hover {color:#fff; background:#444; }  
 td button.today {color:#000; font-weight:900; background:#fff; border:1px solid transparent; text-decoration:underline;}
-
+/* mobile */
+.ui-m .datepicker-head-tit{background:#222; color:#fff; }
+.ui-m .ui-datepicker.visible .ui-datepicker-wrap{top:auto;}
+.ui-m .ui-datepicker-wrap{width:100%; position:fixed; bottom:0; top:auto; left:0;}
+.ui-m .ui-datepicker .btn-close:before, 
+.ui-m .ui-datepicker .btn-close:after{background:#fff;}
+.ui-m .tbl-datepicker{width:auto; margin:0 auto;}
+.ui-m .datepicker-core{padding:0; height:105vw; margin-top:10px}
+.ui-m .tbl-datepicker td span, 
+.ui-m .tbl-datepicker td button {width:14vw; height:14vw;}
+.ui-m .tbl-datepicker th{padding:0;}
+.ui-m .tbl-datepicker th abbr {height:7vw;}
 
 /* ui inputclear */
 .ui-inpcancel-btn {display:inline-block; position:absolute; margin-left:-40px; width:40px; height:40px; }
@@ -448,7 +459,6 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 .ui-select-btn[aria-expanded="true"]:after,
 .ui-select-btn:focus:after,
 .ui-select-btn:active:after{content:"keyboard_arrow_up";}
-
 .ui-select-wrap.on {display:block}
 .ui-select-wrap.top {bottom:39px}
 .ui-select-wrap.bottom {top:39px}
@@ -466,7 +476,7 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 .ui-select.type-bank {width:200px}
 .ui-select.type-card {width:200px}
 .ui-select-confirm{display:none;}
-
+/* mobile */
 .ui-m .ui-select-wrap.on {display:block; }
 .ui-m .ui-select-confirm,
 .ui-m .ui-select-title,
