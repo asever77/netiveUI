@@ -3943,6 +3943,8 @@ if (!Object.keys){
 			} else {
 				$(doc).off('click.'+ id_).on('click.'+ id_ , id_ + ' td button', function () {
 					var $this = $(this);
+
+					console.log(11111111111)
 					writeInputDateValue(calendarEl, $this);
 					datepickerClose(calendarEl);
 				}).off('click.'+ id_ +'today').on('click.'+ id_+'today', id_ + ' .datepicker-head-today button', function () {
