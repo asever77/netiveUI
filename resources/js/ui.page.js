@@ -693,7 +693,7 @@
             today.setDate(today.getDate() + 5);
             $(this).attr('data-min', year + '-' + month + '-'+ today.getDate());
 
-            var month2 = today.getMonth() + 3;  // 월   
+            var month2 = today.getMonth() + 5;  // 월   
             month2 = Number(month2) < 10 ? '0'+ month2 : month2;
             $(this).attr('data-max', year + '-' + month2 + '-'+ date);
         });
