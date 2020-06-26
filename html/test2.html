@@ -30,18 +30,18 @@
 </head>
 
 <body>
+
+    
 	<div class="card-wrap">
         <div class="card-body" data-line="1">
             <img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/de16511ce4728.jpg" alt="">
         </div>
-
         <div class="card-list">
             <button type="button" class="card-list-item" data-n="1" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/de16511ce4728.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/de16511ce4728.jpg" alt=""></button>
             <button type="button" class="card-list-item" data-n="2" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/191e2ef5e2f97.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/191e2ef5e2f97.jpg" alt=""></button>
             <button type="button" class="card-list-item" data-n="3" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/4db18b2fcd761.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/4db18b2fcd761.jpg" alt=""></button>
             <button type="button" class="card-list-item" data-n="4" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/59d29893ef47c.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/59d29893ef47c.jpg" alt=""></button>
         </div>
-
     </div>
 
 	<!-- script -->
@@ -52,8 +52,7 @@
 			$(doc).ready(function(){
 
 
-
-				//배너 닫기 & 스크롤 시 헤더고정
+				//img교체 및 클래스 변경
 				$.uiCardImgChange = function(v){
 					var $wrap = $('.card-wrap');
 					var $body = $wrap.find('.card-body');
@@ -63,7 +62,6 @@
                     var n = v !== undefined ? v : 1;
                     var $current = $list.find('.card-list-item[data-n="'+ n +'"]');
                     
-
                     //init
                     $body.attr('data-line', n);
                     $img.attr('src', $current.attr('data-img'));
