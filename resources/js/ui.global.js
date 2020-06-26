@@ -3264,6 +3264,7 @@ if (!Object.keys){
 		period: false,
 		title: false,
 		dateSplit: '-',
+
 		openback: false,
 		closeback: false,
 		dual: false,
@@ -3414,13 +3415,13 @@ if (!Object.keys){
 				htmlHead += '<div class="datepicker-head-tit">' + tit + '</div>';
 			}
 			
-			
+			/* 년월 선택: datepicker-head-select 
 			if (type === 'normal') {
-				/* 년월 선택: datepicker-head-select */
+				
 				htmlHead += '<div class="datepicker-head-select">';
 				htmlHead += '<div class="ui-select datepicker-head-year">';
 				htmlHead += '<select title="년도 선택" id="sel_' + calendarEl.inputId + '_year">';
-
+				console.log('_minDay[0]', _minDay[0], _minDay[1],  _maxDay[1])
 				for (var y = Number(_minDay[0]); y < Number(_maxDay[0]) + 1; y++) {
 					htmlHead += y === year ? '<option value="' + y + '" selected>' + y + '년</option>' : '<option value="' + y + '">' + y + '년</option>';
 				}
@@ -3430,7 +3431,7 @@ if (!Object.keys){
 				htmlHead += '<div class="ui-select datepicker-head-month">';
 				htmlHead += '<select title="월 선택" id="sel_' + calendarEl.inputId + '_month">';
 
-				for (var m = 1; m < 13; m++) {
+				for (var m = Number(_minDay[1]); m < Number(_maxDay[1]) + 1; m++) {
 					m < 10 ? m = '0' + m : '';
 					htmlHead += m === month + 1 ? '<option value="' + Number(m) + '" selected>' + m + '월</option>' : '<option value="' + Number(m) + '">' + m + '월</option>';
 					m = Number(m);
@@ -3462,6 +3463,7 @@ if (!Object.keys){
 				htmlHead += '</div>';
 				htmlHead += '</div>';
 			}
+			*/
 
 			if (type === 'normal') {
 				/* 년월 선택: button */
@@ -3484,37 +3486,46 @@ if (!Object.keys){
 				htmlHead += '<div class="datepicker-head-today">';
 				htmlHead += '<button type="button" class="today" data-day=' + textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), false) + ' title="오늘'+ textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), true) +'로 이동"><span class="material-icons">flag</span></button>';
 				htmlHead += '</div>';
+				htmlHead += '<div class="datepicker-head-week">';
+				htmlHead += '<span scope="col" class="day-sun"><abbr title="일요일">' + weekDay[0] + '</abbr></span>';
+				htmlHead += '<span scope="col"><abbr title="월요일">' + weekDay[1] + '</abbr></span>';
+				htmlHead += '<span scope="col"><abbr title="화요일">' + weekDay[2] + '</abbr></span>';
+				htmlHead += '<span scope="col"><abbr title="수요일">' + weekDay[3] + '</abbr></span>';
+				htmlHead += '<span scope="col"><abbr title="목요일">' + weekDay[4] + '</abbr></span>';
+				htmlHead += '<span scope="col"><abbr title="금요일">' + weekDay[5] + '</abbr></span>';
+				htmlHead += '<span scope="col" class="day-sat"><abbr title="토요일">' + weekDay[6] + '</abbr></span>';
+				htmlHead += '</div>';
 
 				/* datepicker-head-date */
-				htmlHead += '<div class="datepicker-head-date">';
+				// htmlHead += '<div class="datepicker-head-date">';
 
-				if (dual) {
-					htmlHead += '<div class="datepicker-period-head">';
+				// if (dual) {
+				// 	htmlHead += '<div class="datepicker-period-head">';
 
-					htmlHead += '<div class="n1">';
-					htmlHead += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
-					htmlHead += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
-					htmlHead += '</div>';
+				// 	htmlHead += '<div class="n1">';
+				// 	htmlHead += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
+				// 	htmlHead += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
+				// 	htmlHead += '</div>';
 
-					htmlHead += '<div class="n2">';
+				// 	htmlHead += '<div class="n2">';
 
-					if (month === 11) {
-						htmlHead += '<span class="year2" data-y="' + (year + 1) + '"><strong>' + (year + 1) + '</strong>년</span> ';
-						htmlHead += '<span class="month2" data-m="' + dateMonths[0] + '"><strong>' + dateMonths[0] + '</strong>월</span>';
-					} else {
-						htmlHead += '<span class="year2" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
-						htmlHead += '<span class="month2" data-m="' + dateMonths[month + 1] + '"><strong>' + dateMonths[month + 1] + '</strong>월</span>';
-					}
+				// 	if (month === 11) {
+				// 		htmlHead += '<span class="year2" data-y="' + (year + 1) + '"><strong>' + (year + 1) + '</strong>년</span> ';
+				// 		htmlHead += '<span class="month2" data-m="' + dateMonths[0] + '"><strong>' + dateMonths[0] + '</strong>월</span>';
+				// 	} else {
+				// 		htmlHead += '<span class="year2" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
+				// 		htmlHead += '<span class="month2" data-m="' + dateMonths[month + 1] + '"><strong>' + dateMonths[month + 1] + '</strong>월</span>';
+				// 	}
 
-					htmlHead += '</div>';
-					htmlHead += '</div>';
+				// 	htmlHead += '</div>';
+				// 	htmlHead += '</div>';
 					
-				} else {
-					htmlHead += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
-					htmlHead += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
-				}
+				// } else {
+				// 	htmlHead += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
+				// 	htmlHead += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
+				// }
 
-				htmlHead += '</div>';
+				// htmlHead += '</div>';
 				htmlHead += '</div>';
 
 				/* datepicker-core -------------------- */
@@ -3529,7 +3540,7 @@ if (!Object.keys){
 			return htmlHead;
 		}
 		function buildCore(date, calendarEl, v , endMinMax) {
-			var $base = $('#' + calendarEl.calId);
+			var $base = $('#' + calendarEl.caspand);
 			var $end = $('#' + calendarEl.inputId + '_end');
 			var $prevM = $base.find('.ui-datepicker-prev');
 			var $nextM = $base.find('.ui-datepicker-next');
@@ -3570,7 +3581,7 @@ if (!Object.keys){
 			var dateMonthsNext = dateMonths[month + 1];
 			var dateMonthsNow = dateMonths[month];
 
-			dateMonthsNext === undefined ? dateMonthsNext = 1 : '';
+			dateMonthsNext === undefined ? dateMonthsNext = '01' : '';
 
 			console.log('buildCore111111', date);
 
@@ -3631,23 +3642,29 @@ if (!Object.keys){
 
 			//table datepicker
 			var htmlCalendar = '';
+			htmlCalendar += '<div class="tbl-datepicker" data-date="' + year + '' + dateMonthsNow + '">';
 
-			htmlCalendar += '<table class="tbl-datepicker" data-date="' + year + '' + dateMonthsNow + '">';
-			htmlCalendar += '<caption>' + year + '년 ' + dateMonthsNow + '월 일자 선택</caption>';
+			htmlCalendar += '<div class="tbl-datepicker-head" role="text">';
+			htmlCalendar += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
+			htmlCalendar += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
+			htmlCalendar += '</div>';
+
+			htmlCalendar += '<table>';
+			// htmlCalendar += '<caption>' + year + '년 ' + dateMonthsNow + '월 일자 선택</caption>';
 			htmlCalendar += '<colgroup>';
 			htmlCalendar += '<col class="n1">';
 			htmlCalendar += '<col span="5" class="n1">';
 			htmlCalendar += '<col class="n1">';
 			htmlCalendar += '</colgroup>';
-			htmlCalendar += '<thead><tr>';
-			htmlCalendar += '<th scope="col" class="day-sun"><abbr title="일요일">' + weekDay[0] + '</abbr></th>';
-			htmlCalendar += '<th scope="col"><abbr title="월요일">' + weekDay[1] + '</abbr></th>';
-			htmlCalendar += '<th scope="col"><abbr title="화요일">' + weekDay[2] + '</abbr></th>';
-			htmlCalendar += '<th scope="col"><abbr title="수요일">' + weekDay[3] + '</abbr></th>';
-			htmlCalendar += '<th scope="col"><abbr title="목요일">' + weekDay[4] + '</abbr></th>';
-			htmlCalendar += '<th scope="col"><abbr title="금요일">' + weekDay[5] + '</abbr></th>';
-			htmlCalendar += '<th scope="col" class="day-sat"><abbr title="토요일">' + weekDay[6] + '</abbr></th>';
-			htmlCalendar += '</tr></thead>';
+			// htmlCalendar += '<thead><tr>';
+			// htmlCalendar += '<th scope="col" class="day-sun"><abbr title="일요일">' + weekDay[0] + '</abbr></th>';
+			// htmlCalendar += '<th scope="col"><abbr title="월요일">' + weekDay[1] + '</abbr></th>';
+			// htmlCalendar += '<th scope="col"><abbr title="화요일">' + weekDay[2] + '</abbr></th>';
+			// htmlCalendar += '<th scope="col"><abbr title="수요일">' + weekDay[3] + '</abbr></th>';
+			// htmlCalendar += '<th scope="col"><abbr title="목요일">' + weekDay[4] + '</abbr></th>';
+			// htmlCalendar += '<th scope="col"><abbr title="금요일">' + weekDay[5] + '</abbr></th>';
+			// htmlCalendar += '<th scope="col" class="day-sat"><abbr title="토요일">' + weekDay[6] + '</abbr></th>';
+			// htmlCalendar += '</tr></thead>';
 			htmlCalendar += '<tbody><tr>';
 
 			//이전 달
@@ -3675,13 +3692,13 @@ if (!Object.keys){
 
 				if ((year < _minDay[0]) || (year == _minDay[0] && dateMonthsNow < _minDay[1]) || (year == _minDay[0] && dateMonthsNow == _minDay[1] && dayCounter < _minDay[2])) {
 					//선택 불가월
-					htmlCalendar += '<button type="button" disabled title="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
+					htmlCalendar += '<button type="button" disabled class="disabled" aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
 				} else if ((year > _maxDay[0]) || (year == _maxDay[0] && dateMonthsNow > _maxDay[1]) || (year == _maxDay[0] && dateMonthsNow == _maxDay[1] && dayCounter > _maxDay[2])) {
 					//선택 불가일
-					htmlCalendar += '<button type="button" disabled title="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
+					htmlCalendar += '<button type="button" disabled class="disabled" aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
 				} else {
 					//선택가능 일
-					htmlCalendar += '<button type="button" title="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false) + '" value="' + dayCounter + '">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
+					htmlCalendar += '<button type="button" aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false) + '" value="' + dayCounter + '">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
 				}
 				week_day++;
 			}
@@ -3689,29 +3706,33 @@ if (!Object.keys){
 			//다음 달
 			nextMonthday(week_day);
 
-			htmlCalendar += '</tr></tbody></table>';
+			htmlCalendar += '</tr></tbody></table></div>';
 
 			// period datepicker table
 			if (dual) {
 				empty_after = 0;
 				empty_before = daysInMonth - nextWeekDay;
-
-				htmlCalendar += '<table class="tbl-datepicker type-period" data-date="' + year + '' + dateMonthsNext + '">';
-				htmlCalendar += '<caption>' + year + '년 ' + dateMonthsNext + '월 일자 선택</caption>';
+				htmlCalendar += '<div class="tbl-datepicker type-period" data-date="' + year + '' + dateMonthsNext + '">';
+				htmlCalendar += '<div class="tbl-datepicker-head" role="text">';
+				htmlCalendar += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
+				htmlCalendar += '<span class="month" data-m="' + dateMonthsNext + '"><strong>' + dateMonthsNext + '</strong>월</span>';
+				htmlCalendar += '</div>';
+				htmlCalendar += '<table>';
+				// htmlCalendar += '<caption>' + year + '년 ' + dateMonthsNext + '월 일자 선택</caption>';
 				htmlCalendar += '<colgroup>';
 				htmlCalendar += '<col class="n1">';
 				htmlCalendar += '<col span="5" class="n1">';
 				htmlCalendar += '<col class="n1">';
 				htmlCalendar += '</colgroup>';
-				htmlCalendar += '<thead><tr>';
-				htmlCalendar += '<th scope="col" class="day-sun"><abbr title="일요일">' + weekDay[0] + '</abbr></th>';
-				htmlCalendar += '<th scope="col"><abbr title="월요일">' + weekDay[1] + '</abbr></th>';
-				htmlCalendar += '<th scope="col"><abbr title="화요일">' + weekDay[2] + '</abbr></th>';
-				htmlCalendar += '<th scope="col"><abbr title="수요일">' + weekDay[3] + '</abbr></th>';
-				htmlCalendar += '<th scope="col"><abbr title="목요일">' + weekDay[4] + '</abbr></th>';
-				htmlCalendar += '<th scope="col"><abbr title="금요일">' + weekDay[5] + '</abbr></th>';
-				htmlCalendar += '<th scope="col" class="day-sat"><abbr title="토요일">' + weekDay[6] + '</abbr></th>';
-				htmlCalendar += '</tr></thead>';
+				// htmlCalendar += '<thead><tr>';
+				// htmlCalendar += '<th scope="col" class="day-sun"><abbr title="일요일">' + weekDay[0] + '</abbr></th>';
+				// htmlCalendar += '<th scope="col"><abbr title="월요일">' + weekDay[1] + '</abbr></th>';
+				// htmlCalendar += '<th scope="col"><abbr title="화요일">' + weekDay[2] + '</abbr></th>';
+				// htmlCalendar += '<th scope="col"><abbr title="수요일">' + weekDay[3] + '</abbr></th>';
+				// htmlCalendar += '<th scope="col"><abbr title="목요일">' + weekDay[4] + '</abbr></th>';
+				// htmlCalendar += '<th scope="col"><abbr title="금요일">' + weekDay[5] + '</abbr></th>';
+				// htmlCalendar += '<th scope="col" class="day-sat"><abbr title="토요일">' + weekDay[6] + '</abbr></th>';
+				// htmlCalendar += '</tr></thead>';
 				htmlCalendar += '<tbody><tr>';
 
 				//이전 달
@@ -3742,11 +3763,13 @@ if (!Object.keys){
 					}
 
 					if ((year < _minDay[0]) || (year == _minDay[0] && dateMonthsNext < _minDay[1]) || (year == _minDay[0] && dateMonthsNext == _minDay[1] && dayCounter < _minDay[2])) {
-						htmlCalendar += '<button type="button" disabled title="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
-					} else if ((year > _maxDay[0]) || (year == _maxDay[0] && dateMonthsNext > _maxDay[1]) || (year == _maxDay[0] && dateMonthsNext == _maxDay[1] && dayCounter > _maxDay[2])) {
-						htmlCalendar += '<button type="button" disabled title="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
-					} else {
-						htmlCalendar += '<button type="button" title="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false) + '" value="' + dayCounter + '">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
+						htmlCalendar += '<button type="button" class="disabled" aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'" disabled>' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
+					} 
+					else if ((year > _maxDay[0]) || (year == _maxDay[0] && dateMonthsNext > _maxDay[1]) || (year == _maxDay[0] && dateMonthsNext == _maxDay[1] && dayCounter > _maxDay[2])) {
+						htmlCalendar += '<button type="button"class="disabled"  aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'" disabled>' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
+					} 
+					else {
+						htmlCalendar += '<button type="button" aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false) + '" value="' + dayCounter + '">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
 					}
 					week_day++;
 				}
@@ -3754,7 +3777,7 @@ if (!Object.keys){
 				//다음 달
 				nextMonthday(week_day);
 
-				htmlCalendar += '</tr></tbody></table>';
+				htmlCalendar += '</tr></tbody></table></div>';
 			}
 
 			//이전달 다시보기
@@ -3873,7 +3896,7 @@ if (!Object.keys){
 			});
 
 			function yearMonthSelect(t, v) {
-				var $currentDate = $(t).closest('.datepicker-head').find('.datepicker-head-date'),
+				var $currentDate = $(t).closest('.datepicker-sec').find('.tbl-datepicker-head'),
 					$core = $(t).closest('.ui-datepicker').find('.datepicker-core'),
 					_y = v === 'year' ?
 						$(t).closest('.datepicker-head-year').find('select').eq(0).val() :
@@ -3895,7 +3918,7 @@ if (!Object.keys){
 				var $this = $(t),
 					$core = $this.closest('.ui-datepicker').find('.datepicker-core'),
 					limit = v === 'next' ? 'max' : 'min',
-					$currentDate = $this.closest('.datepicker-head').find('.datepicker-head-date'),
+					$currentDate = $this.closest('.datepicker-sec').find('.tbl-datepicker-head'),
 					_y = Number($currentDate.find('.year').data('y')),
 					_m = Number($currentDate.find('.month').data('m') - 1),
 					dateTemp = v === 'next' ? (dual) ? new Date(_y, _m + 2, 1) : new Date(_y, _m + 1, 1) : (dual) ? new Date(_y, _m - 2, 1) : new Date(_y, _m - 1, 1);
@@ -3909,7 +3932,7 @@ if (!Object.keys){
 				var $this = $(t),
 					$core = $this.closest('.ui-datepicker').find('.datepicker-core'),
 					limit = v === 'next' ? 'max' : 'min',
-					$currentDate = $this.closest('.datepicker-head').find('.datepicker-head-date'),
+					$currentDate = $this.closest('.datepicker-sec').find('.tbl-datepicker-head'),
 					_y = Number($currentDate.find('.year').data('y')),
 					_m = Number($currentDate.find('.month').data('m') - 1),
 					dateTemp = v === 'next' ? new Date(_y + 1, _m, 1) : new Date(_y - 1, _m, 1);
@@ -3944,7 +3967,6 @@ if (!Object.keys){
 				$(doc).off('click.'+ id_).on('click.'+ id_ , id_ + ' td button', function () {
 					var $this = $(this);
 
-					console.log(11111111111)
 					writeInputDateValue(calendarEl, $this);
 					datepickerClose(calendarEl);
 				}).off('click.'+ id_ +'today').on('click.'+ id_+'today', id_ + ' .datepicker-head-today button', function () {
