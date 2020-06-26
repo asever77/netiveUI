@@ -423,7 +423,7 @@ button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; d
 .tbl-datepicker col.n1 {width:14.28%}
 .tbl-datepicker th {padding:5px 0; text-align:center !important; font-weight:600; background:#fff; font-size:12px;}
 .tbl-datepicker th abbr {display:block; border:0; cursor:default; }
-.tbl-datepicker td {padding:4px 0 0; text-align:center; border:0; }
+.tbl-datepicker td {padding:0; text-align:center; border:0; height:40px; max-height:40px; border-top:2px solid #fff}
 .tbl-datepicker td span,
 .tbl-datepicker td button {position:relative; display:block; width:30px; height:30px; line-height:1; margin:0 auto; color:#444; text-align:center;}
 .tbl-datepicker td span {color:#666; cursor:default; opacity:0.5}
@@ -435,15 +435,17 @@ button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; d
 .tbl-datepicker td.empty button:hover {font-weight:400;}
 .tbl-datepicker td:not(.empty) button:not(.disabled):hover {color:#fff; font-weight:900; background:#444 !important; border:1px solid #444; }
 .tbl-datepicker td button.selected {color:#fff; font-weight:900; background:#444 !important; border:1px solid #444; }
-.tbl-datepicker td button.selected-end {color:#fff; font-weight:900; background:#444 !important; }
-.tbl-datepicker td button.selected-start {color:#fff; font-weight:900; background:#444 !important;}
+.tbl-datepicker td button.selected-end {color:#fff; font-weight:900; background:#444 !important; border-radius:50%;}
+.tbl-datepicker td button.selected-start {color:#fff; font-weight:900; background:#444 !important; border-radius:50%;}
 .tbl-datepicker td button.selected-ing { background:rgb(227, 247, 255);}
 .tbl-datepicker td button:disabled {cursor:default; opacity:0.5;}
 .tbl-datepicker td button:disabled:hover {font-weight:400 !important;}
-.tbl-datepicker td.hover:not(.disabled) button {color:#fff; background:#444;}
-.tbl-datepicker td.hover-on:not(.disabled) button {color:#fff; background:#444; }  
-.tbl-datepicker td.hover:not(.disabled) span {color:#fff; background:#444;}
-.tbl-datepicker td.hover-on:not(.disabled) span {color:#fff; background:#444; }  
+
+.tbl-datepicker td.hover:not(.disabled) button {color:#000; background:rgb(247, 247, 247);}
+.tbl-datepicker td.hover-on:not(.disabled) button {color:#000; background:rgb(247, 247, 247); }  
+.tbl-datepicker td.hover:not(.disabled) span {color:#000; background:rgb(247, 247, 247);}
+.tbl-datepicker td.hover-on:not(.disabled) span {color:#000; background:rgb(247, 247, 247); }  
+
 .tbl-datepicker.off-tbl td.hover:not(.disabled) button {color:#444; background:transparent;}
 .tbl-datepicker.off-tbl td.hover-on:not(.disabled) button {color:#444; background:transparent; }  
 .tbl-datepicker.off-tbl td.hover:not(.disabled) button:hover {color:#fff; background:#444;}
@@ -452,6 +454,7 @@ button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; d
 
 td button.today {color:#000; }
 /* mobile */
+.ui-m .datepicker-sec{border:0;}
 .ui-m .datepicker-head-tit{background:#222; color:#fff; }
 .ui-m .ui-datepicker.visible .ui-datepicker-wrap{top:auto;}
 .ui-m .ui-datepicker.visible .ui-datepicker-wrap {animation-name:datepickerUp; animation-duration:0.2s; animation-iteration-count:1; animation-timing-function:ease-in-out; animation-fill-mode: forwards;}
@@ -459,15 +462,14 @@ td button.today {color:#000; }
 .ui-m .ui-datepicker-wrap{width:100%; position:fixed; top:auto; bottom:-100vw; left:0;}
 .ui-m .ui-datepicker .btn-close:before, 
 .ui-m .ui-datepicker .btn-close:after{background:#fff;}
-.ui-m .tbl-datepicker{width:100%; max-width:91vw; margin:0 auto 10px; height:auto}
+.ui-m .tbl-datepicker{width:100%; max-width:280px; margin:0 auto 10px; height:auto}
 .ui-m .tbl-datepicker.type-period{width:auto; margin:0 auto 10px; height:auto}
 .ui-m .datepicker-core{padding:0; height:auto; margin-top:0; max-height:70vh; overflow-x:auto;}
 .ui-m .tbl-datepicker td span, 
-.ui-m .tbl-datepicker td button {width:13vw; height:13vw; line-height:1;}
-.ui-m .tbl-datepicker td span{padding-top:4vw;}
+.ui-m .tbl-datepicker td button {width:40px; height:40px; line-height:1;}
+.ui-m .tbl-datepicker td span{padding-top:0;}
 .ui-m .tbl-datepicker th{padding:0;}
 .ui-m .tbl-datepicker th abbr {height:7vw;}
-.ui-m .tbl-datepicker td{padding-top:1px;}
 .ui-m .ui-datepicker.type-month .datepicker-head-month {width:100%;}
 .ui-m .ui-datepicker.type-dual .ui-datepicker-wrap{width:100%;}
 .ui-m .ui-datepicker.type-dual .ui-datepicker-wrap .tbl-datepicker{width:auto; float:none}
@@ -480,8 +482,14 @@ td button.today {color:#000; }
 .ui-m .datepicker-head-btn {position:relative; bottom:auto; height:40px;}
 .ui-m .datepicker-head-btn button{top:8px}
 .ui-m .tbl-datepicker-head{width:100%; text-align:left; font-size:14px; font-weight:500; padding:5px 13px 3px;}
-.ui-m .datepicker-head-week{idth:100%; max-width:91vw; margin:0 auto; font-size:0; display:flex; border-bottom:1px solid #999; padding-bottom:3px}
-.ui-m .datepicker-head-week span{ width:13vw; height:20px; flex:1; text-align:center;}
+.ui-m .datepicker-head-week{width:100%; max-width:280px; margin:0 auto; font-size:0; display:flex; border-bottom:1px solid #999; padding-bottom:3px}
+.ui-m .datepicker-head-week span{ width:40px; height:20px; flex:1; text-align:center;}
+.ui-m td.on-start{background:linear-gradient(to right, transparent 50%, rgb(247, 247, 247));}
+.ui-m td.on-end{background:linear-gradient(to left, transparent 50%, rgb(247, 247, 247));}
+
+
+
+
 
 /* ui inputclear */
 .ui-inpcancel-btn {display:inline-block; position:absolute; margin-left:-40px; width:40px; height:40px; }

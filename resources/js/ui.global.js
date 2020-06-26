@@ -3583,8 +3583,6 @@ if (!Object.keys){
 
 			dateMonthsNext === undefined ? dateMonthsNext = '01' : '';
 
-			console.log('buildCore111111', date);
-
 			// 최소,최대 선택 가능
 			if (endMinMax) {
 				$end.attr('data-min', $input.attr('data-min'));
