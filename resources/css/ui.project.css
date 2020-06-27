@@ -18,6 +18,8 @@
     100% {left:-50vw;}
 }
 
+a {color:black; outline-offset:1px;}
+
 /* layout */
 .base-header{position:relative; top:0; left:0; z-index:2; width:100%; padding:0;}
 .base-body{position:relative; width:100%;}
@@ -49,17 +51,6 @@
 .header-nav .dep-2-btn.selected:before{content:"+ "; }
 .header-nav .ui-acco-pnl-wrap,
 .header-nav .ui-acco-pnl{background:transparent; padding:0}
-
-
-
-
-
-
-
-
-
-
-
 
 
 /* common */
@@ -323,7 +314,7 @@ html.col-12 .coln12{display:inline-block}
 @media all and (max-width:959px) {
 	/* desktop excluded */
 	.btn-menu{display:block; position:fixed; top:20px; margin-left:20px; width:30px; height:30px; border-radius:50%; background:#1f1f1f;}
-	.btn-menu:after{content:"arrow_forward"; position:absolute; top:0; left:0; width:100%; text-align:center; font-size:25px; line-height:30px; color:#fff; font-family:'Material Icons'; }
+	.btn-menu:after{content:"arrow_forward"; position:absolute; top:0; left:0; width:100%; text-align:center; font-size:25px; line-height:30px; color:#fff; font-family:'Material Icons'; font-feature-settings:'liga'; }
 
 	.base-body{width:100%; position: relative; animation-name:slideLeftOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:ease-out; animation-fill-mode: forwards;}
 	.nav-open .base-body{animation-name:slideLeftIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:ease-out; animation-fill-mode: forwards;}

@@ -3372,7 +3372,7 @@ if (!Object.keys){
 				var $this = $(this);
 
 				$this.data('day') === textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), false)
-					? $this.attr('title', $this.attr('title') + ' (오늘)').addClass('today')
+					? $this.attr('title', $this.attr('aria-label') + ' 오늘 입니다.').addClass('today')
 					: '';
 			});
 		}
@@ -3404,8 +3404,10 @@ if (!Object.keys){
 			$input.attr('data-max') !== undefined ? _maxDay = $input.attr('data-max').split(dateSplit, 3) : _maxDay[0] = 2050;// 최대 선택 가능
 			month === 2 ? daysInMonth = 31 : '';
 
+			$('#' + calendarEl.dpId).data('min-month', _minDay[0] + _minDay[1]).data('max-month', _maxDay[0] + _maxDay[1]);
+
 			/* datepicker-head -------------------- */
-			htmlHead += '<button type="button" class="btn-close ui-datepicker-close"><span>닫기</span></button>';
+			htmlHead += '<button type="button" class="btn-close ui-datepicker-close"><span class="hide">닫기</span></button>';
 			htmlHead += '<div class="datepicker-head">';
 
 			/* title: datepicker-head-tit */
@@ -3491,7 +3493,7 @@ if (!Object.keys){
 
 				/* today */
 				htmlHead += '<div class="datepicker-head-today">';
-				htmlHead += '<button type="button" class="today" data-day=' + textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), false) + ' title="오늘'+ textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), true) +'로 이동"><span class="material-icons">flag</span></button>';
+				htmlHead += '<button type="button" class="btn-today" data-day=' + textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), false) + ' title="오늘'+ textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), true) +'로 이동"><span class="hide">today</span></button>';
 				htmlHead += '</div>';
 				htmlHead += '<div class="datepicker-head-week">';
 				htmlHead += '<span scope="col" class="day-sun"><abbr title="일요일">' + weekDay[0] + '</abbr></span>';
@@ -3999,8 +4001,13 @@ if (!Object.keys){
 				$tbl.prev().addClass('off-tbl')
 			}
 
+			console.log($this.closest('.ui-datepicker').data('min-month'), $tbl.prev().data('date') )
 			if (!!$core.data('start') && !$tbl.hasClass('on-start-tbl')) {
-				$tbl.prev().find('tr').addClass('hover').find('td').addClass('hover');
+
+				if ($tbl.prev().data('date') > $this.closest('.ui-datepicker').data('min-month')) {
+					$tbl.prev().find('tr').addClass('hover').find('td').addClass('hover');
+				}
+				
 			}
 		}
 		function dayHover(t) {
@@ -4138,7 +4145,8 @@ if (!Object.keys){
 			var openback = !!$datepicker.data('opt').openback ? $datepicker.data('opt').openback : false;
 			openback ? openback() : '';
 			
-			$('body').addClass('open-datepicker');
+			win[global].browser.mobile && $('body').addClass('open-datepicker');
+
 			hideCalendar();
 			
 			if (!!dataType) {

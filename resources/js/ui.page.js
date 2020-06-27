@@ -3,6 +3,9 @@
 
     'use strict';
 
+    console.log('page ready after');
+    $plugins.common.init();  
+
     $plugins.page.pageInputPlaceholder = function(){
         $plugins.uiPlaceholder();
     };
