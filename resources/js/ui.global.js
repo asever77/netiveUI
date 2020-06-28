@@ -3417,33 +3417,34 @@ if (!Object.keys){
 				htmlHead += '<div class="datepicker-head-tit">' + tit + '</div>';
 			}
 			
-			/* 년월 선택: datepicker-head-select 
-			if (type === 'normal') {
+			/* 년월 선택: datepicker-head-select */
+			// if (type === 'normal') {
 				
-				htmlHead += '<div class="datepicker-head-select">';
-				htmlHead += '<div class="ui-select datepicker-head-year">';
-				htmlHead += '<select title="년도 선택" id="sel_' + calendarEl.inputId + '_year">';
-				console.log('_minDay[0]', _minDay[0], _minDay[1],  _maxDay[1])
-				for (var y = Number(_minDay[0]); y < Number(_maxDay[0]) + 1; y++) {
-					htmlHead += y === year ? '<option value="' + y + '" selected>' + y + '년</option>' : '<option value="' + y + '">' + y + '년</option>';
-				}
+			// 	htmlHead += '<div class="datepicker-head-select">';
+			// 	htmlHead += '<div class="ui-select datepicker-head-year">';
+			// 	htmlHead += '<select title="년도 선택" id="sel_' + calendarEl.inputId + '_year">';
+			// 	console.log('_minDay[0]', _minDay[0], _minDay[1],  _maxDay[1])
+			// 	for (var y = Number(_minDay[0]); y < Number(_maxDay[0]) + 1; y++) {
+			// 		htmlHead += y === year ? '<option value="' + y + '" selected>' + y + '년</option>' : '<option value="' + y + '">' + y + '년</option>';
+			// 	}
 
-				htmlHead += '</select>';
-				htmlHead += '</div>';
-				htmlHead += '<div class="ui-select datepicker-head-month">';
-				htmlHead += '<select title="월 선택" id="sel_' + calendarEl.inputId + '_month">';
+			// 	htmlHead += '</select>';
+			// 	htmlHead += '</div>';
+			// 	htmlHead += '<div class="ui-select datepicker-head-month">';
+			// 	htmlHead += '<select title="월 선택" id="sel_' + calendarEl.inputId + '_month">';
 
-				for (var m = Number(_minDay[1]); m < Number(_maxDay[1]) + 1; m++) {
-					m < 10 ? m = '0' + m : '';
-					htmlHead += m === month + 1 ? '<option value="' + Number(m) + '" selected>' + m + '월</option>' : '<option value="' + Number(m) + '">' + m + '월</option>';
-					m = Number(m);
-				}
+			// 	for (var m = Number(_minDay[1]); m < Number(_maxDay[1]) + 1; m++) {
+			// 		m < 10 ? m = '0' + m : '';
+			// 		htmlHead += m === month + 1 ? '<option value="' + Number(m) + '" selected>' + m + '월</option>' : '<option value="' + Number(m) + '">' + m + '월</option>';
+			// 		m = Number(m);
+			// 	}
 
-				htmlHead += '</select>';
-				htmlHead += '</div>';
-				htmlHead += '</div>';
+			// 	htmlHead += '</select>';
+			// 	htmlHead += '</div>';
+			// 	htmlHead += '</div>';
 		
-			} else if (type === 'month') {
+			// }  
+			if (type === 'month') {
 				htmlHead += '<div class="datepicker-head-select">';
 				htmlHead += '<div class="ui-select">';
 				htmlHead += '<select title="년도 선택" id="sel_' + calendarEl.inputId + '_year">';
@@ -3465,7 +3466,7 @@ if (!Object.keys){
 				htmlHead += '</div>';
 				htmlHead += '</div>';
 			}
-			*/
+			
 
 			if (type === 'normal') {
 				/* 년월 선택: button */

@@ -472,11 +472,13 @@ td.on-start{background:linear-gradient(to right, transparent 50%, rgb(247, 247, 
 .state-ready td.on-start{background:transparent;}
 td.on-end{background:linear-gradient(to left, transparent 50%, rgb(247, 247, 247));}
 td button.today {color:#000; }
+.datepicker-foot{height:60px; border-top:1px solid #999; display:none;}
+
 /* mobile */
 .ui-m .type-dual .ui-datepicker-wrap{height:100vh}
 .ui-m .datepicker-sec{border:0;}
 .ui-m .datepicker-head{height:110px}
-.ui-m .datepicker-foot{height:60px; border-top:1px solid #999; display:none;}
+
 .ui-m .datepicker-head-tit{background:#222; color:#fff; }
 .ui-m .datepicker-head-m,
 .ui-m .datepicker-head-y{margin:0 20px;}
