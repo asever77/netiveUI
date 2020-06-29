@@ -1932,23 +1932,28 @@ if (!Object.keys){
 		if (re) {
 			$(win).off('resize.win').on('resize.win', function(){
 				var $uiBricklist = $('.ui-bricklist');
+				var winW = $(win).outerWidth();
+				
 				clearTimeout(timer);
-				timer = setTimeout(function(){
-					$uiBricklist.each(function(){
-						var $this = $(this);
-						var dataOpt = $this.data('opt');
-						var reColN = Math.floor($this.outerWidth() / $this.find('.ui-bricklist-item').outerWidth());
 
-						if ($this.data('orgcol') !== reColN || !!dataOpt.fixCol) {
-							win[global].uiBrickList({ 
-								id : $this.attr('id'),
-								fixCol: dataOpt.fixCol,
-								response: dataOpt.response
-							});
-							
-							$this.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
-						}
-					});
+				timer = setTimeout(function(){
+					if (winW !== $(win).outerWidth()) {
+						$uiBricklist.each(function(){
+							var $this = $(this);
+							var dataOpt = $this.data('opt');
+							var reColN = Math.floor($this.outerWidth() / $this.find('.ui-bricklist-item').outerWidth());
+
+							if ($this.data('orgcol') !== reColN || !!dataOpt.fixCol) {
+								win[global].uiBrickList({ 
+									id : $this.attr('id'),
+									fixCol: dataOpt.fixCol,
+									response: dataOpt.response
+								});
+								
+								$this.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
+							}
+						});
+					}
 				},300);
 			});
 		}	
