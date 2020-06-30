@@ -89,7 +89,6 @@ if (!Object.keys){
 
 //utils module
 ;(function ($, win, doc, undefined) {
-	console.log('global');
 
 	'use strict';
 
@@ -445,7 +444,6 @@ if (!Object.keys){
 			clearTimeout(win[global].uiLoading.timerShow);
 			clearTimeout(win[global].uiLoading.timerHide);
 			win[global].uiLoading.timerShow = setTimeout(function(){
-				console.log('show');
 				showLoading();
 			},300);
 			
@@ -453,7 +451,6 @@ if (!Object.keys){
 		if(!loadingVisible) {
 			clearTimeout(win[global].uiLoading.timerShow);
 			win[global].uiLoading.timerHide = setTimeout(function(){
-				console.log('hide');
 				hideLoading();
 			},300)
 			
@@ -536,7 +533,7 @@ if (!Object.keys){
 
 		target.val().length === 0 ? err = false : '';
 		!err && !!target.attr('required') ? err = true : '';
-		console.log('err:' + err);
+
 		switch(type){
 			case 'test': 
 				valueCheck(reg_kr, target, 'error message', err);
@@ -624,7 +621,6 @@ if (!Object.keys){
 		}
 
 		function valueCheck(reg, target, msg, err, type){
-			console.log(reg, target.val(), reg.test(target.val()))
 			if (reg.test(target.val())) {
 				error = false;
 			} else {
@@ -1972,7 +1968,6 @@ if (!Object.keys){
 			itemTopArray = dataOpt.itemTopArray,
 			itemSum = $item.length;
 		
-		console.log('loading')
 		$plugins.uiLoading({ id: opt.id, visible:true });
 
 		var n = dataOpt.start;
@@ -2104,7 +2099,6 @@ if (!Object.keys){
 			});
 			$(doc).find('.ui-drop-close').off('click.dp').on('click.dp', function(e){
 				var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
-				console.log(11111111)
 				win[global].uiDropdownToggle({ 
 					id: pnl_opt.id 
 				});
@@ -2175,8 +2169,6 @@ if (!Object.keys){
 		}
 
 		btnExpanded === 'false' ? pnlShow(): pnlHide();
-
-		console.log('state', state);
 
 		function pnlShow(){
 			var drop_inner = $btn.closest('.ui-drop-pnl').data('id');
@@ -2961,7 +2953,7 @@ if (!Object.keys){
 				case keys.home: homeKey(e);
 				break;
 			}
-			console.log(n,m)
+
 			function upLeftKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-first') ? 
@@ -3002,7 +2994,6 @@ if (!Object.keys){
 			callback = opt.callback;
 
 		//$btn.eq(current).append('<b class="hide">선택됨</b>');
-		console.log('current', current, align, ps_l[current]);
 
 		var currentPnl = $btns.find('.ui-tab-btn[data-tabnum="'+ current +'"]').index();
 		$btn.removeClass('selected').eq(current).addClass('selected').focus();
@@ -3353,7 +3344,6 @@ if (!Object.keys){
 				getYM = getyear + dateSplit + win[global].option.partsAdd0(getMonth);
 
 			//DD.MM.YYYY로 설정
-			console.log(calendarEl, calendarEl.shortDate)
 			calendarEl.shortDate ? getYM = toDDMMYYYY(getYM) : '';
 
 			$("#" + id).val(getYM);
@@ -3618,7 +3608,6 @@ if (!Object.keys){
 				$nextM.find('span').text('다음 ' + dateMonths[(month + 1 > 11) ? 0 : month + 1] + '월로 이동');
 			}
 			
-			console.log('year', $headDate.length)
 			$headDate.find('.year').data('y', year).find('strong').text(year);
 			$headDate.find('.month').data('m', dateMonthsNow).find('strong').text(dateMonthsNow);
 
@@ -3686,8 +3675,6 @@ if (!Object.keys){
 			mm < 1 ? mm = 12 : '';
 			mm = win[global].option.partsAdd0(mm);
 			week_day = firstWeekDay;
-
-			console.log('buildCore', dayCounter, daysInMonth);
 
 			//현재 달
 			for (var dayCounter = 1; dayCounter <= daysInMonth; dayCounter++) {
@@ -3869,7 +3856,6 @@ if (!Object.keys){
 		}
 		//달력 layout
 		function displayCalendar(calendarEl, v) {
-			console.log(type)
 			var id_ = "#" + calendarEl.calId,
 				$dp = $("#" + calendarEl.dpId),
 				$calWrap = $(id_);
@@ -4007,7 +3993,6 @@ if (!Object.keys){
 				$tbl.prev().addClass('off-tbl')
 			}
 
-			console.log($this.closest('.ui-datepicker').data('min-month'), $tbl.prev().data('date') )
 			if (!!$core.data('start') && !$tbl.hasClass('on-start-tbl')) {
 
 				if ($tbl.prev().data('date') > $this.closest('.ui-datepicker').data('min-month')) {
@@ -4399,8 +4384,6 @@ if (!Object.keys){
 			selectDisabled = $sel.prop('disabled');
 			selectTitle = $sel.attr('title');
 			hiddenClass = '';
-
-			console.log(selectID);
 			
 			(!$sel.data('callback') || !!callback) && $sel.data('callback', callback);
 
@@ -4523,7 +4506,6 @@ if (!Object.keys){
 			var $doc = $(doc);
 
 			$doc.find('.dim-select').off('click.dim').on('click.dim', function () {
-				console.log($('body').data('select-open'));
 				if ($('body').data('select-open')) {
 					optBlur();
 				}
@@ -4732,7 +4714,6 @@ if (!Object.keys){
 				_$wrap.off('touchmove.uiscroll').on('touchmove.uiscroll', function(e){
 					touchMoving = true;
 					getScrollTop = $this.scrollTop();
-					console.log(getScrollTop)	
 				}).off('touchcancel.uiscroll touchend.uiscroll').on('touchcancel.uiscroll touchend.uiscroll', function(e){
 					var _$this = $(this);
 

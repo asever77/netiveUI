@@ -137,6 +137,11 @@
 				callback:$plugins.common.header 
 			});
 			$plugins.uiAjax({ 
+				id:'baseFooter', 
+				url:'/netiveUI/html/inc/footer.html', 
+				page:true
+			});
+			$plugins.uiAjax({ 
 				id: 'baseMain', 
 				url: fristHref, 
 				page: true, 
