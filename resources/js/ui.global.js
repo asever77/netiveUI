@@ -5106,7 +5106,7 @@ if (!Object.keys){
 			sel += '</div>';
 			sel += '<div class="box-srch mgb-xxxs">';
 			sel += '<div class="srch-area">';
-			sel += '<input type="search" id="uiCodinglistSrchCode" class="inp-srch ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
+			sel += '<input type="search" id="uiCodinglistSrchCode" class="inp-base ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
 			sel += '</div>';
 			sel += '</div>';
 			
