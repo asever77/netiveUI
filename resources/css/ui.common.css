@@ -220,6 +220,8 @@ input[type="checkbox"] {opacity:0; filter:alpha(opacity=0); display:inline-block
 :checked + .lb-check,
 .lb-radio.checked,
 .lb-check.checked {color:#000;}
+:focus + .lb-radio,
+:focus + .lb-check{text-decoration:underline;}
 :disabled + .lb-radio,
 :disabled + .lb-check,
 .lb-radio.disabled,

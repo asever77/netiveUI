@@ -397,6 +397,29 @@ if (!Object.keys){
 	/* **************************************************************************************************** */
 	/* **************************************************************************************************** */
 
+	/* ------------------------
+	 * [base] selector type
+	 * date : 2020-06-09
+	------------------------ */
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiSelectorType: function (v) {
+			return createUiSelectorType(v);
+		}
+	});
+	function createUiSelectorType(v) {
+		var selector = $('body');
+		if (v === null) {
+			selector = $('body')
+		} else {
+			if (typeof v === 'string') {
+				selector = $('#' + v);
+			} else {
+				selector = v;
+			}
+		}
+
+		return selector;
+	}
 
 	/* ------------------------
 	 * [base] loading
@@ -416,13 +439,12 @@ if (!Object.keys){
 		styleClass : 'orbit' //time
 	}
 	function createUiLoading(opt) {
-		var opt = $.extend(true, {}, win[global].uiLoading.option, opt),
-			id = opt.id,
-			styleClass = opt.styleClass,
-			loadingVisible = opt.visible,
-			txt = opt.txt;
-	
-		var	$selector = id === null ? $('body') : typeof id === 'string' ? $('#' + id) : id;
+		var opt = $.extend(true, {}, win[global].uiLoading.option, opt);
+		var id = opt.id;
+		var styleClass = opt.styleClass;
+		var loadingVisible = opt.visible;
+		var txt = opt.txt;
+		var	$selector = win[global].uiSelectorType(id);
 		var htmlLoading = '';
 
 		$('.ui-loading').not('.visible').remove();
