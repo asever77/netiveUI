@@ -370,9 +370,9 @@ dl.bul-hyphen > div:first-child{margin-top:0;}
 
 /* [base] Layout ---------------------------------------------------------------------------*/
 /* layout inline-block */
-.in-wrap{position:relative; font-size:0; margin:10px 0;}
+.in-wrap{position:relative; font-size:0; margin:10px 0 0;}
 .in-wrap > *,
-.in-item{font-size:14px; display:inline-block; vertical-align:top;}
+.in-item{font-size:14px; display:inline-block; vertical-align:top; margin-top:10px;}
 .in-item > * {vertical-align:top;}
 /* layout float */
 .fl-wrap{position:relative; margin:10px 0;}

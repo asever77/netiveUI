@@ -4377,9 +4377,7 @@ if (!Object.keys){
 			$sel = $selectCurrent.find('select');
 			
 			selectID = $sel.attr('id');
-
 			selectID === undefined && $sel.attr('id', 'uiSelect_' + idN);
-
 			listID = selectID + '_list';
 			selectDisabled = $sel.prop('disabled');
 			selectTitle = $sel.attr('title');
@@ -4396,8 +4394,6 @@ if (!Object.keys){
 			}
 
 			htmlOption += '<strong class="ui-select-title">'+ selectTitle +'</strong>';
-			
-
 			htmlOption += '<div class="ui-select-opts" role="listbox" id="' + listID + '" aria-hidden="false">';
 
 			setOption();
@@ -4405,11 +4401,11 @@ if (!Object.keys){
 			htmlOption += '</div>';
 			htmlOption += '<button type="button" class="ui-select-confirm"><span>확인</span></strong>';
 			htmlOption += '</div>';
-
-			htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '"><span>' + btnTxt + '</span></button>';
+			htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
 
 			$selectCurrent.append(htmlButton);
-			$sel.addClass('hidden').attr('aria-hidden', true).attr('tabindex', -1);
+			$sel.addClass('off');
+			//$sel.attr('aria-hidden', true).attr('tabindex', -1);
 			$selectCurrent.append(htmlOption);
 
 			selectDisabled ? $selectCurrent.find('.ui-select-btn').prop('disabled', true).addClass('disabled') : '';
