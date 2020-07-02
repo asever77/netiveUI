@@ -25,7 +25,6 @@ project/
         │    ├── ui.common.css
         │    ├── ui.font.css
         │    ├── ui.plugins.css
-        │    ├── ui.responsive.css
         │    └── ui.project.css
         ├── data/
         ├── font/
@@ -56,6 +55,11 @@ project/
 		<span class="nt">&lt;title&gt;</span>page title<span class="nt">&lt;/title&gt;</span>
 
 		<span class="nt">&lt;link <span class="na">rel=</span><span class="s">"stylesheet"</span> <span class="na">href=</span><span class="s">"/netiveUI/resources/css/ui.base.css"</span>&gt;</span>
+
+		<span class="nt">&lt;script <span class="na">defer</span> <span class="na">src=</span><span class="s">"/netiveUI/resources/js/lib/jquery-1.12.4.min.js"</span>&gt;&lt;/script&gt;</span>
+		<span class="nt">&lt;script <span class="na">defer</span> <span class="na">src=</span><span class="s">"/netiveUI/resources/js/ui.global.js"</span>&gt;&lt;/script&gt;</span>
+		<span class="nt">&lt;script <span class="na">defer</span> <span class="na">src=</span><span class="s">"/netiveUI/resources/js/ui.common.js"</span>&gt;&lt;/script&gt;</span>
+		<span class="nt">&lt;script <span class="na">defer</span> <span class="na">src=</span><span class="s">"/netiveUI/resources/js/ui.page.js"</span>&gt;&lt;/script&gt;</span>
 	<span class="nt">&lt;/head&gt;</span>
 	<span class="nt">&lt;body&gt;</span>
 		<span class="nt">&lt;div <span class="na">class=</span><span class="s">"base-skip"</span> <span class="na">id=</span><span class="s">"baseSkip"</span>&gt;</span><span class="nt">&lt;/div&gt;</span>
@@ -72,10 +76,7 @@ project/
 			<span class="nt">&lt;footer <span class="na">class=</span><span class="s">"base-footer"</span> <span class="na">id=</span><span class="s">"baseFooter"</span>&gt;</span><span class="nt">&lt;/footer&gt;</span>
 		<span class="nt">&lt;/div&gt;</span>
 
-		<span class="nt">&lt;script <span class="na">src=</span><span class="s">"/netiveUI/resources/js/lib/jquery-1.12.4.min.js"</span>&gt;&lt;/script&gt;</span>
-		<span class="nt">&lt;script <span class="na">src=</span><span class="s">"/netiveUI/resources/js/ui.global.js"</span>&gt;&lt;/script&gt;</span>
-		<span class="nt">&lt;script <span class="na">src=</span><span class="s">"/netiveUI/resources/js/ui.common.js"</span>&gt;&lt;/script&gt;</span>
-		<span class="nt">&lt;script <span class="na">src=</span><span class="s">"/netiveUI/resources/js/ui.page.js"</span>&gt;&lt;/script&gt;</span>
+		
 		<span class="nt">&lt;script&gt;</span>
 		;(function($, win, doc, undefined) {
 			$(doc).ready(function(){
