@@ -2779,13 +2779,12 @@ if (!Object.keys){
 		$scope.off('scroll.win').on('scroll.win', parallax);
 
 		function parallax() {
-			var scopeH = $scope.outerHeight();
-			var scopeT = Math.floor($scope.scrollTop());
-
 			var $parallax = $('.ui-parallax');
 			var $item = $parallax.find('.ui-parallax-item');
 
-			var nnn = Math.floor($item.eq(0).offset().top);
+			var scopeH = $scope.outerHeight();
+			var scopeT = Math.floor($scope.scrollTop());
+			var baseT = Math.floor($item.eq(0).offset().top);
 
 			for (var i = 0; i < len; i++) {
 				var $current = $item.eq(i);
@@ -2803,10 +2802,9 @@ if (!Object.keys){
 				var e = scopeH * Number(attrEnd) / 100;
 				
 				if (opt.scope !== 'window') {
-					start = (start + scopeT) - (nnn + scopeT);
-					end = (end + scopeT) - (nnn + scopeT);
+					start = (start + scopeT) - (baseT + scopeT);
+					end = (end + scopeT) - (baseT + scopeT);
 				}
-				console.log(scopeT, end , nnn);
 
 				(scopeT >= start - s) ? $current.addClass('parallax-s') : $current.removeClass('parallax-s');
 				(scopeT >= end - e) ? $current.addClass('parallax-e') : $current.removeClass('parallax-e');
