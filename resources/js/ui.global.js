@@ -2749,47 +2749,89 @@ if (!Object.keys){
 	* date : 2020-06-13
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiScrollBox: function (opt) {
-			return createUiScrollBox(opt);
+		uiParallax: function (opt) {
+			return createUiParallax(opt);
 		}
 	});
-	win[global].uiScrollBox.option = {
+	win[global].uiParallax.option = {
 		id : null,
 		scope : 'window'
 	}
-	function createUiScrollBox(opt) {	
-		var opt = $.extend(true, {}, win[global].uiScrollBox.option, opt),
+	function createUiParallax(opt) {	
+		var opt = $.extend(true, {}, win[global].uiParallax.option, opt),
 			$scope = opt.scope === 'window' ? $(win) : opt.scope,
-			$scrollBox = opt.id === null ? $('.ui-scrollbox') : $('#' + opt.id),
-			$item = $scrollBox.find('> .ui-scrollbox-item'),
+			$parallax = opt.id === null ? $('.ui-parallax') : $('#' + opt.id),
+			$item = $parallax.find('> .ui-parallax-item'),
 			len = $item.length,
 			i = 0;
 
-		var checkVisible = function (){
-			var itemTop = opt.scope === 'window' ? $item.eq(i).offset().top : $item.eq(i).position().top;
+		// var checkVisible = function (){
+		// 	var itemTop = $item.eq(i).offset().top;
 
-			if ($scope.outerHeight() > itemTop && i < len) {
-				$item.eq(i).addClass('visible');
-				i = i + 1;
-				checkVisible();
+		// 	if ($scope.outerHeight() > itemTop && i < len) {
+		// 		$item.eq(i).addClass('parallax-s');
+		// 		i = i + 1;
+		// 		checkVisible();
+		// 	}
+		// }
+		// checkVisible();
+		parallax();
+		$scope.off('scroll.win').on('scroll.win', parallax);
+
+		function parallax() {
+			var scopeH = $scope.outerHeight();
+			var scopeT = Math.floor($scope.scrollTop());
+
+			var $parallax = $('.ui-parallax');
+			var $item = $parallax.find('.ui-parallax-item');
+
+			var nnn = Math.floor($item.eq(0).offset().top);
+
+			for (var i = 0; i < len; i++) {
+				var $current = $item.eq(i);
+				
+				var attrStart = $current.attr('start');
+				var attrEnd = $current.attr('end');
+
+				attrStart === undefined ? attrStart = 0 : '';
+				attrEnd === undefined ? attrEnd = 0 : '';
+
+				var h = Math.floor($current.outerHeight());
+				var start = Math.floor($current.offset().top);
+				var end = h + start;
+				var s = scopeH * Number(attrStart) / 100;
+				var e = scopeH * Number(attrEnd) / 100;
+				
+				if (opt.scope !== 'window') {
+					start = (start + scopeT) - (nnn + scopeT);
+					end = (end + scopeT) - (nnn + scopeT);
+				}
+				console.log(scopeT, end , nnn);
+
+				(scopeT >= start - s) ? $current.addClass('parallax-s') : $current.removeClass('parallax-s');
+				(scopeT >= end - e) ? $current.addClass('parallax-e') : $current.removeClass('parallax-e');
 			}
 		}
-		checkVisible();
-
-		$scope.off('scroll.win').on('scroll.win', act);
 
 		function act() {
-			var scopeH = $scope.outerHeight(),
-				scopeT = $scope.scrollTop(),
-				addH = (scopeH / 6),
-				$scrollBox = $('.ui-scrollbox'),
-				$item = $scrollBox.find('> .ui-scrollbox-item');
+			var scopeH = $scope.outerHeight();
+			var scopeT = $scope.scrollTop();
+			var addH = (scopeH / 6);
+
+			var $parallax = $('.ui-parallax');
+			var $item = $parallax.find('> .ui-parallax-item');
+
+			
 
 			var n = i;
 			var itemCheck = function () {
-
 				var $itemN = $item.eq(n >= len ? len - 1 : n);
 				var itemTop = opt.scope === 'window' ? $itemN.offset().top : $itemN.position().top;
+
+				// var h = $current.outerHeight();
+				// var start = $current.position().top;
+				// var end = h - winH + start;
+
 				
 				if (n >= len) {
 					return false;

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<title>test</title>
+
+	<style>
+		* {padding:0; margin:0; box-sizing: border-box;}
+
+		.bn-wrap{position:relative;}
+		.bn-wrap.is-close{margin-top:-100px; transition:margin .3s ease-in-out }
+		.base-header{position:relative;}
+		.type-fixed .base-header{position:fixed; top:0;}
+		.type-fixed .base-body{margin-top:100px}
+
+	</style>
+</head>
+
+<body>
+	<div class="base-wrap">
+		<!-- 배너 -->
+		<div class="bn-wrap" style="width:100%; height:100px; background-color: lightpink; padding:20px;">
+			<strong>Banner</strong>
+			<button type="button" class="bn-close"><span>닫기</span></button>
+		</div>
+
+		<header class="base-header"style="width:100%; height:100px; background:lightblue; border:10px dashed #88bfd1; padding:20px;">
+			<h1>LOGO</h1>
+		</header>
+
+		<div class="base-body" style="width:100%; height:2000px; background-color:#e0f5fd; border:10px dashed skyblue; padding:20px;">
+			<h2>BODY</h2>
+		</div>
+
+		<footer class="base-footer" style="width:100%; height:100px;  background:lightblue; border:10px dashed #88bfd1; padding:20px;">
+			<h2>FOOTER</h2>
+		</footer>
+	</div>
+
+	<!-- script -->
+	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
+
+	<script>
+		;(function($, win, doc, undefined) {
+			$(doc).ready(function(){
+
+
+
+				//배너 닫기 & 스크롤 시 헤더고정
+				$.uiBannerTop = function(){
+					var $bn = $('.bn-wrap');
+					var $body = $('body');
+					var bnH = $bn.outerHeight();
+
+					//배너 닫은 후 header에 fixed 설정
+					$('.bn-close').off('click.uibntop').on('click.uibntop', closeBanner);
+
+					//스크롤 이벤트 값이 배너의 높이보다 크면 header에 fixed 설정
+					$(win).off('scroll.uibntop').on('scroll.uibntop', function(){
+						fixedHeader(Math.floor($(this).scrollTop()));
+					});
+
+					function closeBanner(){
+						$bn.addClass('is-close');
+						setTimeout(function(){
+							$body.addClass('type-fixed');
+							$bn.css('display','none');
+						}, 300);
+					}
+					function fixedHeader(v){
+						(bnH < v) ? 
+							$body.addClass('type-fixed'):
+							!$bn.hasClass('is-close') && $body.removeClass('type-fixed');
+					}
+				}
+				$.uiBannerTop();
+
+
+
+
+
+			});
+		})(jQuery, window, document);
+	</script>
+</body>
+</html>

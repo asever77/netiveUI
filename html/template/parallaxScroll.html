@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<title>Netive UI Development Group</title>
+
+	<link rel="apple-touch-icon" href="/netiveUI/resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="/netiveUI/resources/img/common/ico_favicon.ico"> 
+
+	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
+
+	<script defer src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
+	<script defer src="/netiveUI/resources/js/ui.global.js"></script>
+	<script defer src="/netiveUI/resources/js/ui.common.js"></script>
+	<script defer src="/netiveUI/resources/js/ui.parallaxScroll.js"></script>
+
+	<style>				
+		.scroll-page{position:relative; width:100%; height:100%;}
+		.scroll-page-item{width:100%; position:relative;}
+
+		.scroll-page-item.n1{height:300px; background:lightpink}
+		.scroll-page-item.n2{height:3000px; background:lightskyblue}
+		.scroll-page-item.n3{height:500px; background:lightpink}
+		.scroll-page-item.n4{height:800px; background:lightskyblue}
+		.scroll-page-item.n5{height:200px; background:lightpink}
+		.scroll-page-item.n6{height:100px; background:lightskyblue}
+		.scroll-page-item.n7{height:300px; background:lightpink}
+
+		.scroll-page-item.n2 .n1{width:100%; position:fixed; bottom:45vh; opacity:0; transition:opacity 0.2s;}
+		.scroll-page-item.n2.eff1 .n1{opacity:1; transition:opacity 0.2s;}
+
+		.scroll-page-item.n2 .n1-1{width:100%; font-size:10vw; text-align:center; margin-top:20px; opacity:0; transition:opacity 0.2s, margin 0.2s;}
+		.scroll-page-item.n2.eff1 .n1-1{opacity:1; margin-top:0; transition:opacity 0.2s, margin 0.2s;}
+		
+		.scroll-page-item.n2 .n1-2{width:100%; font-size:6vw; text-align:center; margin-top:20px; opacity:0; transition:opacity 0.2s, margin 0.2s;}
+		.scroll-page-item.n2.eff2 .n1-2{opacity:1; margin-top:0; transition:opacity 0.2s, margin 0.2s;}
+		.scroll-page-item.n2.eff-end .n1{position:absolute; bottom:45vh;}
+	</style>
+</head>
+
+<body>
+	<div class="base-skip" id="baseSkip"></div>	
+	<div class="base-wrap" id="baseWrap">
+		
+		<div class="scroll-page">
+			<section class="scroll-page-item n1">
+				<h1>page1</h1>
+				<p>....</p> 
+			</section>
+
+			<section class="scroll-page-item n2">
+				<div class="n1">
+					<h1 class="n1-1">page2</h1>
+					<p class="n1-2"><strong>page2-1 .... .... ...</strong></p>
+				</div>
+				
+			</section>
+
+			<section class="scroll-page-item n3">
+				<h1>page3</h1>
+			</section>
+
+			<section class="scroll-page-item n4">
+				<h1>page4</h1>
+			</section>
+
+			<section class="scroll-page-item n5">
+				<h1>page5</h1>
+			</section>
+
+			<section class="scroll-page-item n6">
+				<h1>page6</h1>
+			</section>
+
+			<section class="scroll-page-item n7">
+				<h1>page7</h1>
+			</section>
+		</div>
+		
+	</div>
+</body>
+</html>

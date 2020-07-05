@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<title>test</title>
+
+	<style>
+		* {padding:0; margin:0; box-sizing: border-box;}
+				
+				.road-wrap{width:100%; height:500px; background:lightblue; position: relative; overflow:hidden;}
+				.road-scene-a{width:calc(100vw * 5); height:1px; position:absolute; z-index:1; left:calc((100vw * 5) / 2 * -1 );}
+				.road-scene-b{width:calc(100vw * 3); height:1px; position:absolute; z-index:2; left:calc((100vw * 3) / 2 * -1 );}
+				.road-scene-c{width:calc(100vw * 2); height:1px; position:absolute; z-index:3; left:calc((100vw * 2) / 2 * -1 );}
+
+				/* .moving-r .road-scene-a{left:0; transition:left 5s;}
+				.moving-l .road-scene-a{left:calc(-100% - 100vw); transition:left 5s;} */
+
+				.road-item{position:absolute; width:300px; height:150px; background:#fff; border:1px solid #ccc;}
+
+				.road-scene-a .n1{top:10px; left:10%; background:lightcoral}
+				.road-scene-a .n2{top:130px; left:30%; background:lightcoral}
+				.road-scene-a .n3{top:170px; left:50%; background:lightcoral}
+				.road-scene-a .n4{top:360px; left:80%; background:lightcoral}
+
+				.road-scene-b .n1{top:220px; left:0%; background:lightgreen}
+				.road-scene-b .n2{top:410px; left:20%; background:lightgreen}
+				.road-scene-b .n3{top:300px; left:65%; background:lightgreen}
+				.road-scene-b .n4{top:110px; left:85%; background:lightgreen}
+
+				.road-scene-c .n1{top:450px; left:15%; background:lightslategray}
+				.road-scene-c .n2{top:270px; left:37%; background:lightslategray}
+				.road-scene-c .n3{top:5px; left:72%; background:lightslategray}
+				.road-scene-c .n4{top:200px; left:90%; background:lightslategray}
+	</style>
+</head>
+
+<body>
+
+		
+	<div class="road-wrap">
+		<div class="road-scene-a">
+			<div class="road-item n1">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+			<div class="road-item n2">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO2</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+			<div class="road-item n3">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO3</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+			<div class="road-item n4">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO4</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="road-scene-b">
+			<div class="road-item n1">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+			<div class="road-item n2">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO2</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+			<div class="road-item n3">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO3</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+			<div class="road-item n4">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO4</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+		</div>
+		<div class="road-scene-c">
+			<div class="road-item n1">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+			<div class="road-item n2">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO2</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+			<div class="road-item n3">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO3</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+			<div class="road-item n4">
+				<a href="#" class="project-sajawho">
+					<div>
+						<h3>사자WHO4</h3>
+						<p>댄스프로젝트</p>
+					</div>
+				</a>
+			</div>
+		</div>
+	</div>
+
+	<!-- script -->
+	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
+
+	<script>
+		;(function($, win, doc, undefined) {
+			$(doc).ready(function(){
+
+				$.uiRoadItem = function(v){
+					var $wrap = $('.road-wrap');
+					
+					$wrap.on('mouseover', function(event){
+						$wrap.on('mousemove', function(event){
+							event = event || window.event;
+
+							var _x = ( event.pageX ) ? event.pageX : event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft; 
+							var isMove = $wrap.data('move');
+
+							if (_x > $wrap.outerWidth() / 2) {
+								if (!isMove || isMove === 'right') {
+									moving('.road-scene-a', true, 'left');
+									moving('.road-scene-b', true, 'left');
+									moving('.road-scene-c', true, 'left');
+								} 
+							} else {
+								if (!isMove || isMove === 'left') {
+									moving('.road-scene-a', true, 'right');
+									moving('.road-scene-b', true, 'right');
+									moving('.road-scene-c', true, 'right');
+								} 
+							}
+						});
+					}).on('mouseleave', function(){
+						moving('.road-scene-a', false);
+						moving('.road-scene-b', false);
+						moving('.road-scene-c', false);
+					});
+
+					$wrap.find('.road-item').on('mouseover', function(event){
+						pause();
+					}).on('mouseleave', function(event){
+						moving('.road-scene-a', false);
+						moving('.road-scene-b', false);
+						moving('.road-scene-c', false);
+					});
+
+					
+					function pause() {
+						setTimeout(function(){
+							$wrap.data('move', 'stop');
+							$('.road-scene-a').stop();
+							$('.road-scene-b').stop();
+							$('.road-scene-c').stop();
+						}, 200);
+					}
+					function moving(t, v, w){
+						var $scene = $(t);
+						var timer;
+
+						clearTimeout(timer);
+						if (v) {
+							var n = $scene.outerWidth() - $wrap.outerWidth();
+							var per = Math.floor((n - Math.abs($scene.position().left)) / n * 100);
+							var per2 = Math.floor(Math.abs($scene.position().left) / n * 100);
+							var speed = 8000 * (per / 100);
+							var speed2 = 8000 * (per2 / 100);
+
+							if (w === 'left') {
+								$wrap.data('move', 'left');
+								$scene.stop().animate({
+									left: ($scene.outerWidth() - $wrap.outerWidth()) * -1 + 'px'
+								}, speed);
+							} else {
+								$wrap.data('move', 'right');
+								$scene.stop().animate({
+									left: 0
+								}, speed2);
+							}
+						} else {
+							timer = setTimeout(function(){
+								$wrap.data('move', false);
+								$scene.stop();	
+							}, 300);
+						}
+					}
+				}
+				$.uiRoadItem();
+			});
+		})(jQuery, window, document);
+	</script>
+</body>
+</html>

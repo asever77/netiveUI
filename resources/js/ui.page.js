@@ -452,7 +452,7 @@
                 ps:'center' 
             });
         });
-        $plugins.uiScrollBox({
+        $plugins.uiParallax({
             id : 'scrollBoxTest1',
             scope : $('#testBoxScroll'),
             callback:function(v) {
@@ -466,8 +466,8 @@
     
     
    
-    $plugins.page.pageScrollBox = function(){
-        $plugins.uiScrollBox({
+    $plugins.page.pageParallax = function(){
+        $plugins.uiParallax({
             callback:function(v) {
                 console.log(v);
             }

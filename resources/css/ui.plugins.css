@@ -268,9 +268,7 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 
 
 /* ui scroll box : base */
-.ui-scrollbox-item {position:relative;}
-.ui-scrollbox-cont {position:relative; width:100%; top:50px; opacity:0; transition:top 0.3s ease-in, opacity 0.5s ease-in;}
-.ui-scrollbox-item.visible .ui-scrollbox-cont {top:0; opacity:1;}
+.ui-parallax-item {position:relative;}
 
 
 /* ui tab : base */

@@ -205,8 +205,8 @@ fieldset{margin:0}
 
 .ui-drop-pnl{width:400px}
 
-.scrollbox-test .ui-scrollbox-cont{padding:60px 0; background:#f1f1f1; margin:10px 0;}
-.scrollbox-test b{display:block; width:100%; text-align:center; font-weight: 900; font-size:20vw; opacity: 0.3;}
+.parallax-test .parallax-cont{padding:0; background:#f1f1f1; margin:10px auto 0; width:100%; top:0}
+.parallax-test b{display:block; width:100%; text-align:center; font-weight: 900; font-size:20vw; opacity: 0.3;}
 
 .ui-scrollbar.test1{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:50%; border:1px dashed #ccc;}
 .ui-scrollbar.test2{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:217px; border:1px dashed #ccc;}
@@ -272,7 +272,9 @@ html.col-12 .coln12{display:inline-block}
 .list-define dt {margin:10px 0 5px; font-weight:500;}
 .list-define dd {padding:0; margin:0;}
 
-
+.parallax-cont {position:relative; width:100%; top:50px; opacity:0; transition:top 0.3s ease-in, opacity 0.5s ease-in;}
+.ui-parallax-item.parallax-s .parallax-cont {top:0; opacity:1;}
+.ui-parallax-item.parallax-e .parallax-cont {outline:10px solid lightgray;}
 
 /* colunns 4 / gutters 16 ---------------- */
 @media all and (max-width:599px) and (orientation:portrait) {
@@ -351,7 +353,7 @@ html.col-12 .coln12{display:inline-block}
 
 	/* common */
 	.tit-catagory{display:none}
-	.tit-wrap{margin:140px 0 0 0;}
+	.tit-wrap{padding:140px 0 0 0;}
 	.tit-wrap em{font-size:12px; margin-top:10px; color:#999}
 	.tit-wrap .h-1{outline:0; display: inline-block; position: relative;}
 	.tit-wrap .h-1:focus:after{content:""; position:absolute; left:0; width:100%; bottom:18px; display:block; border-bottom:1px dashed #000; opacity:0.4; }

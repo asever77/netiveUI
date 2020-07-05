@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<title>test</title>
+
+	<style>
+		* {padding:0; margin:0; box-sizing: border-box;}
+        
+        .card-list{display:inline-block; border:10px solid lightseagreen}
+		.card-list-item{width:200px; height:130px; padding:0; border:0; cursor:pointer; opacity:0.5;}
+        .card-list-item.selected{opacity:1}
+        .card-list-item img{width:100%; display:block;}
+
+        .card-body{display:inline-block;}
+        .card-body img{display:block;}
+
+        .card-body[data-line="1"]{border:10px solid lightblue}
+        .card-body[data-line="2"]{border:10px solid lightgreen}
+        .card-body[data-line="3"]{border:10px solid lightsalmon}
+        .card-body[data-line="4"]{border:10px solid lightslategrey}
+
+	</style>
+</head>
+
+<body>
+
+    
+	<div class="card-wrap">
+        <div class="card-body" data-line="1">
+            <img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/de16511ce4728.jpg" alt="">
+        </div>
+        <div class="card-list">
+            <button type="button" class="card-list-item" data-n="1" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/de16511ce4728.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/de16511ce4728.jpg" alt=""></button>
+            <button type="button" class="card-list-item" data-n="2" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/191e2ef5e2f97.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/191e2ef5e2f97.jpg" alt=""></button>
+            <button type="button" class="card-list-item" data-n="3" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/4db18b2fcd761.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/4db18b2fcd761.jpg" alt=""></button>
+            <button type="button" class="card-list-item" data-n="4" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/59d29893ef47c.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/59d29893ef47c.jpg" alt=""></button>
+        </div>
+    </div>
+
+	<!-- script -->
+	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
+
+	<script>
+		;(function($, win, doc, undefined) {
+			$(doc).ready(function(){
+
+
+				//img교체 및 클래스 변경
+				$.uiCardImgChange = function(v){
+					var $wrap = $('.card-wrap');
+					var $body = $wrap.find('.card-body');
+                    var $img = $body.find('img');
+                    var $list = $wrap.find('.card-list');
+                    var $item = $list.find('.card-list-item');
+                    var n = v !== undefined ? v : 1;
+                    var $current = $list.find('.card-list-item[data-n="'+ n +'"]');
+                    
+                    //init
+                    $body.attr('data-line', n);
+                    $img.attr('src', $current.attr('data-img'));
+                    $item.removeClass('selected');
+                    $current.addClass('selected');
+
+                    //event
+                    $item.off('click.imgchange').on('click.imgchange', function(){
+                        act(this);
+                    });
+
+                    function act(t){
+                        var $this = $(t);
+
+                        $body.attr('data-line', $this.attr('data-n'));
+                        $img.attr('src', $this.attr('data-img'));
+                        $item.removeClass('selected');
+                        $this.addClass('selected');
+                    }
+				}
+				$.uiCardImgChange(2);
+
+
+
+
+
+			});
+		})(jQuery, window, document);
+	</script>
+</body>
+</html>
