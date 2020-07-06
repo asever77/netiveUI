@@ -474,8 +474,8 @@
         });
     }
 
-    $plugins.page.pagePerspective = function(){
-        $plugins.uiPerspectiveSlide();
+    $plugins.page.pagePopupBook = function(){
+        $plugins.uiPopupBook();
     }
 
     $plugins.page.pageScrollBar = function(){
