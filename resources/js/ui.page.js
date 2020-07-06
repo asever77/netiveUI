@@ -474,6 +474,10 @@
         });
     }
 
+    $plugins.page.pagePerspective = function(){
+        $plugins.uiPerspectiveSlide();
+    }
+
     $plugins.page.pageScrollBar = function(){
         $plugins.uiScrollBar({
             infiniteCallback: function(){

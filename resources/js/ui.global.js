@@ -2745,7 +2745,7 @@ if (!Object.keys){
 
 
 	/* ------------------------
-	* name : scroll box
+	* name : parallax box
 	* date : 2020-06-13
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
@@ -2851,6 +2851,88 @@ if (!Object.keys){
 			}
 			itemCheck();
 		}
+	}
+
+	/* ------------------------
+	* name : parallax box
+	* date : 2020-06-13
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {
+		uiPerspectiveSlide: function () {
+			return createUiPerspectiveSlide();
+		}
+	});
+	function createUiPerspectiveSlide() {	
+		var $wrap = $('.ui-perspective');
+					
+        $wrap.off('mouseover.pspt').on('mouseover.pspt', function(){
+            $wrap.off('mousemove.pspt').on('mousemove.pspt', function(event){
+                event = event || window.event;
+				
+				var wrapL = $wrap.position().left;
+                var _x = ( event.pageX ) ? event.pageX - wrapL : event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - wrapL; 
+                var isMove = $wrap.data('move');
+
+                if (_x > $wrap.outerWidth() / 2) {
+                    if (!isMove || isMove === 'right') {
+                        moving('.ui-perspective-scene-a', true, 'left');
+                        moving('.ui-perspective-scene-b', true, 'left');
+                        moving('.ui-perspective-scene-c', true, 'left');
+                    } 
+                } else {
+                    if (!isMove || isMove === 'left') {
+                        moving('.ui-perspective-scene-a', true, 'right');
+                        moving('.ui-perspective-scene-b', true, 'right');
+                        moving('.ui-perspective-scene-c', true, 'right');
+                    } 
+                }
+            });
+        }).off('mouseleave.pspt').on('mouseleave.pspt', function(){
+            moving('.ui-perspective-scene-a', false);
+            moving('.ui-perspective-scene-b', false);
+            moving('.ui-perspective-scene-c', false);
+        });
+
+        $wrap.find('.ui-perspective-item').off('mouseover.pspti').on('mouseover.pspti', function(event){
+            pause();
+        }).off('mouseleave.pspti').on('mouseleave.pspti', function(event){
+            moving('.ui-perspective-scene-a', false);
+            moving('.ui-perspective-scene-b', false);
+            moving('.ui-perspective-scene-c', false);
+        });
+
+        function pause() {
+			$wrap.data('move', 'stop');
+			$('.ui-perspective-scene-a').stop();
+			$('.ui-perspective-scene-b').stop();
+			$('.ui-perspective-scene-c').stop();
+        }
+        function moving(t, v, w){
+            var $scene = $(t);
+
+            if (v) {
+                var n = $scene.outerWidth() - $wrap.outerWidth();
+                var per = Math.floor((n - Math.abs($scene.position().left)) / n * 100);
+                var per2 = Math.floor(Math.abs($scene.position().left) / n * 100);
+                var speed = 8000 * (per / 100);
+                var speed2 = 8000 * (per2 / 100);
+
+                if (w === 'left') {
+                    $wrap.data('move', 'left');
+                    $scene.stop().animate({
+                        left: ($scene.outerWidth() - $wrap.outerWidth()) * -1 + 'px'
+                    }, speed);
+                } else {
+                    $wrap.data('move', 'right');
+                    $scene.stop().animate({
+                        left: 0
+                    }, speed2);
+                }
+            } else {
+				$wrap.data('move', false);
+				$scene.stop();	
+            }
+        }
 	}
 
 

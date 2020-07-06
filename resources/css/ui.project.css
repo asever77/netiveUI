@@ -205,8 +205,9 @@ fieldset{margin:0}
 
 .ui-drop-pnl{width:400px}
 
+.parallax-test:first-child .parallax-cont{margin-top:0;}
 .parallax-test .parallax-cont{padding:0; background:#f1f1f1; margin:10px auto 0; width:100%; top:0}
-.parallax-test b{display:block; width:100%; text-align:center; font-weight: 900; font-size:20vw; opacity: 0.3;}
+.parallax-test b{display:block; width:100%; text-align:center; font-weight: 900; font-size:50vw; opacity: 0.3;}
 
 .ui-scrollbar.test1{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:50%; border:1px dashed #ccc;}
 .ui-scrollbar.test2{margin:10px 10px 0 0; vertical-align:top; display:inline-block; height:300px; width:217px; border:1px dashed #ccc;}

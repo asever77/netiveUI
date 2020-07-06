@@ -68,6 +68,9 @@
 					case 'parallax' :
 						fristHref = '/netiveUI/html/components/parallax.html';
 						break;
+					case 'perspective' :
+						fristHref = '/netiveUI/html/components/perspective.html';
+						break;
 					case 'loading' :
 						fristHref = '/netiveUI/html/components/loading.html';
 						break;
