@@ -12,9 +12,9 @@
 
 	<style>
 		* {padding:0; margin:0; box-sizing: border-box;}
-		body{overflow-y: scroll;}
+		body{overflow-y: hidden;}
 		.ui-fullpage{position:relative; top:0; left:0; }	
-		.ui-fullpage-item{position:relative; margin-top:0; left:0; }
+		.ui-fullpage-item{position:relative; margin-top:0; left:0; height:100vh; overflow-y: auto;}
 
 
 		/* .ui-fullpage .ui-fullpage-item.n2{margin-top:550px; transition:margin 0.3s ease-in-out;}
@@ -25,8 +25,8 @@
 
 <body>
 	<div class="ui-fullpage">
-		<section class="ui-fullpage-item n1" style="background-color:lightskyblue">
-			<div style="width:100%; height:600px; background-color:lightskyblue">
+		<section class="ui-fullpage-item n1">
+			<div style="width:100%; height:2600px; background-color:lightskyblue; border:10px solid lightblue">
 
 			</div>
 		</section>
@@ -61,11 +61,11 @@
 					(winH > $page1.outerHeight()) && $fullPage.data('noscroll', true);
 
 					$fullPage.data('start', true);
-					$page2.css('display', 'none');
+					$page2.css('display', 'none').removeClass('on');
 					$page1.css({
 						'min-height': winH + 'px',
 						'display':'block'
-					});
+					}).addClass('on');
 
 					var wheelEvt = function(){
 						$(document)
@@ -74,27 +74,41 @@
 							e.stopPropagation();
 
 							if (e.originalEvent.wheelDelta) {
-								wheelAct(e.originalEvent.wheelDelta);
+								pageMove(e.originalEvent.wheelDelta);
 							} else if (e.detail) {
-								wheelAct((e.detail * -1));
+								pageMove((e.detail * -1));
 							}
-
 						});
 					}
 					wheelEvt();
-					var timer;
-					function wheelAct(v) {
-						clearTimeout(timer);
-						timer = setTimeout(function(){
-							winScrTop = Math.floor( $win.scrollTop());
-							if (v < 0 && winScrTop > Math.floor($page1.outerHeight() - winH - 15)  && $fullPage.data('start')) {
+
+					function pageMove(v) {
+						winScrTop = Math.floor( $win.scrollTop());
+						var pageScrTop = Math.floor( $fullPage.find('.ui-fullpage-item.on').scrollTop());
+
+						if (!hasScrollBarY()) {
+							if (v < 0  && $fullPage.data('start')) {
 								//down
 								actDown();
-							} else if (v > 0 && winScrTop === 0 && !$fullPage.data('noscroll') && !$fullPage.data('start')) {
+							} else if (v > 0 && !$fullPage.data('noscroll') && !$fullPage.data('start')) {
 								//up
 								actUp();
 							}
-						}, 300);
+						} else {
+							if (v < 0 && pageScrTop > Math.floor($page1.prop('scrollHeight') - winH - 15)  && $fullPage.data('start')) {
+								//down
+								actDown();
+							} else if (v > 0 && pageScrTop === 0 && !$fullPage.data('noscroll') && !$fullPage.data('start')) {
+								//up
+								actUp();
+							}
+						}
+					}
+
+					function hasScrollBarY() {
+						var $this = $fullPage.find('.ui-fullpage-item.on');
+
+						return ($this.prop('scrollHeight') == 0 && $this.prop('clientHeight') == 0) || ($this.prop('scrollHeight') > $this.prop('clientHeight'));
 					}
 
 					function actDown(){
@@ -104,7 +118,8 @@
 							top: $pageItem.eq(0).outerHeight() * -1  + 'px'
 						},400, function(){
 							$('html, body').scrollTop(0);
-							$page1.css('display', 'none');
+							$page1.css('display', 'none').removeClass('on');
+							$page2.addClass('on');
 							$fullPage.css('top', 0);
 
 							$fullPage.data('start', false).data('noscroll', false);
@@ -118,13 +133,11 @@
 						$fullPage.stop().animate({
 							top: 0
 						},400, function(){
-							$page2.css('display', 'none');
+							$page2.css('display', 'none').removeClass('on');
+							$page1.addClass('on');
 							$fullPage.data('start', true).data('noscroll', true);
 							wheelEvt();
 						});
-						
-
-						
 					}
 				}
 				$.uiFullPage();
