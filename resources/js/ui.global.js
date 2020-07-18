@@ -2722,7 +2722,6 @@ if (!Object.keys){
 			$('html').removeClass('is-modal');
 		}
 		$('.ui-modal.open.n' + ($('.ui-modal.open').length - 1)).addClass('current');
-
 		
 		win[global].uiScroll({
 			value: Number($modal.data('scrolltop'))
@@ -2734,6 +2733,7 @@ if (!Object.keys){
 			$modal.find('.ui-modal-body').removeAttr('style');
 			$modal.removeClass('ready is-over current close ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
 			$modal.removeAttr('n');
+			
 			if (!$('.ui-modal.open').length) {
 				$("html, body").removeClass('scroll-no');
 			}

@@ -219,7 +219,7 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 
 .ui-modal.ready.open.current:after {animation-name:fadeIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
 .ui-modal.ready.close:after {animation-name:fadeOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
-.ui-modal.close.ps-center .ui-modal-wrap {opacity:1; animation-name:slideDownOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
+.ui-modal.close.ps-center .ui-modal-wrap {animation-name:slideDownOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
 .ui-modal.open.ps-center .ui-modal-wrap {animation-name:slideDownIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
 .ui-modal.close.ps-top .ui-modal-wrap {animation-name:slideDownOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
 .ui-modal.open.ps-top .ui-modal-wrap {animation-name:slideDownIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
