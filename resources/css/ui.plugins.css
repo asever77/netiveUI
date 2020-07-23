@@ -196,14 +196,14 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 
 
 /* ui modal : base */
-.scroll-no {overflow:hidden; padding-right:17px;}
+.scroll-no {overflow:hidden;}
 .ui-m .scroll-no{padding-right:0;}
 .ui-modal.n1 {z-index:201;}
 .ui-modal.n2 {z-index:202;}
 .ui-modal.n3 {z-index:203;}
 .ui-modal.n4 {z-index:204;}
 .ui-modal.n5 {z-index:205;}
-.ui-modal {display:none; position:fixed; top:0; left:0; z-index:200; width:100%; height:100%; overflow:hidden; overflow-y:scroll; }
+.ui-modal {display:none; position:fixed; top:0; left:0; z-index:200; width:100%; height:100%; overflow:hidden; overflow-y:auto; }
 .ui-modal.ready {display:flex;}
 .ui-modal.ready.current:after{content:""; display:block; position:fixed; top:0; left:0; width:100%; height:100%; opacity:0; background:rgba(0,0,0,.5); }
 
@@ -227,6 +227,9 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-modal.open.ps-bottom .ui-modal-wrap {animation-name:slideUpIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
 .ui-modal.close.ps-center.type-system .ui-modal-wrap {animation-name:slideDownOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
 .ui-modal.open.ps-center.type-system .ui-modal-wrap {animation-name:slideDownIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
+
+.ie9 .ui-modal.open{display:block;}
+.ie9 .ui-modal.open .ui-modal-wrap{opacity:1; margin:0 auto; transform:translate(0, -50%); top:50%}
 
 .type-system .ui-modal-wrap {width:250px; text-align:center; font-size:14px;}
 .type-system .ui-modal-wrap strong{font-weight:900;}

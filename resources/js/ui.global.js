@@ -2681,7 +2681,7 @@ if (!Object.keys){
 					$modal.removeClass('is-over');
 			},150);
 
-			$(doc).find('.ui-modalclose').off('click.close').on('click.close', function(e){
+			$(doc).find('.ui-modal-close').off('click.close').on('click.close', function(e){
 				$plugins.uiModalClose({ 
 					id: $(this).closest('.ui-modal').attr('id'), 
 					remove: remove,
