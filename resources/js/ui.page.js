@@ -141,9 +141,9 @@
     };
 
     $plugins.page.pageModal = function(){
-        $('.test-modal .btn-base').off('click.modal').on('click.modal', function(){
+        $('.test-modal .btn-base').off('click.modal').on('click.modal', function(e){
             var $btn = $(this);
-            console.log($btn.attr('modal-height'))
+            
             $plugins.uiModalOpen({ 
                 id: $btn.attr('modal-id'), 
                 ps: $btn.attr('modal-ps') === undefined ? 'center' : $btn.attr('modal-ps'), 

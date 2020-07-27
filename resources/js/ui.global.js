@@ -2530,6 +2530,7 @@ if (!Object.keys){
 			sConfirmCallback = opt.sConfirmCallback,
 			sCancelCallback = opt.sCancelCallback;
 		
+		
 		if (type === 'normal') {
 			if (!!src && !$('#' + opt.id).length) {
 				$plugins.uiAjax({
@@ -2694,6 +2695,11 @@ if (!Object.keys){
 			$(doc).find('.ui-modal-cancel').off('click.callback').on('click.callback', function(e){
 				sCancelCallback();
 			});
+			$(doc).find('.ui-modal').find('button, a').off('click.act').on('click.act', function(e){
+				var $this = $(this); 
+				console.log($this)
+				$this.closest('.ui-modal').data('active', $this);
+			});
 		}
 	}
 	win[global].uiModalClose.option = {
@@ -2711,15 +2717,19 @@ if (!Object.keys){
 			id = opt.id,
 			remove = opt.remove,
 			$modal = $('#' + id),
-			endfocus = opt.endfocus === false ? $modal.data('endfocus') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus,
+			endfocus = opt.endfocus,
 			closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') === undefined ? false : $modal.data('closecallback') : opt.closeCallback;
-		
+	
 		var timer;
 
 		$modal.removeClass('open').addClass('close');
 		if (!$('.ui-modal.open').length) {
+			endfocus = endfocus === false ? $('body').data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
 			$('html').off('click.uimodaldim');
 			$('html').removeClass('is-modal');
+		} else {
+			console.log(endfocus, $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1)).data('active'));
+			endfocus = endfocus === false ? $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1)).data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
 		}
 		$('.ui-modal.open.n' + ($('.ui-modal.open').length - 1)).addClass('current');
 		
@@ -2740,6 +2750,8 @@ if (!Object.keys){
 			closeCallback ? closeCallback(opt) : '';
 			remove ? $modal.remove() : '';
 			!!endfocus ? endfocus.focus() : '';
+
+			
 		},210);
 	}
 
