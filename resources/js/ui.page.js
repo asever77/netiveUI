@@ -164,9 +164,41 @@
         
     }
 
-    
     $plugins.page.pageFileUpload = function(){
         $plugins.uiFileUpload(); 
+    }
+
+    $plugins.page.pageIssue = function(){
+
+
+        if ($('#uiIssueSearch').val() !== '') {
+            var temp = $('.bul-hyphen > div *:contains('+ $('#uiIssueSearch').val() +')');
+
+            $('.bul-hyphen > div').addClass('disabled').hide();
+            $(temp).closest('.bul-hyphen > div').removeClass('disabled').show();
+        }
+        $.expr[":"].contains = $.expr.createPseudo(function(arg){
+            return function(elem) {
+                return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+            }
+        });
+        $('#uiIssueSearchBtn').on('click', function(){
+            searchAct();
+        });
+        $('#uiIssueSearch').on('keydown', function(e){
+            if (e.keyCode === $plugins.option.keys.enter) {
+                searchAct();
+            }
+        });
+
+        function searchAct(){
+            var k = $('#uiIssueSearch').val(),
+                temp = $('.bul-hyphen > div *:contains('+ k +')');
+
+            $('.bul-hyphen > div').addClass('disabled').hide();
+            $(temp).closest('.bul-hyphen > div').removeClass('disabled').show();
+
+        }
     }
 
     $plugins.page.pageSlot = function(){

@@ -2719,19 +2719,21 @@ if (!Object.keys){
 			$modal = $('#' + id),
 			endfocus = opt.endfocus,
 			closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') === undefined ? false : $modal.data('closecallback') : opt.closeCallback;
-	
-		var timer;
 
 		$modal.removeClass('open').addClass('close');
+
+		var timer;
+		var $modalPrev = $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1));
+
 		if (!$('.ui-modal.open').length) {
 			endfocus = endfocus === false ? $('body').data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
 			$('html').off('click.uimodaldim');
 			$('html').removeClass('is-modal');
 		} else {
-			console.log(endfocus, $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1)).data('active'));
-			endfocus = endfocus === false ? $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1)).data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
+			endfocus = endfocus === false ? $modalPrev.data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
 		}
-		$('.ui-modal.open.n' + ($('.ui-modal.open').length - 1)).addClass('current');
+
+		$modalPrev.addClass('current');
 		
 		win[global].uiScroll({
 			value: Number($modal.data('scrolltop'))
@@ -2750,8 +2752,6 @@ if (!Object.keys){
 			closeCallback ? closeCallback(opt) : '';
 			remove ? $modal.remove() : '';
 			!!endfocus ? endfocus.focus() : '';
-
-			
 		},210);
 	}
 

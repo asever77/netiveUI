@@ -129,6 +129,9 @@
 					case 'slider' :
 						fristHref = '/netiveUI/html/components/slider.html';
 						break;
+					case 'issue' :
+						fristHref = '/netiveUI/html/memory/issue.html';
+						break;
 				   
 				}
 			} 
