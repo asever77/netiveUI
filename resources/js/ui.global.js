@@ -2469,6 +2469,7 @@ if (!Object.keys){
 	* name : modal
 	* date : 2020-06-11
 	------------------------ */	
+	
 	win[global] = win[global].uiNameSpace(namespace, {
 		uiModalOpen: function (opt) {
 			return createUiModalOpen(opt);
@@ -2529,8 +2530,7 @@ if (!Object.keys){
 			sClass = opt.sClass,
 			sConfirmCallback = opt.sConfirmCallback,
 			sCancelCallback = opt.sCancelCallback;
-		
-		
+
 		if (type === 'normal') {
 			if (!!src && !$('#' + opt.id).length) {
 				$plugins.uiAjax({
@@ -2549,6 +2549,10 @@ if (!Object.keys){
 			remove = true;
 			id = 'uiSystemModal';
 			makeSystemModal();
+		}
+
+		if (endfocus === 'body') {
+			endfocus = $('body').data('active');
 		}
 
 		function makeSystemModal(){
@@ -2595,6 +2599,7 @@ if (!Object.keys){
 				.attr('role', 'dialog')
 				.addClass('n' + $('.ui-modal.open').length + ' current')
 				.data('scrolltop', scr_t)
+				.data('active', endfocus)
 				.data('closecallback', closeCallback);
 
 			if (mobileFull && !$plugins.breakpoint) {
@@ -2649,7 +2654,7 @@ if (!Object.keys){
 					type:'hold' 
 				});
 
-				$modal.addClass('open').data('endfocus', endfocus);
+				$modal.addClass('open');
 
 				!!sZindex && $modal.css('z-index', sZindex);
 				callback && callback(opt);
@@ -2697,7 +2702,6 @@ if (!Object.keys){
 			});
 			$(doc).find('.ui-modal').find('button, a').off('click.act').on('click.act', function(e){
 				var $this = $(this); 
-				console.log($this)
 				$this.closest('.ui-modal').data('active', $this);
 			});
 		}
@@ -2727,6 +2731,7 @@ if (!Object.keys){
 
 		if (!$('.ui-modal.open').length) {
 			endfocus = endfocus === false ? $('body').data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
+
 			$('html').off('click.uimodaldim');
 			$('html').removeClass('is-modal');
 		} else {
@@ -2751,6 +2756,9 @@ if (!Object.keys){
 			}
 			closeCallback ? closeCallback(opt) : '';
 			remove ? $modal.remove() : '';
+
+			console.log($modal.attr('id'), endfocus);
+
 			!!endfocus ? endfocus.focus() : '';
 		},210);
 	}

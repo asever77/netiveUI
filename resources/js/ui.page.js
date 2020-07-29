@@ -141,6 +141,14 @@
     };
 
     $plugins.page.pageModal = function(){
+        $(doc).find('button, a').off('click.active').on('click.active', function(){
+            var $this = $(this);
+
+            if (!$this.closest('.ui-modal').length || $this.hasClass('ui-modal')) {
+                $('body').data('active', $this);
+            }
+        });
+
         $('.test-modal .btn-base').off('click.modal').on('click.modal', function(e){
             var $btn = $(this);
             
@@ -152,12 +160,14 @@
                 modalWidth: $btn.attr('modal-width') === undefined ? false : $btn.attr('modal-width'), 
                 modalHeight: $btn.attr('modal-height') === undefined ? false : $btn.attr('modal-height'), 
                 innerScroll : $btn.attr('modal-scroll') === undefined ? false : $btn.attr('modal-scroll') === 'true' && true, 
-                closeCallback: function(v) { console.log('close callback', v); },
+                closeCallback: function(v) { 
+                    //console.log('close callback', v); 
+                },
                 callback: function(v) { 
                     $plugins.uiScrollBar({
                         id: $('#' + $btn.attr('modal-id')).find('.ui-scrollbar')
                     })
-                    console.log('callback', v); 
+                    //console.log('callback', v); 
                 }
             });
         })

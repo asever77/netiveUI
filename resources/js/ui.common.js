@@ -157,13 +157,17 @@
 					$plugins.common.pageInit(fristHref);
 					$plugins.common.settingAside();
 
-					$(doc).find('.base-wrap').find('button, a').on('click', function(){
-						var $this = $(this); 
-						(!$this.closest('.ui-modal').length || $this.hasClass('.ui-modal')) && $('body').data('active', $this);
-					});
+					
+					// $(doc).find('.base-wrap').find('button, a').on('click', function(){
+					// 	var $this = $(this); 
+					// 	(!$this.closest('.ui-modal').length || $this.hasClass('.ui-modal')) && $('body').data('active', $this);
+					// });
 					
 				}
 			});
+
+			
+			
 			// $plugins.uiAjax({ 
 			//	 id:'baseFooter', 
 			//	 url:'/netiveUI/html/inc/footer.html', 
