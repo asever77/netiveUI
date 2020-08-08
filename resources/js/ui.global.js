@@ -2483,7 +2483,7 @@ if (!Object.keys){
 	});
 	win[global].uiModalOpen.option = {
 		type: 'normal',
-		wrap: $('body'),
+		wrap: false,
 		mobileFull: false,
 		ps: 'center',
 		src: false,
@@ -2506,7 +2506,7 @@ if (!Object.keys){
 	}
 	function createUiModalOpen(opt) {
 		var opt = $.extend(true, {}, win[global].uiModalOpen.option, opt),
-			wrap = typeof opt.wrap === 'object' ? opt.wrap : $('#' + opt.wrap),
+			wrap = opt.wrap === false ? $('body') : typeof opt.wrap === 'object' ? opt.wrap : $('#' + opt.wrap),
 			type = opt.type,
 			id = opt.id,
 			src = opt.src,
