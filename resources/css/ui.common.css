@@ -24,7 +24,7 @@ caption{position:relative !important; width:1px !important; height:1px !importan
 legend, .hidden, .hide { position:absolute !important; width:1px !important; height:1px !important; color:transparent !important; overflow:hidden !important; clip:rect(1px, 1px,1px, 1px); clip-path:inset(50%); }
 /* html5 */
 article, aside, details, figcaption, figure, footer, header, main, hgroup, nav, section, summary {display:block; margin:0; padding:0; box-sizing:border-box;}
-
+caption *{display:inline-block !important}
 /* .ui-m *{outline:0;} */
 
 /* [base] HEADING & Font ---------------------------------------------------------------------------*/
