@@ -92,7 +92,8 @@
 		<dt>IOS voiceOver 사용시 포커스 이동</dt>
 		<dd>
 			<p>
-				voiceover 사용 시 강제로 이동시키는 포커스 이동이 안되는 경우가 생기는 현상.
+				voiceover 사용 시 강제로 이동시키는 포커스 이동이 안되는 경우가 생기는 현상.<br>
+				<strong>기본적인 a, button, input, h1.. 태그같은 포커스를 받는 요소로 이동 시켜야하며 자식이 없는 위치여야한다. 예를 들어 div에 tabindex를 줘서 하는 이동은 ios에서 제대로 이동하지 않는다.</strong><br>
 				<a href="https://github.com/humaan/Modaal/issues/99" target="_blank">https://github.com/humaan/Modaal/issues/99</a></p>
 			<div class="list-memory-tag">
 				<em>#ios</em> <em>#focus</em> <em>#포커스</em> <em>#voice over</em>
@@ -108,6 +109,17 @@
 				<a href="https://stackoverflow.com/questions/46036196/document-activeelement-not-returning-the-active-element-in-safari" target="_blank">https://stackoverflow.com/questions/46036196/document-activeelement-not-returning-the-active-element-in-safari</a></p>
 			<div class="list-memory-tag">
 				<em>#ios</em> <em>#focus</em> <em>#포커스</em> <em>#activeElement</em> <em>#safari</em> <em>#mac</em>
+			</div>
+		</dd>
+	</div>
+
+	<div>
+		<dt>mouseleave와 mouseout의 차이</dt>
+		<dd>
+			<p>
+				두개의 차이를 알고 있으면 좋을거 같다. 자식 요소들까지 포함하느냐의 차이인데 mouseover/mouseout은 자식요소까지 포함한다. 반면에 moustenter/mouseleave는 자식요소를 제외한 자신의 영역만 해당한다.
+			<div class="list-memory-tag">
+				<em>#event</em> <em>#mouseleave</em> <em>#mouseout</em> <em>#mouseover</em> <em>#mouseenter</em> 
 			</div>
 		</dd>
 	</div>
