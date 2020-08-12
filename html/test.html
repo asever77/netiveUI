@@ -19,63 +19,39 @@
 
 <body>
 	<div class="base-wrap">
-		
-		
-
-<video controls="controls" 
-       class="video-stream" 
-       x-webkit-airplay="allow" 
-       data-youtube-id="N9oxmRT2YWw" 
-       src="http://v20.lscache8.c.youtube.com/videoplayback?sparams=id%2Cexpire%2Cip%2Cipbits%2Citag%2Cratebypass%2Coc%3AU0hPRVRMVV9FSkNOOV9MRllD&amp;itag=43&amp;ipbits=0&amp;signature=D2BCBE2F115E68C5FF97673F1D797F3C3E3BFB99.59252109C7D2B995A8D51A461FF9A6264879948E&amp;sver=3&amp;ratebypass=yes&amp;expire=1300417200&amp;key=yt1&amp;ip=0.0.0.0&amp;id=37da319914f6616c"></video>
-
-
-		
+<video controls="true">
+    <source src="www.youtube.com/watch?v=3bGNuRtlqAQ" type="video/mp4" />
+</video>	
 	</div>
 
 	<!-- script -->
 	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
 
 	<script>
-		;(function($, win, doc, undefined) {
-			$(doc).ready(function(){
-
-
-
-				//배너 닫기 & 스크롤 시 헤더고정
-				$.uiBannerTop = function(){
-					var $bn = $('.bn-wrap');
-					var $body = $('body');
-					var bnH = $bn.outerHeight();
-
-					//배너 닫은 후 header에 fixed 설정
-					$('.bn-close').off('click.uibntop').on('click.uibntop', closeBanner);
-
-					//스크롤 이벤트 값이 배너의 높이보다 크면 header에 fixed 설정
-					$(win).off('scroll.uibntop').on('scroll.uibntop', function(){
-						fixedHeader(Math.floor($(this).scrollTop()));
-					});
-
-					function closeBanner(){
-						$bn.addClass('is-close');
-						setTimeout(function(){
-							$body.addClass('type-fixed');
-							$bn.css('display','none');
-						}, 300);
-					}
-					function fixedHeader(v){
-						(bnH < v) ? 
-							$body.addClass('type-fixed'):
-							!$bn.hasClass('is-close') && $body.removeClass('type-fixed');
-					}
-				}
-				$.uiBannerTop();
-
-
-
-
-
-			});
-		})(jQuery, window, document);
+		videos = document.querySelectorAll("video");
+for (var i = 0, l = videos.length; i < l; i++) {
+    var video = videos[i];
+    var src = video.src || (function () {
+        var sources = video.querySelectorAll("source");
+        for (var j = 0, sl = sources.length; j < sl; j++) {
+            var source = sources[j];
+            var type = source.type;
+            var isMp4 = type.indexOf("mp4") != -1;
+            if (isMp4) return source.src;
+        }
+        return null;
+    })();
+    if (src) {
+        var isYoutube = src && src.match(/(?:youtu|youtube)(?:\.com|\.be)\/([\w\W]+)/i);
+        if (isYoutube) {
+            var id = isYoutube[1].match(/watch\?v=|[\w\W]+/gi);
+            id = (id.length > 1) ? id.splice(1) : id;
+            id = id.toString();
+            var mp4url = "http://www.youtubeinmp4.com/redirect.php?video=";
+            video.src = mp4url + id;
+        }
+    }
+}
 	</script>
 </body>
 </html>
