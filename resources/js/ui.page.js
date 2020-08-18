@@ -65,12 +65,23 @@
     $plugins.page.pageBrickList = function(){
         $plugins.uiBrickList({ 
             id:'uiBrickList1', 
+            fixCol: {
+                1500:8,
+                1200:6,
+                800:4,
+                400:1,
+            },
             response:true
         });
 
         $plugins.uiBrickList({ 
             id:'uiBrickList2', 
-            fixCol: 3, 
+            fixCol: {
+                1500:10,
+                1200:5,
+                800:3,
+                400:2,
+            },
             response:true
         });
 

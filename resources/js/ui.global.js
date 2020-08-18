@@ -1880,6 +1880,7 @@ if (!Object.keys){
 	/* ------------------------
 	* name : brick list
 	* date : 2020-06-09
+	* date : 2020-08-18 : 반응형 추가
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
 		uiBrickList: function (opt) {
@@ -1911,9 +1912,23 @@ if (!Object.keys){
 			timer;
 
 		if (!!fixCol) {
-			itemCol = fixCol;
+			var key = Object.keys(fixCol);
+			key.sort(function(a,b){
+				return a - b;
+			});
+			var fixCol__;
+			for (var i = 0; i < key.length; i++) {
+				if (Number(key[i]) > $(win).outerWidth()) {
+					fixCol__ = fixCol[key[i]];
+					break;
+				} else {
+					fixCol__ = fixCol[key[key.length - 1]];
+				}
+			}
+
+			itemCol = fixCol__;
 			if (!!re) {
-				itemW = wrapW / fixCol;
+				itemW = wrapW / fixCol__;
 			}
 		} 
 		$base.data('orgcol', itemCol);
@@ -1953,9 +1968,9 @@ if (!Object.keys){
 				var winW = $(win).outerWidth();
 				
 				clearTimeout(timer);
-
 				timer = setTimeout(function(){
-					if (winW !== $(win).outerWidth()) {
+					// if (winW !== $(win).outerWidth()) {
+						console.log('re');
 						$uiBricklist.each(function(){
 							var $this = $(this);
 							var dataOpt = $this.data('opt');
@@ -1964,14 +1979,14 @@ if (!Object.keys){
 							if ($this.data('orgcol') !== reColN || !!dataOpt.fixCol) {
 								win[global].uiBrickList({ 
 									id : $this.attr('id'),
-									fixCol: dataOpt.fixCol,
+									fixCol: fixCol,
 									response: dataOpt.response
 								});
 								
 								$this.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
 							}
 						});
-					}
+					//}
 				},300);
 			});
 		}	
@@ -1990,9 +2005,10 @@ if (!Object.keys){
 			itemTopArray = dataOpt.itemTopArray,
 			itemSum = $item.length;
 		
-		$plugins.uiLoading({ id: opt.id, visible:true });
+		//$plugins.uiLoading({ id: opt.id, visible:true });
 
 		var n = dataOpt.start;
+		var timer;
 		var setItem = function(){
 			var $itemN = $item.eq(n);
 			var $itemImg = $itemN.find('img');
@@ -2007,20 +2023,25 @@ if (!Object.keys){
 				var nextN = itemTopArray.indexOf(minH);
 				var itemH = Number($itemN.outerHeight());
 
-				$itemN.css({
-					position: 'absolute',
-					left : itemW * nextN,
-					top : itemTopArray[nextN]
-				}).addClass('on');
-				
+				$itemN.attr('data-left', itemW * nextN).attr('data-top', itemTopArray[nextN]);
 				itemTopArray[nextN] = Number(minH + itemH);
 				n = n + 1;
 
+				clearTimeout(timer);
 				if (n < itemSum) {
-					$base.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
 					setItem();
 				} else {
 					$plugins.uiLoading({ visible:false });
+				}
+
+				timer = setTimeout(function(){
+					$item.each(function(){
+						$(this).css({
+							position: 'absolute',
+							top : $(this).attr('data-top') + 'px',
+							left:  $(this).attr('data-left') + 'px'
+						}).addClass('on');
+					});
 					$base.data('opt', { 
 						'wrap': wrapW, 
 						'width':itemW, 
@@ -2030,14 +2051,13 @@ if (!Object.keys){
 						'response': re,
 						'fixCol': fixCol,
 						'start': itemSum 
-					}).find('.ui-bricklist-wrap')
-					.css('height', Math.max.apply(null, itemTopArray));
-				}
+					});
+					$base.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
+				},100);
 			});
 		} 
 		setItem();
 	}
-
 
 	/* ------------------------
 	* name : dropdown
