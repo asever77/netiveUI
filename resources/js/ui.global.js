@@ -1891,7 +1891,12 @@ if (!Object.keys){
 		}
 	});
 	win[global].uiBrickList.option = {
-		fixCol: false,
+		fixCol: {
+			1500:4,
+			1200:3,
+			800:2,
+			400:1,
+		},
 		response: true
 	}
 	function createUiBrickList(opt){
@@ -1979,7 +1984,7 @@ if (!Object.keys){
 							if ($this.data('orgcol') !== reColN || !!dataOpt.fixCol) {
 								win[global].uiBrickList({ 
 									id : $this.attr('id'),
-									fixCol: fixCol,
+									fixCol: dataOpt.fixCol,
 									response: dataOpt.response
 								});
 								

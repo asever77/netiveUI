@@ -157,6 +157,7 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 /* ui-bricklist : base */
 .ui-bricklist {position:relative; width:100%;}
 .ui-bricklist-wrap {margin:0; padding:0;}
+.ui-bricklist-item.disabled{display:none;}
 .ui-bricklist-item {width:150px; display:block; box-sizing:border-box; overflow:hidden;}
 .ui-bricklist-item img {width:100%; display:block}
 /* ui-bricklist : netvie UI style */

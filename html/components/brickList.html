@@ -10,7 +10,6 @@
 css의 가로 길이와 옵션의 fixCol 값으로 기준을 주는 두가지 방식으로 사용합니다.</p>
 
 <h2 class="h-2">Examples</h2>
-<h3 class="h-3">css 기준</h3>
 <p>ui-bricklist-item의 정해진 css width 값 기준으로 정렬</p>
 <div class="ui-bricklist mgt-s" id="uiBrickList1">
 	<ul class="ui-bricklist-wrap">
@@ -47,8 +46,8 @@ css의 가로 길이와 옵션의 fixCol 값으로 기준을 주는 두가지 �
 	<button type="button" class="btn-base ui-add mgt-m">추가</button>
 </div>
 
-<h3 class="h-3">option 기준</h3>
-<p>option의 col 값 기준으로 정렬</p>
+<hr>
+
 <div class="ui-bricklist mgt-s" id="uiBrickList2">
 	<ul class="ui-bricklist-wrap">
 		<li class="ui-bricklist-item">
@@ -94,6 +93,12 @@ css의 가로 길이와 옵션의 fixCol 값으로 기준을 주는 두가지 �
 			&lt;div&gt;&lt;img data-src="/netiveUI/resources/img/dummy/@iu1.jpg" alt=""&gt;&lt;/div&gt;
 			&lt;strong&gt;title&lt;/strong&gt;
 		&lt;/li&gt;
+
+		//disabled 클래스 추가 시 리스트에서 제외
+		&lt;li class="ui-bricklist-item disabled"&gt;
+			&lt;div&gt;&lt;img data-src="/netiveUI/resources/img/dummy/@iu1.jpg" alt=""&gt;&lt;/div&gt;
+			&lt;strong&gt;title&lt;/strong&gt;
+		&lt;/li&gt;
 		...
 	&lt;/ul&gt;
 &lt;/div&gt;
@@ -132,7 +137,11 @@ css의 가로 길이와 옵션의 fixCol 값으로 기준을 주는 두가지 �
 <code>
 $plugins<span class="na">.uiBrickList</span>({ <span class="s">
 	id: 'uiBrickList1', 
-	fixCol: 3, 
+	fixCol: {
+		1024 : 5,
+		600 : 3,
+		400 : 1
+	}, 
 	response: true </span> 
 });
 </code>
@@ -165,9 +174,9 @@ $plugins<span class="na">.uiBrickList</span>({ <span class="s">
 			</tr>
 			<tr class="nec">
 				<th scope="row">fixCol:</th>
-				<td>[number]</td>
-				<td>n</td>
-				<td>세로단의 고정갯수</td>
+				<td>[object]</td>
+				<td>{1024 : 5, 600 : 3, 400 : 1}</td>
+				<td>width값에 따른 갯수 변경</td>
 			</tr>
 			<tr>
 				<th scope="row">response:</th>
