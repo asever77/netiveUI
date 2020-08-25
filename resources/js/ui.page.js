@@ -685,6 +685,25 @@
        
     }
 
+    $plugins.page.pageDraggable = function(){
+        $plugins.uiDraggable({
+            id:'drag1'
+        });
+        $plugins.uiDraggable({
+            id:'drag2'
+        });
+        $plugins.uiDraggable({
+            id:'drag3'
+        });
+        $plugins.uiDraggable({
+            id:'drag4'
+        });
+        $plugins.uiDraggable({
+            id:'drag5',
+            line: true
+        });
+    }
+
     
 
     $plugins.page.pageAccordion = function(){

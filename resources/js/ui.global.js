@@ -5571,7 +5571,230 @@ if (!Object.keys){
 
 
 
+	/* ------------------------
+	* name : count number
+	* date : 2020-06-20
+	------------------------ */	
+	win[global] = win[global].uiNameSpace(namespace, {	
+		uiDraggable: function (opt) {
+			return createUiDraggable(opt);
+		},
+		uiDraggableReset: function (opt) {
+			return createUiDraggableReset(opt);
+		}
+	});
+	function createUiDraggable(opt){
+		var $wrap = $('#' + opt.id);
+		var $item = $wrap.find('.ui-draggable-item');
+		var $area = $wrap.find('.ui-draggable-area');
+		var scale = 1;
+		var $svg = $wrap.find('svg');
+		
+		//기본값 세팅
+		$(window).off('resize.drag').on('resize.drag', function(){
+			win[global].uiDraggableReset();
+			set();
+		});
+		set();
+		function set(){
+			scale = 1;
+			$item.each(function(i){
+				var $this = $(this);
 
+				$this.attr('orgt', $this.offset().top / scale - ($wrap.offset().top / scale));
+				$this.attr('orgl', $this.offset().left / scale - ($wrap.offset().left / scale));
+				
+				if (!$this.attr('onlymove')) {
+					$this.after($this.clone().addClass('clone').prop('disabled', true));
+				}
+				if (!!$this.attr('line')) {
+					var nm = $this.attr('name');
+					var strokWidth = 4 / scale;
+					var lineX = Number($this.attr('orgl')) + ($this.outerWidth() / 2 / scale ) - strokWidth / 2;
+					var lineY = Number($this.attr('orgt')) + ($this.outerHeight() / 2 / scale ) - strokWidth / 2;
+					console.log(Number($this.attr('orgl')), $this.outerWidth() / 2 / scale, strokWidth / 2, lineX)
+					$this.attr('linex', lineX);
+					$this.attr('liney', lineY);
+					$svg.find('line[name="'+ nm +'"]')
+						.attr('x1', lineX)
+						.attr('y1', lineY)
+						.attr('x2', lineX)
+						.attr('y2', lineY)
+						.attr('stroke-width', strokWidth);
+				}
+			});
+
+			$area.each(function(i){
+				scale = 1;
+				var $this = $(this);
+
+				$this.attr('ts',$this.offset().top / scale);
+				$this.attr('te',$this.offset().top / scale + $this.outerHeight() / scale);
+				$this.attr('ls',$this.offset().left / scale);
+				$this.attr('le',$this.offset().left / scale + $this.outerWidth() / scale);
+			});
+
+			$item.off('mousedown.drag').on('mousedown.drag', function (e) {
+				scale = 1;
+				//dragStart(e, this);
+				var $this = $(this);
+				var $wrap_ = $this.closest('.ui-draggable');
+				var itemName = $this.attr('name');
+				var $area = $wrap_.find('.ui-draggable-area[name="'+ itemName +'"]');
+				var itemW = $this.outerWidth() * scale;
+				var itemH = $this.outerHeight() * scale;
+				var moving = false;
+				var onlymove = !!$this.attr('onlymove');
+				var line = !!$this.attr('line');
+				var x, y;
+
+				var arrTs = [],
+					arrTe = [],
+					arrLs = [],
+					arrLe = [];	
+
+				var off_tw = $wrap.offset().top / scale,
+					off_lw = $wrap.offset().left / scale,
+					off_t = $this.offset().top / scale,
+					off_l = $this.offset().left / scale;
+
+				for (var i = 0, len = $area.length; i < len; i++) {
+					arrTs.push($area.eq(i).offset().top / scale);
+					arrTe.push($area.eq(i).offset().top / scale + $area.eq(i).outerHeight() / scale);
+					arrLs.push($area.eq(i).offset().left / scale);
+					arrLe.push($area.eq(i).offset().left / scale + $area.eq(i).outerWidth() / scale);
+				}
+
+				$this.css({
+					top: off_t - off_tw  + 'px',
+					left: off_l - off_lw + 'px'
+				});
+
+				$(document).off('mousemove.drag').on('mousemove.drag', function (e) {
+					moving = true;
+
+					if (e.touches !== undefined) {
+						y = e.touches[0].pageY / scale;
+						x = e.touches[0].pageX / scale;
+					} else {
+						if (e.pageY !== undefined) {
+							y = e.pageY / scale;
+							x = e.pageX / scale;
+						}
+						if (e.pageY === undefined) {
+							y = e.clientY / scale;
+							x = e.clientX / scale;
+						}
+					}
+					
+					var $body = $('body');
+					var nowT = y - (itemH / 2) - off_tw;
+					var nowL = x - (itemW / 2) - off_lw;
+					var warpT = $wrap_.offset().top / scale;
+					var warpL = $wrap_.offset().left / scale;
+
+					if (onlymove) {
+						for(var i = 0; i < arrTs.length; i++) {
+							var isInVer = (nowT > arrTs[i] - warpT - (itemH / 2) && nowT < arrTe[i] - warpT - (itemH / 2));
+							var isInHor = (nowL > arrLs[i] - warpL - (itemW / 2) && nowL < arrLe[i] - warpL - (itemW / 2));
+
+
+							if (isInVer && isInHor) {
+								if (Number($body.attr('draggable')) !== i) {
+									$body.attr('draggable', i);
+								}
+								break;
+							} else {
+								$body.removeAttr('draggable');
+							} 
+						}
+					}
+
+					if (line) {
+						var lineName = $this.attr('name');
+						var lineX = Number(nowL) + Number($this.outerWidth() / scale / 2);
+						var lineY = Number(nowT) + Number($this.outerHeight() / scale / 2);
+
+						$svg.find('line[name="'+ lineName +'"]')
+							.attr('x2', lineX)
+							.attr('y2', lineY);
+					}
+
+					$this.css({
+						top: nowT + 'px',
+						left: nowL + 'px'
+					});
+				}).off('mouseup.drag').on('mouseup.drag', function (e) {
+					if (moving && !onlymove) {
+						var nowT = $this.offset().top / scale + (itemH / 2);
+						var nowL = $this.offset().left / scale + (itemW / 2);
+
+						for(var i = 0; i < arrTs.length; i++) {
+							var isIn = (nowT > arrTs[i] && nowT < arrTe[i]) && (nowL > arrLs[i] && nowL < arrLe[i]);
+							var $area_ = $area.eq(i);
+
+							if (isIn && !$area_.attr('full')) {
+								if(!$area_.attr('full')) {
+									if (!!$area_.attr('limit')) {
+										$area_.attr('full', true);
+										$area_.addClass('ok');
+									} else {
+										$area.eq(0).addClass('ok');
+									}
+									
+									$this.addClass('ok');
+									$this.prop('disabled', true);
+								} 
+							} 
+						}
+
+						if (!$this.hasClass('ok')) {
+							if (line) {
+								var lineName = $this.attr('name');
+								console.log($svg.find('line[name="'+ lineName +'"]'))
+								$svg.find('line[name="'+ lineName +'"]')
+									.attr('x2', $this.attr('linex'))
+									.attr('y2', $this.attr('liney'));
+							}
+
+							$this.stop().animate({
+								top: $this.attr('orgt') + 'px',
+								left: $this.attr('orgl') + 'px'
+							});
+						}
+					}
+					$(document).off('mousemove.drag');
+					$(document).off('mouseup.drag');
+				});
+			});
+		}
+	}
+	function uiDraggableReset(opt){
+		var $wrap = v !== undefined ? $('#' + v) :$('.ui-draggable');
+		var $item = $wrap.find('.ui-draggable-item');
+		var $area = $wrap.find('.ui-draggable-area');
+		var $svg = $wrap.find('svg');
+
+		$('body').removeAttr('draggable');
+		$area.removeClass('ok').removeAttr('full');
+		$item.each(function(){
+			var $this = $(this);
+
+			$this.prop('disabled', false).removeClass('ok');
+			$this.stop().animate({
+				top: $this.attr('orgt') + 'px',
+				left: $this.attr('orgl') + 'px'
+			});
+
+			if (!!$this.attr('line')) {
+				var nm = $this.attr('name');
+				
+				$svg.find('line[name="'+ nm +'"]')
+					.attr('x2', $this.attr('linex'))
+					.attr('y2', $this.attr('liney'));
+			}
+		});
+	}
 
 
 

@@ -50,6 +50,9 @@
 					case 'brickList' :
 						fristHref = '/netiveUI/html/components/brickList.html';
 						break;
+					case 'draggable' :
+						fristHref = '/netiveUI/html/components/draggable.html';
+						break;
 					case 'dropdown' :
 						fristHref = '/netiveUI/html/components/dropdown.html';
 						break;

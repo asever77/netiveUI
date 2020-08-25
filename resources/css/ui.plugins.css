@@ -153,6 +153,12 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 .ui-acco-pnl {background:#f9f9f9; margin:0; padding:20px;}
 .ui-acco-tit-wrap {padding:10px;text-decoration:none; color:#000;}
 
+/**/
+.ui-draggable{position:relative; width:100%;}
+.ui-draggable-item{position:absolute; z-index: 1;}
+.ui-draggable-item.clone{position:absolute; z-index: 0; opacity: 0.5;}
+.ui-draggable-item:hover{z-index:2;}
+.ui-draggable-area{position:absolute;}
 
 /* ui-bricklist : base */
 .ui-bricklist {position:relative; width:100%;}
