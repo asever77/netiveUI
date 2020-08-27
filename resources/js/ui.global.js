@@ -5769,8 +5769,8 @@ if (!Object.keys){
 			});
 		}
 	}
-	function uiDraggableReset(opt){
-		var $wrap = v !== undefined ? $('#' + v) :$('.ui-draggable');
+	function createUiDraggableReset(opt){
+		var $wrap = opt !== undefined ? $('#' + opt.id) :$('.ui-draggable');
 		var $item = $wrap.find('.ui-draggable-item');
 		var $area = $wrap.find('.ui-draggable-area');
 		var $svg = $wrap.find('svg');

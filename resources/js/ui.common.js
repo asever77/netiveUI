@@ -51,6 +51,7 @@
 						fristHref = '/netiveUI/html/components/brickList.html';
 						break;
 					case 'draggable' :
+						console.log('draggable');
 						fristHref = '/netiveUI/html/components/draggable.html';
 						break;
 					case 'dropdown' :
