@@ -5572,7 +5572,7 @@ if (!Object.keys){
 
 
 	/* ------------------------
-	* name : count number
+	* name : dragglable
 	* date : 2020-06-20
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {	
@@ -5591,28 +5591,28 @@ if (!Object.keys){
 		var $svg = $wrap.find('svg');
 		
 		//기본값 세팅
-		$(window).off('resize.drag').on('resize.drag', function(){
-			win[global].uiDraggableReset();
+		$(window).off('resize.aaa').on('resize.aaa', function(){
 			set();
 		});
 		set();
 		function set(){
-			scale = 1;
+			scale =1;
 			$item.each(function(i){
 				var $this = $(this);
-
+				
+				$this.addClass('original');
 				$this.attr('orgt', $this.offset().top / scale - ($wrap.offset().top / scale));
 				$this.attr('orgl', $this.offset().left / scale - ($wrap.offset().left / scale));
 				
 				if (!$this.attr('onlymove')) {
-					$this.after($this.clone().addClass('clone').prop('disabled', true));
+					$this.after($this.clone().removeClass('original').addClass('clone').prop('disabled', true));
 				}
 				if (!!$this.attr('line')) {
 					var nm = $this.attr('name');
 					var strokWidth = 4 / scale;
 					var lineX = Number($this.attr('orgl')) + ($this.outerWidth() / 2 / scale ) - strokWidth / 2;
 					var lineY = Number($this.attr('orgt')) + ($this.outerHeight() / 2 / scale ) - strokWidth / 2;
-					console.log(Number($this.attr('orgl')), $this.outerWidth() / 2 / scale, strokWidth / 2, lineX)
+
 					$this.attr('linex', lineX);
 					$this.attr('liney', lineY);
 					$svg.find('line[name="'+ nm +'"]')
@@ -5623,6 +5623,11 @@ if (!Object.keys){
 						.attr('stroke-width', strokWidth);
 				}
 			});
+
+			$wrap.attr('ts',$wrap.offset().top / scale);
+			$wrap.attr('te',$wrap.offset().top / scale + $wrap.outerHeight() / scale);
+			$wrap.attr('ls',$wrap.offset().left / scale);
+			$wrap.attr('le',$wrap.offset().left / scale + $wrap.outerWidth() / scale);
 
 			$area.each(function(i){
 				scale = 1;
@@ -5641,12 +5646,17 @@ if (!Object.keys){
 				var $wrap_ = $this.closest('.ui-draggable');
 				var itemName = $this.attr('name');
 				var $area = $wrap_.find('.ui-draggable-area[name="'+ itemName +'"]');
-				var itemW = $this.outerWidth() * scale;
-				var itemH = $this.outerHeight() * scale;
+				var wrapW = $wrap_.outerWidth();
+				var wrapH = $wrap_.outerHeight();
+				var itemW = $this.outerWidth();
+				var itemH = $this.outerHeight();
 				var moving = false;
 				var onlymove = !!$this.attr('onlymove');
 				var line = !!$this.attr('line');
 				var x, y;
+				
+				var scopeW = wrapW - itemW,
+					scopeH = wrapH - itemH;
 
 				var arrTs = [],
 					arrTe = [],
@@ -5655,19 +5665,20 @@ if (!Object.keys){
 
 				var off_tw = $wrap.offset().top / scale,
 					off_lw = $wrap.offset().left / scale,
-					off_t = $this.offset().top / scale,
-					off_l = $this.offset().left / scale;
+					off_t = $this.position().top / scale,
+					off_l = $this.position().left / scale;
 
 				for (var i = 0, len = $area.length; i < len; i++) {
-					arrTs.push($area.eq(i).offset().top / scale);
-					arrTe.push($area.eq(i).offset().top / scale + $area.eq(i).outerHeight() / scale);
-					arrLs.push($area.eq(i).offset().left / scale);
-					arrLe.push($area.eq(i).offset().left / scale + $area.eq(i).outerWidth() / scale);
+					console.log(i);
+					arrTs.push($area.eq(i).position().top);
+					arrTe.push($area.eq(i).position().top + $area.eq(i).outerHeight() * scale);
+					arrLs.push($area.eq(i).position().left);
+					arrLe.push($area.eq(i).position().left + $area.eq(i).outerWidth() * scale);
 				}
 
 				$this.css({
-					top: off_t - off_tw  + 'px',
-					left: off_l - off_lw + 'px'
+					top: off_t + 'px',
+					left: off_l + 'px'
 				});
 
 				$(document).off('mousemove.drag').on('mousemove.drag', function (e) {
@@ -5690,44 +5701,60 @@ if (!Object.keys){
 					var $body = $('body');
 					var nowT = y - (itemH / 2) - off_tw;
 					var nowL = x - (itemW / 2) - off_lw;
-					var warpT = $wrap_.offset().top / scale;
-					var warpL = $wrap_.offset().left / scale;
-
+					
+					if (0 > nowT) {
+						nowT = 0;
+					} 
+					if (scopeH < nowT) {
+						nowT = scopeH;
+					} 
+					if (0 > nowL) {
+						nowL = 0;
+					} 
+					if (scopeW < nowL) {
+						nowL = scopeW;
+					} 
 					if (onlymove) {
 						for(var i = 0; i < arrTs.length; i++) {
-							var isInVer = (nowT > arrTs[i] - warpT - (itemH / 2) && nowT < arrTe[i] - warpT - (itemH / 2));
-							var isInHor = (nowL > arrLs[i] - warpL - (itemW / 2) && nowL < arrLe[i] - warpL - (itemW / 2));
-
+							var isInVer = (nowT * scale > arrTs[i] - (itemH * scale / 2) && nowT * scale < arrTe[i] - (itemH * scale / 2));
+							var isInHor = (nowL * scale > arrLs[i] - (itemW * scale / 2) && nowL * scale < arrLe[i] - (itemW * scale / 2));
 
 							if (isInVer && isInHor) {
-								if (Number($body.attr('draggable')) !== i) {
-									$body.attr('draggable', i);
+								if (Number($body.attr('dragps')) !== i) {
+									$body.attr('dragps', i);
 								}
 								break;
 							} else {
-								$body.removeAttr('draggable');
+								if (0 <= nowT && scopeH >= nowT && 0 <= nowL && scopeW >= nowL) {
+									$body.removeAttr('dragps');
+								}
 							} 
 						}
 					}
 
 					if (line) {
 						var lineName = $this.attr('name');
-						var lineX = Number(nowL) + Number($this.outerWidth() / scale / 2);
-						var lineY = Number(nowT) + Number($this.outerHeight() / scale / 2);
+						var lineX = Number(nowL) + Number($this.outerWidth() / 2);
+						var lineY = Number(nowT) + Number($this.outerHeight() / 2);
 
 						$svg.find('line[name="'+ lineName +'"]')
 							.attr('x2', lineX)
 							.attr('y2', lineY);
-					}
 
+						(0 > nowT) && $svg.find('line[name="'+ lineName +'"]').attr('y2', 0);
+						(scopeH < nowT) && $svg.find('line[name="'+ lineName +'"]').attr('y2', scopeH);
+						(0 > nowL) && $svg.find('line[name="'+ lineName +'"]').attr('x2', 0);
+						(scopeW < nowL) && $svg.find('line[name="'+ lineName +'"]').attr('x2', scopeW);
+					}
+					
 					$this.css({
 						top: nowT + 'px',
 						left: nowL + 'px'
 					});
 				}).off('mouseup.drag').on('mouseup.drag', function (e) {
 					if (moving && !onlymove) {
-						var nowT = $this.offset().top / scale + (itemH / 2);
-						var nowL = $this.offset().left / scale + (itemW / 2);
+						var nowT = $this.position().top + (itemH / 2);
+						var nowL = $this.position().left + (itemW / 2);
 
 						for(var i = 0; i < arrTs.length; i++) {
 							var isIn = (nowT > arrTs[i] && nowT < arrTe[i]) && (nowL > arrLs[i] && nowL < arrLe[i]);
@@ -5751,7 +5778,6 @@ if (!Object.keys){
 						if (!$this.hasClass('ok')) {
 							if (line) {
 								var lineName = $this.attr('name');
-								console.log($svg.find('line[name="'+ lineName +'"]'))
 								$svg.find('line[name="'+ lineName +'"]')
 									.attr('x2', $this.attr('linex'))
 									.attr('y2', $this.attr('liney'));
