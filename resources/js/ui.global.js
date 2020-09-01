@@ -1966,15 +1966,14 @@ if (!Object.keys){
 		});
 
 		win[global].uiBrickListItem({ id: opt.id });
-
+		var winW = $(win).outerWidth();
 		if (re) {
 			$(win).off('resize.win').on('resize.win', function(){
 				var $uiBricklist = $('.ui-bricklist');
-				var winW = $(win).outerWidth();
-				
+
 				clearTimeout(timer);
 				timer = setTimeout(function(){
-					// if (winW !== $(win).outerWidth()) {
+					if (winW !== $(win).outerWidth()) {
 						console.log('re');
 						$uiBricklist.each(function(){
 							var $this = $(this);
@@ -1991,7 +1990,7 @@ if (!Object.keys){
 								$this.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
 							}
 						});
-					//}
+					}
 				},300);
 			});
 		}	
