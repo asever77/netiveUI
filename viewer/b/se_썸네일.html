@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 user-scalable=0">
+<link rel="stylesheet" type="text/css" href="./css/include.css" >
+<title></title>
+
+<script src="./js/jquery-3.3.1.min.js"></script>
+<script src="./js/jquery-ui.min.js"></script>
+<script src="./js/common.js"></script>
+</head>
+
+<body>
+	<!-- Content -->
+	<div id="wrap" class="viewer-wrap">
+		<div class="container">
+			<img src="./img/bookSample2.png" class="bookSample" />
+			<button class="btnTabMath on">탭-과학</button>
+			<button class="btnTabPrac on">탭-실험관찰</button>
+			<button class="btnChasi">차시 수업</button>
+			<button class="btnCorrect">정답 확인</button>
+			<!-- <button class="btnPrac">수학 익힘</button> -->
+		</div>
+
+		<!-- 좌우 내비게이션-->
+		<button class="btnPrev">이전</button>
+		<button class="btnNext">다음</button>
+
+		<!-- 하단 툴바 -->
+		<div class="thumbWrap open">
+			<div class="box">
+				<button class="btnClose">닫기</button>
+				<div class="inner">
+					<div class="thumbImg" style="background-image: url('./img/bookSample3.png');">
+						<span>1</span>
+					</div>
+					<div class="thumbImg" style="background-image: url('./img/bookSample3.png');">
+						<span>2</span>
+					</div>
+					<div class="thumbImg" style="background-image: url('./img/bookSample3.png');">
+						<span>1</span>
+					</div>
+					<div class="thumbImg" style="background-image: url('./img/bookSample3.png');">
+						<span>1</span>
+					</div>
+					<div class="thumbImg" style="background-image: url('./img/bookSample3.png');">
+						<span>1</span>
+					</div>
+					<div class="thumbImg" style="background-image: url('./img/bookSample3.png');">
+						<span>1</span>
+					</div>
+					<div class="thumbImg" style="background-image: url('./img/bookSample3.png');">
+						<span>1</span>
+					</div>
+				</div>
+				<input type="range" min="1" max="100" value="50" class="slider" />
+
+				<div class="pageWrap">
+					<span class="now">124</span>/<span class="total">124</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

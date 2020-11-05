@@ -1,0 +1,471 @@
+@charset "utf-8";
+
+/* ------------------------------------------------------------------------------------------------------------- */
+#wrap.viewer-wrap {position:relative;width:1024px;height:768px;font-size:60px;font-weight:700;color:#000;text-align:center}
+#wrap.viewer-wrap .btnPrev{position:absolute;top:50%;left:0;transform:translateY(-50%);width:56px;height:87px;background:url("../img/btnPrev.png") no-repeat;font-size:0}
+#wrap.viewer-wrap .btnPrev:hover{background:url("../img/btnPrevOn.png") no-repeat}
+#wrap.viewer-wrap .btnNext{position:absolute;top:50%;right:0;transform:translateY(-50%);width:61px;height:87px;background:url("../img/btnNext.png") no-repeat;font-size:0}
+#wrap.viewer-wrap .btnNext:hover{background:url("../img/btnNextOn.png") no-repeat}
+
+/* ------------------------------------------------------------------------------------------------------------- */ 
+/* container*/
+.viewer-wrap .container{position:relative;display:inline-block;width:1622px;height:1017px;text-align:center;background:url("../img/bgBook.png") repeat-y;text-align:center}
+.fixed-book-frame-wrapper.twoPage:after {position: absolute; top:0; left:50%; display: block; content: ""; background:url("../img/bgShadow.png") no-repeat; width:18px; height:100%;}
+.viewer-wrap .container:after {position:absolute;top:0;left:50%;display:block;content:"";background:url("../img/bgShadow.png") no-repeat;width:18px;height:100%}
+.viewer-wrap .container .btnTabMath {position:absolute;top:40px;left:-51px;width:65px;height:152px;background:url("../img/btnTab.png") no-repeat;background-position:0px 0px;font-size:0}
+.viewer-wrap .container .btnTabMath.on{background:url("../img/btnTab.png") no-repeat; background-position:-65px 0}
+.viewer-wrap .container .btnTabPrac {position:absolute;top:192px;left:-51px;width:65px;height:175px;background:url("../img/btnTab.png") no-repeat;background-position:0px -139px;font-size:0}
+.viewer-wrap .container .btnTabPrac.on{background-position:-65px -152px}
+.viewer-wrap .container .btnChasi {position:absolute;top:111px;left:560px;width:123px;height:42px;background:url("../img/btnChasi.png") no-repeat;font-size:0}
+.viewer-wrap .container .btnPrac{position:absolute;top:55px;left:418px;width:120px;height:38px;background:url("../img/btnPrac.png") no-repeat;font-size:0}
+.viewer-wrap .container .btnCorrect {position:absolute;top:475px;left:120px;width:106px;height:37px;background:url("../img/btnCorrent.png") no-repeat;font-size:0}
+
+/* ------------------------------------------------------------------------------------------------------------- */ 
+/* toolsWrap*/
+.toolsWrap {position:absolute;bottom:0;left:0;width:100%;height:30px;text-align:center; z-index: 15;}
+.toolsWrap .btnOpen{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:106px;height:30px;background:url("../img/btnOpen.png") no-repeat;font-size:0}
+/* .toolsWrap .tools {display:none} */
+.toolsWrap.open {height:138px}
+.toolsWrap.open .btnOpen {display:none}
+.toolsWrap.open .tools{display:block}
+
+.toolsWrap .tools {position:relative;width:100%;height:136px;background:url("../img/bgTool.png") left bottom repeat-x}
+.toolsWrap .tools .inner{position:absolute;top:53px;left:50%;transform:translateX(-50%);width:1348px;height:65px}
+.toolsWrap .tools .inner:before {position:absolute;top:0;left:0;width:100%;height:100%;background:url("../img/bgToolBtnClear.png") no-repeat;content:"";display:block}
+.toolsWrap .tools button{font-size:0}
+.toolsWrap .tools .inner > button {height:65px;position:absolute;bottom:0}
+.toolsWrap .btnClose{position:absolute;top:0;left:50%;transform:translateX(-50%);width:123px;height:30px !important;background:url("../img/btnClose.png") no-repeat}
+.toolsWrap .btnHome{left:0;width:37px;background:url("../img/toolBtnHome.png") no-repeat}
+.toolsWrap .btnData{left:80px;width:37px;background:url("../img/toolBtnData.png") no-repeat}
+.toolsWrap .btnIndex{left:165px;width:28px;background:url("../img/toolBtnIndex.png") no-repeat}
+.toolsWrap .btnCapture{left:276px;width:64px;background:url("../img/toolBtnCapture.png") no-repeat}
+.toolsWrap .btnDraw{left:372px;width:72px;background:url("../img/toolBtnDraw.png") no-repeat}
+.toolsWrap .btnText{left:480px;width:65px;background:url("../img/toolBtnText.png") no-repeat}
+.toolsWrap .btnSearch{left:584px;width:53px;background:url("../img/toolBtnSearch.png") no-repeat}
+.toolsWrap .btnPrint{left:680px;width:40px;background:url("../img/toolBtnPrint.png") no-repeat}
+.toolsWrap .btnZoomIn{left:805px;width:40px;background:url("../img/toolBtnZoomIn.png") no-repeat}
+.toolsWrap .btnZoomOut{left:883px;width:40px;background:url("../img/toolBtnZoomOut.png") no-repeat}
+.toolsWrap .btnThumb{left:999px;width:40px;background:url("../img/toolBtnThumb.png") no-repeat}
+.toolsWrap .btnViewOne{left:1076px;width:49px;background:url("../img/toolBtnViewOne.png") no-repeat}
+.toolsWrap .btnViewTwo{left:1076px;width:53px;background:url("../img/toolBtnViewTwo.png") no-repeat}
+.toolsWrap .pageGo {position:absolute;top:0;left:1160px;width:137px;height:50px;background-color:#fff;border-radius:25px;border:2px solid #08a0a6}
+.toolsWrap .pageGo .page {position:absolute;top:3px;left:30px;width:39px;height:42px; font-size:22px;text-align:center;line-height:52px;font-weight:700;color:#333}
+.toolsWrap .pageGo .pageTotal{color:#333;font-size:22px;position:absolute;top:0;line-height:52px;left:40px;height:50px}
+.toolsWrap .pageGo .btnGo{position:absolute;top:3px;right:4px;width:40px;height:41px;background:url("../img/toolBtnGo.png") no-repeat}
+.toolsWrap .btnHelp{left:1327px;width:53px;background:url("../img/toolBtnHelp.png") no-repeat}
+
+
+/* ------------------------------------------------------------------------------------------------------------- */ 
+/* thumbWrap*/
+.thumbWrap{position:absolute;bottom:0;left:0;width:100%;height:232px; z-index: 20;}
+.thumbWrap .box{position:absolute;width:100%;height:100%;bottom:0}
+.thumbWrap .box .inner {position:absolute;top:35px;left:0;width:100%;height:202px;background:url("../img/bgThumbArea.png") left bottom repeat-x; padding:17px 30px 30px 15px}
+.thumbWrap .box button {font-size:0; z-index: 25;}
+.thumbWrap .btnClose{position:absolute;top:0;left:50%;transform:translateX(-50%);width:122px;height:35px;background:url("../img/btnClose2.png") no-repeat}
+.thumbWrap .inner .thumbImg{position:relative;float:left;width:102px;height:131px;margin-left:10px;border:1px solid #a3a8a8;background-size:cover;background-repeat:no-repeat}
+.thumbWrap .inner .thumbImg:nth-child(1) {margin-left:0}
+/* .thumbWrap .inner .thumbImg img {border:1px solid #b3b3b3;border-radius:5px} */
+.thumbWrap .inner .thumbImg span {position:absolute;bottom:-1px;left:0;background:rgba(176,176,176,0.9);color:#fff;height:30px;width:100%;text-align:center;font-size:14px;line-height:30px;font-weight:500}
+/* .thumbWrap .inner .thumbImg:hover img{border:1px solid #77cb2b} */
+.thumbWrap .inner .thumbImg:hover {border:4px solid #20a9af}
+.thumbWrap .inner .thumbImg:hover span{background:rgba(32,169,175,0.9)}
+.thumbWrap .pageWrap{position:absolute;bottom:12px;left:1800px;font-size:13px;font-weight:500;right:10px; z-index: 25;}
+.thumbWrap .pageWrap .now{padding:0 5px}
+.thumbWrap .pageWrap .total{padding:0 5px}
+
+.slider {position:absolute;bottom:12px;left:15px;-webkit-appearance:none;width:1797px;height:15px;background:url("../img/bgRange.png");outline:none;-webkit-transition:.2s;transition:opacity .2s;}
+.slider:hover {opacity:1;}
+.slider::-webkit-slider-thumb {-webkit-appearance:none;appearance:none;width:28px;height:28px;background:url("../img/bgThumb.png");cursor:pointer;}
+.slider::-moz-range-thumb { width:28px; height:28px; background:url("../img/bgThumb.png"); cursor:pointer;}
+
+/* ------------------------------------------------------------------------------------------------------------- */ 
+/* popup dim*/
+#popFullDim{position:absolute;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.3);z-index: 15;}
+#popFull .inner {position:absolute;top:50%;left:50%;transform:translate(-50%, -50%);border-radius:15px;background:#f1f2f0;padding:0px; z-index: 25;}
+#popFull .inner .top{width:calc(100% - 30px);height:66px;position:relative;left:15px;background:url("../img/topMiddle.png") repeat-x;z-index:10}
+#popFull .inner .top::before,
+#popFull .inner .top::after{content:"";display:block;width:16px;height:66px;position:absolute;top:0}
+#popFull .inner .top::before {background:url("../img/topLeft.png") no-repeat;left:-15px}
+#popFull .inner .top::after{background:url("../img/topRight.png") no-repeat;right:-15px}
+#popFull .inner .top .tit {position:absolute;top:22px;left:15px;color:#fff;font-family:'HeummNemodream182';font-size:26px;line-height:1;font-weight:normal;text-shadow:0px 2px 0px rgba(0, 0, 0, 0.15)}
+#popFull .inner .btnQuestion{position:absolute;top:21px;right:40px;width:29px;height:29px;font-size:0;background:url("../img/btnQuestion.png") no-repeat}
+/*#popFull .inner .btnQuestion{position:absolute;top:11px;right:65px;width:38px;height:38px}
+#popFull .inner .btnQuestion button{position:absolute;top:0;left:0;font-size:0;width:100%;height:100%;background:url("../img/btnQuestion.png") no-repeat}
+#popFull .inner .btnQuestion .bubble{top:-200%;right:15px}*/
+#popFull .inner .btnPopClose{position:absolute;top:23px;right:8px;font-size:0;width:26px;height:26px;background:url("../img/btnPopClose.png") no-repeat}
+#popFull .inner .content{ border:2px solid #bbbbbb;border-radius:0 0 15px 15px;margin-top:-2px}
+#popFull .inner .btnOkLine {width:107px; height:43px; margin-bottom: 21px; background: url("../img/btnOkLine.png") no-repeat; font-size: 0; }
+
+#popFull .inner .table{padding:25px;width:100%}
+#popFull .inner .table .tableHead {text-align:center;height:50px;font-family:'Noto Sans KR';font-weight:700;font-size:18px;border-bottom:2px solid #909090;border-top:2px solid #909090;line-height:50px}
+#popFull .inner .table .tableHead div {display:table-cell}
+#popFull .inner .table .tableHead div:nth-child(1){width:40px}
+#popFull .inner .table .tableHead div:nth-child(2){width:104px}
+#popFull .inner .table .tableHead div:nth-child(3){width:126px}
+#popFull .inner .table .tableHead div:nth-child(4){width:326px}
+#popFull .inner .table .tableHead div:nth-child(5){width:120px}
+#popFull .inner .table .tableHead div:nth-child(6){width:200px}
+
+#popFull .inner .box{width:100%;overflow-y:scroll;margin-top:10px}
+#popFull .inner table{width:100%; font-size:18px}
+#popFull .inner table tbody{font-size:18px;font-family:'Noto Sans KR';font-weight:700;color:#333}
+#popFull .inner table tbody tr th,
+#popFull .inner table tbody tr td{padding:10px 0;height:28px;line-height:28px;text-align:left;vertical-align:middle}
+#popFull .inner table tbody tr th {padding-left:12px}
+#popFull .inner table tbody tr:nth-child(1) th,
+#popFull .inner table tbody tr:nth-child(1) td:nth-child {padding-top:0}
+#popFull .inner table tbody tr td:nth-child(3){text-align:center}
+#popFull .inner table tbody tr td:nth-child(4){padding-left:34px;padding-right:34px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#popFull .inner table tbody tr + tr {border-top:1px solid #d0d0d0}
+
+#popFull .inner input[type="checkbox"]{display:none;cursor:pointer}
+#popFull .inner input[type="checkbox"] + label{display:inline-block;position:relative;color:#000;cursor:pointer;font-size:0}
+#popFull .inner label:before,
+#popFull .inner label:after{cursor:pointer}
+#popFull .inner label:before{content:"";-webkit-appearance:none;display:block;position:absolute;top:-3px;left:0;width:28px;height:28px;background:url("../img/btnCheck.png") no-repeat;background-size:100% auto}
+#popFull .inner input:checked + label:after {content:"";display:block;position:absolute;top:-3px;left:0;width:28px;height:28px;background:url("../img/btnCheckOn.png") no-repeat;background-size:100% auto}
+#popFull .inner label.disabled{pointer-events:none}
+
+#popFull .inner .table .tableFoot {position:relative;height:30px;font-family:'Noto Sans KR';font-weight:700;font-size:18px;border-top:1px solid #000;text-align:left;margin-top:10px;padding-top:30px}
+#popFull .inner .table .tableFoot input[type="checkbox"] + label {font-weight:700;font-size:18px;padding-left:40px}
+#popFull .inner .table .btnAdd{position:absolute;top:20px;right:100px}
+#popFull .inner .table .btnDel{position:absolute;top:20px;right:0}
+
+/* label 안에 input 있는 것 */
+#popFull label input[type="checkbox"] {cursor:pointer;display:none}
+#popFull label input[type="checkbox"] + span{position:relative;padding-left:38px}
+#popFull label input[type="checkbox"] + span::before{content:"";-webkit-appearance:none;display:block;position:absolute;top:6px;left:0;width:28px;height:28px;background:url("../img/btnCheck.png") no-repeat;background-size:100% auto;cursor:pointer}
+#popFull label input[type="checkbox"]:checked + span::after {content:"";display:block;position:absolute;top:6px;left:0;width:28px;height:28px;background:url("../img/btnCheckOn.png") no-repeat;background-size:100% auto;cursor:pointer}
+
+
+
+#popFull .inner .btnClass {width:90px;height:40px;background:url("../img/btnLesson.png") no-repeat;background-size:100% auto;font-size:0; display:inline-block}
+#popFull .inner .btnClass:hover,
+#popFull .inner .btnClass.on {background-image:url("../img/btnLessonOn.png");font-size:0}
+#popFull .inner .btnSave {width:90px;height:40px;background:url("../img/btnSave.png") no-repeat;background-size:100% auto;font-size:0}
+#popFull .inner .btnSave:hover,
+#popFull .inner .btnSave.on {background-image:url("../img/btnSaveOn.png");font-size:0}
+#popFull .inner .btnAdd {width:94px;height:45px;background:url("../img/btnAdd.png") no-repeat;background-size:100% auto;font-size:0}
+#popFull .inner .btnAdd:hover,
+#popFull .inner .btnAdd.on {background-image:url("../img/btnAddOn.png")}
+#popFull .inner .btnDel {width:94px;height:45px;background:url("../img/btnDel.png") no-repeat;background-size:100% auto;font-size:0}
+#popFull .inner .btnDel:hover,
+#popFull .inner .btnDel.on {background-image:url("../img/btnDelOn.png")}
+
+.bubble {position:relative;display:block;border-radius:8px 8px 0 8px;padding:10px;min-width:320px;background:#f0f0f0;border:2px solid #cccccc;line-height:20px;font-size:14px;font-family:'Noto Sans KR';font-weight:700;color:#000;text-align:left}
+.bubble:after{position:absolute;bottom:-11px;right:-2px;content:"";display:block;background:url("../img/bgBubble.png") no-repeat;width:13px;height:11px}
+
+
+#popFull .inner .currSave {width:143px;height:45px;background:url("../img/btnCurrSave.png") no-repeat 0 0/ 100%;font-size:0}
+#popFull .inner .currSave:hover,
+#popFull .inner .currSave.on {background:url("../img/btnCurrSaveOn.png")}
+#popFull .inner .nextSave {width:143px;height:45px;background:url("../img/btnNextSave.png") no-repeat 0 0 / 100%;font-size:0}
+#popFull .inner .nextSave:hover,
+#popFull .inner .nextSave.on {background-image:url("../img/btnNextSaveOn.png")}
+#popFull .inner .btnFind{width:124px;height:61px;background:url("../img/btnFind.png") no-repeat 0 0 / 100%;font-size:0;display:inline-block}
+#popFull .inner .btnFind:hover,
+#popFull .inner .btnFind.on {background-image:url("../img/btnFindOn.png")}
+#popFull .inner .btnInstall{width:183px;height:71px;background:url("../img/btnInstall.png") no-repeat 0 0 / 100%;font-size:0;display:inline-block}
+#popFull .inner .btnInstall:hover,
+#popFull .inner .btnInstall.on {background-image:url("../img/btnInstallOn.png")}
+#popFull .inner .btnCancel{width:183px;height:71px;background:url("../img/btnCancel.png") no-repeat 0 0 / 100%;font-size:0}
+#popFull .inner .btnCancel:hover,
+#popFull .inner .btnCancel.on {background-image:url("../img/btnCancelOn.png")}
+#popFull .inner .btnOk{width:183px;height:71px;background:url("../img/btnOk.png") no-repeat 0 0 / 100%;font-size:0}
+#popFull .inner .btnOk:hover,
+#popFull .inner .btnOk.on {background-image:url("../img/btnOkOn.png")}
+#popFull .inner .btnOkLine{width:153px;height:61px;background:url("../img/btnOkLine.png") no-repeat 0 0 / 100%;font-size:0}
+#popFull .inner .btnOkLine:hover,
+#popFull .inner .btnOkLine.on {background-image:url("../img/btnOkLineOn.png")}
+#popFull .inner .btnCancelLine{width:153px;height:61px;background:url("../img/btnCancelLine.png") no-repeat 0 0 / 100%;font-size:0}
+#popFull .inner .btnCancelLine:hover,
+#popFull .inner .btnCancelLine.on {background-image:url("../img/btnCancelLineOn.png")}
+
+/*#popFull .bubble {padding:10px;background:#f0f0f0;border:2px solid #cccccc;line-height:25px;font-size:14px;font-family:'Noto Sans KR';font-weight:700;color:#000}
+*/
+.shadow {box-shadow:0 3px 3px 0 rgba(0, 0, 0, 0.25)}
+
+/* 진도관리 */
+#popFull .progress{width:900px;height:560px} 
+#popFull .progress .box {height:310px}
+#popFull .progress table tbody tr td:nth-child(2){text-align:center}
+#popFull .progress table tbody tr td:nth-child(5){text-align:center}
+#popFull .progress table tbody tr td:nth-child(6){text-align:center}
+
+
+/* 진도저장 */
+#popFull .progressSave{width:560px}
+#popFull .progressSave .content {display:flex;height:110px;justify-content:center;align-items:center;font-size:32px;color:#333}
+#popFull .progressSave .content input {border:2px solid #9a9a9a;width:113px;font-size:28px;font-family:"Noto Sans KR";line-height:46px;background-color:#fff;color:#333}
+#popFull .progressSave .content .txt{margin-left:10px;margin-right:30px}
+#popFull .progressSave .content button{margin-left:10px}
+
+/* PC에 저장하기 */
+#popFull .pcSave{width:843px}
+#popFull .pcSave .content {font-size:28px;font-weight:700;position:relative;color:#333;padding-top:36px}
+#popFull .pcSave .content > div {display:flex;align-items:center; justify-content:center}
+#popFull .pcSave .content > button:last-child {margin-bottom:26px}
+#popFull .pcSave .content input[type="text"]{border:1px solid #c8c8c8;width:513px;font-size:24px;font-family:"Noto Sans KR";line-height:50px;padding:0 13px;margin-left:18px;border-radius:15px;background-color:#d8d8d8}
+#popFull .pcSave .content input[type="text"]::placeholder {text-align:left;color:#707070}
+#popFull .pcSave .content .btnFind{margin-left:10px}
+#popFull .pcSave .progressBar {display:inline-block;background-color:#d8d8d8;width:703px;height:30px;border-radius:15px;overflow:hidden;border:1px solid #b7b7b6}
+#popFull .pcSave .progressBarInner{height:30px;background:#fbbe0d;border-radius:15px}
+#popFull .pcSave .percentage{margin-left:13px;font-size:32px}
+#popFull .pcSave .percentage::after {content:"%"} 
+#popFull .pcSave .pc1 label {text-align:left;width:100%;padding-left:33px;font-size:24px;margin-bottom:22px;margin-top:18px}
+#popFull .pcSave .pc2 {padding-top:52px}
+#popFull .pcSave .pc2 button{margin-top:50px}
+#popFull .pcSave label::before{display:none}
+#popFull .pcSave .txt1{font-size:32px;color:#000}
+#popFull .pcSave .pc3 {padding-top:30px}
+#popFull .pcSave .pc3 > div:nth-child(2){margin-top:27px;margin-bottom:40px}
+
+/* 드래그 캡처창 */
+#popFull .dragCapture .imgArea{margin: 45px 110px 45px; min-width: 210px; display: flex; justify-content: center; }
+#popFull .dragCapture .btnRow {width:280px;display:flex;justify-content:space-evenly;margin:0 auto 26px;border-radius:10px;background-color:#fff;border:1px solid #b0b0b0;padding:19px 0;align-items:center}
+#popFull .dragCapture .btnRow .btnDraw{background:url("../img/btnDraw.png") no-repeat;width:74px;height:65px}
+#popFull .dragCapture .btnRow .btnPrint {background:url("../img/btnPrint.png") no-repeat;width:74px;height:65px}
+#popFull .dragCapture .btnRow .btnSaveCapture {background:url("../img/btnSaveCapture.png") no-repeat;width:74px;height:65px}
+
+/* e북 스킨 학습목차 */
+#popFull .inner.skinIndex {left:0;top:50px;transform:translate(0,0);width:400px;height:646px;border-radius:30px 30px 0 0}
+#popFull .inner.skinIndex .content{height:580px;border-radius:0}
+#popFull .inner.skinIndex .skinIndexMenu{font-size:14px;line-height:60px;text-align:left;overflow-y:scroll;height:570px;margin-top:10px;}
+#popFull .inner.skinIndex .skinIndexMenu > li {padding-left:40px;position:relative;cursor:pointer;color:#333;line-height:50px;font-size:18px;display: block;width:100%;}
+#popFull .inner.skinIndex .skinIndexMenu > li::before {content:"";display:block;width:18px;height:18px;background:url("../img/iconPlus.png") no-repeat 0 0 / 18px;position:absolute;top:17px;left:10px}
+#popFull .inner.skinIndex .skinIndexMenu > li.on::before {background-image:url("../img/iconMinus.png");}
+#popFull .inner.skinIndex .skinIndexMenu > li > span {display:block;width:calc(100% + 30px);height:100%;padding-left:40px;margin-left:-40px}
+#popFull .inner.skinIndex .skinIndexMenu .item .title {text-overflow: ellipsis; white-space: nowrap; overflow: hidden;}
+#popFull .inner.skinIndex .skinIndexMenu .dropMenu {background-color:#fefefe;width:calc(100% + 70px);margin-left:-70px;border-top:1px solid #bbb;border-bottom:1px solid #bbb;font-size:14px;padding:10px 0;}
+#popFull .inner.skinIndex .skinIndexMenu .dropMenu > li{padding:5px 20px 5px 70px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500; line-height:1.8;}
+#popFull .inner.skinIndex .skinIndexMenu .dropMenu > li.on,
+#popFull .inner.skinIndex .skinIndexMenu .dropMenu > li:hover {color:#00a298}
+#popFull .inner.skinIndex .skinIndexMenu .dropMenu li.mTitle {font-weight:700}
+#popFull .inner.skinIndex .skinIndexMenu .dropMenu li.mTitle::before {content:"·"}
+
+/* 텍스트 선택창 */
+#popFull .textSelect{width:574px}
+#popFull .textSelect .content {padding:20px 22px 17px;font-size:22px;font-weight:500}
+#popFull .textSelect .content p {text-align:left;padding-left:5px}
+#popFull .textSelect .searchTool .toolRow {display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid #bec8c8}
+#popFull .textSelect .searchTool .btnRow{display:flex;justify-content:space-between;width:358px;margin:12px auto 0}
+#popFull .textSelect .searchTool button {height:57px} 
+#popFull .textSelect .searchTool .btnDic1 {background:url("../img/btnDic1.png") no-repeat;width:161px}
+#popFull .textSelect .searchTool .btnDic2 {background:url("../img/btnDic2.png") no-repeat;width:124px}
+#popFull .textSelect .searchTool .btnDic3 {background:url("../img/btnDic3.png") no-repeat;width:109px}
+#popFull .textSelect .searchTool .btnDic4 {background:url("../img/btnDic4.png") no-repeat;width:110px}
+#popFull .textSelect .searchTool .textCopy{background:url("../img/btnTextCopy.png") no-repeat;width:133px}
+#popFull .textSelect .searchTool .textCopy.on,
+#popFull .textSelect .searchTool .textCopy:hover{background:url("../img/btnTextCopyOn.png") no-repeat}
+#popFull .textSelect .searchTool .penLight{background:url("../img/btnPenLight.png") no-repeat;width:94px}
+#popFull .textSelect .searchTool .penLight.on,
+#popFull .textSelect .searchTool .penLight:hover{background:url("../img/btnPenLightOn.png") no-repeat} 
+#popFull .textSelect .searchTool .reSelect{background:url("../img/btnReselect.png") no-repeat;width:115px}
+#popFull .textSelect .searchTool .reSelect.on,
+#popFull .textSelect .searchTool .reSelect:hover{background:url("../img/btnReselectOn.png") no-repeat} 
+
+/* 텍스트 클립보드 */
+#popFull .textClip{width:420px;height:160px;font-size:21px;font-weight:500;padding-top:32px}
+#popFull .textClip p{margin-bottom:24px}
+
+/* 본문 검색 */
+#popFull .inner.searchText {width:502px;height:796px;top:42px;left:200px;transform:translate(0,0)}
+#popFull .searchText .top{height:147px}
+#popFull .searchText .content{overflow-y:auto;overflow-x:hidden;height:651px}
+#popFull .searchText .searchBox{width:502px;height:81px;position:absolute;top:66px;left:-15px;background-color:#d8dfd9;display:flex;justify-content:center;align-items:center;border-left:2px solid #bbbbbb;border-right:2px solid #bbbbbb}
+#popFull .searchText .searchBox input{text-align:left;background-color:#fff;width:470px;height:49px;padding:0 50px 0 10px;line-height:50px;font-weight:500;font-size:18px;border:1px solid #a0a0a0}
+#popFull .searchText .searchBox input::placeholder {line-height:50px;color:#a3a3a3;font-family:"Noto Sans KR"}
+#popFull .searchText .searchBox .btnSearch {width:48px;height:48px;position:absolute;right:16px;top:15px;background:url("../img/btnSearch.png") no-repeat center}
+#popFull .searchText .noResult {font-size:24px;font-weight:500;line-height:70px;padding-left:28px;text-align:left}
+#popFull .searchText .resultList > li{position:relative;display:flex;justify-content:space-evenly;padding:20px 0;align-items:center}
+#popFull .searchText .resultList > li + li::before {content:"";position:absolute;top:0;left:20px;width:445px;height:1px;background-color:#bec8c8}
+#popFull .searchText .resultList .thumb{width:117px;height:149px;background-repeat:no-repeat;background-size:cover;position:relative;border:3px solid #b0b0b0;overflow:hidden}
+#popFull .searchText .resultList .thumb .num {position:absolute;width:100%;height:30px;background-color:rgba(176,176,176,0.9);font-size:16px;color:#fff;font-weight:500;line-height:30px;bottom:0;left:0}
+#popFull .searchText .resultList .textArea {font-size:18px;font-weight:500;width:295px;text-align:justify;line-height:26px;margin-top:-3px;-webkit-box-orient:vertical;max-height:156px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:6}
+
+
+/* 뷰어 학습목차 */
+#popFull .inner.viewerIndex {left:0;top:74px;transform:translate(0,0);width:470px;border-radius:15px 15px 15px 0}
+#popFull .inner.viewerIndex .content{border-radius:0 0 15px 0;padding-bottom:20px}
+#popFull .inner.viewerIndex .selectBox{width:100%;height:70px;background-color:#cfdce6;font-size:15px;color:#303030;position:relative}
+#popFull .inner.viewerIndex #chapterSelect{width:187px;height:40px;position:absolute;top:18px;left:16px}
+#popFull .inner.viewerIndex #unitSelect {width:237px;height:40px;position:absolute;top:18px;right:16px}
+/* custom-select */
+#popFull .inner.viewerIndex .custom-select{position:relative}
+#popFull .inner.viewerIndex .custom-select select {display:none} 
+#popFull .inner.viewerIndex .select-selected{background-color:#fff;text-align:left;height:40px;top:0;left:0;width:100%;padding:0 24px 0 10px;line-height:38px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;position:relative;border:1px solid #a0a0a0}
+#popFull .inner.viewerIndex .select-selected:after{position:absolute;content:"";top:15px;right:10px;width:17px;height:10px;background:url("../img/iconArrow.png") no-repeat}
+#popFull .inner.viewerIndex .select-selected.select-arrow-active {height:52px;background-color:#ededed}
+#popFull .inner.viewerIndex .select-selected.select-arrow-active::after {transform:rotate(180deg)}
+#popFull .inner.viewerIndex .select-items div,.select-selected {padding:0 10px;line-height:50px;cursor:pointer;user-select:none;text-align:left;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#popFull .inner.viewerIndex .select-items {position:absolute;background-color:#fff;top:100%;left:0;right:0;z-index:99;border:1px solid #a0a0a0}
+#popFull .inner.viewerIndex .select-hide{display:none}
+#popFull .inner.viewerIndex .select-items div:hover, .same-as-selected {background-color:#f1f2f0 !important;color:#303030 !important}
+
+#popFull .inner.viewerIndex .viewerIndexMenu{font-size:24px;font-weight:500;text-align:left;overflow-y:scroll;height:470px;color:#333}
+#popFull .inner.viewerIndex .viewerIndexMenu > li {line-height:1}
+#popFull .inner.viewerIndex .viewerIndexMenu > li > div {padding:10px 5px}
+#popFull .inner.viewerIndex .viewerIndexMenu .unitType{font-family:'HeummNemodream182';position:relative;padding-left:36px; font-size:17px}
+#popFull .inner.viewerIndex .viewerIndexMenu .unitType::before {content:'';width:10px;height:10px;border-radius:50%;background-color:#f15042;display:block;position:absolute;left:16px;top:13px}
+#popFull .inner.viewerIndex .viewerIndexMenu .unitTitle {cursor:pointer;background-color:#fff;border:1px solid #bec8c8;margin:0 14px;font-size:15px}
+#popFull .inner.viewerIndex .viewerIndexMenu .unitTitle + .unitTitle {border-top:none}
+#popFull .inner.viewerIndex .viewerIndexMenu .unitTitle.on {color:#079aa0}
+
+
+/* 드래그캡쳐 기능 */
+.dragCaptureFunc{position:absolute;top:500px;left:500px}
+
+/* 텍스트 선택 기능 */
+.textSelectFunc{position:absolute;top:288px;left:470px}
+
+/* 수업 도구 */
+#popFull .inner.classTool {width:200px;height:300px;padding:22px;top:auto;bottom:60px;transform:translate(0,0);left:560px;background:url("../img/classTool.png") no-repeat 0 0 / 100%}
+#popFull .classTool .btnPopClose{background:url("../img/btnPopClose2.png") no-repeat 0 0 / 100%;top:28px;right:-28px;width:30px;height:55px}
+#popFull .inner.classTool .content{border:none}
+#popFull .inner.classTool .toolList { font-size:18px;font-family:"HeummNemodream182";font-weight:normal;line-height:39px;color:#505050}
+#popFull .inner.classTool .toolList li{cursor:pointer;position:relative}
+#popFull .inner.classTool .toolList li.on,
+#popFull .inner.classTool .toolList li:hover{text-shadow:0 2px 0 rgba(0, 0, 0, 0.15);color:#fff}
+#popFull .inner.classTool .toolList li.on::before,
+#popFull .inner.classTool .toolList li:hover::before {content:"";display:block;width:100%;height:36px;border-radius:19px;background-color:#ffbe00;position:absolute;top:50%;transform:translateY(-50%);left:0;z-index:-1}
+#popFull .inner.classTool .toolList li + li::after{content:"";width:154px;height:2px;background:url("../img/classToolLine.png") no-repeat;position:absolute;top:-0.5px;left:0}
+
+/* 그리기&쓰기 */
+#popFull .inner.drawWrite {width:423px;top:158px;left:208px;transform:translate(0,0)}
+#popFull .drawWrite .content{padding:25px 0 0}
+#popFull .inner.drawWrite .optionBox{margin-top:-15px}
+#popFull .drawWrite .bottom {height:65px;background-color:#079aa0;position:relative;;border-radius:0 0 15px 15px}
+#popFull .drawWrite .bottom > button{position:absolute;top:50%;transform:translateY(-50%)}
+#popFull .drawWrite .bottom .viewToggle {width:39px;height:30px;background:url("../img/iconViewToggle.png") no-repeat;left:25px}
+#popFull .drawWrite .bottom .rotateCounter{width:30px;height:31px;background:url("../img/iconRotateCounter.png") no-repeat;right:63px}
+#popFull .drawWrite .bottom .rotateClockwise{width:30px;height:31px;background:url("../img/iconRotateClockwise.png") no-repeat;right:20px}
+#popFull .drawWrite .drawWriteTool{display:flex;margin-bottom:25px;justify-content:space-evenly}
+#popFull .drawWrite .drawWriteTool > li {width:110px;height:110px;background-repeat:no-repeat;background-position:center;cursor:pointer;border-radius:13px;box-shadow:0px 2px 3px 0px rgba(0, 0, 0, 0.2)}
+#popFull .drawWrite .drawWriteTool li.on,
+#popFull .drawWrite .drawWriteTool li:hover {border:4px solid #079aa0}
+#popFull .drawWrite .drawWriteTool .drawMode{background-image:url("../img/iconDrawMode.png")}
+
+#popFull .drawWrite .drawWriteTool .textMode{background-image:url("../img/iconTextMode.png")}
+#popFull .drawWrite .drawWriteTool .selectMode{background-image:url("../img/iconSelectMode.png")}
+#popFull .drawWrite .optionBox > div{display:none;position:relative}
+#popFull .drawWrite .optionBox > div.on {display:block}
+
+/* 그리기 */
+#popFull .drawWrite .optionBox .drawOption .drawTool{display:flex;flex-wrap:wrap;padding:22px 30px 26px;position:relative;background:url("../img/optionBoxLine1.png") no-repeat center top;width:100%;height:246px;margin:0 auto;border-bottom:1px solid #bec8c8}
+#popFull .drawWrite .optionBox .drawOption .drawTool::after {content:"";display:block;width:334px;height:1px;background:url("../img/drawWriteLine2.png") no-repeat;position:absolute;bottom:0;left:25px}
+#popFull .drawWrite .optionBox .drawOption .drawTool li {width:79px;height:84px;background-repeat:no-repeat;background-position:center;margin:5px;cursor:pointer}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(1) {background-image:url("../img/drawTool1.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(1).on, 
+#popFull .drawWrite .drawOption .drawTool li:nth-child(1):hover {background-image:url("../img/drawTool1On.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(2) {background-image:url("../img/drawTool2.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(2).on, 
+#popFull .drawWrite .drawOption .drawTool li:nth-child(2):hover {background-image:url("../img/drawTool2On.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(3) {background-image:url("../img/drawTool3.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(3).on, 
+#popFull .drawWrite .drawOption .drawTool li:nth-child(3):hover {background-image:url("../img/drawTool3On.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(4) {background-image:url("../img/drawTool4.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(4).on, 
+#popFull .drawWrite .drawOption .drawTool li:nth-child(4):hover {background-image:url("../img/drawTool4On.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(5) {background-image:url("../img/drawTool5.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(5).on, 
+#popFull .drawWrite .drawOption .drawTool li:nth-child(5):hover {background-image:url("../img/drawTool5On.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(6) {background-image:url("../img/drawTool6.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(6).on, 
+#popFull .drawWrite .drawOption .drawTool li:nth-child(6):hover {background-image:url("../img/drawTool6On.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(7) {background-image:url("../img/drawTool7.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(7).on, 
+#popFull .drawWrite .drawOption .drawTool li:nth-child(7):hover {background-image:url("../img/drawTool7On.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(8) {background-image:url("../img/drawTool8.png")}
+#popFull .drawWrite .drawOption .drawTool li:nth-child(8).on, 
+#popFull .drawWrite .drawOption .drawTool li:nth-child(8):hover {background-image:url("../img/drawTool8On.png")}
+#popFull .drawWrite .drawOption .colorSize{display:flex;padding:20px 25px;justify-content:space-between}
+#popFull .drawWrite .drawOption .colorPicker{width:82px;height:82px;border:2px solid #505050;cursor:pointer}
+#popFull .drawWrite .drawOption .brushSize{width:265px;display:flex;justify-content:space-between;align-items:center;padding:0 19px}
+#popFull .drawWrite .drawOption .brushSize li {background-color:#c0c0c0;border-radius:50%;cursor:pointer;border:1px solid #a4a4a4}
+#popFull .drawWrite .drawOption .brushSize li:nth-child(1){width:15px;height:15px}
+#popFull .drawWrite .drawOption .brushSize li:nth-child(2){width:20px;height:20px}
+#popFull .drawWrite .drawOption .brushSize li:nth-child(3){width:25px;height:25px}
+#popFull .drawWrite .drawOption .brushSize li:nth-child(4){width:33px;height:33px}
+#popFull .drawWrite .drawOption .brushSize li:nth-child(5){width:44px;height:44px}
+
+/* 쓰기 */
+#popFull .drawWrite .optionBox .textOption{position:relative;margin:0 auto}
+#popFull .drawWrite .optionBox .textOption .textTool{padding:35px 30px 11px;background:url("../img/optionBoxLine2.png") no-repeat center top;width:100%;border-bottom:1px solid #bec8c8;height:275px}
+#popFull .drawWrite .textOption .colorSize{display:flex;padding:20px 0;justify-content:space-between}
+#popFull .drawWrite .textOption .colorPicker{width:82px;height:82px;border:2px solid #505050;cursor:pointer}
+#popFull .drawWrite .textOption .textSize {width:264px;display:flex;justify-content:space-between;align-items:center;padding:0 19px}
+#popFull .drawWrite .textOption .textSize li{background-color:#e0e0e0;border-radius:50%;cursor:pointer;display:flex;justify-content:center;align-items:center;color:#303030;border:1px solid #c0c0c0}
+#popFull .drawWrite .textOption .textSize li:nth-child(1) {width:26px;height:26px;font-size:16px}
+#popFull .drawWrite .textOption .textSize li:nth-child(2) {width:34px;height:34px;font-size:22px}
+#popFull .drawWrite .textOption .textSize li:nth-child(3) {width:44px;height:44px;font-size:28px}
+#popFull .drawWrite .textOption .textSize li:nth-child(4) {width:51px;height:51px;font-size:32px}
+#popFull .drawWrite .textOption .opacity{position:relative;padding-left:0;padding-right:0}
+#popFull .drawWrite .textOption .btnRow {height:102px;display:flex;justify-content:space-between;padding:0 13px;align-items:center}
+#popFull .drawWrite .textOption .btnRow button.textAdd{width:173px;height:61px;background:url("../img/btnTextAdd.png") no-repeat;font-size:0}
+#popFull .drawWrite .textOption .btnRow button.textAdd.on,
+#popFull .drawWrite .textOption .btnRow button.textAdd:hover {background-image:url("../img/btnTextAddOn.png")}
+#popFull .drawWrite .textOption .btnRow button.textDelAll {width:213px;height:61px;background:url("../img/btnTextDelAll.png") no-repeat;font-size:0}
+#popFull .drawWrite .textOption .btnRow button.textDelAll.on,
+#popFull .drawWrite .textOption .btnRow button.textDelAll:hover {background-image:url("../img/btnTextDelAllOn.png")}
+
+/* custom-select font */
+#popFull .drawWrite .custom-select{position:relative;font-size:24px;color:#303030}
+#popFull .drawWrite .custom-select select {display:none} 
+#popFull .drawWrite .select-selected{background-color:#fff;border:1px solid #a0a0a0;text-align:left;height:50px;top:0;left:0;width:100%;padding:0 24px 0 10px;line-height:46px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;position:relative}
+#popFull .drawWrite .select-selected:after{position:absolute;content:"";top:20px;right:10px;width:17px;height:10px;background:url("../img/iconArrow2.png") no-repeat}
+#popFull .drawWrite .select-selected.select-arrow-active{border-radius:5px 5px 0 0;border-bottom-color:transparent;height:52px}
+#popFull .drawWrite .select-selected.select-arrow-active::after {transform:rotate(180deg)}
+#popFull .drawWrite .select-items div,.select-selected{padding:0 10px;line-height:50px;border:1px solid transparent;cursor:pointer;user-select:none;text-align:left}
+#popFull .drawWrite .select-items {position:absolute;background-color:#fff;top:100%;right:0;z-index:99;border:1px solid #a0a0a0;width:359px}
+#popFull .drawWrite .select-items::before {content:"";width:100%;height:5px;background-color:#fff;position:absolute;top:-3px;left:0}
+#popFull .drawWrite .select-hide{display:none}
+#popFull .drawWrite .select-items div:hover, .same-as-selected {background-color:rgba(63, 151, 214, 0.15);color:#3a91d3}
+
+/* 투명도 */
+#popFull .drawWrite .opacity{display:flex;padding:0 25px 38px;justify-content:space-between;align-items:center}
+#popFull .drawWrite .opacity p{font-size:22px;color:#333}
+#popFull .drawWrite .opacity .percentage{font-size:17px}
+#popFull .drawWrite .opacity .percentage::after {content:"%"}
+
+/* 그리기 쓰기 슬라이더 */
+#popFull .drawWrite .slider {width:202px;height:8px;border:none;background-color:#e0e0e0;top:0;border-radius:0}
+#popFull .drawWrite .slider .ui-slider-handle {width:11px;height:31px;border:none;background:url("../img/sliderHandle.png") no-repeat;margin-left:-3px;top:-10px;cursor:pointer}
+/* 선택모드 */
+#popFull .drawWrite .selectOption {height:15px}
+
+/* 전체 삭제창 */
+#popFull .inner.delAll{width:643px;font-size:28px;color:#333}
+#popFull .inner.delAll .content {padding:44px 0 24px}
+#popFull .inner.delAll .content p {margin-bottom:38px}
+#popFull .inner.delAll .content button:last-child {margin-left:4px}
+
+
+.tooltipUI {
+padding:10px 20px !important;
+color:#505050!important;
+border-radius:9px!important;
+box-shadow:0 3px 3px 0 rgba(0, 0, 0, 0.15) !important;
+background-color:#ffeea7 !important;
+font-family:'HeummNemodream182' !important;
+font-size:16px !important;
+line-height:1.4 !important;
+font-weight:400 !important;
+max-height:80px;
+max-width:600px !important;
+
+}
+.tooltipUI.left::after{left:37px;right:auto}
+.tooltipUI.right::after{right:37px;left:auto}
+.tooltipUI::after{content:"";display:block;width:26px;height:17px;background:url(../img/tooltipArrow.png) no-repeat 0 0;position:absolute;bottom:-17px;left:calc(50% - 13px)}
+.tooltipUI2 {
+padding:5px 15px !important;
+color:#000!important;
+border-radius:0!important;
+box-shadow:0 3px 3px 0 rgba(0, 0, 0, 0.15) !important;
+background-color:#ffeea7 !important;
+font-family:'HeummNemodream182' !important;
+font-size:16px !important;
+line-height:1.4 !important;
+font-weight:400 !important;
+max-width:100% !important;
+}

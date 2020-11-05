@@ -2819,8 +2819,12 @@ if (!Object.keys){
 		// 	}
 		// }
 		// checkVisible();
+
 		parallax();
 		$scope.off('scroll.win').on('scroll.win', parallax);
+		$item.find('*').off('focus.parallax').on('focus.parallax', function(){
+			$(this).closest('.ui-parallax-item').addClass('parallax-s');
+		});
 
 		function parallax() {
 			var $parallax = $('.ui-parallax');
