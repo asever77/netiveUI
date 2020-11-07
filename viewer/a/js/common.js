@@ -70,7 +70,7 @@ document.addEventListener('DOMContentLoaded', function () {
 		tooltipClass:'tooltipUI2',
 	 	track: true,
 		position: {
-			my: "left bottom+70",
+			my: "left bottom+50",
 			at: "left",
 			of: "#targetElement", 
 			collision: "fit" 

@@ -1,6 +1,10 @@
 @charset "utf-8";
 
 .type-main.c31 {background:url(../img/main/bg-main.jpg) no-repeat 50% 0 / cover}
+.type-main.c32 {background:url(../img/main/bg-main32.jpg) no-repeat 50% 0 / cover}
+.type-main.c41 {background:url(../img/main/bg-main41.jpg) no-repeat 50% 0 / cover}
+.type-main.c42 {background:url(../img/main/bg-main42.jpg) no-repeat 50% 0 / cover}
+
 .type-main {position:relative;width:1920px;height:1017px;font-size:60px;font-weight:700;color:#000;text-align:center}
 
 .type-main .main-title {font-size:78px;color:#313131;text-align:left;position:absolute;top:40px;left:250px}

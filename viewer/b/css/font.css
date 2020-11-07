@@ -3,6 +3,16 @@
 /* ------------------------------------------------------------------------------------------------------------- */
 /* font */
 @font-face {
+  font-family: 'Binggrae-Bold';
+  src: url('../fonts/Binggrae-Bold.eot');
+  src: url('../fonts/Binggrae-Bold.eot?#iefix') format('embedded-opentype'),
+  url('../fonts/Binggrae-Bold.woff') format('woff'),
+  url('../fonts/Binggrae-Bold.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'Noto Sans KR';
   src: url("../fonts/NotoSans-Bold.eot");
   src: url("../fonts/NotoSans-Bold.eot?#iefix") format("embedded-opentype"), url("../fonts/NotoSans-Bold.woff") format("woff"), url("../fonts/NotoSans-Bold.woff2") format("woff2");

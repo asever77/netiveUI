@@ -52,6 +52,9 @@ body													{position:relative; width:100%; height:100%;  font-family: 'Not
 background-color: #f39200;
 border-radius: 10px;
 }
+.scrollStyle.v2::-webkit-scrollbar-thumb {
+    background-color: #b5b5b5;
+}
 .scrollStyle::-webkit-scrollbar-track {
 background: url('../img/scroll.png') repeat-y;
 border-radius: 10px;
