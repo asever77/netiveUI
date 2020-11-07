@@ -83,5 +83,19 @@ document.addEventListener('DOMContentLoaded', function () {
 		  	callback($(this).prop('title'));
 		}
 	});
+	$('.viewTooltip3').tooltip({
+		tooltipClass:'tooltipUI3',
+		track: true,
+		position: {
+			my: "left bottom+50",
+			at: "left",
+			of: "#targetElement",
+			collision: "fit"
+		},
+		content: function(callback) {
+			$('.ui-helper-hidden-accessible > div').remove();
+			callback($(this).prop('title'));
+		}
+	});
 });
 

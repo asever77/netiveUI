@@ -520,4 +520,17 @@
   font-weight: 400 !important;
   max-width:100% !important;
 }
-
+.tooltipUI3 {
+  padding: 6px 10px !important;
+  color: #000!important;
+  border-radius: 0 !important;
+  box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.15) !important;
+  background-color: #fff !important;
+  font-family: 'Noto Sans KR' !important;
+  font-size: 14px !important;
+  line-height: 100% !important;
+  font-weight: 300 !important;
+  max-height:80px;
+  max-width:600px !important;
+  border:1px solid #313131 !important;
+}
