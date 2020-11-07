@@ -86,34 +86,34 @@
 										<col style="width:240px">
 									</colgroup>
 									<thead>
-									<tr>
-										<th scope="col" rowspan="2">단원 구성</th>
-										<th scope="col" rowspan="2">
-											<input type="checkbox" id="ck1">
-											<label for="ck1">수업 PPT</label>
-										</th>
-										<th scope="col" colspan="3" class="no-line">
-											활동지
-										</th>
-										<th scope="col" rowspan="2">
-											<input type="checkbox" id="ck5">
-											<label for="ck5">탐구/ <br>해 보기 영상</label>
-										</th>
-									</tr>
-									<tr class="row-group">
-										<th scope="col">
-											<input type="checkbox" id="ck2-1">
-											<label for="ck2-1">해 보기</label>
-										</th>
-										<th scope="col">
-											<input type="checkbox" id="ck2-2">
-											<label for="ck2-2">대체 탐구</label>
-										</th>
-										<th scope="col">
-											<input type="checkbox" id="ck2-3">
-											<label for="ck2-3">알짜 정리</label>
-										</th>
-									</tr>
+										<tr>
+											<th scope="col" rowspan="2">단원 구성</th>
+											<th scope="col" rowspan="2">
+												<input type="checkbox" id="ck1" idx="1">
+												<label for="ck1">수업 PPT</label>
+											</th>
+											<th scope="col" colspan="3" class="no-line">
+												활동지
+											</th>
+											<th scope="col" rowspan="2">
+												<input type="checkbox" id="ck5" idx="5">
+												<label for="ck5">탐구/ <br>해 보기 영상</label>
+											</th>
+										</tr>
+										<tr class="row-group">
+											<th scope="col">
+												<input type="checkbox" id="ck2-1" idx="2">
+												<label for="ck2-1">해 보기</label>
+											</th>
+											<th scope="col">
+												<input type="checkbox" id="ck2-2" idx="3">
+												<label for="ck2-2">대체 탐구</label>
+											</th>
+											<th scope="col">
+												<input type="checkbox" id="ck2-3" idx="4">
+												<label for="ck2-3">알짜 정리</label>
+											</th>
+										</tr>
 									</thead>
 									<tbody>
 										<tr>
@@ -425,8 +425,16 @@
 						}
 					} else {
 						if (isCol) {
-							idx = $this.closest('th').index();
-							$tbl.find('tr').each(function(){
+							if(!!$this.attr('idx')) {
+								idx = $this.attr('idx');
+							} else {
+								idx = $this.closest('th').index();
+							}
+
+							console.log(idx)
+							
+
+							$tbl.find('tbody tr').each(function(){
 								if (checked) {
 									$(this).find('> *:eq('+ idx +')').addClass('on').find('input').prop('checked', true);
 								} else {
