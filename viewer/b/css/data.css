@@ -5,6 +5,7 @@ body{background: #fff;}
 .type-data .header .title{font-size:45px; color:#000; font-family: 'BR'; position: relative; padding-left:15px; float: left;}
 .type-data .header .title::before{content:""; display:block; width:16px; height:16px; background:#ffdb00; border-radius:50%; position: absolute; top:35px; left:-10px}
 .type-data .header .title strong{font-size:69px; font-weight: 600;}
+.type-data .header .title strong em {color:#ffdb00}
 
 .header-group{float: right;}
 .inp-round{display:block;float:left; width:620px; height:74px; padding:0 80px 0 40px ; border-radius:37px; border:2px solid #cfcfcf; background:#fff; font-size:24px; font-weight: 600; position: relative;}
