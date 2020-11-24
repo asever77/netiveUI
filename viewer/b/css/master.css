@@ -49,7 +49,7 @@
 .toolsWrap .btnZoomIn 									{left:805px;width:40px;background:url("../img/toolBtnZoomIn.png") no-repeat}
 .toolsWrap .btnZoomOut 									{left:883px;width:40px;background:url("../img/toolBtnZoomOut.png") no-repeat}
 .toolsWrap .btnThumb 									  {left:999px;width:40px;background:url("../img/toolBtnThumb.png") no-repeat}
-.toolsWrap .btnViewOne 									{left:1076px;width:49px;background:url("../img/toolBtnViewOne.png") no-repeat}
+.toolsWrap .btnViewOne 									{left:1076px;width:53px;background:url("../img/toolBtnViewOne.png") no-repeat}
 .toolsWrap .btnViewTwo 									{left:1076px;width:53px;background:url("../img/toolBtnViewTwo.png") no-repeat}
 .toolsWrap .pageGo 										  {position:absolute;top:0;left:1160px;width:137px;height:50px;background-color:#fff;border-radius:25px;border:2px solid #08a0a6}
 .toolsWrap .pageGo .page 								{position:absolute;top:3px;left:30px;width:39px;height:42px; font-size:22px;text-align:center;line-height:52px;font-weight:700;color:#333}
