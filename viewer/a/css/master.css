@@ -39,14 +39,14 @@
 .toolsWrap .btnCapture                  {left:167px;width:67px;background:url("../img/toolBtnCapture.png") no-repeat; margin-left:20px}
 .toolsWrap .btnDraw                     {left:257px;width:73px;background:url("../img/toolBtnDraw.png") no-repeat}
 .toolsWrap .btnText                     {left:338px;width:66px;background:url("../img/toolBtnText.png") no-repeat}
-.toolsWrap .btnSearch                   {left:418px;width:51px;background:url("../img/toolBtnSearch.png") no-repeat}
+.toolsWrap .btnSearch                   {left:418px;width:67px;background:url("../img/toolBtnSearch.png") no-repeat}
 .toolsWrap .btnPrint                    {left:491px;width:38px;background:url("../img/toolBtnPrint.png") no-repeat}
 
 .toolsWrap .btnZoomIn                   {left:549px;width:37px;background:url("../img/toolBtnZoomIn.png") no-repeat; margin-left: 30px;}
 .toolsWrap .btnZoomOut                  {left:634px;width:37px;background:url("../img/toolBtnZoomOut.png") no-repeat; margin-right: 30px;}
 
 .toolsWrap .btnThumb                    {left:728px;width:40px;background:url("../img/toolBtnThumb.png") no-repeat}
-.toolsWrap .btnViewOne                  {left:778px;width:50px;background:url("../img/toolBtnViewOne.png") no-repeat}
+.toolsWrap .btnViewOne                  {left:778px;width:54px;background:url("../img/toolBtnViewOne.png") no-repeat}
 .toolsWrap .btnViewTwo                  {left:778px;width:50px;background:url("../img/toolBtnViewTwo.png") no-repeat}
 .toolsWrap .pageGo                      {position:absolute;left:830px; top:50px; width:134px;height:42px;background-color:#fff;border-radius:10px; transform: scale(0.7);}
 .toolsWrap .pageGo .page                {position:absolute;top:0;left:2px;width:39px;height:42px;font-size:18px;line-height:42px;text-align:center;font-weight:700}
