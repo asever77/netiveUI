@@ -74,6 +74,7 @@
 
 .util-btn2 {width:195px;height:60px;background:url(../img/main/util-btn3.png) no-repeat  0 0;color:#fff;font-size:25px;text-align:left;padding:8px 0 10px 68px;vertical-align:top;font-family:'HeummNemogulim182';font-weight:300}
 .util-btn3 {width:195px;height:60px;background:url(../img/main/util-btn4.png) no-repeat  0 0;color:#fff;font-size:25px;text-align:left;padding:8px 0 10px 74px;margin-left:10px;vertical-align:top;font-family:'HeummNemogulim182';font-weight:300}
+.btn-help {background:url(../img/main/btn-help.png) no-repeat  0 0;width:56px;height:57px;vertical-align:top;margin:2px 0 0 14px}
 
 /* v2 */
 .unit-list.v2 .unit-list-item ~ .unit-list-item {margin-top:20px}

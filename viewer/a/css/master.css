@@ -42,13 +42,13 @@
 .toolsWrap .btnSearch                   {left:418px;width:67px;background:url("../img/toolBtnSearch.png") no-repeat}
 .toolsWrap .btnPrint                    {left:491px;width:38px;background:url("../img/toolBtnPrint.png") no-repeat}
 
-.toolsWrap .btnZoomIn                   {left:549px;width:37px;background:url("../img/toolBtnZoomIn.png") no-repeat; margin-left: 30px;}
-.toolsWrap .btnZoomOut                  {left:634px;width:37px;background:url("../img/toolBtnZoomOut.png") no-repeat; margin-right: 30px;}
+.toolsWrap .btnZoomIn                   {left:499px;width:37px;background:url("../img/toolBtnZoomIn.png") no-repeat; margin-left: 30px;}
+.toolsWrap .btnZoomOut                  {left:584px;width:37px;background:url("../img/toolBtnZoomOut.png") no-repeat; margin-right: 30px;}
 
-.toolsWrap .btnThumb                    {left:728px;width:40px;background:url("../img/toolBtnThumb.png") no-repeat}
-.toolsWrap .btnViewOne                  {left:778px;width:54px;background:url("../img/toolBtnViewOne.png") no-repeat}
-.toolsWrap .btnViewTwo                  {left:778px;width:50px;background:url("../img/toolBtnViewTwo.png") no-repeat}
-.toolsWrap .pageGo                      {position:absolute;left:830px; top:50px; width:134px;height:42px;background-color:#fff;border-radius:10px; transform: scale(0.7);}
+.toolsWrap .btnThumb                    {left:678px;width:40px;background:url("../img/toolBtnThumb.png") no-repeat}
+.toolsWrap .btnViewOne                  {left:728px;width:54px;background:url("../img/toolBtnViewOne.png") no-repeat}
+.toolsWrap .btnViewTwo                  {left:728px;width:50px;background:url("../img/toolBtnViewTwo.png") no-repeat}
+.toolsWrap .pageGo                      {position:absolute;left:800px; top:50px; width:164px;height:42px;background-color:#fff;border-radius:10px; transform: scale(0.7);}
 .toolsWrap .pageGo .page                {position:absolute;top:0;left:2px;width:39px;height:42px;font-size:18px;line-height:42px;text-align:center;font-weight:700}
 .toolsWrap .pageGo .pageTotal           {color:#ec6c1f;font-size:18px;position:absolute;top:0;line-height:42px;left:40px;height:42px}
 .toolsWrap .pageGo .btnGo               {position:absolute;top:6px;right:6px;width:37px;height:31px;background:url("../img/toolBtnGo.png") no-repeat}
@@ -245,7 +245,7 @@
 /* 드래그 캡처창 */
 #popFull .dragCapture                                   {}
 #popFull .dragCapture .imgArea                          {margin:30px 22px;min-width:300px}
-#popFull .dragCapture .btnRow                           {width:200px;display:flex;justify-content:space-between;margin:0 auto 26px}
+#popFull .dragCapture .btnRow                           {width:140px;display:flex;justify-content:space-between;margin:0 auto 26px}
 #popFull .dragCapture .btnRow > button                  {width:60px;height:60px}
 #popFull .dragCapture .btnRow .btnDraw                  {background:url("../img/btnDraw.png") no-repeat}
 #popFull .dragCapture .btnRow .btnPrint                 {background:url("../img/btnPrint.png") no-repeat}
