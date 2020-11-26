@@ -22,40 +22,42 @@
 
 /* ------------------------------------------------------------------------------------------------------------- */
 /* toolsWrap  */
-.toolsWrap 												    {position:absolute;bottom:-23px;left:0; transform: scale(.7); width:100%;height:30px;text-align:center}
+.toolsWrap 												    {position:absolute;bottom:-23px;left:0; width:100%;height:30px;text-align:center}
 .toolsWrap .btnOpen 									{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:106px;height:30px;background:url("../img/btnOpen.png") no-repeat;font-size:0}
 .toolsWrap .tools 										{display:none}
 .toolsWrap.open 										{height:138px}
 .toolsWrap.open .btnOpen 								{display:none}
 .toolsWrap.open .tools 									{display:block}
 
-.toolsWrap .tools 										{position:relative;width:1464px;left:-220px;height:136px;background:url("../img/bgTool.png") left bottom repeat-x}
-.toolsWrap .tools .inner								{position:absolute;top:53px;left:50%;transform:translateX(-50%);width:1348px;height:65px}
-.toolsWrap .tools .inner:before							{position:absolute;top:0;left:0;width:100%;height:100%;background:url("../img/bgToolBtnClear.png") no-repeat;content:"";display:block}
+.toolsWrap .tools 										{position:relative;width:100%;left:0;height:136px;background:url("../img/bgTool.png") left bottom repeat-x}
+.toolsWrap .tools .inner                {width:100%; max-width:1020px; height:65px; position: relative; top:40px; margin:0 auto;}
+.toolsWrap .tools .inner:before							{position:absolute;top:0;left:-134px;width:100%;height:100%;background:url("../img/bgToolBtnClear.png") no-repeat;content:"";display:block;transform: scale(0.74);}
 .toolsWrap .tools button								{font-size:0}
-.toolsWrap .tools .inner > button       {height:65px;position:absolute;bottom:0}
-.toolsWrap .btnClose 									  {position:absolute;top:0;left:50%;transform:translateX(-50%);width:123px;height:30px !important;background:url("../img/btnClose.png") no-repeat}
+/* .toolsWrap .tools .inner > button       {height:65px;position:absolute;bottom:0} */
+.toolsWrap .tools .inner > button       {height:67px; bottom:0;  transform: scale(0.7) translate(13px, 0); position: absolute;}
 
-.toolsWrap .btnHome 									  {left:0;width:37px;background:url("../img/toolBtnHome.png") no-repeat}
-.toolsWrap .btnData 									  {left:80px;width:37px;background:url("../img/toolBtnData.png") no-repeat}
-.toolsWrap .btnIndex 									  {left:165px;width:28px;background:url("../img/toolBtnIndex.png") no-repeat}
+.toolsWrap .btnClose 									  {position:absolute;top:0;left:50%;transform:scale(0.7) translate(-50%, 10px);width:123px;height:30px !important;background:url("../img/btnClose.png") no-repeat}
 
-.toolsWrap .btnCapture 									{left:276px;width:64px;background:url("../img/toolBtnCapture.png") no-repeat}
-.toolsWrap .btnDraw 									  {left:372px;width:72px;background:url("../img/toolBtnDraw.png") no-repeat}
-.toolsWrap .btnText 								  	{left:480px;width:65px;background:url("../img/toolBtnText.png") no-repeat}
-.toolsWrap .btnSearch 									{left:584px;width:53px;background:url("../img/toolBtnSearch.png") no-repeat}
-.toolsWrap .btnPrint 									  {left:680px;width:40px;background:url("../img/toolBtnPrint.png") no-repeat}
+.toolsWrap .btnHome 									  {left:10px;width:37px;background:url("../img/toolBtnHome.png") no-repeat}
+.toolsWrap .btnData 									  {left:60px;width:37px;background:url("../img/toolBtnData.png") no-repeat}
+.toolsWrap .btnIndex 									  {left:115px;width:28px;background:url("../img/toolBtnIndex.png") no-repeat}
 
-.toolsWrap .btnZoomIn 									{left:725px;width:40px;background:url("../img/toolBtnZoomIn.png") no-repeat}
-.toolsWrap .btnZoomOut 									{left:803px;width:40px;background:url("../img/toolBtnZoomOut.png") no-repeat}
-.toolsWrap .btnThumb 									  {left:919px;width:40px;background:url("../img/toolBtnThumb.png") no-repeat}
-.toolsWrap .btnViewOne 									{left:1000px;width:53px;background:url("../img/toolBtnViewOne.png") no-repeat}
-.toolsWrap .btnViewTwo 									{left:1000px;width:53px;background:url("../img/toolBtnViewTwo.png") no-repeat}
-.toolsWrap .pageGo 										  {position:absolute;top:0;left:1100px;width:197px;height:50px;background-color:#fff;border-radius:25px;border:2px solid #08a0a6}
+.toolsWrap .btnCapture 									{left:167px;width:64px;background:url("../img/toolBtnCapture.png") no-repeat; margin-left:20px}
+.toolsWrap .btnDraw 									  {left:257px;width:72px;background:url("../img/toolBtnDraw.png") no-repeat}
+.toolsWrap .btnText 								  	{left:338px;width:65px;background:url("../img/toolBtnText.png") no-repeat}
+.toolsWrap .btnSearch 									{left:418px;width:53px;background:url("../img/toolBtnSearch.png") no-repeat}
+.toolsWrap .btnPrint 									  {left:491px;width:40px;background:url("../img/toolBtnPrint.png") no-repeat}
+
+.toolsWrap .btnZoomIn 									{left:499px;width:40px;background:url("../img/toolBtnZoomIn.png") no-repeat;margin-left: 30px;}
+.toolsWrap .btnZoomOut 									{left:584px;width:40px;background:url("../img/toolBtnZoomOut.png") no-repeat; margin-right: 30px;}
+.toolsWrap .btnThumb 									  {left:678px;width:40px;background:url("../img/toolBtnThumb.png") no-repeat}
+.toolsWrap .btnViewOne 									{left:728px;width:53px;background:url("../img/toolBtnViewOne.png") no-repeat}
+.toolsWrap .btnViewTwo 									{left:728px;width:53px;background:url("../img/toolBtnViewTwo.png") no-repeat}
+.toolsWrap .pageGo 										  {position:absolute;top:0;left:800px;width:164px;height:50px;background-color:#fff;border-radius:25px;border:2px solid #08a0a6;  transform: scale(0.7);}
 .toolsWrap .pageGo .page 								{position:absolute;top:3px;left:30px;width:39px;height:42px; font-size:22px;text-align:center;line-height:52px;font-weight:700;color:#333}
 .toolsWrap .pageGo .pageTotal           {color:#333;font-size:22px;position:absolute;top:0;line-height:52px;left:40px;height:50px}
 .toolsWrap .pageGo .btnGo 							{position:absolute;top:3px;right:4px;width:40px;height:41px;background:url("../img/toolBtnGo.png") no-repeat}
-.toolsWrap .btnHelp 									  {left:1327px;width:53px;background:url("../img/toolBtnHelp.png") no-repeat}
+.toolsWrap .btnHelp 									  {left:818px;width:53px;background:url("../img/toolBtnHelp.png") no-repeat; margin-left: 130px;}
 
 
 /* ------------------------------------------------------------------------------------------------------------- */

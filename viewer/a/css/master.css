@@ -27,8 +27,8 @@
 .toolsWrap.open .tools                  {display:block}
 
 .toolsWrap .tools                     {position:relative;width:100%;height:110px;background:url("../img/bgTool.png") 0 32px repeat-x}
-.toolsWrap .tools .inner                {width:100%;height:65px}
-.toolsWrap .tools .inner:before             {position:absolute;top:35px;left:-134px;width:100%;height:100%;background:url("../img/bgToolBtnClear.png") no-repeat;content:"";display:block;transform: scale(0.74); }
+.toolsWrap .tools .inner                {width:100%; max-width:1020px; height:65px; position: relative; top:40px; margin:0 auto;}
+.toolsWrap .tools .inner:before             {position:absolute;top:0;left:-134px;width:100%;height:100%;background:url("../img/bgToolBtnClear.png") no-repeat;content:"";display:block;transform: scale(0.74); }
 .toolsWrap .btnClose                    {position:absolute;top:0;left:50%;transform:scale(0.7) translate(-50%, 10px);width:106px;height:30px;background:url("../img/btnClose.png") no-repeat}
 .toolsWrap .tools button                {font-size:0}
 .toolsWrap .tools .inner > button       {height:67px; bottom:0;  transform: scale(0.7) translate(13px, 0); position: absolute;}
@@ -48,7 +48,7 @@
 .toolsWrap .btnThumb                    {left:678px;width:40px;background:url("../img/toolBtnThumb.png") no-repeat}
 .toolsWrap .btnViewOne                  {left:728px;width:54px;background:url("../img/toolBtnViewOne.png") no-repeat}
 .toolsWrap .btnViewTwo                  {left:728px;width:50px;background:url("../img/toolBtnViewTwo.png") no-repeat}
-.toolsWrap .pageGo                      {position:absolute;left:800px; top:50px; width:164px;height:42px;background-color:#fff;border-radius:10px; transform: scale(0.7);}
+.toolsWrap .pageGo                      {position:absolute;left:800px; top:10px; width:164px;height:42px;background-color:#fff;border-radius:10px; transform: scale(0.7);}
 .toolsWrap .pageGo .page                {position:absolute;top:0;left:2px;width:39px;height:42px;font-size:18px;line-height:42px;text-align:center;font-weight:700}
 .toolsWrap .pageGo .pageTotal           {color:#ec6c1f;font-size:18px;position:absolute;top:0;line-height:42px;left:40px;height:42px}
 .toolsWrap .pageGo .btnGo               {position:absolute;top:6px;right:6px;width:37px;height:31px;background:url("../img/toolBtnGo.png") no-repeat}
