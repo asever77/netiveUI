@@ -46,12 +46,12 @@
 .toolsWrap .btnSearch 									{left:584px;width:53px;background:url("../img/toolBtnSearch.png") no-repeat}
 .toolsWrap .btnPrint 									  {left:680px;width:40px;background:url("../img/toolBtnPrint.png") no-repeat}
 
-.toolsWrap .btnZoomIn 									{left:805px;width:40px;background:url("../img/toolBtnZoomIn.png") no-repeat}
-.toolsWrap .btnZoomOut 									{left:883px;width:40px;background:url("../img/toolBtnZoomOut.png") no-repeat}
-.toolsWrap .btnThumb 									  {left:999px;width:40px;background:url("../img/toolBtnThumb.png") no-repeat}
-.toolsWrap .btnViewOne 									{left:1076px;width:53px;background:url("../img/toolBtnViewOne.png") no-repeat}
-.toolsWrap .btnViewTwo 									{left:1076px;width:53px;background:url("../img/toolBtnViewTwo.png") no-repeat}
-.toolsWrap .pageGo 										  {position:absolute;top:0;left:1160px;width:137px;height:50px;background-color:#fff;border-radius:25px;border:2px solid #08a0a6}
+.toolsWrap .btnZoomIn 									{left:725px;width:40px;background:url("../img/toolBtnZoomIn.png") no-repeat}
+.toolsWrap .btnZoomOut 									{left:803px;width:40px;background:url("../img/toolBtnZoomOut.png") no-repeat}
+.toolsWrap .btnThumb 									  {left:919px;width:40px;background:url("../img/toolBtnThumb.png") no-repeat}
+.toolsWrap .btnViewOne 									{left:1000px;width:53px;background:url("../img/toolBtnViewOne.png") no-repeat}
+.toolsWrap .btnViewTwo 									{left:1000px;width:53px;background:url("../img/toolBtnViewTwo.png") no-repeat}
+.toolsWrap .pageGo 										  {position:absolute;top:0;left:1100px;width:197px;height:50px;background-color:#fff;border-radius:25px;border:2px solid #08a0a6}
 .toolsWrap .pageGo .page 								{position:absolute;top:3px;left:30px;width:39px;height:42px; font-size:22px;text-align:center;line-height:52px;font-weight:700;color:#333}
 .toolsWrap .pageGo .pageTotal           {color:#333;font-size:22px;position:absolute;top:0;line-height:52px;left:40px;height:50px}
 .toolsWrap .pageGo .btnGo 							{position:absolute;top:3px;right:4px;width:40px;height:41px;background:url("../img/toolBtnGo.png") no-repeat}
@@ -253,7 +253,7 @@
 /* 드래그 캡처창 */
 #popFull .dragCapture                                   {}
 #popFull .dragCapture .imgArea                          {margin:90px 90px 30px;min-width:300px}
-#popFull .dragCapture .btnRow                           {width:280px;display:flex;justify-content:space-evenly;margin:0 auto 26px;border-radius:10px;background-color:#fff;border:1px solid #b0b0b0;padding:19px 0;align-items:center}
+#popFull .dragCapture .btnRow                           {width:200px;display:flex;justify-content:space-evenly;margin:0 auto 26px;border-radius:10px;background-color:#fff;border:1px solid #b0b0b0;padding:19px 0;align-items:center}
 #popFull .dragCapture .btnRow .btnDraw                  {background:url("../img/btnDraw.png") no-repeat;width:74px;height:65px}
 #popFull .dragCapture .btnRow .btnPrint                 {background:url("../img/btnPrint.png") no-repeat;width:74px;height:65px}
 #popFull .dragCapture .btnRow .btnSaveCapture           {background:url("../img/btnSaveCapture.png") no-repeat;width:74px;height:65px}
