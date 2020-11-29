@@ -234,26 +234,64 @@
 						!!el_tablescroll && el_tablescroll.classList.add('not-space');
 					}
 
-					html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
-					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">scroll</span></button>';
-					html_scrollbar += '</div>';
-					html_scrollbar += '<div class="ui-scrollbar-barwrap type-x" >';
-					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="x"><span class="hide">scroll</span></button>';
-					html_scrollbar += '</div>';
-					
-					el_scrollbar.prepend(html_scrollbar);
+					let html_barwrap = document.createElement('div');
+					let html_barwrapX = document.createElement('div');
+					let html_button = document.createElement('button');
+					let html_buttonX = document.createElement('button');
 
-					(wrapH < itemH) ? el_scrollbar.addClass('view-y') : el_scrollbar.removeClass('view-y');
-					(wrapW < itemW) ? el_scrollbar.addClass('view-x') : el_scrollbar.removeClass('view-x');
+					html_barwrap.classList.add('ui-scrollbar-barwrap');
+					html_barwrap.classList.add('type-y');
+
+					html_barwrapX.classList.add('ui-scrollbar-barwrap');
+					html_barwrapX.classList.add('type-x');
+
+					html_button.classList.add('ui-scrollbar-bar');
+					html_button.setAttribute('type', 'button');
+					html_button.setAttribute('aria-hidden', true);
+					html_button.setAttribute('aria-label', 'vertical scroll button');
+					html_button.setAttribute('tabindex', '-1');
+					html_button.dataset.scrollxy = 'y';
+
+					html_buttonX.classList.add('ui-scrollbar-bar');
+					html_buttonX.setAttribute('type', 'button');
+					html_buttonX.setAttribute('aria-hidden', true);
+					html_buttonX.setAttribute('aria-label', 'vertical scroll button');
+					html_buttonX.setAttribute('tabindex', '-1');
+					html_buttonX.dataset.scrollxy = 'x';
+					
+					html_barwrap.append(html_button);
+					html_barwrapX.append(html_buttonX);
+
+					el_scrollbar.prepend(html_barwrap);
+					el_scrollbar.prepend(html_barwrapX);
+
+					// html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
+					// html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">scroll</span></button>';
+					// html_scrollbar += '</div>';
+					// html_scrollbar += '<div class="ui-scrollbar-barwrap type-x" >';
+					// html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="x"><span class="hide">scroll</span></button>';
+					// html_scrollbar += '</div>';
+
+					(wrapH < itemH) ? 
+						el_scrollbar.classList.add('view-y') : 
+						el_scrollbar.classList.remove('view-y');
+
+					(wrapW < itemW) ? 
+						el_scrollbar.classList.add('view-x') : 
+						el_scrollbar.classList.remove('view-x');
 
 					var barH = Math.floor(wrapH / (itemH / 100));
 					var barW = Math.floor(wrapW / (itemW / 100));
-					var $barY = el_scrollbar.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
-					var $barX = el_scrollbar.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+					var $barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+					var $barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 					
-					$barY.css('height', barH + '%').data('height', barH);
-					$barX.css('width', barW + '%').data('width', barW);
-					el_scrollbar.addClass('view-scrollbar');
+					$barY.style.height = barH + '%';
+					$barY.dataset.height = barH;
+
+					$barX.style.height = barW + '%';
+					$barX.dataset.height = barW;
+
+					el_scrollbar.classList.add('view-scrollbar');
 					!!callback && callback(); 
 					scrollEvent(el_item);
 					scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space);
@@ -314,6 +352,9 @@
 			
 			
 			function eventFn(){
+				let el_item = document.querySelectorAll('.ui-scrollbar-item');
+
+				el_item.event
 				$(doc).find('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
 					scrollEvent(this);
 				});
