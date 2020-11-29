@@ -537,7 +537,7 @@
                 console.log('infiniteCallback')
             }
         });
-        //$plugins.uiScrollBar({ id:'scrbar1', top:20 });
+//$plugins.uiScrollBar({ id:'scrbar1', top:20 });
     }
 
     $plugins.page.pageJsonCodingList = function(){

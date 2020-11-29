@@ -914,6 +914,7 @@ if (!Object.keys){
 			var changeH = (itemH !== nItemH || wrapH !== nWrapH);
 			var changeW = (itemW !== nItemW || wrapW !== nWrapW);
 
+
 			if (changeH || changeW) {
 				var barH = Math.floor(nWrapH / (nItemH / 100));
 				var barW = Math.floor(nWrapW / (nItemW / 100));
@@ -981,7 +982,7 @@ if (!Object.keys){
 
 			var itemW =  $item.prop('scrollWidth');
 			var itemH =$item.prop('scrollHeight');
-			
+
 			$wrap.data('opt', {'itemH':itemH, 'itemW':itemW, 'wrapH':wrapH, 'wrapW':wrapW });
 			
 			var idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
@@ -1027,6 +1028,7 @@ if (!Object.keys){
 				
 				$barY.css('height', barH + '%').data('height', barH);
 				$barX.css('width', barW + '%').data('width', barW);
+
 				$wrap.addClass('view-scrollbar');
 				!!callback && callback(); 
 				scrollEvent($item);

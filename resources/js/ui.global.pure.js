@@ -141,13 +141,11 @@
 			// 	return false;
 			// } 
 
-			console.log(scrollbar.length);
-
 			for (let i = 0, len = scrollbar.length; i < len; i++) {
 				if (!remove) {
 					scrollbarReady(scrollbar[i]);
 				} else {
-					//scrollbarRemove(scrollbar[i]);
+					//scrollbarRemove(el_scrollbar[i]);
 				}
 			}
 
@@ -157,7 +155,7 @@
 
 				//+reset
 				el_scrollbar.classList.remove('ready');
-				el_scrollbar.dataset.infiniteCallback = 'infiniteCallback';
+				el_scrollbar.dataset.infiniteCallback = infiniteCallback;
 				el_scrollbar.dataset.ready = 'no';
 
 				//초기화 --------------- 나중에 확인필요
@@ -196,12 +194,17 @@
 				let itemW =	el_item.scrollWidth;
 				let itemH = el_item.scrollHeight;
 
-				el_scrollbar.dataset.opt = {
-					'itemH': itemH, 
-					'itemW': itemW, 
-					'wrapH': wrapH,
-					'wrapW': wrapW 
-				};
+				el_scrollbar.dataset.itemH = itemH;
+				el_scrollbar.dataset.itemW = itemW;
+				el_scrollbar.dataset.wrapH = wrapH;
+				el_scrollbar.dataset.wrapW = wrapW;
+
+				// el_scrollbar.dataset.opt = {
+				// 	'itemH': itemH, 
+				// 	'itemW': itemW, 
+				// 	'wrapH': wrapH,
+				// 	'wrapW': wrapW 
+				// };
 				
 				let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
 				//idN = idN === undefined ? 0 : idN;
@@ -222,10 +225,7 @@
 					el_item.setAttribute('tabindex', 0);
 					el_scrollbar.style.height = wrapH + 'px';
 					
-					
 					let el_tablescroll = el_scrollbar.closest('.ui-tablescroll');
-
-					console.log(!!el_tablescroll, !!el_scrollbar.closest('.ui-tablescroll'));
 
 					if (space) {
 						el_item.classList.add('scroll-y-padding');
@@ -285,6 +285,7 @@
 					var $barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
 					var $barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 					
+
 					$barY.style.height = barH + '%';
 					$barY.dataset.height = barH;
 
@@ -294,50 +295,55 @@
 					el_scrollbar.classList.add('view-scrollbar');
 					!!callback && callback(); 
 					scrollEvent(el_item);
-					scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space);
+					scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW, space);
 					eventFn();
 				}
 			}	
 			
-			
-			function scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space){
-				var $wrap = t;
-				var	$item = $wrap.children('.ui-scrollbar-item');
-
-				if (!$item.length) {
+			function scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW, space){
+				let _el_scrollbar = el_scrollbar;
+				let	el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
+				
+				if (!el_item) {
 					return false;
 				}
 
-				var nWrapH = $wrap.outerHeight();
-				var nWrapW = $wrap.outerWidth();
-				var nItemH = $item.prop('scrollHeight');
-				var nItemW = $item.prop('scrollWidth');
-
-				var changeH = (itemH !== nItemH || wrapH !== nWrapH);
-				var changeW = (itemW !== nItemW || wrapW !== nWrapW);
+				let nWrapH = _el_scrollbar.offsetHeight;
+				let nWrapW = _el_scrollbar.offsetWidth;
+				let nItemH = el_item.scrollHeight;
+				let nItemW = el_item.scrollWidth;
+				let changeH = (itemH !== nItemH || wrapH !== nWrapH);
+				let changeW = (itemW !== nItemW || wrapW !== nWrapW);
 
 				if (changeH || changeW) {
-					var barH = Math.floor(nWrapH / (nItemH / 100));
-					var barW = Math.floor(nWrapW / (nItemW / 100));
-					var $barY = $wrap.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
-					var $barX = $wrap.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+					let barH = Math.floor(nWrapH / (nItemH / 100));
+					let barW = Math.floor(nWrapW / (nItemW / 100));
+					let $barY = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+					let $barX = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 
-					changeH && $barY.css('height', barH + '%').data('height', barH);
-					changeW && $barX.css('width', barW + '%').data('width', barW);
+					if (changeH) {
+						$barY.style.height = barH + '%';
+						$barY.dataset.height = barH;
+					} 
+					if (changeW) {
+						$barX.style.width = barW + '%';
+						$barX.dataset.width = barW;
+					}
 					
-					(nWrapH < nItemH) ? $wrap.addClass('view-y') : $wrap.removeClass('view-y');
-					(nWrapW < nItemW) ? $wrap.addClass('view-x') : $wrap.removeClass('view-x');
+					(nWrapH < nItemH) ? _el_scrollbar.classList.add('view-y') : _el_scrollbar.classList.remove('view-y');
+					(nWrapW < nItemW) ? _el_scrollbar.classList.add('view-x') : _el_scrollbar.classList.remove('view-x');
 
-					$wrap.data('opt', {'itemH':nItemH, 'itemW':nItemW, 'wrapH':nWrapH, 'wrapW':nWrapW });
+					el_scrollbar.dataset.itemH = nItemH;
+					el_scrollbar.dataset.itemW = nItemW;
+					el_scrollbar.dataset.wrapH = nWrapH;
+					el_scrollbar.dataset.wrapW = nWrapW;
+
 					eventFn();
-					scrollEvent($item, space);
+					scrollEvent(el_item, space);
 				}
 
-				var timer;
-
-				clearTimeout(timer);
-				timer = setTimeout(function(){
-					scrollbarUpdate(t, nWrapH, nWrapW, nItemH, nItemW);
+				setTimeout(function(){
+					scrollbarUpdate(el_scrollbar, nWrapH, nWrapW, nItemH, nItemW);
 				}, 300);
 			}
 			
@@ -353,50 +359,59 @@
 			
 			function eventFn(){
 				let el_item = document.querySelectorAll('.ui-scrollbar-item');
+				let el_bar = document.querySelectorAll('.ui-scrollbar-bar');
 
-				el_item.event
-				$(doc).find('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
-					scrollEvent(this);
-				});
-				$(doc).find('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
-					dragMoveAct(e, this);
-				});
+				for (let item of el_item) {
+					item.addEventListener('scroll', function(){
+						scrollEvent(this);
+					});
+				}
+
+				
+				// el_bar.addEventListener('mousedown touchstart', function(e){
+				// 	dragMoveAct(e, this);
+				// });
+				// $(doc).find('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
+				// 	scrollEvent(this);
+				// });
+				// $(doc).find('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
+				// 	dragMoveAct(e, this);
+				// });
 			}	
 			
-			function scrollEvent(t){
-				var $this = $(t),
-					$wrap = $this.closest('.ui-scrollbar'),
-					$barY = $wrap.find('> .type-y .ui-scrollbar-bar'),
-					$barX = $wrap.find('> .type-x .ui-scrollbar-bar');
-				
-				var opt = $wrap.data('opt');
+			function scrollEvent(el_item){
+				let _el_item = el_item;
+				let el_scrollbar = _el_item.closest('.ui-scrollbar');
+				let itemH = Number(el_scrollbar.dataset.itemH);
+				let itemW = Number(el_scrollbar.dataset.itemW);
+				let wrapH = Number(el_scrollbar.dataset.wrapH);
+				let wrapW = Number(el_scrollbar.dataset.wrapW);
 
-				if (opt === undefined) {
+				if (wrapW === undefined) {
 					return false;
 				}
 
-				var itemH = opt.itemH,
-					itemW = opt.itemW,
-					wrapH = opt.wrapH,
-					wrapW = opt.wrapW;
+				let $barY = el_scrollbar.querySelector('.type-y .ui-scrollbar-bar');
+				let $barX = el_scrollbar.querySelector('.type-x .ui-scrollbar-bar');
 
-				var scrT = $this.scrollTop(),
-					scrL = $this.scrollLeft(),
-					barH = $barY.data('height'),
-					barW = $barX.data('width');
-				
-				var hPer = Math.round(scrT / (itemH - wrapH) * 100),
+				let scrT = _el_item.scrollTop,
+					scrL = _el_item.scrollLeft,
+					barH = Number($barY.dataset.height),
+					barW = Number($barX.dataset.width);
+
+				let hPer = Math.round(scrT / (itemH - wrapH) * 100),
 					_hPer = (barH / 100) * hPer,
 					wPer = Math.round(scrL / (itemW - wrapW) * 100),
 					_wPer = (barW / 100) * wPer;
 
-				var _infiniteCallback = $wrap.data('infiniteCallback');
+				let _infiniteCallback = el_scrollbar.dataset.infiniteCallback;
+				
+				$barY.style.top = hPer - _hPer + '%';
+				$barX.style.left = wPer - _wPer + '%';
 
-				$barY.css('top', hPer - _hPer + '%');
-				$barX.css('left', wPer - _wPer + '%');
-
-				if (!!_infiniteCallback) {
-					hPer === 100 && _infiniteCallback(); 
+				console.log(typeof infiniteCallback);
+				if (!!infiniteCallback) {
+					hPer === 100 && infiniteCallback(); 
 				}
 			}
 			
