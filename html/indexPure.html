@@ -15,10 +15,7 @@
 
 	<link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css">
 
-	<script defer src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
-	<script defer src="/netiveUI/resources/js/ui.global.js"></script>
-	<script defer src="/netiveUI/resources/js/ui.common.js"></script>
-	<script defer src="/netiveUI/resources/js/ui.page.js"></script>
+	<script defer src="/netiveUI/resources/js/ui.global.pure.js"></script>
 </head>
 
 <body>
@@ -36,6 +33,33 @@
 		<footer class="base-footer" id="baseFooter"></footer>
 	</div>
 
+	<script>
+		document.addEventListener("DOMContentLoaded", function(){
+			netive.uiAjax.request({ 
+				src: '/netiveUI/html/inc/header.html', 
+				callback: function(v){
+					netive.uiParts.appendHtml(document.querySelector('#baseHeader'), v);
+				} 
+			});
 
+			netive.uiAjax.request({ 
+				src: '/netiveUI/html/inc/footer.html', 
+				callback: function(v){
+					netive.uiParts.appendHtml(document.querySelector('#baseFooter'), v);
+				} 
+			});
+
+			netive.uiAjax.request({ 
+				src: '/netiveUI/html/components/scrollBar.html', 
+				callback: function(v){
+					netive.uiParts.appendHtml(document.querySelector('#baseMain'), v);
+
+					netive.uiScrollBar.init();
+				} 
+			});
+		});
+
+		
+	</script>
 </body>
 </html>

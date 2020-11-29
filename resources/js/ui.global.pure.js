@@ -1,0 +1,438 @@
+'use strict';
+
+//utils module
+;(function (win, doc, undefined) {
+
+	'use strict';
+
+	const global = 'netive';
+	win[global] = {};
+
+	class UiParts {
+		//append
+		appendHtml(el, str) {
+			const div = document.createElement('div');
+
+			div.innerHTML = str;
+			while (div.children.length > 0) {
+				el.appendChild(div.children[0]);
+			}
+		}
+
+		deleteParent(child) {
+			let parent = child.parentNode;
+			console.log(parent);
+
+			parent.parentNode.removeChild(parent);
+		}
+
+		wrapTag(front, selector, back){
+			let org_html = selector.innerHTML;
+			let new_html = front + org_html + back;
+			
+			selector.innerHTML = new_html;
+		}
+
+		keys = { 
+			'tab': 9, 'enter': 13, 'alt': 18, 'esc': 27, 'space': 32, 'pageup': 33, 'pagedown': 34, 'end': 35, 'home': 36, 'left': 37, 'up': 38, 'right': 39, 'down': 40
+		}
+
+		//http://cubic-bezier.com - css easing effect
+		effect = {
+			linear: '0.250, 0.250, 0.750, 0.750',
+			ease: '0.250, 0.100, 0.250, 1.000',
+			easeIn: '0.420, 0.000, 1.000, 1.000',
+			easeOut: '0.000, 0.000, 0.580, 1.000',
+			easeInOut: '0.420, 0.000, 0.580, 1.000',
+			easeInQuad: '0.550, 0.085, 0.680, 0.530',
+			easeInCubic: '0.550, 0.055, 0.675, 0.190',
+			easeInQuart: '0.895, 0.030, 0.685, 0.220',
+			easeInQuint: '0.755, 0.050, 0.855, 0.060',
+			easeInSine: '0.470, 0.000, 0.745, 0.715',
+			easeInExpo: '0.950, 0.050, 0.795, 0.035',
+			easeInCirc: '0.600, 0.040, 0.980, 0.335',
+			easeInBack: '0.600, -0.280, 0.735, 0.045',
+			easeOutQuad: '0.250, 0.460, 0.450, 0.940',
+			easeOutCubic: '0.215, 0.610, 0.355, 1.000',
+			easeOutQuart: '0.165, 0.840, 0.440, 1.000',
+			easeOutQuint: '0.230, 1.000, 0.320, 1.000',
+			easeOutSine: '0.390, 0.575, 0.565, 1.000',
+			easeOutExpo: '0.190, 1.000, 0.220, 1.000',
+			easeOutCirc: '0.075, 0.820, 0.165, 1.000',
+			easeOutBack: '0.175, 0.885, 0.320, 1.275',
+			easeInOutQuad: '0.455, 0.030, 0.515, 0.955',
+			easeInOutCubic: '0.645, 0.045, 0.355, 1.000',
+			easeInOutQuart: '0.770, 0.000, 0.175, 1.000',
+			easeInOutQuint: '0.860, 0.000, 0.070, 1.000',
+			easeInOutSine: '0.445, 0.050, 0.550, 0.950',
+			easeInOutExpo: '1.000, 0.000, 0.000, 1.000',
+			easeInOutCirc: '0.785, 0.135, 0.150, 0.860',
+			easeInOutBack: '0.680, -0.550, 0.265, 1.550'
+		}
+
+		//숫자 세자리수마다 ',' 붙이기
+		uiComma(n) {
+			var parts = n.toString().split(".");
+
+			return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
+		}
+
+		//숫자 한자리수 일때 0 앞에 붙이기
+		partsAdd0(x) {
+			return Number(x) < 10 ? '0' + x : x;
+		}
+
+	}
+	win[global].uiParts = new UiParts();
+
+	class UiAjax {
+		constructor() {
+			this.callback = false;
+			this.type = 'GET';
+			this.cache = false;
+			this.async = true;
+			this.mimeType = 'Content-Type'; //'Accept'
+			this.contType = 'application/x-www-form-urlencoded'; //'application/json'
+			this.dataType = 'html';
+		}
+	
+		request(opt) {
+			const _opt = Object.assign({}, this, opt);
+			const xhr = new XMLHttpRequest();
+			const callback = _opt.callback;
+
+			xhr.open(_opt.type, _opt.src);
+			xhr.setRequestHeader(_opt.mimeType, _opt.contType);
+			xhr.send();
+			xhr.onreadystatechange = function (e) {
+				if (xhr.readyState !== XMLHttpRequest.DONE) return;
+
+				if (xhr.status === 200) {
+					callback && callback(xhr.responseText);
+				} else {
+					console.log('Error!');
+				}
+			};
+		}
+	}
+	win[global].uiAjax = new UiAjax();
+	
+	class UiScrollBar {
+		constructor(){
+			this.id = false;
+			this.callback = false;
+			this.infiniteCallback = false;
+			this.space = false;
+			this.remove = false;
+
+			sessionStorage.setItem('scrollbarID', 0);
+		}
+
+		init(opt){
+			const _opt = Object.assign({}, this, opt);
+			const id = _opt.id;
+			const space = _opt.space;
+			const callback = _opt.callback;
+			const infiniteCallback = _opt.infiniteCallback;
+			const remove = _opt.remove;
+			const scrollbar = !id ? document.querySelectorAll('.ui-scrollbar') : typeof id === 'object' ? id : document.querySelector('[scroll-id="' + id +'"]');
+		
+			// if (win[global].support.touch) {
+			// 	return false;
+			// } 
+
+			console.log(scrollbar.length);
+
+			for (let i = 0, len = scrollbar.length; i < len; i++) {
+				if (!remove) {
+					scrollbarReady(scrollbar[i]);
+				} else {
+					//scrollbarRemove(scrollbar[i]);
+				}
+			}
+
+			function scrollbarReady(scrollbar) {
+				const el_scrollbar = scrollbar;
+				let	html_scrollbar = '';
+
+				//+reset
+				el_scrollbar.classList.remove('ready');
+				el_scrollbar.dataset.infiniteCallback = 'infiniteCallback';
+				el_scrollbar.dataset.ready = 'no';
+
+				//초기화 --------------- 나중에 확인필요
+				if (!!el_scrollbar.querySelector('.ui-scrollbar-item')) {
+					win[global].uiParts.deleteParent(el_scrollbar.querySelector('.ui-scrollbar-item'));
+					//el_scrollbar.querySelector('> .ui-scrollbar-item').contents().unwrap();
+					//el_scrollbar.querySelector('> .ui-scrollbar-wrap').contents().unwrap();
+					el_scrollbar.querySelector('> .ui-scrollbar-barwrap').remove();
+				}
+
+				let wrapW = el_scrollbar.offsetWidth;
+				let wrapH = el_scrollbar.offsetHeight;
+
+				win[global].uiParts.wrapTag('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap">', el_scrollbar ,'</div></div>');
+
+				//++make
+				const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
+				const el_itemWrap = el_item.querySelector('.ui-scrollbar-wrap');
+
+				let _display = window.getComputedStyle(el_scrollbar).display;
+				let _padding = window.getComputedStyle(el_scrollbar).padding;
+
+				el_itemWrap.style.display = _display;
+				el_itemWrap.style.padding = _padding;
+
+				if (!space) {
+					if (_display === 'inline-block') {
+						el_itemWrap.style.display = 'block';
+					}
+					el_itemWrap.style.width = '100%';
+					el_item.style.width = '100%';
+				} 
+
+				el_scrollbar.style.overflow = 'hidden';
+
+				let itemW =	el_item.scrollWidth;
+				let itemH = el_item.scrollHeight;
+
+				el_scrollbar.dataset.opt = {
+					'itemH': itemH, 
+					'itemW': itemW, 
+					'wrapH': wrapH,
+					'wrapW': wrapW 
+				};
+				
+				let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
+				//idN = idN === undefined ? 0 : idN;
+				
+				if (el_scrollbar.dataset.ready === 'no' || !el_scrollbar.getAttribute('scroll-id')) {
+					
+					if (!el_scrollbar.getAttribute('scroll-id')) {
+						el_scrollbar.setAttribute('scroll-id', 'uiScrollBar_' + idN);
+						el_scrollbar.dataset.ready = 'yes';
+						el_scrollbar.classList.add('ready');
+						idN = idN + 1;
+						sessionStorage.setItem('scrollbarID', idN);
+					} else {
+						el_scrollbar.dataset.ready = 'yes';
+						el_scrollbar.classList.add('ready');
+					}
+
+					el_item.setAttribute('tabindex', 0);
+					el_scrollbar.style.height = wrapH + 'px';
+					
+					
+					let el_tablescroll = el_scrollbar.closest('.ui-tablescroll');
+
+					console.log(!!el_tablescroll, !!el_scrollbar.closest('.ui-tablescroll'));
+
+					if (space) {
+						el_item.classList.add('scroll-y-padding');
+						el_item.classLIst.add('scroll-x-padding');
+					} else {
+						!!el_tablescroll && el_tablescroll.classList.add('not-space');
+					}
+
+					html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
+					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">scroll</span></button>';
+					html_scrollbar += '</div>';
+					html_scrollbar += '<div class="ui-scrollbar-barwrap type-x" >';
+					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="x"><span class="hide">scroll</span></button>';
+					html_scrollbar += '</div>';
+					
+					el_scrollbar.prepend(html_scrollbar);
+
+					(wrapH < itemH) ? el_scrollbar.addClass('view-y') : el_scrollbar.removeClass('view-y');
+					(wrapW < itemW) ? el_scrollbar.addClass('view-x') : el_scrollbar.removeClass('view-x');
+
+					var barH = Math.floor(wrapH / (itemH / 100));
+					var barW = Math.floor(wrapW / (itemW / 100));
+					var $barY = el_scrollbar.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+					var $barX = el_scrollbar.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+					
+					$barY.css('height', barH + '%').data('height', barH);
+					$barX.css('width', barW + '%').data('width', barW);
+					el_scrollbar.addClass('view-scrollbar');
+					!!callback && callback(); 
+					scrollEvent(el_item);
+					scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space);
+					eventFn();
+				}
+			}	
+			
+			
+			function scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space){
+				var $wrap = t;
+				var	$item = $wrap.children('.ui-scrollbar-item');
+
+				if (!$item.length) {
+					return false;
+				}
+
+				var nWrapH = $wrap.outerHeight();
+				var nWrapW = $wrap.outerWidth();
+				var nItemH = $item.prop('scrollHeight');
+				var nItemW = $item.prop('scrollWidth');
+
+				var changeH = (itemH !== nItemH || wrapH !== nWrapH);
+				var changeW = (itemW !== nItemW || wrapW !== nWrapW);
+
+				if (changeH || changeW) {
+					var barH = Math.floor(nWrapH / (nItemH / 100));
+					var barW = Math.floor(nWrapW / (nItemW / 100));
+					var $barY = $wrap.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+					var $barX = $wrap.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+
+					changeH && $barY.css('height', barH + '%').data('height', barH);
+					changeW && $barX.css('width', barW + '%').data('width', barW);
+					
+					(nWrapH < nItemH) ? $wrap.addClass('view-y') : $wrap.removeClass('view-y');
+					(nWrapW < nItemW) ? $wrap.addClass('view-x') : $wrap.removeClass('view-x');
+
+					$wrap.data('opt', {'itemH':nItemH, 'itemW':nItemW, 'wrapH':nWrapH, 'wrapW':nWrapW });
+					eventFn();
+					scrollEvent($item, space);
+				}
+
+				var timer;
+
+				clearTimeout(timer);
+				timer = setTimeout(function(){
+					scrollbarUpdate(t, nWrapH, nWrapW, nItemH, nItemW);
+				}, 300);
+			}
+			
+			function scrollbarRemove(t){
+				var $wrap = t;
+
+				$wrap.removeClass('ready view-scrollbar').removeData('infiniteCallback').removeData('ready').removeAttr('style');
+				$wrap.find('> .ui-scrollbar-item').contents().unwrap();
+				$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
+				$wrap.find('> .ui-scrollbar-barwrap').remove();
+			}
+			
+			
+			function eventFn(){
+				$(doc).find('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
+					scrollEvent(this);
+				});
+				$(doc).find('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
+					dragMoveAct(e, this);
+				});
+			}	
+			
+			function scrollEvent(t){
+				var $this = $(t),
+					$wrap = $this.closest('.ui-scrollbar'),
+					$barY = $wrap.find('> .type-y .ui-scrollbar-bar'),
+					$barX = $wrap.find('> .type-x .ui-scrollbar-bar');
+				
+				var opt = $wrap.data('opt');
+
+				if (opt === undefined) {
+					return false;
+				}
+
+				var itemH = opt.itemH,
+					itemW = opt.itemW,
+					wrapH = opt.wrapH,
+					wrapW = opt.wrapW;
+
+				var scrT = $this.scrollTop(),
+					scrL = $this.scrollLeft(),
+					barH = $barY.data('height'),
+					barW = $barX.data('width');
+				
+				var hPer = Math.round(scrT / (itemH - wrapH) * 100),
+					_hPer = (barH / 100) * hPer,
+					wPer = Math.round(scrL / (itemW - wrapW) * 100),
+					_wPer = (barW / 100) * wPer;
+
+				var _infiniteCallback = $wrap.data('infiniteCallback');
+
+				$barY.css('top', hPer - _hPer + '%');
+				$barX.css('left', wPer - _wPer + '%');
+
+				if (!!_infiniteCallback) {
+					hPer === 100 && _infiniteCallback(); 
+				}
+			}
+			
+			function dragMoveAct(e, t) {
+				var $bar = $(t),
+					$uiScrollbar = $bar.closest('.ui-scrollbar'),
+					$barWrap = $bar.closest('.ui-scrollbar-barwrap'),
+					$wrap = $bar.closest('.ui-scrollbar'),
+					$item = $uiScrollbar.find('> .ui-scrollbar-item');
+
+				var off_t = $barWrap.offset().top,
+					w_h = $barWrap.innerHeight(),
+					off_l = $barWrap.offset().left,
+					w_w = $barWrap.innerWidth(),
+					barH = $bar.data('height'),
+					barW = $bar.data('width'),
+					opt = $wrap.data('opt');
+
+				var yRPer, xRPer;
+				var $btn = e.target;
+				var isXY = $btn.getAttribute('data-scrollxy');
+				
+				$('body').addClass('scrollbar-move');
+
+				$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function (e) {
+					var y_m, 
+						x_m;
+					
+					if (e.touches === undefined) {
+						if (e.pageY !== undefined) {
+							y_m = e.pageY;
+						} else if (e.pageY === undefined) {
+							y_m = e.clientY;
+						}
+
+						if (e.pageX !== undefined) {
+							x_m = e.pageX;
+						} else if (e.pageX === undefined) {
+							x_m = e.clientX;
+						}
+					}
+
+					var yR = y_m - off_t;
+					var xR = x_m - off_l;
+
+					yR < 0 ? yR = 0 : '';
+					yR > w_h ? yR = w_h : '';
+					xR < 0 ? xR = 0 : '';
+					xR > w_w ? xR = w_w : '';
+
+					yRPer = yR / w_h * 100;
+					xRPer = xR / w_w * 100;
+					var nPerY = (yRPer - (barH / 100 * yRPer)).toFixed(2);
+					var nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
+
+					if (isXY === 'y') {
+						$bar.css('top', nPerY + '%');
+						$item.scrollTop(opt.itemH * nPerY / 100);
+					} else {
+						$bar.css('left', nPerX + '%');
+						$item.scrollLeft(opt.itemW * nPerX / 100);
+					}
+
+				}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function () {
+					var _infiniteCallback = $wrap.data('infiniteCallback');
+
+					if (!!_infiniteCallback) {
+						yRPer === 100 && _infiniteCallback(); 
+					}
+
+					$('body').removeClass('scrollbar-move');
+					$(doc).off('mousemove.bar mouseup.bar touchmove.bar');
+				});
+			}
+		}
+	}
+	win[global].uiScrollBar = new UiScrollBar();
+	win[global].uiScrollBar.timer = {}
+
+})(window, document);
