@@ -51,8 +51,8 @@
 .toolsWrap .btnZoomIn 									{left:499px;width:40px;background:url("../img/toolBtnZoomIn.png") no-repeat;margin-left: 30px;}
 .toolsWrap .btnZoomOut 									{left:584px;width:40px;background:url("../img/toolBtnZoomOut.png") no-repeat; margin-right: 30px;}
 .toolsWrap .btnThumb 									  {left:678px;width:40px;background:url("../img/toolBtnThumb.png") no-repeat}
-.toolsWrap .btnViewOne 									{left:728px;width:53px;background:url("../img/toolBtnViewOne.png") no-repeat}
-.toolsWrap .btnViewTwo 									{left:728px;width:53px;background:url("../img/toolBtnViewTwo.png") no-repeat}
+.toolsWrap .btnViewOne 									{left:728px;width:54px;background:url("../img/toolBtnViewOne.png") no-repeat}
+.toolsWrap .btnViewTwo 									{left:728px;width:54px;background:url("../img/toolBtnViewTwo.png") no-repeat}
 .toolsWrap .pageGo 										  {position:absolute;top:0;left:800px;width:164px;height:50px;background-color:#fff;border-radius:25px;border:2px solid #08a0a6;  transform: scale(0.7);}
 .toolsWrap .pageGo .page 								{position:absolute;top:3px;left:30px;width:39px;height:42px; font-size:22px;text-align:center;line-height:52px;font-weight:700;color:#333}
 .toolsWrap .pageGo .pageTotal           {color:#333;font-size:22px;position:absolute;top:0;line-height:52px;left:40px;height:50px}
