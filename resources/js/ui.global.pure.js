@@ -367,6 +367,13 @@
 					});
 				}
 
+				for (let bar of el_bar) {
+					bar.addEventListener('mousedown', function(e){
+						console.log('mousedown!!!!');
+						dragMoveAct(e, this);
+					});
+				}
+
 				
 				// el_bar.addEventListener('mousedown touchstart', function(e){
 				// 	dragMoveAct(e, this);
@@ -416,11 +423,11 @@
 			}
 			
 			function dragMoveAct(e, t) {
-				var $bar = $(t),
+				let $bar = t,
 					$uiScrollbar = $bar.closest('.ui-scrollbar'),
 					$barWrap = $bar.closest('.ui-scrollbar-barwrap'),
 					$wrap = $bar.closest('.ui-scrollbar'),
-					$item = $uiScrollbar.find('> .ui-scrollbar-item');
+					$item = $uiScrollbar.querySelectorAll('.ui-scrollbar-item');
 
 				var off_t = $barWrap.offset().top,
 					w_h = $barWrap.innerHeight(),
