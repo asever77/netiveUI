@@ -422,20 +422,23 @@
 				}
 			}
 			
-			function dragMoveAct(e, t) {
-				let $bar = t,
-					$uiScrollbar = $bar.closest('.ui-scrollbar'),
-					$barWrap = $bar.closest('.ui-scrollbar-barwrap'),
-					$wrap = $bar.closest('.ui-scrollbar'),
-					$item = $uiScrollbar.querySelectorAll('.ui-scrollbar-item');
+			function dragMoveAct(e, el_bar) {
+				let _el_bar = el_bar,
+					el_scrollbar = _el_bar.closest('.ui-scrollbar'),
+					el_barWrap = _el_bar.closest('.ui-scrollbar-barwrap'),
+					el_wrap = _el_bar.closest('.ui-scrollbar'),
+					el_item = el_scrollbar.querySelectorAll('.ui-scrollbar-item');
 
-				var off_t = $barWrap.offset().top,
-					w_h = $barWrap.innerHeight(),
-					off_l = $barWrap.offset().left,
-					w_w = $barWrap.innerWidth(),
-					barH = $bar.data('height'),
-					barW = $bar.data('width'),
-					opt = $wrap.data('opt');
+				const el_barWrapRect = el_barWrap.getBoundingClientRect();
+				const off_t = el_barWrapRect.top;
+				const w_h = el_barWrap.innerHeight;
+
+				console.log(off_t,w_h)
+				const off_l = el_barWrap.offset().left,
+					w_w = el_barWrap.innerWidth(),
+					barH = _el_bar.data('height'),
+					barW = _el_bar.data('width'),
+					opt = el_wrap.data('opt');
 
 				var yRPer, xRPer;
 				var $btn = e.target;
@@ -475,15 +478,15 @@
 					var nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
 
 					if (isXY === 'y') {
-						$bar.css('top', nPerY + '%');
-						$item.scrollTop(opt.itemH * nPerY / 100);
+						_el_bar.css('top', nPerY + '%');
+						el_item.scrollTop(opt.itemH * nPerY / 100);
 					} else {
-						$bar.css('left', nPerX + '%');
-						$item.scrollLeft(opt.itemW * nPerX / 100);
+						_el_bar.css('left', nPerX + '%');
+						el_item.scrollLeft(opt.itemW * nPerX / 100);
 					}
 
 				}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function () {
-					var _infiniteCallback = $wrap.data('infiniteCallback');
+					var _infiniteCallback = el_wrap.data('infiniteCallback');
 
 					if (!!_infiniteCallback) {
 						yRPer === 100 && _infiniteCallback(); 
