@@ -31,17 +31,14 @@
 
 <body>
 
-    
-	<div class="card-wrap">
-        <div class="card-body" data-line="1">
-            <img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/de16511ce4728.jpg" alt="">
-        </div>
-        <div class="card-list">
-            <button type="button" class="card-list-item" data-n="1" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/de16511ce4728.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/de16511ce4728.jpg" alt=""></button>
-            <button type="button" class="card-list-item" data-n="2" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/191e2ef5e2f97.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/191e2ef5e2f97.jpg" alt=""></button>
-            <button type="button" class="card-list-item" data-n="3" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/4db18b2fcd761.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/4db18b2fcd761.jpg" alt=""></button>
-            <button type="button" class="card-list-item" data-n="4" data-img="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/59d29893ef47c.jpg"><img src="https://cdn.imweb.me/upload/S202002259d2c4f16c33cd/59d29893ef47c.jpg" alt=""></button>
-        </div>
+    <div id="test" style="position:fixed; top:0">
+
+    </div>
+    <div style="margin:500px 0 1000px;">
+        <input type="text">
+    </div>
+    <div id="test2" style="position:fixed; bottom:0">
+    <button type="button">버튼</button>
     </div>
 
 	<!-- script -->
@@ -50,42 +47,10 @@
 	<script>
 		;(function($, win, doc, undefined) {
 			$(doc).ready(function(){
-
-
-				//img교체 및 클래스 변경
-				$.uiCardImgChange = function(v){
-					var $wrap = $('.card-wrap');
-					var $body = $wrap.find('.card-body');
-                    var $img = $body.find('img');
-                    var $list = $wrap.find('.card-list');
-                    var $item = $list.find('.card-list-item');
-                    var n = v !== undefined ? v : 1;
-                    var $current = $list.find('.card-list-item[data-n="'+ n +'"]');
-                    
-                    //init
-                    $body.attr('data-line', n);
-                    $img.attr('src', $current.attr('data-img'));
-                    $item.removeClass('selected');
-                    $current.addClass('selected');
-
-                    //event
-                    $item.off('click.imgchange').on('click.imgchange', function(){
-                        act(this);
-                    });
-
-                    function act(t){
-                        var $this = $(t);
-
-                        $body.attr('data-line', $this.attr('data-n'));
-                        $img.attr('src', $this.attr('data-img'));
-                        $item.removeClass('selected');
-                        $this.addClass('selected');
-                    }
-				}
-				$.uiCardImgChange(2);
-
-
-
+ $('#test').text($(win).outerHeight())
+                $('input').on('focus', function(){
+                    $('#test').text($(win).outerHeight())
+                })
 
 
 			});
