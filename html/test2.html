@@ -48,9 +48,9 @@
 		;(function($, win, doc, undefined) {
 			$(doc).ready(function(){
  $('#test').text($(win).outerHeight())
-                $('input').on('focus', function(){
+               /* $('input').on('focus', function(){
                     $('#test').text($(win).outerHeight())
-                })
+                })*/
 $(win).on('resize', function(){
                     $('#test').text($(win).outerHeight())
                 })
