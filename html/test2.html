@@ -37,8 +37,8 @@
     <div style="margin:500px 0 1000px;">
         <input type="text">
     </div>
-    <div id="test2" style="">
-    <button type="button">버튼</button>
+    <div id="test2">
+        <button type="button">버튼</button>
     </div>
 
 	<!-- script -->
@@ -47,19 +47,17 @@
 	<script>
 		;(function($, win, doc, undefined) {
 			$(doc).ready(function(){
-            $('#test').text('1: ' + $(win).outerHeight())
-            $('input').on('focus', function(){
-                setTimeout(function(){
-                    $('#test2').addClass('fix');
-                },500);
-               
-            });
+                $('#test').text('1: ' + $(win).outerHeight())
+                $('input').on('focus', function(){
+                        $('#test2').addClass('fix');
+                
+                });
             // $(win).on('resize', function(){
             // alert($(win).outerHeight());
             //         $('#test').text('2: ' + $(win).outerHeight())
             //     });
 
-			// });
+			});
 		})(jQuery, window, document);
 	</script>
 </body>
