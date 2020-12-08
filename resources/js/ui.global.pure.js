@@ -282,15 +282,15 @@
 
 					var barH = Math.floor(wrapH / (itemH / 100));
 					var barW = Math.floor(wrapW / (itemW / 100));
-					var $barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
-					var $barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+					var el_barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+					var el_barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 					
 
-					$barY.style.height = barH + '%';
-					$barY.dataset.height = barH;
+					el_barY.style.height = barH + '%';
+					el_barY.dataset.height = barH;
 
-					$barX.style.height = barW + '%';
-					$barX.dataset.height = barW;
+					el_barX.style.height = barW + '%';
+					el_barX.dataset.height = barW;
 
 					el_scrollbar.classList.add('view-scrollbar');
 					!!callback && callback(); 
@@ -318,16 +318,16 @@
 				if (changeH || changeW) {
 					let barH = Math.floor(nWrapH / (nItemH / 100));
 					let barW = Math.floor(nWrapW / (nItemW / 100));
-					let $barY = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
-					let $barX = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+					let el_barY = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+					let el_barX = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 
 					if (changeH) {
-						$barY.style.height = barH + '%';
-						$barY.dataset.height = barH;
+						el_barY.style.height = barH + '%';
+						el_barY.dataset.height = barH;
 					} 
 					if (changeW) {
-						$barX.style.width = barW + '%';
-						$barX.dataset.width = barW;
+						el_barX.style.width = barW + '%';
+						el_barX.dataset.width = barW;
 					}
 					
 					(nWrapH < nItemH) ? _el_scrollbar.classList.add('view-y') : _el_scrollbar.classList.remove('view-y');
@@ -355,8 +355,7 @@
 				$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
 				$wrap.find('> .ui-scrollbar-barwrap').remove();
 			}
-			
-			
+
 			function eventFn(){
 				let el_item = document.querySelectorAll('.ui-scrollbar-item');
 				let el_bar = document.querySelectorAll('.ui-scrollbar-bar');
@@ -369,85 +368,74 @@
 
 				for (let bar of el_bar) {
 					bar.addEventListener('mousedown', function(e){
-						console.log('mousedown!!!!');
 						dragMoveAct(e, this);
 					});
 				}
-
-				
-				// el_bar.addEventListener('mousedown touchstart', function(e){
-				// 	dragMoveAct(e, this);
-				// });
-				// $(doc).find('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
-				// 	scrollEvent(this);
-				// });
-				// $(doc).find('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
-				// 	dragMoveAct(e, this);
-				// });
 			}	
 			
 			function scrollEvent(el_item){
-				let _el_item = el_item;
-				let el_scrollbar = _el_item.closest('.ui-scrollbar');
-				let itemH = Number(el_scrollbar.dataset.itemH);
-				let itemW = Number(el_scrollbar.dataset.itemW);
-				let wrapH = Number(el_scrollbar.dataset.wrapH);
-				let wrapW = Number(el_scrollbar.dataset.wrapW);
+				const _el_item = el_item;
+				const el_scrollbar = _el_item.closest('.ui-scrollbar');
+				const itemH = Number(el_scrollbar.dataset.itemH);
+				const itemW = Number(el_scrollbar.dataset.itemW);
+				const wrapH = Number(el_scrollbar.dataset.wrapH);
+				const wrapW = Number(el_scrollbar.dataset.wrapW);
 
+				//el_scrollbar.dataset 값이 없을 경우 4개의 갑중 하나라도 없으면 중단
 				if (wrapW === undefined) {
 					return false;
 				}
 
-				let $barY = el_scrollbar.querySelector('.type-y .ui-scrollbar-bar');
-				let $barX = el_scrollbar.querySelector('.type-x .ui-scrollbar-bar');
-
-				let scrT = _el_item.scrollTop,
-					scrL = _el_item.scrollLeft,
-					barH = Number($barY.dataset.height),
-					barW = Number($barX.dataset.width);
-
-				let hPer = Math.round(scrT / (itemH - wrapH) * 100),
-					_hPer = (barH / 100) * hPer,
-					wPer = Math.round(scrL / (itemW - wrapW) * 100),
-					_wPer = (barW / 100) * wPer;
-
-				let _infiniteCallback = el_scrollbar.dataset.infiniteCallback;
+				const el_barY = el_scrollbar.querySelector('.type-y .ui-scrollbar-bar');
+				const el_barX = el_scrollbar.querySelector('.type-x .ui-scrollbar-bar');
+				const scrT = _el_item.scrollTop;
+				const scrL = _el_item.scrollLeft;
+				const barH = Number(el_barY.dataset.height);
+				const barW = Number(el_barX.dataset.width);
+				const hPer = Math.round(scrT / (itemH - wrapH) * 100);
+				const _hPer = (barH / 100) * hPer;
+				const wPer = Math.round(scrL / (itemW - wrapW) * 100);
+				const _wPer = (barW / 100) * wPer;
+				const _infiniteCallback = el_scrollbar.dataset.infiniteCallback;
 				
-				$barY.style.top = hPer - _hPer + '%';
-				$barX.style.left = wPer - _wPer + '%';
+				el_barY.style.top = hPer - _hPer + '%';
+				el_barX.style.left = wPer - _wPer + '%';
 
-				console.log(typeof infiniteCallback);
-				if (!!infiniteCallback) {
-					hPer === 100 && infiniteCallback(); 
-				}
+				console.log(typeof _infiniteCallback);
+				// if (!!_infiniteCallback) {
+				// 	hPer === 100 && _infiniteCallback(); 
+				// }
 			}
 			
 			function dragMoveAct(e, el_bar) {
-				let _el_bar = el_bar,
-					el_scrollbar = _el_bar.closest('.ui-scrollbar'),
-					el_barWrap = _el_bar.closest('.ui-scrollbar-barwrap'),
-					el_wrap = _el_bar.closest('.ui-scrollbar'),
-					el_item = el_scrollbar.querySelectorAll('.ui-scrollbar-item');
-
+				const body = document.querySelector('body');
+				const _el_bar = el_bar;
+				const el_btn = e.target;
+				const el_scrollbar = _el_bar.closest('.ui-scrollbar');
+				const el_barWrap = _el_bar.closest('.ui-scrollbar-barwrap');
+				const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
+				
+				const itemH = Number(el_scrollbar.dataset.itemH);
+				const itemW = Number(el_scrollbar.dataset.itemW);
 				const el_barWrapRect = el_barWrap.getBoundingClientRect();
 				const off_t = el_barWrapRect.top;
-				const w_h = el_barWrap.innerHeight;
+				const off_l = el_barWrapRect.left;
+				const w_h = el_barWrapRect.height;
+				const w_w = el_barWrapRect.width;
+				const barH = _el_bar.getAttribute('data-height');
+				const barW = _el_bar.getAttribute('data-width');
+				const isXY = el_btn.getAttribute('data-scrollxy');
 
-				console.log(off_t,w_h)
-				const off_l = el_barWrap.offset().left,
-					w_w = el_barWrap.innerWidth(),
-					barH = _el_bar.data('height'),
-					barW = _el_bar.data('width'),
-					opt = el_wrap.data('opt');
-
-				var yRPer, xRPer;
-				var $btn = e.target;
-				var isXY = $btn.getAttribute('data-scrollxy');
+				let yRPer;
+				let xRPer;
 				
-				$('body').addClass('scrollbar-move');
+				body.classList.add('scrollbar-move');
 
-				$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function (e) {
-					var y_m, 
+				document.addEventListener('mousemove', mousemoveAct);
+				document.addEventListener('mouseup', mouseupAct);
+
+				function mousemoveAct(e){
+					let y_m, 
 						x_m;
 					
 					if (e.touches === undefined) {
@@ -464,8 +452,8 @@
 						}
 					}
 
-					var yR = y_m - off_t;
-					var xR = x_m - off_l;
+					let yR = y_m - off_t;
+					let xR = x_m - off_l;
 
 					yR < 0 ? yR = 0 : '';
 					yR > w_h ? yR = w_h : '';
@@ -474,27 +462,24 @@
 
 					yRPer = yR / w_h * 100;
 					xRPer = xR / w_w * 100;
-					var nPerY = (yRPer - (barH / 100 * yRPer)).toFixed(2);
-					var nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
+
+					const nPerY = (yRPer - (barH / 100 * yRPer)).toFixed(2);
+					const nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
 
 					if (isXY === 'y') {
-						_el_bar.css('top', nPerY + '%');
-						el_item.scrollTop(opt.itemH * nPerY / 100);
+						_el_bar.style.top = nPerY + '%';
+						el_item.scrollTop = itemH * nPerY / 100;
 					} else {
-						_el_bar.css('left', nPerX + '%');
-						el_item.scrollLeft(opt.itemW * nPerX / 100);
+						_el_bar.style.left = nPerX + '%';
+						el_item.scrollLeft = itemW * nPerX / 100;
 					}
-
-				}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function () {
-					var _infiniteCallback = el_wrap.data('infiniteCallback');
-
-					if (!!_infiniteCallback) {
-						yRPer === 100 && _infiniteCallback(); 
-					}
-
-					$('body').removeClass('scrollbar-move');
-					$(doc).off('mousemove.bar mouseup.bar touchmove.bar');
-				});
+				}
+				function mouseupAct(){
+					body.classList.remove('scrollbar-move');
+					document.removeEventListener('mousemove', mousemoveAct);
+					document.removeEventListener('mouseup', mouseupAct);
+				}
+				
 			}
 		}
 	}
