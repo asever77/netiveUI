@@ -135,7 +135,12 @@
 			const callback = _opt.callback;
 			const infiniteCallback = _opt.infiniteCallback;
 			const remove = _opt.remove;
-			const scrollbar = !id ? document.querySelectorAll('.ui-scrollbar') : typeof id === 'object' ? id : document.querySelector('[scroll-id="' + id +'"]');
+			const scrollbar = 
+				!id ? 
+				document.querySelectorAll('.ui-scrollbar') : 
+				typeof id === 'object' ? 
+					id : 
+					document.querySelector('[scroll-id="' + id +'"]');
 		
 			// if (win[global].support.touch) {
 			// 	return false;
