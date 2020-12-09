@@ -119,6 +119,7 @@
 	
 	class UiScrollBar {
 		constructor(idName){
+			
 			this.id = idName;
 			this.callback = false;
 			this.infiniteCallback = false;
@@ -134,19 +135,21 @@
 			const infiniteCallback = _opt.infiniteCallback;
 			const remove = _opt.remove;
 			const el_scrollbar = document.querySelector('[data-scroll-id="' + id +'"]');
-			console.log('id' , el_scrollbar);
+
+			console.log(id, el_scrollbar);
+
 			//+reset
 			el_scrollbar.classList.remove('ready');
-			//el_scrollbar.dataset.infiniteCallback = infiniteCallback;
 			el_scrollbar.dataset.ready = 'no';
 
 			//초기화 --------------- 나중에 확인필요
-			if (!!el_scrollbar.querySelector('.ui-scrollbar-item')) {
-				win[global].uiParts.deleteParent(el_scrollbar.querySelector('.ui-scrollbar-item'));
-				//el_scrollbar.querySelector('> .ui-scrollbar-item').contents().unwrap();
-				//el_scrollbar.querySelector('> .ui-scrollbar-wrap').contents().unwrap();
-				el_scrollbar.querySelector('.ui-scrollbar-barwrap').remove();
-			}
+			// if (!!el_scrollbar.querySelector('.ui-scrollbar-item')) {
+			// 	console.log(el_scrollbar, el_scrollbar.querySelector('.ui-scrollbar-item'));
+			// 	win[global].uiParts.deleteParent(el_scrollbar.querySelector('.ui-scrollbar-item'));
+			// 	//el_scrollbar.querySelector('> .ui-scrollbar-item').contents().unwrap();
+			// 	//el_scrollbar.querySelector('> .ui-scrollbar-wrap').contents().unwrap();
+			// 	el_scrollbar.querySelector('.ui-scrollbar-barwrap').remove();
+			// }
 
 			const wrapW = el_scrollbar.offsetWidth;
 			const wrapH = el_scrollbar.offsetHeight;
@@ -173,7 +176,7 @@
 
 			el_scrollbar.style.overflow = 'hidden';
 
-			const itemW =	el_item.scrollWidth;
+			const itemW = el_item.scrollWidth;
 			const itemH = el_item.scrollHeight;
 
 			el_scrollbar.dataset.itemH = itemH;
@@ -181,17 +184,10 @@
 			el_scrollbar.dataset.wrapH = wrapH;
 			el_scrollbar.dataset.wrapW = wrapW;
 			
-			let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
-			//idN = idN === undefined ? 0 : idN;
-			
 			if (el_scrollbar.dataset.ready === 'no') {
-				
 				if (!el_scrollbar.getAttribute('data-scroll-id')) {
-					//el_scrollbar.dataset.scrollId = uiScrollBar_' + idN;
 					el_scrollbar.dataset.ready = 'yes';
 					el_scrollbar.classList.add('ready');
-					idN = idN + 1;
-					sessionStorage.setItem('scrollbarID', idN);
 				} else {
 					el_scrollbar.dataset.ready = 'yes';
 					el_scrollbar.classList.add('ready');
@@ -209,10 +205,10 @@
 					!!el_tablescroll && el_tablescroll.classList.add('not-space');
 				}
 
-				let html_barwrap = document.createElement('div');
-				let html_barwrapX = document.createElement('div');
-				let html_button = document.createElement('button');
-				let html_buttonX = document.createElement('button');
+				const html_barwrap = document.createElement('div');
+				const html_barwrapX = document.createElement('div');
+				const html_button = document.createElement('button');
+				const html_buttonX = document.createElement('button');
 
 				html_barwrap.classList.add('ui-scrollbar-barwrap');
 				html_barwrap.classList.add('type-y');
@@ -244,16 +240,14 @@
 					el_scrollbar.classList.add('view-x') : 
 					el_scrollbar.classList.remove('view-x');
 
-				var barH = Math.floor(wrapH / (itemH / 100));
-				var barW = Math.floor(wrapW / (itemW / 100));
-				var el_barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
-				var el_barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+				const barH = Math.floor(wrapH / (itemH / 100));
+				const barW = Math.floor(wrapW / (itemW / 100));
+				const el_barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+				const el_barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 				
-
 				el_barY.style.height = barH + '%';
-				el_barY.dataset.height = barH;
-
 				el_barX.style.height = barW + '%';
+				el_barY.dataset.height = barH;
 				el_barX.dataset.height = barW;
 
 				el_scrollbar.classList.add('view-scrollbar');
@@ -263,8 +257,7 @@
 				scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW, space);
 				eventFn();
 			}
-				
-			
+
 			function scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW, space){
 				let _el_scrollbar = el_scrollbar;
 				let	el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
@@ -364,10 +357,10 @@
 				
 				el_barY.style.top = hPer - _hPer + '%';
 				el_barX.style.left = wPer - _wPer + '%';
-
 				
 				if (hPer === 100) {
-					console.log(infiniteCallback);
+					console.log('end');
+					//infiniteCallback();
 				// 	win[global].uiScrollBar[id].infiniteCallback(); 
 				}
 			}
@@ -390,19 +383,14 @@
 				const barW = _el_bar.getAttribute('data-width');
 				const isXY = el_btn.getAttribute('data-scrollxy');
 
-				let yRPer;
-				let xRPer;
-
 				body.classList.add('scrollbar-move');
 
 				document.addEventListener('mousemove', mousemoveAct);
 				document.addEventListener('mouseup', mouseupAct);
 
 				function mousemoveAct(e){
-					
-
-					let y_m, 
-						x_m;
+					let y_m; 
+					let x_m;
 					
 					if (e.touches === undefined) {
 						if (e.pageY !== undefined) {
@@ -418,19 +406,16 @@
 						}
 					}
 
-					console.log(y_m, off_t);
-
 					let yR = y_m - off_t;
 					let xR = x_m - off_l;
 
-					yR < 0 ? yR = 0 : '';
-					yR > w_h ? yR = w_h : '';
-					xR < 0 ? xR = 0 : '';
-					xR > w_w ? xR = w_w : '';
+					yR = yR < 0 ? 0 : yR;
+					yR = yR > w_h ? w_h : yR;
+					xR = xR < 0 ? 0 : xR;
+					xR = xR > w_w ? w_w : xR;
 
-					yRPer = yR / w_h * 100;
-					xRPer = xR / w_w * 100;
-
+					const yRPer = yR / w_h * 100;
+					const xRPer = xR / w_w * 100;
 					const nPerY = (yRPer - (barH / 100 * yRPer)).toFixed(2);
 					const nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
 
@@ -447,10 +432,8 @@
 					document.removeEventListener('mousemove', mousemoveAct);
 					document.removeEventListener('mouseup', mouseupAct);
 				}
-				
 			}
 		}
-
 	}
 	win[global].uiScrollBar = () => {
 		const uiScrollBar = document.querySelectorAll('.ui-scrollbar');
@@ -460,25 +443,30 @@
 		}
 		
 		for (let i = 0, len = uiScrollBar.length; i < len; i++) {
-			
-			let scrollId = uiScrollBar[i].getAttribute('data-scroll-id')
-		
+			let scrollId = uiScrollBar[i].getAttribute('data-scroll-id');
+
 			if (!scrollId) {
+				let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
+					
+				idN = idN + 1;
+				sessionStorage.setItem('scrollbarID', idN);
+
 				scrollId = 'item' + i;
 				uiScrollBar[i].dataset.scrollId = scrollId;
+
+				console.log(uiScrollBar[i]);
+
 				win[global].uiScrollBar[scrollId] = new UiScrollBar(scrollId);
 			} else {
-				
 				win[global].uiScrollBar[scrollId] = new UiScrollBar(scrollId);
 			}
 
-			win[global].uiScrollBar[scrollId].init();
+			setTimeout(function(){
+				win[global].uiScrollBar[scrollId].init();
+			},0);
 			
 		}
 	}
 	
-
-//	win[global].uiScrollBar = new UiScrollBar();
-	//win[global].uiScrollBar.timer = {}
 
 })(window, document);
