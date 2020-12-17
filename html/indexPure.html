@@ -53,14 +53,19 @@
 				src: '/netiveUI/html/components/scrollBar.html', 
 				callback: function(v){
 					netive.uiParts.appendHtml(document.querySelector('#baseMain'), v);
-
+					
+					netive.uiScrollBar();
 					netive.uiScrollBar();
 
-					// netive.uiScrollBar.item1.init({ 
-					// 	infiniteCallback: function() {
-					// 		console.log(111);
-					// 	}
-					// });
+					netive.uiScrollBar.item1.infiniteCallback = function() {
+						console.log(222);
+					};
+
+					netive.uiScrollBar.item0.init({ 
+						infiniteCallback: function() {
+							console.log(111);
+						}
+					});
 					// netive.uiScrollBar.init();
 					// netive.uiScrollBar.init({
 					// 	id : 'scrbar1',

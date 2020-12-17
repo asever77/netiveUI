@@ -25,7 +25,7 @@
 	<p class="mgt-xxs">
 	나 우리의 첫 <a href="#">입맞춤</a>을 떠올려<br>
 	그럼 언제든 눈을 감고<br>
-	음 가장 먼 곳으로 가요
+	음 가장 먼 곳으로 <button type="button" onclick="alert('기요')">가요</button>
 	</p>
 	<p class="mgt-xxs">
 		난 파도가 머물던<br>
@@ -221,10 +221,11 @@
 <div class="box-code">
 <pre>
 <code>
+jQuery
 //전체 적용 .ui-scrollbar
 $plugins.uiScrollBar({
 	callback: function(){
-		console.log('end')
+		console.log('end');
 	}
 });
 
@@ -232,9 +233,25 @@ $plugins.uiScrollBar({
 $plugins.uiScrollBar({
 	id: 'scroll-id',
 	callback: function(){
-		console.log('end')
+		console.log('end');
 	}
 });
+
+---------------------------------------
+
+javascript
+netive.uiScrollBar();
+
+netive.uiScrollBar.<span class="s">itemname</span>.destroy();
+netive.uiScrollBar.<span class="s">itemname</span>.infiniteCallback = function() {
+	console.log('infiniteCallback 추가');
+};
+netive.uiScrollBar.<span class="s">itemname</span>.init({ 
+	infiniteCallback: function() {
+		console.log('infiniteCallback 추가');
+	}
+});
+
 </code>
 </pre>
 </div>
@@ -262,12 +279,7 @@ $plugins.uiScrollBar({
 			<td></td>
 			<td>scroll-id의 값</td>
 		</tr>
-		<tr>
-			<th scope="row">space:</th>
-			<td>[boolum]</td>
-			<td>true</td>
-			<td>스크롤의 가로 17px, 세로 17px의 여백 </td>
-		</tr>
+
 		<tr>
 			<th scope="row">callback:</th>
 			<td>[function]</td>

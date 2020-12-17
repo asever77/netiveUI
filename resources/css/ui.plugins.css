@@ -259,8 +259,8 @@ a.ui-acco-btn:after {content:"keyboard_arrow_right";}
 /* ui scroll bar : base */
 .ui-scrollbar {position:relative; overflow:auto;}
 .ui-scrollbar-item{position:absolute; top:0; left:0;}
-.ui-scrollbar.ready .ui-scrollbar-item.scroll-y-padding {width:calc(100% - 17px) !important;}
-.ui-scrollbar.ready .ui-scrollbar-item.scroll-x-padding {height:calc(100% - 17px) !important;}
+.ui-scrollbar.ready.view-y .ui-scrollbar-item.scroll-y-padding {width:calc(100% - 10px) !important;}
+.ui-scrollbar.ready.view-x .ui-scrollbar-item.scroll-x-padding {height:calc(100% - 10px) !important;}
 .ui-scrollbar.ready {overflow:hidden !important; padding:0 !important;}
 .ui-scrollbar.ready > .ui-scrollbar-item{position:relative; width:100%; height:100% !important; overflow:scroll !important;}
 .ui-scrollbar.ready .ui-scrollbar-item::-webkit-scrollbar,

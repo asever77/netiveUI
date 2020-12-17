@@ -7,6 +7,17 @@
 
 	const global = 'netive';
 	win[global] = {};
+	
+	win[global].statue = {
+		keys : { 
+			'tab': 9, 'enter': 13, 'alt': 18, 'esc': 27, 'space': 32, 'pageup': 33, 'pagedown': 34, 'end': 35, 'home': 36, 'left': 37, 'up': 38, 'right': 39, 'down': 40
+		},
+		scroll: {
+			y : 0,
+			direction: 'down'
+		}
+	}
+
 
 	class UiParts {
 		//append
@@ -31,10 +42,6 @@
 			const new_html = front + org_html + back;
 			
 			selector.innerHTML = new_html;
-		}
-
-		keys = { 
-			'tab': 9, 'enter': 13, 'alt': 18, 'esc': 27, 'space': 32, 'pageup': 33, 'pagedown': 34, 'end': 35, 'home': 36, 'left': 37, 'up': 38, 'right': 39, 'down': 40
 		}
 
 		//http://cubic-bezier.com - css easing effect
@@ -82,6 +89,10 @@
 			return Number(x) < 10 ? '0' + x : x;
 		}
 
+		scroll() {
+
+		}
+
 	}
 	win[global].uiParts = new UiParts();
 
@@ -119,38 +130,33 @@
 	
 	class UiScrollBar {
 		constructor(idName){
-			
 			this.id = idName;
-			this.callback = false;
+			this.callback = function(){
+				console.log(`${idName} 커스텀 스크롤 준비완료`);
+			};
 			this.infiniteCallback = false;
-			this.space = false;
-			this.remove = false;
 		}
 
 		init = (opt) => {
 			const _opt = Object.assign({}, this, opt);
 			const id = _opt.id;
-			const space = _opt.space;
 			const callback = _opt.callback;
 			const infiniteCallback = _opt.infiniteCallback;
-			const remove = _opt.remove;
 			const el_scrollbar = document.querySelector('[data-scroll-id="' + id +'"]');
 
-			console.log(id, el_scrollbar);
+			let timer;
+			let prevHeightPercent = 0;
+			let scrollDirection = 'keep';
 
 			//+reset
+			if (el_scrollbar.dataset.ready === 'yes') {
+				return false;
+			}
+
 			el_scrollbar.classList.remove('ready');
 			el_scrollbar.dataset.ready = 'no';
-
-			//초기화 --------------- 나중에 확인필요
-			// if (!!el_scrollbar.querySelector('.ui-scrollbar-item')) {
-			// 	console.log(el_scrollbar, el_scrollbar.querySelector('.ui-scrollbar-item'));
-			// 	win[global].uiParts.deleteParent(el_scrollbar.querySelector('.ui-scrollbar-item'));
-			// 	//el_scrollbar.querySelector('> .ui-scrollbar-item').contents().unwrap();
-			// 	//el_scrollbar.querySelector('> .ui-scrollbar-wrap').contents().unwrap();
-			// 	el_scrollbar.querySelector('.ui-scrollbar-barwrap').remove();
-			// }
-
+			el_scrollbar.dataset.direction = scrollDirection;
+			
 			const wrapW = el_scrollbar.offsetWidth;
 			const wrapH = el_scrollbar.offsetHeight;
 
@@ -159,20 +165,17 @@
 			//++make
 			const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
 			const el_itemWrap = el_item.querySelector('.ui-scrollbar-wrap');
-
 			const _display = window.getComputedStyle(el_scrollbar).display;
 			const _padding = window.getComputedStyle(el_scrollbar).padding;
 
 			el_itemWrap.style.display = _display;
 			el_itemWrap.style.padding = _padding;
 
-			if (!space) {
-				if (_display === 'inline-block') {
-					el_itemWrap.style.display = 'block';
-				}
-				el_itemWrap.style.width = '100%';
-				el_item.style.width = '100%';
-			} 
+			if (_display === 'inline-block') {
+				el_itemWrap.style.display = 'block';
+			}
+			el_itemWrap.style.width = '100%';
+			el_item.style.width = '100%';
 
 			el_scrollbar.style.overflow = 'hidden';
 
@@ -185,25 +188,10 @@
 			el_scrollbar.dataset.wrapW = wrapW;
 			
 			if (el_scrollbar.dataset.ready === 'no') {
-				if (!el_scrollbar.getAttribute('data-scroll-id')) {
-					el_scrollbar.dataset.ready = 'yes';
-					el_scrollbar.classList.add('ready');
-				} else {
-					el_scrollbar.dataset.ready = 'yes';
-					el_scrollbar.classList.add('ready');
-				}
-
+				el_scrollbar.dataset.ready = 'yes';
+				el_scrollbar.classList.add('ready');
 				el_item.setAttribute('tabindex', 0);
 				el_scrollbar.style.height = wrapH + 'px';
-				
-				let el_tablescroll = el_scrollbar.closest('.ui-tablescroll');
-
-				if (space) {
-					el_item.classList.add('scroll-y-padding');
-					el_item.classLIst.add('scroll-x-padding');
-				} else {
-					!!el_tablescroll && el_tablescroll.classList.add('not-space');
-				}
 
 				const html_barwrap = document.createElement('div');
 				const html_barwrapX = document.createElement('div');
@@ -253,31 +241,32 @@
 				el_scrollbar.classList.add('view-scrollbar');
 				!!callback && callback(); 
 
-				scrollEvent(el_item);
-				scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW, space);
-				eventFn();
+				scrollEvent(false, el_item);
+				scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW);
+				eventFn(el_scrollbar);
 			}
 
-			function scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW, space){
-				let _el_scrollbar = el_scrollbar;
-				let	el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
+			function scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW){
+				const _el_scrollbar = el_scrollbar;
+				const	el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
 				
 				if (!el_item) {
 					return false;
 				}
 
-				let nWrapH = _el_scrollbar.offsetHeight;
-				let nWrapW = _el_scrollbar.offsetWidth;
-				let nItemH = el_item.scrollHeight;
-				let nItemW = el_item.scrollWidth;
-				let changeH = (itemH !== nItemH || wrapH !== nWrapH);
-				let changeW = (itemW !== nItemW || wrapW !== nWrapW);
+				const nWrapH = _el_scrollbar.offsetHeight;
+				const nWrapW = _el_scrollbar.offsetWidth;
+				const nItemH = el_item.scrollHeight;
+				const nItemW = el_item.scrollWidth;
+				const changeH = (itemH !== nItemH || wrapH !== nWrapH);
+				const changeW = (itemW !== nItemW || wrapW !== nWrapW);
 
+				//resizing
 				if (changeH || changeW) {
-					let barH = Math.floor(nWrapH / (nItemH / 100));
-					let barW = Math.floor(nWrapW / (nItemW / 100));
-					let el_barY = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
-					let el_barX = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+					const barH = Math.floor(nWrapH / (nItemH / 100));
+					const barW = Math.floor(nWrapW / (nItemW / 100));
+					const el_barY = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+					const el_barX = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 
 					if (changeH) {
 						el_barY.style.height = barH + '%';
@@ -295,51 +284,34 @@
 					el_scrollbar.dataset.itemW = nItemW;
 					el_scrollbar.dataset.wrapH = nWrapH;
 					el_scrollbar.dataset.wrapW = nWrapW;
-
-					eventFn();
-					scrollEvent(el_item, space);
 				}
 
 				setTimeout(function(){
 					scrollbarUpdate(el_scrollbar, nWrapH, nWrapW, nItemH, nItemW);
 				}, 300);
 			}
-			
-			function scrollbarRemove(t){
-				var $wrap = t;
 
-				$wrap.removeClass('ready view-scrollbar').removeData('infiniteCallback').removeData('ready').removeAttr('style');
-				$wrap.find('> .ui-scrollbar-item').contents().unwrap();
-				$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
-				$wrap.find('> .ui-scrollbar-barwrap').remove();
-			}
+			function eventFn(v){
+				const _el_scrollbar = el_scrollbar;
+				const el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
+				const el_bar = _el_scrollbar.querySelectorAll('.ui-scrollbar-bar');
 
-			function eventFn(){
-				let el_item = document.querySelectorAll('.ui-scrollbar-item');
-				let el_bar = document.querySelectorAll('.ui-scrollbar-bar');
-
-				for (let item of el_item) {
-					item.addEventListener('scroll', function(){
-						scrollEvent(this);
-					});
-				}
+				el_item.addEventListener('scroll', scrollEvent);
 
 				for (let bar of el_bar) {
-					bar.addEventListener('mousedown', function(e){
-						dragMoveAct(e, this);
-					});
+					bar.addEventListener('mousedown', dragMoveAct);
 				}
 			}	
 			
-			function scrollEvent(el_item){
-				const _el_item = el_item;
+			function scrollEvent(event, el_item){
+				const _el_item = !!event ? event.target : el_item;
 				const el_scrollbar = _el_item.closest('.ui-scrollbar');
 				const itemH = Number(el_scrollbar.dataset.itemH);
 				const itemW = Number(el_scrollbar.dataset.itemW);
 				const wrapH = Number(el_scrollbar.dataset.wrapH);
 				const wrapW = Number(el_scrollbar.dataset.wrapW);
 
-				//el_scrollbar.dataset 값이 없을 경우 4개의 갑중 하나라도 없으면 중단
+				//el_scrollbar.dataset 값이 없을 경우 4개의 값중 하나라도 없으면 중단
 				if (wrapW === undefined) {
 					return false;
 				}
@@ -358,19 +330,31 @@
 				el_barY.style.top = hPer - _hPer + '%';
 				el_barX.style.left = wPer - _wPer + '%';
 				
-				if (hPer === 100) {
-					console.log('end');
-					//infiniteCallback();
-				// 	win[global].uiScrollBar[id].infiniteCallback(); 
+				if (prevHeightPercent < scrT) {
+					scrollDirection = 'down';
+				} else if (prevHeightPercent > scrT) {
+					scrollDirection = 'up';
+				} else {
+					scrollDirection = 'keep';
+				}
+
+				el_scrollbar.dataset.direction = scrollDirection;
+				prevHeightPercent = scrT;
+
+				if (hPer === 100 && scrollDirection === 'down') {
+					clearTimeout(timer);
+					timer = setTimeout(() => {
+						console.log('end');
+						!!infiniteCallback && infiniteCallback();
+					},200);
 				}
 			}
 			
-			function dragMoveAct(e, el_bar) {
+			function dragMoveAct(event) {
 				const body = document.querySelector('body');
-				const _el_bar = el_bar;
-				const el_btn = e.target;
-				const el_scrollbar = _el_bar.closest('.ui-scrollbar');
-				const el_barWrap = _el_bar.closest('.ui-scrollbar-barwrap');
+				const el_bar = event.target;
+				const el_scrollbar = el_bar.closest('.ui-scrollbar');
+				const el_barWrap = el_bar.closest('.ui-scrollbar-barwrap');
 				const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
 				const itemH = Number(el_scrollbar.dataset.itemH);
 				const itemW = Number(el_scrollbar.dataset.itemW);
@@ -379,30 +363,30 @@
 				const off_l = el_barWrapRect.left + document.documentElement.scrollLeft;
 				const w_h = el_barWrapRect.height;
 				const w_w = el_barWrapRect.width;
-				const barH = _el_bar.getAttribute('data-height');
-				const barW = _el_bar.getAttribute('data-width');
-				const isXY = el_btn.getAttribute('data-scrollxy');
+				const barH = el_bar.getAttribute('data-height');
+				const barW = el_bar.getAttribute('data-width');
+				const isXY = el_bar.getAttribute('data-scrollxy');
 
 				body.classList.add('scrollbar-move');
 
 				document.addEventListener('mousemove', mousemoveAct);
 				document.addEventListener('mouseup', mouseupAct);
 
-				function mousemoveAct(e){
+				function mousemoveAct(event){
 					let y_m; 
 					let x_m;
 					
-					if (e.touches === undefined) {
-						if (e.pageY !== undefined) {
-							y_m = e.pageY;
-						} else if (e.pageY === undefined) {
-							y_m = e.clientY;
+					if (event.touches === undefined) {
+						if (event.pageY !== undefined) {
+							y_m = event.pageY;
+						} else if (event.pageY === undefined) {
+							y_m = event.clientY;
 						}
 
-						if (e.pageX !== undefined) {
-							x_m = e.pageX;
-						} else if (e.pageX === undefined) {
-							x_m = e.clientX;
+						if (event.pageX !== undefined) {
+							x_m = event.pageX;
+						} else if (event.pageX === undefined) {
+							x_m = event.clientX;
 						}
 					}
 
@@ -420,10 +404,10 @@
 					const nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
 
 					if (isXY === 'y') {
-						_el_bar.style.top = nPerY + '%';
+						el_bar.style.top = nPerY + '%';
 						el_item.scrollTop = itemH * nPerY / 100;
 					} else {
-						_el_bar.style.left = nPerX + '%';
+						el_bar.style.left = nPerX + '%';
 						el_item.scrollLeft = itemW * nPerX / 100;
 					}
 				}
@@ -433,6 +417,35 @@
 					document.removeEventListener('mouseup', mouseupAct);
 				}
 			}
+		}
+
+		destroy = () => {
+			const el_scrollbar = document.querySelector('[data-scroll-id="' + this.id +'"]');
+			const el_barwrap = el_scrollbar.querySelectorAll('.ui-scrollbar-barwrap');
+			const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
+			const el_wrap = el_item.querySelector('.ui-scrollbar-wrap');
+			const wrapHtml = el_wrap.innerHTML;
+
+			el_scrollbar.dataset.ready = 'no';
+			el_scrollbar.classList.remove('ready');
+			el_scrollbar.classList.remove('view-y');
+			el_scrollbar.classList.remove('view-x');
+			el_scrollbar.classList.remove('view-scrollbar');
+			el_scrollbar.removeAttribute('style');
+			el_barwrap.forEach((userItem) => {
+				el_scrollbar.removeChild(userItem);
+			});
+			el_scrollbar.removeChild(el_item);
+			el_scrollbar.innerHTML = wrapHtml;
+		}
+
+		reset = (opt)=> {
+			console.log(this);
+			win[global].uiScrollBar[this.id].destroy();
+			win[global].uiScrollBar[this.id].init({
+				infiniteCallback: opt.infiniteCallback
+			});
+
 		}
 	}
 	win[global].uiScrollBar = () => {
@@ -453,8 +466,6 @@
 
 				scrollId = 'item' + i;
 				uiScrollBar[i].dataset.scrollId = scrollId;
-
-				console.log(uiScrollBar[i]);
 
 				win[global].uiScrollBar[scrollId] = new UiScrollBar(scrollId);
 			} else {
