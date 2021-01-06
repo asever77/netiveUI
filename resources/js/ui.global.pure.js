@@ -6,46 +6,66 @@
 	'use strict';
 
 	const global = 'netive';
+
 	win[global] = {};
+
+	const Global = win[global];
+
+	const UA = navigator.userAgent.toLowerCase();
+	const deviceSize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360];
+	const deviceInfo = ['android', 'iphone', 'ipod', 'ipad', 'blackberry', 'windows ce', 'windows','samsung', 'lg', 'mot', 'sonyericsson', 'nokia', 'opeara mini', 'opera mobi', 'webos', 'iemobile', 'kfapwi', 'rim', 'bb10'];
+	const filter = "win16|win32|win64|mac|macintel";
 	
-	win[global].statue = {
-		keys : { 
-			'tab': 9, 'enter': 13, 'alt': 18, 'esc': 27, 'space': 32, 'pageup': 33, 'pagedown': 34, 'end': 35, 'home': 36, 'left': 37, 'up': 38, 'right': 39, 'down': 40
+	Global.state = {
+		device: {
+			info: (() => {
+				for (let i = 0, len = deviceInfo.length; i < len; i++) {
+					console.log(UA,deviceInfo[i]);
+					if (UA.match(deviceInfo[i]) !== null) {
+						return deviceInfo[i];
+					}
+				}
+			})(),
+			width: window.innerWidth,
+			height: window.innerHeight,
+			breakpoint: null,
+			colClass: null,
+			ios: (/ip(ad|hone|od)/i).test(UA),
+			android: (/android/i).test(UA),
+			app: UA.indexOf('appname') > -1 ? true : false,
+			touch: null,
+			mobile: null,
+			os: (navigator.appVersion).match(/(mac|win|linux)/i)
+		},
+		browser: {
+			ie: UA.match(/(?:msie ([0-9]+)|rv:([0-9\.]+)\) like gecko)/i),
+			local: (/^http:\/\//).test(location.href),
+			firefox: (/firefox/i).test(UA),
+			webkit: (/applewebkit/i).test(UA),
+			chrome: (/chrome/i).test(UA),
+			opera: (/opera/i).test(UA),
+			safari: (/applewebkit/i).test(UA) && !(/chrome/i).test(UA),	
+		},
+		keys: { 
+			tab: 9, 
+			enter: 13, 
+			alt: 18, 
+			esc: 27, 
+			space: 32, 
+			pageup: 33, 
+			pagedown: 34, 
+			end: 35, 
+			home: 36, 
+			left: 37, 
+			up: 38, 
+			right: 39, 
+			down: 40
 		},
 		scroll: {
-			y : 0,
+			y: 0,
 			direction: 'down'
-		}
-	}
-
-
-	class UiParts {
-		//append
-		appendHtml(el, str) {
-			const div = document.createElement('div');
-
-			div.innerHTML = str;
-
-			while (div.children.length > 0) {
-				el.appendChild(div.children[0]);
-			}
-		}
-
-		deleteParent(child) {
-			const parent = child.parentNode;
-
-			parent.parentNode.removeChild(parent);
-		}
-
-		wrapTag(front, selector, back){
-			const org_html = selector.innerHTML;
-			const new_html = front + org_html + back;
-			
-			selector.innerHTML = new_html;
-		}
-
-		//http://cubic-bezier.com - css easing effect
-		effect = {
+		},
+		effect: { //http://cubic-bezier.com - css easing effect
 			linear: '0.250, 0.250, 0.750, 0.750',
 			ease: '0.250, 0.100, 0.250, 1.000',
 			easeIn: '0.420, 0.000, 1.000, 1.000',
@@ -76,25 +96,103 @@
 			easeInOutCirc: '0.785, 0.135, 0.150, 0.860',
 			easeInOutBack: '0.680, -0.550, 0.265, 1.550'
 		}
+	}
+	Global.uiParts = {
+
+		//리사이즈 이벤트 모음
+		resizeState: () => {
+			const act = () => {
+				const browser = Global.state.browser;
+				const device = Global.state.device;
+
+				device.width = window.innerWidth;
+				device.height = window.innerHeight;
+
+				device.touch = device.ios || device.android || (doc.ontouchstart !== undefined && doc.ontouchstart !== null);
+				device.mobile = device.touch && (device.ios || device.android);
+				device.os = device.os ? device.os[0] : '';
+				device.os = device.os.toLowerCase();
+
+				device.breakpoint = device.width >= deviceSize[5] ? true : false;
+				device.colClass = device.width >= deviceSize[5] ? 'col-12' : device.width > deviceSize[8] ? 'col-8' : 'col-4';
+
+				if (browser.ie) {
+					browser.ie = browser.ie = parseInt( browser.ie[1] || browser.ie[2] );
+					( 11 > browser.ie ) ? support.pointerevents = false : '';
+					( 9 > browser.ie ) ? support.svgimage = false : '';
+				} else {
+					browser.ie = false;
+				}
+
+				const clsBrowser = browser.chrome ? 'chrome' : browser.firefox ? 'firefox' : browser.opera ? 'opera' : browser.safari ? 'safari' : browser.ie ? 'ie ie' + browser.ie : 'other';
+				const clsMobileSystem = device.ios ? "ios" : device.android ? "android" : 'etc';
+				const clsMobile = device.mobile ? device.app ? 'ui-a ui-m' : 'ui-m' : 'ui-d';
+				const el_html = doc.querySelector('html');
+
+				el_html.classList.remove('col-12', 'col-8', 'col-4');
+				el_html.classList.add(device.colClass, clsBrowser, clsMobileSystem, clsMobile);
+			}
+
+			win.addEventListener('resize', act);
+			act();
+		},
+
+		//뒤에 추가하기
+		appendHtml: (el, str) => {
+			const div = doc.createElement('div');
+
+			div.innerHTML = str;
+
+			while (div.children.length > 0) {
+				el.appendChild(div.children[0]);
+			}
+		},
+
+		//
+		deleteParent: (child) => {
+			const parent = child.parentNode;
+
+			parent.parentNode.removeChild(parent);
+		},
+
+		//앞뒤 태그 감싸기 
+		wrapTag: (front, selector, back) => {
+			const org_html = selector.innerHTML;
+			const new_html = front + org_html + back;
+			
+			selector.innerHTML = new_html;
+		},
 
 		//숫자 세자리수마다 ',' 붙이기
-		uiComma(n) {
+		uiComma: (n) => {
 			var parts = n.toString().split(".");
 
 			return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
-		}
+		},
 
 		//숫자 한자리수 일때 0 앞에 붙이기
-		partsAdd0(x) {
+		partsAdd0: (x) => {
 			return Number(x) < 10 ? '0' + x : x;
+		},
+
+		//주소의 파라미터 값 가져오기
+		partsPara: (paraname) => {
+			const tempUrl = win.location.search.substring(1);
+			const tempArray = tempUrl.split('&');
+			const tempArray_len = tempArray.length;
+			let keyValue;
+	
+			for (var i = 0, len = tempArray_len; i < len; i++) {
+				keyValue = tempArray[i].split('=');
+	
+				if (keyValue[0] === paraname) {
+					return keyValue[1];
+				}
+			}
 		}
-
-		scroll() {
-
-		}
-
 	}
-	win[global].uiParts = new UiParts();
+
+	Global.uiParts.resizeState();
 
 	class UiAjax {
 		constructor() {
@@ -126,10 +224,10 @@
 			};
 		}
 	}
-	win[global].uiAjax = new UiAjax();
+	Global.uiAjax = new UiAjax();
 	
 	class UiScrollBar {
-		constructor(idName){
+		constructor(idName) {
 			this.id = idName;
 			this.callback = function(){
 				console.log(`${idName} 커스텀 스크롤 준비완료`);
@@ -137,12 +235,12 @@
 			this.infiniteCallback = false;
 		}
 
-		init = (opt) => {
+		init(opt) {
 			const _opt = Object.assign({}, this, opt);
 			const id = _opt.id;
 			const callback = _opt.callback;
 			const infiniteCallback = _opt.infiniteCallback;
-			const el_scrollbar = document.querySelector('[data-scroll-id="' + id +'"]');
+			const el_scrollbar = doc.querySelector('[data-scroll-id="' + id +'"]');
 
 			let timer;
 			let prevHeightPercent = 0;
@@ -160,7 +258,7 @@
 			const wrapW = el_scrollbar.offsetWidth;
 			const wrapH = el_scrollbar.offsetHeight;
 
-			win[global].uiParts.wrapTag('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap">', el_scrollbar ,'</div></div>');
+			Global.uiParts.wrapTag('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap">', el_scrollbar ,'</div></div>');
 
 			//++make
 			const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
@@ -193,10 +291,10 @@
 				el_item.setAttribute('tabindex', 0);
 				el_scrollbar.style.height = wrapH + 'px';
 
-				const html_barwrap = document.createElement('div');
-				const html_barwrapX = document.createElement('div');
-				const html_button = document.createElement('button');
-				const html_buttonX = document.createElement('button');
+				const html_barwrap = doc.createElement('div');
+				const html_barwrapX = doc.createElement('div');
+				const html_button = doc.createElement('button');
+				const html_buttonX = doc.createElement('button');
 
 				html_barwrap.classList.add('ui-scrollbar-barwrap');
 				html_barwrap.classList.add('type-y');
@@ -351,7 +449,7 @@
 			}
 			
 			function dragMoveAct(event) {
-				const body = document.querySelector('body');
+				const body = doc.querySelector('body');
 				const el_bar = event.target;
 				const el_scrollbar = el_bar.closest('.ui-scrollbar');
 				const el_barWrap = el_bar.closest('.ui-scrollbar-barwrap');
@@ -359,8 +457,8 @@
 				const itemH = Number(el_scrollbar.dataset.itemH);
 				const itemW = Number(el_scrollbar.dataset.itemW);
 				const el_barWrapRect = el_barWrap.getBoundingClientRect();
-				const off_t = el_barWrapRect.top + document.documentElement.scrollTop;
-				const off_l = el_barWrapRect.left + document.documentElement.scrollLeft;
+				const off_t = el_barWrapRect.top + doc.documentElement.scrollTop;
+				const off_l = el_barWrapRect.left + doc.documentElement.scrollLeft;
 				const w_h = el_barWrapRect.height;
 				const w_w = el_barWrapRect.width;
 				const barH = el_bar.getAttribute('data-height');
@@ -369,8 +467,8 @@
 
 				body.classList.add('scrollbar-move');
 
-				document.addEventListener('mousemove', mousemoveAct);
-				document.addEventListener('mouseup', mouseupAct);
+				doc.addEventListener('mousemove', mousemoveAct);
+				doc.addEventListener('mouseup', mouseupAct);
 
 				function mousemoveAct(event){
 					let y_m; 
@@ -413,14 +511,14 @@
 				}
 				function mouseupAct(){
 					body.classList.remove('scrollbar-move');
-					document.removeEventListener('mousemove', mousemoveAct);
-					document.removeEventListener('mouseup', mouseupAct);
+					doc.removeEventListener('mousemove', mousemoveAct);
+					doc.removeEventListener('mouseup', mouseupAct);
 				}
 			}
 		}
 
-		destroy = () => {
-			const el_scrollbar = document.querySelector('[data-scroll-id="' + this.id +'"]');
+		destroy() {
+			const el_scrollbar = doc.querySelector('[data-scroll-id="' + this.id +'"]');
 			const el_barwrap = el_scrollbar.querySelectorAll('.ui-scrollbar-barwrap');
 			const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
 			const el_wrap = el_item.querySelector('.ui-scrollbar-wrap');
@@ -439,17 +537,18 @@
 			el_scrollbar.innerHTML = wrapHtml;
 		}
 
-		reset = (opt)=> {
+		reset(opt) {
 			console.log(this);
-			win[global].uiScrollBar[this.id].destroy();
-			win[global].uiScrollBar[this.id].init({
+			Global.uiScrollBar[this.id].destroy();
+			Global.uiScrollBar[this.id].init({
 				infiniteCallback: opt.infiniteCallback
 			});
 
 		}
 	}
-	win[global].uiScrollBar = () => {
-		const uiScrollBar = document.querySelectorAll('.ui-scrollbar');
+
+	Global.uiScrollBar = () => {
+		const uiScrollBar = doc.querySelectorAll('.ui-scrollbar');
 		
 		if (sessionStorage.getItem('scrollbarID') === null) {
 			sessionStorage.setItem('scrollbarID', 0);
@@ -463,21 +562,21 @@
 					
 				idN = idN + 1;
 				sessionStorage.setItem('scrollbarID', idN);
-
 				scrollId = 'item' + i;
 				uiScrollBar[i].dataset.scrollId = scrollId;
+			} 
 
-				win[global].uiScrollBar[scrollId] = new UiScrollBar(scrollId);
-			} else {
-				win[global].uiScrollBar[scrollId] = new UiScrollBar(scrollId);
-			}
+			Global.uiScrollBar[scrollId] = new UiScrollBar(scrollId);
 
 			setTimeout(function(){
-				win[global].uiScrollBar[scrollId].init();
+				Global.uiScrollBar[scrollId].init();
 			},0);
 			
 		}
 	}
 	
+	class UiScrollMove {
+
+	}
 
 })(window, document);
