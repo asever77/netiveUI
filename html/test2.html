@@ -43,10 +43,15 @@
     </div>
     <div style="margin:500px 0 1000px;">
         <input type="text">
-	<select>
+	<select class="aa">
 	<option value="1">rrrrr</option>
 	<option value="2">hhhhhh</option>
 	<option value="3">uuuuu</option>
+	</select>
+	<select class="bb">
+	<option value="1">33333333333</option>
+	<option value="2">22222222222</option>
+	<option value="3">11111111111</option>
 	</select>
     </div>
     <div id="test2">
@@ -60,9 +65,14 @@
 		;(function($, win, doc, undefined) {
 			$(doc).ready(function(){
 				
-				$('select').off('focusin.aa','focusout.aa').on('focusin.aa', function(){
+				$('select.aa').off('focusin.aa','focusout.aa').on('focusin.aa', function(){
 					$('html').addClass('in');	
 				}).on('focusout.aa', function(){
+					$('html').removeClass('in');	
+				});
+				$('select.bb').off('focus.aa','blur.aa').on('focus.aa', function(){
+					$('html').addClass('in');	
+				}).on('blur.aa', function(){
 					$('html').removeClass('in');	
 				});
 				
