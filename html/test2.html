@@ -26,11 +26,17 @@
         .card-body[data-line="3"]{border:10px solid lightsalmon}
         .card-body[data-line="4"]{border:10px solid lightslategrey}
 .fix{position:fixed; bottom:0; width:100%; background:gold}
+		.in body{background:#ccc;}
 	</style>
 </head>
 
 <body>
-
+	
+	<select id="test">
+		<option value="1">aaaaa</option>
+		<option value="2">bbbbb</option>
+		<option value="3">bbbbb</option>
+	</select>
     <div id="test" style="position:fixed; top:0">
 
     </div>
@@ -47,6 +53,14 @@
 	<script>
 		;(function($, win, doc, undefined) {
 			$(doc).ready(function(){
+				
+				$('select').off('focusin.aa','focusout.aa').on('focusin.aa', function(){
+					$('html').addClass('in');	
+				}).on('focusout.aa', function(){
+					$('html').removeClass('in');	
+				});
+				
+				
                 $('#test').text('1: ' + $(win).outerHeight())
                 $('input').on('focus', function(){
                     var $inp = $(this);
