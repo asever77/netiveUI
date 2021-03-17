@@ -74,6 +74,7 @@
 						$('#test2').addClass('fix');
 					},1000);
 				}).on('blur', function(){
+					var $inp = $(this);
 					$inp.val('');
 					$('#test2').removeClass('fix');
 				});
