@@ -34,7 +34,7 @@
 <body>
 	
 	<select id="test33">
-		<option value="1" selected>aaaaa</option>
+		<option value="1">aaaaa</option>
 		<option value="2">bbbbb</option>
 		<option value="3">bbbbb</option>
 	</select>
@@ -66,8 +66,8 @@
                 $('input').on('focus', function(){
                     var $inp = $(this);
                     setTimeout(function(){
-                        $inp.val($(win).outerHeight(true) +', '+ $(doc).outerHeight(true));
-                        $('#test2').addClass('fix');
+                        //$inp.val($(win).outerHeight(true) +', '+ $(doc).outerHeight(true));
+                        //$('#test2').addClass('fix');
                     },1000);
                         
                 
