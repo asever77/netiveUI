@@ -33,7 +33,7 @@
 
 <body>
 	
-	<select id="test33">
+	<select>
 		<option value="1">aaaaa</option>
 		<option value="2">bbbbb</option>
 		<option value="3">bbbbb</option>
@@ -43,6 +43,11 @@
     </div>
     <div style="margin:500px 0 1000px;">
         <input type="text">
+	<select>
+	<option value="1">rrrrr</option>
+	<option value="2">hhhhhh</option>
+	<option value="3">uuuuu</option>
+	</select>
     </div>
     <div id="test2">
         <button type="button">버튼</button>
@@ -61,21 +66,21 @@
 					$('html').removeClass('in');	
 				});
 				
-				
-                $('#test').text('1: ' + $(win).outerHeight())
-                $('input').on('focus', function(){
-                    var $inp = $(this);
-                    setTimeout(function(){
-                        //$inp.val($(win).outerHeight(true) +', '+ $(doc).outerHeight(true));
-                        //$('#test2').addClass('fix');
-                    },1000);
-                        
-                
-                });
-            // $(win).on('resize', function(){
-            // alert($(win).outerHeight());
-            //         $('#test').text('2: ' + $(win).outerHeight())
-            //     });
+				$('#test').text('1: ' + $(win).outerHeight())
+				$('input').on('focus', function(){
+					var $inp = $(this);
+					setTimeout(function(){
+						$inp.val($(win).outerHeight(true) +', '+ $(doc).outerHeight(true));
+						$('#test2').addClass('fix');
+					},1000);
+				}).on('blur', function(){
+					$inp.val('');
+					$('#test2').removeClass('fix');
+				});
+				// $(win).on('resize', function(){
+				// alert($(win).outerHeight());
+				//         $('#test').text('2: ' + $(win).outerHeight())
+				//     });
 
 			});
 		})(jQuery, window, document);
