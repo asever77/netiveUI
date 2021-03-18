@@ -189,9 +189,24 @@
 					return keyValue[1];
 				}
 			}
+		},
+
+		//기본 선택자 설정
+		partsSelectorType: (v) => {
+			console.log(v);
+			let base = document.querySelector('body');
+
+			if (v !== null) {
+				if (typeof v === 'string') {
+					base = document.querySelector(v);
+				} else {
+					base = v;
+				} 
+			}
+
+			return base;
 		}
 	}
-
 	Global.uiParts.resizeState();
 
 	class UiAjax {
@@ -226,7 +241,14 @@
 	}
 	Global.uiAjax = new UiAjax();
 	
+	/*
+	* @module scroll bar
+	* @description  web browser scroll bar design
+	* @author 조현민
+	* @modify 2021.03.18
+	*/
 	class UiScrollBar {
+		//객체의 기본 상태를 설정해주는 생성자 메서드 constructor()는 new에 의해 자동으로 호출되므로, 특별한 절차 없이 객체를 초기화
 		constructor(idName) {
 			this.id = idName;
 			this.callback = function(){
@@ -235,6 +257,7 @@
 			this.infiniteCallback = false;
 		}
 
+		//메서드 사이엔 쉼표가 없습니다.
 		init(opt) {
 			const _opt = Object.assign({}, this, opt);
 			const id = _opt.id;
@@ -442,7 +465,6 @@
 				if (hPer === 100 && scrollDirection === 'down') {
 					clearTimeout(timer);
 					timer = setTimeout(() => {
-						console.log('end');
 						!!infiniteCallback && infiniteCallback();
 					},200);
 				}
@@ -546,7 +568,7 @@
 
 		}
 	}
-
+	//uiScrollBar 실행함수 생성
 	Global.uiScrollBar = () => {
 		const uiScrollBar = doc.querySelectorAll('.ui-scrollbar');
 		
@@ -571,10 +593,76 @@
 			setTimeout(function(){
 				Global.uiScrollBar[scrollId].init();
 			},0);
-			
 		}
 	}
 	
+	class UiLoading {
+		constructor(){
+			this.selector = document.querySelector('body');
+			this.visible = true;
+			this.text = null;
+			this.htmlTag = '<div class="orbit"><div class="orbit-wrap"></div></div>';
+			this.timerS = null;
+			this.timerH = null;
+		}
+
+		// init(opt) {
+		// 	const _opt = Object.assign({}, this, opt);
+		// 	const selector = _opt.selector;
+		// 	const loadingVisible = _opt.visible;
+		// 	const timer = _opt.timer;
+		// 	const text = _opt.text;
+		// 	const htmlTag = '<div class="ui-loading">' + _opt.htmlTag + '</div>';
+		// 	const target = Global.uiParts.partsSelectorType(selector);
+		// 	const uiLoading = target.querySelector('.ui-loading');
+
+		// 	console.log(this.timerS, this.timerH);
+
+		// 	if (loadingVisible) {
+		// 		clearTimeout(this.timerS);
+		// 		clearTimeout(this.timerH);
+		// 		this.timerS = setTimeout(function(){
+		// 			alert('show');
+		// 		},300);
+				
+		// 	} else {
+		// 		clearTimeout(this.timerS);
+		// 		win[global].uiLoading.timerHide = setTimeout(function(){
+		// 			alert('hide');
+		// 		},300)
+				
+		// 	}	
+		// }
+
+		show(opt) {
+			clearTimeout(this.timerS);
+			clearTimeout(this.timerH);
+			const _opt = Object.assign({}, this, opt);
+			const target = Global.uiParts.partsSelectorType(_opt.selector);
+			const htmlTag = _opt.htmlTag;
+			const newNode = document.createElement('div');
+
+			newNode.classList.add('ui-loading');
+			newNode.innerHTML = htmlTag;
+
+			this.timerS = setTimeout(function(){
+				target.append(newNode);
+				const uiLoading = target.querySelector('.ui-loading');
+				target.dataset.loading = true;
+				uiLoading.classList.add('visible');
+				uiLoading.classList.remove('close');
+			},300);
+		}
+
+		hide() {
+
+		}
+	}
+	Global.uiLoading = new UiLoading({
+		
+	});
+
+
 	class UiScrollMove {
 
 	}
