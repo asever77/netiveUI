@@ -268,7 +268,6 @@
 			let timer;
 			let prevHeightPercent = 0;
 			let scrollDirection = 'keep';
-			let timerResize;
 
 			//+reset
 			if (el_scrollbar.dataset.ready === 'yes') {
@@ -376,23 +375,12 @@
 					return false;
 				}
 
-				let nWrapH = _el_scrollbar.offsetHeight;
+				const nWrapH = _el_scrollbar.offsetHeight;
 				const nWrapW = _el_scrollbar.offsetWidth;
 				const nItemH = el_item.scrollHeight;
 				const nItemW = el_item.scrollWidth;
 				const changeH = (itemH !== nItemH || wrapH !== nWrapH);
 				const changeW = (itemW !== nItemW || wrapW !== nWrapW);
-
-				win.addEventListener('resize', reCalc);
-
-				function reCalc() {
-					clearTimeout(timerResize);
-					timerResize = setTimeout(function(){
-						_el_scrollbar.removeAttribute('style');
-						nWrapH = _el_scrollbar.offsetHeight;
-						_el_scrollbar.style.height = nWrapH + 'px';
-					}, 300);
-				}
 
 				//resizing
 				if (changeH || changeW) {
@@ -624,13 +612,15 @@
 			const htmlTag = _opt.htmlTag;
 			
 			//중복실행 방지
+			console.log(!!target.dataset.ing);
 			for (let i = 0, n = target.children.length; i < n; i++) {
 				if (target.children[i].className === 'ui-loading visible' || target.dataset.ing) {
-					console.log('중복');
+					
+					console.log('중복실행 방지');
 					return false;
 				}
 			}
-			
+
 			clearTimeout(this.timerS);
 			clearTimeout(this.timerH);
 
@@ -649,10 +639,10 @@
 					}
 					console.log(target.children[i].className );
 				}
- 				target.dataset.loading = true;
+ 				//target.dataset.loading = true;
 				uiLoading.classList.add('visible');
 				uiLoading.classList.remove('close');
-				target.dataset.ing = false;
+				target.dataset.ing = '';
 			},300);
 		}
 
@@ -661,13 +651,18 @@
 			const _opt = Object.assign({}, this, opt);
 			const target = Global.uiParts.partsSelectorType(_opt.selector);
 			let uiLoading = null;
+
 			for (let i = 0, n = target.children.length; i < n; i++) {
 				if (target.children[i].className === 'ui-loading visible') {
 					uiLoading = target.children[i];
 				}
 			}
 
-			target.dataset.loading = false;
+			if (!uiLoading) {
+				return false;
+			}
+			target.dataset.ing = '';
+			//target.dataset.loading = false;
 			uiLoading.classList.add('close');
 			this.timerH = setTimeout(function(){
 				uiLoading.classList.remove('visible');
@@ -675,13 +670,92 @@
 			},500);
 		}
 	}
-	Global.uiLoading = new UiLoading({
-		
-	});
+	Global.uiLoading = new UiLoading();
 
 
 	class UiScrollMove {
-
+		constructor(){
+			this.value = 0;
+			this.speed = 0;
+			this.callback
+		}
 	}
 
+
+	// win[global] = win[global].uiNameSpace(namespace, {
+	// 	uiScroll: function (opt) {
+	// 		return createUiScroll(opt);
+	// 	}
+	// });
+	// win[global].uiScroll.option = {
+	// 	value: 0,
+	// 	speed: 0,
+	// 	callback: false,
+	// 	ps: 'top',
+	// 	addLeft: false,
+	// 	focus: false,
+	// 	target: 'html, body'
+	// };
+	// function createUiScroll(opt){
+	// 	if (opt === undefined) {
+	// 		return false;
+	// 	}
+
+	// 	var opt = $.extend(true, {}, win[global].uiScroll.option, opt),
+	// 		psVal = opt.value,
+	// 		s = opt.speed,
+	// 		c = opt.callback,
+	// 		p = opt.ps,
+	// 		addLeft = opt.addLeft,
+	// 		overlap = false,
+	// 		f = typeof opt.focus === 'string' ? $('#' + opt.focus) : opt.focus,
+	// 		$target = typeof opt.target === 'string' ? $(opt.target) : opt.target;
+		
+	// 	if (p === 'top') {
+	// 		$target.stop().animate({ 
+	// 				scrollTop : psVal 
+	// 			}, { 
+	// 				duration: s,
+	// 				step: function(now) { 
+	// 				!!c && now !== 0 ? c({ scrolltop:Math.ceil(now), complete:false }) : '';
+	// 			},
+	// 			complete: function(){
+	// 				if (overlap) {
+	// 					!!c ? c({ focus:f, complete:true }) : '';
+	// 					!!f ? f.attr('tabindex', 0).focus() : '';
+	// 				} else {
+	// 					overlap = true;
+	// 				}
+	// 			}
+	// 		});
+	// 	} else if (p === 'left') {
+	// 		$target.stop().animate({ 
+	// 				scrollLeft : psVal
+	// 			}, { 
+	// 				duration: s,
+	// 				step: function(now) { 
+	// 					!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
+	// 			},
+	// 			complete: function(){
+	// 				!!c ? c({ focus:f, complete:true }) : '';
+	// 				!!f ? f.attr('tabindex', 0).focus() : '';
+	// 			}
+	// 		});
+	// 	} else if (p === 'center') {
+	// 		var w = $target.outerWidth();
+
+	// 		$target.stop().animate({ 
+	// 			scrollLeft : psVal - (w / 2) + addLeft
+	// 		}, { 
+	// 			duration: s,
+	// 			step: function(now) { 
+	// 				!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
+	// 			},
+	// 			complete: function(){
+	// 				!!c ? c({ focus:f, complete:true }) : '';
+	// 				!!f ? f.attr('tabindex', 0).focus() : '';
+	// 			}
+	// 		});
+	// 	}
+	// }
 })(window, document);
