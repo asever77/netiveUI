@@ -891,6 +891,8 @@ if (!Object.keys){
 			remove = opt.remove,
 			$base = !id ? $('.ui-scrollbar') : typeof id === 'object' ? id : $('[scroll-id="' + id +'"]');
 		
+		var timerResize;
+		
 		if (win[global].support.touch) {
 			return false;
 		} 
@@ -914,6 +916,19 @@ if (!Object.keys){
 			var changeH = (itemH !== nItemH || wrapH !== nWrapH);
 			var changeW = (itemW !== nItemW || wrapW !== nWrapW);
 
+			$(win).on('resize', function(){
+				clearTimeout(timerResize);
+				timerResize = setTimeout(function(){
+					console.log(111);
+					$wrap.removeAttr('style');
+					//$wrap.css('overflow', 'hidden');
+					
+					nWrapH = $wrap.outerHeight();
+					//nWrapW = $wrap.outerWidth();
+					//$wrap.css('width', nWrapW);
+					$wrap.css('height', nWrapH);
+				}, 300);
+			});
 
 			if (changeH || changeW) {
 				var barH = Math.floor(nWrapH / (nItemH / 100));

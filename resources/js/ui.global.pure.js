@@ -245,6 +245,7 @@
 			let timer;
 			let prevHeightPercent = 0;
 			let scrollDirection = 'keep';
+			let timerResize;
 
 			//+reset
 			if (el_scrollbar.dataset.ready === 'yes') {
@@ -352,12 +353,23 @@
 					return false;
 				}
 
-				const nWrapH = _el_scrollbar.offsetHeight;
+				let nWrapH = _el_scrollbar.offsetHeight;
 				const nWrapW = _el_scrollbar.offsetWidth;
 				const nItemH = el_item.scrollHeight;
 				const nItemW = el_item.scrollWidth;
 				const changeH = (itemH !== nItemH || wrapH !== nWrapH);
 				const changeW = (itemW !== nItemW || wrapW !== nWrapW);
+
+				win.addEventListener('resize', reCalc);
+
+				function reCalc() {
+					clearTimeout(timerResize);
+					timerResize = setTimeout(function(){
+						_el_scrollbar.removeAttribute('style');
+						nWrapH = _el_scrollbar.offsetHeight;
+						_el_scrollbar.style.height = nWrapH + 'px';
+					}, 300);
+				}
 
 				//resizing
 				if (changeH || changeW) {
