@@ -606,56 +606,61 @@
 			this.timerH = null;
 		}
 
-		// init(opt) {
-		// 	const _opt = Object.assign({}, this, opt);
-		// 	const selector = _opt.selector;
-		// 	const loadingVisible = _opt.visible;
-		// 	const timer = _opt.timer;
-		// 	const text = _opt.text;
-		// 	const htmlTag = '<div class="ui-loading">' + _opt.htmlTag + '</div>';
-		// 	const target = Global.uiParts.partsSelectorType(selector);
-		// 	const uiLoading = target.querySelector('.ui-loading');
-
-		// 	console.log(this.timerS, this.timerH);
-
-		// 	if (loadingVisible) {
-		// 		clearTimeout(this.timerS);
-		// 		clearTimeout(this.timerH);
-		// 		this.timerS = setTimeout(function(){
-		// 			alert('show');
-		// 		},300);
-				
-		// 	} else {
-		// 		clearTimeout(this.timerS);
-		// 		win[global].uiLoading.timerHide = setTimeout(function(){
-		// 			alert('hide');
-		// 		},300)
-				
-		// 	}	
-		// }
-
 		show(opt) {
-			clearTimeout(this.timerS);
-			clearTimeout(this.timerH);
 			const _opt = Object.assign({}, this, opt);
 			const target = Global.uiParts.partsSelectorType(_opt.selector);
 			const htmlTag = _opt.htmlTag;
+			
+			//중복실행 방지
+			for (let i = 0, n = target.children.length; i < n; i++) {
+				if (target.children[i].className === 'ui-loading visible' || target.dataset.ing) {
+					console.log('중복');
+					return false;
+				}
+			}
+			
+			clearTimeout(this.timerS);
+			clearTimeout(this.timerH);
+
 			const newNode = document.createElement('div');
 
 			newNode.classList.add('ui-loading');
 			newNode.innerHTML = htmlTag;
+			target.append(newNode);
+			target.dataset.ing = true;
 
 			this.timerS = setTimeout(function(){
-				target.append(newNode);
-				const uiLoading = target.querySelector('.ui-loading');
-				target.dataset.loading = true;
+				let uiLoading = null;
+				for (let i = 0, n = target.children.length; i < n; i++) {
+					if (target.children[i].className === 'ui-loading') {
+						uiLoading = target.children[i];
+					}
+					console.log(target.children[i].className );
+				}
+ 				target.dataset.loading = true;
 				uiLoading.classList.add('visible');
 				uiLoading.classList.remove('close');
+				target.dataset.ing = false;
 			},300);
 		}
 
-		hide() {
+		hide(opt) {
+			clearTimeout(this.timerS);
+			const _opt = Object.assign({}, this, opt);
+			const target = Global.uiParts.partsSelectorType(_opt.selector);
+			let uiLoading = null;
+			for (let i = 0, n = target.children.length; i < n; i++) {
+				if (target.children[i].className === 'ui-loading visible') {
+					uiLoading = target.children[i];
+				}
+			}
 
+			target.dataset.loading = false;
+			uiLoading.classList.add('close');
+			this.timerH = setTimeout(function(){
+				uiLoading.classList.remove('visible');
+				uiLoading.parentNode.removeChild(uiLoading);
+			},500);
 		}
 	}
 	Global.uiLoading = new UiLoading({
