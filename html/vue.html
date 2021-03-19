@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Bar Chart</title>
+	<style>
+	</style>
+</head>
+
+<body>
+	<div id="timerA" style="width: 75%;">
+	</div>
+	
+	<script>	
+		window.addEventListener('DOMContentLoaded', function(){
+
+			(function() {
+				window.uiCountDownTimer = {
+					timer: null,
+					act: function (id, data) {
+						
+						const _vDate = new Date(data);
+						const _second = 1000;
+						const _minute = _second * 60;
+						const _hour = _minute * 60;
+						const _day = _hour * 24;
+						const showRemaining = function(){
+							const target = document.getElementById(id);
+							const now = new Date();
+							const distDt = _vDate - now;
+							const hours = Math.floor((distDt % _day) / _hour);
+							const minutes = Math.floor((distDt % _hour) / _minute);
+							const seconds = Math.floor((distDt % _minute) / _second);
+							if (!!target) {
+								target.textContent = "";
+								target.textContent += hours + ": ";
+								target.textContent += minutes + ": ";
+								target.textContent += seconds;
+								console.log(hours, minutes, seconds);
+								if (hours === 0 && minutes === 0 && seconds === 0) {
+									console.log('완료');
+								} else {
+									loopTime();
+								}
+							}
+						}
+						showRemaining();
+						function loopTime() {
+							clearTimeout(window.uiCountDownTimer.timer);
+							window.uiCountDownTimer.timer = setTimeout(showRemaining, 1000);
+						}
+					}
+				};
+				const dateObj = new Date();
+				dateObj.setDate(dateObj.getDate() + 1);
+				console.log(dateObj);
+				window.uiCountDownTimer.date = dateObj;
+				window.uiCountDownTimer.act("timerA", window.uiCountDownTimer.date);
+			})();
+	
+		
+		});
+
+		
+	</script>
+</body>
+
+</html>
