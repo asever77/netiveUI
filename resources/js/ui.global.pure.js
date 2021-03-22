@@ -672,45 +672,69 @@
 	}
 	Global.uiLoading = new UiLoading();
 
-
-	class UiScrollMove {
+	/**
+	* Animate scrolling to a target position
+	* @param {string} target Target selector
+	* @param {number} duration (Option) Duration time(ms) (Default. 800ms)
+	* @param {number} adjust (Option) Adjustment value of position
+	*/
+	class UiScrolling {
 		constructor(){
 			this.value = 0;
 			this.speed = 0;
-			this.callback
+			this.callback = false;
+			this.ps = 'y';
+			this.adjust = false;
+			this.focus = false;
+			this.selector = 'html, body';
+		}
+
+		move(opt) {
+			const _opt = Object.assign({}, this, opt);
+			const psValue = _opt.value;
+			const duration = _opt.duration;
+			const callback = _opt.callback;
+			const ps = _opt.ps;
+			const adjust = _opt.adjust * -1;
+			const focus = Global.uiParts.partsSelectorType(_opt.focus);
+			const targetEle = Global.uiParts.partsSelectorType(_opt.selector);
+
+			const scrollEle = document.documentElement || window.scrollingElement;
+			const currentY = scrollEle.scrollTop;
+			const targetY = targetEle.offsetTop - (adjust || 0);
+			const currentX = scrollEle.scrollLeft;
+			const targetX = targetEle.offsetLeft - (adjust || 0);
+
+			if (ps === 'y') {
+				animateScrollTo(currentY, targetY, duration);
+			} else if (ps === 'x') {
+				animateScrollTo(currentX, targetX, duration);
+			}
+
+			function animateScrollTo(_start, _end, duration) {
+				duration = duration ? duration : 300;
+
+				const unit = (_end - _start) / duration;
+				const startTime = new Date().getTime();
+				const endTime = new Date().getTime() + duration;
+				
+				const scrollTo = function() {
+					let now = new Date().getTime();
+					let passed = now - startTime;
+					if (now <= endTime) {
+						scrollEle.scrollTop = _start + (unit * passed);
+						requestAnimationFrame(scrollTo);
+					} else {
+						!!callback && callback();
+						console.log('End off.')
+					}
+				};
+				requestAnimationFrame(scrollTo);
+			};
 		}
 	}
+	Global.uiScrolling = new UiScrolling();
 
-
-	// win[global] = win[global].uiNameSpace(namespace, {
-	// 	uiScroll: function (opt) {
-	// 		return createUiScroll(opt);
-	// 	}
-	// });
-	// win[global].uiScroll.option = {
-	// 	value: 0,
-	// 	speed: 0,
-	// 	callback: false,
-	// 	ps: 'top',
-	// 	addLeft: false,
-	// 	focus: false,
-	// 	target: 'html, body'
-	// };
-	// function createUiScroll(opt){
-	// 	if (opt === undefined) {
-	// 		return false;
-	// 	}
-
-	// 	var opt = $.extend(true, {}, win[global].uiScroll.option, opt),
-	// 		psVal = opt.value,
-	// 		s = opt.speed,
-	// 		c = opt.callback,
-	// 		p = opt.ps,
-	// 		addLeft = opt.addLeft,
-	// 		overlap = false,
-	// 		f = typeof opt.focus === 'string' ? $('#' + opt.focus) : opt.focus,
-	// 		$target = typeof opt.target === 'string' ? $(opt.target) : opt.target;
-		
 	// 	if (p === 'top') {
 	// 		$target.stop().animate({ 
 	// 				scrollTop : psVal 
