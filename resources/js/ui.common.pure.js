@@ -177,7 +177,52 @@
 		},
 		header : function(v){
 			netive.uiParts.appendHtml(document.querySelector('#baseHeader'), v);
-			
+
+			var dep2btn = doc.querySelectorAll('.dep-2-btn');
+
+			for (const btn of dep2btn) {
+				btn.addEventListener('click', pageChange)
+			}
+
+			function pageChange(event) {
+				console.log(event, event.currentTarget  );
+				const currentButton = event.currentTarget;
+				const baseMain = document.querySelector('#baseMain');
+				console.log(currentButton.dataset.href);
+
+				netive.uiAjax.request({ 
+					src: currentButton.dataset.href, 
+					callback: function(v){
+
+						baseMain.innerHTML = v;
+						netive.uiScrollBar();
+					} 
+				});
+			}
+
+			// $('.dep-2-btn').off('click.ajax').on('click.ajax', function(){
+			// 	var href = this.getAttribute('data-href');
+			// 	!!$('body').hasClass('nav-open') && $plugins.common.navOpen();
+			// 	$plugins.uiAjax({ 
+			// 		id: 'baseMain', 
+			// 		url: href, 
+			// 		page: true, 
+			// 		effect: true,
+			// 		callback: function(v){
+			// 			$plugins.uiScroll({ 
+			// 				value:0, 
+			// 				speed:0, 
+			// 				focus:  $('#baseMain h1').eq(0)
+			// 			});
+						
+			// 			$(win).off('scroll.win');
+			// 			$plugins.common.pageInit(href);
+			// 			$plugins.common.settingAside();
+						
+			// 		}
+			// 	});
+			// });
+
 		}
 	};
 
