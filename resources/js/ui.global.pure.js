@@ -10,7 +10,6 @@
 	win[global] = {};
 
 	const Global = win[global];
-
 	const UA = navigator.userAgent.toLowerCase();
 	const deviceSize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360];
 	const deviceInfo = ['android', 'iphone', 'ipod', 'ipad', 'blackberry', 'windows ce', 'windows','samsung', 'lg', 'mot', 'sonyericsson', 'nokia', 'opeara mini', 'opera mobi', 'webos', 'iemobile', 'kfapwi', 'rim', 'bb10'];
@@ -20,7 +19,6 @@
 		device: {
 			info: (() => {
 				for (let i = 0, len = deviceInfo.length; i < len; i++) {
-					console.log(UA,deviceInfo[i]);
 					if (UA.match(deviceInfo[i]) !== null) {
 						return deviceInfo[i];
 					}
@@ -98,7 +96,6 @@
 		}
 	}
 	Global.uiParts = {
-
 		//리사이즈 이벤트 모음
 		resizeState: () => {
 			const act = () => {
@@ -171,12 +168,12 @@
 		},
 
 		//숫자 한자리수 일때 0 앞에 붙이기
-		partsAdd0: (x) => {
+		add0: (x) => {
 			return Number(x) < 10 ? '0' + x : x;
 		},
 
 		//주소의 파라미터 값 가져오기
-		partsPara: (paraname) => {
+		para: (paraname) => {
 			const tempUrl = win.location.search.substring(1);
 			const tempArray = tempUrl.split('&');
 			const tempArray_len = tempArray.length;
@@ -192,8 +189,7 @@
 		},
 
 		//기본 선택자 설정
-		partsSelectorType: (v) => {
-			console.log(v);
+		selectorType: (v) => {
 			let base = document.querySelector('body');
 
 			if (v !== null) {
@@ -205,6 +201,50 @@
 			}
 
 			return base;
+		},
+
+		RAF: function(start, end, startTime, duration){
+			const _start = start;
+			const _end = end;
+			const _duration = duration ? duration : 300;
+			const unit = (_end - _start) / _duration;
+			const endTime = startTime + _duration;
+
+			let now = new Date().getTime();
+			let passed = now - startTime;
+
+			if (now <= endTime) {
+				Global.uiParts.RAF.time = _start + (unit * passed);
+				requestAnimationFrame(scrollTo);
+			} else {
+				!!callback && callback();
+				console.log('End off.')
+			}
+		},
+		//
+		animateScrollTo: function (opt) {
+			const scrollEle = opt.selector;
+			const _start = opt.currentValue;
+			const _end = opt.targetValue; 
+			const callback = opt.callback;
+			const duration = opt.duration ? opt.duration : 300;
+
+			const unit = (_end - _start) / duration;
+			const startTime = new Date().getTime();
+			const endTime = new Date().getTime() + duration;
+			
+			const scrollTo = function() {
+				let now = new Date().getTime();
+				let passed = now - startTime;
+				if (now <= endTime) {
+					scrollEle.scrollTop = _start + (unit * passed);
+					requestAnimationFrame(scrollTo);
+				} else {
+					!!callback && callback();
+					console.log('End off.')
+				}
+			};
+			requestAnimationFrame(scrollTo);
 		}
 	}
 	Global.uiParts.resizeState();
@@ -608,7 +648,7 @@
 
 		show(opt) {
 			const _opt = Object.assign({}, this, opt);
-			const target = Global.uiParts.partsSelectorType(_opt.selector);
+			const target = Global.uiParts.selectorType(_opt.selector);
 			const htmlTag = _opt.htmlTag;
 			
 			//중복실행 방지
@@ -649,7 +689,7 @@
 		hide(opt) {
 			clearTimeout(this.timerS);
 			const _opt = Object.assign({}, this, opt);
-			const target = Global.uiParts.partsSelectorType(_opt.selector);
+			const target = Global.uiParts.selectorType(_opt.selector);
 			let uiLoading = null;
 
 			for (let i = 0, n = target.children.length; i < n; i++) {
@@ -696,8 +736,8 @@
 			const callback = _opt.callback;
 			const ps = _opt.ps;
 			const adjust = _opt.adjust * -1;
-			const focus = Global.uiParts.partsSelectorType(_opt.focus);
-			const targetEle = Global.uiParts.partsSelectorType(_opt.selector);
+			const focus = Global.uiParts.selectorType(_opt.focus);
+			const targetEle = Global.uiParts.selectorType(_opt.selector);
 
 			const scrollEle = document.documentElement || window.scrollingElement;
 			const currentY = scrollEle.scrollTop;
@@ -706,31 +746,22 @@
 			const targetX = targetEle.offsetLeft - (adjust || 0);
 
 			if (ps === 'y') {
-				animateScrollTo(currentY, targetY, duration);
+				Global.uiParts.animateScrollTo({
+					selector: scrollEle, 
+					currentValue: currentY, 
+					targetValue: targetY, 
+					duration: duration, 
+					callback: callback
+				});
 			} else if (ps === 'x') {
-				animateScrollTo(currentX, targetX, duration);
+				Global.uiParts.animateScrollTo({
+					selector: scrollEle, 
+					currentValue: currentX, 
+					targetValue: targetX, 
+					duration: duration, 
+					callback: callback
+				});
 			}
-
-			function animateScrollTo(_start, _end, duration) {
-				duration = duration ? duration : 300;
-
-				const unit = (_end - _start) / duration;
-				const startTime = new Date().getTime();
-				const endTime = new Date().getTime() + duration;
-				
-				const scrollTo = function() {
-					let now = new Date().getTime();
-					let passed = now - startTime;
-					if (now <= endTime) {
-						scrollEle.scrollTop = _start + (unit * passed);
-						requestAnimationFrame(scrollTo);
-					} else {
-						!!callback && callback();
-						console.log('End off.')
-					}
-				};
-				requestAnimationFrame(scrollTo);
-			};
 		}
 	}
 	Global.uiScrolling = new UiScrolling();
