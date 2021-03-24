@@ -96,7 +96,7 @@
 		}
 	}
 	Global.uiParts = {
-		//리사이즈 이벤트 모음
+		//resize state
 		resizeState: () => {
 			const act = () => {
 				const browser = Global.state.browser;
@@ -134,7 +134,11 @@
 			act();
 		},
 
-		//뒤에 추가하기
+		/**
+		* append html : 지정된 영역 안에 마지막에 요소 추가하기
+		* @param {object} el target element
+		* @param {string} str 지정된 영역에 들어갈 값
+		*/
 		appendHtml: (el, str) => {
 			const div = doc.createElement('div');
 
@@ -145,14 +149,22 @@
 			}
 		},
 
-		//
+		/**
+		* delete parent tag : 지정된 요소의 부모태그 삭제
+		* @param {object} child target element
+		*/
 		deleteParent: (child) => {
 			const parent = child.parentNode;
 
 			parent.parentNode.removeChild(parent);
 		},
 
-		//앞뒤 태그 감싸기 
+		/**
+		* wrap tag : 지정된 요소의 tag 감싸기
+		* @param {object} child target element
+		* @param {string} front '<div>'
+		* @param {string} back '</div>
+		*/
 		wrapTag: (front, selector, back) => {
 			const org_html = selector.innerHTML;
 			const new_html = front + org_html + back;
@@ -161,7 +173,7 @@
 		},
 
 		//숫자 세자리수마다 ',' 붙이기
-		uiComma: (n) => {
+		comma: (n) => {
 			var parts = n.toString().split(".");
 
 			return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
@@ -249,6 +261,11 @@
 	}
 	Global.uiParts.resizeState();
 
+	/**
+	* XMLHttpRequest
+	* @param {function} callback call back function
+	* @param {string} src file source
+	*/
 	class UiAjax {
 		constructor() {
 			this.callback = false;
@@ -738,7 +755,6 @@
 			const adjust = _opt.adjust * -1;
 			const focus = Global.uiParts.selectorType(_opt.focus);
 			const targetEle = Global.uiParts.selectorType(_opt.selector);
-
 			const scrollEle = document.documentElement || window.scrollingElement;
 			const currentY = scrollEle.scrollTop;
 			const targetY = targetEle.offsetTop - (adjust || 0);
