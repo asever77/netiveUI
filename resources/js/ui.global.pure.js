@@ -162,8 +162,6 @@
 		/**
 		* wrap tag : 지정된 요소의 tag 감싸기
 		* @param {object} child target element
-		* @param {string} front '<div>'
-		* @param {string} back '</div>
 		*/
 		wrapTag: (front, selector, back) => {
 			const org_html = selector.innerHTML;
@@ -234,30 +232,7 @@
 			}
 		},
 		//
-		animateScrollTo: function (opt) {
-			const scrollEle = opt.selector;
-			const _start = opt.currentValue;
-			const _end = opt.targetValue; 
-			const callback = opt.callback;
-			const duration = opt.duration ? opt.duration : 300;
-
-			const unit = (_end - _start) / duration;
-			const startTime = new Date().getTime();
-			const endTime = new Date().getTime() + duration;
-			
-			const scrollTo = function() {
-				let now = new Date().getTime();
-				let passed = now - startTime;
-				if (now <= endTime) {
-					scrollEle.scrollTop = _start + (unit * passed);
-					requestAnimationFrame(scrollTo);
-				} else {
-					!!callback && callback();
-					console.log('End off.')
-				}
-			};
-			requestAnimationFrame(scrollTo);
-		}
+		
 	}
 	Global.uiParts.resizeState();
 
@@ -277,13 +252,13 @@
 			this.dataType = 'html';
 		}
 	
-		request(opt) {
-			const _opt = Object.assign({}, this, opt);
+		request(option) {
+			const opt = Object.assign({}, this, option);
 			const xhr = new XMLHttpRequest();
-			const callback = _opt.callback;
+			const callback = opt.callback;
 
-			xhr.open(_opt.type, _opt.src);
-			xhr.setRequestHeader(_opt.mimeType, _opt.contType);
+			xhr.open(opt.type, opt.src);
+			xhr.setRequestHeader(opt.mimeType, opt.contType);
 			xhr.send();
 			xhr.onreadystatechange = function (e) {
 				if (xhr.readyState !== XMLHttpRequest.DONE) return;
@@ -315,11 +290,11 @@
 		}
 
 		//메서드 사이엔 쉼표가 없습니다.
-		init(opt) {
-			const _opt = Object.assign({}, this, opt);
-			const id = _opt.id;
-			const callback = _opt.callback;
-			const infiniteCallback = _opt.infiniteCallback;
+		init(option) {
+			const opt = Object.assign({}, this, option);
+			const id = opt.id;
+			const callback = opt.callback;
+			const infiniteCallback = opt.infiniteCallback;
 			const el_scrollbar = doc.querySelector('[data-scroll-id="' + id +'"]');
 
 			let timer;
@@ -663,10 +638,10 @@
 			this.timerH = null;
 		}
 
-		show(opt) {
-			const _opt = Object.assign({}, this, opt);
-			const target = Global.uiParts.selectorType(_opt.selector);
-			const htmlTag = _opt.htmlTag;
+		show(option) {
+			const opt = Object.assign({}, this, option);
+			const target = Global.uiParts.selectorType(opt.selector);
+			const htmlTag = opt.htmlTag;
 			
 			//중복실행 방지
 			console.log(!!target.dataset.ing);
@@ -703,10 +678,10 @@
 			},300);
 		}
 
-		hide(opt) {
+		hide(option) {
 			clearTimeout(this.timerS);
-			const _opt = Object.assign({}, this, opt);
-			const target = Global.uiParts.selectorType(_opt.selector);
+			const opt = Object.assign({}, this, option);
+			const target = Global.uiParts.selectorType(opt.selector);
 			let uiLoading = null;
 
 			for (let i = 0, n = target.children.length; i < n; i++) {
@@ -746,38 +721,45 @@
 			this.selector = 'html, body';
 		}
 
-		move(opt) {
-			const _opt = Object.assign({}, this, opt);
-			const psValue = _opt.value;
-			const duration = _opt.duration;
-			const callback = _opt.callback;
-			const ps = _opt.ps;
-			const adjust = _opt.adjust * -1;
-			const focus = Global.uiParts.selectorType(_opt.focus);
-			const targetEle = Global.uiParts.selectorType(_opt.selector);
-			const scrollEle = document.documentElement || window.scrollingElement;
-			const currentY = scrollEle.scrollTop;
-			const targetY = targetEle.offsetTop - (adjust || 0);
-			const currentX = scrollEle.scrollLeft;
-			const targetX = targetEle.offsetLeft - (adjust || 0);
+		move(option) {
+			const opt = Object.assign({}, this, option);
+			const psValue = opt.value;
+			const duration = opt.duration ? opt.duration : 600;
+			const callback = opt.callback;
+			const ps = opt.ps;
+			const adjust = opt.adjust * -1;
+			const focus = Global.uiParts.selectorType(opt.focus);
+			const targetEle = Global.uiParts.selectorType(opt.selector);
 
-			if (ps === 'y') {
-				Global.uiParts.animateScrollTo({
-					selector: scrollEle, 
-					currentValue: currentY, 
-					targetValue: targetY, 
-					duration: duration, 
-					callback: callback
-				});
-			} else if (ps === 'x') {
-				Global.uiParts.animateScrollTo({
-					selector: scrollEle, 
-					currentValue: currentX, 
-					targetValue: targetX, 
-					duration: duration, 
-					callback: callback
-				});
-			}
+			const scrollEle = document.documentElement || window.scrollingElement;
+			const currentY = targetEle.scrollTop;
+			const targetY = targetEle.offsetTop - (adjust || 0);
+
+		
+
+			console.log(currentY, targetY);
+
+			const _start = currentY;
+			const _end = 200; 
+
+			const unit = (_end - _start) / duration;
+			const startTime = new Date().getTime();
+			const endTime = new Date().getTime() + duration;
+				
+			const scrollTo = function() {
+				let now = new Date().getTime();
+				let passed = now - startTime;
+				console.log(now, endTime, now <= endTime,  passed, unit, _start + (unit * passed)); 
+				if (now <= endTime) {
+					scrollEle.scrollTop = _start + (unit * passed);
+					requestAnimationFrame(scrollTo);
+				} else {
+
+					!!callback && callback();
+					console.log('End off.')
+				}
+			};
+			requestAnimationFrame(scrollTo);
 		}
 	}
 	Global.uiScrolling = new UiScrolling();
