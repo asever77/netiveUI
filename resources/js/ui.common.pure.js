@@ -6,9 +6,9 @@
 		init : () => {
 
 			var fristHref = '/netiveUI/html/start/introduction.html';
-
-			if (!!netive.uiParts.partsPara('page')) {
-				switch(netive.uiParts.partsPara('page')) {
+			
+			if (!!netive.uiParts.para('page')) {
+				switch(netive.uiParts.para('page')) {
 					case 'introduction' :
 						fristHref = '/netiveUI/html/start/introduction.html';
 						break;
@@ -101,7 +101,7 @@
 						fristHref = '/netiveUI/html/components/tooltip.html';
 						break;
 					case 'datePicker' :
-						fristHref = '/netiveUI/html/components/datePicker.html';
+						fristHref = '/netiveUI/html/components/datePicker2.html';
 						break;
 					case 'inputClear' :
 						fristHref = '/netiveUI/html/components/inputClear.html';
@@ -196,6 +196,7 @@
 
 						baseMain.innerHTML = v;
 						netive.uiScrollBar();
+						netive.uiDatepicker.init();
 					} 
 				});
 			}
