@@ -704,6 +704,49 @@
 	}
 	Global.uiLoading = new UiLoading();
 
+	class UiDatepicker {
+		constructor(){
+			this.selector = document.querySelector('body');
+			this.dataSplit = '-';
+			this.openback = false;
+			this.closeback = false;
+			this.dual = false;
+			this.callback = null;
+			this.shortDate = false;
+			this.dataMonth = new Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
+			this.weekDay = new Array('일', '월', '화', '수', '목', '금', '토');
+	
+		}
+
+		init() {
+
+		}
+
+		textDate(d,m,y,whatday) {
+			const _date = new Date(y, m - 1, d);
+			const gDate = _date.getFullYear() + this.dateSplit + this.dataMonth[_date.getMonth()] + this.dateSplit + Global.uiParts.add0(_dae.getDate());
+
+			if (whatday === true) {
+				//요일 추가
+				return (gDate + ' (' + weekDay[_date.getDay()] + ')');
+			} else {
+				return (gDate);
+			}
+		}
+
+		toDDMMYYYY(d) {
+			const _d = new Date(d);
+
+			return (Global.uiParts.add0(_d.getDate()) + this.dateSplit + Global.uiParts.add0(_d.getMonth() + 1) + this.dateSplit + _d.getFullYear());
+		}
+
+
+	}
+
+
+
+
+
 	/**
 	* Animate scrolling to a target position
 	* @param {string} target Target selector
