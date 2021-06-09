@@ -138,9 +138,11 @@
 		* append html : 지정된 영역 안에 마지막에 요소 추가하기
 		* @param {object} el target element
 		* @param {string} str 지정된 영역에 들어갈 값
+		* @param {string} htmltag HTML tag element
 		*/
-		appendHtml: (el, str) => {
-			const div = doc.createElement('div');
+		appendHtml: (el, str, htmltag) => {
+			const _htmltag = !!htmltag ? htmltag : 'div';
+			const div = doc.createElement(_htmltag);
 
 			div.innerHTML = str;
 
@@ -704,44 +706,241 @@
 	}
 	Global.uiLoading = new UiLoading();
 
-	class UiDatepicker {
-		constructor(){
-			this.selector = document.querySelector('body');
-			this.dataSplit = '-';
-			this.openback = false;
-			this.closeback = false;
-			this.dual = false;
-			this.callback = null;
-			this.shortDate = false;
-			this.dataMonth = new Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12');
-			this.weekDay = new Array('일', '월', '화', '수', '목', '금', '토');
+
+
+	class UIdatepicker {
+		constructor() {
+			this.dateSplit ='-';
+			this.newDate = new Date();
+			this.calendarVar = {};
+			this.shortDate = false; //true: DDMMYY, false:DDMMYYYY
+			this.regExp = /^([0-9]{4}).([0-9]{2}).([0-9]{2})/g;
+			this.calId = null;
+			this.dateId = null;
+			this.inpId = null;
+			this.btnId = null;
+			this.elTarget = null;
+			this.elDatepicker = null;
+			this.elInput = null;
+			this.elWrap = null;
+			this.dateMonths = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'];
+			this.weekDay = ['일', '월', '화', '수', '목', '금', '토'];
+		}
+
+		init(target) {
+			const $this = this;
+			const elCalendar = document.querySelectorAll('.ui-datepicker-btn');
+
+			for (let btn of elCalendar) {
+				btn.addEventListener('mousedown', datepickerShow);
+			}
+
+			function datepickerShow(e){
+				console.log('------------------------');
+				console.log('show', this);
+				$this.datepickerReady(e.target);
+			}
+
+			// const elCalendar = document.querySelector('[data-id="'+ target +'"]');
+
+		}
+
+		datepickerReady(target) {
+			console.log('datepickerReady');
+			//this.elTarget = target;
+			const el_target = this.elTarget = target;
+			const el_datepicker = this.elDatepicker = el_target.closest('.ui-datepicker');
+			const el_input = this.elInput = el_datepicker.querySelector('.ui-datepicker-inp');
+			const el_wrap = this.elWrap = el_datepicker.querySelector('.ui-datepicker-wrap');
+			const option_period = el_datepicker.getAttribute('data-period');
+			const option_dual = el_datepicker.getAttribute('data-dual');
+			const option_title = el_datepicker.getAttribute('data-title');
+			const option_type = el_datepicker.getAttribute('data-type');
+			const option_id = el_datepicker.getAttribute('data-id');
+			const option_inputid = el_input.getAttribute('id');
+			const option_value = el_input.value;
+
+			this.calId = 'calWrap_' + option_id;
+			this.dateId = option_id;
+			this.inpId = option_inputid;
+			this.btnId = 'calBtn_' + option_id;
+			this.regExp = (this.dateSplit === '.') ? /^([0-9]{4}).([0-9]{2}).([0-9]{2})/g : /^([0-9]{4})-([0-9]{2})-([0-9]{2})/g;
+
+			let html_wrap = '';
+			html_wrap += '<div id="'+ this.calId +'" class="datepicker-sec">';
+			html_wrap += '<div class="datepicker-wrap">';
+			html_wrap += '</div>';
+			html_wrap += '</div>';
+
+			Global.uiParts.appendHtml(el_wrap, html_wrap);
+			html_wrap = '';
+
+			this.displayCalendar('generate');
+		}
+
+		displayCalendar(v) {
+			console.log('displayCalendar', v);
+
+			this.buildCalendar(v);
+			this.reDisplayCalendar(v);
+		}
+		reDisplayCalendar(v) {
+			console.log('reDisplayCalendar');
+			this.buildCore(v);
+		}
+
+		buildCalendar(v) {
+			console.log('buildCalendar', v);
+			const el_dpwrap = this.elWrap.querySelector('.datepicker-wrap');
+			
+
+			let html_wrap = '';
+			html_wrap += '<div class="datepicker-header">';
+			html_wrap += '</div>';
+			html_wrap += '<div class="datepicker-body">';
+			html_wrap += '	<div class="tbl-datepicker">';
+			html_wrap += '		<table>';
+			html_wrap += '		<thead>';
+			html_wrap += '			<tr>';
+
+			for (let i = 0, len = this.weekDay.length; i < len; i++) {
+				html_wrap += '<th scope="col">' + this.weekDay[i] + '</th>';
+			}
+
+			html_wrap += '			</tr>';
+			html_wrap += '		</thead>';
+			html_wrap += '		<tbody class="datepicker-core">';
+			html_wrap += '		</tbody>';
+			html_wrap += '		</table>';
+			html_wrap += '	</div>';
+			html_wrap += '</div>';
+			html_wrap += '<div class="datepicker-footer">';
+			html_wrap += '</div>';
+
+			Global.uiParts.appendHtml(el_dpwrap, html_wrap);
+			html_wrap = '';
+		}
+		buildCore(v) {
+			console.log('buildCore');
+			const el_core = this.elWrap.querySelector('.datepicker-core');
+			const _val = this.elInput.value;
+			const date = this.newDate;
+			const _valDate = _val.split(this.dateSplit);
+			const generate = v === 'generate' ? true : false;
+			const day = !generate ? 
+				date.getDate() : 
+				_val === '' ? date.getDate() : Number(_valDate[2]);
+			const month = !generate ? 
+				date.getMonth() : 
+				_val === '' ? date.getMonth() : Number(_valDate[1] - 1);
+			const year = !generate ? 
+				date.getFullYear() : 
+				_val === '' ? date.getFullYear() : Number(_valDate[0]);
+
+			const prevMonth = new Date(year, month - 1, 1);
+			const thisMonth = new Date(year, month, 1);
+			const nextMonth = new Date(year, month + 1, 1);
+			const nextMonth2 = new Date(year, month + 2, 1);
+			const firstWeekDay = thisMonth.getDay();
+			const nextWeekDay = nextMonth.getDay();
+			const prevWeekDay = prevMonth.getDay();
+
+			const daysInMonth = Math.floor((nextMonth.getTime() - thisMonth.getTime()) / (1000 * 60 * 60 * 24));
+			const daysInMonth_prev = Math.floor((thisMonth.getTime() - prevMonth.getTime()) / (1000 * 60 * 60 * 24));
+			const daysInMonth_next = Math.floor((nextMonth2.getTime() - nextMonth.getTime()) / (1000 * 60 * 60 * 24));
+
+			const _minDay = new Array();
+			const _maxDay = new Array();
+
+			let next_m = nextMonth.getMonth();
+			let week_day = null;
+			let empty_before = daysInMonth_prev - firstWeekDay;
+			let empty_after = 0;
+
+			month === 2 ? daysInMonth = 31 : '';
+			
+			next_m = Number(next_m) + 1;
+
+			//작년으로 가는 경우
+			next_m < 1 ? next_m = 12 : '';
+
+			//내년으로 넘어가는 경우
+			if (next_m > 12) {
+				next_m = 1;
+				year = year + 1;
+			}
+
+			next_m = Global.uiParts.add0(next_m);
+			week_day = firstWeekDay;
+
+			let html_wrap = '';
+			html_wrap += '<tr>';
+
+			emptyDay(firstWeekDay, 'prev');
+
+			for (let i = 1; i <= daysInMonth; i++) {
+				week_day %= 7;
+				
+				if (week_day === 0 ) {
+					daysInMonth - i < 7 ? 
+						html_wrap += '</tr>' : 
+						html_wrap += '</tr><tr>';
+				} 
+
+				html_wrap += '<td><button type="button" aria-label="' +  this.textDate(i, next_m, year, true) + '" data-day="' + this.textDate(i, next_m, year, false) + '" value="' + i + '">' + Global.uiParts.add0(i) + '</button></td>';
+				
+				week_day++;
+			}
+
+			emptyDay(week_day, 'next');
+
+			html_wrap += '</tr>';
+
+
+			console.log(html_wrap);
+			Global.uiParts.appendHtml(el_core, html_wrap, 'tbody');
+ 			html_wrap = '';
+
+			function emptyDay(n, type) {
+				if (type === 'prev') {
+					for (let i = 0; i < n; i++) {
+						empty_before = empty_before + 1;
 	
+						if (i < n - 1) {
+							html_wrap += '<td class="empty"><button type="button" disabled>' + Global.uiParts.add0(empty_before) + '</button></td>';
+						} else {
+							html_wrap += '<td class="empty last"><button type="button" disabled>' + Global.uiParts.add0(empty_before) + '</button></td>';
+						}
+					}
+				} else {
+					for (let i = n; i < 7; i++) {
+						empty_after = empty_after + 1;
+	
+						if (i > 7) {
+							html_wrap += '<td class="empty"><button type="button" disabled>' + Global.uiParts.add0(empty_after) + '</button></td>';
+						} else {
+							html_wrap += '<td class="empty last"><button type="button" disabled>' + Global.uiParts.add0(empty_after) + '</button></td>';
+						}
+					}
+				}
+			}
+			
 		}
-
-		init() {
-
-		}
-
-		textDate(d,m,y,whatday) {
-			const _date = new Date(y, m - 1, d);
-			const gDate = _date.getFullYear() + this.dateSplit + this.dataMonth[_date.getMonth()] + this.dateSplit + Global.uiParts.add0(_dae.getDate());
+		textDate (d, m, y, whatday) {
+			var _date = new Date(y, m - 1, d);
+			var gDate = _date.getFullYear() + this.dateSplit + this.dateMonths[_date.getMonth()] + this.dateSplit + Global.uiParts.add0(_date.getDate());
 
 			if (whatday === true) {
 				//요일 추가
-				return (gDate + ' (' + weekDay[_date.getDay()] + ')');
+				return (gDate + " (" + this.weekDay[_date.getDay()] + ")");
 			} else {
 				return (gDate);
 			}
 		}
-
-		toDDMMYYYY(d) {
-			const _d = new Date(d);
-
-			return (Global.uiParts.add0(_d.getDate()) + this.dateSplit + Global.uiParts.add0(_d.getMonth() + 1) + this.dateSplit + _d.getFullYear());
-		}
-
-
 	}
+	Global.uiDatepicker = new UIdatepicker();
+
+
 
 
 

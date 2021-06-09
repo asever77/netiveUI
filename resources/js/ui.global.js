@@ -3782,6 +3782,7 @@ if (!Object.keys){
 				daysInMonth = Math.floor((nextMonth.getTime() - thisMonth.getTime()) / (1000 * 60 * 60 * 24)),
 				daysInMonth_prev = Math.floor((thisMonth.getTime() - prevMonth.getTime()) / (1000 * 60 * 60 * 24)),
 				daysInMonth_next = Math.floor((nextMonth2.getTime() - nextMonth.getTime()) / (1000 * 60 * 60 * 24)),
+				
 				$input = $('#' + calendarEl.inputId).eq(0),
 				tit = $input.attr('title'),
 				_minDay = new Array(),
