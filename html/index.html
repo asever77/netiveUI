@@ -19,6 +19,9 @@
 	<script defer src="/netiveUI/resources/js/ui.global.js"></script>
 	<script defer src="/netiveUI/resources/js/ui.common.js"></script>
 	<script defer src="/netiveUI/resources/js/ui.page.js"></script>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/github-dark.min.css">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script><!-- hightlightJS -->
 </head>
 
 <body>
@@ -36,6 +39,19 @@
 		<footer class="base-footer" id="baseFooter"></footer>
 	</div>
 
+	<script>
+		'use strict';
+
+		//utils module
+		;(function (win, doc, undefined) {
+			doc.addEventListener("DOMContentLoaded", function(){
+
+				hljs.initHighlightingOnLoad();
+				
+			});
+		})(window, document);
+		
+	</script>
 
 </body>
 </html>

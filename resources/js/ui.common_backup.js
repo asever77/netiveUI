@@ -6,8 +6,8 @@
 		init: function(){
 			var fristHref = '/netiveUI/html/start/introduction.html';
 
-			if (!!$plugins.para.get('page')) {
-				switch($plugins.para.get('page')) {
+			if (!!$plugins.uiPara('page')) {
+				switch($plugins.uiPara('page')) {
 					case 'introduction' :
 						fristHref = '/netiveUI/html/start/introduction.html';
 						break;
@@ -140,18 +140,18 @@
 				}
 			} 
 
-			$plugins.ajax.init({ 
+			$plugins.uiAjax({ 
 				id:'baseHeader', 
 				url:'/netiveUI/html/inc/header.html', 
 				page:true, 
 				callback:$plugins.common.header 
 			});
-			$plugins.ajax.init({ 
+			$plugins.uiAjax({ 
 				id:'baseFooter', 
 				url:'/netiveUI/html/inc/footer.html', 
 				page:true
 			});
-			$plugins.ajax.init({ 
+			$plugins.uiAjax({ 
 				id: 'baseMain', 
 				url: fristHref, 
 				page: true, 
@@ -172,7 +172,7 @@
 
 			
 			
-			// $plugins.ajax.init({ 
+			// $plugins.uiAjax({ 
 			//	 id:'baseFooter', 
 			//	 url:'/netiveUI/html/inc/footer.html', 
 			//	 page:true, 
@@ -181,8 +181,8 @@
 			
 			console.log('------------------------------------------------------')
 
-			$plugins.table.caption();
-			//$plugins.uiInputClear();
+			$plugins.uiCaption();
+			$plugins.uiInputClear();
 
 
 			
@@ -281,7 +281,7 @@
 			$('.dep-2-btn').off('click.ajax').on('click.ajax', function(){
 				var href = this.getAttribute('data-href');
 				!!$('body').hasClass('nav-open') && $plugins.common.navOpen();
-				$plugins.ajax.init({ 
+				$plugins.uiAjax({ 
 					id: 'baseMain', 
 					url: href, 
 					page: true, 
