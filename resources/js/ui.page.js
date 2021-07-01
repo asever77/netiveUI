@@ -28,11 +28,11 @@
     $plugins.page.pageTypography = function(){};
     $plugins.page.pageLayout = function(){};
     $plugins.page.pageLoading = function(){
-        $plugins.uiLoading({ visible:true });
-        $plugins.uiLoading({ visible:true });
-        $plugins.uiLoading({ visible:false });
-        $plugins.uiLoading({ visible:true });
-        $plugins.uiLoading({ visible:false });
+        $plugins.loading.show();
+        $plugins.loading.show();
+        $plugins.loading.hide();
+        $plugins.loading.show();
+        $plugins.loading.hide();
     };
     $plugins.page.pageButton = function(){};
 
@@ -55,7 +55,7 @@
     $plugins.page.pageTableScroll = function(){
         $plugins.uiTableScroll({
             callback:function(){
-                $plugins.uiScrollBar({
+                $plugins.scrollBar.init({
                     id: 'tblScrollTest1'
                 });
             }
@@ -175,7 +175,7 @@
                     //console.log('close callback', v); 
                 },
                 callback: function(v) { 
-                    $plugins.uiScrollBar({
+                    $plugins.scrollBar.init({
                         id: $('#' + $btn.attr('modal-id')).find('.ui-scrollbar')
                     })
                     //console.log('callback', v); 
@@ -474,44 +474,8 @@
     }
 
     $plugins.page.pageScrollMove = function(){
-        $plugins.uiTab({ id:'exeTab4', current:0 });
 
-         $('#scrolltop').on('click', function(){
-            $plugins.uiScroll({ 
-                target:$('#testBoxScroll'),
-                value: 0, 
-                speed: 300, 
-                focus: $('.tit-wrap h1')
-            });
-        });
-        
-        $('#scrolltop2').on('click', function(){
-            $plugins.uiScroll({ 
-                target:$('#testBoxScroll'),
-                value:$('#testBoxScroll').prop('scrollHeight'), 
-                speed:300 
-            });
-        });
-        
-        $('.text-scroll-left button').on('click', function(){
-            var n = $(this).attr('data-n');
-            $plugins.uiScroll({ 
-                value:$('.test-scroll-left button').eq(n).position().left, 
-                target:$('.test-scroll-left'), 
-                speed:300, 
-                addLeft: $('.test-scroll-left button').eq(n).outerWidth() / 2,
-                focus:$('.test-scroll-left button').eq(n), 
-                callback:callback(n), 
-                ps:'center' 
-            });
-        });
-        $plugins.uiParallax({
-            id : 'scrollBoxTest1',
-            scope : $('#testBoxScroll'),
-            callback:function(v) {
-                console.log(v);
-            }
-        });
+         
         function callback(n){            
             console.log(n);
         }
@@ -532,12 +496,12 @@
     }
 
     $plugins.page.pageScrollBar = function(){
-        $plugins.uiScrollBar({
+        $plugins.scrollBar.init({
             infiniteCallback: function(){
                 console.log('infiniteCallback')
             }
         });
-//$plugins.uiScrollBar({ id:'scrbar1', top:20 });
+//$plugins.scrollBar.init({ id:'scrbar1', top:20 });
     }
 
     $plugins.page.pageJsonCodingList = function(){
@@ -551,11 +515,11 @@
     $plugins.page.pagePopup = function(){
         $('#uiPopupA').on('click', function(e){
             e.preventDefault();
-            $plugins.uiPopup({ link:$(this).attr('href'), width:200  });
+            $plugins.popup.open({ link:$(this).attr('href'), width:200  });
         });
         $('#uiPopupB').on('click', function(e){
             e.preventDefault();
-            $plugins.uiPopup({ link:$(this).attr('href'), name:'list'  });
+            $plugins.popup.open({ link:$(this).attr('href'), name:'list'  });
         });
     }
 
@@ -675,7 +639,7 @@
             $('#'+ v.id).find('.ui-tab-tit').text($('#'+ v.id).find('.ui-tab-btn').eq(v.current).text());
             //console.log(v);
         }
-        $plugins.uiScrollBar();
+        $plugins.scrollBar.init();
         $('.ui-tab-btns').on('scroll', function(){
             //console.log($(this).scrollLeft());
         });

@@ -129,117 +129,6 @@ if (!Object.keys){
 		return w;
 	}
 
-	//jquery easing add
-	var easings = {
-		linear : function(t,b,c,d){return c*t/d+b;},
-		easeInQuad : function(t,b,c,d){return c*(t/=d)*t+b;},
-		easeOutQuad : function(t,b,c,d){return -c*(t/=d)*(t-2)+b;},
-		easeInOutQuad : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t+b;return -c/2*((--t)*(t-2)-1)+b;},
-		easeOutInQuad : function(t,b,c,d){if(t < d/2)return easings.easeOutQuad(t*2,b,c/2,d);return easings.easeInQuad((t*2)-d,b+c/2,c/2,d);},
-		easeInCubic : function(t,b,c,d){return c*(t/=d)*t*t+b;},
-		easeOutCubic : function(t,b,c,d){return c*((t=t/d-1)*t*t+1)+b;},
-		easeInOutCubic : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t+b;return c/2*((t-=2)*t*t+2)+b;},
-		easeOutInCubic : function(t,b,c,d){if(t<d/2)return easings.easeOutCubic(t*2,b,c/2,d);return easings.easeInCubic((t*2)-d,b+c/2,c/2,d);},
-		easeInQuart : function(t,b,c,d){return c*(t/=d)*t*t*t+b;},
-		easeOutQuart : function(t,b,c,d){return -c*((t=t/d-1)*t*t*t-1)+b;},
-		easeInOutQuart : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t+b;return -c/2*((t-=2)*t*t*t-2)+b;},
-		easeOutInQuart : function(t,b,c,d){if(t<d/2)return easings.easeOutQuart(t*2,b,c/2,d);return easings.easeInQuart((t*2)-d,b+c/2,c/2,d);},
-		easeInQuint : function(t,b,c,d){return c*(t/=d)*t*t*t*t+b;},
-		easeOutQuint : function(t,b,c,d){return c*((t=t/d-1)*t*t*t*t+1)+b;},
-		easeInOutQuint : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t*t+b;return c/2*((t-=2)*t*t*t*t+2)+b;},
-		easeOutInQuint : function(t,b,c,d){if(t<d/2)return easings.easeOutQuint(t*2,b,c/2,d);return easings.easeInQuint((t*2)-d,b+c/2,c/2,d);},
-		easeInSine : function(t,b,c,d){return -c*Math.cos(t/d*(Math.PI/2))+c+b;},
-		easeOutSine : function(t,b,c,d){return c*Math.sin(t/d*(Math.PI/2))+b;},
-		easeInOutSine : function(t,b,c,d){return -c/2*(Math.cos(Math.PI*t/d)-1)+b;},
-		easeOutInSine : function(t,b,c,d){if(t<d/2)return easings.easeOutSine(t*2,b,c/2,d);return easings.easeInSine((t*2)-d,b+c/2,c/2,d);},
-		easeInExpo : function(t,b,c,d){return (t===0)? b : c*Math.pow(2,10*(t/d-1))+b-c*0.001;},
-		easeOutExpo : function(t,b,c,d){return (t==d)? b+c : c*1.001*(-Math.pow(2,-10*t/d)+1)+b;},
-		easeInOutExpo : function(t,b,c,d){if(t===0)return b;if(t==d)return b+c;if((t/=d/2)<1)return c/2*Math.pow(2,10*(t-1))+b-c*0.0005;return c/2*1.0005*(-Math.pow(2,-10*--t)+2)+b;},
-		easeOutInExpo : function(t,b,c,d){if(t<d/2)return easings.easeOutExpo(t*2,b,c/2,d);return easings.easeInExpo((t*2)-d,b+c/2,c/2,d);},
-		easeInCirc : function(t,b,c,d){return -c*(Math.sqrt(1-(t/=d)*t)-1)+b;},
-		easeOutCirc : function(t,b,c,d){return c*Math.sqrt(1-(t=t/d-1)*t)+b;},
-		easeInOutCirc : function(t,b,c,d){if((t/=d/2)<1)return -c/2*(Math.sqrt(1-t*t)-1)+b;return c/2*(Math.sqrt(1-(t-=2)*t)+1)+b;},
-		easeOutInCirc : function(t,b,c,d){if (t<d/2)return easings.easeOutCirc(t*2,b,c/2,d);return easings.easeInCirc((t*2)-d,b+c/2,c/2,d);},		
-		easeInElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return -(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;},
-		easeOutElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return (a*Math.pow(2,-10*t)*Math.sin((t*d-s)*(2*Math.PI)/p)+c+b);},
-		easeInOutElastic : function(t,b,c,d,a,p){if(t===0)return b;if((t/=d/2)==2)return b+c;var s,p=d*(.3*1.5),a=0;var s,p=(!p||typeof(p)!='number')? d*(.3*1.5) : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);if(t<1)return -.5*(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;return a*Math.pow(2,-10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p)*.5+c+b;},
-		easeOutInElastic : function(t,b,c,d,a,p){if (t<d/2)return easings.easeOutElastic(t*2,b,c/2,d,a,p);return easings.easeInElastic((t*2)-d,b+c/2,c/2,d,a,p);},
-		easeInBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*(t/=d)*t*((s+1)*t-s)+b;},
-		easeOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*((t=t/d-1)*t*((s+1)*t+s)+1)+b;},
-		easeInOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;if((t/=d/2)<1)return c/2*(t*t*(((s*=(1.525))+1)*t-s))+b;return c/2*((t-=2)*t*(((s*=(1.525))+1)*t+s)+2)+b;},
-		easeOutInBack : function(t,b,c,d,s){if(t<d/2)return easings.easeOutBack(t*2,b,c/2,d,s);return easings.easeInBack((t*2)-d,b+c/2,c/2,d,s);},			
-		easeInBounce : function(t,b,c,d){return c-easings.easeOutBounce(d-t,0,c,d)+b;},
-		easeOutBounce : function(t,b,c,d){if((t/=d)<(1/2.75))return c*(7.5625*t*t)+b;else if(t<(2/2.75))return c*(7.5625*(t-=(1.5/2.75))*t+.75)+b;else if(t<(2.5/2.75))return c*(7.5625*(t-=(2.25/2.75))*t+.9375)+b;else return c*(7.5625*(t-=(2.625/2.75))*t+.984375)+b;},
-		easeInOutBounce : function(t,b,c,d){if(t<d/2)return easings.easeInBounce(t*2,0,c,d)*.5+b;else return easings.easeOutBounce(t*2-d,0,c,d)*.5+c*.5+b;},
-		easeOutInBounce : function(t,b,c,d){if(t<d/2)return easings.easeOutBounce(t*2,b,c/2,d);return easings.easeInBounce((t*2)-d,b+c/2,c/2,d);}
-	};
-	var easing;
-	for (easing in easings) {
-		$.easing[easing] = (function(easingname) {
-			return function(x, t, b, c, d) {
-				return easings[easingname](t, b, c, d);
-			};
-		})(easing);
-	}
-
-	//html5 tag & device size class 
-	(function () {
-		var devsize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360];
-		var html5tags = ['article', 'aside', 'details', 'figcaption', 'figure', 'footer', 'header', 'hgroup', 'nav', 'main', 'section', 'summary'];
-		var width = $('html').outerWidth(),
-			colClass = width >= devsize[5] ? 'col-12' : width > devsize[8] ? 'col-8' : 'col-4',
-			i = 0,
-			size_len = devsize.length,
-			max = html5tags.length,
-			sizeMode,
-			timer;
-
-		win[global].breakpoint = width >= devsize[5] ? true : false;
-
-		var deviceSizeClassName = function(w) {
-			for (var i = 0; i < size_len; i++) {
-				if (w >= devsize[i]) {
-					
-					sizeMode = devsize[i];
-					win[global].breakpoint = width >= devsize[5] ? true : false;
-					break;
-				} else {
-					w < devsize[size_len - 1] ? sizeMode = 300 : '';
-				}
-			}
-		};
-
-		for (i = 0; i < max; i++) {
-			doc.createElement(html5tags[i]);
-		}
-
-		deviceSizeClassName(width);
-		var sizeCls = 's' + sizeMode;
-		
-		$()
-		$('html').addClass(sizeCls).addClass(colClass);
-		win.addEventListener('resize', function() {
-			clearTimeout(timer);			
-			timer = setTimeout(function () {
-				var $html = $('html');
-				
-				width = win.innerWidth; 
-				// document.body.offsetWidth === $(win).outerWidth()
-				// win.innerWidth : scroll 포함된 width (+17px)
-				// win.outerWidth === screen.availWidth 
-				deviceSizeClassName(width);
-
-				colClass = width >= devsize[5] ? 'col-12' : width > devsize[8] ? 'col-8' : 'col-4';
-				$html.removeClass('s1920 s1600 s1440 s1280 s1024 s940 s840 s720 s600 s480 s400 s360 s300 col-12 col-8 col-4');
-				win[global].breakpoint = width >= devsize[5] ? true : false;
-
-				deviceSizeClassName(width);
-				sizeCls = 's' + sizeMode;
-				$html.addClass(sizeCls).addClass(colClass);
-			}, 100);
-		});
-	})();
-
 	//requestAnimationFrame
 	win.requestAFrame = (function () {
 		return win.requestAnimationFrame || win.webkitRequestAnimationFrame || win.mozRequestAnimationFrame || win.oRequestAnimationFrame ||
@@ -310,23 +199,26 @@ if (!Object.keys){
 		}
 	};
 
-	// set device information
+	//set device information
 	(function () {
-		var ua = navigator.userAgent,
-			ie = ua.match(/(?:msie ([0-9]+)|rv:([0-9\.]+)\) like gecko)/i),
-			deviceInfo = ['android', 'iphone', 'ipod', 'ipad', 'blackberry', 'windows ce', 'samsung', 'lg', 'mot', 'sonyericsson', 'nokia', 'opeara mini', 'opera mobi', 'webos', 'iemobile', 'kfapwi', 'rim', 'bb10'],
-			filter = "win16|win32|win64|mac|macintel",
-			uAgent = ua.toLowerCase(),
-			deviceInfo_len = deviceInfo.length;
+		var ua = navigator.userAgent;
+		var maxTouchPoints = navigator.maxTouchPoints;
+		var ie = ua.match(/(?:msie ([0-9]+)|rv:([0-9\.]+)\) like gecko)/i);
+		var deviceInfo = ['android', 'iphone', 'ipod', 'ipad', 'blackberry', 'windows ce', 'samsung', 'lg', 'mot', 'sonyericsson', 'nokia', 'opeara mini', 'opera mobi', 'webos', 'iemobile', 'kfapwi', 'rim', 'bb10'];
+		var filter = "win16|win32|win64|mac|macintel";
+		var uAgent = ua.toLowerCase();
+		var deviceInfo_len = deviceInfo.length;
 
-		var browser = win[global].browser = {},
-			support = win[global].support = {},
-			i = 0,
-			version,
-			device;
+		var browser = win[global].browser = {};
+		var support = win[global].support = {};
+		var i = 0;
+		var version;
+		var device;
+
+		console.log(ua);
 
 		for (i = 0; i < deviceInfo_len; i++) {
-			if (uAgent.match(deviceInfo[i]) != null) {
+			if (uAgent.match(deviceInfo[i]) !== null) {
 				device = deviceInfo[i];
 				break;
 			}
@@ -392,990 +284,795 @@ if (!Object.keys){
 	})();
 
 
-	/* **************************************************************************************************** */
-	/* **************************************************************************************************** */
-	/* **************************************************************************************************** */
-	/* **************************************************************************************************** */
 
-	/* ------------------------
-	 * [base] selector type
-	 * date : 2020-06-09
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiSelectorType: function (v) {
-			return createUiSelectorType(v);
-		}
-	});
-	function createUiSelectorType(v) {
-		var selector = $('body');
-		if (v === null) {
-			selector = $('body')
-		} else {
-			if (typeof v === 'string') {
-				selector = $('#' + v);
-			} else {
-				selector = v;
-			}
-		}
+	/**
+	 * loading show/hide
+	 */
+	win[global].loading = {
+		timerShow : {},
+		timerHide : {},
+		options : {
+			selector: null,
+			txt : null,
+			styleClass : 'orbit' //time
+		},
+		show : function(opt){
+			var opt = $.extend(true, {}, this.options, opt);
+			var selector = opt.selector;
+			var styleClass = opt.styleClass;
+			var txt = opt.txt;
+			var	$selector = !!selector ? selector : $('body');
+			var htmlLoading = '';
 
-		return selector;
-	}
+			$('.ui-loading').not('.visible').remove();
 
-	/* ------------------------
-	 * [base] loading
-	 * date : 2020-06-09
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiLoading: function (opt) {
-			return createUiLoading(opt);
-		}
-	});
-	win[global].uiLoading.timerShow = {};
-	win[global].uiLoading.timerHide = {};
-	win[global].uiLoading.option = {
-		id: null,
-		visible: true,
-		txt : null,
-		styleClass : 'orbit' //time
-	}
-	function createUiLoading(opt) {
-		var opt = $.extend(true, {}, win[global].uiLoading.option, opt);
-		var id = opt.id;
-		var styleClass = opt.styleClass;
-		var loadingVisible = opt.visible;
-		var txt = opt.txt;
-		var	$selector = win[global].uiSelectorType(id);
-		var htmlLoading = '';
-
-		$('.ui-loading').not('.visible').remove();
-
-		id === null ?
+			selector === null ?
 			htmlLoading += '<div class="ui-loading '+ styleClass +'">':
 			htmlLoading += '<div class="ui-loading '+ styleClass +'" style="position:absolute">';
-		htmlLoading += '<div class="ui-loading-wrap">';
+				htmlLoading += '<div class="ui-loading-wrap">';
 
-		txt !== null ?
-			htmlLoading += '<strong class="ui-loading-txt"><span>'+ txt +'</span></strong>':
-			htmlLoading += '';
+			txt !== null ?
+					htmlLoading += '<strong class="ui-loading-txt"><span>'+ txt +'</span></strong>':
+					htmlLoading += '';
 
-		htmlLoading += '</div>';
-		htmlLoading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="$plugins.uiLoading({ visible:false });"><span>$plugins.uiLoading({ visible:false })</span></button>';
-		htmlLoading += '</div>';
+				htmlLoading += '</div>';
+			htmlLoading += '</div>';
 
-		if(loadingVisible) {
-			clearTimeout(win[global].uiLoading.timerShow);
-			clearTimeout(win[global].uiLoading.timerHide);
-			win[global].uiLoading.timerShow = setTimeout(function(){
-				showLoading();
-			},300);
+			clearTimeout(this.timerShow);
+			clearTimeout(this.timerHide);
+			this.timerShow = setTimeout(showLoading,300);
 			
-		}
-		if(!loadingVisible) {
-			clearTimeout(win[global].uiLoading.timerShow);
-			win[global].uiLoading.timerHide = setTimeout(function(){
-				hideLoading();
+			function showLoading(){
+				!$selector.find('.ui-loading').length && $selector.append(htmlLoading);	
+				htmlLoading = null;		
+
+				$('.ui-loading').addClass('visible').removeClass('close');			
+			}
+		},
+		hide: function(){
+			clearTimeout(this.timerShow);
+			this.timerHide = setTimeout(function(){
+
+				$('.ui-loading').addClass('close');	
+				setTimeout(function(){
+					$('.ui-loading').removeClass('visible')
+					$('.ui-loading').remove();
+				},300);
 			},300)
-			
-		}	
+		}
 
-		function showLoading(){
-			!$selector.find('.ui-loading').length && $selector.append(htmlLoading);	
-			htmlLoading = '';		
-			$selector.data('loading', true);
-			$('.ui-loading').addClass('visible').removeClass('close');			
-		}
-		function hideLoading(){
-			$selector.data('loading', false);
-			$('.ui-loading').addClass('close');	
-			setTimeout(function(){
-				$('.ui-loading').removeClass('visible')
-				$('.ui-loading').remove();
-			},300);
-		}
 	}
 
-
-	/* ------------------------
-	 * [base] console guide
-	 * date : 
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiConsoleGuide: function (opt) {
-			return createUiConsoleGuide(opt);
-		}
-	});
-	function createUiConsoleGuide(opt) {
-		if (!win[global].browser.ie) {
-			console.log('');
-			for (var i = 0; i < opt.length; i++) {
-				(i === 0) ? console.log("%c" + opt[i], "background:#333; color:#ffe400; font-size:12px"): console.log(opt[i]);
-			}
-			console.log('');
-		}
-	}
-
-
-	/* --------------------------------------------------------------------------------------------------------
-	 * [base] valueCheck
-	 * date : 
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiValueCheck: function(opt) {
-			return createUivalueCheck(opt)
-		}
-	});
-	win[global].uiValueCheck.option = {
-		first: false
-	}
-	function createUivalueCheck(opt){
-		var opt = $.extend(true, {}, win[global].uiValueCheck.option, opt),
-			type = opt.type,
-			target = opt.target,
-			first = opt.first,
-			msg = opt.message,
-			callback = opt.callback,
-			error,
-			err;
-
-		if (first && target.val().length === 0) {
-			return false;
-		}
-
-		var	regex,
-			reg_id = /^[a-z0-9][a-z0-9_\-]{4,19}$/,
-			reg_pw = /^[A-Za-z0-9`\-=\\\[\];',\./~!@#\$%\^&\*\(\)_\+|\{\}:"<>\?]{8,16}$/,
-			reg_phone = /^((01[1|6|7|8|9])[1-9][0-9]{6,7})$|(010[1-9][0-9]{7})$/,
-			reg_email = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-			reg_email_id = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^()[\]\\.,;:\s@\"]+)*)|(\".+\"))$/,
-			reg_email_address = /^((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i,
-			reg_kr = /^[가-힣]{2,}$/,
-			reg_en = /^[a-zA-Z]{2,}$/,
-			reg_tel = /^[0-9\*]+$/,
-			reg_number = /^[0-9]+$/;
-
-		target.val().length === 0 ? err = false : '';
-		!err && !!target.attr('required') ? err = true : '';
-
-		switch(type){
-			case 'test': 
-				valueCheck(reg_kr, target, 'error message', err);
-				break;
-
-			case 'id': 
-				target.val().length > 0 ? msg ='5~20자의 영문 소문자, 숫자와 특수기호(_),(-)만 사용 가능합니다.' : '';
-				valueCheck(reg_id, target, msg, err);
-				break;
-
-			case 'pw': 
-				(target.val().length < 8 && target.val().length > 0) || target.val().length > 16 ? msg = '8~16자 영문 대 소문자, 숫자, 특수문자를 사용하세요.' : '';
-				valueCheck(reg_pw, target, msg, err);
-				break;
-
-			case 'email':  
-				valueCheck(reg_email, target, msg, err);
-				break;
-
-			case 'email_id':  
-				valueCheck(reg_email_id, target, '정확한 이메일 아이디를 입력해주세요.', err);
-				break;
-
-			case 'email_address': 
-				valueCheck(reg_email_address, target, '정확한 이메일 주소를 입력해주세요.', err);
-				break;
-
-
-			case 'number': 
-				valueCheck(reg_number, target, '숫자로만 입력하세요', err);
-				break;
-
-			case 'phone': 
-				var str = target.val();
-				target.val(str.replace(/\-/g,''));
-				
-				valueCheck(reg_tel, target, msg, err, 'tel');
-				//phoneFomatter(target.val(),0);
-				break;
-
-			case 'kr': 
-				valueCheck(reg_kr, target, '한글로만 2자 이상 입력하세요.', err);
-				break;
-			case 'en': 
-				valueCheck(reg_en, target, '한글로만 2자 이상 입력하세요.', err);
-				break;
-		}
-		
-		function phoneFomatter(num, type){
-			var formatNum = '';
-			
-			if (num.length === 11) {
-				if (type === 0) {
-					formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-****-$3');
-				} else {
-					formatNum = num.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-				}
-			} else if (num.length === 8) {
-				formatNum = num.replace(/(\d{4})(\d{4})/, '$1-$2');
-			} else {
-				if (num.indexOf('02') === 0) {
-					if (type === 0) {
-						if (num.length === 9) {
-							formatNum = num.replace(/(\d{2})(\d{3})(\d{4})/, '$1-****-$3');
-						} else {
-							formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-****-$3');
-						}
-					} else {
-						if (num.length === 9) {
-							formatNum = num.replace(/(\d{2})(\d{3})(\d{4})/, '$1-$2-$3');
-						} else {
-							formatNum = num.replace(/(\d{2})(\d{4})(\d{4})/, '$1-$2-$3');
-						}
-					}
-				} else {
-					if (type === 0) {
-						formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-***-$3');
-						
-					} else {
-						formatNum = num.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3');
-					}
-				}
-			}
-			return target.val(formatNum);
-		}
-
-		function valueCheck(reg, target, msg, err, type){
-			if (reg.test(target.val())) {
-				error = false;
-			} else {
-				error = true;
-			}
-
-			if (err !== undefined) {
-				error = err;
-			}
-
-			win[global].uiError({ 
-				selector:target, 
-				error: error, 
-				message: msg 
-			});
-			
-			type === 'tel' ? phoneFomatter(target.val()) : '';
-
-			callback ? callback() : '';
-			// target.value = '';
-			// target.focus();
-		}
-		
-	}
-
-
-	/* ------------------------
-	 * [base] Ajax
-	 * date : 2020-06-09
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiAjax: function (opt) {
-			return createUiAjax(opt);
-		}
-	});
-	win[global].uiAjax.option = {
-		page: true,
-		add: false,
-		prepend: false,
-		effect: false,
-		loading:false,
-		callback: false,
-		errorCallback: false,
-
-		type: 'GET',
-		cache: false,
-		async: true,
-		contType: 'application/x-www-form-urlencoded',
-		dataType: 'html'
-	};
-	function createUiAjax(opt) {
-		if (opt === undefined) {
-			return false;
-		}
-
-		var opt = opt === undefined ? {} : opt;
-		var opt = $.extend(true, {}, win[global].uiAjax.option, opt);
-		var $id = typeof opt.id === 'string' ? $('#' + opt.id) : typeof opt.id === 'object' ? opt.id : $('body');
-		var loading = opt.loading;
-		var effect = opt.effect;
-		var callback = opt.callback === undefined ? false : opt.callback;
-		var errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
-
-		if (loading) {
-			win[global].uiLoading({
-				visible: true
-			});
-		}
-
-		if (effect) {
-			$id.removeClass('changeover action');
-			$id.addClass('changeover');
-		}
-
-		$.ajax({
-			type: opt.type,
-			url: opt.url,
-			cache: opt.cache,
-			async: opt.async,  
-			headers: {
-				"cache-control": "no-cache",
-				"pragma": "no-cache"
-			},
-			error: function (request, status, err) {
-				if (loading) {
-					win[global].uiLoading({
-						visible: false
-					});
-				}
-				//console.log(request, status, err);
-				errorCallback ? errorCallback() : '';
-			},
-			success: function (v) {
-				if (loading) {
-					win[global].uiLoading({
-						visible: false
-					});
-				}
-
-				if (opt.page) {
-					opt.add ? opt.prepend ? $id.prepend(v) : $id.append(v) : $id.html(v);
-					callback && callback();
-					effect && $id.addClass('action');
-				} else {
-					callback && callback(v);
-				}
-			},
-			complete: function(v){
-				//console.log(v);
-			}
-		});
-	}
-
-
-	/* ------------------------
-	 * [base] scroll move
-	 * date : 
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiScroll: function (opt) {
-			return createUiScroll(opt);
-		}
-	});
-	win[global].uiScroll.option = {
-		value: 0,
-		speed: 0,
-		callback: false,
-		ps: 'top',
-		addLeft: false,
-		focus: false,
-		target: 'html, body'
-	};
-	function createUiScroll(opt){
-		if (opt === undefined) {
-			return false;
-		}
-
-		var opt = $.extend(true, {}, win[global].uiScroll.option, opt),
-			psVal = opt.value,
-			s = opt.speed,
-			c = opt.callback,
-			p = opt.ps,
-			addLeft = opt.addLeft,
-			overlap = false,
-			f = typeof opt.focus === 'string' ? $('#' + opt.focus) : opt.focus,
-			$target = typeof opt.target === 'string' ? $(opt.target) : opt.target;
-		
-		if (p === 'top') {
-			$target.stop().animate({ 
-					scrollTop : psVal 
-				}, { 
-					duration: s,
-					step: function(now) { 
-					!!c && now !== 0 ? c({ scrolltop:Math.ceil(now), complete:false }) : '';
-				},
-				complete: function(){
-					if (overlap) {
-						!!c ? c({ focus:f, complete:true }) : '';
-						!!f ? f.attr('tabindex', 0).focus() : '';
-					} else {
-						overlap = true;
-					}
-				}
-			});
-		} else if (p === 'left') {
-			$target.stop().animate({ 
-					scrollLeft : psVal
-				}, { 
-					duration: s,
-					step: function(now) { 
-						!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
-				},
-				complete: function(){
-					!!c ? c({ focus:f, complete:true }) : '';
-					!!f ? f.attr('tabindex', 0).focus() : '';
-				}
-			});
-		} else if (p === 'center') {
-			var w = $target.outerWidth();
-
-			$target.stop().animate({ 
-				scrollLeft : psVal - (w / 2) + addLeft
-			}, { 
-				duration: s,
-				step: function(now) { 
-					!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
-				},
-				complete: function(){
-					!!c ? c({ focus:f, complete:true }) : '';
-					!!f ? f.attr('tabindex', 0).focus() : '';
-				}
-			});
-		}
-	}
-
-
-	/* ------------------------
-	 * [base] URL parameter
-	 * date : 
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiPara: function (v) {
-			return createUiPara(v);
-		}
-	});
-	function createUiPara(paraname){
-		var _tempUrl = win.location.search.substring(1),
-			_tempArray = _tempUrl.split('&'),
-			_tempArray_len = _tempArray.length,
-			_keyValue;
-
-		for (var i = 0, len = _tempArray_len; i < len; i++) {
-			_keyValue = _tempArray[i].split('=');
-
-			if (_keyValue[0] === paraname) {
-				return _keyValue[1];
-			}
-		}
-	}
-
-
-	/* ------------------------
-	 * scroll bar
-	 * date : 2020.06.12
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiScrollBar: function (opt) {
-			return createuiScrollBar(opt);
-		}
-	});
-	win[global].uiScrollBar.option = {
-		id: false,
-		callback:false,
-		infiniteCallback:false,
-		space: false,
-		remove: false
-	};
-	sessionStorage.setItem('scrollbarID', 0);
-	win[global].uiScrollBar.timer = {}
-	function createuiScrollBar(opt) {
-		var opt = $.extend(true, {}, win[global].uiScrollBar.option, opt),
-			id = opt.id,
-			space = opt.space,
-			callback = opt.callback,
-			infiniteCallback = opt.infiniteCallback,
-			remove = opt.remove,
-			$base = !id ? $('.ui-scrollbar') : typeof id === 'object' ? id : $('[scroll-id="' + id +'"]');
-		
-		var timerResize;
-		
-		if (win[global].support.touch) {
-			return false;
-		} 
-
-		$base.each(function () {
-			!remove ? scrollbarReady($(this)) : scrollbarRemove($(this));
-		});
-		function scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space){
-			var $wrap = t;
-			var	$item = $wrap.children('.ui-scrollbar-item');
-
-			if (!$item.length) {
+	/**
+	 * ajax
+	 */
+	win[global].ajax = {
+		options : {
+			page: true,
+			add: false,
+			prepend: false,
+			effect: false,
+			loading:false,
+			callback: false,
+			errorCallback: false,
+			type: 'GET',
+			cache: false,
+			async: true,
+			contType: 'application/x-www-form-urlencoded',
+			dataType: 'html'
+		},
+		init : function(opt){
+			if (opt === undefined) {
 				return false;
 			}
-
-			var nWrapH = $wrap.outerHeight();
-			var nWrapW = $wrap.outerWidth();
-			var nItemH = $item.prop('scrollHeight');
-			var nItemW = $item.prop('scrollWidth');
-
-			var changeH = (itemH !== nItemH || wrapH !== nWrapH);
-			var changeW = (itemW !== nItemW || wrapW !== nWrapW);
-
-			$(win).on('resize', function(){
-				clearTimeout(timerResize);
-				timerResize = setTimeout(function(){
-					console.log(111);
-					$wrap.removeAttr('style');
-					//$wrap.css('overflow', 'hidden');
-					
-					nWrapH = $wrap.outerHeight();
-					//nWrapW = $wrap.outerWidth();
-					//$wrap.css('width', nWrapW);
-					$wrap.css('height', nWrapH);
-				}, 300);
-			});
-
-			if (changeH || changeW) {
-				var barH = Math.floor(nWrapH / (nItemH / 100));
-				var barW = Math.floor(nWrapW / (nItemW / 100));
-				var $barY = $wrap.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
-				var $barX = $wrap.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
-
-				changeH && $barY.css('height', barH + '%').data('height', barH);
-				changeW && $barX.css('width', barW + '%').data('width', barW);
-				
-				(nWrapH < nItemH) ? $wrap.addClass('view-y') : $wrap.removeClass('view-y');
-				(nWrapW < nItemW) ? $wrap.addClass('view-x') : $wrap.removeClass('view-x');
-
-				$wrap.data('opt', {'itemH':nItemH, 'itemW':nItemW, 'wrapH':nWrapH, 'wrapW':nWrapW });
-				eventFn();
-				scrollEvent($item, space);
+			var xhr = new XMLHttpRequest();	
+			var opt = $.extend(true, {}, this.options, opt);
+			console.log(opt.selector)
+			var $base = opt.selector;
+			var loading = opt.loading;
+			var effect = opt.effect;
+			var callback = opt.callback === undefined ? false : opt.callback;
+			var errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
+	
+			if (loading) {
+				win[global].loading.show();
+			}
+	
+			if (effect) {
+				$base.removeClass('changeover action');
+				$base.addClass('changeover');
 			}
 
-			var timer;
+			xhr.open(opt.type, opt.url);
+			xhr.setRequestHeader(opt.mimeType, opt.contType);
+			xhr.send();
+			xhr.onreadystatechange = function () {
+				if (xhr.readyState !== XMLHttpRequest.DONE) {
+					return;
+				}
 
-			clearTimeout(timer);
-			timer = setTimeout(function(){
-				scrollbarUpdate(t, nWrapH, nWrapW, nItemH, nItemW);
-			}, 300);
+				if (xhr.status === 200) {
+					if (loading) {
+						win[global].loading.hide();
+					}
+	
+					if (opt.page) {
+						opt.add ? opt.prepend ? $base.prepend(xhr.responseText) : $base.append(xhr.responseText) : $base.html(xhr.responseText);
+						callback && callback();
+						effect && $base.addClass('action');
+					} else {
+						callback && callback(xhr.responseText);
+					}
+
+				} else {
+					if (loading) {
+						win[global].loading.hide();
+					}
+					errorCallback ? errorCallback() : '';
+				}
+			};
+	
+			// $.ajax({
+			// 	type: opt.type,
+			// 	url: opt.url,
+			// 	cache: opt.cache,
+			// 	async: opt.async,  
+			// 	headers: {
+			// 		"cache-control": "no-cache",
+			// 		"pragma": "no-cache"
+			// 	},
+			// 	error: function (request, status, err) {
+			// 		if (loading) {
+			// 			win[global].uiLoading({
+			// 				visible: false
+			// 			});
+			// 		}
+			// 		errorCallback ? errorCallback() : '';
+			// 	},
+			// 	success: function (v) {
+			// 		if (loading) {
+			// 			win[global].uiLoading({
+			// 				visible: false
+			// 			});
+			// 		}
+	
+			// 		if (opt.page) {
+			// 			opt.add ? opt.prepend ? $id.prepend(v) : $id.append(v) : $id.html(v);
+			// 			callback && callback();
+			// 			effect && $id.addClass('action');
+			// 		} else {
+			// 			callback && callback(v);
+			// 		}
+			// 	},
+			// 	complete: function(){
+			// 	}
+			// });
 		}
-		function scrollbarRemove(t){
-			var $wrap = t;
+	}
 
-			$wrap.removeClass('ready view-scrollbar').removeData('infiniteCallback').removeData('ready').removeAttr('style');
-			$wrap.find('> .ui-scrollbar-item').contents().unwrap();
-			$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
-			$wrap.find('> .ui-scrollbar-barwrap').remove();
-		}
-		function scrollbarReady(t) {
-			var $wrap = t;
-			var	html_scrollbar = '';
+	/**
+	 * toast
+	 */
+	win[global].toast = {
+		timer : null,
+		options : {
+			delay: 'short',
+			classname : ''
+		},
+		show : function(opt) {
+			var opt = $.extend(true, {}, this.options, opt);
+			var delay = opt.delay;
+			var toast = '<div class="ui-toast toast '+ opt.classname +'">'+ opt.conts +'</div>';
+			var $body = $('body');
+			var time = delay === 'short' ? 2000 : 3500;
 
-			$wrap.removeClass('ready').data('infiniteCallback', infiniteCallback).data('ready', false);
-			$wrap.find('> .ui-scrollbar-item').contents().unwrap();
-			$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
-			$wrap.find('> .ui-scrollbar-barwrap').remove();
+			if (delay === 'short') {
+				time = 2000;
+			} else if(delay === 'long') {
+				time = 3500;
+			} else {
+				time = delay;
+			}
 
-			var wrapW = $wrap.innerWidth();
-			var wrapH = $wrap.outerHeight();
-
-			$wrap.wrapInner('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap"></div></div>');
-
-			var	$item = $wrap.find('> .ui-scrollbar-item');
-			var	$itemWrap = $item.find('> .ui-scrollbar-wrap');
-
-			var cssDisplay = $wrap.css('display');
-			var cssPadding = $wrap.css('padding');
-
-			$itemWrap.css({
-				display: cssDisplay,
-				padding: cssPadding
-			});
-
-			if (!space) {
-				cssDisplay === 'inline-block' && $itemWrap.css('display','block');
-				$itemWrap.css('width','100%');
+			if (!!$('.ui-toast-ready').length) {
+				clearTimeout(win[global].toast.timer);
+				$body.removeClass('ui-toast-show').removeClass('ui-toast-ready');
+				$('.ui-toast').off('transitionend.toastshow').remove();
 			} 
 
-			!space && $item.css('width','100%');
-			$wrap.css('overflow','hidden');
-
-			var itemW =  $item.prop('scrollWidth');
-			var itemH =$item.prop('scrollHeight');
-
-			$wrap.data('opt', {'itemH':itemH, 'itemW':itemW, 'wrapH':wrapH, 'wrapW':wrapW });
+			$body.append(toast);
+			toast = null;
 			
-			var idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
-
-			//idN = idN === undefined ? 0 : idN;
+			var $shanckbar = $('.ui-toast');
 			
-			if (!$wrap.data('ready') || !$wrap.attr('scroll-id')) {
-				
-				if (!$wrap.attr('scroll-id')) {
-					$wrap.attr('scroll-id', 'uiScrollBar_' + idN).data('ready', true).addClass('ready');
-					idN = idN + 1;
-					sessionStorage.setItem('scrollbarID', idN);
-				} else {
-					$wrap.data('ready', true).addClass('ready');
-				}
+			$body.addClass('ui-toast-ready');
 
-				$item.attr('tabindex', 0);
-				$wrap.css('height', wrapH + 'px');
-				
-				if (space) {
-					$item.addClass('scroll-y-padding');
-					$item.addClass('scroll-x-padding');
-				} else {
-					!!$wrap.parent('.ui-tablescroll').length && $wrap.parent('.ui-tablescroll').addClass('not-space');
-				}
+			setTimeout(function(){
+				$body.addClass('ui-toast-show');
 
-				html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
-				html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">scroll</span></button>';
-				html_scrollbar += '</div>';
-				html_scrollbar += '<div class="ui-scrollbar-barwrap type-x" >';
-				html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="x"><span class="hide">scroll</span></button>';
-				html_scrollbar += '</div>';
-				
-				$wrap.prepend(html_scrollbar);
+				$shanckbar.off('transitionend.toasthide').on('transitionend.toastshow', function(){
+					$(this).off('transitionend.toastshow').addClass('on');
+					win[global].toast.timer = setTimeout(win[global].toast.hide, time);
+				});
+			},0);
+		},
+		hide : function(){
+			var $body = $('body');
+			
+			clearTimeout(win[global].toast.timer);
+			$body.removeClass('ui-toast-show');
 
-				(wrapH < itemH) ? $wrap.addClass('view-y') : $wrap.removeClass('view-y');
-				(wrapW < itemW) ? $wrap.addClass('view-x') : $wrap.removeClass('view-x');
-
-				var barH = Math.floor(wrapH / (itemH / 100));
-				var barW = Math.floor(wrapW / (itemW / 100));
-				var $barY = $wrap.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
-				var $barX = $wrap.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
-				
-				$barY.css('height', barH + '%').data('height', barH);
-				$barX.css('width', barW + '%').data('width', barW);
-
-				$wrap.addClass('view-scrollbar');
-				!!callback && callback(); 
-				scrollEvent($item);
-				scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space);
-				eventFn();
-			}
-		}	
-		function eventFn(){
-			$(doc).find('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
-				scrollEvent(this);
+			$('.ui-toast').off('transitionend.toastshow').on('transitionend.toasthide', function(){
+				$(this).off('transitionend.toasthide').remove();
+				$body.removeClass('ui-toast-ready');
 			});
-			$(doc).find('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
-				dragMoveAct(e, this);
-			});
-		}	
-		function scrollEvent(t){
-			var $this = $(t),
-				$wrap = $this.closest('.ui-scrollbar'),
-				$barY = $wrap.find('> .type-y .ui-scrollbar-bar'),
-				$barX = $wrap.find('> .type-x .ui-scrollbar-bar');
-			
-			var opt = $wrap.data('opt');
+		}
+	}
 
+	/**
+	* Create a scroll move
+	*/
+	win[global].scroll = {
+		options : {
+			value: 0,
+			speed: 0,
+			callback: false,
+			ps: 'top',
+			addLeft: false,
+			focus: false,
+			selector: $('html, body')
+		},
+		move : function(opt){
 			if (opt === undefined) {
 				return false;
 			}
 
-			var itemH = opt.itemH,
-				itemW = opt.itemW,
-				wrapH = opt.wrapH,
-				wrapW = opt.wrapW;
-
-			var scrT = $this.scrollTop(),
-				scrL = $this.scrollLeft(),
-				barH = $barY.data('height'),
-				barW = $barX.data('width');
+			var opt = $.extend(true, {}, this.options, opt);
+			var psVal = opt.value;
+			var s = opt.speed;
+			var c = opt.callback;
+			var p = opt.ps;
+			var addLeft = opt.addLeft;
+			var overlap = false;
+			var f = typeof opt.focus === 'string' ? $('#' + opt.focus) : opt.focus;
+			var $selector = opt.selector;
 			
-			var hPer = Math.round(scrT / (itemH - wrapH) * 100),
-				_hPer = (barH / 100) * hPer,
-				wPer = Math.round(scrL / (itemW - wrapW) * 100),
-				_wPer = (barW / 100) * wPer;
-
-			var _infiniteCallback = $wrap.data('infiniteCallback');
-
-			$barY.css('top', hPer - _hPer + '%');
-			$barX.css('left', wPer - _wPer + '%');
-
-			if (!!_infiniteCallback) {
-				hPer === 100 && _infiniteCallback(); 
+			if (p === 'top') {
+				$selector.stop().animate({ 
+						scrollTop : psVal 
+					}, { 
+						duration: s,
+						step: function(now) { 
+						!!c && now !== 0 ? c({ scrolltop:Math.ceil(now), complete:false }) : '';
+					},
+					complete: function(){
+						if (overlap) {
+							!!c ? c({ focus:f, complete:true }) : '';
+							!!f ? f.attr('tabindex', 0).focus() : '';
+						} else {
+							overlap = true;
+						}
+					}
+				});
+			} else if (p === 'left') {
+				$selector.stop().animate({ 
+						scrollLeft : psVal
+					}, { 
+						duration: s,
+						step: function(now) { 
+							!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
+					},
+					complete: function(){
+						!!c ? c({ focus:f, complete:true }) : '';
+						!!f ? f.attr('tabindex', 0).focus() : '';
+					}
+				});
+			} else if (p === 'center') {
+				var w = $selector.outerWidth();
+	
+				$selector.stop().animate({ 
+					scrollLeft : psVal - (w / 2) + addLeft
+				}, { 
+					duration: s,
+					step: function(now) { 
+						!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
+					},
+					complete: function(){
+						!!c ? c({ focus:f, complete:true }) : '';
+						!!f ? f.attr('tabindex', 0).focus() : '';
+					}
+				});
 			}
 		}
-		function dragMoveAct(e, t) {
-			var $bar = $(t),
-				$uiScrollbar = $bar.closest('.ui-scrollbar'),
-				$barWrap = $bar.closest('.ui-scrollbar-barwrap'),
-				$wrap = $bar.closest('.ui-scrollbar'),
-				$item = $uiScrollbar.find('> .ui-scrollbar-item');
+	}
 
-			var off_t = $barWrap.offset().top,
-				w_h = $barWrap.innerHeight(),
-				off_l = $barWrap.offset().left,
-				w_w = $barWrap.innerWidth(),
-				barH = $bar.data('height'),
-				barW = $bar.data('width'),
-				opt = $wrap.data('opt');
+	/**
+	 * parameter get
+	 */
+	win[global].para = {
+		get: function(paraname){
+			var _tempUrl = win.location.search.substring(1),
+			_tempArray = _tempUrl.split('&'),
+			_tempArray_len = _tempArray.length,
+			_keyValue;
 
-			var yRPer, xRPer;
-			var $btn = e.target;
-			var isXY = $btn.getAttribute('data-scrollxy');
-			
-			$('body').addClass('scrollbar-move');
+			for (var i = 0, len = _tempArray_len; i < len; i++) {
+				_keyValue = _tempArray[i].split('=');
 
-			$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function (e) {
-				var y_m, 
-					x_m;
-				
-				if (e.touches === undefined) {
-					if (e.pageY !== undefined) {
-						y_m = e.pageY;
-					} else if (e.pageY === undefined) {
-						y_m = e.clientY;
-					}
-
-					if (e.pageX !== undefined) {
-						x_m = e.pageX;
-					} else if (e.pageX === undefined) {
-						x_m = e.clientX;
-					}
+				if (_keyValue[0] === paraname) {
+					return _keyValue[1];
 				}
+			}
+		}
+	}
 
-				var yR = y_m - off_t;
-				var xR = x_m - off_l;
+	/**
+	 * Focus Loop 
+	 */
+	win[global].focus = {
+		options: {
+			callback: false
+		},
+		loop : function(opt){
+			if (opt === undefined) {
+				return false;
+			}
 
-				yR < 0 ? yR = 0 : '';
-				yR > w_h ? yR = w_h : '';
-				xR < 0 ? xR = 0 : '';
-				xR > w_w ? xR = w_w : '';
+			var opt = $.extend(true, {}, this.options, opt);
+			var $base = opt.selector;
+			var callback = opt.callback;
 
-				yRPer = yR / w_h * 100;
-				xRPer = xR / w_w * 100;
-				var nPerY = (yRPer - (barH / 100 * yRPer)).toFixed(2);
-				var nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
+			if(!$base.find('[class*="ui-focusloop-"]').length) {
+				$base.prepend('<div tabindex="0" class="ui-focusloop-start"><span>시작지점입니다.</span></div>');
+				$base.append('<div tabindex="0" class="ui-focusloop-end"><span>마지막지점입니다.</span></div>');
+			}
 
-				if (isXY === 'y') {
-					$bar.css('top', nPerY + '%');
-					$item.scrollTop(opt.itemH * nPerY / 100);
-				} else {
-					$bar.css('left', nPerX + '%');
-					$item.scrollLeft(opt.itemW * nPerX / 100);
+			var $itemStart = $base.find('.ui-focusloop-start');
+			var $itemEnd = $base.find('.ui-focusloop-end');
+						
+			$itemStart.off('keydown.loop').on('keydown.loop', function(e) {
+				if (e.shiftKey && e.keyCode == 9) {
+					e.preventDefault();
+					$itemEnd.focus();
+					!!callback && callback();
 				}
-
-			}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function () {
-				var _infiniteCallback = $wrap.data('infiniteCallback');
-
-				if (!!_infiniteCallback) {
-					yRPer === 100 && _infiniteCallback(); 
+			});
+			$itemEnd.off('keydown.loop').on('keydown.loop', function(e) {
+				if (!e.shiftKey && e.keyCode == 9) {
+					e.preventDefault();
+					$itemStart.focus();
+					!!callback && callback();
 				}
-
-				$('body').removeClass('scrollbar-move');
-				$(doc).off('mousemove.bar mouseup.bar touchmove.bar');
 			});
 		}
 	}
 
-
-	/* ------------------------
-	 * [base] scroll or not
-	 * date : 
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiHasScrollBarY: function (opt) {
-			return createuiHasScrollBarY(opt);
+	/**
+	 * custom scroll bar
+	 */
+	win[global].scrollBar = {
+		options : {
+			id: false,
+			callback:false,
+			infiniteCallback:false,
+			space: false,
+			remove: false
 		},
-		uiHasScrollBarX: function (opt) {
-			return createUiHasScrollBarX(opt);
-		}
-	});
-	function createuiHasScrollBarY(opt) {
-		var $this = opt.selector;
+		init: function(opt){
+			var opt = $.extend(true, {}, this.options, opt),
+				id = opt.id,
+				space = opt.space,
+				callback = opt.callback,
+				infiniteCallback = opt.infiniteCallback,
+				remove = opt.remove,
+				$base = !id ? $('.ui-scrollbar') : typeof id === 'object' ? id : $('[scroll-id="' + id +'"]');
+			
+			var timerResize;
+			
+			if (win[global].support.touch) {
+				return false;
+			} 
 
-		return ($this.prop('scrollHeight') == 0 && $this.prop('clientHeight') == 0) || ($this.prop('scrollHeight') > $this.prop('clientHeight'));
-	}
-	function createUiHasScrollBarX(opt) {
-		var $this = opt.selector;
+			$base.each(function () {
+				!remove ? scrollbarReady($(this)) : scrollbarRemove($(this));
+			});
+			function scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space){
+				var $wrap = t;
+				var	$item = $wrap.children('.ui-scrollbar-item');
 
-		return ($this.prop('scrollWidth') == 0 && $this.prop('clientWidth') == 0) || ($this.prop('scrollWidth') > $this.prop('clientWidth'));
-	}
-
-
-	/* ------------------------
-	 * [base] focus scope
-	 * date : 
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiFocusTab: function (opt) {
-			return createUiFocusTab(opt);
-		}
-	});
-	win[global].uiFocusTab.option = {
-		focusitem : '.ui-select-tit, iframe, a:not([data-disabled]), button:not(:disabled), input:not(:disabled), select:not(:disabled), textarea:not(:disabled), label, [role="button"]',
-		callback: false,
-		focusnot: false,
-		type: 'hold' //'hold', 'sense'
-	};
-	function createUiFocusTab(opt){
-		if (opt === undefined) {
-			return false;
-		}
-		
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiFocusTab.option, opt),
-			$focus = $(opt.selector),
-			$item = $focus.find(opt.focusitem),
-			callback = opt.callback,
-			focusnot = opt.focusnot,
-			type = opt.type,
-			timer; 
-
-		if (!!$item.length) {
-			$item.eq(0).addClass('ui-fctab-s').attr('tabindex', 0).attr('holds', true);
-			$item.eq(-1).addClass('ui-fctab-e').attr('tabindex', 0).attr('holde', true);
-		} else {
-			$focus.prepend('<div class="ui-fctab-s" tabindex="0" holds="true"></div>');
-			$focus.append('<div class="ui-fctab-e" tabindex="0" holde="true"></div>');
-			$item = $focus.find('.ui-fctab-s, .ui-fctab-e');
-		}
-		
-		clearTimeout(timer);
-		timer = setTimeout(function(){
-			!focusnot ? $item.eq(0).focus() : '';
-		},300);
-		timer = '';
-
-		$focus.find('.ui-fctab-s').off('keydown.holds').on('keydown.holds', function (e) {
-			if (type === 'hold') {
-				if (e.shiftKey && e.keyCode == 9) {
-					e.preventDefault();
-					$focus.find('.ui-fctab-e').focus();
+				if (!$item.length) {
+					return false;
 				}
-			} else if (type === 'sense') {
-				$focus.off('keydown.holds');
-				(e.shiftKey && e.keyCode == 9) ? callback('before') : '';
-			}
-		});
-		$focus.find('.ui-fctab-e').off('keydown.holde').on('keydown.holde', function (e) {
-			if (type === 'hold') {
-				if (!e.shiftKey && e.keyCode == 9) {
-					e.preventDefault();
-					$focus.find('.ui-fctab-s').focus();
+
+				var nWrapH = $wrap.outerHeight();
+				var nWrapW = $wrap.outerWidth();
+				var nItemH = $item.prop('scrollHeight');
+				var nItemW = $item.prop('scrollWidth');
+				var changeH = (itemH !== nItemH || wrapH !== nWrapH);
+				var changeW = (itemW !== nItemW || wrapW !== nWrapW);
+				var timer;
+
+				$(win).on('resize', function(){
+					clearTimeout(timerResize);
+					timerResize = setTimeout(function(){
+						$wrap.removeAttr('style');						
+						nWrapH = $wrap.outerHeight();
+						$wrap.css('height', nWrapH);
+					}, 300);
+				});
+
+				if (changeH || changeW) {
+					var barH = Math.floor(nWrapH / (nItemH / 100));
+					var barW = Math.floor(nWrapW / (nItemW / 100));
+					var $barY = $wrap.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+					var $barX = $wrap.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+
+					changeH && $barY.css('height', barH + '%').data('height', barH);
+					changeW && $barX.css('width', barW + '%').data('width', barW);
+					
+					(nWrapH < nItemH) ? $wrap.addClass('view-y') : $wrap.removeClass('view-y');
+					(nWrapW < nItemW) ? $wrap.addClass('view-x') : $wrap.removeClass('view-x');
+
+					$wrap.data(
+						'opt', {
+							'itemH':nItemH, 
+							'itemW':nItemW, 
+							'wrapH':nWrapH, 
+							'wrapW':nWrapW 
+						});
+					eventFn();
+					scrollEvent($item, space);
 				}
-			} else if (type === 'sense') {
-				$focus.off('keydown.holds');
-				(!e.shiftKey && e.keyCode == 9) ? callback('after') : '';
+
+				clearTimeout(timer);
+				timer = setTimeout(function(){
+					scrollbarUpdate(t, nWrapH, nWrapW, nItemH, nItemW);
+				}, 300);
 			}
-		});
+			function scrollbarRemove(t){
+				var $wrap = t;
+
+				$wrap.removeClass('ready view-scrollbar').removeData('infiniteCallback').removeData('ready').removeAttr('style');
+				$wrap.find('> .ui-scrollbar-item').contents().unwrap();
+				$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
+				$wrap.find('> .ui-scrollbar-barwrap').remove();
+			}
+			function scrollbarReady(t) {
+				var $wrap = t;
+				var	html_scrollbar = '';
+
+				$wrap.removeClass('ready').data('infiniteCallback', infiniteCallback).data('ready', false);
+				$wrap.find('> .ui-scrollbar-item').contents().unwrap();
+				$wrap.find('> .ui-scrollbar-wrap').contents().unwrap();
+				$wrap.find('> .ui-scrollbar-barwrap').remove();
+
+				var wrapW = $wrap.innerWidth();
+				var wrapH = $wrap.outerHeight();
+
+				$wrap.wrapInner('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap"></div></div>');
+
+				var	$item = $wrap.find('> .ui-scrollbar-item');
+				var	$itemWrap = $item.find('> .ui-scrollbar-wrap');
+
+				var cssDisplay = $wrap.css('display');
+				var cssPadding = $wrap.css('padding');
+
+				$itemWrap.css({
+					display: cssDisplay,
+					padding: cssPadding
+				});
+
+				if (!space) {
+					cssDisplay === 'inline-block' && $itemWrap.css('display','block');
+					$itemWrap.css('width','100%');
+				} 
+
+				!space && $item.css('width','100%');
+				$wrap.css('overflow','hidden');
+
+				var itemW =  $item.prop('scrollWidth');
+				var itemH =$item.prop('scrollHeight');
+
+				$wrap.data('opt', {'itemH':itemH, 'itemW':itemW, 'wrapH':wrapH, 'wrapW':wrapW });
+				
+				var idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
+
+				//idN = idN === undefined ? 0 : idN;
+				
+				if (!$wrap.data('ready') || !$wrap.attr('scroll-id')) {
+					
+					if (!$wrap.attr('scroll-id')) {
+						$wrap.attr('scroll-id', 'uiScrollBar_' + idN).data('ready', true).addClass('ready');
+						idN = idN + 1;
+						sessionStorage.setItem('scrollbarID', idN);
+					} else {
+						$wrap.data('ready', true).addClass('ready');
+					}
+
+					$item.attr('tabindex', 0);
+					$wrap.css('height', wrapH + 'px');
+					
+					if (space) {
+						$item.addClass('scroll-y-padding');
+						$item.addClass('scroll-x-padding');
+					} else {
+						!!$wrap.parent('.ui-tablescroll').length && $wrap.parent('.ui-tablescroll').addClass('not-space');
+					}
+
+					html_scrollbar += '<div class="ui-scrollbar-barwrap type-y" >';
+					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="y"><span class="hide">scroll</span></button>';
+					html_scrollbar += '</div>';
+					html_scrollbar += '<div class="ui-scrollbar-barwrap type-x" >';
+					html_scrollbar += '<button type="button" class="ui-scrollbar-bar" aria-hidden="true" tabindex="-1" data-scrollxy="x"><span class="hide">scroll</span></button>';
+					html_scrollbar += '</div>';
+					
+					$wrap.prepend(html_scrollbar);
+
+					(wrapH < itemH) ? $wrap.addClass('view-y') : $wrap.removeClass('view-y');
+					(wrapW < itemW) ? $wrap.addClass('view-x') : $wrap.removeClass('view-x');
+
+					var barH = Math.floor(wrapH / (itemH / 100));
+					var barW = Math.floor(wrapW / (itemW / 100));
+					var $barY = $wrap.find('> .ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+					var $barX = $wrap.find('> .ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+					
+					$barY.css('height', barH + '%').data('height', barH);
+					$barX.css('width', barW + '%').data('width', barW);
+
+					$wrap.addClass('view-scrollbar');
+					!!callback && callback(); 
+					scrollEvent($item);
+					scrollbarUpdate(t, wrapH, wrapW, itemH, itemW, space);
+					eventFn();
+				}
+			}	
+			function eventFn(){
+				$(doc).find('.ui-scrollbar-item').off('scroll.uiscr').on('scroll.uiscr', function(){
+					scrollEvent(this);
+				});
+				$(doc).find('.ui-scrollbar-bar').off('mousedown.bar touchstart.bar').on('mousedown.bar touchstart.bar', function(e) {
+					dragMoveAct(e, this);
+				});
+			}	
+			function scrollEvent(t){
+				var $this = $(t),
+					$wrap = $this.closest('.ui-scrollbar'),
+					$barY = $wrap.find('> .type-y .ui-scrollbar-bar'),
+					$barX = $wrap.find('> .type-x .ui-scrollbar-bar');
+				
+				var opt = $wrap.data('opt');
+
+				if (opt === undefined) {
+					return false;
+				}
+
+				var itemH = opt.itemH,
+					itemW = opt.itemW,
+					wrapH = opt.wrapH,
+					wrapW = opt.wrapW;
+
+				var scrT = $this.scrollTop(),
+					scrL = $this.scrollLeft(),
+					barH = $barY.data('height'),
+					barW = $barX.data('width');
+				
+				var hPer = Math.round(scrT / (itemH - wrapH) * 100),
+					_hPer = (barH / 100) * hPer,
+					wPer = Math.round(scrL / (itemW - wrapW) * 100),
+					_wPer = (barW / 100) * wPer;
+
+				var _infiniteCallback = $wrap.data('infiniteCallback');
+
+				$barY.css('top', hPer - _hPer + '%');
+				$barX.css('left', wPer - _wPer + '%');
+
+				if (!!_infiniteCallback) {
+					hPer === 100 && _infiniteCallback(); 
+				}
+			}
+			function dragMoveAct(e, t) {
+				var $bar = $(t),
+					$uiScrollbar = $bar.closest('.ui-scrollbar'),
+					$barWrap = $bar.closest('.ui-scrollbar-barwrap'),
+					$wrap = $bar.closest('.ui-scrollbar'),
+					$item = $uiScrollbar.find('> .ui-scrollbar-item');
+
+				var off_t = $barWrap.offset().top,
+					w_h = $barWrap.innerHeight(),
+					off_l = $barWrap.offset().left,
+					w_w = $barWrap.innerWidth(),
+					barH = $bar.data('height'),
+					barW = $bar.data('width'),
+					opt = $wrap.data('opt');
+
+				var yRPer, xRPer;
+				var $btn = e.target;
+				var isXY = $btn.getAttribute('data-scrollxy');
+				
+				$('body').addClass('scrollbar-move');
+
+				$(doc).off('mousemove.bar touchmove.bar').on('mousemove.bar touchmove.bar', function (e) {
+					var y_m, 
+						x_m;
+					
+					if (e.touches === undefined) {
+						if (e.pageY !== undefined) {
+							y_m = e.pageY;
+						} else if (e.pageY === undefined) {
+							y_m = e.clientY;
+						}
+
+						if (e.pageX !== undefined) {
+							x_m = e.pageX;
+						} else if (e.pageX === undefined) {
+							x_m = e.clientX;
+						}
+					}
+
+					var yR = y_m - off_t;
+					var xR = x_m - off_l;
+
+					yR < 0 ? yR = 0 : '';
+					yR > w_h ? yR = w_h : '';
+					xR < 0 ? xR = 0 : '';
+					xR > w_w ? xR = w_w : '';
+
+					yRPer = yR / w_h * 100;
+					xRPer = xR / w_w * 100;
+					var nPerY = (yRPer - (barH / 100 * yRPer)).toFixed(2);
+					var nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
+
+					if (isXY === 'y') {
+						$bar.css('top', nPerY + '%');
+						$item.scrollTop(opt.itemH * nPerY / 100);
+					} else {
+						$bar.css('left', nPerX + '%');
+						$item.scrollLeft(opt.itemW * nPerX / 100);
+					}
+
+				}).off('mouseup.bar touchcancel.bar touchend.bar').on('mouseup.bar touchcancel.bar touchend.bar', function () {
+					var _infiniteCallback = $wrap.data('infiniteCallback');
+
+					if (!!_infiniteCallback) {
+						yRPer === 100 && _infiniteCallback(); 
+					}
+
+					$('body').removeClass('scrollbar-move');
+					$(doc).off('mousemove.bar mouseup.bar touchmove.bar');
+				});
+			}
+		}
 	}
 
-
-	/* ------------------------
+	/**
 	 * window popup
-	 * date : 
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiPopup: function (opt) {
-			return createUiPopup(opt);
-		}
-	});
-	win[global].uiPopup.option = {
-		name: 'new popup',
-		width: 790,
-		height: 620,
-		align: 'center',
-		top: 0,
-		left: 0,
-		toolbar: 'no',
-		location: 'no',
-		memubar: 'no',
-		status: 'no',
-		resizable: 'no',
-		scrolbars: 'yes'
-	};
-	function createUiPopup(opt) {
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiPopup.option, opt),
-			specs;
-
-		if (opt.align === 'center') {
-			opt.left = ($(win).outerWidth() / 2) - (opt.width / 2);
-			opt.top = ($(win).outerHeight() / 2) - (opt.height / 2);
-		}
-
-		specs = 'width=' + opt.width + ', height='+ opt.height + ', left=' + opt.left + ', top=' + opt.top;
-		specs += ', toolbar=' + opt.toolbar + ', location=' + opt.location + ', resizable=' + opt.resizable + ', status=' + opt.status + ', menubar=' + opt.menubar + ', scrollbars=' + opt.scrollbars;
-		
-		win.open(opt.link, opt.name , specs);
-	}
-
-
-	/* ------------------------
-	 * cookie
-	 * date : 
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiCookieSet: function (opt) {
-			return creaeteUiCookieSet(opt);
+	 */
+	win[global].popup = {
+		options: {
+			name: 'new popup',
+			width: 790,
+			height: 620,
+			align: 'center',
+			top: 0,
+			left: 0,
+			toolbar: 'no',
+			location: 'no',
+			memubar: 'no',
+			status: 'no',
+			resizable: 'no',
+			scrolbars: 'yes'
 		},
-		uiCookieGet: function (opt) {
-			return creaeteUiCookieGet(opt);
-		},
-		uiCookieDel: function (opt) {
-			return creaeteUiCookieDel(opt);
-		}
-	});
-	function creaeteUiCookieSet(opt){
-		var cookieset = opt.name + '=' + opt.value + ';',
-			expdate;
-		if (opt.term) {
-			expdate = new Date();
-			expdate.setTime( expdate.getTime() + opt.term * 1000 * 60 * 60 * 24 ); // term 1 is a day
-			cookieset += 'expires=' + expdate.toGMTString() + ';';
-		}
-		(opt.path) ? cookieset += 'path=' + opt.path + ';' : '';
-		(opt.domain) ? cookieset += 'domain=' + opt.domain + ';' : '';
-		document.cookie = cookieset;
-	}
-	function creaeteUiCookieGet(opt){
-		var match = ( document.cookie || ' ' ).match( new RegExp(opt.name + ' *= *([^;]+)') );
-		return (match) ? match[1] : null;
-	}
-	function creaeteUiCookieDel(opt){
-		var expireDate = new Date();
+		open: function(opt){
+			var opt = opt === undefined ? {} : opt;
+			var opt = $.extend(true, {}, this.options, opt);
+			var specs;
 
-		expireDate.setDate(expireDate.getDate() + -1);
-		win[global].uiCookieSet({ name:opt.name, term:'-1' });
-	}
-
-
-	/* ------------------------
-	 * table caption
-	 * date : 
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiCaption: function () {
-			return createUiCaption();
-		}
-	});
-	function createUiCaption(){
-		var $cp = $('.ui-caption');
-
-		$cp.text('');
-		$cp.each(function(){
-			var $table = $(this).closest('table'),
-				isthead = !!$table.find('> thead').length,
-				$th = $(this).closest('table').find('> tbody th'),
-				th_len = $th.length,
-				i = 0,
-				cp_txt = '';
-			if (isthead) {
-				$th = $(this).closest('table').find('> thead th');
-				th_len = $th.length
+			if (opt.align === 'center') {
+				opt.left = ($(win).outerWidth() / 2) - (opt.width / 2);
+				opt.top = ($(win).outerHeight() / 2) - (opt.height / 2);
 			}
 
-			for (i = 0; i < th_len; i++) {
-				if ($th.eq(i).text() !== '') {
-					cp_txt += $th.eq(i).text();
+			specs = 'width=' + opt.width + ', height='+ opt.height + ', left=' + opt.left + ', top=' + opt.top;
+			specs += ', toolbar=' + opt.toolbar + ', location=' + opt.location + ', resizable=' + opt.resizable + ', status=' + opt.status + ', menubar=' + opt.menubar + ', scrollbars=' + opt.scrollbars;
+			
+			win.open(opt.link, opt.name , specs);
+		}
+	}
+
+	/**
+	 * cookie set/get/del
+	 */
+	win[global].cookie = {
+		set: function(){
+			var cookieset = opt.name + '=' + opt.value + ';';
+			var expdate;
+
+			if (opt.term) {
+				expdate = new Date();
+				expdate.setTime( expdate.getTime() + opt.term * 1000 * 60 * 60 * 24 ); // term 1 is a day
+				cookieset += 'expires=' + expdate.toGMTString() + ';';
+			}
+			(opt.path) ? cookieset += 'path=' + opt.path + ';' : '';
+			(opt.domain) ? cookieset += 'domain=' + opt.domain + ';' : '';
+			document.cookie = cookieset;
+		},
+		get: function(opt){
+			var match = ( document.cookie || ' ' ).match( new RegExp(opt.name + ' *= *([^;]+)') );
+
+			return (match) ? match[1] : null;
+		},
+		del: function(opt){
+			var expireDate = new Date();
+
+			expireDate.setDate(expireDate.getDate() + -1);
+			this.set({ name:opt.name, term:'-1' });
+		}
+	}
+
+	/**
+	 * table caption/scroll(vertical)
+	 */
+	win[global].table = {
+		caption: function(){
+			var $cp = $('.ui-caption');
+
+			$cp.text('');
+			$cp.each(function(){
+				var $table = $(this).closest('table');
+				var isthead = !!$table.find('> thead').length;
+				var $th = $(this).closest('table').find('> tbody th');
+				var th_len = $th.length;
+				var i = 0;
+				var cp_txt = '';
+
+				if (isthead) {
+					$th = $(this).closest('table').find('> thead th');
+					th_len = $th.length
 				}
-				if (i < th_len - 1) {
-					cp_txt += ', ';
+
+				for (i = 0; i < th_len; i++) {
+					if ($th.eq(i).text() !== '') {
+						cp_txt += $th.eq(i).text();
+					}
+					if (i < th_len - 1) {
+						cp_txt += ', ';
+					}
+				}
+				$(this).text(cp_txt + ' 정보입니다.');
+			});
+		},
+		scrollOption: {
+			callback:false
+		},
+		scroll: function(opt){
+			var opt = $.extend(true, {}, this.scrollOption, opt);
+			var callback = opt.callback;
+			var $tblWrap = $('.ui-tablescroll');
+
+			for (var i = 0, len = $tblWrap.length; i < len; i++) {
+				var $tbl = $tblWrap.eq(i),
+					_$tblWrap = $tbl.find('.ui-tablescroll-wrap'),
+					_$tbl = _$tblWrap.find('table'),
+					cloneTable = _$tbl.clone();
+				
+				if (!$tbl.find('.ui-tablescroll-clone').length) {
+					$tbl.prepend(cloneTable);
+
+					var $cloneTable = $tbl.find('> table:first-child'),
+						$cloneTableTh = $cloneTable.find('th');
+
+					$cloneTable.find('caption').remove();
+					$cloneTable.find('tbody').remove();
+					$cloneTable.addClass('ui-tablescroll-clone');
+					$cloneTable.attr('aria-hidden', true);
+					$cloneTableTh.each(function(){
+						$(this).attr('aria-hidden', true);
+					});
 				}
 			}
-			$(this).text(cp_txt + ' 정보입니다.');
-		});
+
+			!!callback && callback();
+		}
 	}
 
 
@@ -1472,119 +1169,212 @@ if (!Object.keys){
 		}
 	}
 
-
-	/* ------------------------
-	 * error message
-	 * date : 
-	 * option
-	 * - opt.message : 'message text' / [string]
-	 * - opt.error : true or false / [string]
-	 * - opt.selector : 'id' or $(...) / [strong] or [object]
-	 * - opt.wrapper : '...' / [strong]
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiError: function (opt) {
-			return createUiError(opt);
-		}
-	});
-	function createUiError(opt){
-		var msg = opt.message, 
-			err = opt.error, 
-			$this = typeof opt.selector === 'string' ? $('#' + opt.selector) : opt.selector,
-			$wrap = opt.wrapper === undefined ? $this.parent() : $this.closest(opt.wrapper),
-			id = $this.attr('id'),
-			err_html = '<em class="ui-error-msg" aria-hidden="true" id="'+ id +'-error">'+ msg +'</em>';
-
-		//generate error message
-		$this.attr('aria-labelledby', id + '-error');
-
-		!$('#'+ id +'-error').length ? $wrap.append(err_html) : $wrap.find('.ui-error-msg').text(msg) ;
-		
-		//error 여부에 따른 설정
-		if (err) {
-			$('#'+ id +'-error').attr('aria-hidden', false);
-			$wrap.addClass('ui-error-true');
-			$this.addClass('ui-error-item');
-			$this.closest('.ui-select').addClass('ui-error-select');
-		} else {
-			$('#'+ id +'-error').attr('aria-hidden', true).remove();
-			$wrap.find('.ui-error-item').length === 1 ? $wrap.removeClass('ui-error-true') : '';
-			$this.removeClass('ui-error-item');
-			$this.closest('.ui-select').removeClass('ui-error-select');
-		}
-	}
-
-
-
-	/* ------------------------
-	 * input placeholder
-	 * date : 
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiPlaceholder: function () {
-			return createUiPlaceholder();
-		}
-	});
-	function createUiPlaceholder(){
-		var $ph = $('[placeholder]'),
-			phname = '';
-
-		$('.ui-placeholder').remove();
-		$ph.each(function(){
-			phname = $(this).attr('placeholder');
-			$(this).before('<span class="hide ui-placeholder">' + phname + '</span>')
-		});
-	}
-
-
-
-	/* ------------------------
-	* table scroll(vertical)
-	* date : 2020-05-17
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiTableScroll: function (opt) {
-			return createUiTableScroll(opt);
-		}
-	});
-	win[global].uiTableScroll.option = {
-		callback:false
-	};
-	function createUiTableScroll(opt){
-		var opt = $.extend(true, {}, win[global].uiAccordion.option, opt);
-		var callback = opt.callback;
-		var $tblWrap = $('.ui-tablescroll');
-
-		for (var i = 0, len = $tblWrap.length; i < len; i++) {
-			var $tbl = $tblWrap.eq(i),
-				_$tblWrap = $tbl.find('.ui-tablescroll-wrap'),
-				_$tbl = _$tblWrap.find('table'),
-				cloneTable = _$tbl.clone();
-			
-			if (!$tbl.find('.ui-tablescroll-clone').length) {
-				$tbl.prepend(cloneTable);
-
-				var $cloneTable = $tbl.find('> table:first-child'),
-					$cloneTableTh = $cloneTable.find('th');
-
-				$cloneTable.find('caption').remove();
-				$cloneTable.find('tbody').remove();
-				$cloneTable.addClass('ui-tablescroll-clone');
-				$cloneTable.attr('aria-hidden', true);
-				$cloneTableTh.each(function(){
-					$(this).attr('aria-hidden', true);
-				});
-			}
-		}
-
-		!!callback && callback();
-	}
-
-
 	/* ------------------------
 	* accordion tab  
 	* date : 2020-05-17
 	------------------------ */
+	win[global].accordion = {
+		options: {
+			current: null,
+			autoclose: false,
+			callback: false,
+			add: false,
+			level: 3,
+			effect: win[global].option.effect.easeInOut,
+			effTime: '.2'
+		},
+		init: function(opt){
+			if (opt === undefined) {
+				return false;
+			}
+	
+			var opt = $.extend(true, {}, this.options, opt);
+			var id = opt.id;
+			var current = opt.current;
+			var callback = opt.callback;
+			var autoclose = opt.autoclose;
+			var level = opt.level;
+			var add = opt.add;
+
+	
+			var	$acco = $('#' + id),
+				$wrap = $acco.children('.ui-acco-wrap'),
+				$pnl = $wrap.children('.ui-acco-pnl'),
+				$tit = $wrap.children('.ui-acco-tit'),
+				$btn = $tit.find('.ui-acco-btn');
+	
+			var	len = $wrap.length, 
+				keys = win[global].option.keys,
+				optAcco;
+	
+			var para = win[global].para.get('acco'),
+				paras,
+				paraname;
+	
+			//set up
+			if (!!para && !add) {
+				if (para.split('+').length > 1) {
+					//2 or more : acco=exeAcco1*2+exeAcco2*3
+					paras = para.split('+');
+	
+					for (var j = 0; j < paras.length; j++ ) {
+						paraname = paras[j].split('*');
+						opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
+					}
+				} else {
+					//only one : tab=1
+					 if (para.split('*').length > 1) {
+						paraname = para.split('*');
+						opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
+					} else {
+						current = [Number(para)];
+					}
+				}
+			}
+	
+			if (add) {
+				current = [];
+				var ss = JSON.parse(sessionStorage.getItem(id));
+	
+				autoclose = autoclose || ss.close;
+	
+				$acco.find('.ui-acco-btn.selected').each(function(){
+					current.push($(this).closest('.ui-acco-wrap').index());
+				});
+				$btn.removeAttr('acco-last').removeAttr('acco-first');
+	
+				autoclose = $acco.data('opt').close;
+				callback = $acco.data('opt').callback;
+			}
+	
+			sessionStorage.setItem(id, JSON.stringify({ 'close': autoclose, 'current': current }) );
+			win[global].uiAccordion[id] = callback;
+	
+			//set up
+			!$pnl ? $pnl = $tit.children('.ui-acco-pnl') : '';
+			$acco.data('opt', { 
+				id: id, 
+				close: autoclose, 
+				callback: callback
+			});
+	
+			for (var i = 0; i < len; i++) {
+				var $wrap_i = $wrap.eq(i),
+					$accotit = $wrap_i.find('> .ui-acco-tit'),
+					$accopln = $wrap_i.find('> .ui-acco-pnl'),
+					$accobtn = $accotit.find('.ui-acco-btn');
+	
+				if ($accotit.prop('tagName') !== 'DT') {
+					$accotit.attr('role','heading');
+					$accotit.attr('aria-level', level);
+				}
+				
+				if (!$accopln) {
+					$accopln = $accotit.children('.ui-acco-pnl');
+				}
+	
+				($accotit.attr('id') === undefined) && $accobtn.attr('id', id + '-btn' + i);
+				($accopln.attr('id') === undefined) && $accopln.attr('id', id + '-pnl' + i);
+				
+				$accobtn
+					.data('selected', false)
+					.attr('data-n', i)
+					.attr('data-len', len)
+					.attr('aria-expanded', false)
+					.attr('aria-controls', $accopln.attr('id'))
+					.removeClass('selected');
+				$accopln
+					.attr('data-n', i)
+					.attr('data-len', len)
+					.attr('aria-labelledby', $accobtn.attr('id'))
+					.attr('aria-hidden', true).hide();
+	
+				(i === 0) && $accobtn.attr('acco-first', true);
+				(i === len - 1) && $accobtn.attr('acco-last', true);
+			}
+			
+			if (current !== null) {
+				win[global].uiAccordionToggle({ 
+					id: id, 
+					current: current, 
+					motion: false 
+				});
+			}
+	
+			//event
+			$btn.off('click.uiaccotab keydown.uiaccotab')
+				.on({
+					'click.uiaccotab': evtClick,
+					'keydown.uiaccotab': evtKeys
+				});
+	
+			function evtClick(e) {
+				if (!!$(this).closest('.ui-acco-wrap').find('.ui-acco-pnl').length) {
+					e.preventDefault();
+					var $this = $(this);
+	
+					optAcco = $this.closest('.ui-acco').data('opt');
+					win[global].uiAccordionToggle({ 
+						id: optAcco.id, 
+						current: [$this.data('n')], 
+						close: optAcco.close, 
+						callback: optAcco.callback
+					});
+				}
+			}
+			function evtKeys(e) {
+				var $this = $(this),
+					n = Number($this.data('n')),
+					m = Number($this.data('len')),
+					id = $this.closest('.ui-acco').attr('id');
+	
+				switch(e.keyCode){
+					case keys.up: upLeftKey(e);
+					break;
+	
+					case keys.left: upLeftKey(e);
+					break;
+	
+					case keys.down: downRightKey(e);
+					break;
+	
+					case keys.right: downRightKey(e);
+					break;
+	
+					case keys.end: endKey(e);
+					break;
+	
+					case keys.home: homeKey(e);
+					break;
+				}
+	
+				function upLeftKey(e) {
+					e.preventDefault();
+					
+					!$this.attr('acco-first') ?
+					$('#' + id + '-btn' + (n - 1)).focus():
+					$('#' + id + '-btn' + (m - 1)).focus();
+				}
+				function downRightKey(e) {
+					e.preventDefault();
+	
+					!$this.attr('acco-last') ? 
+					$('#' + id + '-btn' + (n + 1)).focus():
+					$('#' + id + '-btn0').focus();
+				}
+				function endKey(e) {
+					e.preventDefault();
+	
+					$('#' + id + '-btn' + (m - 1)).focus();
+				}
+				function homeKey(e) {
+					e.preventDefault();
+					$('#' + id + '-btn0').focus();
+				}
+			}
+		}
+	}
+
 	win[global] = win[global].uiNameSpace(namespace, {
 		uiAccordion: function (opt) {
 			return createUiAccordion(opt);
@@ -1627,7 +1417,7 @@ if (!Object.keys){
 			keys = win[global].option.keys,
 			optAcco;
 
-		var para = win[global].uiPara('acco'),
+		var para = win[global].para.get('acco'),
 			paras,
 			paraname;
 
@@ -2052,7 +1842,7 @@ if (!Object.keys){
 				if (n < itemSum) {
 					setItem();
 				} else {
-					$plugins.uiLoading({ visible:false });
+					win[global].loading.hide();
 				}
 
 				timer = setTimeout(function(){
@@ -2248,12 +2038,16 @@ if (!Object.keys){
 			}
 
 			$btn.attr('aria-expanded', true);
-			$pnl.attr('aria-hidden', false).attr('tabindex', 0).addClass('on');
+			$pnl.attr('aria-hidden', false).addClass('on');
 
+			win[global].focus.loop({
+				selector: $('.ui-drop-pnl[data-id="'+ id +'"]'),
+				callback:pnlHide
+			});
 			//focus hold or sense
-			hold ?	
-				win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
-				win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
+			// hold ?	
+			// 	win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
+			// 	win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
 
 			switch (ps) {
 				case 'BL': 
@@ -2505,7 +2299,38 @@ if (!Object.keys){
 		}
 	}
 
+	win[global].modal = {
+		options : {
+			/* type : normal, system */
+			type: 'normal',
+			wrap: false,
+			full: false,
+			ps: 'center',
+			src: false,
+			remove: false,
+			modalWidth: false,
+			modalHeight: false,
+			innerScroll: false,
+			mg: 20,
+			callback:false,
+			closeCallback:false,
+			endfocus:false,
 
+			sMessage: '',
+			sBtnConfirmTxt: 'Ok',
+			sBtnCancelTxt: 'Cancel',
+			sZindex: false,
+			sClass: 'type-system',
+			sConfirmCallback: false,
+			sCancelCallback: false
+		},
+		show: function(opt){
+
+		},
+		hide: function(){
+
+		}
+	}
 	/* ------------------------
 	* name : modal
 	* date : 2020-06-11
@@ -2525,14 +2350,14 @@ if (!Object.keys){
 	win[global].uiModalOpen.option = {
 		type: 'normal',
 		wrap: false,
-		mobileFull: false,
+		full: false,
 		ps: 'center',
 		src: false,
 		remove: false,
 		modalWidth: false,
 		modalHeight: false,
 		innerScroll: false,
-		mg: 10,
+		mg: 20,
 		callback:false,
 		closeCallback:false,
 		endfocus:false,
@@ -2551,7 +2376,7 @@ if (!Object.keys){
 			type = opt.type,
 			id = opt.id,
 			src = opt.src,
-			mobileFull = opt.mobileFull,
+			full = opt.full,
 			ps = opt.ps,
 			mg = opt.mg,
 			remove = opt.remove,
@@ -2574,7 +2399,7 @@ if (!Object.keys){
 
 		if (type === 'normal') {
 			if (!!src && !$('#' + opt.id).length) {
-				$plugins.uiAjax({
+				$plugins.ajax.init({
 					id: wrap,
 					url: src,
 					add: true,
@@ -2599,13 +2424,13 @@ if (!Object.keys){
 		function makeSystemModal(){
 			var htmlSystem = '';
 			
-			htmlSystem += '<div class="ui-modal type-system '+ sClass +'" id="uiSystemModal">';
+			htmlSystem += '<div class="ui-modal '+ sClass +'" id="uiSystemModal">';
 			htmlSystem += '<div class="ui-modal-wrap">';
 			htmlSystem += '<div class="ui-modal-body">';
 			htmlSystem += sMessage;
 			htmlSystem += '</div>';
 			htmlSystem += '<div class="ui-modal-footer">';
-			htmlSystem += '<div class="btn-wrap">';
+			htmlSystem += '<div class="btn-area stick">';
 
 			if (type === 'confirm') {
 				htmlSystem += '<button type="button" class="btn-base ui-modal-cancel"><span>'+ sBtnCancelTxt +'</span></button>';
@@ -2643,7 +2468,7 @@ if (!Object.keys){
 				.data('active', endfocus)
 				.data('closecallback', closeCallback);
 
-			if (mobileFull && !$plugins.breakpoint) {
+			if (full) {
 				$modal.addClass('type-full');
 				mg = 0;
 			} 
@@ -2662,38 +2487,57 @@ if (!Object.keys){
 					break;
 			}
 
-			if (innerScroll) {
-				headerH = $modalHeader.length ? $modalHeader.outerHeight() : 0;
-				footerH = $modalFooter.length ? $modalFooter.outerHeight() : 0;
+			headerH = $modalHeader.length ? $modalHeader.outerHeight() : 0;
+			footerH = $modalFooter.length ? $modalFooter.outerHeight() : 0;
 
+			if (!full) {
+				//lyaer modal
 				if (!h) {
+					var win_h = $(win).outerHeight();
+					var max_h = win_h - (headerH + footerH + (mg * 2));
+
 					$modalBody
-						.addClass('is-scrollable')
-						.css({
-							'max-height' : 'calc(100vh - '+ (headerH + footerH + (mg * 2)) +'px)',
-							'overflow-y' : 'auto',
-							'height' : '100%'
-						});
+					.addClass('is-scrollable')
+					.css({
+						'max-height' : max_h + 'px',
+						'overflow-y' : 'auto',
+						'height' : '100%'
+					});
 				} else {
 					$modalBody
-						.addClass('is-scrollable')
-						.css({
-							'overflow-y' : 'auto',
-							'height' : h + 'px'
-						});
+					.addClass('is-scrollable')
+					.css({
+						'overflow-y' : 'auto',
+						'height' : h + 'px'
+					});
 				}
-				
 			} else {
+				//full modal
 				!!w && $modalWrap.css('width', w);
-				!!h && $modalBody.css({ 'height': h + 'px', 'overflow-y' : 'auto' });
+				if (!!h) {
+					$modalBody.css({ 
+						'height': h + 'px', 
+						'overflow-y' : 'auto' 
+					});
+				} else {
+					$modalBody.css({ 
+						'min-height': $(window).outerHeight() + 'px', 
+						'overflow-y' : 'auto' ,
+						'padding-top': (headerH + 10)  + 'px',
+						'padding-bottom': '75px'
+					});
+				}
 			}
 			
 			clearTimeout(timer);
 			timer = setTimeout(function(){
-				win[global].uiFocusTab({ 
+				win[global].focus.loop({ 
 					selector: $modal, 
-					type:'hold' 
 				});
+				// win[global].uiFocusTab({ 
+				// 	selector: $modal, 
+				// 	type:'hold' 
+				// });
 
 				$modal.addClass('open');
 
@@ -2745,6 +2589,16 @@ if (!Object.keys){
 				var $this = $(this); 
 				$this.closest('.ui-modal').data('active', $this);
 			});
+
+			$modalWrap.on('transitionend.modal', function(){
+				if (!!full) {
+					$modal.addClass('fix-header');
+					$modalBody.css({
+						'padding-top': (headerH + 10)  + 'px',
+
+					});
+				}
+			});
 		}
 	}
 	win[global].uiModalClose.option = {
@@ -2758,14 +2612,17 @@ if (!Object.keys){
 		});
 	}
 	function createUiModalClose(v) {
-		var opt = $.extend(true, {}, win[global].uiModalClose.option, v),
-			id = opt.id,
-			remove = opt.remove,
-			$modal = $('#' + id),
-			endfocus = opt.endfocus,
-			closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') === undefined ? false : $modal.data('closecallback') : opt.closeCallback;
+		var opt = $.extend(true, {}, win[global].uiModalClose.option, v);
+		var id = opt.id;
+		var remove = opt.remove;
+		var $modal = $('#' + id);
+		var endfocus = opt.endfocus;
+		var closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') === undefined ? false : $modal.data('closecallback') : opt.closeCallback;
+		var $modalWrap = $modal.find('> .ui-modal-wrap');
 
+		$modalWrap.off('transitionend.modal');
 		$modal.removeClass('open').addClass('close');
+		$modal.removeClass('fix-header');
 
 		var timer;
 		var $modalPrev = $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1));
@@ -2781,7 +2638,7 @@ if (!Object.keys){
 
 		$modalPrev.addClass('current');
 		
-		win[global].uiScroll({
+		win[global].scroll.move({
 			value: Number($modal.data('scrolltop'))
 		});
 		
@@ -2930,74 +2787,74 @@ if (!Object.keys){
 	function createUiPopupBook() {	
 		var $wrap = $('.ui-popupbook');
 					
-        $wrap.off('mouseover.pspt').on('mouseover.pspt', function(){
-            $wrap.off('mousemove.pspt').on('mousemove.pspt', function(event){
-                event = event || window.event;
+				$wrap.off('mouseover.pspt').on('mouseover.pspt', function(){
+						$wrap.off('mousemove.pspt').on('mousemove.pspt', function(event){
+								event = event || window.event;
 				
 				var wrapL = $wrap.position().left;
-                var _x = ( event.pageX ) ? event.pageX - wrapL : event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - wrapL; 
-                var isMove = $wrap.data('move');
+								var _x = ( event.pageX ) ? event.pageX - wrapL : event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - wrapL; 
+								var isMove = $wrap.data('move');
 
-                if (_x > $wrap.outerWidth() / 2) {
-                    if (!isMove || isMove === 'right') {
-                        moving('.ui-popupbook-scene-a', true, 'left');
-                        moving('.ui-popupbook-scene-b', true, 'left');
-                        moving('.ui-popupbook-scene-c', true, 'left');
-                    } 
-                } else {
-                    if (!isMove || isMove === 'left') {
-                        moving('.ui-popupbook-scene-a', true, 'right');
-                        moving('.ui-popupbook-scene-b', true, 'right');
-                        moving('.ui-popupbook-scene-c', true, 'right');
-                    } 
-                }
-            });
-        }).off('mouseleave.pspt').on('mouseleave.pspt', function(){
-            moving('.ui-popupbook-scene-a', false);
-            moving('.ui-popupbook-scene-b', false);
-            moving('.ui-popupbook-scene-c', false);
-        });
+								if (_x > $wrap.outerWidth() / 2) {
+										if (!isMove || isMove === 'right') {
+												moving('.ui-popupbook-scene-a', true, 'left');
+												moving('.ui-popupbook-scene-b', true, 'left');
+												moving('.ui-popupbook-scene-c', true, 'left');
+										} 
+								} else {
+										if (!isMove || isMove === 'left') {
+												moving('.ui-popupbook-scene-a', true, 'right');
+												moving('.ui-popupbook-scene-b', true, 'right');
+												moving('.ui-popupbook-scene-c', true, 'right');
+										} 
+								}
+						});
+				}).off('mouseleave.pspt').on('mouseleave.pspt', function(){
+						moving('.ui-popupbook-scene-a', false);
+						moving('.ui-popupbook-scene-b', false);
+						moving('.ui-popupbook-scene-c', false);
+				});
 
-        $wrap.find('.ui-popupbook-item').off('mouseover.pspti').on('mouseover.pspti', function(event){
-            pause();
-        }).off('mouseleave.pspti').on('mouseleave.pspti', function(event){
-            moving('.ui-popupbook-scene-a', false);
-            moving('.ui-popupbook-scene-b', false);
-            moving('.ui-popupbook-scene-c', false);
-        });
+				$wrap.find('.ui-popupbook-item').off('mouseover.pspti').on('mouseover.pspti', function(event){
+						pause();
+				}).off('mouseleave.pspti').on('mouseleave.pspti', function(event){
+						moving('.ui-popupbook-scene-a', false);
+						moving('.ui-popupbook-scene-b', false);
+						moving('.ui-popupbook-scene-c', false);
+				});
 
-        function pause() {
+				function pause() {
 			$wrap.data('move', 'stop');
 			$('.ui-popupbook-scene-a').stop();
 			$('.ui-popupbook-scene-b').stop();
 			$('.ui-popupbook-scene-c').stop();
-        }
-        function moving(t, v, w){
-            var $scene = $(t);
+				}
+				function moving(t, v, w){
+						var $scene = $(t);
 
-            if (v) {
-                var n = $scene.outerWidth() - $wrap.outerWidth();
-                var per = Math.floor((n - Math.abs($scene.position().left)) / n * 100);
-                var per2 = Math.floor(Math.abs($scene.position().left) / n * 100);
-                var speed = 8000 * (per / 100);
-                var speed2 = 8000 * (per2 / 100);
+						if (v) {
+								var n = $scene.outerWidth() - $wrap.outerWidth();
+								var per = Math.floor((n - Math.abs($scene.position().left)) / n * 100);
+								var per2 = Math.floor(Math.abs($scene.position().left) / n * 100);
+								var speed = 8000 * (per / 100);
+								var speed2 = 8000 * (per2 / 100);
 
-                if (w === 'left') {
-                    $wrap.data('move', 'left');
-                    $scene.stop().animate({
-                        left: ($scene.outerWidth() - $wrap.outerWidth()) * -1 + 'px'
-                    }, speed);
-                } else {
-                    $wrap.data('move', 'right');
-                    $scene.stop().animate({
-                        left: 0
-                    }, speed2);
-                }
-            } else {
+								if (w === 'left') {
+										$wrap.data('move', 'left');
+										$scene.stop().animate({
+												left: ($scene.outerWidth() - $wrap.outerWidth()) * -1 + 'px'
+										}, speed);
+								} else {
+										$wrap.data('move', 'right');
+										$scene.stop().animate({
+												left: 0
+										}, speed2);
+								}
+						} else {
 				$wrap.data('move', false);
 				$scene.stop();	
-            }
-        }
+						}
+				}
 	}
 
 
@@ -3039,7 +2896,7 @@ if (!Object.keys){
 		var	len = $btn.length,
 			keys = win[global].option.keys;
 			
-		var	para = win[global].uiPara('tab'),
+		var	para = win[global].para.get('tab'),
 			paras,
 			paraname;
 
@@ -3117,7 +2974,7 @@ if (!Object.keys){
 		callback ? callback(opt) : '';
 		$btn.data('psl', ps_l).data('len', len);
 
-		win[global].uiScroll({ 
+		win[global].scroll.move({ 
 			value: ps_l[current], 
 			target: $btns,
 			speed: 0, 
@@ -3214,10 +3071,10 @@ if (!Object.keys){
 			$target = $btns.find('> .ui-scrollbar-item');
 		}
 
-		win[global].uiScroll({ 
+		win[global].scroll.move({ 
 			value: ps_l[current], 
 			addLeft : $btn.outerWidth(),
-			target: $target, 
+			selector: $target, 
 			speed: 300, 
 			ps: align 
 		});
@@ -3295,18 +3152,18 @@ if (!Object.keys){
 		ps: false
 	};
 	function createUiTooltip(opt){
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiTooltip.option, opt);
+		var opt = opt === undefined ? {} : opt;
 
-		var $btn = $('.ui-tooltip-btn'),
-			$tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false,
-			visible = opt.visible,
-			id = opt.id ? $tip.attr('id') : '',
-			
-			sp = 10,
-			ps = opt.ps,
-			timer,
-			class_ps = 'ps-ct ps-cb ps-lt ps-lb ps-rt ps-rb';
+		opt = $.extend(true, {}, win[global].uiTooltip.option, opt);
+
+		var $btn = $('.ui-tooltip-btn');
+		var $tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false;
+		var visible = opt.visible;
+		var id = opt.id ? $tip.attr('id') : '';
+		var sp = 4;
+		var ps = opt.ps;
+		var timer;
+		var class_ps = 'ps-ct ps-cb ps-lt ps-lb ps-rt ps-rb';
 
 		if (visible !== null) {
 			visible ? tooltipSet(id) : tooltipHide();
@@ -3318,24 +3175,25 @@ if (!Object.keys){
 		// 	tooltipSet($(this).attr('aria-describedby'));
 		// });
 
-		$btn
-		.off('mouseover.ui focus.ui').on('mouseover.ui focus.ui', function(e){
-			e.preventDefault();
-			tooltipSet(this);
-		})
-		.off('mouseleave.ui ').on('mouseleave.ui', function(){
-			tooltipHideDelay();
+		// $btn.off('mouseover.ui focus.ui').on('mouseover.ui focus.ui', function(e){
+		// 	e.preventDefault();
+		// 	tooltipSet(this);
+		// }).off('mouseleave.ui ').on('mouseleave.ui', function(){
+		// 	tooltipHideDelay();
 
-			$('.ui-tooltip').on('mouseover.ui', function(){
-				clearTimeout(timer);
-			}).on('mouseleave.ui', function(e){
-				tooltipHideDelay();
-			});
+		// 	$('.ui-tooltip').on('mouseover.ui', function(){
+		// 		clearTimeout(timer);
+		// 	}).on('mouseleave.ui', function(e){
+		// 		tooltipHideDelay();
+		// 	});
+		// });
+
+		$('.ui-tooltip-close').off('click.uitooltip').on('click.uitooltip', function(){
+			$btn.data('view', false);
+			tooltipHide();
 		});
 
-		$btn
-		.off('touchstart.uitooltip').on('touchstart.uitooltip', function(e){
-			e.preventDefault();
+		$btn.off('touchstart.uitooltip').on('touchstart.uitooltip', function(){
 			var $this = $(this);
 
 			if (!$this.data('view')){
@@ -3346,6 +3204,15 @@ if (!Object.keys){
 				$this.data('view', false);
 				tooltipHide();
 			}
+			
+			setTimeout(function(){
+				$(doc).on('click.bdd', function(){
+					$btn.data('view', false);
+					tooltipHide();
+					console.log(22222);
+				});
+			},100);
+			
 
 			// $(doc).off('click.bdd').on('click.bdd', function(e){
 			// 	//dropdown 영역 외에 클릭 시 판단
@@ -3374,9 +3241,9 @@ if (!Object.keys){
 			var sl = $doc.scrollLeft();
 			
 			if (!!src && !$('#' + id).length) {
-				$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><div class="ui-tooltip-arrow"></div>')
+				$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><button class="ui-tooltip-close" type="button"><span class="a11y-hidden">툴팁닫기</span></button><div class="ui-tooltip-arrow"></div>')
 
-				$plugins.uiAjax({
+				$plugins.ajax.init({
 					id: $('#' + id),
 					url: src,
 					add: true,
@@ -3384,6 +3251,14 @@ if (!Object.keys){
 						act();
 					}
 				});
+				// $plugins.uiAjax({
+				// 	id: $('#' + id),
+				// 	url: src,
+				// 	add: true,
+				// 	callback: function(){
+				// 		act();
+				// 	}
+				// });
 			} else {
 				act();
 			}
@@ -3394,6 +3269,7 @@ if (!Object.keys){
 			}
 		}
 		function tooltipHide() {
+			$(doc).off('click.bdd');
 			$('.ui-tooltip').removeAttr('style').attr('aria-hidden', true).removeClass(class_ps);
 		}
 		function tooltipHideDelay(){
@@ -3401,12 +3277,14 @@ if (!Object.keys){
 		}
 
 		function tooltipShow(off_t, off_l, w, h, bw, bh, st, sl, id) {
-			var $id = $('#' + id),
-				pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false,
-				psl = (bw / 2 > (off_l - sl) + (w / 2)) ? true : false,
-				tw = $id.outerWidth(),
-				th = $id.outerHeight(),
-				ps_l, ps_r, cursorCls = 'ps-';
+			var $id = $('#' + id);
+			var pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false;
+			var psl = (bw / 2 > (off_l - sl) + (w / 2)) ? true : false;
+			var tw = $id.outerWidth();
+			var th = $id.outerHeight();
+			var ps_l; 
+			var ps_r; 
+			var cursorCls = 'ps-';
 				
 			if (psl) {
 				if (off_l - sl > tw / 2) {
@@ -3443,12 +3321,12 @@ if (!Object.keys){
 			if (!!$id.closest('.type-fixed-bottom').length) {
 				off_t = off_t - $('ui-modal-tit').outerHeight();
 			}
-
+			console.log(sp);
 			$id.addClass(cursorCls).attr('aria-hidden', false).css({ 
 				display:'block'
 			}).css({
 				top : pst ? off_t + h + sp : off_t - th - sp,
-				left : psl ? ps_l : ps_r
+				left : 0
 			});
 		}
 	}
@@ -4444,31 +4322,50 @@ if (!Object.keys){
 		}
 	});
 	function createUiInputClear(){
-		var $inp = $('.ui-inpcancel');
+		var $inp = $('.inp-base');
 
 		$inp.each(function(i){
 			var $this = $(this);
-			var $cancel = $this.next('.ui-inpcancel-btn');
+			var $wrap = $this.parent();
+			var $clear = $wrap.find('.ui-clear');
 
-			$this.val() === '' ?
-				$cancel.remove():
-				$cancel.length === 0 ?
-				$this.after('<button type="button" class="ui-inpcancel-btn" data-id="'+ $this.attr('id') +'"><span>clear</span></button>') : '';
+			// if ($this.val() === '' || $this.prop('readonly') || $this.prop('disabled')) {
+			// 	$clear.remove();
+			// } else { 
+			// 	if ($clear.length === 0) {
+			// 		$wrap.append(make($this.attr('id')));
+			// 	} 
+			// }
 
-			$inp.eq(i).off('keyup.inpcancel').on('keyup.inpcancel', function(){
+			$inp.eq(i).off('keyup.clear focus.clear').on('keyup.clear focus.clear', function(){
 				var _$this = $(this);
+				var _$wrap = $this.parent();
+				
+				if (_$this.prop('readonly') || _$this.prop('disabled') || _$this.attr('type') === 'date') {
+					return false;
+				}
 
 				if (_$this.val() === '') {
-					_$this.next('.ui-inpcancel-btn').remove();
+					_$this.next('.ui-clear').remove();
 				} else {
-					!!$('.ui-inpcancel-btn[data-id="'+ _$this.attr('id') +'"]').length ? '' :
-					_$this.after('<button type="button" class="ui-inpcancel-btn" data-id="'+ _$this.attr('id') +'"><span>clear</span></button>');
+					if (!$('.ui-clear[data-id="'+ _$this.attr('id') +'"]').length || _$this.attr('type') === 'date') {
+						_$wrap.append( make(_$this.attr('id')) );
+					} 
 				}
+			}).off('blur.clear').on('blur.clear', function(){
+				var $clear =  $(this).parent().find('.ui-clear');
+				setTimeout(function(){
+					$clear.remove();
+				},100)
 			});
 		});
 
+		function make(v){
+			return '<button type="button" class="ui-clear btn-clear" data-id="'+ v +'"><span class="a11y-hidden">내용지우기</span></button>';
+		}
+
 		//event
-		$(doc).off('click.inpcancel').on('click.inpcancel', '.ui-inpcancel-btn', function(){
+		$(doc).off('click.clear').on('click.clear', '.ui-clear', function(){
 			$('#' + $(this).data('id')).val('').focus();
 			$(this).remove();
 		});
@@ -4842,9 +4739,9 @@ if (!Object.keys){
 			}
 		}
 		function optScroll($wrap, n_top, wrap_h, key) {
-			win[global].uiScroll({ 
+			win[global].scroll.move({ 
 				value: Number(n_top), 
-				target: customscroll ? $wrap.find('> .ui-scrollbar-item') : $wrap, 
+				selector: customscroll ? $wrap.find('> .ui-scrollbar-item') : $wrap, 
 				speed: 0, 
 				ps: 'top' 
 			});
@@ -4888,16 +4785,16 @@ if (!Object.keys){
 				win[global].uiScrollBar({
 					id : _$wrap
 				});
-				win[global].uiScroll({ 
+				win[global].scroll.move({ 
 					value: Number(opt_h * _$uisel.find(':checked').index()), 
-					target: _$wrap.find('> .ui-scrollbar-item'), 
+					selector: _$wrap.find('> .ui-scrollbar-item'), 
 					speed: 0, 
 					ps: 'top' 
 				});
 			} else {
-				win[global].uiScroll({ 
+				win[global].scroll.move({ 
 					value: Number(opt_h * _$uisel.find(':checked').index()), 
-					target: _$wrap, 
+					selector: _$wrap, 
 					speed: 0, 
 					ps: 'top' 
 				});
