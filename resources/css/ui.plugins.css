@@ -3635,3 +3635,175 @@ select.off:focus+.ui-select-btn:after {
 .ui-focusloop-end{
     bottom:0;
 }
+
+
+
+
+/* draggable */
+.ui-draggable {
+	position: relative;
+	width: 100%;
+	height: 500px;
+	border: 1px solid rgb(80, 80, 80)
+}
+
+.ui-draggable-item {
+	position: absolute;
+	padding: 10px;
+	background: rgb(36, 36, 36);
+	color: #fff;
+	z-index: 1;
+	width: 50px;
+	height: 50px;
+}
+
+.ui-draggable-item.n1 {
+	top: 10px;
+	left: 10px
+}
+
+.ui-draggable-item.n2 {
+	top: 10px;
+	left: 300px
+}
+
+.ui-draggable-item.n3 {
+	top: 10px;
+	left: 500px
+}
+
+.ui-draggable-area {
+	position: absolute;
+	padding: 10px;
+	border: 1px solid #000;
+	background: #f2f2f2;
+	text-align: center;
+}
+
+.ui-draggable-area.n1 {
+	bottom: 10px;
+	left: 0;
+	width: 30%;
+	height: 200px
+}
+
+.ui-draggable-area.n2 {
+	bottom: 10px;
+	left: 30%;
+	width: 30%;
+	height: 200px
+}
+
+.ui-draggable-area.n3 {
+	bottom: 10px;
+	left: 60%;
+	width: 30%;
+	height: 200px
+}
+
+.ui-draggable.type-line {
+	width: 100%;
+	height: 500px;
+	border: 1px solid #000;
+	position: relative;
+}
+
+.ui-draggable.type-line .ui-draggable-area {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	background: #fff;
+	border: 1px solid #000;
+	left: auto;
+	width: 50px;
+	height: 50px;
+}
+
+.ui-draggable.type-line .ui-draggable-item {
+	position: absolute;
+	width: 10px;
+	height: 10px;
+	background: #000;
+	z-index: 2;
+	width: 50px;
+	height: 50px;
+}
+
+.ui-draggable.type-line .ui-draggable-item.clone {
+	z-index: 0;
+	opacity: .5;
+}
+
+.ui-draggable.type-line .ui-draggable-item.n1 {
+	top: 10px;
+	left: 50px
+}
+
+.ui-draggable.type-line .ui-draggable-item.n2 {
+	top: 100px;
+	left: 50px
+}
+
+.ui-draggable.type-line .ui-draggable-item.n3 {
+	top: 200px;
+	left: 50px
+}
+
+.ui-draggable.type-line .ui-draggable-area.n1 {
+	top: 100px;
+	right: 50px
+}
+
+.ui-draggable.type-line .ui-draggable-area.n2 {
+	top: 10px;
+	right: 50px
+}
+
+.ui-draggable.type-line .ui-draggable-area.n3 {
+	top: 200px;
+	right: 50px
+}
+
+.ui-draggable.type-line svg {
+	width: 100%;
+	height: 100%;
+	border: 1px solid #000;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.ui-draggable.type-line svg line {
+	stroke: black;
+	stroke-linecap: round
+}
+
+[draggable="0"] #drag4::after {
+	content: "0";
+	position: absolute;
+	width: 100%;
+	height: 100;
+	font-size: 150px;
+	text-align: center;
+	opacity: 0.4;
+}
+
+[draggable="1"] #drag4::after {
+	content: "1";
+	position: absolute;
+	width: 100%;
+	height: 100;
+	font-size: 150px;
+	text-align: center;
+	opacity: 0.4;
+}
+
+[draggable="2"] #drag4::after {
+	content: "2";
+	position: absolute;
+	width: 100%;
+	height: 100;
+	font-size: 150px;
+	text-align: center;
+	opacity: 0.4;
+}

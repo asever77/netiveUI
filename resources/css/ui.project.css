@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+:focus{
+	outline: 2px solid black !important;
+}
+
 /* mobile first style */
 @keyframes slideLeftIn {
     0% {left: 0;}
@@ -211,7 +215,6 @@ p {
 	font-family: 'Roboto', sans-serif;
 	font-size: 4rem;
 	font-weight: 400;
-	letter-spacing: 0.1rem;
 	line-height: 1.2;
 	margin: 0;
 }
@@ -242,6 +245,11 @@ p {
 	font-size: 16px;
 	margin: 10px 0 5px;
 }
+
+/* table */
+
+
+
 
 /* box code */
 .box-code {
@@ -295,199 +303,12 @@ p {
 	width: 25%;
 }
 
-.tbl-test1 col.n1 {
-	width: auto
-}
 
-.tbl-test1 col.n2 {
-	width: auto
-}
-
-.tbl-test1 col.n3 {
-	width: auto
-}
-
-.tbl-test1 col.n4 {
-	width: auto
-}
-
-.tbl-test1 col.n5 {
-	width: auto
-}
 
 .tab-test-scroll {
 	width: 100%;
 }
 
-
-/* draggable */
-.ui-draggable {
-	position: relative;
-	width: 100%;
-	height: 500px;
-	border: 1px solid rgb(80, 80, 80)
-}
-
-.ui-draggable-item {
-	position: absolute;
-	padding: 10px;
-	background: rgb(36, 36, 36);
-	color: #fff;
-	z-index: 1;
-	width: 50px;
-	height: 50px;
-}
-
-.ui-draggable-item.n1 {
-	top: 10px;
-	left: 10px
-}
-
-.ui-draggable-item.n2 {
-	top: 10px;
-	left: 300px
-}
-
-.ui-draggable-item.n3 {
-	top: 10px;
-	left: 500px
-}
-
-.ui-draggable-area {
-	position: absolute;
-	padding: 10px;
-	border: 1px solid #000;
-	background: #f2f2f2;
-	text-align: center;
-}
-
-.ui-draggable-area.n1 {
-	bottom: 10px;
-	left: 0;
-	width: 30%;
-	height: 200px
-}
-
-.ui-draggable-area.n2 {
-	bottom: 10px;
-	left: 30%;
-	width: 30%;
-	height: 200px
-}
-
-.ui-draggable-area.n3 {
-	bottom: 10px;
-	left: 60%;
-	width: 30%;
-	height: 200px
-}
-
-.ui-draggable.type-line {
-	width: 100%;
-	height: 500px;
-	border: 1px solid #000;
-	position: relative;
-}
-
-.ui-draggable.type-line .ui-draggable-area {
-	position: absolute;
-	width: 10px;
-	height: 10px;
-	background: #fff;
-	border: 1px solid #000;
-	left: auto;
-	width: 50px;
-	height: 50px;
-}
-
-.ui-draggable.type-line .ui-draggable-item {
-	position: absolute;
-	width: 10px;
-	height: 10px;
-	background: #000;
-	z-index: 2;
-	width: 50px;
-	height: 50px;
-}
-
-.ui-draggable.type-line .ui-draggable-item.clone {
-	z-index: 0;
-	opacity: .5;
-}
-
-.ui-draggable.type-line .ui-draggable-item.n1 {
-	top: 10px;
-	left: 50px
-}
-
-.ui-draggable.type-line .ui-draggable-item.n2 {
-	top: 100px;
-	left: 50px
-}
-
-.ui-draggable.type-line .ui-draggable-item.n3 {
-	top: 200px;
-	left: 50px
-}
-
-.ui-draggable.type-line .ui-draggable-area.n1 {
-	top: 100px;
-	right: 50px
-}
-
-.ui-draggable.type-line .ui-draggable-area.n2 {
-	top: 10px;
-	right: 50px
-}
-
-.ui-draggable.type-line .ui-draggable-area.n3 {
-	top: 200px;
-	right: 50px
-}
-
-.ui-draggable.type-line svg {
-	width: 100%;
-	height: 100%;
-	border: 1px solid #000;
-	position: absolute;
-	top: 0;
-	left: 0;
-}
-
-.ui-draggable.type-line svg line {
-	stroke: black;
-	stroke-linecap: round
-}
-
-[draggable="0"] #drag4::after {
-	content: "0";
-	position: absolute;
-	width: 100%;
-	height: 100;
-	font-size: 150px;
-	text-align: center;
-	opacity: 0.4;
-}
-
-[draggable="1"] #drag4::after {
-	content: "1";
-	position: absolute;
-	width: 100%;
-	height: 100;
-	font-size: 150px;
-	text-align: center;
-	opacity: 0.4;
-}
-
-[draggable="2"] #drag4::after {
-	content: "2";
-	position: absolute;
-	width: 100%;
-	height: 100;
-	font-size: 150px;
-	text-align: center;
-	opacity: 0.4;
-}
 
 
 .tst-obj {
@@ -985,11 +806,12 @@ html.col-12 .coln12 {
 	box-shadow: 0 0.3rem 0.3rem rgba(0, 0, 0, 0.1);
 }
 
+.test-scrollmove-hor{
+	overflow-x: auto;
+}
 .test-scrollmove-hor > div {
 	display: flex;
 	justify-content: space-between;
-	overflow-x: auto;
-	max-width:40rem;
 }
 .test-scrollmove-hor > div > div:focus{
 	background:black;
@@ -1006,9 +828,14 @@ html.col-12 .coln12 {
 	justify-content: center;
 	font-size:4rem;
 	line-height: 1;
+	opacity:0.1;
+	transition: opacity .8s;
+}
+.test-scrollmove-hor .test.tada{
+	opacity: 1;
 }
 .test-scrollmove-hor .test+.test{
-	margin-left:1rem;
+	/* margin-left:1rem; */
 }
 .test-scrollmove-hor .btn-wrap {
 	flex-wrap: wrap;
@@ -1407,25 +1234,7 @@ html.col-12 .coln12 {
 		width: auto;
 	}
 
-	.tbl-test1 col.n1 {
-		width: 100px
-	}
-
-	.tbl-test1 col.n2 {
-		width: auto
-	}
-
-	.tbl-test1 col.n3 {
-		width: 200px
-	}
-
-	.tbl-test1 col.n4 {
-		width: 150px
-	}
-
-	.tbl-test1 col.n5 {
-		width: 150px
-	}
+	
 
 	.type-discription .col-th {
 		width: 140px;

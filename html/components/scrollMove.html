@@ -2,25 +2,24 @@
 
 <div class="tit-wrap">
 	<h1 class="h-1">Scroll Move</h1>
-	<p>특정위치로 스크롤 이동 시 사용</p>
+	<p>특정 위치로 스크롤 이동이 필요할때 사용한다.</p>
 </div>
 
 <section class="sec-wrap">
 	<h2 class="h-2">Examples</h2>
 	<div class="box-guide">
 		<div class="ui-scrollbar test-scrollmove-hor">
-			<div>
-				<div class="test" tabindex="0"><span>1</span></div>
-				<div class="test" tabindex="0"><span>2</span></div>
-				<div class="test" tabindex="0"><span>3</span></div>
-				<div class="test" tabindex="0"><span>4</span></div>
-				<div class="test" tabindex="0"><span>5</span></div>
-				<div class="test" tabindex="0"><span>6</span></div>
-				<div class="test" tabindex="0"><span>7</span></div>
-				<div class="test" tabindex="0"><span>8</span></div>
+			<div class="test-scrollmove-hor-wrap">
+				<div class="test test-scrollmove-hor-item" tabindex="0"><span>1</span></div>
+				<div class="test test-scrollmove-hor-item" tabindex="0"><span>2</span></div>
+				<div class="test test-scrollmove-hor-item" tabindex="0"><span>3</span></div>
+				<div class="test test-scrollmove-hor-item" tabindex="0"><span>4</span></div>
+				<div class="test test-scrollmove-hor-item" tabindex="0"><span>5</span></div>
+				<div class="test test-scrollmove-hor-item" tabindex="0"><span>6</span></div>
+				<div class="test test-scrollmove-hor-item" tabindex="0"><span>7</span></div>
+				<div class="test test-scrollmove-hor-item" tabindex="0"><span>8</span></div>
 			</div>
 		</div>
-		
 		<div class="btn-wrap type-many">
 			<button type="button" class="btn-base test-scrollmove-left" data-n="0"><span>01</span></button>
 			<button type="button" class="btn-base test-scrollmove-left" data-n="1"><span>02</span></button>
@@ -42,22 +41,21 @@
 		</div>
 	</div>
 
-	
-
 	<script>
 		$('.test-scrollmove-left').on('click', function(){
 			var n = $(this).attr('data-n');
-			console.log( $('.test-scrollmove-hor .test').eq(n).position().left, $('.test-scrollmove-hor > div').scrollLeft() );
+
+			console.log('-------------', $('.test-scrollmove-hor-wrap').scrollLeft());
 
 			$plugins.scroll.move({ 
-				value: $('.test-scrollmove-hor .test').eq(n).position().left + $('.test-scrollmove-hor > div').scrollLeft() + 10, 
-				selector: $('.test-scrollmove-hor > div'), 
+				value: $('.test-scrollmove-hor .test').eq(n).position().left + $('.test-scrollmove-hor').scrollLeft() + 10, 
+				selector: document.querySelector('.test-scrollmove-hor'), 
 				speed:  300, 
 				ps:'center',
-				addLeft: $('.test-scrollmove-hor .test').eq(n).outerWidth() / 2,
+				add: $('.test-scrollmove-hor .test').eq(n).outerWidth() / 2,
 				focus: $('.test-scrollmove-hor .test').eq(n), 
 				callback: function(v) {
-					//console.log(v);
+					console.log('callback-center', v);
 				}
 			});
 			
@@ -65,10 +63,13 @@
 
 		$('.test-scrollmove-top').on('click', function(){
             $plugins.scroll.move({ 
-                selector: $('.test-scrollmove-ver'),
+                selector: document.querySelector('.test-scrollmove-ver'),
                 value: 0, 
                 speed: 300, 
-                focus: $('.tit-wrap h1')
+                focus: $('.h-1'),
+				callback: function(v) {
+					console.log('callback-top', v);
+				}
             });
         });
         
@@ -76,14 +77,19 @@
             $plugins.scroll.move({ 
                 selector: $('.test-scrollmove-ver'),
                 value: $('.test-scrollmove-ver').prop('scrollHeight'), 
-                speed:300 
+                speed:300,
+				callback: function(v) {
+					console.log('callback-bottom', v);
+				}
             });
         });
+
+		document.querySelectorAll('.test-scrollmove-hor-item').forEach(function (v) {
+			$plugins.io.observe(v);
+		});
 	</script>
 
 </section>
-
-
 
 <section class="sec-wrap">
 	<h2 class="h-2">Javascript</h2>
@@ -96,7 +102,7 @@ $plugins.scroll.move({
 	speed: 0,
 	callback: false,
 	ps: 'top', //'top/center/left'
-	addLeft: 0,
+	add: 0,
 	focus: false,
 	
 });
@@ -121,16 +127,22 @@ $plugins.scroll.move({
 			</thead>
 			<tbody>
 				<tr>
+					<th scope="row">selector:</th>
+					<td>[object]</td>
+					<td>$('html, body')</td>
+					<td>스크롤 영역 지정</td>
+				</tr>
+				<tr>
 					<th scope="row">value:</th>
 					<td>[number]</td>
 					<td>0</td>
-					<td>스크롤이 갈 위치값</td>
+					<td>이동할 위치값</td>
 				</tr>
 				<tr>
 					<th scope="row">speed:</th>
 					<td>[number]</td>
 					<td>300</td>
-					<td>스크롤속도</td>
+					<td>이동속도</td>
 				</tr>
 				<tr>
 					<th scope="row">addLeft:</th>
@@ -138,12 +150,7 @@ $plugins.scroll.move({
 					<td>0</td>
 					<td>가로 이동 시 이동값 추가</td>
 				</tr>
-				<tr>
-					<th scope="row">target:</th>
-					<td>[string][object]</td>
-					<td>'html, body'</td>
-					<td>스크롤 영역으로 해당 아이디명 기입. 기본으로 html,body로 설정됨</td>
-				</tr>
+				
 				<tr>
 					<th scope="row">ps:</th>
 					<td>[string]</td>
