@@ -42,51 +42,59 @@
 	</div>
 
 	<script>
-		$('.test-scrollmove-left').on('click', function(){
-			var n = $(this).attr('data-n');
+		;(function($, win, doc, undefined) {
 
-			console.log('-------------', $('.test-scrollmove-hor-wrap').scrollLeft());
+			'use strict';
 
-			$plugins.scroll.move({ 
-				value: $('.test-scrollmove-hor .test').eq(n).position().left + $('.test-scrollmove-hor').scrollLeft() + 10, 
-				selector: document.querySelector('.test-scrollmove-hor'), 
-				speed:  300, 
-				ps:'center',
-				add: $('.test-scrollmove-hor .test').eq(n).outerWidth() / 2,
-				focus: $('.test-scrollmove-hor .test').eq(n), 
-				callback: function(v) {
-					console.log('callback-center', v);
-				}
-			});
+			$(doc).ready(function() {
+				$('.test-scrollmove-left').on('click', function(){
+					var n = $(this).attr('data-n');
+
+					console.log('-------------', $('.test-scrollmove-hor-wrap').scrollLeft());
+
+					$plugins.scroll.move({ 
+						value: $('.test-scrollmove-hor .test').eq(n).position().left + $('.test-scrollmove-hor').scrollLeft() + 10, 
+						selector: document.querySelector('.test-scrollmove-hor'), 
+						speed:  300, 
+						ps:'center',
+						add: $('.test-scrollmove-hor .test').eq(n).outerWidth() / 2,
+						focus: $('.test-scrollmove-hor .test').eq(n), 
+						callback: function(v) {
+							console.log('callback-center', v);
+						}
+					});
+					
+				});
+
+				$('.test-scrollmove-top').on('click', function(){
+					$plugins.scroll.move({ 
+						selector: document.querySelector('.test-scrollmove-ver'),
+						value: 0, 
+						speed: 300, 
+						focus: $('.h-1'),
+						callback: function(v) {
+							console.log('callback-top', v);
+						}
+					});
+				});
+				
+				$('.test-scrollmove-bottom').on('click', function(){
+					$plugins.scroll.move({ 
+						selector: $('.test-scrollmove-ver'),
+						value: $('.test-scrollmove-ver').prop('scrollHeight'), 
+						speed:300,
+						callback: function(v) {
+							console.log('callback-bottom', v);
+						}
+					});
+				});
+
 			
-		});
-
-		$('.test-scrollmove-top').on('click', function(){
-            $plugins.scroll.move({ 
-                selector: document.querySelector('.test-scrollmove-ver'),
-                value: 0, 
-                speed: 300, 
-                focus: $('.h-1'),
-				callback: function(v) {
-					console.log('callback-top', v);
-				}
-            });
-        });
-        
-        $('.test-scrollmove-bottom').on('click', function(){
-            $plugins.scroll.move({ 
-                selector: $('.test-scrollmove-ver'),
-                value: $('.test-scrollmove-ver').prop('scrollHeight'), 
-                speed:300,
-				callback: function(v) {
-					console.log('callback-bottom', v);
-				}
-            });
-        });
-
-		document.querySelectorAll('.test-scrollmove-hor-item').forEach(function (v) {
-			$plugins.io.observe(v);
-		});
+				document.querySelectorAll('.test-scrollmove-hor-item').forEach(function (v) {
+					$plugins.io.observe(v);
+				});
+			});
+		})(jQuery, window, document);
 	</script>
 
 </section>

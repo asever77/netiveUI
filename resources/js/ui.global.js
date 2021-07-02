@@ -513,7 +513,6 @@ if (!Object.keys){
 	 * intersection observer
 	 */
 	win[global].io = new IntersectionObserver(function (entries) {
-		console.log(entries);
 		entries.forEach(function (entry) {
 			if (entry.intersectionRatio > 0) {
 				entry.target.classList.add('tada');
