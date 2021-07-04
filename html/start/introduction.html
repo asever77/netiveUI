@@ -1,22 +1,16 @@
 <input type="hidden" id="uiJsName" value="pageIntroduction">
 
-<div class="tit-catagory">
-	Getting Started
-</div>
-
 <div class="tit-wrap">
 	<h1 class="h-1">Introduction</h1>
+	<p>Netive UI Plugins는 jQuery기반으로 jQuery 플러그인을 먼저 실행 후 사용해야 합니다.</p>
 </div>
 
-<h2 class="h-2">Before the start</h2>
-<p>Netive UI Plugins는 jQuery기반으로 작업이 되어있어 jquery-1.12.4(이상 호환) 플러그인을 먼저 실행 후 사용해야 한다.</p>
-
-<h2 class="h-2">HTML Template</h2>
-<p>HTML5 Doctype를 기본으로 구성한 아래와 같이 작성한다.<br>
-특별한 이유가 있지 않다면 스크립트는 body 최하단영역에 위치한다.</p>
-<div class="box-code">
-<pre>
-<code class="html">
+<section class="sec-wrap">
+	<h2 class="h-2">HTML Template</h2>
+	<p class="bul-dot">기본적으로 HTML5로 마크업을 구성한다. 'id'사용은 최대한 지양하며 'class'로만 스타일을 준다.</p>
+	<p class="bul-dot">기본구성의 class명은 접두사로 'base-'를 사용하며 사용 시 'id'처럼 유니크하게 사용한다.
+	
+<pre class="box-code"><code class="html">
 &lt;doctype html&gt;
 &lt;html lang="ko"&gt;
 	&lt;head&gt;
@@ -26,28 +20,28 @@
 
 		&lt;title&gt;page title&lt;/title&gt;
 
-		&lt;link rel="stylesheet" href="/netiveUI/resources/css/ui.base.css"&gt;
+		&lt;link rel="stylesheet" href="/projectname/resources/css/ui.base.css"&gt;
 
-		&lt;script defer src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"&gt;&lt;/script&gt;
-		&lt;script defer src="/netiveUI/resources/js/ui.global.js"&gt;&lt;/script&gt;
-		&lt;script defer src="/netiveUI/resources/js/ui.common.js"&gt;&lt;/script&gt;
-		&lt;script defer src="/netiveUI/resources/js/ui.page.js"&gt;&lt;/script&gt;
+		&lt;script src="/projectname/resources/js/lib/jquery-1.12.4.min.js"&gt;&lt;/script&gt;
+		&lt;script src="/projectname/resources/js/ui.global.js"&gt;&lt;/script&gt;
+		&lt;script src="/projectname/resources/js/ui.common.js"&gt;&lt;/script&gt;
 	&lt;/head&gt;
 	&lt;body&gt;
-		&lt;div class="base-skip" id="baseSkip"&gt;&lt;/div&gt;
-		&lt;div class="base-wrap" id="baseWrap"&gt;
-			&lt;header class="base-header" id="baseHeader"&gt;&lt;/header&gt;
-			&lt;div class="base-body" id="baseBody"&gt;
-				&lt;aside class="base-aside" id="baseAside"&gt;
+		&lt;div class="base-skip"&gt;&lt;/div&gt;
+		&lt;div class="base-wrap"&gt;
+			&lt;header class="base-header"&gt;
+				// 
+			&lt;/header&gt;
+			&lt;div class="base-body"&gt;
+				&lt;aside class="base-aside"&gt;
 					// 사이드 영역 
 				&lt;/aside&gt;
-				&lt;main role="main" class="base-main" id="baseMain"&gt;
+				&lt;main class="base-main"&gt;
 					// 콘텐츠 영역
 				&lt;/main&gt;
 			&lt;/div&gt;
-			&lt;footer class="base-footer" id="baseFooter"&gt;&lt;/footer&gt;
+			&lt;footer class="base-footer"&gt;&lt;/footer&gt;
 		&lt;/div&gt;
-
 		
 		&lt;script&gt;
 		;(function($, win, doc, undefined) {
@@ -58,60 +52,62 @@
 		&lt;/script&gt;
 	&lt;/body&gt;
 &lt;/html&gt;
-</code>
-</pre>
-</div>
-								
-<h2 class="h-2">Z-index</h2>
-<p>기본적인 z-index 값을 정하여 체계적인 위치설정</p>
-<div class="tbl-base type-zindex">
-	<table>
-		<caption>옵션 설명</caption>
-		<colgroup>
-			<col class="n1">
-			<col class="n2">
-			<col class="n3">
-			<col class="n4">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">class명</th>
-				<th scope="col">옵션명</th>
-				<th scope="col">설정값</th>
-				<th scope="col">설명</th>
-			</tr>
-		</thead>
-		<tbody class="txta-l">
-			<tr class="nec">
-				<th scope="row">.base-skip</th>
-				<td>z-index</td>
-				<td>1000</td>
-				<td>스킵네비게이션 메뉴 (모든 컨텐츠의 최상위에 존재)</td>
-			</tr>
-			<tr>
-				<th scope="row">.modal-backdrop</th>
-				<td>z-index</td>
-				<td>199</td>
-				<td>모달의 암막레이어</td>
-			</tr>
-			<tr>
-				<th scope="row">.ui-modal</th>
-				<td>z-index</td>
-				<td>200 ~ </td>
-				<td>모달</td>
-			</tr>
-			<tr>
-				<th scope="row">.ui-dropdown</th>
-				<td>z-index</td>
-				<td>100</td>
-				<td>드롭다운</td>
-			</tr>
-			<tr>
-				<th scope="row">.ui-tooltip</th>
-				<td>z-index</td>
-				<td>50</td>
-				<td>툴팁</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+</code></pre>
+
+</section>
+
+<section class="sec-wrap">
+	<h2 class="h-2">Z-index</h2>
+	<p>기본적인 z-index 값을 정하여 체계적인 위치설정</p>
+	<div class="tbl-base type-zindex">
+		<table>
+			<caption>옵션 설명</caption>
+			<colgroup>
+				<col class="n1">
+				<col class="n2">
+				<col class="n3">
+				<col class="n4">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">class명</th>
+					<th scope="col">옵션명</th>
+					<th scope="col">설정값</th>
+					<th scope="col">설명</th>
+				</tr>
+			</thead>
+			<tbody class="txta-l">
+				<tr class="nec">
+					<th scope="row">.base-skip</th>
+					<td>z-index</td>
+					<td>1000</td>
+					<td>스킵네비게이션 메뉴 (모든 컨텐츠의 최상위에 존재)</td>
+				</tr>
+				<tr>
+					<th scope="row">.modal-backdrop</th>
+					<td>z-index</td>
+					<td>199</td>
+					<td>모달의 암막레이어</td>
+				</tr>
+				<tr>
+					<th scope="row">.ui-modal</th>
+					<td>z-index</td>
+					<td>200 ~ </td>
+					<td>모달</td>
+				</tr>
+				<tr>
+					<th scope="row">.ui-dropdown</th>
+					<td>z-index</td>
+					<td>100</td>
+					<td>드롭다운</td>
+				</tr>
+				<tr>
+					<th scope="row">.ui-tooltip</th>
+					<td>z-index</td>
+					<td>50</td>
+					<td>툴팁</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</section>

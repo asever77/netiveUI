@@ -1,50 +1,44 @@
 <input type="hidden" id="uiJsName" value="pagePopup">
 
-<div class="tit-catagory">Components</div>
 <div class="tit-wrap">
 	<h1 class="h-1">Window Popup</h1>
-</div>
-<p class="txts-m">window popup을 생성할때 사용</p>
-
-<h2 class="h-2">Examples</h2>
-<div class="btn-wrap txta-l">
-	<a href="http://naver.com" class="btn-base" id="uiPopupA" target="_blank" aria-haspopup="true" title="가이드 새 창 열림" ><span>팝업띄우기</span></a>
-	<a href="http://daum.net" class="btn-base" id="uiPopupB" target="_blank" aria-haspopup="true" title="가이드 새 창 열림" data-popname="list"><span>팝업띄우기</span></a>
+	<p>window popup을 생성할때 사용</p>
 </div>
 
-<h2 class="h-2">HTML Structure</h2>
-<div class="box-code">
-<pre>
-<code>
-&lt;a href="..." class="btn-base" id="uiPopupA" target="_blank" aria-haspopup="true" title="새 창 열림"&gt;팝업&lt;/a&gt;
-</code>
-</pre>
-</div>	
-	
-<h2 class="h-2">Javascript</h2>
-<h3 class="h-3">$plugins.uiPopup</h3>
-<div class="box-code">
-<pre>
-<code>
-$('#uiPopupA').on('click', function(e){
-	e.preventDefault()
-	$plugins.uiPopup({
-		link: this.href,
-		name: 'new popup',
-		width: 790,
-		height: 620,
-		align: 'center',
-		top: 0,
-		left: 0,
-		toolbar: 'no',
-		location: 'no',
-		memubar: 'no',
-		status: 'no',
-		resizable: 'no',
-		scrolbars: 'yes'
-	});
+<section class="sec-wrap">
+	<h2 class="h-2">Examples</h2>
+	<div class="btn-wrap txta-l">
+		<a href="http://naver.com" class="btn-base" id="uiPopupA" target="_blank" aria-haspopup="true" title="가이드 새 창 열림" ><span>팝업띄우기</span></a>
+		<a href="http://daum.net" class="btn-base" id="uiPopupB" target="_blank" aria-haspopup="true" title="가이드 새 창 열림" data-popname="list"><span>팝업띄우기</span></a>
+	</div>
+</section>
+
+<section class="sec-wrap">
+	<h2 class="h-2">HTML Structure</h2>
+<pre class="box-code"><code class="html">
+&lt;a href="..." class="btn-base" target="_blank" aria-haspopup="true" title="새 창 열림"&gt;팝업&lt;/a&gt;
+</code></pre>
+</section>
+
+<section class="sec-wrap">
+	<h2 class="h-2">Javascript</h2>
+	<h3 class="h-3">$plugins.popup.open({ ... })</h3>
+
+<pre class="box-code"><code class="javascript">
+$plugins.uiPopup({
+	link: this.href,
+	name: 'new popup',
+	width: 790,
+	height: 620,
+	align: 'center',
+	top: 0,
+	left: 0,
+	toolbar: 'no',
+	location: 'no',
+	memubar: 'no',
+	status: 'no',
+	resizable: 'no',
+	scrolbars: 'yes'
 });
-</code>
-</pre>
-</div>
-
+</code></pre>
+</section>

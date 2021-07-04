@@ -141,18 +141,18 @@
 			} 
 
 			$plugins.ajax.init({ 
-				id:'baseHeader', 
+				selector: $('.base-header'), 
 				url:'/netiveUI/html/inc/header.html', 
 				page:true, 
 				callback:$plugins.common.header 
 			});
 			$plugins.ajax.init({ 
-				id:'baseFooter', 
+				selector: $('base-footer'), 
 				url:'/netiveUI/html/inc/footer.html', 
 				page:true
 			});
 			$plugins.ajax.init({ 
-				id: 'baseMain', 
+				selector: $('.base-main'), 
 				url: fristHref, 
 				page: true, 
 				effect: true,
@@ -161,7 +161,7 @@
 					$plugins.common.pageInit(fristHref);
 					$plugins.common.settingAside();
 
-					
+					hljs.initHighlightingOnLoad();
 					// $(doc).find('.base-wrap').find('button, a').on('click', function(){
 					// 	var $this = $(this); 
 					// 	(!$this.closest('.ui-modal').length || $this.hasClass('.ui-modal')) && $('body').data('active', $this);
@@ -182,10 +182,7 @@
 			console.log('------------------------------------------------------')
 
 			$plugins.table.caption();
-			//$plugins.uiInputClear();
-
-
-			
+			$plugins.uiInputClear();
 
 		},
 		
@@ -211,8 +208,8 @@
 			
 		},
 		settingAside: function(){
-			var $aside = $('#baseAside'),
-				$main = $('#baseMain'),
+			var $aside = $('.base-aside'),
+				$main = $('.base-main'),
 				$h2 = $main.find('.h-2');
 
 			var asideUl = '<ul>';
@@ -253,6 +250,7 @@
 				var indexUrl = '/netiveUI/html/index.html?page=' + paraUrl;
    
 				history.pushState(false, 'loading', indexUrl);
+				
 			}
 
 		   
@@ -282,20 +280,21 @@
 				var href = this.getAttribute('data-href');
 				!!$('body').hasClass('nav-open') && $plugins.common.navOpen();
 				$plugins.ajax.init({ 
-					id: 'baseMain', 
+					selector: $('.base-main'), 
 					url: href, 
 					page: true, 
 					effect: true,
 					callback: function(v){
-						$plugins.uiScroll({ 
+						$plugins.scroll.move({ 
 							value:0, 
 							speed:0, 
-							focus:  $('#baseMain h1').eq(0)
+							focus:  $('.base-main h1').eq(0)
 						});
 						
 						$(win).off('scroll.win');
 						$plugins.common.pageInit(href);
 						$plugins.common.settingAside();
+						hljs.initHighlightingOnLoad();
 						
 					}
 				});

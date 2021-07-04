@@ -7,8 +7,8 @@
 
 <h2 class="h-2">Examples</h2>
 <div class="pure-not">
-	<button type="button" class="btn-base " onclick="$plugins.uiLoading({ visible:true, styleClass:'time' });"><span>Time loading...</span></button>
-	<button type="button" class="btn-base" onclick="$plugins.uiLoading({ visible:true, styleClass:'orbit' });"><span>Orbit loading...</span></button>
+	<button type="button" class="btn-base " onclick="$plugins.loading.show({ styleClass:'time' });"><span>Time loading...</span></button>
+	<button type="button" class="btn-base" onclick="$plugins.loading.show({ styleClass:'orbit' });"><span>Orbit loading...</span></button>
 </div>
 <div class="pure-is">
 	<button type="button" class="btn-base" onclick="netive.uiLoading.show({
@@ -19,18 +19,12 @@
 
 <h2 class="h-2">HTML Structure</h2>
 <div class="box-code">
-<pre>
-<code>
-//스크립트 실행 후
-&lt;div class="ui-loading visible"&gt;
-	//-------------
+<pre><code class="html">&lt;div class="ui-loading visible"&gt;
 	&lt;div class="orbit"&gt;
 		&lt;div class="orbit-wrap"&gt;&lt;/div&gt;
 	&lt;/div&gt;
-	//-------------
 &lt;/div&gt;
-</code>
-</pre>
+</code></pre>
 </div>
 
 
@@ -38,28 +32,217 @@
 <h3 class="h-3">base style</h3>
 <div class="box-code pure-not">
 <pre>
-<code>
-.ui-loading {display:block; position:fixed; z-index:100; width:100%; height:100%; opacity:0; top:0; left:0;}
-.ui-loading.visible {animation-name:fadeIn; animation-delay:1s; animation-duration:.5s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
-.ui-loading {animation-name:fadeOut; animation-duration:.5s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
-.ui-loading-txt {font-size:14px; color:#fff; width:120px; position:absolute; left:50%; bottom:-30px; margin-left:-60px; text-align:center;}
-.ui-loading-txt span {display:block; padding:2px;}
+<code class="css">.ui-loading {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+}
 
-/* time */
-.ui-loading.time:after {content:""; display:block; position:fixed; z-index:0; width:100%; height:100%; opacity:1; top:0; left:0; background:rgba(0,0,0,0.5);}
-.ui-loading.time .ui-loading-wrap {position:absolute; z-index:1; width:80px; height:80px; top:50%; left:50%; margin:-40px 0 0 -40px; border-radius:50%; border:1px solid rgba(255,255,255,0.5); background:rgba(0,0,0,0.1); box-shadow:0 0 8px rgba(0,0,0,0.2);}
-.ui-loading.time .ui-loading-wrap:after {content:""; display:block; position:absolute; z-index:1; left:50%; top:40px; margin-left:-20px; border-radius:1px; width:40px; height:1px; background:linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 100%);}
-.ui-loading.time .ui-loading-wrap:before {content:""; display:block; position:absolute; z-index:1; left:50%; top:40px; margin-left:-30px; border-radius:1px; width:60px; height:1px; background:linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,1) 100%);}
-.ui-loading.time .ui-loading-wrap:after {animation-name:timeAni; animation-duration:12s; animation-iteration-count:infinite; animation-timing-function:linear}
-.ui-loading.time .ui-loading-wrap:before {animation-name:timeAni; animation-duration:1.2s; animation-iteration-count:infinite; animation-timing-function:linear}
-/* orbit */
-.ui-loading.orbit:after{content:""; display:block; position:fixed; z-index:0; width:0; height:0; top:50%; left:50%; background:rgba(0,0,0,0.5); transform: translate(-50%,-50%); border-radius:50%;}
-.ui-loading.orbit .ui-loading-wrap {position:absolute; width:80px; height:80px; top:50%; left:50%; margin:-40px 0 0 -40px;}
-.ui-loading.orbit .ui-loading-wrap:after {content:""; display:block; position:absolute; left:0; top:calc(50% - 10px); border-radius:50%; width:20px; height:20px; background:rgba(0,0,0,1);}
-.ui-loading.orbit .ui-loading-wrap:before {content:""; display:block; position:absolute; right:0; top:calc(50% - 10px); border-radius:50%; width:20px; height:20px; background:rgba(255,255,255,1)}
-.ui-loading.orbit:after{animation-name:orbitScaleAni; animation-delay:1s; animation-duration:0.5s; animation-iteration-count:1; animation-timing-function:ease-in-out; animation-fill-mode: forwards;}
-.ui-loading.orbit .ui-loading-wrap:after {animation-name:orbitLeftAni; animation-duration:1.5s; animation-iteration-count:infinite; animation-timing-function:ease-in-out; animation-direction: reverse;}
-.ui-loading.orbit .ui-loading-wrap:before {animation-name:orbitRightAni; animation-duration:1.5s; animation-iteration-count:infinite; animation-timing-function:ease-in-out; animation-direction: reverse;}
+.ui-loading.visible {
+    display: block;
+    animation-name: fadeIn;
+    animation-duration: .5s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.ui-loading {
+    animation-name: fadeOut;
+    animation-duration: .5s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.ui-loading-txt {
+    font-size: 14px;
+    color: #fff;
+    width: 120px;
+    position: absolute;
+    left: 50%;
+    bottom: -30px;
+    margin-left: -60px;
+    text-align: center;
+}
+
+.ui-loading-txt span {
+    display: block;
+    padding: 2px;
+}
+
+/* ui-loading : time */
+.ui-loading.time:after {
+    content: "";
+    display: block;
+    position: fixed;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 1;
+    top: 0;
+    left: 0;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.ui-loading.time:after {
+    animation-name: fadeIn;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.ui-loading.time.close:after {
+    animation-name: fadeOut;
+    animation-duration: 0.25s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+}
+
+.ui-loading.time .ui-loading-wrap {
+    position: absolute;
+    z-index: 1;
+    width: 80px;
+    height: 80px;
+    top: 50%;
+    left: 50%;
+    margin: -40px 0 0 -40px;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    background: rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+}
+
+.ui-loading.time .ui-loading-wrap:after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 40px;
+    margin-left: -20px;
+    border-radius: 1px;
+    width: 40px;
+    height: 1px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 1) 100%);
+}
+
+.ui-loading.time .ui-loading-wrap:before {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1;
+    left: 50%;
+    top: 40px;
+    margin-left: -30px;
+    border-radius: 1px;
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 1) 100%);
+}
+
+.ui-loading.time .ui-loading-wrap:after {
+    animation-name: timeAni;
+    animation-duration: 12s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear
+}
+
+.ui-loading.time .ui-loading-wrap:before {
+    animation-name: timeAni;
+    animation-duration: 1.2s;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear
+}
+
+/* ui-loading : orbit */
+.ui-loading.orbit:after {
+    content: "";
+    display: block;
+    position: absolute;
+    ;
+    z-index: 0;
+    width: 0;
+    height: 0;
+    top: 50%;
+    left: 50%;
+    background: rgba(0, 0, 0, 0.5);
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+}
+
+.ui-loading.orbit:after {
+    animation-name: orbitScaleShowAni;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.ui-loading.orbit.close:after {
+    animation-name: orbitScaleHideAni;
+    animation-duration: 0.25s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-fill-mode: forwards;
+}
+
+.ui-loading.orbit .ui-loading-wrap {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    top: 50%;
+    left: 50%;
+    margin: -40px 0 0 -40px;
+}
+
+.ui-loading.orbit .ui-loading-wrap:after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    top: calc(50% - 10px);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background: rgba(0, 0, 0, 1);
+}
+
+.ui-loading.orbit .ui-loading-wrap:before {
+    content: "";
+    display: block;
+    position: absolute;
+    right: 0;
+    top: calc(50% - 10px);
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    background: rgba(255, 255, 255, 1)
+}
+
+.ui-loading.orbit .ui-loading-wrap:after {
+    animation-name: orbitLeftAni;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: reverse;
+}
+
+.ui-loading.orbit .ui-loading-wrap:before {
+    animation-name: orbitRightAni;
+    animation-duration: 1.5s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+    animation-direction: reverse;
+}
 </code>
 </pre>
 </div>

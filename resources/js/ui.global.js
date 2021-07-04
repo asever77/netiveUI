@@ -366,10 +366,9 @@ if (!Object.keys){
 				return false;
 			}
 			var xhr = new XMLHttpRequest();	
-			var opt = opt === undefined ? {} : opt;
-			opt = $.extend(true, {}, this.options, opt);
-			
-			var $id = typeof opt.id === 'string' ? $('#' + opt.id) : typeof opt.id === 'object' ? opt.id : $('body');
+			var opt = $.extend(true, {}, this.options, opt);
+			console.log(opt.selector)
+			var $base = opt.selector;
 			var loading = opt.loading;
 			var effect = opt.effect;
 			var callback = opt.callback === undefined ? false : opt.callback;
@@ -380,8 +379,8 @@ if (!Object.keys){
 			}
 	
 			if (effect) {
-				$id.removeClass('changeover action');
-				$id.addClass('changeover');
+				$base.removeClass('changeover action');
+				$base.addClass('changeover');
 			}
 
 			xhr.open(opt.type, opt.url);
@@ -398,9 +397,9 @@ if (!Object.keys){
 					}
 	
 					if (opt.page) {
-						opt.add ? opt.prepend ? $id.prepend(xhr.responseText) : $id.append(xhr.responseText) : $id.html(xhr.responseText);
+						opt.add ? opt.prepend ? $base.prepend(xhr.responseText) : $base.append(xhr.responseText) : $base.html(xhr.responseText);
 						callback && callback();
-						effect && $id.addClass('action');
+						effect && $base.addClass('action');
 					} else {
 						callback && callback(xhr.responseText);
 					}
@@ -511,17 +510,33 @@ if (!Object.keys){
 	}
 
 	/**
-	* Create a scroll move
+	 * intersection observer
+	 */
+	win[global].io = new IntersectionObserver(function (entries) {
+		entries.forEach(function (entry) {
+			if (entry.intersectionRatio > 0) {
+				entry.target.classList.add('tada');
+			} else {
+				entry.target.classList.remove('tada');
+			}
+		});
+	});
+
+
+	/**
+	* scroll
+	* move: 특정 위치로 스크롤 이동
+	* checkEnd: 스크롤 이동 완료 체크 후 포커스 및 콜백 실행
 	*/
 	win[global].scroll = {
 		options : {
 			value: 0,
-			speed: 0,
+			effect:'smooth', //'auto'
 			callback: false,
 			ps: 'top',
-			addLeft: false,
+			add: 0,
 			focus: false,
-			target: 'html, body'
+			selector: $('html, body')
 		},
 		move : function(opt){
 			if (opt === undefined) {
@@ -530,60 +545,100 @@ if (!Object.keys){
 
 			var opt = $.extend(true, {}, this.options, opt);
 			var psVal = opt.value;
-			var s = opt.speed;
-			var c = opt.callback;
-			var p = opt.ps;
-			var addLeft = opt.addLeft;
-			var overlap = false;
-			var f = typeof opt.focus === 'string' ? $('#' + opt.focus) : opt.focus;
-			var $target = typeof opt.target === 'string' ? $(opt.target) : opt.target;
-			
-			if (p === 'top') {
-				$target.stop().animate({ 
-						scrollTop : psVal 
-					}, { 
-						duration: s,
-						step: function(now) { 
-						!!c && now !== 0 ? c({ scrolltop:Math.ceil(now), complete:false }) : '';
-					},
-					complete: function(){
-						if (overlap) {
-							!!c ? c({ focus:f, complete:true }) : '';
-							!!f ? f.attr('tabindex', 0).focus() : '';
-						} else {
-							overlap = true;
-						}
-					}
-				});
-			} else if (p === 'left') {
-				$target.stop().animate({ 
-						scrollLeft : psVal
-					}, { 
-						duration: s,
-						step: function(now) { 
-							!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
-					},
-					complete: function(){
-						!!c ? c({ focus:f, complete:true }) : '';
-						!!f ? f.attr('tabindex', 0).focus() : '';
-					}
-				});
-			} else if (p === 'center') {
-				var w = $target.outerWidth();
-	
-				$target.stop().animate({ 
-					scrollLeft : psVal - (w / 2) + addLeft
-				}, { 
-					duration: s,
-					step: function(now) { 
-						!!c && now !== 0 ? c({ scrollleft:Math.ceil(now), complete:false }) : '';
-					},
-					complete: function(){
-						!!c ? c({ focus:f, complete:true }) : '';
-						!!f ? f.attr('tabindex', 0).focus() : '';
-					}
-				});
+			var callback = opt.callback;
+			var ps = opt.ps;
+			var add = opt.add;
+			var focus = opt.focus;
+			var $selector = opt.selector;
+			var effect = opt.effect;
+
+			//jquery selector인 경우 변환
+			if (!!$selector.selector) {
+				$selector = document.querySelector($selector.selector);
 			}
+			
+			switch (ps) {
+				case 'top':
+					$selector.scrollTo({
+						top: psVal + add,
+						behavior: effect
+					});
+	
+					this.checkEnd({
+						selector : $selector,
+						now : $selector.scrollTop,
+						ps : 'top',
+						callback : callback,
+						focus : focus
+					});
+					break;
+
+				case 'left':
+					$selector.scrollTo({
+						left: psVal + add,
+						behavior: effect
+					});
+	
+					this.checkEnd({
+						selector : $selector,
+						now : $selector.scrollTop,
+						ps : 'left',
+						callback : callback,
+						focus : focus
+					});
+					break;
+
+				case 'center':
+					var w = $selector.offsetWidth ;
+				
+					$selector.scrollTo({
+						left: psVal - (w / 2) + add,
+						behavior: effect
+					});
+
+					
+					this.checkEnd({
+						selector : $selector,
+						now : $selector.scrollLeft,
+						ps : 'left',
+						callback : callback,
+						focus : focus
+					});
+					break;
+			}
+		},
+		checkEndTimer : {},
+		checkEnd: function(opt){
+			var $selector = opt.selector;
+			var now = opt.now;
+			var ps = opt.ps === undefined ? 'top' : opt.ps; //top,left
+			var scrollPs = ps === 'top' ? 'scrollTop' : 'scrollLeft';
+			var focus = opt.focus;
+			var callback = opt.callback;
+
+			win[global].scroll.checkEndTimer = setTimeout(function(){
+				//스크롤 현재 진행 여부 판단
+				if (now === $selector[scrollPs]) {
+					clearTimeout(win[global].scroll.checkEndTimer);
+					//포커스가 위치할 엘리먼트를 지정하였다면 실행
+					if (!!focus ) {
+						focus.attr('tabindex', 0).focus();
+					}
+					//스크롤 이동후 콜백함수 실행
+					if (!!callback ) {
+						callback();
+					}
+				} else {
+					now = $selector[scrollPs];
+					win[global].scroll.checkEnd({
+						selector : opt.selector,
+						now : $selector[scrollPs],
+						ps : opt.ps,
+						callback : opt.callback,
+						focus : opt.focus
+					});
+				}
+			},100);
 		}
 	}
 
@@ -2978,7 +3033,7 @@ if (!Object.keys){
 		win[global].scroll.move({ 
 			value: ps_l[current], 
 			target: $btns,
-			speed: 0, 
+			effect: 'auto', 
 			ps: align
 		});
 
@@ -3074,9 +3129,8 @@ if (!Object.keys){
 
 		win[global].scroll.move({ 
 			value: ps_l[current], 
-			addLeft : $btn.outerWidth(),
-			target: $target, 
-			speed: 300, 
+			add : $btn.outerWidth(),
+			selector: $target, 
 			ps: align 
 		});
 
@@ -4742,8 +4796,8 @@ if (!Object.keys){
 		function optScroll($wrap, n_top, wrap_h, key) {
 			win[global].scroll.move({ 
 				value: Number(n_top), 
-				target: customscroll ? $wrap.find('> .ui-scrollbar-item') : $wrap, 
-				speed: 0, 
+				selector: customscroll ? $wrap.find('> .ui-scrollbar-item') : $wrap, 
+				effect: 'auto', 
 				ps: 'top' 
 			});
 		}
@@ -4788,15 +4842,15 @@ if (!Object.keys){
 				});
 				win[global].scroll.move({ 
 					value: Number(opt_h * _$uisel.find(':checked').index()), 
-					target: _$wrap.find('> .ui-scrollbar-item'), 
-					speed: 0, 
+					selector: _$wrap.find('> .ui-scrollbar-item'), 
+					effect: 'auto', 
 					ps: 'top' 
 				});
 			} else {
 				win[global].scroll.move({ 
 					value: Number(opt_h * _$uisel.find(':checked').index()), 
-					target: _$wrap, 
-					speed: 0, 
+					selector: _$wrap, 
+					effect: 'auto', 
 					ps: 'top' 
 				});
 			}
