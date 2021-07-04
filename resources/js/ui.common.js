@@ -250,6 +250,7 @@
 				var indexUrl = '/netiveUI/html/index.html?page=' + paraUrl;
    
 				history.pushState(false, 'loading', indexUrl);
+				hljs.initHighlightingOnLoad();
 				
 			}
 
