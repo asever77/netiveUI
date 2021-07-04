@@ -160,8 +160,7 @@
 					$(win).off('scroll.win');
 					$plugins.common.pageInit(fristHref);
 					$plugins.common.settingAside();
-
-					hljs.initHighlightingOnLoad();
+ 					
 					// $(doc).find('.base-wrap').find('button, a').on('click', function(){
 					// 	var $this = $(this); 
 					// 	(!$this.closest('.ui-modal').length || $this.hasClass('.ui-modal')) && $('body').data('active', $this);
@@ -250,11 +249,10 @@
 				var indexUrl = '/netiveUI/html/index.html?page=' + paraUrl;
    
 				history.pushState(false, 'loading', indexUrl);
-				hljs.initHighlightingOnLoad();
 				
 			}
 
-		   
+			hljs.highlightAll();
 			
 
 			// console.log(v.split('.html'), !!doc.querySelector('#uiPageJS'));
@@ -295,7 +293,13 @@
 						$(win).off('scroll.win');
 						$plugins.common.pageInit(href);
 						$plugins.common.settingAside();
-						hljs.initHighlightingOnLoad();
+						
+						document.addEventListener('DOMContentLoaded', (event) => {
+							document.querySelectorAll('pre code').forEach((el) => {
+								alert(1);
+							  hljs.highlightElement(el);
+							});
+						  });
 						
 					}
 				});

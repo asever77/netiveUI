@@ -1,5 +1,9 @@
 @charset "utf-8";
 
+div.box-code {
+	white-space: pre;
+}
+
 :focus{
 	outline: 2px solid black !important;
 }

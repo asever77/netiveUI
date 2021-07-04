@@ -536,7 +536,7 @@ if (!Object.keys){
 			ps: 'top',
 			add: 0,
 			focus: false,
-			selector: $('html, body')
+			selector: document.querySelector('html, body')
 		},
 		move : function(opt){
 			if (opt === undefined) {
@@ -551,7 +551,7 @@ if (!Object.keys){
 			var focus = opt.focus;
 			var $selector = opt.selector;
 			var effect = opt.effect;
-
+			console.log($selector.selector, $selector);
 			//jquery selector인 경우 변환
 			if (!!$selector.selector) {
 				$selector = document.querySelector($selector.selector);
