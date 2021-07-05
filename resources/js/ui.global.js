@@ -1128,6 +1128,9 @@ if (!Object.keys){
 			}
 
 			!!callback && callback();
+		},
+		sort: function(opt){
+			v
 		}
 	}
 

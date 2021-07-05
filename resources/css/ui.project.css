@@ -230,28 +230,111 @@ p {
 }
 
 .h-3 {
+	font-size: 1.6rem;
+	font-weight: 700;
+	margin: 3rem 0 0.7rem;
+}
+
+.h-4 {
 	font-size: 1.4rem;
 	font-weight: 700;
 	margin: 1.5rem 0 0.7rem;
 }
 
-.h-4 {
-	font-size: 18px;
-	margin: 10px 0 7px;
-}
-
 .h-5 {
-	font-size: 16px;
-	margin: 10px 0 5px;
-}
+	font-size: 1.2rem;
+	font-weight: 500;
+	margin: 1rem 0 0.7rem;}
 
 .h-6 {
-	font-size: 16px;
-	margin: 10px 0 5px;
+	font-size: 1.2rem;
+	font-weight: 500;
+	margin: 1rem 0 0.5rem;}
+
+/* text */
+.fs-s {
+	font-size:1.2rem;
+}
+.fs-m {
+	font-size:1.4rem;
+}
+.fs-l {
+	font-size:1.6rem;
+}
+[class*="fs-"] b{
+	font-weight:700;
 }
 
-/* table */
+/* tbl */
+.tbl-base.type-device table{
+	display: block;
+	font-size:1.4rem;
+}
 
+.tbl-base.type-device thead{
+	display:block;
+	width: 100%;
+}
+.tbl-base.type-device thead tr{
+	display:flex;
+	width: 100%;
+}
+.tbl-base.type-device thead th{
+	flex: 1 auto;
+}
+.tbl-base.type-device tbody{
+	display: block;
+	
+}
+.tbl-base.type-device tbody tr{
+	display: block;
+	position:relative;
+	padding-left:50%;
+}
+.tbl-base.type-device tbody th{
+	display: block;
+	position:absolute;
+	top:0;
+	left:0;
+	width:50%;
+	height: 100%;
+	text-align: left;
+	background-color: #fff;
+}
+.tbl-base.type-device td {
+	display: block;
+	width:100%;
+}
+.tbl-base.type-device td + td{
+	border-top: 1px solid #ccc !important;
+}
+.tbl-base.type-device td::before{
+	display: inline-block;
+	width:50%;
+	margin-right:.4rem;
+	color: #888;
+}
+.tbl-base.type-device td:nth-child(2)::before{
+	content:"phys.width ";
+}
+.tbl-base.type-device td:nth-child(3)::before{
+	content:"phys.height ";
+}
+.tbl-base.type-device td:nth-child(4)::before{
+	content:"CSS.width ";
+}
+.tbl-base.type-device td:nth-child(5)::before{
+	content:"CSS.height ";
+}
+.tbl-base.type-device td:nth-child(6)::before{
+	content:"pixel.ratio ";
+}
+.tbl-base.type-device td:nth-child(7)::before{
+	content:"phys.ppi ";
+}
+.tbl-base.type-device td:nth-child(8)::before{
+	content:"CSS.ppi ";
+}
 
 
 
@@ -269,7 +352,7 @@ p {
 }
 
 .box-code .hljs {
-	padding:0 2rem 2rem;
+	padding:0 2rem 1.6rem;
 }
 
 /* page */
@@ -378,6 +461,9 @@ p {
 .list-define.font dd {
 	font-size: 20px;
 	word-break: break-all
+}
+.list-define > div + div{
+	margin-top:3rem;
 }
 
 .page-grid .coln12,
@@ -806,6 +892,7 @@ html.col-12 .coln12 {
 	border:1px solid #ccc;
 	padding:2rem;
 	border-radius:0.4rem;
+	margin:1rem 0;
 	box-shadow: 0 0.3rem 0.3rem rgba(0, 0, 0, 0.1);
 }
 
