@@ -252,7 +252,8 @@
 				
 			}
 
-			hljs.highlightAll();
+			hljs.initHighlightingOnLoad();
+			//hljs.highlightAll();
 			
 
 			// console.log(v.split('.html'), !!doc.querySelector('#uiPageJS'));
@@ -294,12 +295,14 @@
 						$plugins.common.pageInit(href);
 						$plugins.common.settingAside();
 						
-						document.addEventListener('DOMContentLoaded', (event) => {
-							document.querySelectorAll('pre code').forEach((el) => {
-								alert(1);
-							  hljs.highlightElement(el);
-							});
-						  });
+						// document.addEventListener('DOMContentLoaded', (event) => {
+						// 	document.querySelectorAll('pre code').forEach((el) => {
+						// 		alert(1);
+						// 	  hljs.highlightElement(el);
+						// 	});
+						//   });
+
+						hljs.initHighlightingOnLoad();
 						
 					}
 				});

@@ -512,15 +512,15 @@ if (!Object.keys){
 	/**
 	 * intersection observer
 	 */
-	win[global].io = new IntersectionObserver(function (entries) {
-		entries.forEach(function (entry) {
-			if (entry.intersectionRatio > 0) {
-				entry.target.classList.add('tada');
-			} else {
-				entry.target.classList.remove('tada');
-			}
-		});
-	});
+	// win[global].io = new IntersectionObserver(function (entries) {
+	// 	entries.forEach(function (entry) {
+	// 		if (entry.intersectionRatio > 0) {
+	// 			entry.target.classList.add('tada');
+	// 		} else {
+	// 			entry.target.classList.remove('tada');
+	// 		}
+	// 	});
+	// });
 
 
 	/**

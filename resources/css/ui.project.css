@@ -218,14 +218,14 @@ p {
 .h-1 {
 	font-family: 'Roboto', sans-serif;
 	font-size: 4rem;
-	font-weight: 400;
+	font-weight: 700;
 	line-height: 1.2;
 	margin: 0;
 }
 
 .h-2 {
-	font-size: 2rem;
-	font-weight: 500;
+	font-size: 3rem;
+	font-weight: 200;
 	margin: 0 0 1rem;
 }
 
@@ -884,12 +884,11 @@ html.col-12 .coln12 {
 	outline: 10px solid lightgray;
 }
 
-
 .box-guide{
 	width:100%;
 	position: relative;
 	background:#fff;
-	border:1px solid #ccc;
+	border:1px solid #ececec;
 	padding:2rem;
 	border-radius:0.4rem;
 	margin:1rem 0;
@@ -1227,7 +1226,7 @@ html.col-12 .coln12 {
 		position: relative;
 		z-index: 0;
 		width: 100%;
-		padding: 0 15rem 10rem 26rem;
+		padding: 0 4rem 10rem 26rem;
 		font-size: 1.4rem;
 	}
 
