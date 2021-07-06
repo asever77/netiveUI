@@ -182,7 +182,6 @@
 
 			$plugins.table.caption();
 			$plugins.uiInputClear();
-
 		},
 		
 		header: function(){
@@ -251,8 +250,16 @@
 				history.pushState(false, 'loading', indexUrl);
 				
 			}
+			if(document.currentScript === undefined){
+				// IE 에서만 돌아갈 내용
+			  } else {
+				// IE 가 아닐 때 돌아갈 내용
+				hljs.configure({tabReplace: " "});
+				hljs.initHighlighting();
+			  }
+			
 
-			hljs.initHighlightingOnLoad();
+			//hljs.initHighlighting();
 			//hljs.highlightAll();
 			
 
@@ -302,7 +309,7 @@
 						// 	});
 						//   });
 
-						hljs.initHighlightingOnLoad();
+						
 						
 					}
 				});
