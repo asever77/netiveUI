@@ -22,26 +22,15 @@ body {
 	-webkit-text-size-adjust: none;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-overflow-scrolling: touch;
-	/* -webkit-user-select: none;
+	-webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none; 
-	user-select: none;*/
+	user-select: none;
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 	-webkit-tap-highlight-color: transparent;
 	word-break: keep-all;
 }
-
-body:before {
-	content: '';
-	position: fixed;
-	left: 0;
-	top: 0;
-	width: 100%;
-	height: 0;
-}
-
-/* fix webkit bug(scroll event delay) */
 
 body,
 iframe,
@@ -594,24 +583,22 @@ select:focus {
 	margin-left: 1rem;
 }
 
-.btn-wrap.txta-l [class*="btn-base"] {
+.btn-wrap.stick [class*="btn-"]+[class*="btn-"] {
 	margin-left: 0;
-	margin-right: 10px;
 }
 
 .btn-wrap.txta-r [class*="btn-base"] {
 	margin-right: 0;
-	margin-left: 10px;
+	margin-left: 1rem;
 }
 
 /* button */
 [class*="btn-base"] {
 	display: inline-block;
-	padding: 0 20px;
-	min-height: 40px;
-	min-width: 60px;
+	padding: 0 1rem;
+	min-height: 4rem;
 	border: 1px solid #63686d;
-	font-size: 14px;
+	font-size: 1.4rem;
 	text-align: center;
 	background: #fff;
 	vertical-align: top;
@@ -623,14 +610,14 @@ select:focus {
 div[class*="btn-base"],
 span[class*="btn-base"],
 a[class*="btn-base"] {
-	padding: 12px 20px 8px;
+	padding: 1.2rem 1rem .8rem;
 }
 
 [class*="btn-base"] span {
 	vertical-align: middle;
 	display: inline-block;
 	line-height: 1;
-	margin-top: -3px;
+	margin-top: -.3rem;
 }
 
 [class*="btn-base"]:hover,
@@ -639,16 +626,18 @@ a[class*="btn-base"] {
 	background: #eee;
 }
 
-[class*="btn-base"].disabled {
+[class*="btn-base"].disabled,
+[class*="btn-base"]:disabled {
 	opacity: 0.7;
-	filter: alpha(opacity=70);
 	border: 1px solid #ccc;
 	box-shadow: none;
 	cursor: default;
 }
 
 [class*="btn-base"].disabled:hover,
-[class*="btn-base"].disabled:focus {
+[class*="btn-base"].disabled:focus
+[class*="btn-base"]:disabled:hover,
+[class*="btn-base"]:disabled:focus {
 	border-color: #ccc;
 	background: inherit;
 }
@@ -761,7 +750,7 @@ a.btn-base-l {
 	border-bottom: 1px solid #e4e4e4;
 	border-left: 1px solid #e4e4e4;
 	color: #000;
-	padding: 0.3rem;
+	padding:0.5rem 0.5rem 0.7rem;
 	font-weight: 500;
 }
 
@@ -770,10 +759,11 @@ a.btn-base-l {
 	border-top: 1px solid #e4e4e4;
 	border-left: 1px solid #e4e4e4;
 	color: #444;
-	padding: 0.3rem;
+	padding: 0.5rem 0.5rem 0.7rem;
 	font-weight: 300;
 	word-break: break-all;
 	background: #fff;
+	text-align: center;
 }
 
 .tbl-base table>tbody>tr:first-child>th,
@@ -1352,3 +1342,11 @@ dl[class*="bul-"]>dt {
 		margin-left: 2.4rem;
 	}
 }
+
+
+/*
+내부 스크롤에 관성 및 바운스 적용하기
+overflow:auto;
+-webkit-overflow-scrolling: touch;
+
+*/
