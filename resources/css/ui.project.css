@@ -1,11 +1,7 @@
 @charset "utf-8";
 
-div.box-code {
-	white-space: pre;
-}
-
-:focus{
-	outline: 2px solid black !important;
+.hljs {
+	tab-size:4;
 }
 
 /* mobile first style */
@@ -949,238 +945,131 @@ html.col-12 .coln12 {
 	margin-top:1rem;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-/* colunns 4 / gutters 16 ---------------- */
-@media all and (max-width:599px) and (orientation:portrait) {
-
-	/* handset */
-	body:after {
-		content: "handset";
-		display: block;
-		position: fixed;
-		bottom: 0;
-		right: 0;
-		padding: 5px;
-		background: #000;
-		color: #fff;
-		font-size: 12px;
-		z-index: 1000;
-		opacity: 0.5
-	}
+.btn-grid {
+	display: block;
+	position: fixed;
+	right: 2rem;
+	top: 2rem;
+	width: 3rem;
+	height: 3rem;
+	z-index: 99999;
 }
 
-@media all and (max-width:359px) {
-
-	/* small handset */
-	body:after {
-		content: "small handset";
-		display: block;
-		position: fixed;
-		bottom: 0;
-		right: 0;
-		padding: 5px;
-		background: #000;
-		color: #fff;
-		font-size: 12px;
-		z-index: 1000;
-		opacity: 0.5
-	}
+.btn-grid:after {
+	content: "grid_on";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	font-size:3rem;
+	line-height: 3rem;
+	color: #1f1f1f;
+	font-family: 'Material Icons';
+	font-feature-settings: 'liga';
 }
 
-@media all and (max-width:599px) and (orientation:landscape) {
 
-	/* small handset landscape */
-	body:after {
-		content: "small handset landscape";
-		display: block;
-		position: fixed;
-		bottom: 0;
-		right: 0;
-		padding: 5px;
-		background: #000;
-		color: #fff;
-		font-size: 12px;
-		z-index: 1000;
-		opacity: 0.5
-	}
-
+.btn-menu {
+	display: block;
+	position: fixed;
+	top: 2rem;
+	margin-left: 2rem;
+	width: 3rem;
+	height: 3rem;
+	border-radius: 50%;
+	background: #1f1f1f;
 }
 
-/* colunns 8 / gutters 16 ---------------- */
-@media all and (max-width:959px) and (orientation:landscape) {
-
-	/* tablet & handset landscape */
-	body:after {
-		content: "tablet & handset landscape";
-		display: block;
-		position: fixed;
-		bottom: 0;
-		right: 0;
-		padding: 5px;
-		background: #000;
-		color: #fff;
-		font-size: 12px;
-		z-index: 1000;
-		opacity: 0.5
-	}
-
-
+.btn-menu:after {
+	content: "arrow_forward";
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	text-align: center;
+	font-size: 2.5rem;
+	line-height: 3rem;
+	color: #fff;
+	font-family: 'Material Icons';
+	font-feature-settings: 'liga';
 }
 
-@media all and (min-width:600px) and (max-width:1112px) and (orientation:portrait) {
-
-	/* tablet	*/
-	body:after {
-		content: "tablet";
-		display: block;
-		position: fixed;
-		bottom: 0;
-		right: 0;
-		padding: 5px;
-		background: #000;
-		color: #fff;
-		font-size: 12px;
-		z-index: 1000;
-		opacity: 0.5
-	}
-
+.base-body {
+	width: 100%;
+	position: relative;
+	animation-name: slideLeftOut;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
 }
 
-/* colunns 12 / gutters 24	---------------- */
-@media all and (min-width:960px) and (max-width:1439px) and (orientation:landscape) {
+.nav-open .base-body {
+	animation-name: slideLeftIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
 
-	/* tablet landscape */
-	body:after {
-		content: "tablet landscape";
-		display: block;
-		position: fixed;
-		bottom: 0;
-		right: 0;
-		padding: 5px;
-		background: #000;
-		color: #fff;
-		font-size: 12px;
-		z-index: 1000;
-		opacity: 0.5
-	}
+.header-wrap .logo {
+	animation-name: slideLeftOut;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
 
+.nav-open .header-wrap .logo {
+	animation-name: slideLeftIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
+
+.header-nav {
+	animation-name: navLeftOut;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
+
+.nav-open .header-nav {
+	display: block;
+	animation-name: navLeftIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
+
+.btn-menu {
+	animation-name: slideLeftOut;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
+
+.nav-open .btn-menu {
+	animation-name: slideLeftIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-out;
+	animation-fill-mode: forwards;
+}
+
+.nav-open .btn-menu:after {
+	content: "arrow_back";
 }
 
 
 
-@media all and (max-width:959px) {
-
-	/* desktop excluded */
-	.btn-menu {
-		display: block;
-		position: fixed;
-		top: 20px;
-		margin-left: 20px;
-		width: 30px;
-		height: 30px;
-		border-radius: 50%;
-		background: #1f1f1f;
-	}
-
-	.btn-menu:after {
-		content: "arrow_forward";
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		text-align: center;
-		font-size: 25px;
-		line-height: 30px;
-		color: #fff;
-		font-family: 'Material Icons';
-		font-feature-settings: 'liga';
-	}
-
-	.base-body {
-		width: 100%;
-		position: relative;
-		animation-name: slideLeftOut;
-		animation-duration: .2s;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
-		animation-fill-mode: forwards;
-	}
-
-	.nav-open .base-body {
-		animation-name: slideLeftIn;
-		animation-duration: .2s;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
-		animation-fill-mode: forwards;
-	}
-
-	.header-wrap .logo {
-		animation-name: slideLeftOut;
-		animation-duration: .2s;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
-		animation-fill-mode: forwards;
-	}
-
-	.nav-open .header-wrap .logo {
-		animation-name: slideLeftIn;
-		animation-duration: .2s;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
-		animation-fill-mode: forwards;
-	}
-
-	.header-nav {
-		animation-name: navLeftOut;
-		animation-duration: .2s;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
-		animation-fill-mode: forwards;
-	}
-
-	.nav-open .header-nav {
-		display: block;
-		animation-name: navLeftIn;
-		animation-duration: .2s;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
-		animation-fill-mode: forwards;
-	}
-
-	.btn-menu {
-		animation-name: slideLeftOut;
-		animation-duration: .2s;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
-		animation-fill-mode: forwards;
-	}
-
-	.nav-open .btn-menu {
-		animation-name: slideLeftIn;
-		animation-duration: .2s;
-		animation-iteration-count: 1;
-		animation-timing-function: ease-out;
-		animation-fill-mode: forwards;
-	}
-
-	.nav-open .btn-menu:after {
-		content: "arrow_back";
-	}
-}
-
+/* 
 @media all and (min-width:960px) {
-
-	/* desktop */
 	body:after {
 		content: "desktop";
 		display: block;
@@ -1195,7 +1084,7 @@ html.col-12 .coln12 {
 		opacity: 0.5
 	}
 
-	/* layout */
+
 	.base-header {
 		position: absolute;
 		top: 0;
@@ -1235,7 +1124,7 @@ html.col-12 .coln12 {
 		text-align: center;
 	}
 
-	/* header */
+
 	.header-wrap {
 		width: 100%;
 		padding: 0 40px;
@@ -1273,7 +1162,7 @@ html.col-12 .coln12 {
 		overflow: visible;
 	}
 
-	/* common */
+
 	.page-title {
 		padding: 14rem 0 0;
 	}
@@ -1333,4 +1222,4 @@ html.col-12 .coln12 {
 		width: 500px;
 	}
 
-}
+} */

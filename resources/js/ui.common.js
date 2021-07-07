@@ -183,7 +183,12 @@
 			$plugins.table.caption();
 			$plugins.uiInputClear();
 		},
-		
+		gridSwitch: function(){
+			var $grid = $('.base-grid');
+
+			(!$grid.hasClass('on')) ? $grid.addClass('on') : $grid.removeClass('on');
+
+		},
 		header: function(){
 			console.log('header load');
 			$plugins.uiAccordion({ 
