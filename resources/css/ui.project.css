@@ -150,7 +150,9 @@ a {
 	text-align: left;
 	outline: none;
 }
-
+.header-nav .dep-2 + .dep-2 {
+	margin-top:.5rem;
+}
 .header-nav .modify .dep-2-btn {
 	color: #000
 }
