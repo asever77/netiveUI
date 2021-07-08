@@ -25,7 +25,20 @@
 
 	<h2 class="h-3">btn-wrap</h2>
 	<p>기본적으로 width값은 flex로 영역안에 채워지며 버튼간의 기본 간격이 있다.</p>
-	<p>stick 클래스를 추가하면 간격이 없어진다.</p>
+	<dl class="bul-dot">
+		<div>
+			<dt>.stick</dt> 
+			<dd>버튼의 간격이 없어진다.</dd>
+		</div>
+		<div>
+			<dt>.bottom</dt> 
+			<dd>하단 고정 버튼영역</dd>
+		</div>
+		<div>
+			<dt>.left / .center / .right</dt> 
+			<dd>정렬기준에 따라 위치</dd>
+		</div>
+	</dl>
 	<div class="box-guide">
 		<div class="btn-wrap" style="border:3px dashed #ccc;">
 			<button type="button" class="btn-base-m"><span>button</span></button>
@@ -35,18 +48,49 @@
 			<button type="button" class="btn-base-m"><span>button</span></button>
 			<a href="#none" class="btn-base-m"><span>a</span></a>
 		</div>
+		<div class="test-bottom">
+			<div class="btn-wrap bottom" style="border:3px dashed #ccc;">
+				<button type="button" class="btn-base-m"><span>button</span></button>
+			</div>
+		</div>
+		<div class="btn-wrap left" style="border:3px dashed #ccc;">
+			<button type="button" class="btn-base-m"><span>button</span></button>
+			<a href="#none" class="btn-base-m"><span>a</span></a>
+		</div>
+		<div class="btn-wrap center" style="border:3px dashed #ccc;">
+			<button type="button" class="btn-base-m"><span>button</span></button>
+			<a href="#none" class="btn-base-m"><span>a</span></a>
+		</div>
+		<div class="btn-wrap right" style="border:3px dashed #ccc;">
+			<button type="button" class="btn-base-m"><span>button</span></button>
+			<a href="#none" class="btn-base-m"><span>a</span></a>
+		</div>
+		
 	</div>
-
-	
-
 
 <pre class="box-code"><code class="html">
 &lt;div class="btn-wrap"&gt;
-	&lt;button class="btn-base-m"</span> type="button"&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/button&gt;
-	&lt;a class="btn-base-m"</span> href="#none"&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/a&gt;
-	
-	&lt;button class="btn-base-m disabled"</span> type="button"</span> disabled&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/button&gt;
-	&lt;a class="btn-base-m disabled"</span> href="#none"&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/a&gt;
+	...
+&lt;/div&gt;
+
+&lt;div class="btn-wrap stick"&gt;
+	...
+&lt;/div&gt;
+
+&lt;div class="btn-wrap bottom"&gt;
+	...
+&lt;/div&gt;
+
+&lt;div class="btn-wrap left"&gt;
+	...
+&lt;/div&gt;
+
+&lt;div class="btn-wrap center"&gt;
+	...
+&lt;/div&gt;
+
+&lt;div class="btn-wrap right"&gt;
+	...
 &lt;/div&gt;
 </code>
 </pre>
@@ -56,133 +100,197 @@
 <section class="sec-wrap">
 	<h2 class="h-2">Size</h2>
 	<h3 class="h-3">small</h3>
-	<p>컨텐츠 안에 들어가는 버튼</p>
+	<p>컨텐츠 안에 들어가는 버튼으로 주로 텍스트와 같이 쓰인다.</p>
 	<div class="box-guide">
 		<div class="btn-wrap">
 			<button type="button" class="btn-base-s"><span>.btn-base-s(button)</span></button>
 			<a href="#none" class="btn-base-s"><span>.btn-base-s(a)</span></a>
 		</div>
+	</div>
 
-		<h3 class="h-3">midium(base)</h3>
+	<h3 class="h-3">midium(base)</h3>
+	<p>form안에 들어가는 버튼으로 form 요소들의 높이와 동일하다.</p>
+	<div class="box-guide">
 		<div class="btn-wrap">
 			<button type="button" class="btn-base-m"><span>.btn-base-m(button)</span></button>
 			<a href="#none" class="btn-base-m"><span>.btn-base-m(a)</span></a>
-
-			<button type="button" class="btn-base"><span>.btn-base(button)</span></button>
-			<a href="#none" class="btn-base"><span>.btn-base(a)</span></a>
 		</div>
+	</div>
 
-		<h3 class="h-3">large</h3>
+	<h3 class="h-3">large</h3>
+	<p>페이지 하단에 들어가는 버튼으로 페이지 안의 최종단계에 쓰인다.
+	<div class="box-guide">
 		<div class="btn-wrap">
 			<button type="button" class="btn-base-l"><span>.btn-base-l(button)</span></button>
 			<a href="#none" class="btn-base-l"><span>.btn-base-l(a)</span></a>
 		</div>
 	</div>
+
 <pre class="box-code"><code class="html">
 &lt;div class="btn-wrap"&gt;
-	&lt;button class="btn-base-s"</span> type="button"&gt;&lt;span&gt;버튼s사이즈&lt;/span&gt;&lt;/button&gt;
-	&lt;a class="btn-base-s"</span> href="#none"&gt;&lt;span&gt;버튼s사이즈&lt;/span&gt;&lt;/a&gt;
+	&lt;button class="btn-base-s" type="button"&gt;
+		&lt;span&gt;NAME&lt;/span&gt;
+	&lt;/button&gt;
+	&lt;a class="btn-base-s" href="#none"&gt;
+		&lt;span&gt;NAME&lt;/span&gt;
+	&lt;/a&gt;
 	
-	&lt;button class="btn-base-m"</span> type="button"&gt;&lt;span&gt;버튼m사이즈&lt;/span&gt;&lt;/button&gt;
-	&lt;a class="btn-base-m"</span> href="#none"&gt;&lt;span&gt;버튼m사이즈&lt;/span&gt;&lt;/a&gt;
+	&lt;button class="btn-base" type="button"&gt;
+		&lt;span&gt;NAME&lt;/span&gt;
+	&lt;/button&gt;
+	&lt;a class="btn-base-s" href="#none"&gt;
+		&lt;span&gt;NAME&lt;/span&gt;
+	&lt;/a&gt;
 
-	&lt;button class="btn-base-l"</span> type="button"&gt;&lt;span&gt;버튼l사이즈&lt;/span&gt;&lt;/button&gt;
-	&lt;a class="btn-base-l"</span> href="#none"&gt;&lt;span&gt;버튼l사이즈&lt;/span&gt;&lt;/a&gt;
+	&lt;button class="btn-base-l" type="button"&gt;
+		&lt;span&gt;NAME&lt;/span&gt;
+	&lt;/button&gt;
+	&lt;a class="btn-base-s" href="#none"&gt;
+		&lt;span&gt;NAME&lt;/span&gt;
+	&lt;/a&gt;
 &lt;/div&gt;
 </code>
 </pre>
 
 </section>
 
+
 <section class="sec-wrap">
+	<h2 class="h-2">Type</h2>
+	<h3 class="h-3">Text Button</h3>
+	<div class="box-guide">
+		<div class="btn-wrap">
+			<button type="button" class="btn-base-s text"><span>.Btn-base-s(button)</span></button>
+			<a href="#none" class="btn-base-s text"><span>.Btn-base-s(a)</span></a>
+		</div>
+		<div class="btn-wrap">
+			<button type="button" class="btn-base-m text"><span>.Btn-base-m(button)</span></button>
+			<a href="#none" class="btn-base-m text"><span>.Btn-base-m(a)</span></a>
+		</div>
+		<div class="btn-wrap">
+			<button type="button" class="btn-base-l text"><span>.Btn-base-l(button)</span></button>
+			<a href="#none" class="btn-base-l text"><span>.Btn-base-l(a)</span></a>
+		</div>
+	</div>
 
-<h2 class="h-2">Button 좌우정렬</h2>
-<p>버튼의 좌우정렬 기본은 중앙정렬이며, 부모요소에 좌측정렬은 <code>txta-l</code>,클래스를, 우측정렬은 <code>txta-r</code> 클래스를 추가하면 됩니다.</p>
+	<h3 class="h-3">Outline Button(base)</h3>
+	<div class="box-guide">
+		<div class="btn-wrap">
+			<button type="button" class="btn-base-s"><span>.btn-base-s(button)</span></button>
+			<a href="#none" class="btn-base-s"><span>.btn-base-s(a)</span></a>
+		</div>
+		<div class="btn-wrap">
+			<button type="button" class="btn-base-m"><span>.btn-base-m(button)</span></button>
+			<a href="#none" class="btn-base-m"><span>.btn-base-m(a)</span></a>
+		</div>
+		<div class="btn-wrap">
+			<button type="button" class="btn-base-l"><span>.btn-base-l(button)</span></button>
+			<a href="#none" class="btn-base-l"><span>.btn-base-l(a)</span></a>
+		</div>
+	</div>
 
-<div class="btn-wrap txta-l">
-	<button type="button" class="btn-base-m"><span>button 버튼 좌측</span></button>
-	<a href="#none" class="btn-base-m"><span>a 버튼 좌측</span></a>
-</div>
-<div class="btn-wrap">
-	<button type="button" class="btn-base-m"><span>button 버튼 센터</span></button>
-	<a href="#none" class="btn-base-m"><span>a 버튼 센터</span></a>
-</div>
-<div class="btn-wrap txta-r">
-	<button type="button" class="btn-base-m"><span>button 버튼 우측</span></button>
-	<a href="#none" class="btn-base-m"><span>a 버튼 우측</span></a>
-</div>
+	<h3 class="h-3">Contained Button</h3>
+	<div class="box-guide">
+		<div class="btn-wrap">
+			<button type="button" class="btn-base-s primary"><span>.btn-base-s(button)</span></button>
+			<a href="#none" class="btn-base-s primary"><span>.btn-base-s(a)</span></a>
+		</div>
+		<div class="btn-wrap">
+			<button type="button" class="btn-base-m primary"><span>.btn-base-m(button)</span></button>
+			<a href="#none" class="btn-base-m primary"><span>.btn-base-m(a)</span></a>
+		</div>
+		<div class="btn-wrap">
+			<button type="button" class="btn-base-l primary"><span>.btn-base-l(button)</span></button>
+			<a href="#none" class="btn-base-l primary"><span>.btn-base-l(a)</span></a>
+		</div>
+	</div>
+
 <pre class="box-code"><code class="html">
-&lt;div class="btn-wrap txta-l"&gt;
-	&lt;button class="btn-base"</span> type="button"&gt;&lt;span&gt;버튼 좌측&lt;/span&gt;&lt;/button&gt;
-	&lt;a class="btn-base"</span> href="#none"&gt;&lt;span&gt;버튼 좌측&lt;/span&gt;&lt;/a&gt;
-&lt;/div&gt;
-
 &lt;div class="btn-wrap"&gt;
-	&lt;button class="btn-base"</span> type="button"&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/button&gt;
-	&lt;a class="btn-base"</span> href="#none"&gt;&lt;span&gt;버튼&lt;/span&gt;&lt;/a&gt;
-&lt;/div&gt;
+	&lt;button class="btn-base text" type="button"&gt;
+		&lt;span&gt;NAME&lt;/span&gt;
+	&lt;/button&gt;
 
-&lt;div class="btn-wrap txta-r"&gt;
-	&lt;button class="btn-base"</span> type="button"&gt;&lt;span&gt;버튼 우측&lt;/span&gt;&lt;/button&gt;
-	&lt;a class="btn-base"</span> href="#none"&gt;&lt;span&gt;버튼 우측&lt;/span&gt;&lt;/a&gt;
-&lt;/div&gt;
-</code>
-</pre>
-</section>
-
-<section class="sec-wrap">
-<h2 class="h-2">Button Icon + text</h2>
-<p>버튼의 기본 스타일에 아이콘 추가 시 사용한다.</p>
-
-<h3 class="h-3">small</h3>
-<div class="btn-wrap txta-l">
-	<button type="button" class="btn-base-s ico-print"><span>인쇄하기(button)</span></button>
-	<a href="#none" class="btn-base-s ico-print"><span>인쇄하기(a)</span></a>
-</div>
-
-<h3 class="h-3">midium(base)</h3>
-<div class="btn-wrap txta-l">
-	<button type="button" class="btn-base-m ico-print"><span>인쇄하기(button)</span></button>
-	<a href="#none" class="btn-base-m ico-print"><span>인쇄하기(a)</span></a>
-
-	<button type="button" class="btn-base ico-print"><span>인쇄하기(button)</span></button>
-	<a href="#none" class="btn-base ico-print"><span>인쇄하기(a)</span></a>
-</div>
-
-<h3 class="h-3">large</h3>
-<div class="btn-wrap txta-l">
-	<button type="button" class="btn-base-l ico-print"><span>인쇄하기(button)</span></button>
-	<a href="#none" class="btn-base-l ico-print"><span>인쇄하기(a)</span></a>
-</div>
-
-<pre class="box-code"><code class="html">
-&lt;div class="btn-wrap txta-l"&gt;
-	&lt;button class="btn-base ico-print"</span> type="button"&gt;&lt;span&gt;인쇄하기&lt;/span&gt;&lt;/button&gt;
-	&lt;a class="btn-base ico-print"</span> href="#none"&gt;&lt;span&gt;인쇄하기&lt;/span&gt;&lt;/a&gt;
+	&lt;button class="btn-base primary" type="button"&gt;
+		&lt;span&gt;NAME&lt;/span&gt;
+	&lt;/button&gt;
 &lt;/div&gt;
 </code>
 </pre>
+
 </section>
 
+
 <section class="sec-wrap">
-<h2 class="h-2">Button Icon</h2>
-<p>버튼의 기본 스타일 외의 스타일을 줄 경우 btn-base 를 제외한 btn-name(btn-close, btn-del, btn-next ...) 으로 쓴다.</p>
+	<h2 class="h-2">Icon</h2>
+	<h3 class="h-3">Icon + Text Button</h3>
+	<p>버튼의 기본 스타일에 아이콘 추가 시 사용한다.</p>
 
+	<div class="box-guide">
+		<div class="btn-wrap center">
+			<a href="#none" class="btn-base-s text">
+				<span class="icon-material" data-icon="photo_libray"></span>
+				<span>인쇄하기</span>
+				<span class="icon-material" data-icon="add_to_photos"></span>
+			</a>
+		</div>
 
-<div class="btn-wrap txta-l" >
-	<div style="display:inline-block; background:#222; padding:10px;">
-		<button type="button" class="btn-close"><span class="hide">닫기</span></button>
+		<div class="btn-wrap center">
+			<button type="button" class="btn-base-m">
+				<span class="icon-material" data-icon="print"></span>
+				<span>인쇄하기</span>
+				<span class="icon-material" data-icon="mail_outline"></span>
+			</button>
+		</div>
+
+		<div class="btn-wrap center">
+			<a href="#none" class="btn-base-l primary">
+				<span class="icon-material" data-icon="notifications"></span>
+				<span>인쇄하기</span>
+				<span class="icon-material" data-icon="share"></span>
+			</a>
+		</div>
 	</div>
-	<div style="display:inline-block; padding:10px;">
-		<button type="button" class="btn-del"><span class="hide">삭제</span></button>
-	</div>
-
-	
-</div>
 
 <pre class="box-code"><code class="html">
-&lt;button class="btn-close"</span> type="button"&gt;&lt;span&gt;닫기&lt;/span&gt;&lt;/button&gt;
-</code>
+&lt;div class="btn-wrap"&gt;
+	&lt;button class="btn-base" type="button"&gt;
+		&lt;span class="icon-material" data-icon="print"&gt;&lt;/span&gt;
+		&lt;span&gt;인쇄하기&lt;/span&gt;
+		&lt;span class="icon-material" data-icon="print"&gt;&lt;/span&gt;
+	&lt;/button&gt;
+	&lt;a class="btn-base" href="#none"&gt;
+		&lt;span class="icon-material" data-icon="print"&gt;&lt;/span&gt;
+		&lt;span&gt;인쇄하기&lt;/span&gt;
+		&lt;span class="icon-material" data-icon="print"&gt;&lt;/span&gt;
+	&lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
+
+	<h3 class="h-3">Only Icon Button</h3>
+	<div class="box-guide">
+		<button type="button" class="btn-close icon-material" data-icon="close" style=" display: inline-flex; vertical-align: top;">
+			<span class="a11y-hidden">닫기</span>
+		</button>
+
+		<button type="button" class="btn-menu icon-material" data-icon="arrow_forward" style="position: relative !important; top:0 !important; left:0 !important; display: inline-flex;  vertical-align: top;">
+			<span class="a11y-hidden">닫기</span>
+		</button>
+
+		<button type="button" class="btn-grid icon-material" data-icon="grid_on" style="position: relative !important; top:0 !important; left:0 !important; display: inline-flex;  vertical-align: top;">
+			<span class="a11y-hidden">그리드 보기</span>
+		</button>
+
+	</div>
+
+<pre class="box-code"><code class="html">
+&lt;div class="btn-wrap"&gt;
+	&lt;button class="btn-name icon-material" type="button"&gt;
+		&lt;span class="icon-material" data-icon="print"&gt;&lt;/span&gt;
+		&lt;span class="a11y-hidden"&gt;인쇄하기&lt;/span&gt;
+	&lt;/button&gt;
+&lt;/div&gt;
+</code></pre>
 </pre>
 </section>
 

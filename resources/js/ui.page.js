@@ -7,12 +7,11 @@
     $plugins.common.init();  
 
     $plugins.page.pageInputPlaceholder = function(){
-        $plugins.uiPlaceholder();
+
     };
     
     $plugins.page.pageInnerLabel = function(){
         $plugins.uiInputClear();
-        $plugins.uiPlaceholder();
         $plugins.uiSelect();
         $plugins.uiDatePicker();
         $plugins.uiInnerLabel();

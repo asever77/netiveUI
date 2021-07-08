@@ -8,13 +8,13 @@
 }
 
 /* mobile first style */
-@keyframes slideLeftIn {
-    0% {left: 0;}
-    100% {left:50vw;}
+@keyframes menuIn {
+    0% {transform: translateX(0);}
+    100% {transform: translateX(50vw);}
 }
-@keyframes slideLeftOut {
-    0% {left: 50vw;}
-    100% {left:0;}
+@keyframes menuOut {
+    0% {transform: translateX(50vw);}
+    100% {transform: translateX(0);}
 }
 @keyframes navLeftIn {
     0% {left:-50vw;}
@@ -949,61 +949,21 @@ html.col-12 .coln12 {
 }
 
 .btn-grid {
-	display: block;
 	position: fixed;
 	right: 2rem;
 	top: 2rem;
-	width: 3rem;
-	height: 3rem;
-	z-index: 99999;
-	border-radius: .4rem;
-	background-color: #fff;
 }
-
-.btn-grid:after {
-	content: "grid_on";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	text-align: center;
-	font-size:3rem;
-	line-height: 3rem;
-	color: #1f1f1f;
-	font-family: 'Material Icons';
-	font-feature-settings: 'liga';
-}
-
-
 .btn-menu {
-	display: block;
 	position: fixed;
 	top: 2rem;
-	margin-left: 2rem;
-	width: 3rem;
-	height: 3rem;
-	border-radius: 50%;
-	background: #1f1f1f;
+	left: 2rem;
 }
 
-.btn-menu:after {
-	content: "arrow_forward";
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	text-align: center;
-	font-size: 2.5rem;
-	line-height: 3rem;
-	color: #fff;
-	font-family: 'Material Icons';
-	font-feature-settings: 'liga';
-}
 
 .base-body {
 	width: 100%;
 	position: relative;
-	animation-name: slideLeftOut;
+	animation-name: menuOut;
 	animation-duration: .2s;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-out;
@@ -1011,7 +971,7 @@ html.col-12 .coln12 {
 }
 
 .nav-open .base-body {
-	animation-name: slideLeftIn;
+	animation-name: menuIn;
 	animation-duration: .2s;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-out;
@@ -1019,7 +979,7 @@ html.col-12 .coln12 {
 }
 
 .header-wrap .logo {
-	animation-name: slideLeftOut;
+	animation-name: menuOut;
 	animation-duration: .2s;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-out;
@@ -1027,7 +987,7 @@ html.col-12 .coln12 {
 }
 
 .nav-open .header-wrap .logo {
-	animation-name: slideLeftIn;
+	animation-name: menuIn;
 	animation-duration: .2s;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-out;
@@ -1052,7 +1012,7 @@ html.col-12 .coln12 {
 }
 
 .btn-menu {
-	animation-name: slideLeftOut;
+	animation-name: menuOut;
 	animation-duration: .2s;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-out;
@@ -1060,14 +1020,14 @@ html.col-12 .coln12 {
 }
 
 .nav-open .btn-menu {
-	animation-name: slideLeftIn;
+	animation-name: menuIn;
 	animation-duration: .2s;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
 }
 
-.nav-open .btn-menu:after {
+.nav-open .btn-menu::before {
 	content: "arrow_back";
 }
 
