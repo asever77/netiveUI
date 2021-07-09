@@ -9,20 +9,20 @@
 
 /* mobile first style */
 @keyframes menuIn {
-    0% {transform: translateX(0);}
-    100% {transform: translateX(50vw);}
+    0% {left:0;}
+    100% {left:50%;}
 }
 @keyframes menuOut {
-    0% {transform: translateX(50vw);}
-    100% {transform: translateX(0);}
+    0% {left:50%;}
+    100% {left:0;}
 }
 @keyframes navLeftIn {
-    0% {left:-50vw;}
+    0% {left:-50%;}
     100% {left: 0;}
 }
 @keyframes navLeftOut {
     0% {left: 0;}
-    100% {left:-50vw;}
+    100% {left:-50%;}
 }
 
 a {
@@ -958,7 +958,7 @@ html.col-12 .coln12 {
 .btn-menu {
 	position: fixed;
 	top: 2rem;
-	left: 2rem;
+	margin-left: 2rem;
 }
 
 
