@@ -337,6 +337,18 @@ p {
 	content:"CSS.ppi ";
 }
 
+.type-bbs1 col:nth-child(1){
+	width:6rem;
+}
+.type-bbs1 col:nth-child(2){
+	width:auto;
+}
+.type-bbs1 td:nth-child(2){
+	text-align:left;
+}
+.type-bbs1 col:nth-child(3){
+	width:9rem;
+}
 
 
 /* box code */

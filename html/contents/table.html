@@ -7,109 +7,62 @@
 <section class="sec-wrap">
 	<h2 class="h-2">Table Explanation</h2>
 	<h3 class="h-3">caption</h3>
-	<p>좀 더 자세하고 정확하게 표현하기 위해 strong 안에 테이블의 간략한 제목 기입과 p.ui-caption 태그안에는 자동으로 테이블의 모든 th의 항목텍스트를 기입하여 테이블을 설명합니다.<br>
-	예) 번호, 제목, 이름, 아이디, 날짜 정보입니다.</p>	
-	<div class="box-code">
-	<pre>
-	<code>
-	&lt;caption&gt;
-	&lt;strong&gt;테이블의 제목&lt;/strong&gt;
-	&lt;p class="ui-caption"&gt;[자동으로 테이블의 th의 제목이 들어감]&lt;/p&gt;
-	&lt;/caption&gt;
-	</code>
-	</pre>
+	<p>좀 더 자세하고 정확하게 표현하기 위해 strong 안에 테이블의 간략한 제목 기입과 '.ui-caption' 엘리먼트에 자동으로 테이블의 모든 th의 항목 텍스트를 기입하여 테이블을 설명한다.<br>
+	<div class="bul-etc" data-bullet="예)">
+		<div>
+			번호, 제목, 이름, 아이디, 날짜 정보입니다.
+		</div>
 	</div>
+
+<pre class="box-code"><code class="html">
+&lt;caption&gt;
+	&lt;strong&gt;테이블의 제목&lt;/strong&gt;
+	&lt;span class="ui-caption"&gt;[자동으로 테이블의 th의 제목이 들어감] 정보입니다.&lt;/span&gt;
+&lt;/caption&gt;
+</code></pre>
 
 	<h3 class="h-3">col</h3>
-	<p>col 스타일은 클래스로 사용하여 html 마크업과 css 스타일을 분리시킨다. <br>
-	테이블이 가지고 있는 구분지어지는 클래스 기준으로 n1, n2 ... 로 개별적으로 테이블 col의 width 관련 스타일을 준다.
-	<div class="box-code">
-	<pre>
-	<code>
-	&lt;table class="tbl-base type-table"&gt;
-	...
-	&lt;col class="n1"&gt;
-	&lt;col class="n2"&gt;
-	&lt;colgroup span="2" class="n3"&gt;
-	</code>
-	</pre>
+	<p>col width 값은 css에서 정의하여 html 마크업과 css 스타일을 분리시킨다.</p>
+	<div class="bul-etc" data-bullet="예)">
+		<div>
+			.tbl-base col:nth-child(1) { width:10rem; }<br>
+			.tbl-base col.n2 { width:10rem; }
+		</div>
 	</div>
 
-	<div class="tbl-base type-discription ">
-		<table>
-			<caption>class 예약어</caption>
-			<colgroup>
-				<col class="col-th">
-				<col class="col-auto">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">클래스명</th>
-					<th scope="col">설명</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">.col-auto</th>
-					<td>크기가 유동적일때 사용.<br>
-						width="auto"
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">.col-[1]</th>
-					<td>상위 부모의 class 기준(type-info)으로 col-1,2,3 으로 숫자로 설정<br>
-					예) <br>
-						.type-name .col-1 {width:100px}<br>
-						.type-name .col-2 {width:200px}
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">.col-[size]</th>
-					<td>기본적인 고정 사이즈로 % 기준으로 설정. 주로 콘텐츠 data형 테이블에 사용
-						<ul>
-							<li>.col-xxxs {width:5%}</li>
-							<li>.col-xxs {width:10%}</li>
-							<li>.col-xs {width:15%}</li>
-							<li>.col-s {width:20%}</li>
-							<li>.col-m {width:25%}</li>
-							<li>.col-l {width:30%}</li>
-							<li>.col-xl {width:35%}</li>
-							<li>.col-xxl {width:40%}</li>
-							<li>.col-xxxl {width:45%}</li>
-							<li>.col-half {width:50%}</li>
-						</ul>
+<pre class="box-code"><code class="html">
+&lt;div class="tbl-base type-name"&gt;
+	&lt;table&gt;
+		&lt;colgroup&gt;
+			&lt;col class="n1"&gt;
+			&lt;col span="3" class="n2"&gt;
+		&lt;/colgroup&gt;
+		&lt;colgroup span="2" class="n3"&gt;
+		...
 
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">.col-[name]</th>
-					<td>게시판형 목록 테이블에서 크기를 일정하게 사용하는 항목에 사용<br>
-						예) <br>
-						.col-name {width:100px} /* 이름, 성명 */<br>
-						.col-date {width:200px} /* yyyy-mm-dd 형의 날짜 */
-						
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+.type-name col.n1 {
+	width:5rem;
+}
+.type-name col.n2 {
+	width:auto;
+}
+...
+</code></pre>
 
 	<h3 class="h-3">scope="colgroup" &amp; &lt;colgroup&gt;</h3>
 	<p>scope="colgroup" 열그룹은 colgroup 범위안에서 그룹핑을 한다. 사용 시 colgroup으로 영역 구분.</p>
-	<div class="box-code">
-	<pre>
-	<code>
-	&lt;colgroup &gt;
-		&lt;col class="col-th"&gt;
-		&lt;col class="col-auto"&gt;
-		&lt;col class="col-auto"&gt;
-	&lt;/colgroup&gt;
-	&lt;colgroup &gt;
-		&lt;col class="col-th"&gt;
-		&lt;col class="col-auto"&gt;
-		&lt;col class="col-auto"&gt;
-	&lt;/colgroup&gt;
-
+<pre class="box-code"><code class="html">
+&lt;colgroup&gt;
+	&lt;col&gt;
+	&lt;col&gt;
+	&lt;col&gt;
+&lt;/colgroup&gt;
+&lt;colgroup&gt;
+	&lt;col&gt;
+	&lt;col&gt;
+	&lt;col&gt;
+&lt;/colgroup&gt;
+&lt;tbody&gt;
 	&lt;tr&gt;
 		&lt;th scope="colgroup"&gt;열그룹 A&lt;/th&gt;
 		&lt;td&gt;열그룹 A-1&lt;/td&gt;
@@ -119,90 +72,81 @@
 		&lt;td&gt;열그룹 B-1&lt;/td&gt;
 		&lt;td&gt;열그룹 B-2&lt;/td&gt;
 	&lt;/tr&gt;
-	</code>
-	</pre>
-	</div>
+	...
+</code></pre>
 
 	<h3 class="h-3">scope="rowgroup" &amp; &lt;tbody&gt;</h3>
 	<p>scope="rowgroup" 행그룹은 tbody 범위안에서 그룹핑을 한다. 사용 시 tbody으로 영역 구분.</p>
-	<div class="box-code">
-	<pre>
-	<code>
-	&lt;tbody&gt;
-		&lt;tr&gt;
-			&lt;th scope="rowgroup" rowspan="2"&gt;행그룹 A&lt;/th&gt;
-			&lt;th scope="row"&gt;행그룹 A-a&lt;/th&gt;
-			&lt;td&gt;행그룹 A-a-1&lt;/td&gt;
-		&lt;/tr&gt;
-		&lt;tr&gt;
-			&lt;th scope="row"&gt;행그룹 A-b&lt;/th&gt;
-			&lt;td&gt;행그룹 A-b-2&lt;/td&gt;
-		&lt;/tr&gt;
-	&lt;/tbody&gt;
-	&lt;tbody&gt;
-		&lt;tr&gt;
-			&lt;th scope="rowgroup" rowspan="2"&gt;행그룹 B&lt;/th&gt;
-			&lt;th scope="row"&gt;행그룹 B-a&lt;/th&gt;
-			&lt;td&gt;행그룹 B-a-1&lt;/td&gt;
-		&lt;/tr&gt;
-		&lt;tr&gt;
-			&lt;th scope="row"&gt;행그룹 B-b&lt;/th&gt;
-			&lt;td&gt;행그룹 B-b-2&lt;/td&gt;
-		&lt;/tr&gt;
-	&lt;/tbody&gt;
-	</code>
-	</pre>
-	</div>
+
+<pre class="box-code"><code class="html">
+&lt;tbody&gt;
+	&lt;tr&gt;
+		&lt;th scope="rowgroup" rowspan="2"&gt;행그룹 A&lt;/th&gt;
+		&lt;th scope="row"&gt;행그룹 A-a&lt;/th&gt;
+		&lt;td&gt;행그룹 A-a-1&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;th scope="row"&gt;행그룹 A-b&lt;/th&gt;
+		&lt;td&gt;행그룹 A-b-2&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;tbody&gt;
+	&lt;tr&gt;
+		&lt;th scope="rowgroup" rowspan="2"&gt;행그룹 B&lt;/th&gt;
+		&lt;th scope="row"&gt;행그룹 B-a&lt;/th&gt;
+		&lt;td&gt;행그룹 B-a-1&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;th scope="row"&gt;행그룹 B-b&lt;/th&gt;
+		&lt;td&gt;행그룹 B-b-2&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/tbody&gt;
+</code></pre>
 </section>
 
-<h2 class="h-2">Table Type</h2>
-<h3 class="h-3">목록형</h3>
-<p>일반적인 게시판 목록 유형의 테이블.</p>
-<div class="tbl-base txta-c">
-	<table>
-		<caption>
-			<strong>목록형 기본 테이블</strong>
-			<p class="ui-caption"></p>
-		</caption>
-		<col class="col-1">
-		<col class="col-2">
-		<col class="col-3">
-		<col class="col-4">
-		<col class="col-5">
-		<thead>
-			<tr>
-				<th scope="col">번호</th>
-				<th scope="col">제목</th>
-				<th scope="col">이름</th>
-				<th scope="col">아이디</th>
-				<th scope="col">날짜</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<td colspan="5">내용이 없습니다.</td>
-			</tr>
-			<tr>
-				<td>1</td>
-				<td class="txta-l">제목이 들어가는 공간입니다.</td>
-				<td>이순신</td>
-				<td>lss</td>
-				<td>2018.03.20</td>
-			</tr>
-			<tr>
-				<td>2</td>
-				<td class="txta-l">제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다.</td>
-				<td>이순신</td>
-				<td>lss</td>
-				<td>2018.03.20</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-<div class="box-code">
-<pre>
-<code>
-&lt;div class="tbl-base txta-c"&gt;
+<section class="sec-wrap">
+	<h2 class="h-2">Table Type</h2>
+	<h3 class="h-3">목록형</h3>
+	<p>일반적인 게시판 목록 유형의 테이블.</p>
+
+	<div class="tbl-list type-bbs1">
+		<table>
+			<caption>
+				<strong>목록형 기본 테이블</strong>
+				<span class="ui-caption"></span>
+			</caption>
+			<colgroup>
+				<col class="n1">
+				<col class="n2">
+				<col class="n3">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">번호</th>
+					<th scope="col">제목</th>
+					<th scope="col">날짜</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td colspan="3">내용이 없습니다.</td>
+				</tr>
+				<tr>
+					<td>1</td>
+					<td class="">제목이 들어가는 공간입니다.</td>
+					<td>2018.03.20</td>
+				</tr>
+				<tr>
+					<td>2</td>
+					<td class="">제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다.</td>
+					<td>2018.03.20</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+<pre class="box-code"><code class="html">
+&lt;div class="tbl-list"&gt;
 	&lt;table&gt;
 		&lt;caption&gt;
 			&lt;strong&gt;목록형 기본 테이블&lt;/strong&gt;
@@ -211,129 +155,119 @@
 		&lt;col class="col-1"&gt;
 		&lt;col class="col-2"&gt;
 		&lt;col class="col-3"&gt;
-		&lt;col class="col-4"&gt;
-		&lt;col class="col-5"&gt;
 		&lt;thead&gt;
 			&lt;tr&gt;
 				&lt;th scope="col"&gt;번호&lt;/th&gt;
 				&lt;th scope="col"&gt;제목&lt;/th&gt;
-				&lt;th scope="col"&gt;이름&lt;/th&gt;
-				&lt;th scope="col"&gt;아이디&lt;/th&gt;
 				&lt;th scope="col"&gt;날짜&lt;/th&gt;
 			&lt;/tr&gt;
 		&lt;/thead&gt;
 		&lt;tbody&gt;
 			&lt;tr&gt;
-				&lt;td colspan="5"&gt;내용이 없습니다.&lt;/td&gt;
+				&lt;td colspan="3"&gt;내용이 없습니다.&lt;/td&gt;
 			&lt;/tr&gt;
 			&lt;tr&gt;
 				&lt;td&gt;1&lt;/td&gt;
 				&lt;td class="txta-l"&gt;제목이 들어가는 공간입니다.&lt;/td&gt;
-				&lt;td&gt;이순신&lt;/td&gt;
-				&lt;td&gt;lss&lt;/td&gt;
 				&lt;td&gt;2018.03.20&lt;/td&gt;
 			&lt;/tr&gt;
 		&lt;/tbody&gt;
 	&lt;/table&gt;
 &lt;/div&gt;
-</code>
-</pre>
-</div>
+</code></pre>
 
-<h3 class="h-3">자료형</h3>
-<p>일반적인 자료 유형의 테이블.</p>
-<div class="tbl-base">
-	<table>
-		<caption>
-			<strong>특정 임플란트 치조골 이식술 정보</strong>
-			<p class="ui-caption"></p>
-		</caption>
+	<h3 class="h-3">자료형</h3>
+	<p>일반적인 자료 유형의 테이블.</p>
+	<div class="tbl-base">
+		<table>
+			<caption>
+				<strong>특정 임플란트 치조골 이식술 정보</strong>
+				<span class="ui-caption"></span>
+			</caption>
+			<colgroup>
+				<col class="n1">
+				<col class="n2" span="2">
+			</colgroup>
 
-		<colgroup>
-			<col class="col-auto">
-			<col class="col-auto" span="2">
-		</colgroup>
+			<thead>
+				<tr>
+					<th scope="col" rowspan="2">구분</th>
+					<th scope="colgroup" colspan="2">지급금액</th>
+				</tr>
+				<tr>
+					<th scope="col">보장개시일 (책임개시일)부터 가입 후 2년 미만</th>
+					<th scope="col">가입 후 2년 이상</th>
+				</tr>
+			</thead>
 
-		<thead>
-			<tr>
-				<th scope="col" rowspan="2">구분</th>
-				<th scope="colgroup" colspan="2">지급금액</th>
-			</tr>
-			<tr>
-				<th scope="col">보장개시일 (책임개시일)부터 가입 후 2년 미만</th>
-				<th scope="col">가입 후 2년 이상</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">골이식술(BBG)</th>
-				<td>가입금액의 15%</td>
-				<td>가입금액의 30%</td>
-			</tr>
-			<tr>
-				<th scope="row">골유도재생술(GBR)</th>
-				<td>가입금액의 25%</td>
-				<td>가입금액의 50%</td>
-			</tr>
-			<tr>
-				<th scope="row">상악동거상술(SL)</th>
-				<td>가입금액의 50%</td>
-				<td>가입금액의 100%</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-<div class="tbl-base mgt-s">
-	<table>
-		<caption>
-			<strong>장기요양등급 정보</strong>
-			<p class="ui-caption"></p>
-		</caption>
-		<colgroup>
-			<col class="col-th">
-			<col class="col-auto">
-			<col class="col-auto">
-			<col class="col-auto">
-			<col class="col-auto">
-		</colgroup>
-		<tbody>
-			<tr>
-				<th scope="row">암</th>
-				<td>유사암</td>
-				<td>암진단비</td>
-				<td>5대 주요암,<br>10대 주요암</td>
-				<td>재진단암</td>
-			</tr>
-			<tr>
-				<th scope="row">뇌</th>
-				<td>뇌혈관질환(뇌졸중 포함),<br>12대특정뇌질환(뇌졸중 포함)</td>
-				<td>뇌졸중,<br>뇌출혈</td>
-				<td>중대한 뇌졸중</td>
-				<td>두번째 뇌출혈</td>
-			</tr>
-			<tr>
-				<th scope="row">심장</th>
-				<td>허혈성심장질환,<br>8대특정심장질환</td>
-				<td>급성심근경색증</td>
-				<td>중대한 <br>급성심근경색증</td>
-				<td>두번째 <br>급성심근경색증</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-<div class="box-code">
-<pre>
-<code>
+			<tbody>
+				<tr>
+					<th scope="row">골이식술(BBG)</th>
+					<td>가입금액의 15%</td>
+					<td>가입금액의 30%</td>
+				</tr>
+				<tr>
+					<th scope="row">골유도재생술(GBR)</th>
+					<td>가입금액의 25%</td>
+					<td>가입금액의 50%</td>
+				</tr>
+				<tr>
+					<th scope="row">상악동거상술(SL)</th>
+					<td>가입금액의 50%</td>
+					<td>가입금액의 100%</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="tbl-base mgt-s">
+		<table>
+			<caption>
+				<strong>장기요양등급 정보</strong>
+				<span class="ui-caption"></span>
+			</caption>
+			<colgroup>
+				<col>
+				<col>
+				<col>
+				<col>
+				<col>
+			</colgroup>
+			<tbody>
+				<tr>
+					<th scope="row">암</th>
+					<td>유사암</td>
+					<td>암진단비</td>
+					<td>5대 주요암,<br>10대 주요암</td>
+					<td>재진단암</td>
+				</tr>
+				<tr>
+					<th scope="row" rowspan="2">뇌</th>
+					<td>뇌혈관질환(뇌졸중 포함),<br>12대특정뇌질환(뇌졸중 포함)</td>
+					<td>뇌졸중,<br>뇌출혈</td>
+					<td>중대한 뇌졸중</td>
+					<td>두번째 뇌출혈</td>
+				</tr>
+				<tr>
+					<td>허혈성심장질환,<br>8대특정심장질환</td>
+					<td>급성심근경색증</td>
+					<td>중대한 <br>급성심근경색증</td>
+					<td>두번째 <br>급성심근경색증</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+<pre class="box-code"><code class="html">
 &lt;div class="tbl-base"&gt;
 	&lt;table&gt;
 		&lt;caption&gt;
 			&lt;strong&gt;특정 임플란트 치조골 이식술 정보&lt;/strong&gt;
-			&lt;p class="ui-caption"&gt;&lt;/p&gt;
+			&lt;span class="ui-caption"&gt;&lt;/span&gt;
 		&lt;/caption&gt;
 
 		&lt;colgroup&gt;
-			&lt;col class="col-auto"&gt;
-			&lt;col class="col-auto" span="2"&gt;
+			&lt;col&gt;
+			&lt;col span="2"&gt;
 		&lt;/colgroup&gt;
 
 		&lt;thead&gt;
@@ -355,6 +289,6 @@
 		&lt;/tbody&gt;
 	&lt;/table&gt;
 &lt;/div&gt;
-</code>
-</pre>
-</div>
+</code></pre>
+
+</section>
