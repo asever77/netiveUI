@@ -958,7 +958,7 @@ html.col-12 .coln12 {
 .btn-menu {
 	position: fixed;
 	top: 2rem;
-	margin-left: 2rem;
+	margin-left:2rem
 }
 
 
@@ -1027,10 +1027,12 @@ html.col-12 .coln12 {
 	animation-iteration-count: 1;
 	animation-timing-function: ease-out;
 	animation-fill-mode: forwards;
+	margin-left:0;
 }
 
 .nav-open .btn-menu::before {
 	content: "arrow_back";
+	
 }
 
 
