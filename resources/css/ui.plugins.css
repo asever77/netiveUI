@@ -53,7 +53,7 @@
     100% {display:none;}
 }
 
-@keyframes timeAni {
+@keyframes clockAni {
     0% {transform:rotate(0)}
     100% {transform:rotate(360deg)}
 }
@@ -145,7 +145,7 @@
     animation-fill-mode: forwards;
 }
 
-.ui-loading-txt {
+.ui-loading-message {
     font-size: 14px;
     color: #fff;
     width: 120px;
@@ -156,13 +156,13 @@
     text-align: center;
 }
 
-.ui-loading-txt span {
+.ui-loading-message span {
     display: block;
     padding: 2px;
 }
 
-/* ui-loading : time */
-.ui-loading.time:after {
+/* ui-loading : clock */
+.ui-loading.clock:after {
     content: "";
     display: block;
     position: fixed;
@@ -175,7 +175,7 @@
     background: rgba(0, 0, 0, 0.5);
 }
 
-.ui-loading.time:after {
+.ui-loading.clock:after {
     animation-name: fadeIn;
     animation-duration: 0.5s;
     animation-iteration-count: 1;
@@ -183,7 +183,7 @@
     animation-fill-mode: forwards;
 }
 
-.ui-loading.time.close:after {
+.ui-loading.clock.close:after {
     animation-name: fadeOut;
     animation-duration: 0.25s;
     animation-iteration-count: 1;
@@ -191,7 +191,7 @@
     animation-fill-mode: forwards;
 }
 
-.ui-loading.time .ui-loading-wrap {
+.ui-loading.clock .ui-loading-wrap {
     position: absolute;
     z-index: 1;
     width: 80px;
@@ -205,7 +205,7 @@
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
 }
 
-.ui-loading.time .ui-loading-wrap:after {
+.ui-loading.clock .ui-loading-wrap:after {
     content: "";
     display: block;
     position: absolute;
@@ -219,7 +219,7 @@
     background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 1) 100%);
 }
 
-.ui-loading.time .ui-loading-wrap:before {
+.ui-loading.clock .ui-loading-wrap:before {
     content: "";
     display: block;
     position: absolute;
@@ -233,15 +233,15 @@
     background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 1) 100%);
 }
 
-.ui-loading.time .ui-loading-wrap:after {
-    animation-name: timeAni;
+.ui-loading.clock .ui-loading-wrap:after {
+    animation-name: clockAni;
     animation-duration: 12s;
     animation-iteration-count: infinite;
     animation-timing-function: linear
 }
 
-.ui-loading.time .ui-loading-wrap:before {
-    animation-name: timeAni;
+.ui-loading.clock .ui-loading-wrap:before {
+    animation-name: clockAni;
     animation-duration: 1.2s;
     animation-iteration-count: infinite;
     animation-timing-function: linear
@@ -286,6 +286,7 @@
     top: 50%;
     left: 50%;
     margin: -40px 0 0 -40px;
+    z-index:1;
 }
 
 .ui-loading.orbit .ui-loading-wrap:after {
@@ -410,8 +411,8 @@
     animation-direction: reverse;
 }
 
-/* pure time */
-.ui-loading .time:after {
+/* pure clock */
+.ui-loading .clock:after {
     content: "";
     display: block;
     position: fixed;
@@ -424,7 +425,7 @@
     background: rgba(0, 0, 0, 0.5);
 }
 
-.ui-loading .time .ui-loading-wrap {
+.ui-loading .clock .ui-loading-wrap {
     position: absolute;
     z-index: 1;
     width: 80px;

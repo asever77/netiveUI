@@ -242,35 +242,35 @@ select::-ms-expand {
 }
 
 .mgt-xxs {
-	margin-top: 0.2rem !important;
+	margin-top: 0.4rem !important;
 }
 
 .mgt-xs {
-	margin-top: 0.5rem !important;
+	margin-top: 0.8rem !important;
 }
 
 .mgt-s {
-	margin-top: 1rem !important;
+	margin-top: 1.6rem !important;
 }
 
 .mgt-m {
-	margin-top: 1.5rem !important;
+	margin-top: 2.4rem !important;
 }
 
 .mgt-l {
-	margin-top: 2rem !important;
+	margin-top: 3.2rem !important;
 }
 
 .mgt-xl {
-	margin-top: 3rem !important;
-}
-
-.mgt-xxl {
 	margin-top: 4rem !important;
 }
 
+.mgt-xxl {
+	margin-top: 4.8rem !important;
+}
+
 .mgt-xxxl {
-	margin-top: 5rem !important;
+	margin-top: 5.6rem !important;
 }
 
 /* align */
@@ -724,6 +724,7 @@ a.btn-base-l {
 	font-weight:500;
 	box-shadow: none;
 	color:#333;
+	background:transparent;
 }
 
 [class*="btn-base"].primary {

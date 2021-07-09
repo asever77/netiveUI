@@ -90,9 +90,9 @@
 				});
 
 			
-				document.querySelectorAll('.test-scrollmove-hor-item').forEach(function (v) {
-					$plugins.io.observe(v);
-				});
+				// document.querySelectorAll('.test-scrollmove-hor-item').forEach(function (v) {
+				// 	$plugins.io.observe(v);
+				// });
 			});
 		})(jQuery, window, document);
 	</script>
@@ -100,8 +100,8 @@
 </section>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Javascript</h2>
-	<h3 class="h-3">$plugins.scroll.move({ ... })</h3>
+    <h2 class="h-2">Source Code</h2>
+	<h3 class="h-3">Javascript</h3>
 
 <pre class="box-code"><code class="script">
 $plugins.scroll.move({ 
@@ -109,7 +109,7 @@ $plugins.scroll.move({
 	value: 0,
 	speed: 0,
 	callback: false,
-	ps: 'top', //'top/center/left'
+	ps: 'top', //'top | center | left'
 	add: 0,
 	focus: false,
 	
@@ -127,10 +127,10 @@ $plugins.scroll.move({
 			</colgroup>
 			<thead>
 				<tr>
-					<th scope="col">옵션명</th>
-					<th scope="col">유형</th>
-					<th scope="col">기본</th>
-					<th scope="col">설명</th>
+					<th scope="col">Options</th>
+					<th scope="col">Type</th>
+					<th scope="col">Default</th>
+					<th scope="col">Explanation</th>
 				</tr>
 			</thead>
 			<tbody>

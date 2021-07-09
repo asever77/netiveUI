@@ -293,14 +293,14 @@ if (!Object.keys){
 		timerHide : {},
 		options : {
 			selector: null,
-			txt : null,
+			message : null,
 			styleClass : 'orbit' //time
 		},
 		show : function(opt){
 			var opt = $.extend(true, {}, this.options, opt);
 			var selector = opt.selector;
 			var styleClass = opt.styleClass;
-			var txt = opt.txt;
+			var message = opt.message;
 			var	$selector = !!selector ? selector : $('body');
 			var htmlLoading = '';
 
@@ -311,8 +311,8 @@ if (!Object.keys){
 			htmlLoading += '<div class="ui-loading '+ styleClass +'" style="position:absolute">';
 				htmlLoading += '<div class="ui-loading-wrap">';
 
-			txt !== null ?
-					htmlLoading += '<strong class="ui-loading-txt"><span>'+ txt +'</span></strong>':
+			message !== null ?
+					htmlLoading += '<strong class="ui-loading-message"><span>'+ message +'</span></strong>':
 					htmlLoading += '';
 
 				htmlLoading += '</div>';
@@ -551,12 +551,12 @@ if (!Object.keys){
 			var focus = opt.focus;
 			var $selector = opt.selector;
 			var effect = opt.effect;
-			console.log($selector.selector, $selector);
-			//jquery selector인 경우 변환
-			if (!!$selector.selector) {
-				$selector = document.querySelector($selector.selector);
-			}
 			
+			//jquery selector인 경우 변환
+			if (!!$selector[0]) {
+				$selector = $selector[0];
+			}
+
 			switch (ps) {
 				case 'top':
 					$selector.scrollTo({
@@ -725,9 +725,9 @@ if (!Object.keys){
 			
 			var timerResize;
 			
-			if (win[global].support.touch) {
-				return false;
-			} 
+			// if (win[global].support.touch) {
+			// 	return false;
+			// } 
 
 			$base.each(function () {
 				!remove ? scrollbarReady($(this)) : scrollbarRemove($(this));
