@@ -2105,8 +2105,8 @@ if (!Object.keys){
 			});
 			//focus hold or sense
 			// hold ?	
-			// 	win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
-			// 	win[global].uiFocusTab({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
+			// 	win[global].focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
+			// 	win[global].focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
 
 			switch (ps) {
 				case 'BL': 
@@ -2593,7 +2593,7 @@ if (!Object.keys){
 				win[global].focus.loop({ 
 					selector: $modal, 
 				});
-				// win[global].uiFocusTab({ 
+				// win[global].focus.loop({ 
 				// 	selector: $modal, 
 				// 	type:'hold' 
 				// });
@@ -4010,7 +4010,7 @@ if (!Object.keys){
 			$calWrap.empty().append(buildCalendar(date, calendarEl, v));
 			reDisplayCalendar(calendarEl, v);
 			$dp.addClass('visible');
-			win[global].uiFocusTab({ selector: $calWrap, type: 'hold' });
+			win[global].focus.loop({ selector: $calWrap, type: 'hold' });
 
 			//datepicker event--------------------------------------------------------
 			$('.datepicker-head-year select').off('change.uidpsel').on('change.uidpsel', function (e) {

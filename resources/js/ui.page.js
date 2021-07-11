@@ -44,7 +44,7 @@
     };
 
     $plugins.page.pageTableCaption = function(){
-        $plugins.uiCaption();
+        $plugins.table.caption();
     };
 
     $plugins.page.pageTableCellFix = function(){

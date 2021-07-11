@@ -4,30 +4,33 @@
 :root {
 	--bg-color: #fff;
 
+	/* text */
 	--grey-900: #212121; /* headline text */
 	--grey-800: #424242; /* default text*/
 	--grey-700: #616161; /* sub text */
-	--grey-600: #757575; /* weak text */
 
-	--grey-500: #9E9E9E; 
+	/* line */
 	--grey-400: #BDBDBD; 
-
-	--grey-300: #E0E0E0; /* border line */
-
 	--grey-200: #EEEEEE;
-	--grey-100: #F5F5F5;
+
+	/* bg */
 	--grey-50: #FAFAFA;	
 	--grey-0: #FFFFFF;	
 
-	--btn-bg-primary: #616161;
+	/* button */
+	--btn-bg-primary: #424242;
 	--btn-text-primary: #FAFAFA;
-	--btn-line-primary: #616161;
+	--btn-line-primary: #424242;
 
-	--btn-bg: #FAFAFA;
+	--btn-bg: #FFF;
 	--btn-text: #424242;
 	--btn-line: #616161;
 
-	--shodow: rgba(0,0,0,0.1);
+	/* box */
+	--box-bg:#FFF;
+	--box-line:#BDBDBD;
+
+	--shadow: rgba(0,0,0,0.1);
 
 	--color-primary: #121212;
 	--color-secondary: rgb(255, 95, 21);
@@ -37,30 +40,31 @@
 :root.dark-mode {
 	--bg-color: #212121;
 	
-	--grey-900: #FAFAFA; /* headline text */
-	--grey-800: #F5F5F5; /* default text*/
-	--grey-700: #EEEEEE; /* sub text */
-	--grey-600: #E0E0E0; /* weak text */
+	--grey-900: #E0E0E0; /* headline text */
+	--grey-800: #9E9E9E; /* default text*/
+	--grey-700: #616161; /* sub text */
 
-	--grey-500: #BDBDBD; 
-	--grey-400: #9E9E9E; 
+	/* line */
+	--grey-400: #616161; 
+	--grey-200: #424242;
 
-	--grey-300: #757575; /* border line */
-
-	--grey-200: #616161;
-	--grey-100: #424242;
+	/* bg */
 	--grey-50: #212121;	
-	--grey-0: #121212;
+	--grey-0: #121212;	
 
 	--btn-bg-primary: #E0E0E0;
 	--btn-text-primary: #212121;
 	--btn-line-primary: #FAFAFA;
 
 	--btn-bg: #424242;
-	--btn-text: #F5F5F51;
+	--btn-text: #E0E0E0;
 	--btn-line: #616161;
 
-	--shodow: rgba(255,255,255,0.1);
+	/* box */
+	--box-bg:#212121;
+	--box-line:#424242;
+
+	--shadow: rgba(0,0,0,0.5);
 
 	--color-primary: #121212;
 	--color-secondary: rgb(255, 95, 21);
@@ -561,7 +565,7 @@ input[type="checkbox"] {
 	display: inline-block;
 	vertical-align: top;
 	width: 100%;
-	border: 1px solid var(--grey-100);
+	border: 1px solid var(--grey-50);
 	border-radius: 0;
 	height: 4rem;
 	padding: 0 1rem;
@@ -597,7 +601,7 @@ select {
 	appearance: none;
 	-moz-appearance: none;
 	-webkit-appearance: none;
-	border: 1px solid var(--grey-100);
+	border: 1px solid var(--grey-50);
 	font-size: 14px;
 	cursor: pointer;
 }
@@ -755,15 +759,15 @@ select:focus {
 }
 
 .form-wrap .inp-base:focus::-webkit-input-placeholder {
-    color: var(--grey-600);;
+    color: var(--grey-700);
 }
 
 .form-wrap .inp-base:focus:-ms-input-placeholder {
-    color: var(--grey-600);;
+    color: var(--grey-700);
 }
 
 .form-wrap .inp-base:focus::placeholder {
-    color: var(--grey-600);;
+    color: var(--grey-700);
 }
 
 .field-text {
@@ -855,6 +859,7 @@ select:focus {
 	min-height: 4rem;
 	border: 1px solid var(--btn-line);
 	font-size: 1.4rem;
+	font-weight: 500;
 	background: var(--btn-bg);
 	color: var(--btn-text);
 	text-decoration: none;
@@ -879,7 +884,7 @@ a[class*="btn-base"] {
 [class*="btn-base"]:hover,
 [class*="btn-base"]:focus {
 	border: 1px solid var(--grey-700);
-	background: var(--grey-100);
+	background: var(--grey-50);
 }
 
 [class*="btn-base"].disabled,
@@ -1311,7 +1316,7 @@ dl.bul-num dd {
 }
 
 dl.bul-num dd+dd {
-	border-top: 1px solid var(--grey-400);
+	border-top: 1px solid var(--grey-700);
 }
 
 .bul-num.round>li {
@@ -1323,7 +1328,7 @@ dl.bul-num dd+dd {
 	width: 1.4rem;
 	height: 1.4rem;
 	border-radius: 50%;
-	border: 1px solid var(--grey-500);
+	border: 1px solid var(--grey-700);
 	font-size: 0.9rem;
 	min-width: 1.4rem;
 	margin-top: 0.4rem;
@@ -1339,7 +1344,7 @@ dl.bul-num dd+dd {
 	width: .2rem;
 	height: .2rem;
 	border-radius: 50%;
-	background-color: var(--grey-500);
+	background-color: var(--grey-700);
 	position: absolute;
 	left: 0.2rem;
 	top: 1.2rem;
@@ -1796,28 +1801,10 @@ overflow:auto;
 
 
 @media (prefers-color-scheme: light) {
-	body::after{
-		content:'light';
-		display: block;
-		position:fixed;
-		right:0;
-		bottom:0;
-		padding:1rem;
-		background:#fff;
-		z-index: 10000;
-	}
+	/* light mode */
 }
 @media (prefers-color-scheme: dark) {
-	body::after{
-		content:'dark';
-		display: block;
-		position:fixed;
-		right:0;
-		bottom:0;
-		padding:1rem;
-		background:#fff;
-		z-index: 10000;
-	}
+	/* dark mode */
 }
 
 

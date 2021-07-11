@@ -901,13 +901,12 @@ html.col-12 .coln12 {
 .box-guide{
 	width:100%;
 	position: relative;
-	background:var(--grey-50);
-	border:1px solid var(--grey-100);
-	color:var(--grey-700);
+	background:var(--box-bg);
+	border:1px solid var(--box-line);
 	padding:2rem;
 	border-radius:0.4rem;
 	margin:1rem 0;
-	box-shadow: 0 0.3rem 0.3rem rgba(0, 0, 0, 0.1);
+	box-shadow: 0 0.3rem 0.3rem var(--shadow);
 }
 
 .test-scrollmove-hor{
