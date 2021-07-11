@@ -54,7 +54,6 @@ a {
 	z-index: 0;
 	width: 100%;
 	padding: 0 2rem;
-	font-size: 1.4rem;
 }
 
 .base-footer {
@@ -65,7 +64,7 @@ a {
 /* header */
 .header-wrap {
 	width: 100%;
-	padding: 0 2rem;
+	padding: 6rem 2rem 0;
 	margin: 0 auto;
 	font-size: 0;
 	text-align: center;
@@ -75,11 +74,15 @@ a {
 	position: relative;
 	display: block;
 	width: 2.8rem;
-	padding: 6rem 0 0 .2rem;
+	height: 2.8rem;
+	top: 0;
+	left: .2rem;
+	/* background:url(../img/common/logo_ui.svg) no-repeat 50% 50% / 2.8rem; */
 }
-
+.header-wrap .logo svg,
 .header-wrap .logo img {
 	width: 100%;
+	height: 100%;
 }
 
 .header-nav {
@@ -195,14 +198,12 @@ a {
 /* common */
 p {
 	line-height:1.6;
-	font-size:1.4rem;
 }
 
 .tit-wrap {
 	margin: 5rem 0;
 }
 .tit-wrap p {
-	font-size: 1.4rem;
 	margin: 1rem 0 0;
 }
 
@@ -972,6 +973,11 @@ html.col-12 .coln12 {
 	top: 2rem;
 	margin-left:2rem
 }
+.btn-mode {
+	position: fixed;
+	top: 6rem;
+	right:2rem
+}
 
 
 .base-body {
@@ -1048,6 +1054,9 @@ html.col-12 .coln12 {
 	
 }
 
+.color-box {
+	padding:2rem;
+}
 
 
 /* 

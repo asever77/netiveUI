@@ -17,7 +17,7 @@
         $plugins.uiInnerLabel();
 
     };
-
+    $plugins.page.pageColor = function(){};
     $plugins.page.pageUnits = function(){};
     $plugins.page.pagePlaceholder = function(){};
     $plugins.page.pageNaming = function(){};

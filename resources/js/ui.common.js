@@ -14,6 +14,9 @@
 					case 'typography' :
 						fristHref = '/netiveUI/html/start/typography.html';
 						break;
+					case 'color' :
+						fristHref = '/netiveUI/html/start/color.html';
+						break;
 					case 'device' :
 						fristHref = '/netiveUI/html/start/device.html';
 						break;
@@ -198,7 +201,10 @@
 			});
 			$plugins.common.menuAjax();
 
-			$('.ui-nav').on('click', $plugins.common.navOpen)
+			$('.ui-nav').on('click', $plugins.common.navOpen);
+			document.querySelector('.btn-mode').addEventListener('click', function() {
+				document.querySelector('html').classList.toggle('dark-mode');
+			});
 		},
 		navOpen: function(){
 			var $body = $('body');

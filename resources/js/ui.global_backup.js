@@ -1389,9 +1389,9 @@ if (!Object.keys){
 		}
 	});
 	function createUiInnerLabel(){
-		var $input = $('.field-inlabel .inp-base');
-		var $select = $('.field-inlabel select');
-		var $datepicker = $('.field-inlabel .ui-datepicker .inp-base');
+		var $input = $('.form-wrap .inp-base');
+		var $select = $('.form-wrap select');
+		var $datepicker = $('.form-wrap .ui-datepicker .inp-base');
 
 		//set
 		$input.each(function(){
@@ -1419,7 +1419,7 @@ if (!Object.keys){
 			.off('change.inlabel').on('change.inlabel', function(){
 				checkValueSelect(this)
 			});
-		$(doc).find('.field-inlabel .ui-select-btn')
+		$(doc).find('.form-wrap .ui-select-btn')
 			.off('focus.inlabel').on('focus.inlabel', function(){
 				checkValueSelectBtn(this)
 			})
@@ -3542,7 +3542,7 @@ if (!Object.keys){
 			$("#" + id).val(d);
 
 			//기간설정
-			d !== '' ? $("#" + id).closest('.field-inlabel').addClass('activated') : '';
+			d !== '' ? $("#" + id).closest('.form-wrap').addClass('activated') : '';
 			!!opt.callback ? opt.callback({ id: id, value: d, name: end ? $('#' + id).attr('name') : $('#' + org_id).attr('name')}) : '';
 		}
 		function writeInputMonthValue(calendarEl, obj) {
@@ -3558,7 +3558,7 @@ if (!Object.keys){
 			$("#" + id).val(getYM);
 
 			//기간설정
-			getYM !== '' ? $("#" + id).closest('.field-inlabel').addClass('activated') : '';
+			getYM !== '' ? $("#" + id).closest('.form-wrap').addClass('activated') : '';
 			!!opt.callback ? opt.callback({ id: id, value: getYM, name: $('#' + id).attr('name')}) : '';
 		}
 

@@ -92,7 +92,7 @@
 			$("#" + id).val(d);
 
 			//기간설정
-			d !== '' ? $("#" + id).closest('.field-inlabel').addClass('activated') : '';
+			d !== '' ? $("#" + id).closest('.form-wrap').addClass('activated') : '';
 			!!opt.callback ? opt.callback({ id: id, value: d, name: end ? $('#' + id).attr('name') : $('#' + org_id).attr('name')}) : '';
 		}
 
