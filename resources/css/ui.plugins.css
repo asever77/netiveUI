@@ -2345,21 +2345,23 @@ select.off:focus+.ui-select-btn:after {
 }
 
 .ui-select-btn {
-    display: inline-block;
+    padding: 0 3.5rem 0 1rem;
+    text-overflow: ellipsis;
+
+    /* display: inline-block;
     position: relative;
     text-align: left;
     vertical-align: top;
     width: 100%;
-    height: 40px;
-    padding: 0 35px 0 10px;
+    height: 4rem;
+   
     border-radius: 2px;
     border: 1px solid #c9c9c9;
-    font-size: 14px;
     cursor: pointer;
     outline: 0;
     box-sizing: border-box;
     text-overflow: ellipsis;
-    background-color: #fff;
+    background-color: #fff; */
 }
 
 .ui-select-btn:after {
@@ -2367,16 +2369,16 @@ select.off:focus+.ui-select-btn:after {
     font-family: 'Material Icons';
     display: block;
     position: absolute;
-    right: 10px;
+    right: 1rem;
     top: 50%;
-    margin-top: -10px;
-    width: 18px;
-    height: 20px;
+    margin-top: -1rem;
+    width: 1.8rem;
+    height: 2rem;
     float: right;
     overflow: hidden;
-    color: #000;
-    font-size: 20px;
+    font-size: 2rem;
     line-height: 1;
+    color:var(--text-400);
 }
 
 .ui-select-btn span {
@@ -2388,13 +2390,13 @@ select.off:focus+.ui-select-btn:after {
     white-space: nowrap;
     overflow: hidden;
     text-align: left;
-    margin-top: 6px;
+    margin-top: .3rem;
 }
 
 .ui-select-btn[aria-expanded="true"],
 .ui-select-btn:focus,
 .ui-select-btn:active {
-    border-color: #000;
+    border-color: var(--line-b);
 }
 
 .ui-select-btn[aria-expanded="true"]:after,

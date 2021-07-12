@@ -4566,7 +4566,7 @@ if (!Object.keys){
 			htmlOption += '</div>';
 			htmlOption += '<button type="button" class="ui-select-confirm"><span>확인</span></strong>';
 			htmlOption += '</div>';
-			htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
+			htmlButton = '<button type="button" class="inp-base ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
 
 			$selectCurrent.append(htmlButton);
 			$sel.addClass('off');

@@ -1,119 +1,121 @@
 <input type="hidden" id="uiJsName" value="pageInnerLabel">
 
-<div class="tit-catagory">Contents Form</div>
 <div class="tit-wrap">
 	<h1 class="h-1">Inner Label</h1>
 </div>
 
-<h2 class="h-2">Examples</h2>
-<p>입력란 안에 label이 들어가는 스타일로 좁은 공간이나 모바일 환경에서 많이 사용한다.</p>
-<div class="box-guide type-fieldset">
-	<div class="fx-wrap space">
-		<div class="fx-item" style="background: #eee">
+<section class="sec-wrap">
+	<h2 class="h-2">Examples</h2>
+	<p>입력란 안에 label이 들어가는 스타일로 좁은 공간이나 모바일 환경에서 많이 사용한다.</p>
+	<div class="box-guide type-fieldset">
+		<div class="fx-wrap space" data-align="justify" style="border:1px dashed lightpink">
+			<div class="fx-item" style="border:1px dashed lightpink">
 
-			<div class="form-wrap">
-				
-				<input type="text" id="test_a1" class="inp-base" value="" placeholder="placeholder text">
-				<label class="form-wrap-label" for="test_a1">Label Title</label>
-				<em class="info">Helper Text</em>
-				<em class="error">Error message</em>
-
-			</div>
-
-		</div>
-
-		<div class="fx-item" style="background: #eee">
-			<div class="form-wrap ui-error-true">
-				<em class="field-placeholder">Helper Text</em>
-				<em class="ui-error-msg">Error message</em>
-				<input type="text" id="test_a2" class="inp-base" value="23" placeholder="placeholder text">
-				<label class="form-wrap-label" for="test_a2">Label Title</label>
-			</div>
-		</div>
-	</div>
-
-	<div class="fx-wrap space">
-		<div class="fx-item" style="background: #eee">
-			<div class="form-wrap">
-				<em class="field-placeholder">Helper Text</em>
-				<em class="ui-error-msg">Error message</em>
-				<div class="ui-select">
-					<select title="카드번호 선택" id="test_a3_s">
-						<option disabled selected>선택하세요</option>
-						<option value="1">신한카드 908*****2*5**</option>
-						<option value="2">시티카드 908*****2*5**</option>
-						<option value="3">현대카드 908*****2*5**</option>
-					</select>
+				<div class="form-wrap">
+					<input type="text" id="test_a1" class="inp-base" value="" placeholder="placeholder text">
+					<label class="form-wrap-label" for="test_a1">Label Title</label>
 				</div>
-				<label class="form-wrap-label" for="test_a3_s">Card Select</label>
-			</div>
-		</div>
-
-		<div class="fx-item" style="background: #eee">
-			<div class="form-wrap">
-				<em class="field-placeholder">Helper Text</em>
-				<em class="ui-error-msg">Error message</em>
-				<div class="ui-select">
-					<select title="카드번호 선택" id="test_a4_s">
-						<option disabled >선택하세요</option>
-						<option value="1" selected>신한카드 908*****2*5**</option>
-						<option value="2">시티카드 908*****2*5**</option>
-						<option value="3">현대카드 908*****2*5**</option>
-					</select>
+				<div class="from-info">
+					<div class="bul-etc">Helper Text</div>
 				</div>
-				<label class="form-wrap-label" for="test_a4_s">Card Select</label>
-			</div>
-		</div>
-	</div>
 
-	<div class="fx-wrap space">
-		<div class="fx-item" style="background: #eee">
-			<div class="form-wrap">
-				<em class="field-placeholder">Helper Text</em>
-				<em class="ui-error-msg">Error message</em>
-				<div class="ui-datepicker" id="test_a5_s" data-period="true" data-dual="true" data-title="테스트">
-					<input type="tel" id="test_a5_s2" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-12-05" data-max="2022-12-30" title="시작일" placeholder="placeholder text" readonly>
-					<label class="form-wrap-label" for="test_a5_s2">Label Title</label>
-					<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
-					<div class="ui-datepicker-wrap"></div>
-				</div>
 			</div>
-			<div class="field-text">~</div>
-			<div class="form-wrap">
-				<em class="field-placeholder">Helper Text</em>
-				<em class="ui-error-msg">Error message</em>
-				<div class="ui-datepicker">
-					<input type="tel" id="test_a5_s2_end" class="ui-datepicker-inp inp-base day-end" value="" data-min="2019-12-01" data-max="2020-12-30" title="종료일" readonly>
-					<label class="form-wrap-label" for="test_a6_s2">Label Title</label>
-					<button type="button" class="ui-datepicker-btn" disabled aria-label="종료일 선택"></button>
+
+			<div class="fx-item" style="border:1px dashed lightpink">
+				<div class="form-wrap">
+					
+					<input type="text" id="test_a2" class="inp-base" value="23" placeholder="placeholder text">
+					<label class="form-wrap-label" for="test_a2">Label Title</label>
+					
+
 				</div>
 			</div>
 		</div>
-	</div>
 
-	<div class="fx-wrap">
-		<div class="in-item" style="background: #eee">
-			<div class="form-wrap">
-				<em class="field-placeholder">Helper Text</em>
-				<em class="ui-error-msg">Error message</em>
-				<textarea name="form_address" class="inp-base" placeholder="100글자 이내로 입력하세요." id="test_a7"></textarea>
-				<label class="form-wrap-label" for="test_a7">Label Title</label>
+		<div class="fx-wrap space">
+			<div class="fx-item" style="background: #eee">
+				<div class="form-wrap">
+					<em class="field-placeholder">Helper Text</em>
+					<em class="ui-error-msg">Error message</em>
+					<div class="ui-select">
+						<select class="inp-base" title="카드번호 선택" id="test_a3_s">
+							<option disabled selected>선택하세요</option>
+							<option value="1">신한카드 908*****2*5**</option>
+							<option value="2">시티카드 908*****2*5**</option>
+							<option value="3">현대카드 908*****2*5**</option>
+						</select>
+					</div>
+					<label class="form-wrap-label" for="test_a3_s">Card Select</label>
+				</div>
+			</div>
+
+			<div class="fx-item" style="background: #eee">
+				<div class="form-wrap">
+					<em class="field-placeholder">Helper Text</em>
+					<em class="ui-error-msg">Error message</em>
+					<div class="ui-select">
+						<select title="카드번호 선택" id="test_a4_s">
+							<option disabled >선택하세요</option>
+							<option value="1" selected>신한카드 908*****2*5**</option>
+							<option value="2">시티카드 908*****2*5**</option>
+							<option value="3">현대카드 908*****2*5**</option>
+						</select>
+					</div>
+					<label class="form-wrap-label" for="test_a4_s">Card Select</label>
+				</div>
 			</div>
 		</div>
 
-		<div class="in-item" style="background: #eee">
-			<div class="form-wrap">
-				<em class="field-placeholder">Helper Text</em>
-				<em class="ui-error-msg">Error message</em>
-				<textarea name="form_address" class="inp-base" placeholder="100글자 이내로 입력하세요." id="test_a8">....</textarea>
-				<label class="form-wrap-label" for="test_a8">Label Title</label>
+		<div class="fx-wrap space">
+			<div class="fx-item" style="background: #eee">
+				<div class="form-wrap">
+					<em class="field-placeholder">Helper Text</em>
+					<em class="ui-error-msg">Error message</em>
+					<div class="ui-datepicker" id="test_a5_s" data-period="true" data-dual="true" data-title="테스트">
+						<input type="tel" id="test_a5_s2" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-12-05" data-max="2022-12-30" title="시작일" placeholder="placeholder text" readonly>
+						<label class="form-wrap-label" for="test_a5_s2">Label Title</label>
+						<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
+						<div class="ui-datepicker-wrap"></div>
+					</div>
+				</div>
+				<div class="field-text">~</div>
+				<div class="form-wrap">
+					<em class="field-placeholder">Helper Text</em>
+					<em class="ui-error-msg">Error message</em>
+					<div class="ui-datepicker">
+						<input type="tel" id="test_a5_s2_end" class="ui-datepicker-inp inp-base day-end" value="" data-min="2019-12-01" data-max="2020-12-30" title="종료일" readonly>
+						<label class="form-wrap-label" for="test_a6_s2">Label Title</label>
+						<button type="button" class="ui-datepicker-btn" disabled aria-label="종료일 선택"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="fx-wrap">
+			<div class="in-item" style="background: #eee">
+				<div class="form-wrap">
+					<em class="field-placeholder">Helper Text</em>
+					<em class="ui-error-msg">Error message</em>
+					<textarea name="form_address" class="inp-base" placeholder="100글자 이내로 입력하세요." id="test_a7"></textarea>
+					<label class="form-wrap-label" for="test_a7">Label Title</label>
+				</div>
+			</div>
+
+			<div class="in-item" style="background: #eee">
+				<div class="form-wrap">
+					<em class="field-placeholder">Helper Text</em>
+					<em class="ui-error-msg">Error message</em>
+					<textarea name="form_address" class="inp-base" placeholder="100글자 이내로 입력하세요." id="test_a8">....</textarea>
+					<label class="form-wrap-label" for="test_a8">Label Title</label>
+				</div>
 			</div>
 		</div>
 	</div>
-</div>
+</section>
 
-<h2 class="h-2">HTML Structure</h2>
-<div class="box-code">
+<section class="sec-wrap">
+	<h2 class="h-2">Source Code</h2>
+	<h3 class="h-3">HTML</h3>
 <pre>
 <code>
 //base input
@@ -157,11 +159,9 @@
 &lt;/div&gt;
 </code>
 </pre>
-</div>
 
-<h2 class="h-2">CSS Style</h2>
-<h3 class="h-3">base style</h3>
-<div class="box-code">
+	<h3 class="h-3">CSS</h3>
+
 <pre>
 <code>
 .form-wrap {position:relative; padding:0 0 40px; display:inline-block; vertical-align:top;}
@@ -206,12 +206,8 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 .field-outlabel.ui-error-true .placeholder{display:none;}
 </code>
 </pre>
-</div>
 
-
-<h2 class="h-2">Javascript</h2>
-<h3 class="h-3">$plugins.uiInnerLabel</h3>
-<div class="box-code">
+	<h3 class="h-3">Javascript</h3>
 <pre>
 <code>
 <span class="nt">&lt;script <span class="na">src=</span><span class="s">"/netiveUI/resources/js/ui.global.js"</span>&gt;&lt;/script&gt;</span>
@@ -226,4 +222,4 @@ transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(
 <span class="nt">&lt;/script&gt;</span>
 </code>
 </pre>
-</div>
+</section>
