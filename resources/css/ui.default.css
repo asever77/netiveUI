@@ -1,0 +1,86 @@
+@charset "utf-8";
+
+/* root */
+:root {
+	--bg-color: #fff;
+
+	/* text */
+	--grey-900: #212121; /* headline text */
+	--grey-800: #424242; /* default text*/
+	--grey-700: #616161; /* sub text */
+
+	/* line */
+	--grey-400: #BDBDBD; 
+	--grey-200: #EEEEEE;
+
+	/* bg */
+	--grey-50: #FAFAFA;	
+	--grey-0: #FFFFFF;	
+
+	/* button */
+	--btn-bg-primary: #424242;
+	--btn-text-primary: #FAFAFA;
+	--btn-line-primary: #424242;
+
+	--btn-bg: #FFF;
+	--btn-text: #424242;
+	--btn-line: #616161;
+
+	/* table */
+	--tbl-td: #FFF;
+	--tbl-tbody-th: #FAFAFA;
+	--tbl-thead-th: #EEEEEE;
+	--tbl-line: #BDBDBD;
+	--tbl-line-b: #616161;
+
+
+	/* box */
+	--box-bg:#FFF;
+	--box-line:#BDBDBD;
+
+	--shadow: rgba(0,0,0,0.1);
+
+	--color-primary: #121212;
+	--color-secondary: rgb(255, 95, 21);
+	
+}
+
+:root.dark-mode {
+	--bg-color: #212121;
+	
+	--grey-900: #E0E0E0; /* headline text */
+	--grey-800: #9E9E9E; /* default text*/
+	--grey-700: #616161; /* sub text */
+
+	/* line */
+	--grey-400: #616161; 
+	--grey-200: #424242;
+
+	/* bg */
+	--grey-50: #212121;	
+	--grey-0: #121212;	
+
+	--btn-bg-primary: #E0E0E0;
+	--btn-text-primary: #212121;
+	--btn-line-primary: #FAFAFA;
+
+	--btn-bg: #424242;
+	--btn-text: #E0E0E0;
+	--btn-line: #616161;
+
+	/* table */
+	--tbl-td: #212121;
+	--tbl-tbody-th: #424242;
+	--tbl-thead-th: #616161;
+	--tbl-line: #121212;
+	--tbl-line-b: #9E9E9E;
+
+	/* box */
+	--box-bg:#212121;
+	--box-line:#424242;
+
+	--shadow: rgba(0,0,0,0.5);
+
+	--color-primary: #121212;
+	--color-secondary: rgb(255, 95, 21);
+}

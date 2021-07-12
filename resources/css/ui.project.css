@@ -4,7 +4,7 @@
 	tab-size:4;
 }
 .code {
-	color:#555;
+	color:var(--grey-900);
 }
 
 /* mobile first style */
@@ -779,21 +779,21 @@ fieldset {
 
 .ui-scrollbar.test7 {
 	display: inline-block;
-	height: 300px;
-	width: 120px;
+	height: 30rem;
+	width: 12rem;
 	border: 1px dashed #ddd;
 }
 
 .tip-test0 {
-	width: 250px;
+	width: 25rem;
 }
 
 .tip-test3 {
-	width: 400px;
+	width: 40rem;
 }
 
 .tip-test1 {
-	width: 100px;
+	width: 10rem;
 }
 
 .coln8,
@@ -811,26 +811,26 @@ html.col-12 .coln12 {
 .page-layout .fx-wrap,
 .page-layout .fl-wrap,
 .page-layout .in-wrap {
-	border: 1px solid #222;
-	background: #f1f1f1;
+	border: 1px solid var(--grey-400);
+	background: var(--grey-200);
 }
 
 .page-layout .in-item,
 .page-layout [class*="fx-item"],
 .page-layout .fl-item-r,
 .page-layout .fl-item-l {
-	border: 1px dashed #ccc;
-	padding: 10px;
-	background: #fff;
+	border: 1px dashed var(--grey-400);
+	padding: 1rem;
+	background: var(--grey-0);
 }
 
 .test-flex1 [class*="fx-item"]:nth-child(1) {
-	min-height: 90px;
-	padding-top: 15px
+	min-height: 9rem;
+	padding-top: 1.5rem
 }
 
 .test-flex1 [class*="fx-item"]:nth-child(2) {
-	min-height: 60px;
+	min-height: 6rem;
 }
 
 .test-flex1 [class*="fx-item"]:nth-child(3) {

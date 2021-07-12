@@ -11,6 +11,7 @@
 
 
 /* common */
+@import url(ui.default.css);
 @import url(ui.common.css);
 @import url(ui.plugins.css);
 
