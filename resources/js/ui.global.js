@@ -199,6 +199,7 @@ if (!Object.keys){
 		}
 	};
 
+
 	//set device information
 	(function () {
 		var ua = navigator.userAgent;
@@ -1136,11 +1137,17 @@ if (!Object.keys){
 
 	win[global].form = {
 		unitText: function(){
-			var el_item = document.querySelectorAll('.form-item');
-			var len = el_item.length;
+			var $inp = $('.inp-base');
+			var len = $inp.length;
 
 			for (var i = 0; i < len; i++) {
-				el_item[i].querySelectorAll('.unit');
+				
+				var $wrap = $inp.eq(i).closest('.form-item');
+				var unit = $inp.eq(i).data('unit');
+
+				if (unit !== undefined) {
+					$wrap.append('<div class="unit">'+unit+'</div>');
+				}
 			}
 		}
 	}
