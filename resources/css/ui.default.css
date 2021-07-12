@@ -40,6 +40,7 @@
 	--inp-placeholder:#BDBDBD;
 	--inp-bg-active:#FAFAFA;
 	--inp-line-active:#616161;
+	--inp-label:#828282;
 
 	/* box */
 	--box-bg:#FFF;
@@ -51,6 +52,8 @@
 	/* color */
 	--primary: #121212;
 	--secondary: rgb(255, 95, 21);
+
+	--error:rgb(255, 21, 21);
 	
 }
 
@@ -104,4 +107,6 @@
 	/* color */
 	--primary: #121212;
 	--secondary: rgb(255, 95, 21);
+
+	--error:rgb(255, 21, 21);
 }

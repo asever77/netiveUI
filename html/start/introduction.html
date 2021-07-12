@@ -7,8 +7,12 @@
 
 <section class="sec-wrap">
 	<h2 class="h-2">HTML Template</h2>
-	<p class="bul-dot">기본적으로 HTML5로 마크업을 구성한다. 'id'사용은 최대한 지양하며 'class'로만 스타일을 준다.</p>
-	<p class="bul-dot">기본구성의 class명은 접두사로 'base-'를 사용하며 사용 시 'id'처럼 유니크하게 사용한다.
+	<div class="bul-dot">
+		<div>기본적으로 HTML5로 마크업을 구성한다. 'id'사용은 최대한 지양하며 'class'로만 스타일을 준다.</div>
+	</div>
+	<div class="bul-dot">
+		<div>기본구성의 class명은 접두사로 'base-'를 사용하며 사용 시 'id'처럼 유니크하게 사용한다.</div>
+	</div>
 
 <pre class="box-code"><code class="html">
 &lt;doctype html&gt;
@@ -57,53 +61,74 @@
 
 <section class="sec-wrap">
 	<h2 class="h-2">Z-index</h2>
-	<p>기본적인 z-index 값을 정하여 체계적인 위치설정</p>
+	<p>z-index를 3등급으로 나눈다.</p>
+	<ul class="bul-dot">
+		<li>
+			<div>
+				A : 최상위 단위의 영역으로 구분
+			</div>
+		</li>
+		<li>
+			<div>
+				B : A등급영역 안에 들어가는 가장 큰 구분
+			</div>
+		</li>
+		<li>
+			<div>
+				C : A,B등급영역 안에 들어가는 가장 작은 단위
+			</div>
+		</li>
+	</ul>
 	<div class="tbl-base type-zindex">
 		<table>
 			<caption>옵션 설명</caption>
 			<colgroup>
-				<col class="n1">
-				<col class="n2">
-				<col class="n3">
-				<col class="n4">
+				<col>
+				<col>
+				<col>
+				<col>
 			</colgroup>
 			<thead>
 				<tr>
+					<th scope="col">Level</th>
 					<th scope="col">class명</th>
-					<th scope="col">Options</th>
-					<th scope="col">설정값</th>
+					<th scope="col">Default</th>
 					<th scope="col">Explanation</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
+					<th scope="rowgroup" rowspan="3">A</th>
 					<th scope="row">.base-skip</th>
-					<td>z-index</td>
-					<td>1000</td>
-					<td>스킵네비게이션 메뉴 (모든 컨텐츠의 최상위에 존재)</td>
+					<td>2</td>
+					<td>스킵네비게이션 메뉴 <br>(모든 컨텐츠의 최상위에 존재)</td>
 				</tr>
 				<tr>
-					<th scope="row">.modal-backdrop</th>
-					<td>z-index</td>
-					<td>199</td>
-					<td>모달의 암막레이어</td>
+					<th scope="row">.base-wrap</th>
+					<td>0</td>
+					<td>본문영역</td>
 				</tr>
 				<tr>
 					<th scope="row">.ui-modal</th>
-					<td>z-index</td>
-					<td>200 ~ </td>
+					<td>300 ~ </td>
 					<td>모달</td>
 				</tr>
+			</tbody>
+
+			<tbody>
 				<tr>
-					<th scope="row">.ui-dropdown</th>
-					<td>z-index</td>
-					<td>100</td>
+					<th scope="rowgroup">B</th>
+					<th scope="row">.ui-drop-pnl</th>
+					<td>200</td>
 					<td>드롭다운</td>
 				</tr>
+			</tbody>
+
+			<tbody>
 				<tr>
+					<th scope="rowgroup">C</th>
 					<th scope="row">.ui-tooltip</th>
-					<td>z-index</td>
-					<td>50</td>
+					<td>100</td>
 					<td>툴팁</td>
 				</tr>
 			</tbody>

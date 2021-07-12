@@ -7,34 +7,72 @@
 <section class="sec-wrap">
 	<h2 class="h-2">Examples</h2>
 	<p>입력란 안에 label이 들어가는 스타일로 좁은 공간이나 모바일 환경에서 많이 사용한다.</p>
-	<div class="box-guide type-fieldset">
-		<div class="fx-wrap space" data-align="justify" style="border:1px dashed lightpink">
-			<div class="fx-item" style="border:1px dashed lightpink">
-
-				<div class="form-wrap">
+	<div class="box-guide inner-label">
+		<div class="fx-wrap space" data-align="justify">
+			<div class="fx-item inner-label-item">
+				<div class="form-item">
 					<input type="text" id="test_a1" class="inp-base" value="" placeholder="placeholder text">
-					<label class="form-wrap-label" for="test_a1">Label Title</label>
+					<label class="form-item-label" for="test_a1">Label Title</label>
 				</div>
 				<div class="from-info">
-					<div class="bul-etc">Helper Text</div>
+					<div class="bul-info">
+						<div>Helper Text</div>
+					</div>
 				</div>
+			</div>
+		</div>
 
+		<div class="fx-wrap space" data-align="justify">
+			<div class="fx-item inner-label-item">
+				<div class="form-item">
+					<span class="unit prefix">$</span>
+					<input type="text" id="test_a1" class="inp-base" value="" placeholder="placeholder text" data-unit="만원" data-prefix="$">
+					<label class="form-item-label" for="test_a1">Label Title</label>
+					<span class="unit">만원</span>
+				</div>
+				<div class="from-info">
+					<div class="bul-info">
+						<div>Helper Text</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="fx-wrap space" data-align="justify">
+			<div class="fx-item inner-label-item">
+				<div class="form-item">
+					<input type="text" id="test_a2" class="inp-base" value="" placeholder="placeholder text">
+					<label class="form-item-label" for="test_a2">Label Title</label>
+				</div>
+				<div class="from-info">
+					<div class="bul-error" aria-live="polite">
+						<div>Error Text</div>
+					</div>
+					<div class="bul-info">
+						<div>Helper Text</div>
+					</div>
+				</div>
 			</div>
 
-			<div class="fx-item" style="border:1px dashed lightpink">
-				<div class="form-wrap">
-					
-					<input type="text" id="test_a2" class="inp-base" value="23" placeholder="placeholder text">
-					<label class="form-wrap-label" for="test_a2">Label Title</label>
-					
-
+			<div class="fx-item inner-label-item">
+				<div class="form-item">
+					<input type="text" id="test_a3" class="inp-base" value="23" placeholder="placeholder text">
+					<label class="form-item-label" for="test_a3">Label Title</label>
+				</div>
+				<div class="from-info">
+					<div class="bul-error" aria-live="polite">
+						<div>Error Text</div>
+					</div>
+					<div class="bul-info">
+						<div>Helper Text</div>
+					</div>
 				</div>
 			</div>
 		</div>
 
 		<div class="fx-wrap space">
 			<div class="fx-item" style="background: #eee">
-				<div class="form-wrap">
+				<div class="form-item">
 					<em class="field-placeholder">Helper Text</em>
 					<em class="ui-error-msg">Error message</em>
 					<div class="ui-select">
@@ -45,12 +83,12 @@
 							<option value="3">현대카드 908*****2*5**</option>
 						</select>
 					</div>
-					<label class="form-wrap-label" for="test_a3_s">Card Select</label>
+					<label class="form-item-label" for="test_a3_s">Card Select</label>
 				</div>
 			</div>
 
 			<div class="fx-item" style="background: #eee">
-				<div class="form-wrap">
+				<div class="form-item">
 					<em class="field-placeholder">Helper Text</em>
 					<em class="ui-error-msg">Error message</em>
 					<div class="ui-select">
@@ -61,30 +99,30 @@
 							<option value="3">현대카드 908*****2*5**</option>
 						</select>
 					</div>
-					<label class="form-wrap-label" for="test_a4_s">Card Select</label>
+					<label class="form-item-label" for="test_a4_s">Card Select</label>
 				</div>
 			</div>
 		</div>
 
 		<div class="fx-wrap space">
 			<div class="fx-item" style="background: #eee">
-				<div class="form-wrap">
+				<div class="form-item">
 					<em class="field-placeholder">Helper Text</em>
 					<em class="ui-error-msg">Error message</em>
 					<div class="ui-datepicker" id="test_a5_s" data-period="true" data-dual="true" data-title="테스트">
 						<input type="tel" id="test_a5_s2" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-12-05" data-max="2022-12-30" title="시작일" placeholder="placeholder text" readonly>
-						<label class="form-wrap-label" for="test_a5_s2">Label Title</label>
+						<label class="form-item-label" for="test_a5_s2">Label Title</label>
 						<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
 						<div class="ui-datepicker-wrap"></div>
 					</div>
 				</div>
 				<div class="field-text">~</div>
-				<div class="form-wrap">
+				<div class="form-item">
 					<em class="field-placeholder">Helper Text</em>
 					<em class="ui-error-msg">Error message</em>
 					<div class="ui-datepicker">
 						<input type="tel" id="test_a5_s2_end" class="ui-datepicker-inp inp-base day-end" value="" data-min="2019-12-01" data-max="2020-12-30" title="종료일" readonly>
-						<label class="form-wrap-label" for="test_a6_s2">Label Title</label>
+						<label class="form-item-label" for="test_a6_s2">Label Title</label>
 						<button type="button" class="ui-datepicker-btn" disabled aria-label="종료일 선택"></button>
 					</div>
 				</div>
@@ -93,20 +131,20 @@
 
 		<div class="fx-wrap">
 			<div class="in-item" style="background: #eee">
-				<div class="form-wrap">
+				<div class="form-item">
 					<em class="field-placeholder">Helper Text</em>
 					<em class="ui-error-msg">Error message</em>
 					<textarea name="form_address" class="inp-base" placeholder="100글자 이내로 입력하세요." id="test_a7"></textarea>
-					<label class="form-wrap-label" for="test_a7">Label Title</label>
+					<label class="form-item-label" for="test_a7">Label Title</label>
 				</div>
 			</div>
 
 			<div class="in-item" style="background: #eee">
-				<div class="form-wrap">
+				<div class="form-item">
 					<em class="field-placeholder">Helper Text</em>
 					<em class="ui-error-msg">Error message</em>
 					<textarea name="form_address" class="inp-base" placeholder="100글자 이내로 입력하세요." id="test_a8">....</textarea>
-					<label class="form-wrap-label" for="test_a8">Label Title</label>
+					<label class="form-item-label" for="test_a8">Label Title</label>
 				</div>
 			</div>
 		</div>
@@ -119,14 +157,14 @@
 <pre>
 <code>
 //base input
-&lt;div class="form-wrap"&gt;
+&lt;div class="form-item"&gt;
 	&lt;em class="field-placeholder"&gt;Helper Text&lt;/em&gt;
 	&lt;input type="text" id="test_a1" class="inp-base" value="" placeholder="placeholder text"&gt;
 	&lt;label for="test_a1"&gt;Label Title&lt;/label&gt;
 &lt;/div&gt;
 
 //select
-&lt;div class="form-wrap"&gt;
+&lt;div class="form-item"&gt;
 	&lt;em class="field-placeholder"&gt;Helper Text&lt;/em&gt;
 	&lt;div class="ui-select"&gt;
 		&lt;select title="카드번호 선택" id="test_a3_s"&gt;
@@ -136,26 +174,26 @@
 			&lt;option value="3"&gt;현대카드 908*****2*5**&lt;/option&gt;
 		&lt;/select&gt;
 	&lt;/div&gt;
-	&lt;label class="form-wrap-label" for="test_a3_s"&gt;Card Select&lt;/label&gt;
+	&lt;label class="form-item-label" for="test_a3_s"&gt;Card Select&lt;/label&gt;
 &lt;/div&gt;
 
 //datepicker
-&lt;div class="form-wrap"&gt;
+&lt;div class="form-item"&gt;
 	&lt;em class="field-placeholder"&gt;Helper Text&lt;/em&gt;
 	&lt;div class="ui-datepicker" id="test_a5_s" data-period="true" data-dual="true" data-title="테스트"&gt;
 		&lt;input type="tel" id="test_a5_s2" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-12-05" data-max="2022-12-30" title="시작일" placeholder="placeholder text" readonly&gt;
-		&lt;label class="form-wrap-label" for="test_a5_s2"&gt;Label Title&lt;/label&gt;
+		&lt;label class="form-item-label" for="test_a5_s2"&gt;Label Title&lt;/label&gt;
 		&lt;button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"&gt;&lt;/button&gt;
 		&lt;div class="ui-datepicker-wrap"&gt;&lt;/div&gt;
 	&lt;/div&gt;
 &lt;/div&gt;
 
 //textarea
-&lt;div class="form-wrap"&gt;
+&lt;div class="form-item"&gt;
 	&lt;em class="field-placeholder"&gt;Helper Text&lt;/em&gt;
 	&lt;em class="ui-error-msg"&gt;Error message&lt;/em&gt;
 	&lt;textarea name="form_address" class="inp-base" placeholder="100글자 이내로 입력하세요." id="test_a7"&gt;&lt;/textarea&gt;
-	&lt;label class="form-wrap-label" for="test_a7"&gt;Label Title&lt;/label&gt;
+	&lt;label class="form-item-label" for="test_a7"&gt;Label Title&lt;/label&gt;
 &lt;/div&gt;
 </code>
 </pre>
@@ -164,40 +202,40 @@
 
 <pre>
 <code>
-.form-wrap {position:relative; padding:0 0 40px; display:inline-block; vertical-align:top;}
-.form-wrap > *{vertical-align:top;}
-.form-wrap .form-wrap-label{position:absolute; top:0; left:10px; transform:translate(0, 9px); font-size:14px; color:#888; cursor:text; 
+.form-item {position:relative; padding:0 0 40px; display:inline-block; vertical-align:top;}
+.form-item > *{vertical-align:top;}
+.form-item .form-item-label{position:absolute; top:0; left:10px; transform:translate(0, 9px); font-size:14px; color:#888; cursor:text; 
 transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms; z-index:1;}
-.form-wrap .inp-base + .form-wrap-label{transform:translate(0, 9px); color:#888; font-size:14px;}
-.form-wrap .inp-base.activated + .form-wrap-label,
-.form-wrap.activated .inp-base + .form-wrap-label,
-.form-wrap .inp-base:focus + .form-wrap-label{transform:translate(0, -9px); color:#000; font-size:12px;}
-.form-wrap .inp-base:focus{background:rgb(245, 251, 253);}
-.form-wrap .ui-select.is-null.activated select{color:#000}
-.form-wrap .ui-select.is-null .ui-select-btn,
-.form-wrap .ui-select.is-null select{color:transparent}
-.form-wrap .ui-select.is-null select option{color:#000}
-.form-wrap .ui-select select{outline:0;}
-.form-wrap .ui-select + .form-wrap-label{transform:translate(0, 9px); color:#888; font-size:14px;}
-.form-wrap .ui-select.activated + .form-wrap-label{transform:translate(0, -9px); color:#000; font-size:12px;}
-.form-wrap .ui-select.activated + .form-wrap-label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:3px solid #fff; transition-delay: 150ms;}
+.form-item .inp-base + .form-item-label{transform:translate(0, 9px); color:#888; font-size:14px;}
+.form-item .inp-base.activated + .form-item-label,
+.form-item.activated .inp-base + .form-item-label,
+.form-item .inp-base:focus + .form-item-label{transform:translate(0, -9px); color:#000; font-size:12px;}
+.form-item .inp-base:focus{background:rgb(245, 251, 253);}
+.form-item .ui-select.is-null.activated select{color:#000}
+.form-item .ui-select.is-null .ui-select-btn,
+.form-item .ui-select.is-null select{color:transparent}
+.form-item .ui-select.is-null select option{color:#000}
+.form-item .ui-select select{outline:0;}
+.form-item .ui-select + .form-item-label{transform:translate(0, 9px); color:#888; font-size:14px;}
+.form-item .ui-select.activated + .form-item-label{transform:translate(0, -9px); color:#000; font-size:12px;}
+.form-item .ui-select.activated + .form-item-label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:3px solid #fff; transition-delay: 150ms;}
 /*line*/
-.form-wrap .form-wrap-label:after{content:""; position:absolute; top:8px; left:0; display:block; width:100%; height:1px; z-index:-1; border-top:3px solid #fff; 
+.form-item .form-item-label:after{content:""; position:absolute; top:8px; left:0; display:block; width:100%; height:1px; z-index:-1; border-top:3px solid #fff; 
 transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(0.4, 0, 0.2, 1);}
-.form-wrap .inp-base.activated + .form-wrap-label:after,
-.form-wrap.activated .inp-base + .form-wrap-label:after,
-.form-wrap .inp-base:valid + .form-wrap-label:after,
-.form-wrap .inp-base:focus + .form-wrap-label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:3px solid #fff; transition-delay: 150ms;}
-.form-wrap .ui-error-msg,
-.form-wrap .placeholder{position: absolute; left:0; padding:0 10px; bottom:23px; line-height:1.2; margin:0;}
-.form-wrap .ui-select .ui-error-msg{top:42px;}
-.form-wrap.ui-error-true .placeholder{display:none;}
-.form-wrap .inp-base::-webkit-input-placeholder{color:transparent;}
-.form-wrap .inp-base:-ms-input-placeholder{color:transparent;}
-.form-wrap .inp-base::placeholder {color:transparent;}
-.form-wrap .inp-base:focus::-webkit-input-placeholder{color:#999;}
-.form-wrap .inp-base:focus:-ms-input-placeholder{color:#999;}
-.form-wrap .inp-base:focus::placeholder {color:#999;}
+.form-item .inp-base.activated + .form-item-label:after,
+.form-item.activated .inp-base + .form-item-label:after,
+.form-item .inp-base:valid + .form-item-label:after,
+.form-item .inp-base:focus + .form-item-label:after{padding:0 5px; top:8px; left:-5px; z-index:-1; border-top:3px solid #fff; transition-delay: 150ms;}
+.form-item .ui-error-msg,
+.form-item .placeholder{position: absolute; left:0; padding:0 10px; bottom:23px; line-height:1.2; margin:0;}
+.form-item .ui-select .ui-error-msg{top:42px;}
+.form-item.ui-error-true .placeholder{display:none;}
+.form-item .inp-base::-webkit-input-placeholder{color:transparent;}
+.form-item .inp-base:-ms-input-placeholder{color:transparent;}
+.form-item .inp-base::placeholder {color:transparent;}
+.form-item .inp-base:focus::-webkit-input-placeholder{color:#999;}
+.form-item .inp-base:focus:-ms-input-placeholder{color:#999;}
+.form-item .inp-base:focus::placeholder {color:#999;}
 .field-outlabel {position:relative; padding:20px 0 30px; display:inline-block; vertical-align:top;}
 .field-outlabel label{position:absolute; top:0; display:block; margin-bottom:2px; padding-left:10px;}
 .field-outlabel .ui-error-msg,

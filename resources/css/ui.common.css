@@ -508,7 +508,7 @@ select.inp-base{
 	padding: 0 4rem 0 1rem;
 }
 .inp-base:focus {
-	border-bottom-color: var(--inp-line-active);
+	border-color: var(--inp-line-active);
 }
 
 .inp-base::-webkit-search-cancel-button {
@@ -525,7 +525,10 @@ textarea.inp-base {
 
 
 /* in label style */
-.form-wrap {
+.inner-label-item{
+	padding:2rem 0 0;
+}
+.form-item {
 	width: 100%;
     position: relative;
     padding: 0;
@@ -533,11 +536,11 @@ textarea.inp-base {
     vertical-align: top;
 }
 
-.form-wrap>* {
+.form-item>* {
     vertical-align: top;
 }
 
-.form-wrap .form-wrap-label {
+.form-item .form-item-label {
     position: absolute;
     top: 0;
     left: 1rem;
@@ -547,59 +550,55 @@ textarea.inp-base {
     cursor: text;
 }
 
-.form-wrap .form-wrap-label {
+.form-item .form-item-label {
     transition: transform 150ms cubic-bezier(0.4, 0, 0.2, 1), color 150ms cubic-bezier(0.4, 0, 0.2, 1), font-size 150ms;
     z-index: 1;
 }
 
-.form-wrap .inp-base+.form-wrap-label {
-    transform: translate(0, .9rem);
-    color: var(--text-200);
+.form-item .inp-base+.form-item-label {
+    transform: translate(0, 1.1rem);
+    color: var(--inp-label);
     font-size: 1.4rem;
 }
 
-.form-wrap .inp-base.activated+.form-wrap-label,
-.form-wrap.activated .inp-base+.form-wrap-label,
-.form-wrap .inp-base:focus+.form-wrap-label {
-    transform: translate(0, -.9rem);
+.form-item .inp-base.activated+.form-item-label,
+.form-item.activated .inp-base+.form-item-label,
+.form-item .inp-base:focus+.form-item-label {
+    transform: translate(0, -1.9rem);
     color: var(--text-700);
     font-size: 1.2rem;
 }
 
-.form-wrap .inp-base:focus {
-    background: rgb(245, 251, 253);
-}
-
-.form-wrap .ui-select.is-null.activated select {
+.form-item .ui-select.is-null.activated select {
     color: var(--text-700);
 }
 
-.form-wrap .ui-select.is-null .ui-select-btn,
-.form-wrap .ui-select.is-null select {
+.form-item .ui-select.is-null .ui-select-btn,
+.form-item .ui-select.is-null select {
     color: transparent;
 }
 
-.form-wrap .ui-select.is-null select option {
+.form-item .ui-select.is-null select option {
     color: var(--text-700);
 }
 
-.form-wrap .ui-select select {
+.form-item .ui-select select {
     outline: 0;
 }
 
-.form-wrap .ui-select+.form-wrap-label {
+.form-item .ui-select+.form-item-label {
     transform: translate(0, 9px);
     color: var(--text-200);
     font-size: 1.4rem;
 }
 
-.form-wrap .ui-select.activated+.form-wrap-label {
+.form-item .ui-select.activated+.form-item-label {
     transform: translate(0, -9px);
     color: var(--text-700);
     font-size: 1.2rem;
 }
 
-.form-wrap .ui-select.activated+.form-wrap-label:after {
+.form-item .ui-select.activated+.form-item-label:after {
     padding: 0 .5rem;
     top: .8rem;
     left: -.5rem;
@@ -607,8 +606,16 @@ textarea.inp-base {
     border-top: .3rem solid var(--bg-base);
     transition-delay: 150ms;
 }
+
+.form-item .unit {
+	position:absolute;
+	right:1rem;
+	top:50%;
+	transform: translateY(-50%);
+}
+
 /* 
-.form-wrap .form-wrap-label:after {
+.form-item .form-item-label:after {
     content: "";
     position: absolute;
     top: .8rem;
@@ -621,10 +628,10 @@ textarea.inp-base {
     transition: left 250ms cubic-bezier(0.4, 0, 0.2, 1), padding 250ms cubic-bezier(0.4, 0, 0.2, 1);
 } */
 
-/* .form-wrap .inp-base.activated+.form-wrap-label:after,
-.form-wrap.activated .inp-base+.form-wrap-label:after,
-.form-wrap .inp-base:valid+.form-wrap-label:after,
-.form-wrap .inp-base:focus+.form-wrap-label:after {
+/* .form-item .inp-base.activated+.form-item-label:after,
+.form-item.activated .inp-base+.form-item-label:after,
+.form-item .inp-base:valid+.form-item-label:after,
+.form-item .inp-base:focus+.form-item-label:after {
     padding: 0 .5rem;
     top: .8rem;
     left: -.5rem;
@@ -633,8 +640,8 @@ textarea.inp-base {
     transition-delay: 150ms;
 } */
 
-.form-wrap .ui-error-msg,
-.form-wrap .field-placeholder {
+.form-item .ui-error-msg,
+.form-item .field-placeholder {
     position: absolute;
     left: 0;
     padding: 0 1rem;
@@ -643,39 +650,39 @@ textarea.inp-base {
     margin: 0;
 }
 
-.form-wrap .ui-select .ui-error-msg {
+.form-item .ui-select .ui-error-msg {
     top: 4.2rem;
 }
 
-.form-wrap.ui-error-true .field-placeholder {
+.form-item.ui-error-true .field-placeholder {
     display: none;
 }
 
-.form-wrap .inp-base::-webkit-input-placeholder {
+.form-item .inp-base::-webkit-input-placeholder {
     color: transparent;
 }
 
-.form-wrap .inp-base:-ms-input-placeholder {
+.form-item .inp-base:-ms-input-placeholder {
     color: transparent;
 }
 
-.form-wrap .inp-base::placeholder {
+.form-item .inp-base::placeholder {
     color: transparent;
 }
 
-.form-wrap .inp-base:focus::-webkit-input-placeholder {
+.form-item .inp-base:focus::-webkit-input-placeholder {
     color: var(--text-200);
 }
 
-.form-wrap .inp-base:focus:-ms-input-placeholder {
+.form-item .inp-base:focus:-ms-input-placeholder {
     color: var(--text-200);
 }
 
-.form-wrap .inp-base:focus::placeholder {
+.form-item .inp-base:focus::placeholder {
     color: var(--text-200);
 }
 
-.form-wrap .info{
+.form-item .info{
 	font-size: 1.2rem;
 }
 
@@ -905,6 +912,28 @@ a.btn-base-l {
 	height:3rem;
 	line-height:1;
 }
+.btn-clear{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color:var(--btn-bg-primary);
+	font-size:3rem;
+	width:3rem;
+	height:3rem;
+	line-height:1;
+	position:absolute;
+	top:50%;
+	right:.5rem;
+	transform: translateY(-50%);
+}
+.btn-clear::before{
+	content:"clear";
+	font-family: 'Material Icons';
+	color:var(--text-700);
+	font-size:1.8rem;
+	line-height:1;
+	display:block;
+}
 .btn-menu {
 	display: flex;
 	justify-content: center;
@@ -916,6 +945,7 @@ a.btn-base-l {
 	height: 3rem;
 	border-radius: 50%;
 	background: var(--text-700);
+	
 }
 .btn-mode {
 	display: flex;
@@ -1099,13 +1129,9 @@ a.btn-base-l {
 [class*="bul-"]:not(ul):not(ol):not(dl) {
 	position: relative;
 	margin-top: .5rem;
-	padding-left: 1rem;
-	line-height: 1.5;
-	display: block;
-}
-
-.bul-care:not(ul):not(ol):not(dl) {
-	padding-left: 1.5rem;
+	padding-left: 0;
+	display: flex;
+	line-height: 1.6;
 }
 
 [class*="bul-"].primary {
@@ -1142,7 +1168,7 @@ dl.bul-num dd::before,
 	content: counter(dep1) '.';
 	font-weight: 400;
 	font-size: 1.4rem;
-	line-height: 1.5;
+	line-height: 1.6;
 	margin-right: .3rem;
 }
 
@@ -1250,13 +1276,16 @@ dl.bul-num dd+dd {
 .bul-dot>dd:before,
 .bul-dot:not(ul):not(ol):not(dl):before {
 	content: "";
-	width: .2rem;
-	height: .2rem;
+	min-width: .2rem;
+	min-height: .2rem;
+	max-width: .2rem;
+	max-height: .2rem;
 	border-radius: 50%;
 	background-color: var(--text-200);
-	position: absolute;
+	position: relative;
 	left: 0.2rem;
 	top: 1.2rem;
+	margin-right:.6rem;
 	font-weight: 900;
 	line-height: 1.2;
 }
@@ -1265,29 +1294,82 @@ dl.bul-num dd+dd {
 .bul-hyphen>div>dd:before,
 .bul-hyphen>dd:before,
 .bul-hyphen:not(ul):not(ol):not(dl):before {
-	content: "-";
-	position: absolute;
-	left: 0;
-	top: .2rem;
-	font-weight: 400;
+	content: "";
+	min-width: .4rem;
+	min-height: .1rem;
+	max-width: .4rem;
+	max-height: .1rem;
+	border-radius: 50%;
+	background-color: var(--text-200);
+	position: relative;
+	left: 0.1rem;
+	top: 1.2rem;
+	margin-right:.4rem;
+	font-weight: 900;
 	line-height: 1.2;
 }
 
-.bul-star:not(ul):not(ol):not(dl):before {
+.bul-error,
+.bul-help,
+.bul-star,
+.bul-care,
+.bul-info {
+	font-size:1.3rem;
+}
+.bul-star::before {
 	content: "*";
-	position: absolute;
+	position: relative;
 	left: 0;
 	top: .6rem;
+	margin-right:0.2rem;
 	font-weight: 400;
 	line-height: 1.2;
 }
 
-.bul-care:not(ul):not(ol):not(dl):before {
+.bul-care::before {
 	content: "※";
-	position: absolute;
+	position: relative;
 	left: 0;
 	top: .2rem;
 	font-weight: 400;
+	line-height: 1.2;
+}
+
+.bul-info::before {
+	content: "info";
+	font-family: 'Material Icons Outlined';
+	position: relative;
+	left: 0;
+	top: 0.1rem;
+	margin-right:0.2rem;
+	font-weight: 200;
+	font-size:1.6rem;
+	line-height: 1.2;
+}
+.bul-help::before {
+	content: "help_outline";
+	font-family: 'Material Icons Outlined';
+	position: relative;
+	left: 0;
+	top: 0.1rem;
+	margin-right:0.2rem;
+	font-weight: 200;
+	font-size:1.6rem;
+	line-height: 1.2;
+}
+.bul-error{
+	color:var(--error);
+}
+.bul-error::before {
+	content: "error_outline";
+	font-family: 'Material Icons Outlined';
+	position: relative;
+	color:var(--error);
+	left: 0;
+	top: 0.1rem;
+	margin-right:0.2rem;
+	font-weight: 200;
+	font-size:1.6rem;
 	line-height: 1.2;
 }
 

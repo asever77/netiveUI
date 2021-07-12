@@ -1134,7 +1134,16 @@ if (!Object.keys){
 		}
 	}
 
+	win[global].form = {
+		unitText: function(){
+			var el_item = document.querySelectorAll('.form-item');
+			var len = el_item.length;
 
+			for (var i = 0; i < len; i++) {
+				el_item[i].querySelectorAll('.unit');
+			}
+		}
+	}
 	/* ------------------------
 	 * in label
 	 * date : 
@@ -1145,9 +1154,9 @@ if (!Object.keys){
 		}
 	});
 	function createUiInnerLabel(){
-		var $input = $('.form-wrap .inp-base');
-		var $select = $('.form-wrap select');
-		var $datepicker = $('.form-wrap .ui-datepicker .inp-base');
+		var $input = $('.form-item .inp-base');
+		var $select = $('.form-item select');
+		var $datepicker = $('.form-item .ui-datepicker .inp-base');
 
 		//set
 		$input.each(function(){
@@ -1175,7 +1184,7 @@ if (!Object.keys){
 			.off('change.inlabel').on('change.inlabel', function(){
 				checkValueSelect(this)
 			});
-		$(doc).find('.form-wrap .ui-select-btn')
+		$(doc).find('.form-item .ui-select-btn')
 			.off('focus.inlabel').on('focus.inlabel', function(){
 				checkValueSelectBtn(this)
 			})
@@ -1969,8 +1978,9 @@ if (!Object.keys){
 			closeback = opt.closeback;
 
 		if (!!dropSrc && !$('[data-id="' + opt.id + '"]').length) {
-			$plugins.uiAjax({
-				id: dropSpace,
+			
+			win[global].ajax.init({
+				selector: dropSpace,
 				url: dropSrc,
 				add: true,
 				callback: function(){
@@ -2459,7 +2469,7 @@ if (!Object.keys){
 		if (type === 'normal') {
 			if (!!src && !$('#' + opt.id).length) {
 				$plugins.ajax.init({
-					id: wrap,
+					selector: wrap,
 					url: src,
 					add: true,
 					callback: function(){
@@ -3478,7 +3488,7 @@ if (!Object.keys){
 			$("#" + id).val(d);
 
 			//기간설정
-			d !== '' ? $("#" + id).closest('.form-wrap').addClass('activated') : '';
+			d !== '' ? $("#" + id).closest('.form-item').addClass('activated') : '';
 			!!opt.callback ? opt.callback({ id: id, value: d, name: end ? $('#' + id).attr('name') : $('#' + org_id).attr('name')}) : '';
 		}
 		function writeInputMonthValue(calendarEl, obj) {
@@ -3494,7 +3504,7 @@ if (!Object.keys){
 			$("#" + id).val(getYM);
 
 			//기간설정
-			getYM !== '' ? $("#" + id).closest('.form-wrap').addClass('activated') : '';
+			getYM !== '' ? $("#" + id).closest('.form-item').addClass('activated') : '';
 			!!opt.callback ? opt.callback({ id: id, value: getYM, name: $('#' + id).attr('name')}) : '';
 		}
 
@@ -4404,7 +4414,7 @@ if (!Object.keys){
 				}
 
 				if (_$this.val() === '') {
-					_$this.next('.ui-clear').remove();
+					//_$this.next('.ui-clear').remove();
 				} else {
 					if (!$('.ui-clear[data-id="'+ _$this.attr('id') +'"]').length || _$this.attr('type') === 'date') {
 						_$wrap.append( make(_$this.attr('id')) );
@@ -4413,7 +4423,7 @@ if (!Object.keys){
 			}).off('blur.clear').on('blur.clear', function(){
 				var $clear =  $(this).parent().find('.ui-clear');
 				setTimeout(function(){
-					$clear.remove();
+					//$clear.remove();
 				},100)
 			});
 		});
@@ -4983,11 +4993,12 @@ if (!Object.keys){
 	function createUiCodinglist(opt) {
 		var dataExecel;
 
-		win[global].uiAjax({ 
+		win[global].ajax.init({
 			url: opt.url, 
 			page: false, 
 			callback: callback 
 		});
+
 		function callback(v) {
 			dataExecel = v;
 
