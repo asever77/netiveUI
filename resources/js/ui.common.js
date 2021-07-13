@@ -184,7 +184,7 @@
 			console.log('------------------------------------------------------')
 
 			$plugins.table.caption();
-			$plugins.uiInputClear();
+			$plugins.form.init();
 		},
 		gridSwitch: function(){
 			var $grid = $('.base-grid');

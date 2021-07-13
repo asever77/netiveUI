@@ -1136,17 +1136,169 @@ if (!Object.keys){
 	}
 
 	win[global].form = {
-		unitText: function(){
+		init: function(opt){
 			var $inp = $('.inp-base');
 			var len = $inp.length;
 
 			for (var i = 0; i < len; i++) {
-				
-				var $wrap = $inp.eq(i).closest('.form-item');
-				var unit = $inp.eq(i).data('unit');
+				var $that = $inp.eq(i);
+				var $wrap = $that.parent();
+				var unit = $that.data('unit');
+				var prefix = $that.data('prefix');
+				var $label = $wrap.find('label');
+				var space = 0;
+
+				$that.removeAttr('style');
+				$wrap.find('.unit').remove();
+				$wrap.find('.prefix').remove();
+
+				var pdr = parseFloat($that.css('padding-right'));
+				var pdl = parseFloat($that.css('padding-left'));
 
 				if (unit !== undefined) {
 					$wrap.append('<div class="unit">'+unit+'</div>');
+					space = Math.floor($wrap.find('.unit').outerWidth()) + (pdr / 2) ;
+				}
+
+				$that.css('padding-right', Number(space + pdr)).data('pdr', space + pdr).attr('pdr', space + pdr);
+				space = 0;
+				
+				if (prefix !== undefined) {					
+					$wrap.prepend('<div class="prefix">'+prefix+'</div>');
+					space = Math.floor($wrap.find('.prefix').outerWidth()) + pdl;
+					$that.css('padding-left', (space + pdl) + 'px').data('pdl', space + pdl);
+					$label.css('margin-left',  space + 'px');
+				}
+
+				$that.css('padding-left', space + pdl).data('pdl', space + pdl);
+			}
+
+			$inp.off('keyup.clear focus.clear').on('keyup.clear focus.clear', function(){
+				clearButton(this);
+			}).off('blur.clear').on('blur.clear', function(){
+				var $this = $(this);
+				var $clear = $this.parent().find('.ui-clear');
+				var pdr = Number($this.data('pdr'));
+
+				setTimeout(function(){
+					$this.css('padding-right', pdr + 'px'); 
+					$clear.remove();
+				},100);
+			});
+
+			function clearButton(v){
+				var $this = $(v);
+				var $wrap = $this.parent();
+				var $inp = $wrap.find('.inp-base');
+				var pdr = Number($inp.data('pdr'));
+
+				if ($this.prop('readonly') || $this.prop('disabled') || $this.attr('type') === 'date') {
+					return false;
+				}
+
+				if ($this.val() === '') {
+					$inp.css('padding-right', pdr + 'px'); 
+					$wrap.find('.ui-clear').remove();
+				} else {
+					if (!$wrap.find('.ui-clear').length) {
+						$wrap.append('<button type="button" class="ui-clear btn-clear" style="margin-right:'+pdr+'px"><span class="a11y-hidden">내용지우기</span></button>');
+
+						$inp.css('padding-right', pdr + $wrap.find('.ui-clear').outerWidth() + 'px'); 
+					} 
+				}
+			}
+
+			//event
+			$(doc).off('click.clear').on('click.clear', '.ui-clear', function(){
+				var $this = $(this);
+				var $wrap = $this.parent();
+				var $inp = $wrap.find('.inp-base');
+				var pdr = Number($inp.data('pdr'));
+				console.log(pdr);
+				$inp.css('padding-right', pdr + 'px').val('').focus();
+				$this.remove();
+			});
+		},
+		innerLabel: function(){
+			var $input = $('.form-item .inp-base');
+			var $select = $('.form-item select');
+			var $datepicker = $('.form-item .ui-datepicker .inp-base');
+
+			//set
+			$input.each(function(){
+				checkValue(this, 'input');
+			});
+			$select.each(function(){
+				checkValue(this, 'select');
+			});
+			$datepicker.each(function(){
+				checkValue(this, 'datepicker');
+			});
+
+			//event input
+			$input.off('keydown.inlabel blur.inlabel').on('keydown.inlabel blur.inlabel', function(){
+				checkValue(this, 'input');
+			});
+			//event select
+			$select
+				.off('focus.inlabel').on('focus.inlabel', function(){
+					$(this).closest('.ui-select').addClass('activated');
+				})
+				.off('blur.inlabel').on('blur.inlabel', function(){
+					checkValueSelect(this)
+				})
+				.off('change.inlabel').on('change.inlabel', function(){
+					checkValueSelect(this)
+				});
+			$(doc).find('.form-item .ui-select-btn')
+				.off('focus.inlabel').on('focus.inlabel', function(){
+					checkValueSelectBtn(this)
+				})
+				.off('blur.inlabel').on('blur.inlabel', function(){
+					checkValueSelectBtn(this, 'blur')
+				});
+
+			function checkValue(v, type){
+				var $this = $(v);
+				var $wrap;
+
+				if (type === 'select') {
+					$wrap = $this.closest('.ui-select');
+				} else if (type === 'datepicker'){
+					$wrap = $this.closest('.ui-datepicker');
+				}
+
+				if (type === 'input') {
+					!!$this.val() ? $this.addClass('activated') : $this.removeClass('activated');
+				} else {
+					($this.val() === null) ?
+						$wrap.addClass('is-null'):
+						$wrap.removeClass('is-null').addClass('activated');
+				}
+			}
+			function checkValueSelectBtn(v, s){
+				var $this = $(v).closest('.ui-select').find('select');
+				var $wrap = $this.closest('.ui-select');
+				var eBlur = !!s ? true : false;
+
+				if ($this.val() === null) {
+					eBlur ?
+					$wrap.removeClass('activated').addClass('is-null'):
+					$wrap.addClass('activated').removeClass('is-null');
+				} else {
+					eBlur ?
+					$wrap.removeClass('is-null').addClass('activated'):
+					$wrap.addClass('activated');
+				}
+			}
+			function checkValueSelect(v){
+				var $this = $(v);
+				var $wrap = $this.closest('.ui-select');
+
+				if ($this.val() === null) {
+					$wrap.removeClass('activated').addClass('is-null');
+				} else {
+					$wrap.removeClass('is-null').addClass('activated');
 				}
 			}
 		}
@@ -4387,64 +4539,7 @@ if (!Object.keys){
 	}  
 
 
-	/* ------------------------
-	* name : input cancel
-	* date : 2020-06-15
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiInputClear: function () {
-			return createUiInputClear();
-		}
-	});
-	function createUiInputClear(){
-		var $inp = $('.inp-base');
 
-		$inp.each(function(i){
-			var $this = $(this);
-			var $wrap = $this.parent();
-			var $clear = $wrap.find('.ui-clear');
-
-			// if ($this.val() === '' || $this.prop('readonly') || $this.prop('disabled')) {
-			// 	$clear.remove();
-			// } else { 
-			// 	if ($clear.length === 0) {
-			// 		$wrap.append(make($this.attr('id')));
-			// 	} 
-			// }
-
-			$inp.eq(i).off('keyup.clear focus.clear').on('keyup.clear focus.clear', function(){
-				var _$this = $(this);
-				var _$wrap = $this.parent();
-				
-				if (_$this.prop('readonly') || _$this.prop('disabled') || _$this.attr('type') === 'date') {
-					return false;
-				}
-
-				if (_$this.val() === '') {
-					//_$this.next('.ui-clear').remove();
-				} else {
-					if (!$('.ui-clear[data-id="'+ _$this.attr('id') +'"]').length || _$this.attr('type') === 'date') {
-						_$wrap.append( make(_$this.attr('id')) );
-					} 
-				}
-			}).off('blur.clear').on('blur.clear', function(){
-				var $clear =  $(this).parent().find('.ui-clear');
-				setTimeout(function(){
-					//$clear.remove();
-				},100)
-			});
-		});
-
-		function make(v){
-			return '<button type="button" class="ui-clear btn-clear" data-id="'+ v +'"><span class="a11y-hidden">내용지우기</span></button>';
-		}
-
-		//event
-		$(doc).off('click.clear').on('click.clear', '.ui-clear', function(){
-			$('#' + $(this).data('id')).val('').focus();
-			$(this).remove();
-		});
-	}
 	
 
 	/* ------------------------
@@ -5395,7 +5490,7 @@ if (!Object.keys){
 				$(temp).closest('tr').show();
 			});
 
-			win[global].uiInputClear();
+			win[global].form.init();
 		}
 	}
 

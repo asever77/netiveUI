@@ -11,10 +11,12 @@
     };
     
     $plugins.page.pageInnerLabel = function(){
-        $plugins.uiInputClear();
+        $plugins.form.init();
         $plugins.uiSelect();
         $plugins.uiDatePicker();
-        $plugins.uiInnerLabel();
+        $plugins.form.innerLabel();
+
+        $plugins.form.init();
 
     };
     $plugins.page.pageColor = function(){};
@@ -529,7 +531,7 @@
     }
 
     $plugins.page.pageInputClear = function(){
-        $plugins.uiInputClear();
+        $plugins.form.init();
         
   
     }
