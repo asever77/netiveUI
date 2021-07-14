@@ -1304,6 +1304,159 @@ if (!Object.keys){
 		}
 	}
 
+	win[global].datepicker = {
+		today: new Date(),
+		currentDate: null,
+		date: new Date(),
+		init: function(v) {
+			var setDate = v;
+			var viewYear = this.date.getFullYear();
+			var viewMonth = this.date.getMonth();
+			var viewDay = this.date.getDate();
+			var _viewYear = this.date.getFullYear();
+			var _viewMonth = this.date.getMonth();
+			var _viewDay = this.date.getDate();
+			var c_viewYear = null;
+			var c_viewMonth = null;
+			var c_viewDay = null;
+
+			//설정일자가 있는 경우
+			if (setDate !== undfined) {
+				this.currentDate = new Date(setDate);
+				this.date = new Date(setDate);
+
+				viewYear = this.date.getFullYear();
+				viewMonth = this.date.getMonth();
+				viewDay = this.date.getDate();
+			}
+
+			//선택일자가 있는 경우
+			if (!!this.currentDate) {
+				c_viewYear = this.currentDate.getFullYear();
+				c_viewMonth = this.currentDate.getMonth();
+				c_viewDay = this.currentDate.getDate();
+			}
+
+			//year-month 채우기
+			document.querySelector('.year-month').textContent = viewYear + '.' + add00(viewMonth + 1);
+
+			//지난달 마지막 date, 이번달 마지막 date
+			var prevLast = new Date(viewYear, viewMonth, 0);
+			var thisLast = new Date(viewYear, viewMonth + 1, 0);
+
+			var PLDate = prevLast.getDate();
+			var PLDay = prevLast.getDay();
+
+			var TLDate = thisLast.getDate();
+			var TLDay = thisLast.getDay();
+
+			var prevDates = [];
+			var thisDates = [...Array(TLDate + 1).keys()].slice(1);
+			var nextDates = [];
+
+			//prevDates 계산
+			if (PLDay !== 6) {
+				for(var i = 0; i < PLDay + 1; i++) {
+					prevDates.unshift('');
+				}
+			}
+			//nextDates 계산
+			for(var i = 1; i < 7 - TLDay; i++) {
+				prevDates.unshift('');
+			}
+
+			//dates 합치기
+			var dates = prevDates.concat(thisDates, nextDates);
+
+			//dates 정리
+			dates.forEach((date,i) => {
+				var _taghHtml = '';
+				var _class = null;
+
+				_class = (i % 7 === 0) ? 'hday' : '';
+				_class = (i % 7 === 0) ? 'hday' : _class;
+				_class = (date === _viewDay && viewYear === _viewYear && viewMonth === _viewMonth) ? _class + 'today' : _class;
+
+				var _day = (date === c_viewDay && viewYear === c_viewYear && viewMonth === c_viewMonth) ? _class + ' selected' : _class;
+
+				if (!(i % 7)) {
+					if (i !== 0) {
+						_tagHtml = '</tr><tr>';
+					} else {
+						_tagHtml = '<tr>';
+					}
+				} else {
+					_tagHtml = '';
+				}
+
+				dates[i] = _tagHtml + '<td class="'+ _class +'"><button type="button" class="datepicker_day '+ _day +'" data-date="'+ viewYear +'-'+ add00(viewMonth + 1)+'-'+ add00(date)+ '"><span>' + date +'</span></button></td>';
+			});
+
+			document.querySelector('.dates').innerHTML = dates.join('');
+
+			var timer = null;
+			var _this = this;
+
+			function checkRe(){
+				clearTimeout(timer);
+				timer = setTimeout(function(){
+					if (!!document.querySelectorAll('.layer_wrap').length) {
+						checkOpen();
+					} else {
+						checkRe();
+					}
+				});
+			}
+
+			function checkOpen(){
+				clearTimeout(timer);
+				var btn = document.querySelectorAll('.datepicker_day');
+
+				for (var datbtn of btn) {
+					datbtn.addEventListener('click', _this.daySelect);
+				}
+			}
+
+			function add00(v) {
+				if (v < 10) {
+					return v = '0' + v;
+				} else {
+					return v;
+				}
+			}
+		},
+		daySelect: (e) => {
+			var btns = document.querySelectorAll('.datepicker-day');
+
+			for (var i = 0; i < btns.length; i++) {
+				btns[i].classList.remove('selected');
+			}
+
+			e.currentTarget.classList.add('selected');
+			this.currentDate = new Date(e.currentTarget.dataset.date);
+		},
+		nextYear: () => {
+			this.date.setFullYear(this.date.getFullYear() + 1);
+			this.init();
+		},
+		prevYear: () => {
+			this.date.setFullYear(this.date.getFullYear() - 1);
+			this.init();
+		},
+		nextMonth: () => {
+			this.date.setMonth(this.date.getMonth() + 1);
+			this.init();
+		},
+		prevMonth: () => {
+			this.date.setMonth(this.date.getMonth() - 1);
+			this.init();
+		},
+		goToday: () => {
+			this.date = new Date();
+			this.init();
+		}
+	}
+
 	/* ------------------------
 	* accordion tab  
 	* date : 2020-05-17
