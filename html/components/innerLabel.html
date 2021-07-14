@@ -119,7 +119,7 @@
 
 					<div class="form-item">
 						<div class="ui-select">
-							<select title="카드번호 선택" id="test_a0_5">
+							<select class="inp-base" title="카드번호 선택" id="test_a0_5">
 								<option disabled >선택하세요</option>
 								<option value="1" selected>신한카드 908*****2*5**</option>
 								<option value="2">시티카드 908*****2*5**</option>
@@ -210,7 +210,7 @@
 			</div>
 
 			<div class="fx-wrap">
-				<div class="fx-item inner-label-item">
+				<div class="fx-item ">
 					<div class="form-item">
 						<div class="ui-select">
 							<select class="inp-base" title="카드번호 선택" id="test_a3_s">
@@ -229,12 +229,10 @@
 					</div>
 				</div>
 
-				<div class="fx-item" style="background: #eee">
+				<div class="fx-item">
 					<div class="form-item">
-						<em class="field-placeholder">Helper Text</em>
-						<em class="ui-error-msg">Error message</em>
 						<div class="ui-select">
-							<select title="카드번호 선택" id="test_a4_s">
+							<select class="inp-base" itle="카드번호 선택" id="test_a4_s">
 								<option disabled >선택하세요</option>
 								<option value="1" selected>신한카드 908*****2*5**</option>
 								<option value="2">시티카드 908*****2*5**</option>
@@ -243,36 +241,42 @@
 						</div>
 						<label class="form-item-label" for="test_a4_s">Card Select</label>
 					</div>
+					<div class="from-info">
+						<div class="bul-info">
+							<div>Helper Text</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
 			<div class="fx-wrap">
-				<div class="fx-item" style="background: #eee">
+				<div class="fx-item">
 					<div class="form-item">
-						<em class="field-placeholder">Helper Text</em>
-						<em class="ui-error-msg">Error message</em>
 						<div class="ui-datepicker" id="test_a5_s" data-period="true" data-dual="true" data-title="테스트">
-							<input type="tel" id="test_a5_s2" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-12-05" data-max="2022-12-30" title="시작일" placeholder="placeholder text" readonly>
+							<input type="text" id="test_a5_s2" class="ui-datepicker-inp inp-base day-start" value="" 
+							data-min="2017-12-05" 
+							data-max="2022-12-30" 
+							title="시작일" placeholder="placeholder text" readonly>
 							<label class="form-item-label" for="test_a5_s2">Label Title</label>
 							<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
 							<div class="ui-datepicker-wrap"></div>
 						</div>
-					</div>
-					<div class="field-text">~</div>
-					<div class="form-item">
-						<em class="field-placeholder">Helper Text</em>
-						<em class="ui-error-msg">Error message</em>
+						<div class="field-text">~</div>
 						<div class="ui-datepicker">
-							<input type="tel" id="test_a5_s2_end" class="ui-datepicker-inp inp-base day-end" value="" data-min="2019-12-01" data-max="2020-12-30" title="종료일" readonly>
-							<label class="form-item-label" for="test_a6_s2">Label Title</label>
+							<input type="text" id="test_a5_s2_end" class="ui-datepicker-inp inp-base day-end" value="" data-min="2019-12-01" data-max="2020-12-30" title="종료일" readonly>
 							<button type="button" class="ui-datepicker-btn" disabled aria-label="종료일 선택"></button>
+						</div>
+					</div>
+					<div class="from-info">
+						<div class="bul-info">
+							<div>Helper Text</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
 			<div class="fx-wrap">
-				<div class="in-item" style="background: #eee">
+				<div class="fx-item">
 					<div class="form-item">
 						<em class="field-placeholder">Helper Text</em>
 						<em class="ui-error-msg">Error message</em>
@@ -281,7 +285,7 @@
 					</div>
 				</div>
 
-				<div class="in-item" style="background: #eee">
+				<div class="fx-item">
 					<div class="form-item">
 						<em class="field-placeholder">Helper Text</em>
 						<em class="ui-error-msg">Error message</em>

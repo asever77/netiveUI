@@ -533,7 +533,7 @@ textarea.inp-base {
 	width: 100%;
     position: relative;
     padding: 0;
-    display: inline-block;
+    display: inline-flex;
     vertical-align: top;
 }
 
@@ -577,6 +577,9 @@ textarea.inp-base {
     top: 0;
     left: 1rem;
     transform: translate(0, .8rem);
+}
+.form-item .ui-select.activated+.form-item-label{
+	left: 0;
 }
 .form-item .form-item-label.fix,
 .form-item .inp-base.activated+.form-item-label,

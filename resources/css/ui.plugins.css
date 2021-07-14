@@ -2338,6 +2338,7 @@ select.off:focus+.ui-select-btn:after {
 .ui-select {
     position: relative;
     display: inline-block;
+    width: 100%;
 }
 
 .ui-select select {
@@ -2347,7 +2348,11 @@ select.off:focus+.ui-select-btn:after {
 .ui-select-btn {
     padding: 0 3.5rem 0 1rem;
     text-overflow: ellipsis;
-
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height:auto;
+    min-height:4rem;
     /* display: inline-block;
     position: relative;
     text-align: left;
@@ -2390,7 +2395,9 @@ select.off:focus+.ui-select-btn:after {
     white-space: nowrap;
     overflow: hidden;
     text-align: left;
-    margin-top: .3rem;
+    line-height:1.2;
+    margin:.8rem 0;
+    /* margin-top: .3rem; */
 }
 
 .ui-select-btn[aria-expanded="true"],

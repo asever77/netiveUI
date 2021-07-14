@@ -1303,98 +1303,6 @@ if (!Object.keys){
 			}
 		}
 	}
-	/* ------------------------
-	 * in label
-	 * date : 
-	------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiInnerLabel: function () {
-			return createUiInnerLabel();
-		}
-	});
-	function createUiInnerLabel(){
-		var $input = $('.form-item .inp-base');
-		var $select = $('.form-item select');
-		var $datepicker = $('.form-item .ui-datepicker .inp-base');
-
-		//set
-		$input.each(function(){
-			checkValue(this, 'input');
-		});
-		$select.each(function(){
-			checkValue(this, 'select');
-		});
-		$datepicker.each(function(){
-			checkValue(this, 'datepicker');
-		});
-
-		//event input
-		$input.off('keydown.inlabel blur.inlabel').on('keydown.inlabel blur.inlabel', function(){
-			checkValue(this, 'input');
-		});
-		//event select
-		$select
-			.off('focus.inlabel').on('focus.inlabel', function(){
-				$(this).closest('.ui-select').addClass('activated');
-			})
-			.off('blur.inlabel').on('blur.inlabel', function(){
-				checkValueSelect(this)
-			})
-			.off('change.inlabel').on('change.inlabel', function(){
-				checkValueSelect(this)
-			});
-		$(doc).find('.form-item .ui-select-btn')
-			.off('focus.inlabel').on('focus.inlabel', function(){
-				checkValueSelectBtn(this)
-			})
-			.off('blur.inlabel').on('blur.inlabel', function(){
-				checkValueSelectBtn(this, 'blur')
-			});
-
-		function checkValue(v, type){
-			var $this = $(v);
-			var $wrap;
-
-			if (type === 'select') {
-				$wrap = $this.closest('.ui-select');
-			} else if (type === 'datepicker'){
-				$wrap = $this.closest('.ui-datepicker');
-			}
-
-			if (type === 'input') {
-				!!$this.val() ? $this.addClass('activated') : $this.removeClass('activated');
-			} else {
-				($this.val() === null) ?
-					$wrap.addClass('is-null'):
-					$wrap.removeClass('is-null').addClass('activated');
-			}
-		}
-		function checkValueSelectBtn(v, s){
-			var $this = $(v).closest('.ui-select').find('select');
-			var $wrap = $this.closest('.ui-select');
-			var eBlur = !!s ? true : false;
-
-			if ($this.val() === null) {
-				eBlur ?
-				$wrap.removeClass('activated').addClass('is-null'):
-				$wrap.addClass('activated').removeClass('is-null');
-			} else {
-				eBlur ?
-				$wrap.removeClass('is-null').addClass('activated'):
-				$wrap.addClass('activated');
-			}
-		}
-		function checkValueSelect(v){
-			var $this = $(v);
-			var $wrap = $this.closest('.ui-select');
-
-			if ($this.val() === null) {
-				$wrap.removeClass('activated').addClass('is-null');
-			} else {
-				$wrap.removeClass('is-null').addClass('activated');
-			}
-		}
-	}
 
 	/* ------------------------
 	* accordion tab  
@@ -4652,14 +4560,13 @@ if (!Object.keys){
 		for (var i = 0; i < len; i++) {
 			$selectCurrent = $ui_select.eq(i);
 			$sel = $selectCurrent.find('select');
-			
-			selectID = $sel.attr('id');
+ 			selectID = $sel.attr('id');
 			selectID === undefined && $sel.attr('id', 'uiSelect_' + idN);
 			listID = selectID + '_list';
 			selectDisabled = $sel.prop('disabled');
 			selectTitle = $sel.attr('title');
 			hiddenClass = '';
-			
+			$selectCurrent.css('max-width', $selectCurrent.outerWidth());
 			(!$sel.data('callback') || !!callback) && $sel.data('callback', callback);
 
 			if (customscroll) {
@@ -4679,6 +4586,8 @@ if (!Object.keys){
 			htmlOption += '<button type="button" class="ui-select-confirm"><span>확인</span></strong>';
 			htmlOption += '</div>';
 			htmlButton = '<button type="button" class="inp-base ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
+
+			
 
 			$selectCurrent.append(htmlButton);
 			$sel.addClass('off');
