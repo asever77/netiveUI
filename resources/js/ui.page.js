@@ -14,7 +14,7 @@
         $plugins.form.init();
         $plugins.uiSelect();
         $plugins.uiDatePicker();
-        $plugins.form.innerLabel();
+        // $plugins.form.innerLabel();
 
         $plugins.form.init();
 

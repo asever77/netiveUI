@@ -1143,9 +1143,10 @@ if (!Object.keys){
 			for (var i = 0; i < len; i++) {
 				var $that = $inp.eq(i);
 				var $wrap = $that.parent();
+				var $item = $that.closest('[class*="ui-form"]');
 				var unit = $that.data('unit');
 				var prefix = $that.data('prefix');
-				var $label = $wrap.find('label');
+				var $label =  $item.find('.form-item-label');
 				var space = 0;
 
 				$that.removeAttr('style');
@@ -1170,28 +1171,48 @@ if (!Object.keys){
 					$label.css('margin-left',  space + 'px');
 				}
 
+				isValue($that,false);
 				$that.css('padding-left', space + pdl).data('pdl', space + pdl);
 			}
 
+			$('.ui-select-btn').off('click.label').on('click.label', function(){
+				isValue($(this),true);
+			});
+	
 			$inp.off('keyup.clear focus.clear').on('keyup.clear focus.clear', function(){
-				clearButton(this);
+				isValue($(this),true);
 			}).off('blur.clear').on('blur.clear', function(){
 				var $this = $(this);
 				var $clear = $this.parent().find('.ui-clear');
 				var pdr = Number($this.data('pdr'));
-
+				
+				isValue($this,false);
 				setTimeout(function(){
 					$this.css('padding-right', pdr + 'px'); 
 					$clear.remove();
 				},100);
 			});
-
-			function clearButton(v){
-				var $this = $(v);
+			
+			function isValue(t,v){
+				var $this = t;
 				var $wrap = $this.parent();
+				var $inner = $this.closest('.ui-form-inner');
 				var $inp = $wrap.find('.inp-base');
 				var pdr = Number($inp.data('pdr'));
-
+				
+				if (!!$inner) {
+					if (v) {
+						$inner.addClass('is-value');
+					} else {
+						console.log($inp,$inp.prop('value'),$inp.val(),!!$inp.prop('value'));
+						if (!!$inp.val()) {
+							$inner.addClass('is-value');
+						} else {
+							$inner.removeClass('is-value');
+						}
+					}
+				}
+				
 				if ($this.prop('readonly') || $this.prop('disabled') || $this.attr('type') === 'date') {
 					return false;
 				}
@@ -1200,10 +1221,14 @@ if (!Object.keys){
 					$inp.css('padding-right', pdr + 'px'); 
 					$wrap.find('.ui-clear').remove();
 				} else {
+					console.log($inp.prop('tagName'));
 					if (!$wrap.find('.ui-clear').length) {
-						$wrap.append('<button type="button" class="ui-clear btn-clear" style="margin-right:'+pdr+'px"><span class="a11y-hidden">내용지우기</span></button>');
-
-						$inp.css('padding-right', pdr + $wrap.find('.ui-clear').outerWidth() + 'px'); 
+						if ($inp.prop('tagName') === 'INPUT') { 
+							$wrap.append('<button type="button" class="ui-clear btn-clear" style="margin-right:'+pdr+'px"><span class="a11y-hidden">내용지우기</span></button>');
+							$inp.css('padding-right', pdr + $wrap.find('.ui-clear').outerWidth() + 'px'); 
+						} else {
+							$inp.css('padding-right', pdr + 'px'); 
+						}
 					} 
 				}
 			}
@@ -1214,94 +1239,12 @@ if (!Object.keys){
 				var $wrap = $this.parent();
 				var $inp = $wrap.find('.inp-base');
 				var pdr = Number($inp.data('pdr'));
-				console.log(pdr);
+
 				$inp.css('padding-right', pdr + 'px').val('').focus();
 				$this.remove();
 			});
-		},
-		innerLabel: function(){
-			var $input = $('.form-item .inp-base');
-			var $select = $('.form-item select');
-			var $datepicker = $('.form-item .ui-datepicker .inp-base');
-
-			//set
-			$input.each(function(){
-				checkValue(this, 'input');
-			});
-			$select.each(function(){
-				checkValue(this, 'select');
-			});
-			$datepicker.each(function(){
-				checkValue(this, 'datepicker');
-			});
-
-			//event input
-			$input.off('keydown.inlabel blur.inlabel').on('keydown.inlabel blur.inlabel', function(){
-				checkValue(this, 'input');
-			});
-			//event select
-			$select
-				.off('focus.inlabel').on('focus.inlabel', function(){
-					$(this).closest('.ui-select').addClass('activated');
-				})
-				.off('blur.inlabel').on('blur.inlabel', function(){
-					checkValueSelect(this)
-				})
-				.off('change.inlabel').on('change.inlabel', function(){
-					checkValueSelect(this)
-				});
-			$(doc).find('.form-item .ui-select-btn')
-				.off('focus.inlabel').on('focus.inlabel', function(){
-					checkValueSelectBtn(this)
-				})
-				.off('blur.inlabel').on('blur.inlabel', function(){
-					checkValueSelectBtn(this, 'blur')
-				});
-
-			function checkValue(v, type){
-				var $this = $(v);
-				var $wrap;
-
-				if (type === 'select') {
-					$wrap = $this.closest('.ui-select');
-				} else if (type === 'datepicker'){
-					$wrap = $this.closest('.ui-datepicker');
-				}
-
-				if (type === 'input') {
-					!!$this.val() ? $this.addClass('activated') : $this.removeClass('activated');
-				} else {
-					($this.val() === null) ?
-						$wrap.addClass('is-null'):
-						$wrap.removeClass('is-null').addClass('activated');
-				}
-			}
-			function checkValueSelectBtn(v, s){
-				var $this = $(v).closest('.ui-select').find('select');
-				var $wrap = $this.closest('.ui-select');
-				var eBlur = !!s ? true : false;
-
-				if ($this.val() === null) {
-					eBlur ?
-					$wrap.removeClass('activated').addClass('is-null'):
-					$wrap.addClass('activated').removeClass('is-null');
-				} else {
-					eBlur ?
-					$wrap.removeClass('is-null').addClass('activated'):
-					$wrap.addClass('activated');
-				}
-			}
-			function checkValueSelect(v){
-				var $this = $(v);
-				var $wrap = $this.closest('.ui-select');
-
-				if ($this.val() === null) {
-					$wrap.removeClass('activated').addClass('is-null');
-				} else {
-					$wrap.removeClass('is-null').addClass('activated');
-				}
-			}
 		}
+		
 	}
 
 	win[global].datepicker = {
@@ -4738,7 +4681,7 @@ if (!Object.keys){
 			htmlOption += '</div>';
 			htmlOption += '<button type="button" class="ui-select-confirm"><span>확인</span></strong>';
 			htmlOption += '</div>';
-			htmlButton = '<button type="button" class="inp-base ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
+			htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
 
 			
 
@@ -4866,7 +4809,7 @@ if (!Object.keys){
 					$('#' + idname + '_inp').focus();
 				}, 0);
 			});
-			$doc.find('.ui-select select').off('change.ui').on({ 'change.ui': selectChange });
+			$doc.find('.ui-select select').off('change.ui').on('change.ui', selectChange );
 		}
 
 		function selectLeave() {
