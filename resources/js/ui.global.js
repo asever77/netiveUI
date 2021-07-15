@@ -1313,7 +1313,7 @@ if (!Object.keys){
 
 			//dates 정리
 			dates.forEach((date,i) => {
-				var _taghHtml = '';
+				var _tagHtml = '';
 				var _class = null;
 
 				_class = (i % 7 === 0) ? 'hday' : '';
@@ -1348,8 +1348,9 @@ if (!Object.keys){
 					} else {
 						checkRe();
 					}
-				});
+				},10);
 			}
+			checkRe();
 
 			function checkOpen(){
 				clearTimeout(timer);
