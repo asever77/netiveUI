@@ -1619,13 +1619,7 @@ button.ui-tooltip-btn:after {
     z-index: 2
 }
 
-.ui-datepicker {
-    display: inline-block;
-    vertical-align: top;
-    position: relative;
-    padding: 0;
-    width: auto;
-}
+
 
 .ui-datepicker-btn {
     border: 0;

@@ -657,7 +657,32 @@ textarea.inp-base {
 	margin: 0 .8rem;
 }
 
-
+/**/
+.datepicker-header{
+	width:100%;
+	display:flex;
+	justify-content: center;
+	align-items: center;
+}
+.datepicker-header > button {
+	width:3rem;
+	height:3rem;
+	font-family: 'Material Icons';
+	font-size:2rem;
+	position: relative;
+}
+.ui-prev-y::before{
+	content:"chevron_left";
+}
+.ui-next-y::before{
+	content:"chevron_right";
+}
+.ui-prev-m::before{
+	content:"chevron_left";
+}
+.ui-next-m::before{
+	content:"chevron_right";
+}
 
 /* [base] BUTTON ---------------------------------------------------------------------------*/
 /* button wrap */

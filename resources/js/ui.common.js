@@ -46,7 +46,6 @@
 						fristHref = '/netiveUI/html/components/inputPlaceholder.html';
 						break;
 
-
 					case 'accordion' :
 						fristHref = '/netiveUI/html/components/accordion.html';
 						break;

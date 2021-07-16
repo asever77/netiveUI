@@ -703,86 +703,9 @@
     }
     
     $plugins.page.pageDatePicker = function(){
+        //$plugins.datepicker.init();
 
-        $('.day-start').each(function(){
-            var today = new Date(); 
-            var year = today.getFullYear(); // 년도
-            var month = today.getMonth() + 1;  // 월
-            var date = today.getDate();  // 날짜
-            var day = today.getDay();  // 요일
-            month = Number(month) < 10 ? '0'+ month : month;
-            date = Number(date) < 10 ? '0'+ date : date;
-           
-            $(this).attr('data-min', year + '-' + month + '-'+ date);
-            
-            today.setDate(today.getDate() + 15);
-
-            if (today.getDate() < Number(date)) {
-                month = Number(month) + 1; 
-                month = Number(month) < 10 ? '0'+ month : month;
-            }
-            date = today.getDate();
-            date = Number(date) < 10 ? '0'+ date : date;
-
-            $(this).attr('data-max', year + '-' + month + '-'+ date);
-        });
-        $('.day-end').each(function(){
-            var today = new Date(); 
-            var year = today.getFullYear(); // 년도
-            var month = today.getMonth() + 1;  // 월
-            var date = today.getDate();  // 날짜
-            var day = today.getDay();  // 요일
-
-            month = Number(month) < 10 ? '0'+ month : month;
-            today.setDate(today.getDate() + 5);
-            $(this).attr('data-min', year + '-' + month + '-'+ today.getDate());
-
-            var month2 = today.getMonth() + 5;  // 월   
-            month2 = Number(month2) < 10 ? '0'+ month2 : month2;
-            $(this).attr('data-max', year + '-' + month2 + '-'+ date);
-        });
-
-        $('#uiDatePicker1mInp').attr('data-min', '2000-01');
-        $('#uiDatePicker1mInp').attr('data-max', '2030-12');
         
-        $plugins.uiDatePicker();
-        $plugins.uiDatePicker({ 
-            selector:'#uiDatePicker1', 
-            openback: function(){
-                console.log('open callback gg');
-            },
-            closeback: function(){
-                console.log('close callback gg');
-            },
-            callback: function(v) {
-                console.log('callback: ', v);
-            }
-        });
-
-        $plugins.uiDatePicker({ 
-            selector:'#uiDatePicker2',
-            weekDay: new Array('日', '月', '火', '水', '木', '金', '土'),
-            dual:true
-        });
-
-        $plugins.uiDatePicker({ 
-            selector:'#uiDatePicker3',
-            period : true,
-            dual  : false,
-            title: '여행기간 선택',
-            callback: function(v) {
-                console.log('callback: ', v);
-            }
-        });
-        $plugins.uiDatePicker({ 
-            selector:'#uiDatePicker4',
-            period : true,
-            dual : true,
-            title: '여행기간 선택',
-            callback: function(v) {
-                console.log('callback: ', v);
-            }
-        });
     }
 
 
