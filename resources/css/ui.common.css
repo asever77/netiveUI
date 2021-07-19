@@ -1678,6 +1678,11 @@ dl[class*="bul-"]>dt {
 	margin-left: 2.4rem;
 }
 
+/* datepicker */
+.datepicker-date td{
+	text-align:center
+}
+
 /* 4colum */
 @media all and (max-width:599px) {
 	.base-grid {
