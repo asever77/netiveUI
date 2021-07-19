@@ -1441,9 +1441,10 @@ if (!Object.keys){
 			var dp_tbody = dp.querySelector('.datepicker-date');
 			var dp_y = dp.querySelector('.datepicker-yy');
 			var dp_m = dp.querySelector('.datepicker-mm');
+			var getData = dp.dataset.date.split('-');
 
-			dp_y.innerHTML = viewYear;
-			dp_m.innerHTML = win[global].option.partsAdd0(viewMonth + 1 );
+			dp_y.innerHTML = getData[0];
+			dp_m.innerHTML = getData[1];
 			dp_tbody.innerHTML = _dpHtml;
 		},
 		daySelect: (e) => {
