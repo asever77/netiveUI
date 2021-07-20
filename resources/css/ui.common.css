@@ -1682,7 +1682,9 @@ dl[class*="bul-"]>dt {
 .datepicker-date td{
 	text-align:center
 }
-
+.datepicker :disabled{
+	opacity:.5;
+}
 /* 4colum */
 @media all and (max-width:599px) {
 	.base-grid {

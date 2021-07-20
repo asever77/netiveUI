@@ -16,12 +16,12 @@
 			type="date" 
 			id="uiDate_1" 
 			class="ui-datepicker inp-base" 
-			value="2021-07-10" 
-			min="2017-12-05" 
-			max="2022-12-30" 
+			value="" 
+			min="2020-12-05" 
+			max="2022-05-20" 
 			title="시작일"
 			onclick="$plugins.datepicker.init({
-				date: '',
+				date: this.value,
 				min: this.min,
 				max: this.max,
 				id: this.id,
