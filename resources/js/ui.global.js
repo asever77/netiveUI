@@ -1243,6 +1243,19 @@ if (!Object.keys){
 				$inp.css('padding-right', pdr + 'px').val('').focus();
 				$this.remove();
 			});
+
+			$(doc).off('focus.clear').on('focus.clear', '.ui-datepicker .inp-base', function(){
+				var $this = $(this);
+
+				$plugins.datepicker.init({
+					date: this.value,
+					min: this.min,
+					max: this.max,
+					id: this.id,
+					title: this.title,
+					period: this.dataset.period
+				});
+			});
 		}
 		
 	}
@@ -1267,41 +1280,33 @@ if (!Object.keys){
 		init: function(opt) {
 			var setDate = opt.date === '' || opt.date === undefined ? new Date(): opt.date;
 			var setId = opt.id;
-
-			var date = new Date();
-			var today = new Date();
-			var currentDate = setDate;
-
-			var viewYear = date.getFullYear();
-			var viewMonth = date.getMonth();
-			var viewDay = date.getDate();
-			
-			var _dpHtml = '';
-
-			var selectDate = new Date(setDate);
-
-			var _viewYear = selectDate.getFullYear();
-			var _viewMonth = selectDate.getMonth();
-			var _viewDay = selectDate.getDate();
-
+			var currentDate = opt.date;
+			var date = new Date(setDate);
+			var _viewYear = date.getFullYear();
+			var _viewMonth = date.getMonth();
 			var el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
-
 			var yyyymm = _viewYear + '-' + win[global].option.partsAdd0(_viewMonth + 1);
+			var _dpHtml = '';
+			var title = opt.title;
+			var period = opt.period === '' || opt.period === undefined ? false : opt.period;
+
+
 
 			if (!el_dp) {
-				_dpHtml += '<div class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-select="'+yyyymm+'-'+_viewDay+'">';
+				_dpHtml += '<div class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-select="'+currentDate+'">';
 				_dpHtml += '<div class="datepicker-header">';
+				_dpHtml += '<div class="datepicker-title">'+title+'</div>';
 				_dpHtml += '<button type="button" class="ui-prev-y" data-id="'+setId+'"><span class="a11y-hidden">이전 년도</span></button>';
 				_dpHtml += '<div class="datepicker-yy"></div>';
 				_dpHtml += '<button type="button" class="ui-next-y" data-id="'+setId+'"><span class="a11y-hidden">다음 년도</span></button>';
 				_dpHtml += '<button type="button" class="ui-prev-m" data-id="'+setId+'"><span class="a11y-hidden">이전 월</span></button>';
 				_dpHtml += '<div class="datepicker-mm"></div>';
 				_dpHtml += '<button type="button" class="ui-next-m" data-id="'+setId+'"><span class="a11y-hidden">다음 월</span></button>';
-				_dpHtml += '</h2>';
+				_dpHtml += '<button type="button" class="ui-today" data-id="'+setId+'"><span class="a11y-hidden">오늘</span></button>';
 				_dpHtml += '</div>';
 				_dpHtml += '<div class="datepicker-body">';
 				_dpHtml += '<table>';
-				_dpHtml += '<caption></caption>';
+				_dpHtml += '<caption>'+title+'</caption>';
 				_dpHtml += '<colgroup>';
 				_dpHtml += '<col span="7">';
 				_dpHtml += '</colgroup>';
@@ -1321,37 +1326,58 @@ if (!Object.keys){
 				_dpHtml += '</table>';
 				_dpHtml += '</div>';
 				_dpHtml += '<div class="datepicker-footer">';
+				_dpHtml += '<div class="btn-wrap">';
+				_dpHtml += '<button type="button" class="btn-base ui-confirm"><span>확인</span></button>';
 				_dpHtml += '</div>';
 				_dpHtml += '</div>';
 
 				document.querySelector('#' + setId).parentNode.insertAdjacentHTML('beforeend',_dpHtml);
-			
-
 				el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
 
 				this.dateMake({
-					setDate: selectDate,
+					setDate: date,
+					currentDate: currentDate, 
 					setId: setId
 				});
 
 				_dpHtml = null;
 				
+				console.log('period', period);
+
 				//event
 				var nextY = el_dp.querySelector('.ui-next-y');
 				var prevY = el_dp.querySelector('.ui-prev-y');
 				var nextM = el_dp.querySelector('.ui-next-m');
 				var prevM = el_dp.querySelector('.ui-prev-m');
+				var today = el_dp.querySelector('.ui-today');
+				var confirm = el_dp.querySelector('.ui-confirm');
 
 				nextY.addEventListener('click', win[global].datepicker.nextYear);
 				prevY.addEventListener('click', win[global].datepicker.prevYear);
 				nextM.addEventListener('click', win[global].datepicker.nextMonth);
 				prevM.addEventListener('click', win[global].datepicker.prevMonth);
+				today.addEventListener('click', win[global].datepicker.goToday);
+				confirm.addEventListener('click', win[global].datepicker.confirm);
 			}
+		},
+		confirm: function(event){
+			var el_btn = event.currentTarget;
+			var el_dp = el_btn.closest('.datepicker');
+			var selectDay = el_dp.dataset.select;
+			var id = el_dp.dataset.id;
+			var el_inp = document.getElementById(id);
+
+			el_inp.value = selectDay;
+
+			win[global].datepicker.destroy({
+				id : id
+			});
 		},
 		dateMake: function(opt){
 			var setDate = opt.setDate;
-			console.log(opt.setDate);
+
 			var setId = opt.setId;
+			var el_dp = document.querySelector('.datepicker[data-id="' + setId + '"]');
 			var el_inp = document.querySelector('#' + setId);
 			var min = el_inp.getAttribute('min');
 			var max = el_inp.getAttribute('max');
@@ -1360,31 +1386,33 @@ if (!Object.keys){
 			var today = new Date();
 			var min_day = new Date(min);
 			var max_day = new Date(max);
+			var currentDay = el_dp.dataset.select;
 			var currentDate = null;
-
+			//설정된 날
 			var viewYear = date.getFullYear();
 			var viewMonth = date.getMonth();
 			var viewDay = date.getDate();
+			//오늘
 			var _viewYear = today.getFullYear();
 			var _viewMonth = today.getMonth();
 			var _viewDay = today.getDate();
+			//선택한 날
 			var c_viewYear = null;
 			var c_viewMonth = null;
 			var c_viewDay = null;
-
+			//최소
 			var min_viewYear = min_day.getFullYear();
 			var min_viewMonth = min_day.getMonth();
 			var min_viewDay = min_day.getDate();
-
+			//최대
 			var max_viewYear = max_day.getFullYear();
 			var max_viewMonth = max_day.getMonth();
 			var max_viewDay = max_day.getDate();
-
-			console.log(setId, min, max);
-
+			
 			//설정일자가 있는 경우
+			console.log(setDate);
 			if (!!setDate) {
-				currentDate = new Date(setDate);
+				console.log('설정일자');
 				date = new Date(setDate);
 
 				viewYear = date.getFullYear();
@@ -1393,7 +1421,8 @@ if (!Object.keys){
 			}
 
 			//선택일자가 있는 경우
-			if (!!currentDate) {
+			if (currentDay !== '') {
+				currentDate = new Date(currentDay);
 				c_viewYear = currentDate.getFullYear();
 				c_viewMonth = currentDate.getMonth();
 				c_viewDay = currentDate.getDate();
@@ -1483,13 +1512,12 @@ if (!Object.keys){
 					_dpHtml += '';
 				}
 
-
 				_dpHtml += '<td class="'+ _class +'">';
 
 				if (!_disabled) {
-					_dpHtml += '<button type="button" class="datepicker_day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '">';
+					_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '">';
 				} else {
-					_dpHtml += '<button type="button" class="datepicker_day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '" disabled>';
+					_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '" disabled>';
 				}
 				
 				_dpHtml += '<span>' + date +'</span>';
@@ -1497,25 +1525,34 @@ if (!Object.keys){
 				_dpHtml += '</td>';
 			});
 
-			var dp = document.querySelector('[data-id="' + setId +'"]');
-			var dp_tbody = dp.querySelector('.datepicker-date');
-			var dp_y = dp.querySelector('.datepicker-yy');
-			var dp_m = dp.querySelector('.datepicker-mm');
-			var getData = dp.dataset.date.split('-');
-
+			var dp_tbody = el_dp.querySelector('.datepicker-date');
+			var dp_y = el_dp.querySelector('.datepicker-yy');
+			var dp_m = el_dp.querySelector('.datepicker-mm');
+			var getData = el_dp.dataset.date.split('-');
+			
 			dp_y.innerHTML = getData[0];
 			dp_m.innerHTML = getData[1];
 			dp_tbody.innerHTML = _dpHtml;
-		},
-		daySelect: (e) => {
-			var btns = document.querySelectorAll('.datepicker-day');
 
-			for (var i = 0; i < btns.length; i++) {
-				btns[i].classList.remove('selected');
+			var dayBtn = dp_tbody.querySelectorAll('.datepicker-day');
+
+			for (var dayBtns of dayBtn) {
+				dayBtns.addEventListener('click', win[global].datepicker.daySelect);
+			}
+		},
+		daySelect: (event) => {
+			var el_btn = event.currentTarget;
+			var el_dp = el_btn.closest('.datepicker');
+			var dayBtn = el_dp.querySelectorAll('.datepicker-day');
+			var selectDay = el_btn.dataset.date;
+
+			el_dp.dataset.select = selectDay;
+
+			for (var dayBtns of dayBtn) {
+				dayBtns.classList.remove('selected');
 			}
 
-			e.currentTarget.classList.add('selected');
-			this.currentDate = new Date(e.currentTarget.dataset.date);
+			el_btn.classList.add('selected');
 		},
 		dateControl: (v, t) => {
 			var dpId = v;
@@ -1589,7 +1626,7 @@ if (!Object.keys){
 			});
 		},
 
-		nextYear: () => {
+		nextYear: (event) => {
 			var dpId = event.target.dataset.id;
 			var el_inp = document.querySelector('#' + dpId);
 			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
@@ -1641,7 +1678,7 @@ if (!Object.keys){
 				setId: dpId
 			});
 		},
-		prevYear: () => {
+		prevYear: (event) => {
 			var dpId = event.target.dataset.id;
 			var el_inp = document.querySelector('#' + dpId);
 			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
@@ -1691,7 +1728,7 @@ if (!Object.keys){
 				setId: dpId
 			});
 		},
-		nextMonth: () => {
+		nextMonth: (event) => {
 			var dpId = event.target.dataset.id;
 			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			var date = new Date(el_dp.dataset.date);
@@ -1712,7 +1749,7 @@ if (!Object.keys){
 				setId: dpId
 			});
 		},
-		prevMonth: () => {
+		prevMonth: (event) => {
 			var dpId = event.target.dataset.id;
 			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			var date = new Date(el_dp.dataset.date);
@@ -1733,9 +1770,20 @@ if (!Object.keys){
 				setId: dpId
 			});
 		},
-		goToday: () => {
-			this.date = new Date();
-			this.init();
+		goToday: (event) => {
+			var dpId = event.target.dataset.id;
+			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			
+			console.log('goToday', dpId, date);
+
+			el_dp.dataset.date = year +'-'+ win[global].option.partsAdd0(month); 
+			win[global].datepicker.dateMake({
+				setDate: date,
+				setId: dpId
+			});
 		}
 	}
 

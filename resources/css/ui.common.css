@@ -657,12 +657,29 @@ textarea.inp-base {
 	margin: 0 .8rem;
 }
 
-/**/
+/* datepicker */
+.ui-datepicker{
+	width:100%;
+	display:flex;
+	justify-content: space-between;
+}
+.datepicker{
+	position: absolute;
+	background:var(--bg);
+	z-index: 1;
+	top:4rem;
+	border:1px solid var(--box-line);
+	padding:1rem;
+}
+.datepicker .btn-wrap{
+	margin:0;
+}
 .datepicker-header{
 	width:100%;
 	display:flex;
 	justify-content: center;
 	align-items: center;
+	flex-wrap:wrap;
 }
 .datepicker-header > button {
 	width:3rem;
@@ -671,6 +688,39 @@ textarea.inp-base {
 	font-size:2rem;
 	position: relative;
 }
+.datepicker-title {
+	width:100%;
+	text-align: center;
+}
+.datepicker-date td{
+	text-align:center
+}
+.datepicker :disabled{
+	opacity:.5;
+}
+.datepicker-day {
+	width:2.4rem;
+	height:2.4rem;
+	border-radius:50%;
+	font-size:1.2rem;
+	margin:0.3rem 0;
+	line-height: 1;
+}
+.datepicker-day.selected {
+	background:var(--primary);
+	color:#fff;
+}
+.datepicker-day.today.selected {
+	background:var(--primary);
+	color:#fff;
+}
+.datepicker-day.today {
+	background:#fff;
+	border:1px solid var(--primary);
+	color:var(--primary);
+}
+
+
 .ui-prev-y::before{
 	content:"chevron_left";
 }
@@ -682,6 +732,9 @@ textarea.inp-base {
 }
 .ui-next-m::before{
 	content:"chevron_right";
+}
+.ui-today::before{
+	content:"today";
 }
 
 /* [base] BUTTON ---------------------------------------------------------------------------*/
@@ -1678,13 +1731,7 @@ dl[class*="bul-"]>dt {
 	margin-left: 2.4rem;
 }
 
-/* datepicker */
-.datepicker-date td{
-	text-align:center
-}
-.datepicker :disabled{
-	opacity:.5;
-}
+
 /* 4colum */
 @media all and (max-width:599px) {
 	.base-grid {
