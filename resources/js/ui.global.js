@@ -1267,22 +1267,21 @@ if (!Object.keys){
 			var is_dim = !!$('.sheet-dim').length;
 
 			if (is_dim) {
-				win[global].sheets.bottom();
 				win[global].sheets.dim(false);
-			} else {
-				if (!opt) {
-					var el_dp = document.querySelectorAll('.datepicker');
-	
-					for (var el_dps of el_dp) {
-						el_dps.remove();
-					}
-				} else {
-					var el_dp = document.querySelector('.datepicker[data-id="'+ opt.id +'"]');
-	
-					el_dp.remove();
-				}
-	
 			}
+			
+			if (!opt) {
+				var el_dp = document.querySelectorAll('.datepicker');
+
+				for (var el_dps of el_dp) {
+					el_dps.remove();
+				}
+			} else {
+				var el_dp = document.querySelector('.datepicker[data-id="'+ opt.id +'"]');
+
+				el_dp.remove();
+			}
+
 		},
 		init: function(opt) {
 			var setDate = opt.date === '' || opt.date === undefined ? new Date(): opt.date;
