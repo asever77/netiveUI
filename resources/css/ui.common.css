@@ -1,5 +1,5 @@
 @charset "utf-8";
-
+:focus{outline:1px solid black;}
 /* default */
 html,
 body {
@@ -215,6 +215,16 @@ select {
 
 select::-ms-expand {
 	display: none;
+}
+
+/* z index */
+.base-skip {
+	position:fixed;
+	z-index:2;
+}
+.base-wrap {
+	position: relative;
+	z-index: 0;
 }
 
 
@@ -664,17 +674,22 @@ textarea.inp-base {
 	justify-content: space-between;
 }
 .datepicker{
+	width:100%;
+	max-width:23rem;
 	position: absolute;
 	background:var(--bg);
 	z-index: 1;
 	top:4rem;
+	left: 0;
 	border:1px solid var(--box-line);
 	padding:1rem;
 }
+
 .datepicker .btn-wrap{
 	margin:0;
 }
 .datepicker-header{
+	position:relative;
 	width:100%;
 	display:flex;
 	justify-content: center;
@@ -690,7 +705,14 @@ textarea.inp-base {
 }
 .datepicker-title {
 	width:100%;
+	font-size:1.4rem;
 	text-align: center;
+}
+.datepicker-body {
+	margin:1rem 0;
+}
+.datepicker-body th{
+	font-size: 1.2rem;
 }
 .datepicker-date td{
 	text-align:center
@@ -720,7 +742,6 @@ textarea.inp-base {
 	color:var(--primary);
 }
 
-
 .ui-prev-y::before{
 	content:"chevron_left";
 }
@@ -733,9 +754,80 @@ textarea.inp-base {
 .ui-next-m::before{
 	content:"chevron_right";
 }
+.datepicker-header .ui-today{
+	width:2.5rem;
+	height:2.5rem;
+	line-height: 1;
+	position:absolute;
+	top:0;
+	right:0;
+}
 .ui-today::before{
 	content:"today";
 }
+
+/* sheet */
+[class*="sheet-bottom"] {
+	z-index: 301;
+}
+.sheet-dim {
+	position:fixed;
+	top:0;
+	left:0;
+	width:100%;
+	height:100%;
+	z-index: 300;
+	background:rgba(0,0,0,0.3);
+	opacity:0;
+	transition: opacity .2s ease-in-out;
+}
+.sheet-dim.on {
+	opacity: 1;
+}
+.sheet-off .datepicker{
+	display:none;
+}
+.sheet-on .datepicker{
+	display:block;
+}
+
+.sheet-bottom{
+	display: none;
+}
+.sheet-bottom.on {
+    display: block
+}
+
+.sheet-bottom.top {
+    bottom: 39px
+}
+
+.sheet-bottom.bottom {
+    top: 39px
+}
+
+.ui-m .datepicker{
+	max-width:100%;
+	top:auto;
+	bottom:0;
+	position:fixed;
+}
+.ui-m .datepicker-body{
+	max-width:23rem;
+	margin:1rem auto;
+}
+.ui-m .datepicker.sheet-bottom-off {
+	bottom:-50vh;
+}	
+.ui-m .datepicker.sheet-bottom-on {
+    top: auto;
+    animation-name: slideUpIn;
+    animation-duration: .2s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
 
 /* [base] BUTTON ---------------------------------------------------------------------------*/
 /* button wrap */

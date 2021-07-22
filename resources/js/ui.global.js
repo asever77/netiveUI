@@ -678,6 +678,9 @@ if (!Object.keys){
 			var opt = $.extend(true, {}, this.options, opt);
 			var $base = opt.selector;
 			var callback = opt.callback;
+			var $focusItem = $base.find('input, h1, h2, h3, a, button, label, textarea, select').eq(0);
+
+			$focusItem.attr('tabindex', 0).focus();
 
 			if(!$base.find('[class*="ui-focusloop-"]').length) {
 				$base.prepend('<div tabindex="0" class="ui-focusloop-start"><span>시작지점입니다.</span></div>');
@@ -686,7 +689,7 @@ if (!Object.keys){
 
 			var $itemStart = $base.find('.ui-focusloop-start');
 			var $itemEnd = $base.find('.ui-focusloop-end');
-						
+		
 			$itemStart.off('keydown.loop').on('keydown.loop', function(e) {
 				if (e.shiftKey && e.keyCode == 9) {
 					e.preventDefault();
@@ -1244,17 +1247,16 @@ if (!Object.keys){
 				$this.remove();
 			});
 
-			$(doc).off('focus.clear').on('focus.clear', '.ui-datepicker .inp-base', function(){
+			$(doc).off('click.clear').on('click.clear', '.ui-datepicker .inp-base', function(){
 				var $this = $(this);
 
-				$plugins.datepicker.init({
-					date: this.value,
-					min: this.min,
-					max: this.max,
-					id: this.id,
-					title: this.title,
-					period: this.dataset.period
+
+				win[global].sheets.bottom({
+					that: this,
+					type: 'datepicker'
 				});
+
+				
 			});
 		}
 		
@@ -1262,20 +1264,25 @@ if (!Object.keys){
 
 	win[global].datepicker = {
 		destroy: function(opt){
-			var setId = opt.id;
-			var el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
+			var is_dim = !!$('.sheet-dim').length;
 
-			//event 취소 안해도 된다면 삭제
-			var nextY = el_dp.querySelector('.ui-next-y');
-			var prevY = el_dp.querySelector('.ui-prev-y');
-			var nextM = el_dp.querySelector('.ui-next-m');
-			var prevM = el_dp.querySelector('.ui-prev-m');
-			nextY.removeEventListener('click', win[global].datepicker.nextYear);
-			prevY.removeEventListener('click', win[global].datepicker.prevYear);
-			nextM.removeEventListener('click', win[global].datepicker.nextMonth);
-			prevM.removeEventListener('click', win[global].datepicker.prevMonth);
-
-			el_dp.remove();
+			if (is_dim) {
+				win[global].sheets.bottom();
+				win[global].sheets.dim(false);
+			} else {
+				if (!opt) {
+					var el_dp = document.querySelectorAll('.datepicker');
+	
+					for (var el_dps of el_dp) {
+						el_dps.remove();
+					}
+				} else {
+					var el_dp = document.querySelector('.datepicker[data-id="'+ opt.id +'"]');
+	
+					el_dp.remove();
+				}
+	
+			}
 		},
 		init: function(opt) {
 			var setDate = opt.date === '' || opt.date === undefined ? new Date(): opt.date;
@@ -1289,20 +1296,18 @@ if (!Object.keys){
 			var _dpHtml = '';
 			var title = opt.title;
 			var period = opt.period === '' || opt.period === undefined ? false : opt.period;
-
-
-
+			
 			if (!el_dp) {
-				_dpHtml += '<div class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-select="'+currentDate+'">';
+				_dpHtml += '<section class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-select="'+currentDate+'">';
 				_dpHtml += '<div class="datepicker-header">';
-				_dpHtml += '<div class="datepicker-title">'+title+'</div>';
-				_dpHtml += '<button type="button" class="ui-prev-y" data-id="'+setId+'"><span class="a11y-hidden">이전 년도</span></button>';
+				_dpHtml += '<h3 class="datepicker-title">'+title+'</h3>';
+				_dpHtml += '<button type="button" class="ui-prev-y" data-dpid="'+setId+'"><span class="a11y-hidden">이전 년도</span></button>';
 				_dpHtml += '<div class="datepicker-yy"></div>';
-				_dpHtml += '<button type="button" class="ui-next-y" data-id="'+setId+'"><span class="a11y-hidden">다음 년도</span></button>';
-				_dpHtml += '<button type="button" class="ui-prev-m" data-id="'+setId+'"><span class="a11y-hidden">이전 월</span></button>';
+				_dpHtml += '<button type="button" class="ui-next-y" data-dpid="'+setId+'"><span class="a11y-hidden">다음 년도</span></button>';
+				_dpHtml += '<button type="button" class="ui-prev-m" data-dpid="'+setId+'"><span class="a11y-hidden">이전 월</span></button>';
 				_dpHtml += '<div class="datepicker-mm"></div>';
-				_dpHtml += '<button type="button" class="ui-next-m" data-id="'+setId+'"><span class="a11y-hidden">다음 월</span></button>';
-				_dpHtml += '<button type="button" class="ui-today" data-id="'+setId+'"><span class="a11y-hidden">오늘</span></button>';
+				_dpHtml += '<button type="button" class="ui-next-m" data-dpid="'+setId+'"><span class="a11y-hidden">다음 월</span></button>';
+				_dpHtml += '<button type="button" class="ui-today" data-dpid="'+setId+'"><span class="a11y-hidden">오늘</span></button>';
 				_dpHtml += '</div>';
 				_dpHtml += '<div class="datepicker-body">';
 				_dpHtml += '<table>';
@@ -1325,13 +1330,14 @@ if (!Object.keys){
 				_dpHtml += '</tbody>';
 				_dpHtml += '</table>';
 				_dpHtml += '</div>';
-				_dpHtml += '<div class="datepicker-footer">';
+				_dpHtml += '<section class="datepicker-footer">';
 				_dpHtml += '<div class="btn-wrap">';
 				_dpHtml += '<button type="button" class="btn-base ui-confirm"><span>확인</span></button>';
 				_dpHtml += '</div>';
-				_dpHtml += '</div>';
+				_dpHtml += '</section>';
 
-				document.querySelector('#' + setId).parentNode.insertAdjacentHTML('beforeend',_dpHtml);
+				document.querySelector('body').insertAdjacentHTML('beforeend',_dpHtml);
+				//document.querySelector('#' + setId).parentNode.insertAdjacentHTML('beforeend',_dpHtml);
 				el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
 
 				this.dateMake({
@@ -1514,10 +1520,15 @@ if (!Object.keys){
 
 				_dpHtml += '<td class="'+ _class +'">';
 
-				if (!_disabled) {
-					_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '">';
+				console.log(date);
+				if (date === '') {
+					//빈곳
 				} else {
-					_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '" disabled>';
+					if (!_disabled) {
+						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '">';
+					} else {
+						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '" disabled>';
+					}
 				}
 				
 				_dpHtml += '<span>' + date +'</span>';
@@ -1554,80 +1565,8 @@ if (!Object.keys){
 
 			el_btn.classList.add('selected');
 		},
-		dateControl: (v, t) => {
-			var dpId = v;
-			var type = t;
-			var el_inp = document.querySelector('#' + dpId);
-			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
-			var el_next = el_dp.querySelector('.ui-next-y');
-			var el_prev = el_dp.querySelector('.ui-prev-y');
-			var date = new Date(el_dp.dataset.date);
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1;
-			var day = date.getDay();
-			var max = el_inp.getAttribute('max');
-			var max_date = new Date(max);
-			var max_year = max_date.getFullYear();
-			var max_month = max_date.getMonth() + 1;
-			var max_day = max_date.getDay();
-			var min = el_inp.getAttribute('min');
-			var min_date = new Date(min);
-			var min_year = min_date.getFullYear();
-			var min_month = min_date.getMonth() + 1;
-			var min_day = min_date.getDay();
-
-			//disabled set
-			//max
-			if (year <= min_year) {
-				el_prev.disabled = true;
-			} else {
-				el_prev.disabled = false;
-			}
-
-			if (year + 1 === max_year) {
-				if (month > max_month) {
-					month = max_month;
-				}
-				el_next.disabled = true;
-			} else if (year > max_year) {
-				alert('!!!');
-				return false;
-			}
-			
-			//min
-			if (year - 1 >= max_year) {
-				el_next.disabled = true;
-			} else {
-				el_next.disabled = false;
-			}
-
-			if (year - 1 === min_year) {
-				if (month < min_month) {
-					month = min_month;
-				}
-				el_prev.disabled = true;
-			} else if (year < min_year) {
-				alert('!!!');
-				return false;
-			}
-
-
-
-			date.setFullYear(year + 1);
-			el_dp.dataset.date = (year + 1) +'-'+ win[global].option.partsAdd0(month); 
-			
-			date.setFullYear(year - 1);
-			el_dp.dataset.date = (year - 1) +'-'+ win[global].option.partsAdd0(month); 
-
-
-			win[global].datepicker.dateMake({
-				setDate: date,
-				setId: dpId
-			});
-		},
-
 		nextYear: (event) => {
-			var dpId = event.target.dataset.id;
+			var dpId = event.target.dataset.dpid;
 			var el_inp = document.querySelector('#' + dpId);
 			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			var el_next = el_dp.querySelector('.ui-next-y');
@@ -1679,7 +1618,7 @@ if (!Object.keys){
 			});
 		},
 		prevYear: (event) => {
-			var dpId = event.target.dataset.id;
+			var dpId = event.target.dataset.dpid;
 			var el_inp = document.querySelector('#' + dpId);
 			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			var el_next = el_dp.querySelector('.ui-next-y');
@@ -1729,7 +1668,7 @@ if (!Object.keys){
 			});
 		},
 		nextMonth: (event) => {
-			var dpId = event.target.dataset.id;
+			var dpId = event.target.dataset.dpid;
 			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			var date = new Date(el_dp.dataset.date);
 			var year = date.getFullYear();
@@ -1750,7 +1689,7 @@ if (!Object.keys){
 			});
 		},
 		prevMonth: (event) => {
-			var dpId = event.target.dataset.id;
+			var dpId = event.target.dataset.dpid;
 			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			var date = new Date(el_dp.dataset.date);
 			var year = date.getFullYear();
@@ -1771,7 +1710,7 @@ if (!Object.keys){
 			});
 		},
 		goToday: (event) => {
-			var dpId = event.target.dataset.id;
+			var dpId = event.target.dataset.dpid;
 			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			var date = new Date();
 			var year = date.getFullYear();
@@ -1786,6 +1725,104 @@ if (!Object.keys){
 			});
 		}
 	}
+
+	win[global].sheets = {
+		dim: function(v){
+			if (v) {
+				$('body').append('<div class="sheet-dim"></div>');
+				$('.sheet-dim').addClass('on');
+			} else {
+				$('.sheet-dim').removeClass('on');
+				$('.sheet-dim').on('transitionend', function(){
+					$(this).remove();
+				});
+			}
+		},
+		bottom: function(opt){
+			var that = opt.that;
+			var type = opt.type;
+			var state = opt.state;
+			var id = that.id;
+			var $that = $('#'+id);
+			var $sheet = $('[data-id*="'+id+'"]');
+			var is_expanded = !!$sheet.length;
+			var win_w = $(win).outerWidth();
+			var win_h = $(win).outerHeight();
+			var offtop = $that.offset().top;
+			var offleft = $that.offset().left;
+			var scrtop = $(doc).scrollTop();
+			var that_w = $that.outerWidth();
+			var that_h = $that.outerHeight();
+
+			var sheet_show = !is_expanded || is_expanded === 'false';
+
+			if (state !== undefined) {
+				sheet_show = state;
+			}
+
+			if (sheet_show) {
+				//show
+				if (win[global].browser.mobile) {
+					
+				}
+
+				if (type === 'datepicker') {
+					win[global].datepicker.destroy();
+
+					win[global].datepicker.init({
+						date: that.value,
+						min: that.min,
+						max: that.max,
+						id: id,
+						title: that.title,
+						period: that.dataset.period
+					});
+
+					$sheet = $('[data-id*="'+id+'"]');
+
+					var wrap_w = Number($sheet.outerWidth().toFixed(2));
+					var wrap_h = Number($sheet.outerHeight().toFixed(2));
+					
+					if (win[global].browser.mobile) {
+						$sheet.addClass('sheet-bottom-off');
+						setTimeout(function(){
+							win[global].sheets.dim(true);
+							$sheet.addClass('sheet-bottom-on');
+						},0);
+						
+					} else {
+						$sheet.css({
+							left: ((wrap_w + offleft) > win_w) ? (offleft - (wrap_w - that_w))+ 'px' : offleft + 'px',
+							top: (win_h - ((offtop - scrtop) + that_h) > wrap_h) ? (offtop + that_h) + 'px' : (offtop - wrap_h) + 'px'
+						});
+					}
+
+					win[global].focus.loop({
+						selector: $sheet
+					});
+				}
+	
+			} else {
+				//hide
+				if (type === 'datepicker') {
+					if (win[global].browser.mobile) {
+						$('.sheet-dim').removeClass('on');
+						$sheet.removeClass('sheet-bottom-on');
+						setTimeout(function(){
+							//$sheet.addClass('sheet-bottom-on');
+						},0);
+						
+					} else {
+						win[global].datepicker.destroy({
+							id: that.id,
+						});
+					}
+				}
+	
+			}
+		}
+	}
+
 
 	/* ------------------------
 	* accordion tab  
