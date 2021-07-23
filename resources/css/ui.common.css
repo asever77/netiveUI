@@ -1845,6 +1845,29 @@ dl[class*="bul-"]>dt {
 	.fx-item[data-flex$="-12"] {
 		flex: 12 12;
 	}
+
+	.base-main{
+		margin:0 auto;
+		max-width: 102.4rem;
+	}
+	/* .header-nav{
+		width:32rem !important;
+	}
+	.base-body{
+		left:0 !important;
+	}
+
+	.nav-open .header-wrap .logo{
+		margin-left:0 !important;
+	}
+	@keyframes menuIn {
+		0% {left:0;}
+		100% {left:32rem !important}
+	}
+	@keyframes menuOut {
+		0% {left:32rem !important}
+		100% {left:0;}
+	} */
 }
 
 /*
