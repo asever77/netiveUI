@@ -678,6 +678,9 @@ if (!Object.keys){
 			var opt = $.extend(true, {}, this.options, opt);
 			var $base = opt.selector;
 			var callback = opt.callback;
+			var $focusItem = $base.find('input, h1, h2, h3, a, button, label, textarea, select').eq(0);
+
+			$focusItem.attr('tabindex', 0).focus();
 
 			if(!$base.find('[class*="ui-focusloop-"]').length) {
 				$base.prepend('<div tabindex="0" class="ui-focusloop-start"><span>시작지점입니다.</span></div>');
@@ -686,7 +689,7 @@ if (!Object.keys){
 
 			var $itemStart = $base.find('.ui-focusloop-start');
 			var $itemEnd = $base.find('.ui-focusloop-end');
-						
+		
 			$itemStart.off('keydown.loop').on('keydown.loop', function(e) {
 				if (e.shiftKey && e.keyCode == 9) {
 					e.preventDefault();
@@ -1243,128 +1246,267 @@ if (!Object.keys){
 				$inp.css('padding-right', pdr + 'px').val('').focus();
 				$this.remove();
 			});
+
+			//datepicker event
+			$(doc).off('click.clear').on('click.clear', '.ui-datepicker .inp-base', function(e){
+				e.preventDefault();
+				
+				var $this = $(this);
+				//<input type="date" id="uiDate_1" class="inp-base" value="" min="2020-12-05" max="2022-05-20" title="시작일" required="">
+				win[global].sheets.bottom({
+					id: $this.attr('id'),
+					callback: function(){
+						win[global].datepicker.init({
+							id: $this.attr('id'),
+							date: $this.val(),
+							min: $this.attr('min'),
+							max: $this.attr('max'),
+							title: $this.attr('title'),
+							period: $this.data('period')
+						});
+					}
+				});
+			});
 		}
 		
 	}
 
 	win[global].datepicker = {
-		today: new Date(),
-		currentDate: null,
-		date: new Date(),
-		init: function(opt) {
-			var setDate = opt.date;
-			var setId = opt.id;
-			var date = new Date();
-			var today = new Date();
-			var currentDate = null;
+		destroy: function(opt){
+			var is_dim = !!$('.sheet-dim').length;
 
-			var viewYear = date.getFullYear();
-			var viewMonth = date.getMonth();
-			var viewDay = date.getDate();
-
-			var _dpHtml = '';
-			_dpHtml += '<div class="datepicker" data-id="'+setId+'" data-date="'+viewYear+'-'+win[global].option.partsAdd0(viewMonth + 1)+'-'+viewDay+'" data-select="'+currentDate+'">';
-			_dpHtml += '<div class="datepicker-header">';
-			_dpHtml += '<button type="button" class="ui-prev-y" data-id="'+setId+'"><span class="a11y-hidden">이전 년도</span></button>';
-			_dpHtml += '<div class="datepicker-yy"></div>';
-			_dpHtml += '<button type="button" class="ui-next-y" data-id="'+setId+'"><span class="a11y-hidden">다음 년도</span></button>';
-
-			_dpHtml += '<button type="button" class="ui-prev-m" data-id="'+setId+'"><span class="a11y-hidden">이전 월</span></button>';
-			_dpHtml += '<div class="datepicker-mm"></div>';
-			_dpHtml += '<button type="button" class="ui-next-m" data-id="'+setId+'"><span class="a11y-hidden">다음 월</span></button>';
-			_dpHtml += '</h2>';
-			_dpHtml += '</div>';
-			_dpHtml += '<div class="datepicker-body">';
-			_dpHtml += '<table>';
-			_dpHtml += '<caption></caption>';
-			_dpHtml += '<colgroup>';
-			_dpHtml += '<col span="7">';
-			_dpHtml += '</colgroup>';
-			_dpHtml += '<thead>';
-			_dpHtml += '<tr>';
-			_dpHtml += '<th scope="col">일</th>';
-			_dpHtml += '<th scope="col">월</th>';
-			_dpHtml += '<th scope="col">화</th>';
-			_dpHtml += '<th scope="col">수</th>';
-			_dpHtml += '<th scope="col">목</th>';
-			_dpHtml += '<th scope="col">금</th>';
-			_dpHtml += '<th scope="col">토</th>';
-			_dpHtml += '</tr>';
-			_dpHtml += '</thead>';
-			_dpHtml += '<tbody class="datepicker-date">';
-			_dpHtml += '</tbody>';
-			_dpHtml += '</table>';
-			_dpHtml += '</div>';
-			_dpHtml += '<div class="datepicker-footer">';
-			_dpHtml += '</div>';
-			_dpHtml += '</div>';
-
-			document.querySelector('#' + setId).parentNode.insertAdjacentHTML('beforeend',_dpHtml);
-
-			var nn = new Date(setDate);
-			this.dateMake({
-				setDate: nn,
-				setId: setId
-			});
-
-			_dpHtml = null;
+			if (is_dim) {
+				win[global].sheets.dim(false);
+			}
 			
-			//event
-			var nextY = document.querySelectorAll('.ui-next-y');
+			if (!opt) {
+				var el_dp = document.querySelectorAll('.datepicker');
 
-			for (var nextYs of nextY) {
-				nextYs.addEventListener('click', function(){
-					win[global].datepicker.nextYear(setId);	
-				});
+				for (var el_dps of el_dp) {
+					el_dps.remove();
+				}
+			} else {
+				var el_dp = document.querySelector('.datepicker[data-id="'+ opt.id +'"]');
+
+				el_dp.remove();
 			}
 
+		},
+		init: function(opt) {
+			var setId = opt.id;
+			var currentDate = opt.date;
+			var endDate = opt.date;
+			var title = opt.title;
+
+			var el_inp = document.querySelector('#' + setId);
+			var el_uidp = el_inp.closest('.ui-datepicker');
+			var el_start = el_uidp.querySelector('[data-period="start"]');
+			var el_end = el_uidp.querySelector('[data-period="end"]');
+
+			var setDate = (opt.date === '' || opt.date === undefined) ? new Date(): opt.date;
+			var period = (opt.period === '' || opt.period === undefined) ? false : opt.period;
+			var area = (opt.area === '' || opt.area === undefined) ? document.querySelector('body') : opt.area;
+
+			var date = new Date(setDate);
+			var _viewYear = date.getFullYear();
+			var _viewMonth = date.getMonth();
+			var el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
+			var yyyymm = _viewYear + '-' + win[global].option.partsAdd0(_viewMonth + 1);
+			var _dpHtml = '';
+			
+			win[global].datepicker.destroy();
+
+			if (!!period || !!el_end) {
+				period = true;
+				endDate = el_end.value;
+			}
+			if (!el_dp) {
+				if (period) {
+					_dpHtml += '<section class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-start="'+currentDate+'" data-end="'+endDate+'" data-period="start">';
+				} else {
+					_dpHtml += '<section class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-start="'+currentDate+'" data-end="'+endDate+'">';
+				}
+				
+				_dpHtml += '<div class="datepicker-wrap">';
+
+				_dpHtml += '<div class="datepicker-header">';
+				_dpHtml += '<h3 class="datepicker-title">'+title+'</h3>';
+				_dpHtml += '<button type="button" class="ui-prev-y" data-dpid="'+setId+'"><span class="a11y-hidden">이전 년도</span></button>';
+				_dpHtml += '<div class="datepicker-yy"></div>';
+				_dpHtml += '<button type="button" class="ui-next-y" data-dpid="'+setId+'"><span class="a11y-hidden">다음 년도</span></button>';
+				_dpHtml += '<button type="button" class="ui-prev-m" data-dpid="'+setId+'"><span class="a11y-hidden">이전 월</span></button>';
+				_dpHtml += '<div class="datepicker-mm"></div>';
+				_dpHtml += '<button type="button" class="ui-next-m" data-dpid="'+setId+'"><span class="a11y-hidden">다음 월</span></button>';
+				_dpHtml += '<button type="button" class="ui-today" data-dpid="'+setId+'"><span class="a11y-hidden">오늘</span></button>';
+				_dpHtml += '</div>';
+
+				_dpHtml += '<div class="datepicker-body">';
+				_dpHtml += '<table>';
+				_dpHtml += '<caption>'+title+'</caption>';
+				_dpHtml += '<colgroup>';
+				_dpHtml += '<col span="7">';
+				_dpHtml += '</colgroup>';
+				_dpHtml += '<thead>';
+				_dpHtml += '<tr>';
+				_dpHtml += '<th scope="col">일</th>';
+				_dpHtml += '<th scope="col">월</th>';
+				_dpHtml += '<th scope="col">화</th>';
+				_dpHtml += '<th scope="col">수</th>';
+				_dpHtml += '<th scope="col">목</th>';
+				_dpHtml += '<th scope="col">금</th>';
+				_dpHtml += '<th scope="col">토</th>';
+				_dpHtml += '</tr>';
+				_dpHtml += '</thead>';
+				_dpHtml += '<tbody class="datepicker-date"></tbody>';
+				_dpHtml += '</table>';
+				_dpHtml += '</div>';
+
+				_dpHtml += '<div class="datepicker-footer">';
+				_dpHtml += '<div class="btn-wrap">';
+				_dpHtml += '<button type="button" class="btn-base ui-confirm"><span>확인</span></button>';
+				_dpHtml += '</div>';
+				_dpHtml += '</div>';
+
+				_dpHtml += '</div>';
+				_dpHtml += '</section>';
+
+				area.insertAdjacentHTML('beforeend',_dpHtml);
+				//document.querySelector('#' + setId).parentNode.insertAdjacentHTML('beforeend',_dpHtml);
+				el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
+
+				this.dateMake({
+					setDate: date,
+					currentDate: currentDate, 
+					setId: setId,
+					period: period
+				});
+
+				_dpHtml = null;
+				
+				//event
+				var nextY = el_dp.querySelector('.ui-next-y');
+				var prevY = el_dp.querySelector('.ui-prev-y');
+				var nextM = el_dp.querySelector('.ui-next-m');
+				var prevM = el_dp.querySelector('.ui-prev-m');
+				var today = el_dp.querySelector('.ui-today');
+				var confirm = el_dp.querySelector('.ui-confirm');
+
+				nextY.addEventListener('click', win[global].datepicker.nextYear);
+				prevY.addEventListener('click', win[global].datepicker.prevYear);
+				nextM.addEventListener('click', win[global].datepicker.nextMonth);
+				prevM.addEventListener('click', win[global].datepicker.prevMonth);
+				today.addEventListener('click', win[global].datepicker.goToday);
+				confirm.addEventListener('click', win[global].datepicker.confirm);
+			}
+		},
+		confirm: function(event){
+			var el_btn = event.currentTarget;
+			var el_dp = el_btn.closest('.datepicker');
+			var selectDay = el_dp.dataset.start;
+			var id = el_dp.dataset.id;
+			var el_inp = document.getElementById(id);
+
+			el_inp.value = selectDay;
+
+			if (el_dp.classList.contains('sheet-bottom')) {
+				win[global].sheets.bottom({
+					id: id,
+					state: false,
+					callback: function(){
+						win[global].datepicker.destroy({
+							id : id
+						});
+					}
+				});
+			} else {
+				win[global].datepicker.destroy({
+					id : id
+				});
+			}
 		},
 		dateMake: function(opt){
 			var setDate = opt.setDate;
 
 			var setId = opt.setId;
+			var el_dp = document.querySelector('.datepicker[data-id="' + setId + '"]');
+			var el_inp = document.querySelector('#' + setId);
+			var el_uidp = el_inp.closest('.ui-datepicker');
+			
+
+			var el_start = el_uidp.querySelector('[data-period="start"]');
+			var el_end = el_uidp.querySelector('[data-period="end"]');
+
+			var period = el_dp.dataset.period;
+			var min = el_inp.getAttribute('min');
+			var max = el_inp.getAttribute('max');
+
+			if (period === 'end') {
+				min = el_end.getAttribute('min');
+				max = el_end.getAttribute('max');
+			}
+
 			var date = setDate;
 			var today = new Date();
+			var min_day = new Date(min);
+			var max_day = new Date(max);
+			var currentDay = el_dp.dataset.start;
 			var currentDate = null;
 
+			// if (period === 'end') {
+			// 	currentDay = el_dp.dataset.end;
+			// }
+
+			//설정된 날
 			var viewYear = date.getFullYear();
 			var viewMonth = date.getMonth();
 			var viewDay = date.getDate();
-			var _viewYear = date.getFullYear();
-			var _viewMonth = date.getMonth();
-			var _viewDay = date.getDate();
-			var c_viewYear = null;
-			var c_viewMonth = null;
-			var c_viewDay = null;
-
+			//오늘
+			var _viewYear = today.getFullYear();
+			var _viewMonth = today.getMonth();
+			var _viewDay = today.getDate();
+			//선택한 날
+			var start_viewYear = null;
+			var start_viewMonth = null;
+			var start_viewDay = null;
+			//선택한 날
+			var end_viewYear = null;
+			var end_viewMonth = null;
+			var end_viewDay = null;
+			//최소
+			var min_viewYear = min_day.getFullYear();
+			var min_viewMonth = min_day.getMonth();
+			var min_viewDay = min_day.getDate();
+			//최대
+			var max_viewYear = max_day.getFullYear();
+			var max_viewMonth = max_day.getMonth();
+			var max_viewDay = max_day.getDate();
+			
 			//설정일자가 있는 경우
+			console.log(setDate);
 			if (!!setDate) {
-				currentDate = new Date(setDate);
+				console.log('설정일자');
 				date = new Date(setDate);
 
 				viewYear = date.getFullYear();
 				viewMonth = date.getMonth();
-				viewDay = date.getDate();
+				viewDay = date.getDate();	
 			}
 
 			//선택일자가 있는 경우
-			if (!!currentDate) {
-				c_viewYear = currentDate.getFullYear();
-				c_viewMonth = currentDate.getMonth();
-				c_viewDay = currentDate.getDate();
+			if (currentDay !== '') {
+				currentDate = new Date(currentDay);
+				start_viewYear = currentDate.getFullYear();
+				start_viewMonth = currentDate.getMonth();
+				start_viewDay = currentDate.getDate();
 			}
-
 
 			//지난달 마지막 date, 이번달 마지막 date
 			var prevLast = new Date(viewYear, viewMonth, 0);
 			var thisLast = new Date(viewYear, viewMonth + 1, 0);
-
 			var PLDate = prevLast.getDate();
 			var PLDay = prevLast.getDay();
-			
 			var TLDate = thisLast.getDate();
 			var TLDay = thisLast.getDay();
-			
 			var prevDates = [];
 			var thisDates = [...Array(TLDate + 1).keys()].slice(1);
 			var nextDates = [];
@@ -1375,9 +1517,10 @@ if (!Object.keys){
 					prevDates.unshift('');
 				}
 			}
+
 			//nextDates 계산
 			for(var i = 1; i < 7 - TLDay; i++) {
-				prevDates.unshift('');
+				nextDates.unshift('');
 			}
 
 			//dates 합치기
@@ -1386,14 +1529,51 @@ if (!Object.keys){
 
 			//dates 정리
 			dates.forEach((date,i) => {
-				var _class = null;
+				var _class = '';
+				var _disabled = false;
 
-				_class = (i % 7 === 0) ? 'hday' : '';
-				_class = (i % 7 === 0) ? 'hday' : _class;
+				// _class = (i % 7 === 0) ? 'hday' : '';
+				// _class = (i % 7 === 0) ? 'hday' : _class;
+
+				//오늘날짜 설정
 				_class = (date === _viewDay && viewYear === _viewYear && viewMonth === _viewMonth) ? _class + 'today' : _class;
 
-				var _day = (date === c_viewDay && viewYear === c_viewYear && viewMonth === c_viewMonth) ? _class + ' selected' : _class;
+				//max date
+				if (viewYear === max_viewYear) {
+					console.log('===', viewYear, max_viewYear);
+					if (viewMonth === max_viewMonth) {
+						if (date > max_viewDay) {
+							_disabled = true;
+						}
+					} else if (viewMonth > max_viewMonth) {
+						_disabled = true;
+					}
+					
+				} else if (viewYear > max_viewYear ) {
+					console.log('>');
+					_disabled = true;
+				}
 
+				//min date
+				if (viewYear === min_viewYear) {
+					console.log('===', viewMonth,  min_viewMonth);
+					if (viewMonth === min_viewMonth) {
+						if (date < min_viewDay) {
+							_disabled = true;
+						}
+					} else if (viewMonth < min_viewMonth) {
+						_disabled = true;
+					}
+					
+				} else if (viewYear < min_viewYear ) {
+					console.log('<');
+					_disabled = true;
+				}
+
+				//selected date
+				var _day = (date === start_viewDay && viewYear === start_viewYear && viewMonth === start_viewMonth) ? _class + ' selected' : _class;
+
+				//row
 				if (!(i % 7)) {
 					if (i !== 0) {
 						_dpHtml += '</tr><tr>';
@@ -1404,91 +1584,340 @@ if (!Object.keys){
 					_dpHtml += '';
 				}
 
-				_dpHtml += '<td class="'+ _class +'"><button type="button" class="datepicker_day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '"><span>' + date +'</span></button></td>';
+				_dpHtml += '<td class="'+ _class +'">';
+
+				if (date === '') {
+					//빈곳
+				} else {
+					if (!_disabled) {
+						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '">';
+					} else {
+						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '" disabled>';
+					}
+				}
+				
+				_dpHtml += '<span>' + date +'</span>';
+				_dpHtml += '</button>';
+				_dpHtml += '</td>';
 			});
 
-			var dp = document.querySelector('[data-id="' + setId +'"] .datepicker-date');
-			dp.innerHTML = _dpHtml;
-		},
-		daySelect: (e) => {
-			var btns = document.querySelectorAll('.datepicker-day');
+			var dp_tbody = el_dp.querySelector('.datepicker-date');
+			var dp_y = el_dp.querySelector('.datepicker-yy');
+			var dp_m = el_dp.querySelector('.datepicker-mm');
+			var getData = el_dp.dataset.date.split('-');
+			
+			dp_y.innerHTML = getData[0];
+			dp_m.innerHTML = getData[1];
+			dp_tbody.innerHTML = _dpHtml;
 
-			for (var i = 0; i < btns.length; i++) {
-				btns[i].classList.remove('selected');
+			var dayBtn = dp_tbody.querySelectorAll('.datepicker-day');
+
+			for (var dayBtns of dayBtn) {
+				dayBtns.addEventListener('click', win[global].datepicker.daySelect);
+			}
+		},
+		daySelect: (event) => {
+			var el_btn = event.currentTarget;
+			var el_dp = el_btn.closest('.datepicker');
+			var dayBtn = el_dp.querySelectorAll('.datepicker-day');
+			var selectDay = el_btn.dataset.date;
+			var period = el_dp.dataset.period;
+			var n = 0;
+			var id = el_dp.dataset.id;
+			var date = new Date(el_dp.dataset.date);
+
+			var el_inp = document.querySelector('#' + id);
+			var el_uidp = el_inp.closest('.ui-datepicker');
+			var el_start = el_uidp.querySelector('[data-period="start"]');
+			var el_end = el_uidp.querySelector('[data-period="end"]');
+
+			console.log(!!period, id);
+
+			if (!period) {
+				//single mode
+				el_dp.dataset.start = selectDay;
+				for (var dayBtns of dayBtn) {
+					dayBtns.classList.remove('selected');
+				}
+				el_btn.classList.add('selected');
+			} else {
+				//period mode
+				if (period === 'start') {
+					//start
+					el_dp.dataset.start = selectDay;
+					el_dp.dataset.period = 'end';
+
+					el_btn.classList.add('selected-start');
+					el_end.min = selectDay;
+				} else {
+					//end
+					if (!el_dp.dataset.end) {
+						el_dp.dataset.end = selectDay;
+						el_btn.classList.add('selected-end');
+					} else {
+						if (!!el_dp.querySelector('.selected-end')) {
+							el_dp.querySelector('.selected-end').classList.remove('selected-end');
+						}
+						
+						el_dp.dataset.end = selectDay;
+						el_btn.classList.add('selected-end');
+					}
+					
+				}
+
+				win[global].datepicker.dateMake({
+					setDate: date,
+					setId: id
+				});
+			}
+			
+			// end date 값 넘기기
+			
+
+			
+
+			
+		},
+		nextYear: (event) => {
+			var dpId = event.target.dataset.dpid;
+			var el_inp = document.querySelector('#' + dpId);
+			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			var el_next = el_dp.querySelector('.ui-next-y');
+			var el_prev = el_dp.querySelector('.ui-prev-y');
+			var el_next_m = el_dp.querySelector('.ui-next-m');
+			var el_prev_m = el_dp.querySelector('.ui-prev-m');
+
+			var date = new Date(el_dp.dataset.date);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDay();
+
+			var max = el_inp.getAttribute('max');
+			var max_date = new Date(max);
+			var max_year = max_date.getFullYear();
+			var max_month = max_date.getMonth() + 1;
+			var max_day = max_date.getDay();
+
+			var min = el_inp.getAttribute('min');
+			var min_date = new Date(min);
+			var min_year = min_date.getFullYear();
+			var min_month = min_date.getMonth() + 1;
+			var min_day = min_date.getDay();
+
+			// if (year + 1 <= min_year) {
+			// 	//el_prev.disabled = true;
+			// } else {
+			// 	//el_prev.disabled = false;
+			// }
+
+			// el_prev_m.disabled = false;
+			// if (year + 1 === max_year) {
+			// 	if (month > max_month) {
+			// 		month = max_month;
+			// 		//el_next_m.disabled = true;
+			// 	}
+			// 	date.setMonth(month - 1);
+			// 	//el_next.disabled = true;
+			// } else if (year > max_year) {
+			// 	//return false;
+			// }
+			
+			date.setFullYear(year + 1);
+
+			el_dp.dataset.date = (year + 1) +'-'+ win[global].option.partsAdd0(month); 
+			win[global].datepicker.dateMake({
+				setDate: date,
+				setId: dpId
+			});
+		},
+		prevYear: (event) => {
+			var dpId = event.target.dataset.dpid;
+			var el_inp = document.querySelector('#' + dpId);
+			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			var el_next = el_dp.querySelector('.ui-next-y');
+			var el_prev = el_dp.querySelector('.ui-prev-y');
+			var el_next_m = el_dp.querySelector('.ui-next-m');
+			var el_prev_m = el_dp.querySelector('.ui-prev-m');
+
+			var date = new Date(el_dp.dataset.date);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			var day = date.getDay();
+
+			var max = el_inp.getAttribute('max');
+			var max_date = new Date(max);
+			var max_year = max_date.getFullYear();
+			var max_month = max_date.getMonth() + 1;
+
+			var min = el_inp.getAttribute('min');
+			var min_date = new Date(min);
+			var min_year = min_date.getFullYear();
+			var min_month = min_date.getMonth() + 1;
+
+			// if (year - 1 >= max_year) {
+			// 	el_next.disabled = true;
+			// } else {
+			// 	el_next.disabled = false;
+			// }
+
+			// el_next_m.disabled = false;
+			// if (year - 1 === min_year) {
+			// 	if (month < min_month) {
+			// 		month = min_month;
+			// 		el_prev_m.disabled = true;
+			// 	}
+			// 	date.setMonth(month - 1);
+			// 	el_prev.disabled = true;
+			// } else if (year < min_year) {
+			// 	return false;
+			// }
+			
+			date.setFullYear(year - 1);
+
+			el_dp.dataset.date = (year - 1) +'-'+ win[global].option.partsAdd0(month); 
+			win[global].datepicker.dateMake({
+				setDate: date,
+				setId: dpId
+			});
+		},
+		nextMonth: (event) => {
+			var dpId = event.target.dataset.dpid;
+			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			var date = new Date(el_dp.dataset.date);
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			
+			if (month > 11) {
+				month = 0;
+				year = year + 1;
+				date.setFullYear(year);
 			}
 
-			e.currentTarget.classList.add('selected');
-			this.currentDate = new Date(e.currentTarget.dataset.date);
-		},
-		nextYear: (v) => {
-			var dpId = v;
+			date.setMonth(month);
 
-			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
-			//var y = el_dp.setDate('yyyy');
-			var date = new Date(el_dp.dataset.date);
-
-			console.log(date);
-
-			
-			date.setFullYear(date.getFullYear() + 1);
-
-			console.log(date);
-			// this.init({
-			// 	date: this.value,
-			// 	min: document.querySelector('#'+ dpId).min,
-			// 	max: document.querySelector('#'+ dpId).max,
-			// 	id: dpId,
-			// 	title:  document.querySelector('#'+ dpId).title
-			// });
+			el_dp.dataset.date = year +'-'+ win[global].option.partsAdd0(month + 1); 
 			win[global].datepicker.dateMake({
 				setDate: date,
 				setId: dpId
-			})
+			});
 		},
-		prevYear: (opt) => {
-			var dpId = opt.id;
-			this.date.setFullYear(this.date.getFullYear() - 1);
-			this.init();
-		},
-		nextMonth: (v) => {
-			// var dpId = opt.id;
-			// this.date.setMonth(this.date.getMonth() + 1);
-			// this.init();
-
-			var dpId = v;
-
+		prevMonth: (event) => {
+			var dpId = event.target.dataset.dpid;
 			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
-			//var y = el_dp.setDate('yyyy');
 			var date = new Date(el_dp.dataset.date);
-
-			console.log(date);
-
+			var year = date.getFullYear();
+			var month = date.getMonth();
 			
-			date.setFullYear(win[global].datepicker.date.getMonth() + 1);
+			if (month < 1) {
+				month = 12;
+				year = year - 1;
+				date.setFullYear(year);
+			}
 
-			console.log(date);
-			// this.init({
-			// 	date: this.value,
-			// 	min: document.querySelector('#'+ dpId).min,
-			// 	max: document.querySelector('#'+ dpId).max,
-			// 	id: dpId,
-			// 	title:  document.querySelector('#'+ dpId).title
-			// });
+			date.setMonth(month - 1);
+
+			el_dp.dataset.date = year +'-'+ win[global].option.partsAdd0(month); 
 			win[global].datepicker.dateMake({
 				setDate: date,
 				setId: dpId
-			})
+			});
 		},
-		prevMonth: (opt) => {
-			var dpId = opt.id;
-			this.date.setMonth(this.date.getMonth() - 1);
-			this.init();
-		},
-		goToday: () => {
-			this.date = new Date();
-			this.init();
+		goToday: (event) => {
+			var dpId = event.target.dataset.dpid;
+			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			var date = new Date();
+			var year = date.getFullYear();
+			var month = date.getMonth() + 1;
+			
+			console.log('goToday', dpId, date);
+
+			el_dp.dataset.date = year +'-'+ win[global].option.partsAdd0(month); 
+			win[global].datepicker.dateMake({
+				setDate: date,
+				setId: dpId
+			});
 		}
 	}
+
+	win[global].sheets = {
+		dim: function(opt){
+			var callback = opt.callback;
+
+ 			if (opt.show) {
+				$('.sheet-bottom[data-id="'+opt.id+'"]').append('<div class="sheet-dim"></div>');
+
+				$('.sheet-dim').addClass('on');
+				!!callback && callback();
+			} else {
+				$('.sheet-dim').removeClass('on');
+			}
+		},
+		bottom: function(opt){
+			var id = opt.id;
+			var state = opt.state; // true, false
+			var callback = opt.callback;
+
+			var $base = $('#'+id);
+			var $sheet = $('[data-id*="'+id+'"]');
+			
+			var scr_t = $(doc).scrollTop();
+			var win_w = $(win).outerWidth();
+			var win_h = $(win).outerHeight();
+			var off_t = $base.offset().top;
+			var off_l = $base.offset().left;
+			var base_w = $base.outerWidth();
+			var base_h = $base.outerHeight();
+
+			var is_expanded = !!$sheet.length;
+			var show = !is_expanded || is_expanded === 'false';
+
+			if (state !== undefined) {
+				show = state;
+			}
+
+			if (show) {
+				!!callback && callback(); 
+				
+				$sheet = $('[data-id*="'+id+'"]');
+				$sheet.addClass('sheet-bottom');
+
+				var wrap_w = Number($sheet.outerWidth().toFixed(2));
+				var wrap_h = Number($sheet.height().toFixed(2));
+
+				win[global].sheets.dim({
+					id: id,
+					show: true,
+					callback: function(){
+						$('.sheet-dim').on('click', function(){
+							win[global].sheets.bottom({
+								id:id,
+								state: false
+							})
+						});
+					}
+				});
+
+				$sheet.addClass('on').css({
+					left: ((wrap_w + off_l) > win_w) ? (off_l - (wrap_w - base_w))+ 'px' : off_l + 'px',
+					top: (win_h - ((off_t - scr_t) + base_h) > wrap_h) ? (off_t + base_h) + 'px' : (off_t - wrap_h) + 'px'
+				});
+
+				win[global].focus.loop({
+					selector: $sheet
+				});
+			} else {
+				//hide
+				$sheet.removeClass('on').addClass('off');
+				
+				setTimeout(function(){
+					!!callback && callback();
+					$sheet.remove();
+					$('#'+id).focus();
+				},300);
+			}
+		}
+	}
+
 
 	/* ------------------------
 	* accordion tab  

@@ -9,43 +9,130 @@
 	<h2 class="h-2">Examples</h2>
 	<h3 class="h-3">Base Date Picker</h3>
 	<div class="box-guide">
-		<h4 class="h-4 mgt-n">single</h4>
+		<div class="form-wrap">
+			<div class="fx-wrap" data-align="justify">
+				<div class="fx-item ui-form" data-flex="1-1-1">
+					<div class="form-label">
+						<label class="form-item-label" for="uiDate_1">single date</label>
+					</div>
+
+					<div class="form-item">
+						<div class="ui-datepicker">
+							<input 
+								type="date" 
+								id="uiDate_1" 
+								class="inp-base" 
+								value="2021-11-05" 
+								min="2020-12-05" 
+								max="2022-05-20" 
+								title="시작일"
+								required
+							>
+						</div>
+					</div>
+				</div>
+				<div class="fx-item ui-form" data-flex="1-1-1">
+					<div class="form-label">
+						<label class="form-item-label" for="uiDate_4">single date</label>
+					</div>
+
+					<div class="form-item">
+						<div class="ui-datepicker">
+							<input 
+								type="date" 
+								id="uiDate_4" 
+								class="inp-base" 
+								value="" 
+								min="2020-12-05" 
+								max="2022-05-20" 
+								title="시작일"
+								required
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="fx-wrap" data-align="justify">
+				<div class="fx-item ui-form" data-flex="1-1-1">
+					<div class="form-label">
+						<label class="form-item-label" for="uiDate_2">Period date</label>
+					</div>
+
+					<div class="form-item">
+						<div class="ui-datepicker">
+							<input 
+								type="date" 
+								id="uiDate_2" 
+								class="inp-base" 
+								value="" 
+								min="2017-12-05" 
+								max="2022-12-30" 
+								title="시작일"
+								data-period="start"
+								required
+							>
+							<div class="form-sc">~</div>
+							<input 
+								type="date" 
+								id="uiDate_3" 
+								class="inp-base" 
+								value="" 
+								min="2017-12-05" 
+								max="2022-12-30" 
+								title="종료일"
+								data-period="end"
+								disabled 
+								required
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="fx-wrap" data-align="justify">
+				<div class="fx-item ui-form" data-flex="1-1-1">
+					<div class="form-label">
+						<label class="form-item-label" for="uiDate_2a">Period date</label>
+					</div>
+
+					<div class="form-item">
+						<div class="ui-datepicker">
+							<input 
+								type="date" 
+								id="uiDate_2a" 
+								class="inp-base" 
+								value="2021-07-23" 
+								min="2017-12-05" 
+								max="2022-12-30" 
+								title="시작일"
+								data-period="start"
+								required
+							>
+							<div class="form-sc">~</div>
+							<input 
+								type="date" 
+								id="uiDate_3a" 
+								class="inp-base" 
+								value="" 
+								min="2017-12-05" 
+								max="2022-12-30" 
+								title="종료일"
+								data-period="end"
+								disabled 
+								required
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<div>
-			<input 
-			type="date" 
-			id="uiDate_1" 
-			class="ui-datepicker inp-base" 
-			value="2021-07-10" 
-			min="2017-12-05" 
-			max="2022-12-30" 
-			title="시작일"
-			onclick="$plugins.datepicker.init({
-				date: this.value,
-				min: this.min,
-				max: this.max,
-				id: this.id,
-				title: this.title
-			})" 
-			required>
+			
 		</div>
 		<div>
-			<input 
-			type="date" 
-			id="uiDate_2" 
-			class="ui-datepicker inp-base" 
-			value="" 
-			min="2017-12-05" 
-			max="2022-12-30" 
-			title="시작일"
-			onclick="$plugins.datepicker.init({
-				date: this.value,
-				min: this.min,
-				max: this.max,
-				id: this.id,
-				title: this.title
-			})" 
-			required>
+			
 		</div>
 
 		<section class="test">
