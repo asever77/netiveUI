@@ -1247,16 +1247,25 @@ if (!Object.keys){
 				$this.remove();
 			});
 
-			$(doc).off('click.clear').on('click.clear', '.ui-datepicker .inp-base', function(){
-				var $this = $(this);
-
-
-				win[global].sheets.bottom({
-					that: this,
-					type: 'datepicker'
-				});
-
+			//datepicker event
+			$(doc).off('click.clear').on('click.clear', '.ui-datepicker .inp-base', function(e){
+				e.preventDefault();
 				
+				var $this = $(this);
+				//<input type="date" id="uiDate_1" class="inp-base" value="" min="2020-12-05" max="2022-05-20" title="시작일" required="">
+				win[global].sheets.bottom({
+					id: $this.attr('id'),
+					callback: function(){
+						win[global].datepicker.init({
+							id: $this.attr('id'),
+							date: $this.val(),
+							min: $this.attr('min'),
+							max: $this.attr('max'),
+							title: $this.attr('title'),
+							period: $this.data('period')
+						});
+					}
+				});
 			});
 		}
 		
@@ -1284,20 +1293,42 @@ if (!Object.keys){
 
 		},
 		init: function(opt) {
-			var setDate = opt.date === '' || opt.date === undefined ? new Date(): opt.date;
 			var setId = opt.id;
 			var currentDate = opt.date;
+			var endDate = opt.date;
+			var title = opt.title;
+
+			var el_inp = document.querySelector('#' + setId);
+			var el_uidp = el_inp.closest('.ui-datepicker');
+			var el_start = el_uidp.querySelector('[data-period="start"]');
+			var el_end = el_uidp.querySelector('[data-period="end"]');
+
+			var setDate = (opt.date === '' || opt.date === undefined) ? new Date(): opt.date;
+			var period = (opt.period === '' || opt.period === undefined) ? false : opt.period;
+			var area = (opt.area === '' || opt.area === undefined) ? document.querySelector('body') : opt.area;
+
 			var date = new Date(setDate);
 			var _viewYear = date.getFullYear();
 			var _viewMonth = date.getMonth();
 			var el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
 			var yyyymm = _viewYear + '-' + win[global].option.partsAdd0(_viewMonth + 1);
 			var _dpHtml = '';
-			var title = opt.title;
-			var period = opt.period === '' || opt.period === undefined ? false : opt.period;
 			
+			win[global].datepicker.destroy();
+
+			if (!!period || !!el_end) {
+				period = true;
+				endDate = el_end.value;
+			}
 			if (!el_dp) {
-				_dpHtml += '<section class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-select="'+currentDate+'">';
+				if (period) {
+					_dpHtml += '<section class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-start="'+currentDate+'" data-end="'+endDate+'" data-period="start">';
+				} else {
+					_dpHtml += '<section class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-start="'+currentDate+'" data-end="'+endDate+'">';
+				}
+				
+				_dpHtml += '<div class="datepicker-wrap">';
+
 				_dpHtml += '<div class="datepicker-header">';
 				_dpHtml += '<h3 class="datepicker-title">'+title+'</h3>';
 				_dpHtml += '<button type="button" class="ui-prev-y" data-dpid="'+setId+'"><span class="a11y-hidden">이전 년도</span></button>';
@@ -1308,6 +1339,7 @@ if (!Object.keys){
 				_dpHtml += '<button type="button" class="ui-next-m" data-dpid="'+setId+'"><span class="a11y-hidden">다음 월</span></button>';
 				_dpHtml += '<button type="button" class="ui-today" data-dpid="'+setId+'"><span class="a11y-hidden">오늘</span></button>';
 				_dpHtml += '</div>';
+
 				_dpHtml += '<div class="datepicker-body">';
 				_dpHtml += '<table>';
 				_dpHtml += '<caption>'+title+'</caption>';
@@ -1325,30 +1357,32 @@ if (!Object.keys){
 				_dpHtml += '<th scope="col">토</th>';
 				_dpHtml += '</tr>';
 				_dpHtml += '</thead>';
-				_dpHtml += '<tbody class="datepicker-date">';
-				_dpHtml += '</tbody>';
+				_dpHtml += '<tbody class="datepicker-date"></tbody>';
 				_dpHtml += '</table>';
 				_dpHtml += '</div>';
-				_dpHtml += '<section class="datepicker-footer">';
+
+				_dpHtml += '<div class="datepicker-footer">';
 				_dpHtml += '<div class="btn-wrap">';
 				_dpHtml += '<button type="button" class="btn-base ui-confirm"><span>확인</span></button>';
 				_dpHtml += '</div>';
+				_dpHtml += '</div>';
+
+				_dpHtml += '</div>';
 				_dpHtml += '</section>';
 
-				document.querySelector('body').insertAdjacentHTML('beforeend',_dpHtml);
+				area.insertAdjacentHTML('beforeend',_dpHtml);
 				//document.querySelector('#' + setId).parentNode.insertAdjacentHTML('beforeend',_dpHtml);
 				el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
 
 				this.dateMake({
 					setDate: date,
 					currentDate: currentDate, 
-					setId: setId
+					setId: setId,
+					period: period
 				});
 
 				_dpHtml = null;
 				
-				console.log('period', period);
-
 				//event
 				var nextY = el_dp.querySelector('.ui-next-y');
 				var prevY = el_dp.querySelector('.ui-prev-y');
@@ -1368,15 +1402,27 @@ if (!Object.keys){
 		confirm: function(event){
 			var el_btn = event.currentTarget;
 			var el_dp = el_btn.closest('.datepicker');
-			var selectDay = el_dp.dataset.select;
+			var selectDay = el_dp.dataset.start;
 			var id = el_dp.dataset.id;
 			var el_inp = document.getElementById(id);
 
 			el_inp.value = selectDay;
 
-			win[global].datepicker.destroy({
-				id : id
-			});
+			if (el_dp.classList.contains('sheet-bottom')) {
+				win[global].sheets.bottom({
+					id: id,
+					state: false,
+					callback: function(){
+						win[global].datepicker.destroy({
+							id : id
+						});
+					}
+				});
+			} else {
+				win[global].datepicker.destroy({
+					id : id
+				});
+			}
 		},
 		dateMake: function(opt){
 			var setDate = opt.setDate;
@@ -1384,15 +1430,32 @@ if (!Object.keys){
 			var setId = opt.setId;
 			var el_dp = document.querySelector('.datepicker[data-id="' + setId + '"]');
 			var el_inp = document.querySelector('#' + setId);
+			var el_uidp = el_inp.closest('.ui-datepicker');
+			
+
+			var el_start = el_uidp.querySelector('[data-period="start"]');
+			var el_end = el_uidp.querySelector('[data-period="end"]');
+
+			var period = el_dp.dataset.period;
 			var min = el_inp.getAttribute('min');
 			var max = el_inp.getAttribute('max');
+
+			if (period === 'end') {
+				min = el_end.getAttribute('min');
+				max = el_end.getAttribute('max');
+			}
 
 			var date = setDate;
 			var today = new Date();
 			var min_day = new Date(min);
 			var max_day = new Date(max);
-			var currentDay = el_dp.dataset.select;
+			var currentDay = el_dp.dataset.start;
 			var currentDate = null;
+
+			// if (period === 'end') {
+			// 	currentDay = el_dp.dataset.end;
+			// }
+
 			//설정된 날
 			var viewYear = date.getFullYear();
 			var viewMonth = date.getMonth();
@@ -1402,9 +1465,13 @@ if (!Object.keys){
 			var _viewMonth = today.getMonth();
 			var _viewDay = today.getDate();
 			//선택한 날
-			var c_viewYear = null;
-			var c_viewMonth = null;
-			var c_viewDay = null;
+			var start_viewYear = null;
+			var start_viewMonth = null;
+			var start_viewDay = null;
+			//선택한 날
+			var end_viewYear = null;
+			var end_viewMonth = null;
+			var end_viewDay = null;
 			//최소
 			var min_viewYear = min_day.getFullYear();
 			var min_viewMonth = min_day.getMonth();
@@ -1428,9 +1495,9 @@ if (!Object.keys){
 			//선택일자가 있는 경우
 			if (currentDay !== '') {
 				currentDate = new Date(currentDay);
-				c_viewYear = currentDate.getFullYear();
-				c_viewMonth = currentDate.getMonth();
-				c_viewDay = currentDate.getDate();
+				start_viewYear = currentDate.getFullYear();
+				start_viewMonth = currentDate.getMonth();
+				start_viewDay = currentDate.getDate();
 			}
 
 			//지난달 마지막 date, 이번달 마지막 date
@@ -1473,7 +1540,7 @@ if (!Object.keys){
 
 				//max date
 				if (viewYear === max_viewYear) {
-					console.log('===');
+					console.log('===', viewYear, max_viewYear);
 					if (viewMonth === max_viewMonth) {
 						if (date > max_viewDay) {
 							_disabled = true;
@@ -1489,7 +1556,7 @@ if (!Object.keys){
 
 				//min date
 				if (viewYear === min_viewYear) {
-					console.log('===');
+					console.log('===', viewMonth,  min_viewMonth);
 					if (viewMonth === min_viewMonth) {
 						if (date < min_viewDay) {
 							_disabled = true;
@@ -1504,7 +1571,7 @@ if (!Object.keys){
 				}
 
 				//selected date
-				var _day = (date === c_viewDay && viewYear === c_viewYear && viewMonth === c_viewMonth) ? _class + ' selected' : _class;
+				var _day = (date === start_viewDay && viewYear === start_viewYear && viewMonth === start_viewMonth) ? _class + ' selected' : _class;
 
 				//row
 				if (!(i % 7)) {
@@ -1519,7 +1586,6 @@ if (!Object.keys){
 
 				_dpHtml += '<td class="'+ _class +'">';
 
-				console.log(date);
 				if (date === '') {
 					//빈곳
 				} else {
@@ -1555,14 +1621,62 @@ if (!Object.keys){
 			var el_dp = el_btn.closest('.datepicker');
 			var dayBtn = el_dp.querySelectorAll('.datepicker-day');
 			var selectDay = el_btn.dataset.date;
+			var period = el_dp.dataset.period;
+			var n = 0;
+			var id = el_dp.dataset.id;
+			var date = new Date(el_dp.dataset.date);
 
-			el_dp.dataset.select = selectDay;
+			var el_inp = document.querySelector('#' + id);
+			var el_uidp = el_inp.closest('.ui-datepicker');
+			var el_start = el_uidp.querySelector('[data-period="start"]');
+			var el_end = el_uidp.querySelector('[data-period="end"]');
 
-			for (var dayBtns of dayBtn) {
-				dayBtns.classList.remove('selected');
+			console.log(!!period, id);
+
+			if (!period) {
+				//single mode
+				el_dp.dataset.start = selectDay;
+				for (var dayBtns of dayBtn) {
+					dayBtns.classList.remove('selected');
+				}
+				el_btn.classList.add('selected');
+			} else {
+				//period mode
+				if (period === 'start') {
+					//start
+					el_dp.dataset.start = selectDay;
+					el_dp.dataset.period = 'end';
+
+					el_btn.classList.add('selected-start');
+					el_end.min = selectDay;
+				} else {
+					//end
+					if (!el_dp.dataset.end) {
+						el_dp.dataset.end = selectDay;
+						el_btn.classList.add('selected-end');
+					} else {
+						if (!!el_dp.querySelector('.selected-end')) {
+							el_dp.querySelector('.selected-end').classList.remove('selected-end');
+						}
+						
+						el_dp.dataset.end = selectDay;
+						el_btn.classList.add('selected-end');
+					}
+					
+				}
+
+				win[global].datepicker.dateMake({
+					setDate: date,
+					setId: id
+				});
 			}
+			
+			// end date 값 넘기기
+			
 
-			el_btn.classList.add('selected');
+			
+
+			
 		},
 		nextYear: (event) => {
 			var dpId = event.target.dataset.dpid;
@@ -1726,98 +1840,80 @@ if (!Object.keys){
 	}
 
 	win[global].sheets = {
-		dim: function(v){
-			if (v) {
-				$('body').append('<div class="sheet-dim"></div>');
+		dim: function(opt){
+			var callback = opt.callback;
+
+ 			if (opt.show) {
+				$('.sheet-bottom[data-id="'+opt.id+'"]').append('<div class="sheet-dim"></div>');
+
 				$('.sheet-dim').addClass('on');
+				!!callback && callback();
 			} else {
 				$('.sheet-dim').removeClass('on');
-				$('.sheet-dim').on('transitionend', function(){
-					$(this).remove();
-				});
 			}
 		},
 		bottom: function(opt){
-			var that = opt.that;
-			var type = opt.type;
-			var state = opt.state;
-			var id = that.id;
-			var $that = $('#'+id);
+			var id = opt.id;
+			var state = opt.state; // true, false
+			var callback = opt.callback;
+
+			var $base = $('#'+id);
 			var $sheet = $('[data-id*="'+id+'"]');
-			var is_expanded = !!$sheet.length;
+			
+			var scr_t = $(doc).scrollTop();
 			var win_w = $(win).outerWidth();
 			var win_h = $(win).outerHeight();
-			var offtop = $that.offset().top;
-			var offleft = $that.offset().left;
-			var scrtop = $(doc).scrollTop();
-			var that_w = $that.outerWidth();
-			var that_h = $that.outerHeight();
+			var off_t = $base.offset().top;
+			var off_l = $base.offset().left;
+			var base_w = $base.outerWidth();
+			var base_h = $base.outerHeight();
 
-			var sheet_show = !is_expanded || is_expanded === 'false';
+			var is_expanded = !!$sheet.length;
+			var show = !is_expanded || is_expanded === 'false';
 
 			if (state !== undefined) {
-				sheet_show = state;
+				show = state;
 			}
 
-			if (sheet_show) {
-				//show
-				if (win[global].browser.mobile) {
-					
-				}
+			if (show) {
+				!!callback && callback(); 
+				
+				$sheet = $('[data-id*="'+id+'"]');
+				$sheet.addClass('sheet-bottom');
 
-				if (type === 'datepicker') {
-					win[global].datepicker.destroy();
+				var wrap_w = Number($sheet.outerWidth().toFixed(2));
+				var wrap_h = Number($sheet.height().toFixed(2));
 
-					win[global].datepicker.init({
-						date: that.value,
-						min: that.min,
-						max: that.max,
-						id: id,
-						title: that.title,
-						period: that.dataset.period
-					});
-
-					$sheet = $('[data-id*="'+id+'"]');
-
-					var wrap_w = Number($sheet.outerWidth().toFixed(2));
-					var wrap_h = Number($sheet.outerHeight().toFixed(2));
-					
-					if (win[global].browser.mobile) {
-						$sheet.addClass('sheet-bottom-off');
-						setTimeout(function(){
-							win[global].sheets.dim(true);
-							$sheet.addClass('sheet-bottom-on');
-						},0);
-						
-					} else {
-						$sheet.css({
-							left: ((wrap_w + offleft) > win_w) ? (offleft - (wrap_w - that_w))+ 'px' : offleft + 'px',
-							top: (win_h - ((offtop - scrtop) + that_h) > wrap_h) ? (offtop + that_h) + 'px' : (offtop - wrap_h) + 'px'
+				win[global].sheets.dim({
+					id: id,
+					show: true,
+					callback: function(){
+						$('.sheet-dim').on('click', function(){
+							win[global].sheets.bottom({
+								id:id,
+								state: false
+							})
 						});
 					}
+				});
 
-					win[global].focus.loop({
-						selector: $sheet
-					});
-				}
-	
+				$sheet.addClass('on').css({
+					left: ((wrap_w + off_l) > win_w) ? (off_l - (wrap_w - base_w))+ 'px' : off_l + 'px',
+					top: (win_h - ((off_t - scr_t) + base_h) > wrap_h) ? (off_t + base_h) + 'px' : (off_t - wrap_h) + 'px'
+				});
+
+				win[global].focus.loop({
+					selector: $sheet
+				});
 			} else {
 				//hide
-				if (type === 'datepicker') {
-					if (win[global].browser.mobile) {
-						$('.sheet-dim').removeClass('on');
-						$sheet.removeClass('sheet-bottom-on');
-						setTimeout(function(){
-							//$sheet.addClass('sheet-bottom-on');
-						},0);
-						
-					} else {
-						win[global].datepicker.destroy({
-							id: that.id,
-						});
-					}
-				}
-	
+				$sheet.removeClass('on').addClass('off');
+				
+				setTimeout(function(){
+					!!callback && callback();
+					$sheet.remove();
+					$('#'+id).focus();
+				},300);
 			}
 		}
 	}
