@@ -727,9 +727,13 @@ textarea.inp-base {
 	background:var(--primary);
 	color:#fff;
 }
-.datepicker-day.today.selected {
+.datepicker-day.today.selected-end,
+.datepicker-day.today.selected-start {
 	background:var(--primary);
 	color:#fff;
+}
+.during .datepicker-day {
+	background:#ccc !important;
 }
 .datepicker-day.today {
 	background:#fff;

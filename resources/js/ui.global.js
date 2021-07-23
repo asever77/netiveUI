@@ -1449,12 +1449,14 @@ if (!Object.keys){
 			var today = new Date();
 			var min_day = new Date(min);
 			var max_day = new Date(max);
-			var currentDay = el_dp.dataset.start;
-			var currentDate = null;
+			var startDay = el_dp.dataset.start;
+			var startDate = null;
 
-			// if (period === 'end') {
-			// 	currentDay = el_dp.dataset.end;
-			// }
+			var endDay = null;
+			var endDate = null;
+			if (period === 'end') {
+				endDay = el_dp.dataset.end;
+			}
 
 			//설정된 날
 			var viewYear = date.getFullYear();
@@ -1493,11 +1495,17 @@ if (!Object.keys){
 			}
 
 			//선택일자가 있는 경우
-			if (currentDay !== '') {
-				currentDate = new Date(currentDay);
-				start_viewYear = currentDate.getFullYear();
-				start_viewMonth = currentDate.getMonth();
-				start_viewDay = currentDate.getDate();
+			if (startDay !== '') {
+				startDate = new Date(startDay);
+				start_viewYear = startDate.getFullYear();
+				start_viewMonth = startDate.getMonth();
+				start_viewDay = startDate.getDate();
+			}
+			if (endDay !== '') {
+				endDate = new Date(endDay);
+				end_viewYear = endDate.getFullYear();
+				end_viewMonth = endDate.getMonth();
+				end_viewDay = endDate.getDate();
 			}
 
 			//지난달 마지막 date, 이번달 마지막 date
@@ -1571,7 +1579,45 @@ if (!Object.keys){
 				}
 
 				//selected date
-				var _day = (date === start_viewDay && viewYear === start_viewYear && viewMonth === start_viewMonth) ? _class + ' selected' : _class;
+				var _day = (date === start_viewDay && viewYear === start_viewYear && viewMonth === start_viewMonth) ? 
+					_class + ' selected-start' : 
+					(date === end_viewDay && viewYear === end_viewYear && viewMonth === end_viewMonth) ? _class + ' selected-end' : _class;
+				
+				if (!!endDay) {
+					_class = _class + ' during';
+
+					if (viewYear < start_viewYear || viewYear > end_viewYear) {
+						_class = _class.replace(' during', '');
+					}
+
+					if (viewYear === start_viewYear && viewMonth < start_viewMonth) {
+						_class = _class.replace(' during', '');
+					}
+
+					if (viewYear === start_viewYear && viewMonth === start_viewMonth && date <=  start_viewDay) {
+						_class = _class.replace(' during', '');
+					}
+
+					if (viewYear === end_viewYear && viewMonth > end_viewMonth) {
+						_class = _class.replace(' during', '');
+					}
+
+					if (viewYear === end_viewYear && viewMonth === end_viewMonth && date >=  end_viewDay) {
+						_class = _class.replace(' during', '');
+					}
+
+				}
+
+
+				// if ((viewYear === start_viewYear) && (viewMonth >= start_viewMonth) && (date > end_viewMonth) && !!endDay) {
+				// 	_class = _class + ' during';
+				// }
+				// if (viewYear > start_viewYear && viewYear < end_viewYear && ) {
+				// 	_class = _class + ' during';
+				// }
+				// if (viewYear > start_viewYear && viewYear < end_viewYear && ) {
+				// 	_class = _class + ' during';
+				// }
 
 				//row
 				if (!(i % 7)) {
@@ -1637,9 +1683,9 @@ if (!Object.keys){
 				//single mode
 				el_dp.dataset.start = selectDay;
 				for (var dayBtns of dayBtn) {
-					dayBtns.classList.remove('selected');
+					dayBtns.classList.remove('selected-start');
 				}
-				el_btn.classList.add('selected');
+				el_btn.classList.add('selected-start');
 			} else {
 				//period mode
 				if (period === 'start') {
@@ -1648,13 +1694,15 @@ if (!Object.keys){
 					el_dp.dataset.period = 'end';
 
 					el_btn.classList.add('selected-start');
-					el_end.min = selectDay;
+					//el_end.min = selectDay;
 				} else {
 					//end
 					if (!el_dp.dataset.end) {
+						//end 
 						el_dp.dataset.end = selectDay;
 						el_btn.classList.add('selected-end');
 					} else {
+						//end값 수정`
 						if (!!el_dp.querySelector('.selected-end')) {
 							el_dp.querySelector('.selected-end').classList.remove('selected-end');
 						}
