@@ -1402,11 +1402,20 @@ if (!Object.keys){
 		confirm: function(event){
 			var el_btn = event.currentTarget;
 			var el_dp = el_btn.closest('.datepicker');
-			var selectDay = el_dp.dataset.start;
+			var startDay = el_dp.dataset.start;
+			var endDay = el_dp.dataset.end;
 			var id = el_dp.dataset.id;
 			var el_inp = document.getElementById(id);
 
-			el_inp.value = selectDay;
+			var el_uidp = el_inp.closest('.ui-datepicker');	
+			var el_start = el_uidp.querySelector('[data-period="start"]');
+			var el_end = el_uidp.querySelector('[data-period="end"]');
+
+			el_inp.value = startDay;
+
+			if (!!el_end) {
+				el_end.value = endDay;
+			}
 
 			if (el_dp.classList.contains('sheet-bottom')) {
 				win[global].sheets.bottom({
@@ -1430,13 +1439,16 @@ if (!Object.keys){
 			var setId = opt.setId;
 			var el_dp = document.querySelector('.datepicker[data-id="' + setId + '"]');
 			var el_inp = document.querySelector('#' + setId);
-			var el_uidp = el_inp.closest('.ui-datepicker');
-			
-
+			var el_uidp = el_inp.closest('.ui-datepicker');	
 			var el_start = el_uidp.querySelector('[data-period="start"]');
 			var el_end = el_uidp.querySelector('[data-period="end"]');
 
 			var period = el_dp.dataset.period;
+
+			if (el_dp.dataset.end !== '' && (el_dp.dataset.end !== el_dp.dataset.start)) {
+				period = 'end';
+			}
+
 			var min = el_inp.getAttribute('min');
 			var max = el_inp.getAttribute('max');
 
@@ -1449,11 +1461,13 @@ if (!Object.keys){
 			var today = new Date();
 			var min_day = new Date(min);
 			var max_day = new Date(max);
+
 			var startDay = el_dp.dataset.start;
 			var startDate = null;
 
 			var endDay = null;
 			var endDate = null;
+
 			if (period === 'end') {
 				endDay = el_dp.dataset.end;
 			}
@@ -1484,9 +1498,7 @@ if (!Object.keys){
 			var max_viewDay = max_day.getDate();
 			
 			//설정일자가 있는 경우
-			console.log(setDate);
 			if (!!setDate) {
-				console.log('설정일자');
 				date = new Date(setDate);
 
 				viewYear = date.getFullYear();
@@ -1548,7 +1560,6 @@ if (!Object.keys){
 
 				//max date
 				if (viewYear === max_viewYear) {
-					console.log('===', viewYear, max_viewYear);
 					if (viewMonth === max_viewMonth) {
 						if (date > max_viewDay) {
 							_disabled = true;
@@ -1605,27 +1616,12 @@ if (!Object.keys){
 					if (viewYear === end_viewYear && viewMonth === end_viewMonth && date >=  end_viewDay) {
 						_class = _class.replace(' during', '');
 					}
-
 				}
-
-
-				// if ((viewYear === start_viewYear) && (viewMonth >= start_viewMonth) && (date > end_viewMonth) && !!endDay) {
-				// 	_class = _class + ' during';
-				// }
-				// if (viewYear > start_viewYear && viewYear < end_viewYear && ) {
-				// 	_class = _class + ' during';
-				// }
-				// if (viewYear > start_viewYear && viewYear < end_viewYear && ) {
-				// 	_class = _class + ' during';
-				// }
 
 				//row
 				if (!(i % 7)) {
-					if (i !== 0) {
-						_dpHtml += '</tr><tr>';
-					} else {
-						_dpHtml += '<tr>';
-					}
+					_dpHtml += (i !== 0) ? '</tr><tr>' : '<tr>';
+				
 				} else {
 					_dpHtml += '';
 				}
@@ -1677,11 +1673,10 @@ if (!Object.keys){
 			var el_start = el_uidp.querySelector('[data-period="start"]');
 			var el_end = el_uidp.querySelector('[data-period="end"]');
 
-			console.log(!!period, id);
-
 			if (!period) {
 				//single mode
 				el_dp.dataset.start = selectDay;
+
 				for (var dayBtns of dayBtn) {
 					dayBtns.classList.remove('selected-start');
 				}
@@ -1692,25 +1687,51 @@ if (!Object.keys){
 					//start
 					el_dp.dataset.start = selectDay;
 					el_dp.dataset.period = 'end';
-
 					el_btn.classList.add('selected-start');
 					//el_end.min = selectDay;
 				} else {
 					//end
-					if (!el_dp.dataset.end) {
-						//end 
-						el_dp.dataset.end = selectDay;
-						el_btn.classList.add('selected-end');
+					if (el_dp.dataset.start > selectDay) {
+						el_dp.dataset.start = selectDay;
+						el_dp.dataset.end = '';
+						el_btn.classList.add('selected-start');
+						el_dp.querySelector('.selected-start') && el_dp.querySelector('.selected-start').classList.remove('selected-start');
+						el_dp.querySelector('.selected-end') && el_dp.querySelector('.selected-end').classList.remove('selected-end');
 					} else {
-						//end값 수정`
-						if (!!el_dp.querySelector('.selected-end')) {
-							el_dp.querySelector('.selected-end').classList.remove('selected-end');
+						if (!el_dp.dataset.end) {
+							//end 
+							if (el_dp.dataset.start === selectDay) {
+								el_dp.dataset.start = '';
+								el_dp.dataset.end = '';
+								el_dp.dataset.period = 'start';
+								el_dp.querySelector('.selected-start') && el_dp.querySelector('.selected-start').classList.remove('selected-start');
+							} else {
+								el_dp.dataset.end = selectDay;
+								el_btn.classList.add('selected-end');
+							}
+						} else {
+							//end값 수정`
+							if (el_dp.dataset.start === selectDay) {
+								el_dp.dataset.start = '';
+								el_dp.dataset.end = '';
+								el_dp.dataset.period = 'start';
+								el_dp.querySelector('.selected-start') && el_dp.querySelector('.selected-start').classList.remove('selected-start');
+								el_dp.querySelector('.selected-end') && el_dp.querySelector('.selected-end').classList.remove('selected-end');
+							} else {
+								if (el_dp.dataset.end === selectDay) {
+									el_dp.dataset.end = '';
+									el_dp.querySelector('.selected-end') && el_dp.querySelector('.selected-end').classList.remove('selected-end');
+								} else {
+									if (!!el_dp.querySelector('.selected-end')) {
+										el_dp.querySelector('.selected-end').classList.remove('selected-end');
+									}
+									
+									el_dp.dataset.end = selectDay;
+									el_btn.classList.add('selected-end');
+								}
+							}
 						}
-						
-						el_dp.dataset.end = selectDay;
-						el_btn.classList.add('selected-end');
 					}
-					
 				}
 
 				win[global].datepicker.dateMake({
