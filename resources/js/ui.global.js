@@ -1443,11 +1443,12 @@ if (!Object.keys){
 			var el_start = el_uidp.querySelector('[data-period="start"]');
 			var el_end = el_uidp.querySelector('[data-period="end"]');
 
-			var period = el_dp.dataset.period;
-
+			console.log(el_dp.dataset.end, (el_dp.dataset.end !== el_dp.dataset.start));
 			if (el_dp.dataset.end !== '' && (el_dp.dataset.end !== el_dp.dataset.start)) {
-				period = 'end';
+				el_dp.dataset.period = 'end';
 			}
+
+			var period = el_dp.dataset.period;
 
 			var min = el_inp.getAttribute('min');
 			var max = el_inp.getAttribute('max');
@@ -1672,6 +1673,8 @@ if (!Object.keys){
 			var el_uidp = el_inp.closest('.ui-datepicker');
 			var el_start = el_uidp.querySelector('[data-period="start"]');
 			var el_end = el_uidp.querySelector('[data-period="end"]');
+
+			period = (!!el_dp.dataset.end) ? 'end' : period;
 
 			if (!period) {
 				//single mode
