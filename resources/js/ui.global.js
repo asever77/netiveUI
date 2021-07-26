@@ -1248,10 +1248,10 @@ if (!Object.keys){
 			});
 
 			//datepicker event
-			$(doc).off('click.clear').on('click.clear', '.ui-datepicker .inp-base', function(e){
-				e.preventDefault();
+			$(doc).off('click.clear').on('click.clear', '.ui-datepicker-btn', function(e){
+				//e.preventDefault();
 				
-				var $this = $(this);
+				var $this = $(this).closest('.ui-datepicker').find('.inp-base');
 				//<input type="date" id="uiDate_1" class="inp-base" value="" min="2020-12-05" max="2022-05-20" title="시작일" required="">
 				win[global].sheets.bottom({
 					id: $this.attr('id'),
@@ -1262,7 +1262,10 @@ if (!Object.keys){
 							min: $this.attr('min'),
 							max: $this.attr('max'),
 							title: $this.attr('title'),
-							period: $this.data('period')
+							period: $this.data('period'),
+							callback: function(){
+								console.log('callback!!')
+							}
 						});
 					}
 				});
@@ -1274,6 +1277,7 @@ if (!Object.keys){
 	win[global].datepicker = {
 		destroy: function(opt){
 			var is_dim = !!$('.sheet-dim').length;
+			var callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
 
 			if (is_dim) {
 				win[global].sheets.dim(false);
@@ -1291,22 +1295,20 @@ if (!Object.keys){
 				el_dp.remove();
 			}
 
+			!!callback && callback();
 		},
 		init: function(opt) {
 			var setId = opt.id;
 			var currentDate = opt.date;
 			var endDate = opt.date;
 			var title = opt.title;
-
 			var el_inp = document.querySelector('#' + setId);
 			var el_uidp = el_inp.closest('.ui-datepicker');
 			var el_start = el_uidp.querySelector('[data-period="start"]');
 			var el_end = el_uidp.querySelector('[data-period="end"]');
-
 			var setDate = (opt.date === '' || opt.date === undefined) ? new Date(): opt.date;
 			var period = (opt.period === '' || opt.period === undefined) ? false : opt.period;
 			var area = (opt.area === '' || opt.area === undefined) ? document.querySelector('body') : opt.area;
-
 			var date = new Date(setDate);
 			var _viewYear = date.getFullYear();
 			var _viewMonth = date.getMonth();
@@ -1321,10 +1323,11 @@ if (!Object.keys){
 				endDate = el_end.value;
 			}
 			if (!el_dp) {
+				console.log(!!currentDate);
 				if (period) {
 					_dpHtml += '<section class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-start="'+currentDate+'" data-end="'+endDate+'" data-period="start">';
 				} else {
-					_dpHtml += '<section class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-start="'+currentDate+'" data-end="'+endDate+'">';
+					_dpHtml += '<section class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-start="'+currentDate+'">';
 				}
 				
 				_dpHtml += '<div class="datepicker-wrap">';
@@ -1363,7 +1366,7 @@ if (!Object.keys){
 
 				_dpHtml += '<div class="datepicker-footer">';
 				_dpHtml += '<div class="btn-wrap">';
-				_dpHtml += '<button type="button" class="btn-base ui-confirm"><span>확인</span></button>';
+				_dpHtml += '<button type="button" class="btn-base ui-confirm" data-confirm="'+ setId +'"><span>확인</span></button>';
 				_dpHtml += '</div>';
 				_dpHtml += '</div>';
 
@@ -1396,11 +1399,16 @@ if (!Object.keys){
 				nextM.addEventListener('click', win[global].datepicker.nextMonth);
 				prevM.addEventListener('click', win[global].datepicker.prevMonth);
 				today.addEventListener('click', win[global].datepicker.goToday);
-				confirm.addEventListener('click', win[global].datepicker.confirm);
+				confirm.addEventListener('click', function(){
+					win[global].datepicker.confirm({
+						id: this.dataset.confirm
+					});
+				});
 			}
 		},
-		confirm: function(event){
-			var el_btn = event.currentTarget;
+		confirm: function(opt){
+			console.log(opt.id)
+			var el_btn = document.querySelector('.ui-confirm[data-confirm="'+opt.id+'"]');
 			var el_dp = el_btn.closest('.datepicker');
 			var startDay = el_dp.dataset.start;
 			var endDay = el_dp.dataset.end;
@@ -1410,8 +1418,11 @@ if (!Object.keys){
 			var el_uidp = el_inp.closest('.ui-datepicker');	
 			var el_start = el_uidp.querySelector('[data-period="start"]');
 			var el_end = el_uidp.querySelector('[data-period="end"]');
+			var callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
 
 			el_inp.value = startDay;
+
+			!!callback && callback();
 
 			if (!!el_end) {
 				el_end.value = endDay;
@@ -1443,13 +1454,13 @@ if (!Object.keys){
 			var el_start = el_uidp.querySelector('[data-period="start"]');
 			var el_end = el_uidp.querySelector('[data-period="end"]');
 
-			console.log(el_dp.dataset.end, (el_dp.dataset.end !== el_dp.dataset.start));
-			if (el_dp.dataset.end !== '' && (el_dp.dataset.end !== el_dp.dataset.start)) {
-				el_dp.dataset.period = 'end';
+			if (!!el_dp.dataset.period) {
+				if (el_dp.dataset.end !== '' && (el_dp.dataset.end !== el_dp.dataset.start)) {
+					el_dp.dataset.period = 'end';
+				}
 			}
 
 			var period = el_dp.dataset.period;
-
 			var min = el_inp.getAttribute('min');
 			var max = el_inp.getAttribute('max');
 
@@ -1462,10 +1473,8 @@ if (!Object.keys){
 			var today = new Date();
 			var min_day = new Date(min);
 			var max_day = new Date(max);
-
 			var startDay = el_dp.dataset.start;
 			var startDate = null;
-
 			var endDay = null;
 			var endDate = null;
 
@@ -1654,9 +1663,55 @@ if (!Object.keys){
 			dp_tbody.innerHTML = _dpHtml;
 
 			var dayBtn = dp_tbody.querySelectorAll('.datepicker-day');
+			var len = dayBtn.length;
 
-			for (var dayBtns of dayBtn) {
-				dayBtns.addEventListener('click', win[global].datepicker.daySelect);
+			for (var i = 0; i < len; i++) {
+				dayBtn[i].addEventListener('click', win[global].datepicker.daySelect);
+				dayBtn[i].dataset.n = i;
+				dayBtn[i].addEventListener('keydown', keyMove);
+			}
+
+			// for (var dayBtns of dayBtn) {
+			// 	dayBtns.addEventListener('click', win[global].datepicker.daySelect);
+			// 	console.log(dayBtns);
+			// 	dayBtns.addEventListener('keydown', keyMove);
+			// }
+
+			function keyMove(e) {
+				e.preventDefault();
+
+				var isShift = !!window.event.shiftKey;
+				var n = Number(e.currentTarget.dataset.n);
+				var current = n;
+				var keycode = e.keyCode;
+				var keys = win[global].option.keys;
+
+				switch (keycode) {
+					case keys.up:
+						current = (n - 7 < 0) ? 0 : n - 7;
+						dp_tbody.querySelector('.datepicker-day[data-n="'+current+'"]').focus();
+						break;
+					case keys.left:
+						current = (n - 1 < 0) ? 0 : n - 1;
+						dp_tbody.querySelector('.datepicker-day[data-n="'+current+'"]').focus();
+						break;
+					case keys.down:
+						current = (n + 7 > len - 1) ? len - 1 : n + 7;
+						dp_tbody.querySelector('.datepicker-day[data-n="'+current+'"]').focus();
+						break;
+					case keys.right:
+						current = (n + 1 > len - 1) ? len - 1 : n + 1;
+						dp_tbody.querySelector('.datepicker-day[data-n="'+current+'"]').focus();
+						break;
+					case keys.tab:
+						isShift ?
+							el_dp.querySelector('.datepicker-header .datepicker-title').focus(): 
+							el_dp.querySelector('.ui-confirm').focus();
+						break;
+					case keys.enter:
+						win[global].datepicker.daySelect(e);
+						break;
+				}
 			}
 		},
 		daySelect: (event) => {
