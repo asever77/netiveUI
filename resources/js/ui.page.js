@@ -13,7 +13,7 @@
     $plugins.page.pageInnerLabel = function(){
         $plugins.form.init();
         $plugins.uiSelect();
-        $plugins.uiDatePicker();
+        //$plugins.uiDatePicker();
         // $plugins.form.innerLabel();
 
         $plugins.form.init();

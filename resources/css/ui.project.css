@@ -353,6 +353,10 @@ p {
 
 
 /* box code */
+.ui-m .box-code {
+	max-height:50vh;
+	overflow:auto;
+}
 .box-code {
 	width: 100%;
 	margin: 1rem 0 0;

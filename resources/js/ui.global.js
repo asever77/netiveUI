@@ -1178,7 +1178,7 @@ if (!Object.keys){
 				$that.css('padding-left', space + pdl).data('pdl', space + pdl);
 			}
 
-			$('.ui-select-btn').off('click.label').on('click.label', function(){
+			$('.ui-select-btn, ui-datepicker-btn').off('click.label').on('click.label', function(){
 				isValue($(this),true);
 			});
 	
@@ -1264,7 +1264,7 @@ if (!Object.keys){
 							title: $this.attr('title'),
 							period: $this.data('period'),
 							callback: function(){
-								console.log('callback!!')
+								console.log('callback init')
 							}
 						});
 					}
@@ -1315,6 +1315,7 @@ if (!Object.keys){
 			var el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
 			var yyyymm = _viewYear + '-' + win[global].option.partsAdd0(_viewMonth + 1);
 			var _dpHtml = '';
+			var callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
 			
 			win[global].datepicker.destroy();
 
@@ -1385,6 +1386,8 @@ if (!Object.keys){
 				});
 
 				_dpHtml = null;
+
+				!!callback && callback();
 				
 				//event
 				var nextY = el_dp.querySelector('.ui-next-y');

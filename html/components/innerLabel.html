@@ -269,18 +269,20 @@
 						<label class="form-item-label" for="test_a5_s2">Label Title</label>
 					</div>
 					<div class="form-item">
-						<div class="ui-datepicker" id="test_a5_s" data-period="true" data-dual="true" data-title="테스트">
-							<input type="text" id="test_a5_s2" class="ui-datepicker-inp inp-base day-start" value="" 
-							data-min="2017-12-05" 
-							data-max="2022-12-30" 
-							title="시작일" placeholder="placeholder text" readonly>
-							<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
-							<div class="ui-datepicker-wrap"></div>
-						</div>
-						<div class="form-sc">~</div>
 						<div class="ui-datepicker">
-							<input type="text" id="test_a5_s2_end" class="ui-datepicker-inp inp-base day-end" value="" data-min="2019-12-01" data-max="2020-12-30" title="종료일" readonly>
-							<button type="button" class="ui-datepicker-btn" disabled aria-label="종료일 선택"></button>
+							<button type="button" class="ui-datepicker-btn">
+								<span class="a11y-hidden">년월일 선택</span>
+							</button>
+							<input 
+								type="date" 
+								id="uiDate_1" 
+								class="inp-base" 
+								value="2021-11-05" 
+								min="2020-12-05" 
+								max="2022-05-20" 
+								title="시작일"
+								readonly 
+								required>
 						</div>
 					</div>
 					<div class="from-info">

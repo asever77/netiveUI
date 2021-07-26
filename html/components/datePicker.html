@@ -195,65 +195,181 @@
 &lt;/div&gt;
 </code></pre>
 
-<div class="tbl-base type-option">
-	<table>
-		<caption>옵션 설명</caption>
-		<colgroup>
-			<col class="n1">
-			<col class="n2">
-			<col class="n3">
-			<col class="n4">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">태그</th>
-				<th scope="col">속성</th>
-				<th scope="col">값</th>
-				<th scope="col">Explanation</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row" rowspan="4">type="date"</th>
-				<th scope="row">min</th>
-				<td>YYYY-MM-DD</td>
-				<td>최소선택 년월일</td>
-			</tr>
-			<tr>
-				<th scope="row">max</th>
-				<td>YYYY-MM-DD</td>
-				<td>최대선택 년월일</td>
-			</tr>
-			<tr>
-				<th scope="row">data-period</th>
-				<td>'start' or 'end'</td>
-				<td>기간선택일 경우 시작일과 종료일 설정</td>
-			</tr>
-			<tr>
-				<th scope="row">id (multi 일 경우)</th>
-				<td>유니크한 아이디이름 A + '_end'</td>
-				<td>시작일 아이디에 _end 를 붙인 이름 규칙으로 아이디 사용</td>
-			</tr>
-		</tbody>
-	</table>
-
-</div>
-
-
 <h3 class="h-3">CSS</h3>
+<pre class="box-code"><code class="css">
+/* datepicker */
+.ui-datepicker {
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.datepicker {
+	width: 100%;
+	max-width: 23rem;
+}
+
+.ui-datepicker-btn {
+	border: 0;
+	padding: 0;
+	text-align: right;
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+	background-color: transparent;
+}
+
+.ui-datepicker .inp-base:after {
+	content: 'date_range';
+	font-family: 'Material Icons';
+	font-feature-settings: 'liga';
+	font-size: 22px;
+	word-break: keep-all;
+	line-height: 1.6;
+}
+
+.ui-datepicker-btn:focus~.inp-base,
+.ui-datepicker-btn:hover~.inp-base {
+	border: 1px solid #1f1f1f;
+	background: transparent;
+}
+
+.ui-datepicker-btn:disabled {
+	opacity: 0.5
+}
+
+.ui-datepicker-btn:disabled:focus,
+.ui-datepicker-btn:disabled:hover {
+	border: 0;
+	background: transparent;
+	color: #666;
+}
+
+.datepicker .btn-wrap {
+	margin: 0;
+}
+
+.datepicker-header {
+	position: relative;
+	width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-wrap: wrap;
+}
+
+.datepicker-header>button {
+	width: 3rem;
+	height: 3rem;
+	font-family: 'Material Icons';
+	font-size: 2rem;
+	position: relative;
+}
+
+.datepicker-title {
+	width: 100%;
+	font-size: 1.4rem;
+	text-align: center;
+}
+
+.datepicker-body {
+	margin: 1rem 0;
+}
+
+.datepicker-body th {
+	font-size: 1.2rem;
+}
+
+.datepicker-date td {
+	text-align: center
+}
+
+.datepicker :disabled {
+	opacity: .5;
+}
+
+.datepicker-day {
+	width: 2.4rem;
+	height: 2.4rem;
+	border-radius: 50%;
+	font-size: 1.2rem;
+	margin: 0.3rem 0;
+	line-height: 1;
+}
+
+.datepicker-day.selected-end,
+.datepicker-day.selected-start,
+.datepicker-day.selected {
+	background: var(--primary);
+	color: #fff;
+}
+
+.datepicker-day.today.selected-end,
+.datepicker-day.today.selected-start {
+	background: var(--primary);
+	color: #fff;
+}
+
+.during .datepicker-day {
+	background: #ccc !important;
+}
+
+.datepicker-day.today {
+	background: #fff;
+	border: 1px solid var(--primary);
+	color: var(--primary);
+}
+
+.ui-prev-y::before {
+	content: "chevron_left";
+}
+
+.ui-next-y::before {
+	content: "chevron_right";
+}
+
+.ui-prev-m::before {
+	content: "chevron_left";
+}
+
+.ui-next-m::before {
+	content: "chevron_right";
+}
+
+.datepicker-header .ui-today {
+	width: 2.5rem;
+	height: 2.5rem;
+	line-height: 1;
+	position: absolute;
+	top: 0;
+	right: 0;
+}
+
+.ui-today::before {
+	content: "today";
+}
+</code></pre>
 
 
 <h3 class="h-3">Javascript</h3>
 <pre class="box-code"><code class="javascript">
+//생성
 $plugins.datepicker.init({
 	id: 'input id name',
 	date: 'YYYY-MM-DD',
 	min: 'YYYY-MM-DD',
 	max: 'YYYY-MM-DD',
 	title: 'title name',
-	period: 'start' or 'end'
+	period: 'start' or 'end',
+	callback: function(){
+		console.log('callback init');
+	}
 });
 
+//확인
 $plugins.datepicker.confirm({
 	id: 'input id name',
 	callback: function(){
@@ -261,54 +377,13 @@ $plugins.datepicker.confirm({
 	}
 });
 
+//삭제
 $plugins.datepicker.destoroy({
 	id: 'input id name',
 	callback: function(){
 		console.log('callback destoroy');
 	}
 });
-</code>
-</pre>
+</code></pre>
 
-<div class="tbl-base type-option">
-	<table>
-		<caption>옵션 설명</caption>
-		<colgroup>
-			<col class="n1">
-			<col class="n2">
-			<col class="n3">
-			<col class="n4">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">Options</th>
-				<th scope="col">Type</th>
-				<th scope="col">Default</th>
-				<th scope="col">Explanation</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">period :</th>
-				<td>[string]</td>
-				<td>start</td>
-				<td>'start', 'end'</td>
-			</tr>
-			<tr>
-				<th scope="row">title :</th>
-				<td>[string]</td>
-				<td>input title</td>
-				<td>달력의 제목 설정</td>
-			</tr>
-			
-			<tr>
-				<th scope="row">callback:</th>
-				<td>[function]</td>
-				<td>false</td>
-				<td>날짜를 선택했을 때 콜백값으로 {id: "uiDatePicker1Inp", value: "2020-06-16", name: undefined}</td>
-			</tr>
-
-		</tbody>
-	</table>
-</div>
 </section>
