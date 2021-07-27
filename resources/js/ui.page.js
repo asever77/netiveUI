@@ -187,7 +187,11 @@
     }
 
     $plugins.page.pageFileUpload = function(){
-        $plugins.uiFileUpload(); 
+        //$plugins.uiFileUpload(); 
+        $plugins.form.fileUpload(); 
+        $plugins.form.fileUpload(); 
+        $plugins.form.fileUpload(); 
+        $plugins.form.fileUpload(); 
     }
 
     $plugins.page.pageIssue = function(){

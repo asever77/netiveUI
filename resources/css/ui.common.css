@@ -2015,6 +2015,13 @@ dl[class*="bul-"]>dt {
 		color: orangered;
 	}
 
+	.base-grid {
+		max-width: 1024px;
+		left:50%;
+    	transform: translate(-50%, 0);
+	}
+
+
 	.fx-item[data-flex$="-0"] {
 		flex: 0 0;
 	}
