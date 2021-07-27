@@ -1272,8 +1272,7 @@ if (!Object.keys){
 			});
 		},
 		fileUpload: function(opt){
-			var id = opt.id;
-			var state = 
+			
 			$(doc).off('change.fu').on('change.fu', '.ui-file-inp', function(){
 				upload(this);
 			})
