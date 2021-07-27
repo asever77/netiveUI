@@ -1270,6 +1270,44 @@ if (!Object.keys){
 					}
 				});
 			});
+		},
+		fileUpload: function(opt){
+			var id = opt.id;
+			var state = 
+			$(doc).off('change.fu').on('change.fu', '.ui-file-inp', function(){
+				upload(this);
+			})
+			.off('click.fu').on('click.fu', '.ui-file-del', function(){
+				fileDel(this);
+			});
+				
+			//fn
+			function upload(t){
+				var $this = $(t),
+					files= $this[0].files,
+					id = $this.attr('id'),
+					len = files.length,
+					$list = $('.ui-file-list[aria-labelledby="'+ id +'"]');
+	
+				$list.find('.ui-file-item').remove();
+				$list.find('.ui-file-del').remove();
+				for (var i = 0; i < len; i++) {
+					$list.append('<div class="ui-file-item n'+ i +'">'+ files[i].name +'</div>');
+	
+				}
+				$list.append('<button type="button" class="ui-file-del"><span class="hide">Delete attachment</span></button>');
+			}
+			function fileDel(t){
+				var $this = $(t),
+					$list = $this.closest('.ui-file-list'),
+					id = $list.attr('aria-labelledby'),
+					$id = $('#' + id);
+	
+				win[global].browser.ie ?
+					$id.replaceWith( $id.clone(true) ) : $id.val(''); 
+				$list.find('.ui-file-item').remove();
+				$this.remove();
+			}
 		}
 		
 	}
