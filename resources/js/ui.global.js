@@ -216,8 +216,6 @@ if (!Object.keys){
 		var version;
 		var device;
 
-		console.log(ua);
-
 		for (i = 0; i < deviceInfo_len; i++) {
 			if (uAgent.match(deviceInfo[i]) !== null) {
 				device = deviceInfo[i];
@@ -366,9 +364,9 @@ if (!Object.keys){
 			if (opt === undefined) {
 				return false;
 			}
+
 			var xhr = new XMLHttpRequest();	
 			var opt = $.extend(true, {}, this.options, opt);
-			console.log(opt.selector)
 			var $base = opt.selector;
 			var loading = opt.loading;
 			var effect = opt.effect;
@@ -1207,7 +1205,6 @@ if (!Object.keys){
 					if (v) {
 						$inner.addClass('is-value');
 					} else {
-						console.log($inp,$inp.prop('value'),$inp.val(),!!$inp.prop('value'));
 						if (!!$inp.val()) {
 							$inner.addClass('is-value');
 						} else {
@@ -1224,7 +1221,6 @@ if (!Object.keys){
 					$inp.css('padding-right', pdr + 'px'); 
 					$wrap.find('.ui-clear').remove();
 				} else {
-					console.log($inp.prop('tagName'));
 					if (!$wrap.find('.ui-clear').length) {
 						if ($inp.prop('tagName') === 'INPUT') { 
 							$wrap.append('<button type="button" class="ui-clear btn-clear" style="margin-right:'+pdr+'px"><span class="a11y-hidden">내용지우기</span></button>');
@@ -1248,7 +1244,7 @@ if (!Object.keys){
 			});
 
 			//datepicker event
-			$(doc).off('click.clear').on('click.clear', '.ui-datepicker-btn', function(e){
+			$(doc).off('click.dp').on('click.dp', '.ui-datepicker-btn', function(e){
 				//e.preventDefault();
 				
 				var $this = $(this).closest('.ui-datepicker').find('.inp-base');
@@ -1272,14 +1268,6 @@ if (!Object.keys){
 			});
 		},
 		fileUpload: function(opt){
-			
-			// $(doc).off('change.fu').on('change.fu', '.ui-file-inp', function(){
-			// 	upload(this);
-			// })
-			// .off('click.fu').on('click.fu', '.ui-file-del', function(){
-			// 	fileDel(this);
-			// });
-
 			var el_file = document.querySelectorAll('.ui-file-inp');
 			var fileTypes = [
 				"image/apng",
@@ -1388,37 +1376,6 @@ if (!Object.keys){
 				} else if(number >= 1048576) {
 					return (number/1048576).toFixed(1) + 'MB';
 				}
-			}
-
-			//fn
-			function upload(t){
-				var $this = $(t),
-					files= $this[0].files,
-					id = $this.attr('id'),
-					len = files.length,
-					$list = $('.ui-file-list[aria-labelledby="'+ id +'"]');
-				
-				$list.find('.ui-file-item').remove();
-				$list.find('.ui-file-del').remove();
-
-
-
-				for (var i = 0; i < len; i++) {
-					$list.append('<div class="ui-file-item n'+ i +'">'+ files[i].name +'</div>');
-					
-				}
-				$list.append('<button type="button" class="ui-file-del"><span class="hide">Delete attachment</span></button>');
-			}
-			function fileDel(t){
-				var $this = $(t),
-					$list = $this.closest('.ui-file-list'),
-					id = $list.attr('aria-labelledby'),
-					$id = $('#' + id);
-	
-				win[global].browser.ie ?
-					$id.replaceWith( $id.clone(true) ) : $id.val(''); 
-				$list.find('.ui-file-item').remove();
-				$this.remove();
 			}
 		}
 		
