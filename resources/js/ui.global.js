@@ -1273,13 +1273,123 @@ if (!Object.keys){
 		},
 		fileUpload: function(opt){
 			
-			$(doc).off('change.fu').on('change.fu', '.ui-file-inp', function(){
-				upload(this);
-			})
-			.off('click.fu').on('click.fu', '.ui-file-del', function(){
-				fileDel(this);
-			});
+			// $(doc).off('change.fu').on('change.fu', '.ui-file-inp', function(){
+			// 	upload(this);
+			// })
+			// .off('click.fu').on('click.fu', '.ui-file-del', function(){
+			// 	fileDel(this);
+			// });
+
+			var el_file = document.querySelectorAll('.ui-file-inp');
+			var fileTypes = [
+				"image/apng",
+				"image/bmp",
+				"image/gif",
+				"image/jpeg",
+				"image/pjpeg",
+				"image/png",
+				"image/svg+xml",
+				"image/tiff",
+				"image/webp",
+				"image/x-icon"
+			];
+
+			for (var i = 0; i < el_file.length; i++) {
+				if (!el_file[i].dataset.ready) {
+					el_file[i].addEventListener('change', updateImageDisplay);
+					el_file[i].dataset.ready = true;
+				}
+			}
+			
+			function updateImageDisplay(event) {
+				var el_file = event.currentTarget;
+				var id = el_file.id;
+				var preview = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
+
+				while(preview.firstChild) {
+					preview.removeChild(preview.firstChild);
+				}
+
+				var curFiles = el_file.files;
+
+				if(curFiles.length === 0) {
+					var para = document.createElement('p');
+					para.textContent = 'No files currently selected for upload';
+					preview.appendChild(para);
+				} else {
+					var list = document.createElement('ul');
+					var title = document.createElement('h4');
+					var delbutton = document.createElement('button');
+
+					delbutton.type = 'button';
+					delbutton.classList.add('ui-file-del');
+					delbutton.dataset.id = id;
+
+					title.textContent = 'File upload list';
+					title.classList.add('a11y-hidden');
+					preview.classList.add('on');
+					preview.appendChild(title);
+					preview.appendChild(list);
+					preview.appendChild(delbutton);
+
+					var delbuttonSpan = document.createElement('span'); 
+					delbuttonSpan.textContent = 'Delete attachment';
+					delbuttonSpan.classList.add('a11y-hidden');
+					delbutton.appendChild(delbuttonSpan);
 				
+					for(var file of curFiles) {
+						var listItem = document.createElement('li');
+						var para = document.createElement('p');
+
+						if(validFileType(file)) {
+							para.textContent = `${file.name}, ${returnFileSize(file.size)}.`;
+							
+							var image = document.createElement('img');
+							image.src = URL.createObjectURL(file);
+							
+							listItem.appendChild(image);
+							listItem.appendChild(para);
+							
+						} else {
+							para.textContent = `${file.name}`;
+							listItem.appendChild(para);
+						}
+				
+						list.appendChild(listItem);
+					}
+
+					delbutton.addEventListener('click', fileDelete);
+
+					
+				}
+			}
+
+			function fileDelete(event){
+				var id = event.currentTarget.dataset.id;
+				var list = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
+				var inp = document.querySelector('#'+ id);
+
+				list.classList.remove('on');
+				while(list.firstChild) {
+					list.removeChild(list.firstChild);
+				}
+				inp.value = ''; 
+			}
+
+			function validFileType(file) {
+				return fileTypes.includes(file.type);
+			}
+
+			function returnFileSize(number) {
+				if(number < 1024) {
+					return number + 'bytes';
+				} else if(number >= 1024 && number < 1048576) {
+					return (number/1024).toFixed(1) + 'KB';
+				} else if(number >= 1048576) {
+					return (number/1048576).toFixed(1) + 'MB';
+				}
+			}
+
 			//fn
 			function upload(t){
 				var $this = $(t),
@@ -1287,12 +1397,15 @@ if (!Object.keys){
 					id = $this.attr('id'),
 					len = files.length,
 					$list = $('.ui-file-list[aria-labelledby="'+ id +'"]');
-	
+				
 				$list.find('.ui-file-item').remove();
 				$list.find('.ui-file-del').remove();
+
+
+
 				for (var i = 0; i < len; i++) {
 					$list.append('<div class="ui-file-item n'+ i +'">'+ files[i].name +'</div>');
-	
+					
 				}
 				$list.append('<button type="button" class="ui-file-del"><span class="hide">Delete attachment</span></button>');
 			}

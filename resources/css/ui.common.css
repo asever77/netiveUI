@@ -1,7 +1,7 @@
 @charset "utf-8";
-
+:focus *,
 :focus {
-	outline: 1px solid black;
+	text-decoration: underline;
 }
 
 /* default */
@@ -901,6 +901,82 @@ textarea.inp-base {
 	opacity: 1;
 	transition: opacity .2s ease-in-out;
 }
+
+/* ui file */
+.ui-file {
+    position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.ui-file-inp {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+    direction: ltr;
+    cursor: pointer;
+    font-size: xx-small;
+}
+.ui-file input:active + .btn-base,
+.ui-file input:hover + .btn-base,
+.ui-file input:focus + .btn-base {
+	border: 1px solid var(--text-200);
+	background: var(--bg-b);
+}
+
+.ui-file-list.on{
+	display: block;
+}
+.ui-file-list {
+    position: relative;
+    padding: 1rem 3rem 1rem 1rem;
+    border: 1px solid var(--box-line);
+    min-height: 4rem;
+	margin-top:0.8rem;
+	display: none;
+}
+
+.ui-file-list li{
+	padding:.5rem 0;
+	display: flex;
+	justify-content: left;
+	font-size:1.2rem;
+	align-items: center;
+}
+.ui-file-list li + li {
+	border-top:1px solid var(--line);
+}
+
+.ui-file-list img{
+    height:3rem;
+	margin-right:.5rem;
+}
+
+.ui-file-list .ui-file-del {
+    position: absolute;
+    right: .5rem;
+    top: 1rem;
+    line-height:1;
+}
+
+.ui-file-del:after {
+    content: "clear";
+    display: block;
+    width: 2rem;
+    height: 2rem;
+    font-family: 'Material Icons';
+    font-feature-settings: 'liga';
+    font-weight: 600;
+    font-size: 2rem;
+    color: var(--primary);
+}
+
+
 
 
 

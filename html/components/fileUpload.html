@@ -3,57 +3,154 @@
 <div class="tit-wrap">
 	<h1 class="h-1">File Upload</h1>
 </div>
-<p class="txts-m">*멀티 파일업로드 작업 필요</p>
 
 <section class="sec-wrap">
 	<h2 class="h-2">Examples</h2>
-	<h3 class="h-3">base type</h3>
 	<div class="box-guide">
 		<form>
+
+			<input type="file" >
+
+			<div class="form-wrap">
+				<div class="fx-wrap" data-align="justify">
+					<div class="fx-item ui-form" data-flex="1-1-1">
+						<div class="form-label">
+							<label class="form-item-label" for="test_a0_1">Label Text</label>
+						</div>
+	
+						<div class="form-item">
+							<div class="ui-file">
+								<input type="file" class="ui-file-inp" id="test_a0_1" name="avatar" multiple>
+								<div class="btn-base">file upload</div>
+							</div>
+							
+						</div>
+						<div class="ui-file-list" data-id="test_a0_1" aria-labelledby="test_a0_1"></div>
+					</div>
+				</div>
+				<div class="fx-wrap" data-align="justify">
+					<div class="fx-item ui-form" data-flex="1-1-1">
+						<div class="form-label">
+							<label class="form-item-label" for="test_a0_2">Label Text</label>
+						</div>
+	
+						<div class="form-item">
+							<div class="ui-file">
+								<input type="file" class="ui-file-inp" id="test_a0_2" name="avatar" multiple>
+								<div class="btn-base">file upload</div>
+							</div>
+							
+						</div>
+						<div class="ui-file-list" data-id="test_a0_2" aria-labelledby="test_a0_2"></div>
+					</div>
+				</div>
+			</div>
+<!-- 
 			<input type="file" >
 			<input type="file"  multiple>
-			
-			<div class="ui-file btn-base" id="addfileWrap">
-				<input type="file" class="ui-file-inp" id="addfileInp" multiple>
-				<span>file upload</span>
-			</div>
-			<div class="ui-file-list" aria-labelledby="addfileInp"></div>
 
 			<div class="ui-file btn-base" id="addfileWrap2">
 				<input type="file" class="ui-file-inp" id="addfileInp2" multiple>
 				<span>file upload</span>
 			</div>
-			<div class="ui-file-list" aria-labelledby="addfileInp2"></div>
+			<div class="ui-file-list" aria-labelledby="addfileInp2"></div> -->
 		</form>
 	</div>
 </section>
 
-<h2 class="h-2">HTML Structure</h2>
-<h3 class="h-3">basic type</h3>
-<div class="box-code">
-<pre>
-<code>
-&lt;div class="ui-file btn-base" id="addfileWrap"&gt;
-	&lt;input type="file" class="ui-file-inp" id="addfileInp" multiple&gt;
-	&lt;span&gt;file upload&lt;/span&gt;
+<section class="sec-wrap">
+	<h2 class="h-2">Source Code</h2>
+	<h3 class="h-3">HTML</h3>
+
+<pre class="box-code"><code class="html">
+&lt;div class="ui-file"&gt;
+	&lt;input type="file" class="ui-file-inp" id="test_a0_1" name="avatar" multiple&gt;
+	&lt;div class="btn-base"&gt;file upload&lt;/div&gt;
 &lt;/div&gt;
+&lt;div class="ui-file-list" data-id="test_a0_1" aria-labelledby="test_a0_1"&gt;&lt;/div&gt;
+</code></pre>
 
-&lt;div class="ui-file-list" aria-labelledby="addfileInp"&gt;
 
-	&lt;div class="ui-file-item n0"&gt;bg_comment.png&lt;/div&gt;
-	&lt;button type="button" class="ui-file-del"&gt;&lt;span class="hide"&gt;Delete attachment&lt;/span&gt;&lt;/button&gt;
-	...
-&lt;/div&gt;
-</code>
-</pre>
-</div>
-				<h2 class="h-2">Javascript</h2>
-				<h3 class="h-3">$plugins.uiFileUpload</h3>
-<div class="box-code">
-<pre>
-<code>
-$plugins<span class="na">.uiFileUpload</span>();
-</code>
-</pre>
-</div>
+<h3 class="h-3">CSS</h3>
+<pre class="box-code"><code class="javascript">
+/* ui file */
+.ui-file {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
 
+.ui-file-inp {
+	position: absolute;
+	top: 0;
+	right: 0;
+	margin: 0;
+	opacity: 0;
+	width: 100%;
+	height: 100%;
+	direction: ltr;
+	cursor: pointer;
+	font-size: xx-small;
+}
+.ui-file input:active + .btn-base,
+.ui-file input:hover + .btn-base,
+.ui-file input:focus + .btn-base {
+	border: 1px solid var(--text-200);
+	background: var(--bg-b);
+}
+
+.ui-file-list.on{
+	display: block;
+}
+.ui-file-list {
+	position: relative;
+	padding: 1rem 3rem 1rem 1rem;
+	border: 1px solid var(--box-line);
+	min-height: 4rem;
+	margin-top:0.8rem;
+	display: none;
+}
+
+.ui-file-list li{
+	padding:.5rem 0;
+	display: flex;
+	justify-content: left;
+	font-size:1.2rem;
+	align-items: center;
+}
+.ui-file-list li + li {
+	border-top:1px solid var(--line);
+}
+
+.ui-file-list img{
+	height:3rem;
+	margin-right:.5rem;
+}
+
+.ui-file-list .ui-file-del {
+	position: absolute;
+	right: .5rem;
+	top: 1rem;
+	line-height:1;
+}
+
+.ui-file-del:after {
+	content: "clear";
+	display: block;
+	width: 2rem;
+	height: 2rem;
+	font-family: 'Material Icons';
+	font-feature-settings: 'liga';
+	font-weight: 600;
+	font-size: 2rem;
+	color: var(--primary);
+}
+</code></pre>
+
+	<h3 class="h-3">Javascript</h3>
+<pre class="box-code"><code class="javascript">
+$plugins.form.fileUpload();
+</code></pre>
+
+</section>
