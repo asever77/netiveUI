@@ -1335,151 +1335,10 @@ a.ui-acco-btn:after {
 }
 
 
-/* ui-fixtd */
-.ui-fixtd-btn {
-    vertical-align: middle;
-    display: inline-block;
-}
-
-.ui-fixtd-btn.prev:after {
-    content: "keyboard_arrow_left";
-    font-family: 'Material Icons';
-    font-feature-settings: 'liga';
-    font-size: 20px;
-    margin-right: 5px
-}
-
-.ui-fixtd-btn.next:after {
-    content: "keyboard_arrow_right";
-    font-family: 'Material Icons';
-    font-feature-settings: 'liga';
-    font-size: 20px;
-    margin-left: 5px
-}
-
-[class*="ui-fixtd-n"] {
-    display: none
-}
-
-[current="1"] col.ui-fixtd-n1 {
-    display: block
-}
-
-[current="1"] .ui-fixtd-n1 {
-    display: table-cell
-}
-
-[current="2"] col.ui-fixtd-n2 {
-    display: block
-}
-
-[current="2"] .ui-fixtd-n2 {
-    display: table-cell
-}
-
-[current="3"] col.ui-fixtd-n3 {
-    display: block
-}
-
-[current="3"] .ui-fixtd-n3 {
-    display: table-cell
-}
-
-[current="4"] col.ui-fixtd-n4 {
-    display: block
-}
-
-[current="4"] .ui-fixtd-n4 {
-    display: table-cell
-}
-
-[current="5"] col.ui-fixtd-n5 {
-    display: block
-}
-
-[current="5"] .ui-fixtd-n5 {
-    display: table-cell
-}
-
-[current="6"] col.ui-fixtd-n6 {
-    display: block
-}
-
-[current="6"] .ui-fixtd-n6 {
-    display: table-cell
-}
-
-[current="7"] col.ui-fixtd-n7 {
-    display: block
-}
-
-[current="7"] .ui-fixtd-n7 {
-    display: table-cell
-}
-
-[current="8"] col.ui-fixtd-n8 {
-    display: block
-}
-
-[current="8"] .ui-fixtd-n8 {
-    display: table-cell
-}
-
-[current="9"] col.ui-fixtd-n9 {
-    display: block
-}
-
-[current="9"] .ui-fixtd-n9 {
-    display: table-cell
-}
-
-[current="10"] col.ui-fixtd-n10 {
-    display: block
-}
-
-[current="10"] .ui-fixtd-n10 {
-    display: table-cell
-}
-
-[current="11"] col.ui-fixtd-n11 {
-    display: block
-}
-
-[current="11"] .ui-fixtd-n11 {
-    display: table-cell
-}
 
 
-/* ui-tblscroll */
-.ui-tablescroll {
-    position: relative;
-}
 
-.ui-tablescroll-wrap {
-    overflow-y: auto;
-    height: 200px;
-    width: 100%;
-}
 
-.ui-tablescroll-wrap.tbl-base {
-    border: 0;
-}
-
-.tbl-base.not-space .ui-tablescroll-clone {
-    width: 100%;
-}
-
-.tbl-base .ui-tablescroll-clone {
-    position: absolute;
-    width: calc(100% - 17px);
-    top: 0;
-    left: 0;
-    z-index: 1;
-}
-
-.ui-m .tbl-base .ui-tablescroll-clone {
-    width: 100%;
-}
 
 
 /* ui-printui-print*/
@@ -2862,7 +2721,7 @@ td button.today {
     background: #303030;
     border-radius: 5px;
     z-index: 2;
-    transition: all 0.2s;
+    /* transition: all 0.2s; */
 }
 
 [class^="ui-slider-btn"] {
@@ -2877,7 +2736,7 @@ td button.today {
     overflow: hidden;
     color: transparent;
     font-size: xx-small;
-    transition: left 0.2s;
+    /* transition: left 0.2s; */
     margin-left: -10px;
 }
 

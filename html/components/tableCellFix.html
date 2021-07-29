@@ -1,259 +1,238 @@
 <input type="hidden" id="uiJsName" value="pageTableCellFix">
 
-<div class="tit-catagory">
-	Components Table
-</div>
-
 <div class="tit-wrap">
 	<h1 class="h-1">Table Cell Fix</h1>
 </div>
 
-<h2 class="h-2">Examples</h2>
-<p>특정 col 고정하여 col수가 많은 data 테이블일 경우 사용</p>
-<p>display:none 으로 숨겨진 cell에 관하여 접근성부분은 고려해봐야 할듯...</p>
-<div class="tbl-base txta-c">
-	<table>
-		<caption>
-			<strong>기본 테이블</strong>
-			<p class="ui-caption"></p>
-		</caption>
-		<colgroup>
-		<col class="col-1">
-		<col class="col-2">
-		<col class="col-3">
-		<col class="col-4">
-		<col class="col-4">
-		<col class="col-4">
-		<col class="col-4">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">고정영역 1</th>
-				<th scope="col">고정영역 2</th>
-				<th scope="col">고정영역 3</th>
-				<th scope="col">가변영역 1</th>
-				<th scope="col">가변영역 2</th>
-				<th scope="col">가변영역 3</th>
-				<th scope="col">가변영역 4</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">고정내용 1</th>
-				<th scope="row">고정내용 2</th>
-				<th scope="row">고정내용 3</th>
-				<td>2018.03.20</td>
-				<td>2018.03.21</td>
-				<td>2018.03.22</td>
-				<td>2018.03.23</td>
-			</tr>
-			<tr>
-				<th scope="row">고정내용 1</th>
-				<th scope="row">고정내용 2</th>
-				<th scope="row">고정내용 3</th>
-				<td>2018.03.20</td>
-				<td>2018.03.21</td>
-				<td>2018.03.22</td>
-				<td>2018.03.23</td>
-			</tr>
-			<tr>
-				<th scope="row">고정내용 1</th>
-				<th scope="row">고정내용 2</th>
-				<th scope="row">고정내용 3</th>
-				<td>2018.03.20</td>
-				<td>2018.03.21</td>
-				<td>2018.03.22</td>
-				<td>2018.03.23</td>
-			</tr>
-			<tr>
-				<th scope="row">고정내용 1</th>
-				<th scope="row">고정내용 2</th>
-				<th scope="row">고정내용 3</th>
-				<td>2018.03.20</td>
-				<td>2018.03.21</td>
-				<td>2018.03.22</td>
-				<td>2018.03.23</td>
-			</tr>
-			<tr>
-				<th scope="row">고정내용 1</th>
-				<th scope="row">고정내용 2</th>
-				<th scope="row">고정내용 3</th>
-				<td>2018.03.20</td>
-				<td>2018.03.21</td>
-				<td>2018.03.22</td>
-				<td>2018.03.23</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-<div class="ui-fixtd tbl-base txta-c mgt-s" fix="3">
-	<table>
-		<caption>
-			<strong>기본 테이블</strong>
-			<p class="ui-caption"></p>
-		</caption>
-		<colgroup>
-		<col class="col-1">
-		<col class="col-2">
-		<col class="col-3">
-		<col class="col-4">
-		<col class="col-4">
-		<col class="col-4">
-		<col class="col-4">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">고정영역 1</th>
-				<th scope="col">고정영역 2</th>
-				<th scope="col">고정영역 3</th>
-				<th scope="col">가변영역 1</th>
-				<th scope="col">가변영역 2</th>
-				<th scope="col">가변영역 3</th>
-				<th scope="col">가변영역 4</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">고정내용 1</th>
-				<th scope="row">고정내용 2</th>
-				<th scope="row">고정내용 3</th>
-				<td>2018.03.20</td>
-				<td>2018.03.21</td>
-				<td>2018.03.22</td>
-				<td>2018.03.23</td>
-			</tr>
-			<tr>
-				<th scope="row">고정내용 1</th>
-				<th scope="row">고정내용 2</th>
-				<th scope="row">고정내용 3</th>
-				<td>2018.03.20</td>
-				<td>2018.03.21</td>
-				<td>2018.03.22</td>
-				<td>2018.03.23</td>
-			</tr>
-			<tr>
-				<th scope="row">고정내용 1</th>
-				<th scope="row">고정내용 2</th>
-				<th scope="row">고정내용 3</th>
-				<td>2018.03.20</td>
-				<td>2018.03.21</td>
-				<td>2018.03.22</td>
-				<td>2018.03.23</td>
-			</tr>
-			<tr>
-				<th scope="row">고정내용 1</th>
-				<th scope="row">고정내용 2</th>
-				<th scope="row">고정내용 3</th>
-				<td>2018.03.20</td>
-				<td>2018.03.21</td>
-				<td>2018.03.22</td>
-				<td>2018.03.23</td>
-			</tr>
-			<tr>
-				<th scope="row">고정내용 1</th>
-				<th scope="row">고정내용 2</th>
-				<th scope="row">고정내용 3</th>
-				<td>2018.03.20</td>
-				<td>2018.03.21</td>
-				<td>2018.03.22</td>
-				<td>2018.03.23</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+<section class="sec-wrap">
+	<h2 class="h-2">Examples</h2>
+	<p>특정 col 고정하여 col수가 많은 data 테이블일 경우 사용</p>
+	<div class="box-guide">
+		<div class="tbl-base">
+			<table>
+				<caption>
+					<strong>기본 테이블</strong>
+					<span class="ui-caption"></span>
+				</caption>
+				<colgroup>
+				<col class="col-1">
+				<col class="col-2">
+				<col class="col-3">
+				<col class="col-4">
+				<col class="col-4">
+				<col class="col-4">
+				<col class="col-4">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">고정영역 1</th>
+						<th scope="col">고정영역 2</th>
+						<th scope="col">고정영역 3</th>
+						<th scope="col">가변영역 1</th>
+						<th scope="col">가변영역 2</th>
+						<th scope="col">가변영역 3</th>
+						<th scope="col">가변영역 4</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">고정내용 1</th>
+						<th scope="row">고정내용 2</th>
+						<th scope="row">고정내용 3</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+					<tr>
+						<th scope="row">고정내용 1</th>
+						<th scope="row">고정내용 2</th>
+						<th scope="row">고정내용 3</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+					<tr>
+						<th scope="row">고정내용 1</th>
+						<th scope="row">고정내용 2</th>
+						<th scope="row">고정내용 3</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+					<tr>
+						<th scope="row">고정내용 1</th>
+						<th scope="row">고정내용 2</th>
+						<th scope="row">고정내용 3</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+					<tr>
+						<th scope="row">고정내용 1</th>
+						<th scope="row">고정내용 2</th>
+						<th scope="row">고정내용 3</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div class="ui-fixtd tbl-base mgt-s" data-fix="3">
+			<table>
+				<caption>
+					<strong>기본 테이블</strong>
+					<span class="ui-caption"></span>
+				</caption>
+				<colgroup>
+				<col class="col-1">
+				<col class="col-2">
+				<col class="col-3">
+				<col class="col-4">
+				<col class="col-4">
+				<col class="col-4">
+				<col class="col-4">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">고정영역 1</th>
+						<th scope="col">고정영역 2</th>
+						<th scope="col">고정영역 3</th>
+						<th scope="col">가변영역 1</th>
+						<th scope="col">가변영역 2</th>
+						<th scope="col">가변영역 3</th>
+						<th scope="col">가변영역 4</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">고정내용 1</th>
+						<th scope="row">고정내용 2</th>
+						<th scope="row">고정내용 3</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+					<tr>
+						<th scope="row">고정내용 1</th>
+						<th scope="row">고정내용 2</th>
+						<th scope="row">고정내용 3</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+					<tr>
+						<th scope="row">고정내용 1</th>
+						<th scope="row">고정내용 2</th>
+						<th scope="row">고정내용 3</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+					<tr>
+						<th scope="row">고정내용 1</th>
+						<th scope="row">고정내용 2</th>
+						<th scope="row">고정내용 3</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+					<tr>
+						<th scope="row">고정내용 1</th>
+						<th scope="row">고정내용 2</th>
+						<th scope="row">고정내용 3</th>
+						<td>1</td>
+						<td>2</td>
+						<td>3</td>
+						<td>4</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
 
-
-<h2 class="h-2">HTML Structure</h2>	
-<div class="box-code">
-<pre>
-<code>
+<section class="sec-wrap">
+	<h2 class="h-2">Source Code</h2>
+	<h3 class="h-3">HTML</h3>
+<pre class="box-code"><code class="html">
 //fix 속성값으로 고정 값 설정
-&lt;div class="ui-fixtd tbl-base txta-c" <span class="na">fix=</span><span class="s">"3"</span>&gt;
+&lt;div class="ui-fixtd tbl-base" data-fix="3"&gt;
 	&lt;table&gt;
-		&lt;caption&gt;
-			&lt;strong&gt;기본 테이블&lt;/strong&gt;
-			&lt;p class="ui-caption"&gt;&lt;/p&gt;
-		&lt;/caption&gt;
-		&lt;colgroup&gt;
-			&lt;col class="col-1"&gt;
-			&lt;col class="col-2"&gt;
-			&lt;col class="col-3"&gt;
-			&lt;col class="col-4"&gt;
-			&lt;col class="col-4"&gt;
-			&lt;col class="col-4"&gt;
-			&lt;col class="col-4"&gt;
-		&lt;/colgroup&gt;
-		&lt;thead&gt;
-			&lt;tr&gt;
-				&lt;th scope="col"&gt;고정영역 1&lt;/th&gt;
-				&lt;th scope="col"&gt;고정영역 2&lt;/th&gt;
-				&lt;th scope="col"&gt;고정영역 3&lt;/th&gt;
-				&lt;th scope="col"&gt;가변영역 1&lt;/th&gt;
-				&lt;th scope="col"&gt;가변영역 2&lt;/th&gt;
-				&lt;th scope="col"&gt;가변영역 3&lt;/th&gt;
-				&lt;th scope="col"&gt;가변영역 4&lt;/th&gt;
-			&lt;/tr&gt;
-		&lt;/thead&gt;
-		&lt;tbody&gt;
-			&lt;tr&gt;
-				&lt;th scope="row"&gt;고정내용 1&lt;/th&gt;
-				&lt;th scope="row"&gt;고정내용 2&lt;/th&gt;
-				&lt;th scope="row"&gt;고정내용 3&lt;/th&gt;
-				&lt;td&gt;2018.03.20&lt;/td&gt;
-				&lt;td&gt;2018.03.21&lt;/td&gt;
-				&lt;td&gt;2018.03.22&lt;/td&gt;
-				&lt;td&gt;2018.03.23&lt;/td&gt;
-			&lt;/tr&gt;
-			...
-		&lt;/tbody&gt;
+		...
 	&lt;/table&gt;
 &lt;/div&gt;
-</code>
-</pre>
-</div>
+</code></pre>
 
 
-<h2 class="h-2">CSS Style</h2>
-<h3 class="h-3">base style</h3>
-<div class="box-code">
-<pre>
-<code>
-.ui-fixtd-btn {vertical-align:middle; display:inline-block; }
-.ui-fixtd-btn.prev:after {content:"keyboard_arrow_left";font-family:'Material Icons'; font-size:20px; margin-right:5px}
-.ui-fixtd-btn.next:after {content:"keyboard_arrow_right";font-family:'Material Icons'; font-size:20px; margin-left:5px}
-[class*="ui-fixtd-n"] {display:none}
-[current="1"] col.ui-fixtd-n1 {display:block}
-[current="1"] .ui-fixtd-n1 {display:table-cell}
-[current="2"] col.ui-fixtd-n2 {display:block}
-[current="2"] .ui-fixtd-n2 {display:table-cell}
-[current="3"] col.ui-fixtd-n3 {display:block}
-[current="3"] .ui-fixtd-n3 {display:table-cell}
-[current="4"] col.ui-fixtd-n4 {display:block}
-[current="4"] .ui-fixtd-n4 {display:table-cell}
-[current="5"] col.ui-fixtd-n5 {display:block}
-[current="5"] .ui-fixtd-n5 {display:table-cell}
-[current="6"] col.ui-fixtd-n6 {display:block}
-[current="6"] .ui-fixtd-n6 {display:table-cell}
-[current="7"] col.ui-fixtd-n7 {display:block}
-[current="7"] .ui-fixtd-n7 {display:table-cell}
-[current="8"] col.ui-fixtd-n8 {display:block}
-[current="8"] .ui-fixtd-n8 {display:table-cell}
-[current="9"] col.ui-fixtd-n9 {display:block}
-[current="9"] .ui-fixtd-n9 {display:table-cell}
-[current="10"] col.ui-fixtd-n10 {display:block}
-[current="10"] .ui-fixtd-n10 {display:table-cell}
-[current="11"] col.ui-fixtd-n11 {display:block}
-[current="11"] .ui-fixtd-n11 {display:table-cell}
-</code>
-</pre>
-</div>
+<h3 class="h-3">CSS</h3>
+<pre class="box-code"><code class="css">
+.ui-fixtd-btn {
+	vertical-align: middle;
+	display: inline-block;
+}
 
-<h2 class="h-2">Javascript</h2>
-<h3 class="h-3">$plugins.uiTableFixTd</h3>
-<div class="box-code">
-<pre>
-<code>
-$plugins<span class="na">.uiTableFixTd</span>();
+.ui-fixtd-btn.prev:after {
+	content: "keyboard_arrow_left";
+	font-family: 'Material Icons';
+	font-feature-settings: 'liga';
+	font-size: 20px;
+	margin-right: 5px
+}
+
+.ui-fixtd-btn.next:after {
+	content: "keyboard_arrow_right";
+	font-family: 'Material Icons';
+	font-feature-settings: 'liga';
+	font-size: 20px;
+	margin-left: 5px
+}
+
+[class*="ui-fixtd-n"] {
+	display: none
+}
+
+[data-current="1"] col.ui-fixtd-n1,
+[data-current="2"] col.ui-fixtd-n2,
+[data-current="3"] col.ui-fixtd-n3,
+[data-current="4"] col.ui-fixtd-n4,
+[data-current="5"] col.ui-fixtd-n5,
+[data-current="6"] col.ui-fixtd-n6,
+[data-current="7"] col.ui-fixtd-n7,
+[data-current="8"] col.ui-fixtd-n8,
+[data-current="9"] col.ui-fixtd-n9,
+[data-current="10"] col.ui-fixtd-n10,
+[data-current="11"] col.ui-fixtd-n11 {
+	display: block
+}
+
+[data-current="1"] .ui-fixtd-n1,
+[data-current="2"] .ui-fixtd-n2,
+[data-current="3"] .ui-fixtd-n3,
+[data-current="4"] .ui-fixtd-n4,
+[data-current="5"] .ui-fixtd-n5,
+[data-current="6"] .ui-fixtd-n6,
+[data-current="7"] .ui-fixtd-n7,
+[data-current="8"] .ui-fixtd-n8,
+[data-current="9"] .ui-fixtd-n9,
+[data-current="10"] .ui-fixtd-n10,
+[data-current="11"] .ui-fixtd-n11 {
+	display: table-cell
+}
 </code>
 </pre>
-</div>	
+
+	<h3 class="h-3">Javascript</h3>
+<pre class="box-code"><code class="javascript">
+$plugins.table.fixTd();
+</code></pre>
+</section>	

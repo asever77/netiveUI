@@ -50,17 +50,24 @@
     };
 
     $plugins.page.pageTableCellFix = function(){
-        $plugins.uiTableFixTd();
+        $plugins.table.fixTd();
     };
 
     $plugins.page.pageTableScroll = function(){
-        $plugins.uiTableScroll({
+        $plugins.table.scroll({
             callback:function(){
                 $plugins.scrollBar.init({
                     id: 'tblScrollTest1'
                 });
             }
         });
+        // $plugins.uiTableScroll({
+        //     callback:function(){
+        //         $plugins.scrollBar.init({
+        //             id: 'tblScrollTest1'
+        //         });
+        //     }
+        // });
     };
 
     $plugins.page.pageBrickList = function(){
@@ -677,11 +684,11 @@
 
     $plugins.page.pageAccordion = function(){
         console.log('page.js-acco');
-        $plugins.uiAccordion({ id:'exeAcco1', current:[0,2], callback:function(v){console.log(v)} });
-        $plugins.uiAccordion({ id:'exeAcco2', current:[0,2], autoclose:true });
-        $plugins.uiAccordion({ id:'exeAcco3', current:null, autoclose:false });
-        $plugins.uiAccordion({ id:'exeAcco4', current:null, autoclose:false });
-        $plugins.uiAccordion({ id:'exeAcco5', current:'all', autoclose:false });
+        $plugins.accordion.init({ id:'exeAcco1', current:[0,2], callback:function(v){console.log(v)} });
+        $plugins.accordion.init({ id:'exeAcco2', current:[0,2], autoclose:true });
+        $plugins.accordion.init({ id:'exeAcco3', current:null, autoclose:false });
+        $plugins.accordion.init({ id:'exeAcco4', current:null, autoclose:false });
+        $plugins.accordion.init({ id:'exeAcco5', current:'all', autoclose:false });
 
         var add_html = '';
         add_html += '<div class="ui-acco-wrap">';
@@ -698,7 +705,7 @@
         $('#uiAccoAdd').on('click.add', function(){
             $('#exeAcco1').append(add_html);
 
-            $plugins.uiAccordion({ 
+            $plugins.accordion.init({ 
                 id: 'exeAcco1', 
                 add: true,
                 callback: function(v){console.log(v)} 

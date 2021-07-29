@@ -1,347 +1,230 @@
 <input type="hidden" id="uiJsName" value="pageTableScroll">
 
-<div class="tit-catagory">
-	Components Table
-</div>
-
 <div class="tit-wrap">
 	<h1 class="h-1">Table Scroll</h1>
 </div>
 
-<h2 class="h-2">Examples</h2>
-<p>thead 고정, tbody 영역 스크롤 정보성 테이블</p>
-<div class="tbl-base txta-c tbl-test1">
-	<div class="tbl-base">
-		<table>
-			<caption>
-				<strong>기본 테이블</strong>
-				<p class="ui-caption"></p>
-			</caption>
-			<colgroup>
-			<col class="n1">
-			<col class="n2">
-			<col class="n3">
-			<col class="n4">
-			<col class="n5">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">번호</th>
-					<th scope="col">제목</th>
-					<th scope="col">이름</th>
-					<th scope="col">아이디</th>
-					<th scope="col">날짜</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td class="txta-l">제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>4</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>5</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>6</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>7</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	
-</div>
+<section class="sec-wrap">
+	<h2 class="h-2">Examples</h2>
+	<p>thead 고정, tbody 영역 스크롤 정보성 테이블</p>
 
-<div class="ui-tablescroll tbl-base txta-c tbl-test1 mgt-s">
-	<div class="ui-tablescroll-wrap tbl-base ui-scrollbar" scroll-id="tblScrollTest1">
-		<table>
-			<caption>
-				<strong>기본 테이블</strong>
-				<p class="ui-caption"></p>
-			</caption>
-			<colgroup>
-			<col class="n1">
-			<col class="n2">
-			<col class="n3">
-			<col class="n4">
-			<col class="n5">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">번호</th>
-					<th scope="col">제목</th>
-					<th scope="col">이름</th>
-					<th scope="col">아이디</th>
-					<th scope="col">날짜</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td class="txta-l">제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>4</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>5</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>6</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>7</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-	
-</div>
+	<div class="box-guide">
+		<div class="ui-tablescroll tbl-base">
+			<div class="ui-tablescroll-wrap ui-scrollbar" scroll-id="tblScrollTest1">
+				<table>
+					<caption>
+						<strong>기본 테이블</strong>
+						<span class="ui-caption"></span>
+					</caption>
+					<colgroup>
+					<col class="n1">
+					<col class="n2">
+					<col class="n3">
+					<col class="n4">
+					<col class="n5">
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">번호</th>
+							<th scope="col">제목</th>
+							<th scope="col">이름</th>
+							<th scope="col">아이디</th>
+							<th scope="col">날짜</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td class="txta-l">제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 
-<div class="ui-tablescroll tbl-base txta-c tbl-test1 mgt-s">
-	<div class="ui-tablescroll-wrap tbl-base">
-		<table>
-			<caption>
-				<strong>기본 테이블</strong>
-				<p class="ui-caption"></p>
-			</caption>
-			<colgroup>
-			<col class="n1">
-			<col class="n2">
-			<col class="n3">
-			<col class="n4">
-			<col class="n5">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">번호</th>
-					<th scope="col">제목</th>
-					<th scope="col">이름</th>
-					<th scope="col">아이디</th>
-					<th scope="col">날짜</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td>1</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td class="txta-l">제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>3</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>4</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>5</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>6</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>7</td>
-					<td class="txta-l">제목이 들어가는 공간입니다.</td>
-					<td>이순신</td>
-					<td>lss</td>
-					<td>2018.03.20</td>
-				</tr>
-			</tbody>
-		</table>
+		<div class="ui-tablescroll tbl-base mgt-s">
+			<div class="ui-tablescroll-wrap">
+				<table>
+					<caption>
+						<strong>기본 테이블</strong>
+						<span class="ui-caption"></span>
+					</caption>
+					<colgroup>
+					<col class="n1">
+					<col class="n2">
+					<col class="n3">
+					<col class="n4">
+					<col class="n5">
+					</colgroup>
+					<thead>
+						<tr>
+							<th scope="col">번호</th>
+							<th scope="col">제목</th>
+							<th scope="col">이름</th>
+							<th scope="col">아이디</th>
+							<th scope="col">날짜</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>1</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>2</td>
+							<td class="txta-l">제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>3</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>4</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>5</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>6</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+						<tr>
+							<td>7</td>
+							<td class="txta-l">제목이 들어가는 공간입니다.</td>
+							<td>이순신</td>
+							<td>lss</td>
+							<td>2018.03.20</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			
+		</div>
 	</div>
-	
-</div>
+</section>
 
-<h2 class="h-2">HTML Structure</h2>	
-<div class="box-code">
-<pre>
-<code>
+<section class="sec-wrap">
+	<h2 class="h-2">Source Code</h2>
+	<h3 class="h-3">HTML</h3>
+<pre class="box-code"><code class="html">
 &lt;div class="ui-tablescroll tbl-base"&gt;
-	&lt;div class="ui-tablescroll-wrap tbl-base"&gt;
+	&lt;div class="ui-tablescroll-wrap"&gt;
 		&lt;table&gt;
-			&lt;caption&gt;
-				&lt;strong&gt;기본 테이블&lt;/strong&gt;
-				&lt;p class="ui-caption"&gt;&lt;/p&gt;
-			&lt;/caption&gt;
-			&lt;colgroup&gt;
-				&lt;col class="n1"&gt;
-				&lt;col class="n2"&gt;
-				&lt;col class="n3"&gt;
-				&lt;col class="n4"&gt;
-				&lt;col class="n5"&gt;
-			&lt;/colgroup&gt;
-			&lt;thead&gt;
-				&lt;tr&gt;
-					&lt;th scope="col"&gt;번호&lt;/th&gt;
-					&lt;th scope="col"&gt;제목&lt;/th&gt;
-					&lt;th scope="col"&gt;이름&lt;/th&gt;
-					&lt;th scope="col"&gt;아이디&lt;/th&gt;
-					&lt;th scope="col"&gt;날짜&lt;/th&gt;
-				&lt;/tr&gt;
-			&lt;/thead&gt;
-			&lt;tbody&gt;
-				&lt;tr&gt;
-					&lt;td&gt;1&lt;/td&gt;
-					&lt;td&gt;제목이 들어가는 공간입니다.&lt;/td&gt;
-					&lt;td&gt;이순신&lt;/td&gt;
-					&lt;td&gt;lss&lt;/td&gt;
-					&lt;td&gt;2018.03.20&lt;/td&gt;
-				&lt;/tr&gt;
-				...
-			&lt;/tbody&gt;
+			...
 		&lt;/table&gt;
 	&lt;/div&gt;
 &lt;/div&gt;
 
 </code>
 </pre>
-</div>
 
 
-<h2 class="h-2">CSS Style</h2>
-<h3 class="h-3">base style</h3>
-<div class="box-code">
-<pre>
-<code>
-.ui-tablescroll {position: relative;}
-.ui-tablescroll-wrap {overflow-y:auto; height:200px; width:100%; }
-.tbl-base.not-space .ui-tablescroll-clone{width:100%;}
-.tbl-base .ui-tablescroll-clone {position:absolute; width:calc(100% - 17px); top:0; left:0; z-index:1;}
-</code>
-</pre>
-</div>
+	<h3 class="h-3">CSS</h3>
+<pre class="box-code"><code class="css">
+.ui-tablescroll {
+	position: relative;
+}
 
-<h2 class="h-2">Javascript</h2>
-<h3 class="h-3">$plugins.uiTableFixTd</h3>
-<div class="box-code">
-<pre>
-<code>
-$plugins<span class="na">.uiTableFixTd</span>({
-	callback: function(){}
+.ui-tablescroll-wrap {
+	overflow-y: auto;
+	height: 200px;
+	width: 100%;
+}
+
+.ui-tablescroll-wrap.tbl-base {
+	border: 0;
+}
+
+.tbl-base.not-space .ui-tablescroll-clone {
+	width: 100%;
+}
+
+.tbl-base .ui-tablescroll-clone {
+	position: absolute;
+	width: calc(100% - 15px);
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+
+.ui-m .tbl-base .ui-tablescroll-clone {
+	width: 100%;
+}
+</code></pre>
+
+<h3 class="h-3">Javascript</h3>
+<pre class="box-code"><code class="javascript">
+$plugins.table.scroll({
+	callback: function(){
+		...
+	}
 });
 </code>
 </pre>
-</div>	
-
-<div class="tbl-base type-option">
-	<table>
-		<caption>옵션 설명</caption>
-		<colgroup>
-			<col class="n1">
-			<col class="n2">
-			<col class="n3">
-			<col class="n4">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">Options</th>
-				<th scope="col">Type</th>
-				<th scope="col">Default</th>
-				<th scope="col">Explanation</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr>
-				<th scope="row">callback:</th>
-				<td>[function]</td>
-				<td>function</td>
-				<td>콜백값으로 아이디와 현재선택 index값</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+	
+</section>

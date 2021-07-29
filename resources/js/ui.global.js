@@ -1076,27 +1076,23 @@ if (!Object.keys){
 
 			$cp.text('');
 			$cp.each(function(){
-				var $table = $(this).closest('table');
-				var isthead = !!$table.find('> thead').length;
-				var $th = $(this).closest('table').find('> tbody th');
-				var th_len = $th.length;
-				var i = 0;
+				var $caption = $(this);
+				var $table = $caption.closest('table');
+				var th = $table.find('th');
 				var cp_txt = '';
 
-				if (isthead) {
-					$th = $(this).closest('table').find('> thead th');
-					th_len = $th.length
-				}
-
-				for (i = 0; i < th_len; i++) {
-					if ($th.eq(i).text() !== '') {
-						cp_txt += $th.eq(i).text();
+				for (var i = 0; i < th.length; i++) {
+					var a = th.eq(i).text();
+					
+					if (a !== '') {
+						cp_txt += a;
 					}
-					if (i < th_len - 1) {
+					if (i < th.length - 1) {
 						cp_txt += ', ';
 					}
 				}
-				$(this).text(cp_txt + ' 정보입니다.');
+
+				$caption.text(cp_txt + ' 정보입니다.');
 			});
 		},
 		scrollOption: {
@@ -1131,8 +1127,92 @@ if (!Object.keys){
 
 			!!callback && callback();
 		},
+		fixTd : function() {
+			// var el_tbl = document.querySelectorAll('.ui-fixtd');
+			
+			// for (var el_tbls of el_tbl) {
+				
+			// 	var tbl_col = el_tbls.querySelectorAll('col');
+			// 	var tbl_tr = el_tbls.querySelectorAll('tr');
+			// 	var fix_n = Number(el_tbls.dataset.fix);
+			// 	var view_n = Number(el_tbls.dataset.view);
+			// 	var col_len = tbl_col.length;
+			// 	var tr_len = tbl_tr.length;
+			// 	var fix_sum = col_len - fix_n;
+			// 	var tit = [];
+
+			// 	console.log(fix_sum);
+			// 	el_tbls.setAttribute('data-current', 1);
+			// 	el_tbls.setAttribute('data-total', col_len);
+
+			// 	for (var i = 0; i < tr_len; i++) {
+			// 		for (var j = 0; j < fix_sum; j++) {
+			// 			console.log(j , fix_sum);
+			// 			var tr_this = tbl_tr[i];
+			// 			var td_this = tr_this.querySelector('td')[j - fix_sum];
+			// 			var jj = (j + 1);
+	
+			// 			td_this.classList.add('ui-fixtd-n' + jj);
+			// 			td_this.dataset.n = j;
+
+			// 			if (tr_this.closest('thead').length) {
+			// 				tit.push(td_this.textContent);
+			// 				td_this.prepend('<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="a11y-hidden">previous</span></button>');
+			// 				td_this.append('<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="a11y-hidden">next</span></button>');
+			// 			}
+
+			// 			$tbl_col[j - fix_sum].classList.add('ui-fixtd-n' + jj);
+			// 		}
+			// 	}
+
+			// }
+			var $tbl = $('.ui-fixtd');
+			
+			$tbl.each(function(i){
+				var $tbl = $(this);
+				var $tbl_col = $tbl.find('col');
+				var $tbl_tr = $tbl.find('tr');
+
+				var fix_n = Number($tbl.data('fix'));
+				var view_n = Number($tbl.data('view'));
+				var col_len = $tbl_col.length;
+				var fix_sum = col_len - fix_n;
+				var len = $tbl_tr.length;
+				var tit = [];
+	
+				$tbl.attr('data-current', 1).attr('data-total', col_len);
+	
+				for (var i = 0; i < len; i++) {
+					for (var j = 0; j < fix_sum; j++) {
+						var $tr_this = $tbl_tr.eq(i);
+						var $td_this = $tr_this.find('> *').eq(j - fix_sum);
+						var jj = (j + 1);
+	
+						$td_this.addClass('ui-fixtd-n' + jj).data('n', j);
+						if ($tr_this.closest('thead').length) {
+							tit.push($td_this.text());
+							$td_this.prepend('<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="a11y-hidden">previous</span></button>');
+							$td_this.append('<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="a11y-hidden">next</span></button>');
+						}
+						$tbl_col.eq(j - fix_sum).addClass('ui-fixtd-n' + jj);
+					}
+				}
+			});
+	
+			$tbl.find('.ui-fixtd-btn').off('click.uifixtd').on('click.uifixtd', function(){
+				var $tbl_this = $(this).closest('.ui-fixtd');
+				var this_sum =  Number($tbl_this.data('total') - $tbl_this.data('fix'));
+				var n = Number($tbl_this.attr('data-current'));
+				console.log(n);
+				if ($(this).data('btn') === 'next') {
+					$tbl_this.attr('data-current', n + 1 > this_sum ? n = 1 : n + 1);
+				} else {
+					$tbl_this.attr('data-current', n - 1 <= 0 ? n = this_sum : n - 1);
+				}
+			});
+		},
 		sort: function(opt){
-			v
+			
 		}
 	}
 
@@ -2160,6 +2240,7 @@ if (!Object.keys){
 	* accordion tab  
 	* date : 2020-05-17
 	------------------------ */
+
 	win[global].accordion = {
 		options: {
 			current: null,
@@ -2171,18 +2252,19 @@ if (!Object.keys){
 			effTime: '.2'
 		},
 		init: function(opt){
-			if (opt === undefined) {
+			if (opt === undefined || !$('#' + opt.id).length) {
 				return false;
 			}
 	
-			var opt = $.extend(true, {}, this.options, opt);
-			var id = opt.id;
-			var current = opt.current;
-			var callback = opt.callback;
-			var autoclose = opt.autoclose;
-			var level = opt.level;
-			var add = opt.add;
-
+			var opt = $.extend(true, {}, win[global].accordion.options, opt),
+				id = opt.id,
+				current = opt.current,
+				callback = opt.callback,
+				autoclose = opt.autoclose,
+				level = opt.level,
+				add = opt.add,
+				effect = opt.effect,
+				effTime = opt.effTime;
 	
 			var	$acco = $('#' + id),
 				$wrap = $acco.children('.ui-acco-wrap'),
@@ -2234,8 +2316,8 @@ if (!Object.keys){
 				callback = $acco.data('opt').callback;
 			}
 	
-			sessionStorage.setItem(id, JSON.stringify({ 'close': autoclose, 'current': current }) );
-			win[global].uiAccordion[id] = callback;
+			sessionStorage.setItem(id, JSON.stringify({ 'close': autoclose, 'current': current, 'effTime':effTime, 'effect':effect }) );
+			win[global].accordion[id] = callback;
 	
 			//set up
 			!$pnl ? $pnl = $tit.children('.ui-acco-pnl') : '';
@@ -2281,7 +2363,7 @@ if (!Object.keys){
 			}
 			
 			if (current !== null) {
-				win[global].uiAccordionToggle({ 
+				win[global].accordion.toggle({ 
 					id: id, 
 					current: current, 
 					motion: false 
@@ -2301,7 +2383,7 @@ if (!Object.keys){
 					var $this = $(this);
 	
 					optAcco = $this.closest('.ui-acco').data('opt');
-					win[global].uiAccordionToggle({ 
+					win[global].accordion.toggle({ 
 						id: optAcco.id, 
 						current: [$this.data('n')], 
 						close: optAcco.close, 
@@ -2359,313 +2441,104 @@ if (!Object.keys){
 					$('#' + id + '-btn0').focus();
 				}
 			}
-		}
-	}
-
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiAccordion: function (opt) {
-			return createUiAccordion(opt);
 		},
-		uiAccordionToggle: function (opt) {
-			return createUiAccordionToggle(opt);
-		}
-	});
-	win[global].uiAccordion.option = {
-		current: null,
-		autoclose: false,
-		callback: false,
-		add: false,
-		level: 3,
-		effect: win[global].option.effect.easeInOut,
-		effTime: '.2'
-	};
-	function createUiAccordion(opt){
-		if (opt === undefined || !$('#' + opt.id).length) {
-			return false;
-		}
-
-		var opt = $.extend(true, {}, win[global].uiAccordion.option, opt),
-			id = opt.id,
-			current = opt.current,
-			callback = opt.callback,
-			autoclose = opt.autoclose,
-			level = opt.level,
-			add = opt.add,
-			effect = opt.effect,
-			effTime = opt.effTime;
-
-		var	$acco = $('#' + id),
-			$wrap = $acco.children('.ui-acco-wrap'),
-			$pnl = $wrap.children('.ui-acco-pnl'),
-			$tit = $wrap.children('.ui-acco-tit'),
-			$btn = $tit.find('.ui-acco-btn');
-
-		var	len = $wrap.length, 
-			keys = win[global].option.keys,
-			optAcco;
-
-		var para = win[global].para.get('acco'),
-			paras,
-			paraname;
-
-		//set up
-		if (!!para && !add) {
-			if (para.split('+').length > 1) {
-				//2 or more : acco=exeAcco1*2+exeAcco2*3
-				paras = para.split('+');
-
-				for (var j = 0; j < paras.length; j++ ) {
-					paraname = paras[j].split('*');
-					opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
-				}
-			} else {
-				//only one : tab=1
-			 	if (para.split('*').length > 1) {
-					paraname = para.split('*');
-					opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
-				} else {
-					current = [Number(para)];
-				}
-			}
-		}
-
-		if (add) {
-			current = [];
-			var ss = JSON.parse(sessionStorage.getItem(id));
-
-			autoclose = autoclose || ss.close;
-
-			$acco.find('.ui-acco-btn.selected').each(function(){
-				current.push($(this).closest('.ui-acco-wrap').index());
-			});
-			$btn.removeAttr('acco-last').removeAttr('acco-first');
-
-			autoclose = $acco.data('opt').close;
-			callback = $acco.data('opt').callback;
-		}
-
-		sessionStorage.setItem(id, JSON.stringify({ 'close': autoclose, 'current': current, 'effTime':effTime, 'effect':effect }) );
-		win[global].uiAccordion[id] = callback;
-
-		//set up
-		!$pnl ? $pnl = $tit.children('.ui-acco-pnl') : '';
-		$acco.data('opt', { 
-			id: id, 
-			close: autoclose, 
-			callback: callback
-		});
-
-		for (var i = 0; i < len; i++) {
-			var $wrap_i = $wrap.eq(i),
-				$accotit = $wrap_i.find('> .ui-acco-tit'),
-				$accopln = $wrap_i.find('> .ui-acco-pnl'),
-				$accobtn = $accotit.find('.ui-acco-btn');
-
-			if ($accotit.prop('tagName') !== 'DT') {
-				$accotit.attr('role','heading');
-				$accotit.attr('aria-level', level);
+		toggle: function(opt){
+			if (opt === undefined) {
+				return false;
 			}
 			
-			if (!$accopln) {
-				$accopln = $accotit.children('.ui-acco-pnl');
-			}
-
-			($accotit.attr('id') === undefined) && $accobtn.attr('id', id + '-btn' + i);
-			($accopln.attr('id') === undefined) && $accopln.attr('id', id + '-pnl' + i);
+			var id = opt.id,
+				$acco = $('#' + id),
+				dataOpt = $acco.data('opt'),
+				current = opt.current === undefined ? null : opt.current,
+				callback = opt.callback === undefined ? dataOpt.callback : opt.callback,
+				state = opt.state === undefined ? 'toggle' : opt.state,
+				motion = opt.motion === undefined ? true : opt.motion,
+				autoclose = dataOpt.close,
+				open = null,
+				$wrap = $acco.children('.ui-acco-wrap'),
+				$pnl,
+				$tit,
+				$btn,
+				len = $wrap.length,
+				speed = 200,
+				i, c = 0;
 			
-			$accobtn
-				.data('selected', false)
-				.attr('data-n', i)
-				.attr('data-len', len)
-				.attr('aria-expanded', false)
-				.attr('aria-controls', $accopln.attr('id'))
-				.removeClass('selected');
-			$accopln
-				.attr('data-n', i)
-				.attr('data-len', len)
-				.attr('aria-labelledby', $accobtn.attr('id'))
-				.attr('aria-hidden', true).hide();
-
-			(i === 0) && $accobtn.attr('acco-first', true);
-			(i === len - 1) && $accobtn.attr('acco-last', true);
-		}
-		
-		if (current !== null) {
-			win[global].uiAccordionToggle({ 
-				id: id, 
-				current: current, 
-				motion: false 
-			});
-		}
-
-		//event
-		$btn.off('click.uiaccotab keydown.uiaccotab')
-			.on({
-				'click.uiaccotab': evtClick,
-				'keydown.uiaccotab': evtKeys
-			});
-
-		function evtClick(e) {
-			if (!!$(this).closest('.ui-acco-wrap').find('.ui-acco-pnl').length) {
-				e.preventDefault();
-				var $this = $(this);
-
-				optAcco = $this.closest('.ui-acco').data('opt');
-				win[global].uiAccordionToggle({ 
-					id: optAcco.id, 
-					current: [$this.data('n')], 
-					close: optAcco.close, 
-					callback: optAcco.callback
-				});
-			}
-		}
-		function evtKeys(e) {
-			var $this = $(this),
-				n = Number($this.data('n')),
-				m = Number($this.data('len')),
-				id = $this.closest('.ui-acco').attr('id');
-
-			switch(e.keyCode){
-				case keys.up: upLeftKey(e);
-				break;
-
-				case keys.left: upLeftKey(e);
-				break;
-
-				case keys.down: downRightKey(e);
-				break;
-
-				case keys.right: downRightKey(e);
-				break;
-
-				case keys.end: endKey(e);
-				break;
-
-				case keys.home: homeKey(e);
-				break;
-			}
-
-			function upLeftKey(e) {
-				e.preventDefault();
-				
-				!$this.attr('acco-first') ?
-				$('#' + id + '-btn' + (n - 1)).focus():
-				$('#' + id + '-btn' + (m - 1)).focus();
-			}
-			function downRightKey(e) {
-				e.preventDefault();
-
-				!$this.attr('acco-last') ? 
-				$('#' + id + '-btn' + (n + 1)).focus():
-				$('#' + id + '-btn0').focus();
-			}
-			function endKey(e) {
-				e.preventDefault();
-
-				$('#' + id + '-btn' + (m - 1)).focus();
-			}
-			function homeKey(e) {
-				e.preventDefault();
-				$('#' + id + '-btn0').focus();
-			}
-		}
-	}
-	function createUiAccordionToggle(opt){
-		if (opt === undefined) {
-			return false;
-		}
-		
-		var id = opt.id,
-			$acco = $('#' + id),
-			dataOpt = $acco.data('opt'),
-			current = opt.current === undefined ? null : opt.current,
-			callback = opt.callback === undefined ? dataOpt.callback : opt.callback,
-			state = opt.state === undefined ? 'toggle' : opt.state,
-			motion = opt.motion === undefined ? true : opt.motion,
-			autoclose = dataOpt.close,
-			open = null,
-			$wrap = $acco.children('.ui-acco-wrap'),
-			$pnl,
-			$tit,
-			$btn,
-			len = $wrap.length,
-			speed = 200,
-			i, c = 0;
-		
-		(motion === false) ? speed = 0 : speed = 200;
-
-		if (current !== 'all') {
-			for (i = 0 ; i < current.length; i++) {
-				$pnl = $wrap.eq(current[i]).children('.ui-acco-pnl');
-				$tit = $wrap.eq(current[i]).children('.ui-acco-tit');
-				$btn = $tit.find('.ui-acco-btn');
-				
-				if (state === 'toggle') {
-					(!$btn.data('selected')) ? act('down') : act('up');
-				} else {
-					(state === 'open') ? act('down') : (state === 'close') ? act('up') : '';
+			(motion === false) ? speed = 0 : speed = 200;
+	
+			if (current !== 'all') {
+				for (i = 0 ; i < current.length; i++) {
+					$pnl = $wrap.eq(current[i]).children('.ui-acco-pnl');
+					$tit = $wrap.eq(current[i]).children('.ui-acco-tit');
+					$btn = $tit.find('.ui-acco-btn');
+					
+					if (state === 'toggle') {
+						(!$btn.data('selected')) ? act('down') : act('up');
+					} else {
+						(state === 'open') ? act('down') : (state === 'close') ? act('up') : '';
+					}
 				}
+				!callback ? '' :
+					callback({ 
+						id:id, 
+						open:open, 
+						current:current
+					});
+			} else if (current === 'all') {
+				checking();
 			}
-			!callback ? '' :
-				callback({ 
-					id:id, 
-					open:open, 
-					current:current
-				});
-		} else if (current === 'all') {
-			checking();
-		}
-
-		function checking() {
-			//열린상태 체크하여 전체 열지 닫을지 결정
-			c = 0;
-			$wrap.each(function(i){
-				c = ($wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').attr('aria-expanded') === 'true') ? c + 1 : c + 0;
-			});
-			//state option 
-			if (state === 'open') {
+	
+			function checking() {
+				//열린상태 체크하여 전체 열지 닫을지 결정
 				c = 0;
-				$acco.data('allopen', false);
-			} else if (state === 'close') {
-				c = len;
-				$acco.data('allopen', true);
-			}
-			//all check action
-			if (c === 0 || !$acco.data('allopen')) {
-				$acco.data('allopen', true);
-				act('down');
-			} else if (c === len || !!$acco.data('allopen')) {
-				$acco.data('allopen', false);
-				act('up');
-			}
-		}
-		function act(v) {
-			var isDown = v === 'down',
-				a = isDown ? true : false, 
-				cls = isDown ? 'addClass' : 'removeClass', 
-				updown = isDown ? 'slideDown' : 'slideUp';
-			
-			open = isDown ? true : false;
-
-			if (autoclose === true && isDown) {
 				$wrap.each(function(i){
-					$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', false).removeClass('selected').attr('aria-expanded', false);
-					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden',true).stop().slideUp(speed);
+					c = ($wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').attr('aria-expanded') === 'true') ? c + 1 : c + 0;
 				});
+				//state option 
+				if (state === 'open') {
+					c = 0;
+					$acco.data('allopen', false);
+				} else if (state === 'close') {
+					c = len;
+					$acco.data('allopen', true);
+				}
+				//all check action
+				if (c === 0 || !$acco.data('allopen')) {
+					$acco.data('allopen', true);
+					act('down');
+				} else if (c === len || !!$acco.data('allopen')) {
+					$acco.data('allopen', false);
+					act('up');
+				}
 			}
-
-			if (current === 'all') {
-				$wrap.each(function(i){
-					$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', a)[cls]('selected').attr('aria-expanded', a);
-					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden', !a).stop()[updown](speed, function(){
+			function act(v) {
+				var isDown = v === 'down',
+					a = isDown ? true : false, 
+					cls = isDown ? 'addClass' : 'removeClass', 
+					updown = isDown ? 'slideDown' : 'slideUp';
+				
+				open = isDown ? true : false;
+	
+				if (autoclose === true && isDown) {
+					$wrap.each(function(i){
+						$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', false).removeClass('selected').attr('aria-expanded', false);
+						$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden',true).stop().slideUp(speed);
+					});
+				}
+	
+				if (current === 'all') {
+					$wrap.each(function(i){
+						$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', a)[cls]('selected').attr('aria-expanded', a);
+						$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden', !a).stop()[updown](speed, function(){
+							$(this).css({ height: '', padding: '', margin: '' }); 
+						});
+					});
+				} else {
+					$btn.data('selected', a).attr('aria-expanded', a)[cls]('selected');
+					$pnl.attr('aria-hidden', !a).stop()[updown](speed, function(){
 						$(this).css({ height: '', padding: '', margin: '' }); 
 					});
-				});
-			} else {
-				$btn.data('selected', a).attr('aria-expanded', a)[cls]('selected');
-				$pnl.attr('aria-hidden', !a).stop()[updown](speed, function(){
-					$(this).css({ height: '', padding: '', margin: '' }); 
-				});
+				}
 			}
 		}
 	}

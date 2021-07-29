@@ -25,11 +25,11 @@ body {
 	-webkit-text-size-adjust: none;
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-overflow-scrolling: touch;
-	-webkit-user-select: none;
+	/* -webkit-user-select: none;
 	-khtml-user-select: none;
 	-moz-user-select: none;
 	-ms-user-select: none;
-	user-select: none;
+	user-select: none; */
 	-webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 	-webkit-tap-highlight-color: transparent;
 	word-break: keep-all;
@@ -1576,7 +1576,7 @@ a.btn-base-l {
 
 /* table */
 .tbl-base {
-	margin: 0.5rem 0 0;
+	margin: 0;
 	width: 100%;
 	position: relative;
 	border-top: 1px solid var(--tbl-line-b);
@@ -1584,11 +1584,11 @@ a.btn-base-l {
 	font-size: 1.1rem;
 }
 
-.tbl-base>table {
+.tbl-base table {
 	width: 100%;
 }
 
-.tbl-base>table>thead th {
+.tbl-base table>thead th {
 	background: var(--tbl-thead-th);
 	border-bottom: 1px solid var(--tbl-line);
 	border-left: 1px solid var(--tbl-line);
@@ -1597,8 +1597,8 @@ a.btn-base-l {
 	color: var(--text-700);
 }
 
-.tbl-base>table>tbody>tr>th,
-.tbl-base>table>tbody>tr>td {
+.tbl-base table>tbody>tr>th,
+.tbl-base table>tbody>tr>td {
 	border-top: 1px solid var(--tbl-line);
 	border-left: 1px solid var(--tbl-line);
 	padding: 0.5rem 0.5rem 0.7rem;
@@ -1608,23 +1608,23 @@ a.btn-base-l {
 	text-align: center;
 }
 
-.tbl-base>table>tbody>tr:first-child>th,
-.tbl-base>table>tbody>tr:first-child>td {
+.tbl-base table>tbody>tr:first-child>th,
+.tbl-base table>tbody>tr:first-child>td {
 	border-top: 0;
 }
 
-.tbl-base>table>thead>tr>th:first-child,
-.tbl-base>table>tbody>tr>th:first-child,
-.tbl-base>table>tbody>tr>td:first-child {
+.tbl-base table>thead>tr>th:first-child,
+.tbl-base table>tbody>tr>th:first-child,
+.tbl-base table>tbody>tr>td:first-child {
 	border-left: 0;
 }
 
-.tbl-base>table>thead>tr>*[rowspan],
-.tbl-base>table>tbody>tr>*[rowspan] {
+.tbl-base table>thead>tr>*[rowspan],
+.tbl-base table>tbody>tr>*[rowspan] {
 	border-right: 1px solid var(--tbl-line);
 }
 
-.tbl-base>table>tbody>tr>th {
+.tbl-base table>tbody>tr>th {
 	background: var(--tbl-tbody-th);
 	font-weight: 500;
 	color: var(--text-700);
@@ -1687,6 +1687,101 @@ a.btn-base-l {
 .tbl-list tbody+tbody,
 .tbl-list tbody.line-t {
 	border-top: 1px solid var(--tbl-line-b);
+}
+
+/* ui-tblscroll */
+.ui-tablescroll {
+    position: relative;
+}
+
+.ui-tablescroll-wrap {
+    overflow-y: auto;
+    height: 200px;
+    width: 100%;
+}
+
+.ui-tablescroll-wrap.tbl-base {
+    border: 0;
+}
+
+.tbl-base.not-space .ui-tablescroll-clone {
+    width: 100%;
+}
+
+.tbl-base .ui-tablescroll-clone {
+    position: absolute;
+    width: calc(100% - 15px);
+    top: 0;
+    left: 0;
+    z-index: 1;
+}
+
+.ui-m .tbl-base .ui-tablescroll-clone {
+    width: 100%;
+}
+
+/* ui-fixtd */
+.ui-fixtd-btn {
+	position: absolute;
+	top:50%;
+	transform: translate(0, -50%);
+    vertical-align: middle;
+    display: inline-block;
+	background:#fff;
+	width:1.8rem;
+	height:1.8rem;
+	line-height: 1;
+	border:1px solid var(--line-b);
+}
+.ui-fixtd-btn.prev{
+	left: -1rem;
+}
+.ui-fixtd-btn.next{
+	right: -1rem;
+}
+.ui-fixtd-btn.prev::after {
+    content: "keyboard_arrow_left";
+    font-family: 'Material Icons';
+    font-size: 1.6rem;
+}
+
+.ui-fixtd-btn.next::after {
+    content: "keyboard_arrow_right";
+    font-family: 'Material Icons';
+    font-size: 1.6rem;
+}
+
+[class*="ui-fixtd-n"] {
+    display: none;
+	position:relative;
+}
+
+[data-current="1"] col.ui-fixtd-n1,
+[data-current="2"] col.ui-fixtd-n2,
+[data-current="3"] col.ui-fixtd-n3,
+[data-current="4"] col.ui-fixtd-n4,
+[data-current="5"] col.ui-fixtd-n5,
+[data-current="6"] col.ui-fixtd-n6,
+[data-current="7"] col.ui-fixtd-n7,
+[data-current="8"] col.ui-fixtd-n8,
+[data-current="9"] col.ui-fixtd-n9,
+[data-current="10"] col.ui-fixtd-n10,
+[data-current="11"] col.ui-fixtd-n11 {
+    display: block
+}
+
+[data-current="1"] .ui-fixtd-n1,
+[data-current="2"] .ui-fixtd-n2,
+[data-current="3"] .ui-fixtd-n3,
+[data-current="4"] .ui-fixtd-n4,
+[data-current="5"] .ui-fixtd-n5,
+[data-current="6"] .ui-fixtd-n6,
+[data-current="7"] .ui-fixtd-n7,
+[data-current="8"] .ui-fixtd-n8,
+[data-current="9"] .ui-fixtd-n9,
+[data-current="10"] .ui-fixtd-n10,
+[data-current="11"] .ui-fixtd-n11 {
+    display: table-cell
 }
 
 /* bullet */

@@ -193,7 +193,7 @@
 		},
 		header: function(){
 			console.log('header load');
-			$plugins.uiAccordion({ 
+			$plugins.accordion.init({ 
 				id: 'exeLNB', 
 				current: 'all', 
 				autoclose: false
@@ -262,11 +262,11 @@
 			}
 			if(document.currentScript === undefined){
 				// IE 에서만 돌아갈 내용
-			  } else {
+			} else {
 				// IE 가 아닐 때 돌아갈 내용
 				hljs.configure({tabReplace: " "});
 				hljs.initHighlighting();
-			  }
+			}
 			
 
 			//hljs.initHighlighting();
@@ -292,6 +292,7 @@
 			
 			
 		},
+
 		menuAjax: function(){
 			$('.dep-2-btn').off('click.ajax').on('click.ajax', function(){
 				var href = this.getAttribute('data-href');
