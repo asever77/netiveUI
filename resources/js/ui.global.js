@@ -1467,90 +1467,24 @@ if (!Object.keys){
 			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			var el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			var el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
-			var el_left = el_range.querySelector(".ui-range-btn.left");
-			var el_right = el_range.querySelector(".ui-range-btn.right");
-			var el_bar = el_range.querySelector(".ui-range-bar");
 
 			
-			const inputLeft = document.getElementById("input-left");
-			const inputRight = document.getElementById("input-right");
-			const thumbLeft = document.querySelector(".thumb.left");
-			const thumbRight = document.querySelector(".thumb.right");
-			const range = document.querySelector(".range");
-
-			console.log(!!(el_from && el_to));
 
 			if (el_from && el_to) {
 				this.rangeFrom(id);
 				this.rangeTo(id);
 				el_from.addEventListener("input", function(){
-					console.log(111111);
 					win[global].rangeSlider.rangeFrom(id);
 				});
 				el_to.addEventListener("input", function(){
-					console.log(22222);
 					win[global].rangeSlider.rangeTo(id);
 				});
-				//el_to.addEventListener("input", win[global].rangeSlider.rangeTo(id));
 			} else {
 				this.rangeFrom(id);
-				el_from.addEventListener("input", win[global].rangeSlider.rangeFrom(id));
+				el_from.addEventListener("input", function(){
+					win[global].rangeSlider.rangeFrom(id);
+				});
 			}
-
-			const setLeftValue = e => {
-				const _this = e.target;
-				const {
-					value,
-					min,
-					max
-				} = _this;
-
-				const v = _this.value;
-
-				if (+inputRight.value - (+v - 1) < 0) {
-					v = +inputRight.value - 0;
-				}
-
-				console.log(inputRight.value, v, min, (+max - +min))
-
-				const percent = ((+v - +min) / (+max - +min)) * 100;
-
-				thumbRight.classList.remove('on');
-				thumbLeft.classList.add('on');
-				_this.classList.add('on');
-				inputRight.classList.remove('on');
-				thumbLeft.style.left = `${percent}%`;
-				range.style.left = `${percent}%`;
-			};
-
-			const setRightValue = e => {
-				const _this = e.target;
-				const {
-					value,
-					min,
-					max
-				} = _this;
-
-				if (+value - +inputLeft.value < 0) {
-					_this.value = +inputLeft.value + 0;
-				}
-
-				const percent = ((+_this.value - +min) / (+max - +min)) * 100;
-
-				console.log(percent);
-
-				thumbRight.classList.add('on');
-				thumbLeft.classList.remove('on');
-				_this.classList.add('on');
-				inputLeft.classList.remove('on');
-				thumbRight.style.right = `${100 - percent}%`;
-				range.style.right = `${100 - percent}%`;
-			};
-
-			// if (inputLeft && inputRight) {
-			// 	inputLeft.addEventListener("input", setLeftValue);
-			// 	inputRight.addEventListener("input", setRightValue);
-			// }
 		},
 		rangeFrom: function(id){
 			console.log(id);
@@ -1560,22 +1494,12 @@ if (!Object.keys){
 			var el_left = el_range.querySelector(".ui-range-btn.left");
 			var el_right = el_range.querySelector(".ui-range-btn.right");
 			var el_bar = el_range.querySelector(".ui-range-bar");
+			var inp_from = document.querySelector('[data-'+ id +'="from"]');
 			var {
 				value,
 				min,
 				max
 			} = el_from;
-
-	// 	if (+inputRight.value - (+v - 1) < 0) {
-	// 		v = +inputRight.value - 0;
-	// 	}
-
-	// 	console.log(inputRight.value, v, min, (+max - +min))
-
-	// 	const percent = ((+v - +min) / (+max - +min)) * 100;
-
-
-			var v = el_from.value;
 
 			if (+el_to.value - +el_from.value < 0) {
 				el_from.value = +el_to.value - 0;
@@ -1585,12 +1509,11 @@ if (!Object.keys){
 
 			el_right.classList.remove('on');
 			el_left.classList.add('on');
-
 			el_from.classList.add('on');
 			el_to.classList.remove('on');
-
 			el_left.style.left = `${percent}%`;
 			el_bar.style.left = `${percent}%`;
+			inp_from.value = el_from.value;
 		},
 		rangeTo: function(id){
 			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
@@ -1599,6 +1522,7 @@ if (!Object.keys){
 			var el_left = el_range.querySelector(".ui-range-btn.left");
 			var el_right = el_range.querySelector(".ui-range-btn.right");
 			var el_bar = el_range.querySelector(".ui-range-bar");
+			var inp_to = document.querySelector('[data-'+ id +'="to"]');
 			var {
 				value,
 				min,
@@ -1613,12 +1537,11 @@ if (!Object.keys){
 
 			el_right.classList.add('on');
 			el_left.classList.remove('on');
-
 			el_to.classList.add('on');
 			el_from.classList.remove('on');
-
 			el_right.style.right = `${100 - percent}%`;
 			el_bar.style.right = `${100 - percent}%`;
+			inp_to.value = el_to.value;
 		}
 	}
 
