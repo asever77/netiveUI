@@ -1471,23 +1471,35 @@ if (!Object.keys){
 			
 
 			if (el_from && el_to) {
-				this.rangeFrom(id);
-				this.rangeTo(id);
+				this.rangeFrom({
+					id: id
+				});
+				this.rangeTo({
+					id: id
+				});
 				el_from.addEventListener("input", function(){
-					win[global].rangeSlider.rangeFrom(id);
+					win[global].rangeSlider.rangeFrom({
+						id: id
+					});
 				});
 				el_to.addEventListener("input", function(){
-					win[global].rangeSlider.rangeTo(id);
+					win[global].rangeSlider.rangeTo({
+						id: id
+					});
 				});
 			} else {
-				this.rangeFrom(id);
+				this.rangeFrom({
+					id: id
+				});
 				el_from.addEventListener("input", function(){
-					win[global].rangeSlider.rangeFrom(id);
+					win[global].rangeSlider.rangeFrom({
+						id: id
+					});
 				});
 			}
 		},
-		rangeFrom: function(id){
-			console.log(id);
+		rangeFrom: function(opt){
+			var id = opt.id;
 			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			var el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			var el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
@@ -1515,7 +1527,8 @@ if (!Object.keys){
 			el_bar.style.left = `${percent}%`;
 			inp_from.value = el_from.value;
 		},
-		rangeTo: function(id){
+		rangeTo: function(opt){
+			var id = opt.id;
 			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			var el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			var el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
