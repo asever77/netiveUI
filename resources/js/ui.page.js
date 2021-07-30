@@ -50,17 +50,24 @@
     };
 
     $plugins.page.pageTableCellFix = function(){
-        $plugins.uiTableFixTd();
+        $plugins.table.fixTd();
     };
 
     $plugins.page.pageTableScroll = function(){
-        $plugins.uiTableScroll({
+        $plugins.table.scroll({
             callback:function(){
                 $plugins.scrollBar.init({
                     id: 'tblScrollTest1'
                 });
             }
         });
+        // $plugins.uiTableScroll({
+        //     callback:function(){
+        //         $plugins.scrollBar.init({
+        //             id: 'tblScrollTest1'
+        //         });
+        //     }
+        // });
     };
 
     $plugins.page.pageBrickList = function(){
@@ -352,7 +359,7 @@
     }
     $plugins.page.pageSlider = function(){
         //range slider
-        $plugins.uiSlider({ 
+        $plugins.range.init({ 
             id:"uiSlider", 
             vertical:false, 
             reverse:false, 
@@ -372,7 +379,7 @@
 
 
 
-        $plugins.uiSlider({ 
+        $plugins.range.init({ 
             id:"uiSlider2", 
             vertical:false, 
             reverse:true, 
@@ -388,14 +395,14 @@
             acc:true, 
             callback:sliderCallback
         });
-        $plugins.uiSlider({ 
+        $plugins.range.init({ 
             id:"uiSlider3", 
             vertical:true, reverse:false, range:true, 
             now:[1500, 2500], step:10, min:1000, max:6000, 
             tooltip:true, unit:'만원', txt_s:'이하', txt_e:'이상', 
             acc:true, callback:sliderCallback
         });
-        $plugins.uiSlider({ 
+        $plugins.range.init({ 
             id:"uiSlider4", 
             vertical:true, reverse:true, range:true, 
             now:[1500, 2500], step:10, min:1000, max:6000, 
@@ -404,28 +411,28 @@
         });
 
         //slider
-        $plugins.uiSlider({
+        $plugins.range.init({
             id:"uiSlider5",
             vertical:false, reverse:false, range:false,
             now:[500], step:10, min:0, max:1000,
             tooltip:true, unit:'만원', txt_s:'', txt_e:'',
             acc:true, callback:sliderCallback
         });
-        $plugins.uiSlider({
+        $plugins.range.init({
             id:"uiSlider6",
             vertical:false, reverse:true, range:false,
             now:[500], step:10, min:0, max:1000,
             tooltip:true, unit:'만원', txt_s:'', txt_e:'',
             acc:true, callback:sliderCallback
         });
-        $plugins.uiSlider({
+        $plugins.range.init({
             id:"uiSlider7",
             vertical:true, reverse:false, range:false, stepname:['step1','step2','step3','step4','step5','step6','step7','step8','step9','step10', 'step11'], 
             now:[50], step:10, min:0, max:100,
             tooltip:true, unit:'', txt_s:'', txt_e:'',
             acc:true, callback:sliderCallback
         });
-        $plugins.uiSlider({
+        $plugins.range.init({
             id:"uiSlider8",
             vertical:true, reverse:true, range:false,
             now:[500], step:10, min:0, max:1000,
@@ -677,11 +684,11 @@
 
     $plugins.page.pageAccordion = function(){
         console.log('page.js-acco');
-        $plugins.uiAccordion({ id:'exeAcco1', current:[0,2], callback:function(v){console.log(v)} });
-        $plugins.uiAccordion({ id:'exeAcco2', current:[0,2], autoclose:true });
-        $plugins.uiAccordion({ id:'exeAcco3', current:null, autoclose:false });
-        $plugins.uiAccordion({ id:'exeAcco4', current:null, autoclose:false });
-        $plugins.uiAccordion({ id:'exeAcco5', current:'all', autoclose:false });
+        $plugins.accordion.init({ id:'exeAcco1', current:[0,2], callback:function(v){console.log(v)} });
+        $plugins.accordion.init({ id:'exeAcco2', current:[0,2], autoclose:true });
+        $plugins.accordion.init({ id:'exeAcco3', current:null, autoclose:false });
+        $plugins.accordion.init({ id:'exeAcco4', current:null, autoclose:false });
+        $plugins.accordion.init({ id:'exeAcco5', current:'all', autoclose:false });
 
         var add_html = '';
         add_html += '<div class="ui-acco-wrap">';
@@ -698,7 +705,7 @@
         $('#uiAccoAdd').on('click.add', function(){
             $('#exeAcco1').append(add_html);
 
-            $plugins.uiAccordion({ 
+            $plugins.accordion.init({ 
                 id: 'exeAcco1', 
                 add: true,
                 callback: function(v){console.log(v)} 
