@@ -1253,9 +1253,102 @@ select.off:focus+.ui-select-btn:after {
     color: var(--primary);
 }
 
+/* range */
+.ui-range{
 
+	width: 100%;
+	height: 5rem;
+	/* 후에 padding: 1.5rem 2rem 으로 수정합니다. 참고바랍니다. */
+	padding: 0 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	position: relative;
+}
+.ui-range-inp.on{z-index: 11;}
+.ui-range-inp {
+	width: 100%;
+	top: 0;
+	left: 0;
+	position: absolute;
+	border: none;
+	pointer-events: none;
+	z-index: 10;
+	appearance: none;
+	opacity: 0;
+	padding:0;
+	margin:0;
+	height:2rem;
+  }
+  
+  .ui-range-inp::-webkit-slider-thumb {
+	pointer-events: all;
+	/* appearance, background-color는 지워도 됨 */
+	appearance:none;
+	background-color: transparent;
+	width: 2rem;
+	height: 2rem;
+	margin-top:-1.5rem;
+  }
 
-
+.track {
+	position: relative;
+	width: 100%;
+	height: 0.5rem;
+	background-color: #bdc3c7;
+	border-radius: 0.5rem;
+  }
+  
+  .ui-range .range {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #2c3e50;
+	border-radius: 0.5rem;
+  }
+  .ui-range .thumb.on {
+	z-index: 1;
+  }
+  .ui-range .thumb {
+	position: absolute;
+	top:50%;
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	width:2rem;
+	height: 2rem;
+	background-color: black;
+	border-radius: 50%;
+  }
+  
+  .ui-range .left {
+	left: 0;
+	transform: translate(-1rem ,-50%);
+  }
+  
+  .ui-range .right {
+	right: 0;
+	transform: translate(1rem ,-50%);
+  }
+  .ui-range .right::after{
+	  content:'arrow_right';
+	  font-family: 'Material Icons';
+	  font-size: 1.2;
+	  color:#fff;
+	  line-height: 2rem;
+	  
+  }
+  .ui-range .left::after{
+	content:'arrow_left';
+	font-family: 'Material Icons';
+	font-size: 1.2;
+	color:#fff;
+	line-height: 2rem;
+	
+}
 
 /* [base] BUTTON ---------------------------------------------------------------------------*/
 /* button wrap */

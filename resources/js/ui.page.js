@@ -359,7 +359,7 @@
     }
     $plugins.page.pageSlider = function(){
         //range slider
-        $plugins.uiSlider({ 
+        $plugins.range.init({ 
             id:"uiSlider", 
             vertical:false, 
             reverse:false, 
@@ -379,7 +379,7 @@
 
 
 
-        $plugins.uiSlider({ 
+        $plugins.range.init({ 
             id:"uiSlider2", 
             vertical:false, 
             reverse:true, 
@@ -395,14 +395,14 @@
             acc:true, 
             callback:sliderCallback
         });
-        $plugins.uiSlider({ 
+        $plugins.range.init({ 
             id:"uiSlider3", 
             vertical:true, reverse:false, range:true, 
             now:[1500, 2500], step:10, min:1000, max:6000, 
             tooltip:true, unit:'만원', txt_s:'이하', txt_e:'이상', 
             acc:true, callback:sliderCallback
         });
-        $plugins.uiSlider({ 
+        $plugins.range.init({ 
             id:"uiSlider4", 
             vertical:true, reverse:true, range:true, 
             now:[1500, 2500], step:10, min:1000, max:6000, 
@@ -411,28 +411,28 @@
         });
 
         //slider
-        $plugins.uiSlider({
+        $plugins.range.init({
             id:"uiSlider5",
             vertical:false, reverse:false, range:false,
             now:[500], step:10, min:0, max:1000,
             tooltip:true, unit:'만원', txt_s:'', txt_e:'',
             acc:true, callback:sliderCallback
         });
-        $plugins.uiSlider({
+        $plugins.range.init({
             id:"uiSlider6",
             vertical:false, reverse:true, range:false,
             now:[500], step:10, min:0, max:1000,
             tooltip:true, unit:'만원', txt_s:'', txt_e:'',
             acc:true, callback:sliderCallback
         });
-        $plugins.uiSlider({
+        $plugins.range.init({
             id:"uiSlider7",
             vertical:true, reverse:false, range:false, stepname:['step1','step2','step3','step4','step5','step6','step7','step8','step9','step10', 'step11'], 
             now:[50], step:10, min:0, max:100,
             tooltip:true, unit:'', txt_s:'', txt_e:'',
             acc:true, callback:sliderCallback
         });
-        $plugins.uiSlider({
+        $plugins.range.init({
             id:"uiSlider8",
             vertical:true, reverse:true, range:false,
             now:[500], step:10, min:0, max:1000,
