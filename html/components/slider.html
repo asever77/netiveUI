@@ -7,22 +7,54 @@
 <section class="sec-wrap">
 	<h2 class="h-2">Examples</h2>
 	<h3 class="h-3">Range slider</h3>
+	<div class="box-guide">
+		<div class="ui-range" data-id="range2" data-type="single">
+			<input class="ui-range-inp" data-range="from" type="range" min="0" max="100" value="0" />
+			<div class="ui-range-track">
+				<div class="ui-range-bar"></div>
+				<div class="left ui-range-btn">
+					<em class="n" data-range2="from"></em>
+				</div>
+			</div>
+		</div>
 
-	<div class="ui-range" data-id="range1">
-		<input class="ui-range-inp" data-range="from" type="range" min="0" max="100" value="0" />
-		<input class="ui-range-inp" data-range="to" type="range" min="0" max="100" value="50" />
-		<div class="ui-range-track">
-			<div class="ui-range-bar"></div>
-			<div class="left ui-range-btn"></div>
-			<div class="right ui-range-btn"></div>
+		<div>
+			<input type="tel" value="" class="inp-base" data-range2="from">
 		</div>
 	</div>
 
-	<div>
-		<input type="tel" value="" class="inp-base" data-range1="from">
-		<input type="tel" value="" class="inp-base" data-range1="to" >
+	<div class="box-guide">
+		<div class="ui-range" data-id="range1">
+			<input class="ui-range-inp" data-range="from" type="range" min="0" max="100" value="0" />
+			<input class="ui-range-inp" data-range="to" type="range" min="0" max="100" value="50" />
+			<div class="ui-range-track">
+				<div class="ui-range-bar"></div>
+				<div class="left ui-range-btn">
+					<em class="n" data-range1="from"></em>
+				</div>
+				<div class="right ui-range-btn">
+					<em class="n" data-range1="to"></em>
+				</div>
+			</div>
+		</div>
+
+		<div>
+			<input type="tel" value="" class="inp-base" data-range1="from">
+			<input type="tel" value="" class="inp-base" data-range1="to" >
+		</div>
 	</div>
 
+	<div class="box-guide" style="height:16rem;">
+		<div class="ui-range" data-id="range3" data-type="single" data-orient="vertical" style="width:10rem">
+			<input class="ui-range-inp" data-range="from" type="range" min="1000" max="1000000" value="0" step="100" />
+			<div class="ui-range-track">
+				<div class="ui-range-bar"></div>
+				<div class="left ui-range-btn">
+					<em class="n"  data-range3="from"></em>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="box-guide">
 
@@ -374,6 +406,14 @@ $plugins<span class="na">.uiSlider</span>({ <span class="s"></span>
 
 	$plugins.rangeSlider.init({
 		id : 'range1'
+	});
+
+	$plugins.rangeSlider.init({
+		id : 'range2'
+	});
+
+	$plugins.rangeSlider.init({
+		id : 'range3'
 	});
 	//https://velog.io/@ordidxzero/bidirectional-html-input-range
 

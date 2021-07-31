@@ -1467,14 +1467,15 @@ if (!Object.keys){
 			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			var el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			var el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
-
-			
+			var inp_to = document.querySelector('[data-'+ id +'="to"]');
+			var inp_from = document.querySelector('[data-'+ id +'="from"]');
 
 			if (el_from && el_to) {
-				this.rangeFrom({
+				//range
+				win[global].rangeSlider.rangeFrom({
 					id: id
 				});
-				this.rangeTo({
+				win[global].rangeSlider.rangeTo({
 					id: id
 				});
 				el_from.addEventListener("input", function(){
@@ -1487,13 +1488,30 @@ if (!Object.keys){
 						id: id
 					});
 				});
+				inp_from.addEventListener('input', function(){
+					console.log(this.value);
+				});
+				inp_to.addEventListener('input', function(){
+					console.log(this.value);
+				});
 			} else {
-				this.rangeFrom({
-					id: id
+				//single
+				win[global].rangeSlider.rangeFrom({
+					id: id,
+					type: 'single'
 				});
 				el_from.addEventListener("input", function(){
 					win[global].rangeSlider.rangeFrom({
-						id: id
+						id: id,
+						type: 'single'
+					});
+				});
+				inp_from.addEventListener('input', function(){
+					var v = this.value;
+					win[global].rangeSlider.rangeFrom({
+						id: id,
+						type: 'range',
+						value: v
 					});
 				});
 			}
@@ -1506,26 +1524,49 @@ if (!Object.keys){
 			var el_left = el_range.querySelector(".ui-range-btn.left");
 			var el_right = el_range.querySelector(".ui-range-btn.right");
 			var el_bar = el_range.querySelector(".ui-range-bar");
-			var inp_from = document.querySelector('[data-'+ id +'="from"]');
+
+			var inp_from = document.querySelectorAll('[data-'+ id +'="from"]');
+			var v = opt.value;
+			var percent;
 			var {
 				value,
 				min,
 				max
 			} = el_from;
 
-			if (+el_to.value - +el_from.value < 0) {
-				el_from.value = +el_to.value - 0;
+			var from_value = +el_from.value;
+
+			if (opt.type !== 'single') {
+				if (+el_to.value - from_value < 0) {
+					el_from.value = +el_to.value - 0;
+				}
+				
+				percent = ((from_value - +min) / (+max - +min)) * 100;
+
+				el_right.classList.remove('on');
+				el_to.classList.remove('on');
+				el_left.style.left = `${percent}%`;
+				el_bar.style.left = `${percent}%`;
+			} else {
+				if (from_value < 0) {
+					from_value = 0;
+				}
+				percent = ((from_value - +min) / (+max - +min)) * 100;
+				el_left.style.left = `${percent}%`;
+				el_bar.style.right = `${100 - percent}%`;
 			}
 
-			var percent = ((+el_from.value - +min) / (+max - +min)) * 100;
-
-			el_right.classList.remove('on');
 			el_left.classList.add('on');
 			el_from.classList.add('on');
-			el_to.classList.remove('on');
-			el_left.style.left = `${percent}%`;
-			el_bar.style.left = `${percent}%`;
-			inp_from.value = el_from.value;
+			
+			for (var i = 0; i < inp_from.length; i++) {
+				if (inp_from[i].tagName === 'INPUT') {
+					inp_from[i].value = from_value;
+				} else {
+					inp_from[i].textContent = from_value;
+				}
+			}
+			
 		},
 		rangeTo: function(opt){
 			var id = opt.id;
@@ -1535,7 +1576,7 @@ if (!Object.keys){
 			var el_left = el_range.querySelector(".ui-range-btn.left");
 			var el_right = el_range.querySelector(".ui-range-btn.right");
 			var el_bar = el_range.querySelector(".ui-range-bar");
-			var inp_to = document.querySelector('[data-'+ id +'="to"]');
+			var inp_to = document.querySelectorAll('[data-'+ id +'="to"]');
 			var {
 				value,
 				min,
@@ -1554,9 +1595,19 @@ if (!Object.keys){
 			el_from.classList.remove('on');
 			el_right.style.right = `${100 - percent}%`;
 			el_bar.style.right = `${100 - percent}%`;
-			inp_to.value = el_to.value;
+
+			for (var i = 0; i < inp_to.length; i++) {
+				if (inp_to[i].tagName === 'INPUT') {
+					inp_to[i].value = el_to.value;
+				} else {
+					inp_to[i].textContent = el_to.value;
+				}
+			}
 		}
 	}
+
+
+
 
 	win[global].datepicker = {
 		destroy: function(opt){
