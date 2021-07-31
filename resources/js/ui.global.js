@@ -1535,12 +1535,13 @@ if (!Object.keys){
 			} = el_from;
 
 			var from_value = +el_from.value;
-
+			
 			if (opt.type !== 'single') {
 				if (+el_to.value - from_value < 0) {
-					el_from.value = +el_to.value - 0;
+					from_value = +el_to.value - 0;
+					el_from.value = from_value;
 				}
-				
+
 				percent = ((from_value - +min) / (+max - +min)) * 100;
 
 				el_right.classList.remove('on');
@@ -1566,7 +1567,6 @@ if (!Object.keys){
 					inp_from[i].textContent = from_value;
 				}
 			}
-			
 		},
 		rangeTo: function(opt){
 			var id = opt.id;
