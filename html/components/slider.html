@@ -17,10 +17,6 @@
 				</div>
 			</div>
 		</div>
-
-		<div>
-			<input type="tel" value="" class="inp-base" data-range2="from">
-		</div>
 	</div>
 
 	<div class="box-guide">
@@ -37,16 +33,11 @@
 				</div>
 			</div>
 		</div>
-
-		<div>
-			<input type="tel" value="" class="inp-base" data-range1="from">
-			<input type="tel" value="" class="inp-base" data-range1="to" >
-		</div>
 	</div>
 
-	<div class="box-guide" style="height:16rem;">
+	<div class="box-guide" style="height:14rem; display: flex; justify-content: center;">
 		<div class="ui-range" data-id="range3" data-type="single" data-orient="vertical" style="width:10rem">
-			<input class="ui-range-inp" data-range="from" type="range" min="1000" max="1000000" value="0" step="100" />
+			<input class="ui-range-inp" data-range="from" type="range" min="100" max="10000" value="0" step="100" />
 			<div class="ui-range-track">
 				<div class="ui-range-bar"></div>
 				<div class="left ui-range-btn">
@@ -56,351 +47,225 @@
 		</div>
 	</div>
 
-	<div class="box-guide">
-
-
-		<div class="ui-slider" id="uiSlider">
-			<div class="ui-slider-wrap">
-				<button class="ui-slider-btn-s" data-btn="min" type="button" title="최소값 선택">선택 최소값 <span
-						class="ui-slider-txt"></span></button>
-				<button class="ui-slider-btn-e" data-btn="max" type="button" title="최대값 선택">선택 최대값 <span
-						class="ui-slider-txt"></span></button>
-				<div class="ui-slider-bg">
-					<div class="ui-slider-bar"></div>
+	<div class="box-guide" style="height:14rem; display: flex; justify-content: center;">
+		<div class="ui-range" data-id="range4" data-orient="vertical" style="width:10rem">
+			<input class="ui-range-inp" data-range="from" type="range" min="100" max="10000" value="0" step="100" />
+			<input class="ui-range-inp" data-range="to" type="range" min="100" max="10000" value="6000" step="100"/>
+			<div class="ui-range-track">
+				<div class="ui-range-bar"></div>
+				<div class="left ui-range-btn">
+					<em class="n"  data-range4="from"></em>
 				</div>
-				<div class="ui-slider-divwrap"></div>
-			</div>
-		</div>
-		<div data-sliderselect="uiSlider" style="margin-top:20px">
-			<select title="최소값 선택" class="t1 ui-slider-min"></select>
-			<select title="최대값 선택" class="t2 ui-slider-max"></select>
-		</div>
-
-		<div class="ui-slider" id="uiSlider2">
-			<div class="ui-slider-wrap">
-				<button class="ui-slider-btn-s" data-btn="min" type="button" title="최소값 선택">선택 최소값 <span
-						class="ui-slider-txt"></span></button>
-				<button class="ui-slider-btn-e" data-btn="max" type="button" title="최대값 선택">선택 최대값 <span
-						class="ui-slider-txt"></span></button>
-				<div class="ui-slider-bg">
-					<div class="ui-slider-bar"></div>
-				</div>
-				<div class="ui-slider-divwrap"></div>
-			</div>
-		</div>
-		<div data-sliderselect="uiSlider2" style="margin-top:20px">
-			<select title="최소값 선택" class="t1 ui-slider-min"></select>
-			<select title="최대값 선택" class="t2 ui-slider-max"></select>
-		</div>
-
-		<hr>
-
-		<div style="display:inline-block; width:45%;">
-			<div class="ui-slider" id="uiSlider3" style="margin:0 auto">
-				<div class="ui-slider-wrap">
-					<button class="ui-slider-btn-s" data-btn="min" type="button" title="최소값 선택">선택 최소값 <span
-							class="ui-slider-txt"></span></button>
-					<button class="ui-slider-btn-e" data-btn="max" type="button" title="최대값 선택">선택 최대값 <span
-							class="ui-slider-txt"></span></button>
-					<div class="ui-slider-bg">
-						<div class="ui-slider-bar"></div>
-					</div>
-					<div class="ui-slider-divwrap"></div>
+				<div class="right ui-range-btn">
+					<em class="n" data-range4="to"></em>
 				</div>
 			</div>
-			<div data-sliderselect="uiSlider3" style="margin-top:20px">
-				<select title="최소값 선택" class="t1 ui-slider-min"></select>
-				<select title="최대값 선택" class="t2 ui-slider-max"></select>
-			</div>
 		</div>
-		<div style="display:inline-block; width:45%;">
-			<div class="ui-slider" id="uiSlider4" style="margin:0 auto">
-				<div class="ui-slider-wrap">
-					<button class="ui-slider-btn-s" data-btn="min" type="button" title="최소값 선택">선택 최소값 <span
-							class="ui-slider-txt"></span></button>
-					<button class="ui-slider-btn-e" data-btn="max" type="button" title="최대값 선택">선택 최대값 <span
-							class="ui-slider-txt"></span></button>
-					<div class="ui-slider-bg">
-						<div class="ui-slider-bar"></div>
-					</div>
-					<div class="ui-slider-divwrap"></div>
-				</div>
-			</div>
-			<div data-sliderselect="uiSlider4" style="margin-top:20px">
-				<select title="최소값 선택" class="t1 ui-slider-min"></select>
-				<select title="최대값 선택" class="t2 ui-slider-max"></select>
-			</div>
-		</div>
-	</div>
-	<hr>
-	<h3 class="h-3">single slider</h3>
-	<div class="ui-slider" id="uiSlider5">
-		<div class="ui-slider-wrap">
-			<button class="ui-slider-btn-s" data-btn="min" type="button" title="값 선택">선택 값 <span
-					class="ui-slider-txt"></span></button>
-			<div class="ui-slider-bg">
-				<div class="ui-slider-bar"></div>
-			</div>
-			<div class="ui-slider-divwrap"></div>
-		</div>
-	</div>
-	<div data-sliderselect="uiSlider5" style="margin-top:20px">
-		<select title="최소값 선택" class="t1 ui-slider-min"></select>
 	</div>
 
-	<div class="ui-slider" id="uiSlider6">
-		<div class="ui-slider-wrap">
-			<button class="ui-slider-btn-s" data-btn="min" type="button" title="값 선택">선택 값 <span
-					class="ui-slider-txt"></span></button>
-			<div class="ui-slider-bg">
-				<div class="ui-slider-bar"></div>
-			</div>
-			<div class="ui-slider-divwrap"></div>
-		</div>
-	</div>
-	<div data-sliderselect="uiSlider6" style="margin-top:20px">
-		<select title="최소값 선택" class="t1 ui-slider-min"></select>
-	</div>
-	<hr>
-
-	<div style="display:inline-block; width:45%;">
-		<div class="ui-slider" id="uiSlider7" style="margin:0 auto">
-			<div class="ui-slider-wrap">
-				<button class="ui-slider-btn-s" data-btn="min" type="button" title="값 선택">선택 값 <span
-						class="ui-slider-txt"></span></button>
-				<div class="ui-slider-bg">
-					<div class="ui-slider-bar"></div>
-				</div>
-				<div class="ui-slider-divwrap"></div>
-			</div>
-		</div>
-		<div data-sliderselect="uiSlider7" style="margin-top:20px">
-			<select title="최소값 선택" class="t1 ui-slider-min"></select>
-		</div>
-	</div>
-	<div style="display:inline-block; width:45%;">
-		<div class="ui-slider" id="uiSlider8" style="margin:0 auto">
-			<div class="ui-slider-wrap">
-				<button class="ui-slider-btn-s" data-btn="min" type="button" title="값 선택">선택 값 <span
-						class="ui-slider-txt"></span></button>
-				<div class="ui-slider-bg">
-					<div class="ui-slider-bar"></div>
-				</div>
-				<div class="ui-slider-divwrap"></div>
-			</div>
-		</div>
-		<div data-sliderselect="uiSlider8" style="margin-top:20px">
-			<select title="최소값 선택" class="t1 ui-slider-min"></select>
-		</div>
-	</div>
 </section>
 
-
-<h2 class="h-2">HTML Structure</h2>
-<div class="box-code">
-	<pre>
-<code>
-<span class="c">// range slider</span>
-&lt;div <span class="na">class=</span><span class="s">"ui-slider"</span> <span class="na">id=</span><span class="s">"uiSlider"</span>&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-slider-wrap"</span>&gt;
-		&lt;button <span class="na">class=</span><span class="s">"ui-slider-btn-s"</span> <span class="na">data-btn=</span><span class="s">"min"</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">title=</span><span class="s">"최소값 선택 "</span>&gt;선택 최소값 &lt;span <span class="na">class=</span><span class="s">"ui-slider-txt"</span>&gt;&lt;/span&gt;&lt;/button&gt;
-		&lt;button <span class="na">class=</span><span class="s">"ui-slider-btn-e"</span> <span class="na">data-btn=</span><span class="s">"max"</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">title=</span><span class="s">"최대값 선택 "</span>&gt;선택 최대값 &lt;span <span class="na">class=</span><span class="s">"ui-slider-txt"</span>&gt;&lt;/span&gt;&lt;/button&gt;
-		&lt;div <span class="na">class=</span><span class="s">"ui-slider-bg"</span>&gt;
-			&lt;div <span class="na">class=</span><span class="s">"ui-slider-bar"</span>&gt;&lt;/div&gt;
+<section class="sec-wrap">
+	<h2 class="h-2">Source Code</h2>
+	<h3 class="h-3">HTML</h3>
+<pre class="box-code"><code class="html">
+//single
+&lt;div class="ui-range" data-id="range2" data-type="single"&gt;
+	&lt;input class="ui-range-inp" data-range="from" type="range" min="0" max="100" value="0" /&gt;
+	&lt;div class="ui-range-track"&gt;
+		&lt;div class="ui-range-bar"&gt;&lt;/div&gt;
+		&lt;div class="left ui-range-btn"&gt;
+			&lt;em class="n" data-range2="from"&gt;&lt;/em&gt;
 		&lt;/div&gt;
-		&lt;div <span class="na">class=</span><span class="s">"ui-slider-divwrap"</span>&gt;&lt;/div&gt;
 	&lt;/div&gt;
 &lt;/div&gt;
-&lt;div <span class="na">data-sliderselect=</span><span class="s">"uiSlider"</span>&gt;
-	&lt;select <span class="na">title=</span><span class="s">"최소값 선택"</span> <span class="na">class=</span><span class="s">"t1 ui-slider-min"</span>&gt;&lt;/select&gt;
-	&lt;select <span class="na">title=</span><span class="s">"최대값 선택"</span> <span class="na">class=</span><span class="s">"t2 ui-slider-max"</span>&gt;&lt;/select&gt;
-&lt;/div&gt;
 
-<span class="c">// slider</span>
-&lt;div <span class="na">class=</span><span class="s">"ui-slider"</span> <span class="na">id=</span><span class="s">"uiSlider2"</span>&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-slider-wrap"</span>&gt;
-		&lt;button <span class="na">class=</span><span class="s">"ui-slider-btn-s"</span> <span class="na">data-btn=</span><span class="s">"min"</span> <span class="na">type=</span><span class="s">"button"</span> <span class="na">title=</span><span class="s">"값 선택 "</span>&gt;선택 값 &lt;span <span class="na">class=</span><span class="s">"ui-slider-txt"</span>&gt;&lt;/span&gt;&lt;/button&gt;
-		&lt;div <span class="na">class=</span><span class="s">"ui-slider-bg"</span>&gt;
-			&lt;div <span class="na">class=</span><span class="s">"ui-slider-bar"</span>&gt;&lt;/div&gt;
+//dual
+&lt;div class="ui-range" data-id="range1"&gt;
+	&lt;input class="ui-range-inp" data-range="from" type="range" min="0" max="100" value="0" /&gt;
+	&lt;input class="ui-range-inp" data-range="to" type="range" min="0" max="100" value="50" /&gt;
+	&lt;div class="ui-range-track"&gt;
+		&lt;div class="ui-range-bar"&gt;&lt;/div&gt;
+		&lt;div class="left ui-range-btn"&gt;
+			&lt;em class="n" data-range1="from"&gt;&lt;/em&gt;
 		&lt;/div&gt;
-		&lt;div <span class="na">class=</span><span class="s">"ui-slider-divwrap"</span>&gt;&lt;/div&gt;
+		&lt;div class="right ui-range-btn"&gt;
+			&lt;em class="n" data-range1="to"&gt;&lt;/em&gt;
+		&lt;/div&gt;
 	&lt;/div&gt;
 &lt;/div&gt;
-&lt;div <span class="na">data-sliderselect=</span><span class="s">"uiSlider2"</span>&gt;
-	&lt;select <span class="na">title=</span><span class="s">"현재가격 선택"</span> <span class="na">class=</span><span class="s">"t1 ui-slider-min"</span>&gt;&lt;/select&gt;
+
+//vertical : data-orient="vertical"
+&lt;div class="ui-range" data-id="range2" data-orient="vertical" data-type="single"&gt;
+	&lt;input class="ui-range-inp" data-range="from" type="range" min="0" max="100" value="0" /&gt;
+	&lt;div class="ui-range-track"&gt;
+		&lt;div class="ui-range-bar"&gt;&lt;/div&gt;
+		&lt;div class="left ui-range-btn"&gt;
+			&lt;em class="n" data-range2="from"&gt;&lt;/em&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
 &lt;/div&gt;
+</code>
+</pre>
+
+<h3 class="h-3">CSS</h3>
+<pre class="box-code"><code class="css">
+/* range */
+.ui-range[data-orient="vertical"]{
+	transform-origin: 5rem 5rem;
+		transform: rotate(-90deg);
+	margin-left:6rem;
+}
+.ui-range[data-orient="vertical"] .ui-range-btn{
+	justify-content: center;
+}
+.ui-range[data-orient="vertical"] .ui-range-btn .n{
+	top:2.4rem;
+	left:2rem;
+	transform: rotate(90deg);
+	transform-origin: 0 0;
+}
+.ui-range {
+	width: 100%;
+	height: 3rem;
+	padding: 1.2rem 1rem;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	position: relative;
+}
+
+.ui-range-inp.on {
+	z-index: 11;
+}
+
+.ui-range-inp {
+	width: 100%;
+	top: .5rem;
+	left: 0;
+	position: absolute;
+	border: none;
+	pointer-events: none;
+	z-index: 10;
+	appearance: none;
+	opacity: 0;
+	padding: 0;
+	margin: 0;
+	height: 2rem;
+}
+
+.ui-range-inp::-webkit-slider-thumb {
+	pointer-events: all;
+	/* appearance, background-color는 지워도 됨 */
+	appearance: none;
+	background-color: red;
+	width: 2rem;
+	height: 2rem;
+	margin-top: 0rem;
+}
+
+.ui-range-track {
+	position: relative;
+	width: 100%;
+	height: 0.6rem;
+	background-color: #bdc3c7;
+	border-radius: 0.3rem;
+}
+[data-type="single"] .ui-range-bar{
+	right:auto;
+}
+.ui-range-bar {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-color: #2c3e50;
+	border-radius: 0.5rem;
+}
+
+.ui-range-btn.on {
+	z-index: 1;
+}
+
+.ui-range-btn {
+	position: absolute;
+	top: 50%;
+	display: flex;
+	justify-content: center;
+	align-self: center;
+	width: 2rem;
+	height: 2rem;
+	background-color: black;
+	border-radius: 50%;
+}
+
+.ui-range-btn.left {
+	left: 0;
+	transform: translate(-1rem, -50%);
+}
+
+.ui-range-btn.right {
+	right: 0;
+	transform: translate(1rem, -50%);
+}
+
+.ui-range-btn.right::after {
+	content: 'arrow_right';
+	font-family: 'Material Icons';
+	font-size: 1.2;
+	color: #fff;
+	line-height: 2rem;
+
+}
+[data-type="single"] .ui-range-btn.left::after{
+	content:"code";
+}
+.ui-range-btn.left::after {
+	content: 'arrow_left';
+	font-family: 'Material Icons';
+	font-size: 1.2rem;
+	color: #fff;
+	line-height: 2rem;
+
+}
+
+.ui-range-btn .n {
+	position:absolute;
+	top:-1.8rem;
+	font-size:1.2rem;
+	text-align: center;
+}
 </code>
 </pre>
 </div>
 
-<h2 class="h-2">Javascript</h2>
-<h3 class="h-3">$plugins.uiSlider</h3>
-<div class="box-code">
-	<pre>
-<code>
-$plugins<span class="na">.uiSlider</span>({ <span class="s"></span>
-	id:"uiSlider", 
-	vertical: false, 
-	reverse: false, 
-	range: false, 
-	acc: true, 
-	callback: sliderCallback, 
-	stepname: false,
-	now:[500], 
-	step:10,
-	min:0, 
-	max:1000, 
-	tooltip:true, 
-	unit:'만원', 
-	txt_s:'이하', 
-	txt_e:'이상' </span>
+<h3 class="h-3">Javascript</h3>
+<pre class="box-code"><code class="javascript">
+$plugins.rangeSlider.init({
+	id : 'range1'
 });
-</code>
-</pre>
-</div>
 
-<table class="tbl-base type-option">
-	<caption>옵션 설명</caption>
-	<colgroup>
-		<col class="n1">
-		<col class="n2">
-		<col class="n3">
-		<col class="n4">
-	</colgroup>
-	<thead>
-		<tr>
-			<th scope="col">Options</th>
-			<th scope="col">Type</th>
-			<th scope="col">Default</th>
-			<th scope="col">Explanation</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr class="nec">
-			<th scope="row">id:</th>
-			<td>[string]</td>
-			<td>'name'</td>
-			<td>(필수) ui-sider의 아이디명 기입</td>
-		</tr>
-		<tr>
-			<th scope="row">vertical:</th>
-			<td>[boolean]</td>
-			<td>false</td>
-			<td>가로/세로 모드 설정
-				<ul>
-					<li>true: 세로모드</li>
-					<li>false: 가로모드</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">reverse:</th>
-			<td>[boolean]</td>
-			<td>false</td>
-			<td>순서 설정
-				<ul>
-					<li>true: 역순으로 설정</li>
-					<li>false: 기본순</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">range:</th>
-			<td>[boolean]</td>
-			<td>false</td>
-			<td>순서 설정
-				<ul>
-					<li>true: 범위설정 (최소,최대)</li>
-					<li>false: 기본</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">acc:</th>
-			<td>[boolean]</td>
-			<td>false</td>
-			<td>순서 설정
-				<ul>
-					<li>true: 접근성을 위해 셀렉트 박스와 연결</li>
-					<li>false: 미사용</li>
-				</ul>
-			</td>
-		</tr>
-		<tr class="nec">
-			<th scope="row">now:</th>
-			<td>[array]</td>
-			<td>[0]</td>
-			<td>현재 설정 값, range가 true일때 [최소, 최대] 2개의 값</td>
-		</tr>
-		<tr class="nec">
-			<th scope="row">step:</th>
-			<td>[number]</td>
-			<td>10</td>
-			<td>단계 설정</td>
-		</tr>
-		<tr class="nec">
-			<th scope="row">min:</th>
-			<td>[number]</td>
-			<td>0</td>
-			<td>최소 값</td>
-		</tr>
-		<tr class="nec">
-			<th scope="row">max:</th>
-			<td>[number]</td>
-			<td>100</td>
-			<td>최대 값</td>
-		</tr>
+//single type 필수
+$plugins.rangeSlider.rangeFrom({ 
+	id: 'range1', 
+	value: 90,
+	type: 'single'
+});
 
-		<tr>
-			<th scope="row">stepname:</th>
-			<td>[boolean][array]</td>
-			<td>false</td>
-			<td>구분부분 텍스트지정
-				<ul>
-					<li>['step1', 'step2', ......]</li>
-					<li>false: 미사용</li>
-				</ul>
-			</td>
-		</tr>
+//dual type 생략
+$plugins.rangeSlider.rangeFrom({ 
+	id: 'range1', 
+	value: 90
+});
+$plugins.rangeSlider.rangeTo({ 
+	id: 'range1', 
+	value: 90 
+});
+</code></pre>
 
-		<tr>
-			<th scope="row">tooltip:</th>
-			<td>[boolean]</td>
-			<td>false</td>
-			<td>툴팁 생성 여부 설정
-				<ul>
-					<li>true: 툴팁생성</li>
-					<li>false: 미사용</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">unit:</th>
-			<td>[string]</td>
-			<td>''</td>
-			<td>툴팁에 단위명 추가 예)0000만원</td>
-		</tr>
-		<tr>
-			<th scope="row">txt_s:</th>
-			<td>[string]</td>
-			<td>''</td>
-			<td>단계에 첫번째 오브젝트에 추가 예) 100 이하</td>
-		</tr>
-		<tr>
-			<th scope="row">txt_e:</th>
-			<td>[string]</td>
-			<td>''</td>
-			<td>단계에 첫번째 오브젝트에 추가 예) 1000 이상</td>
-		</tr>
-		<tr>
-			<th scope="row">callback:</th>
-			<td>[function]</td>
-			<td>function</td>
-			<td>콜백값으로 아이디와 최소/최대 값, 최소/최대버튼 위치값 %</td>
-		</tr>
-	</tbody>
-</table>
-
+</section>
 
 <script>
 
@@ -414,6 +279,10 @@ $plugins<span class="na">.uiSlider</span>({ <span class="s"></span>
 
 	$plugins.rangeSlider.init({
 		id : 'range3'
+	});
+
+	$plugins.rangeSlider.init({
+		id : 'range4'
 	});
 	//https://velog.io/@ordidxzero/bidirectional-html-input-range
 

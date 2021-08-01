@@ -1261,12 +1261,16 @@ select.off:focus+.ui-select-btn:after {
 .ui-range[data-orient="vertical"]{
 	transform-origin: 5rem 5rem;
   	transform: rotate(-90deg);
+	margin-left:6rem;
 }
 .ui-range[data-orient="vertical"] .ui-range-btn{
-	justify-content: flex-start;
+	justify-content: center;
 }
 .ui-range[data-orient="vertical"] .ui-range-btn .n{
+	top:2.4rem;
+	left:2rem;
 	transform: rotate(90deg);
+	transform-origin: 0 0;
 }
 .ui-range {
 	width: 100%;
@@ -1368,7 +1372,7 @@ select.off:focus+.ui-select-btn:after {
 .ui-range-btn.left::after {
 	content: 'arrow_left';
 	font-family: 'Material Icons';
-	font-size: 1.2;
+	font-size: 1.2rem;
 	color: #fff;
 	line-height: 2rem;
 

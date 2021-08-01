@@ -1467,8 +1467,6 @@ if (!Object.keys){
 			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			var el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			var el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
-			var inp_to = document.querySelector('[data-'+ id +'="to"]');
-			var inp_from = document.querySelector('[data-'+ id +'="from"]');
 
 			if (el_from && el_to) {
 				//range
@@ -1488,51 +1486,35 @@ if (!Object.keys){
 						id: id
 					});
 				});
-				inp_from.addEventListener('input', function(){
-					console.log(this.value);
-				});
-				inp_to.addEventListener('input', function(){
-					console.log(this.value);
-				});
+
 			} else {
 				//single
 				win[global].rangeSlider.rangeFrom({
 					id: id,
 					type: 'single'
 				});
-				el_from.addEventListener("input", function(){
-					win[global].rangeSlider.rangeFrom({
-						id: id,
-						type: 'single'
-					});
-				});
-				inp_from.addEventListener('input', function(){
-					var v = this.value;
-					win[global].rangeSlider.rangeFrom({
-						id: id,
-						type: 'range',
-						value: v
-					});
-				});
 			}
 		},
 		rangeFrom: function(opt){
 			var id = opt.id;
+			var v = opt.value;
 			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			var el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			var el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
 			var el_left = el_range.querySelector(".ui-range-btn.left");
 			var el_right = el_range.querySelector(".ui-range-btn.right");
 			var el_bar = el_range.querySelector(".ui-range-bar");
-
 			var inp_from = document.querySelectorAll('[data-'+ id +'="from"]');
-			var v = opt.value;
 			var percent;
 			var {
 				value,
 				min,
 				max
 			} = el_from;
+
+			if (v) {
+				el_from.value = v;
+			}
 
 			var from_value = +el_from.value;
 			
@@ -1570,6 +1552,7 @@ if (!Object.keys){
 		},
 		rangeTo: function(opt){
 			var id = opt.id;
+			var v = opt.value;
 			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			var el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			var el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
@@ -1583,11 +1566,18 @@ if (!Object.keys){
 				max
 			} = el_to;
 
-			if (+value - +el_from.value < 0) {
-				el_to.value = +el_from.value + 0;
+			if (v) {
+				el_to.value = v;
 			}
 
-			var percent = ((+el_to.value - +min) / (+max - +min)) * 100;
+			var to_value = +el_to.value;
+
+			if (+value - +el_from.value < 0) {
+				to_value = +el_from.value + 0;
+				el_to.value = to_value;
+			}
+
+			var percent = ((to_value - +min) / (+max - +min)) * 100;
 
 			el_right.classList.add('on');
 			el_left.classList.remove('on');
