@@ -665,9 +665,7 @@
     $plugins.page.pageAccordion = function(){
         console.log('page.js-acco');
         $plugins.accordion.init({ id:'exeAcco1', current:[0,2], callback:function(v){console.log(v)} });
-        $plugins.accordion.init({ id:'exeAcco2', current:[0,2], autoclose:true });
         $plugins.accordion.init({ id:'exeAcco3', current:null, autoclose:false });
-        $plugins.accordion.init({ id:'exeAcco4', current:null, autoclose:false });
         $plugins.accordion.init({ id:'exeAcco5', current:'all', autoclose:false });
 
         var add_html = '';

@@ -2917,7 +2917,7 @@ if (!Object.keys){
 				return false;
 			}
 	
-			var opt = $.extend(true, {}, this.options, opt);
+			var opt = $.extend(true, {}, win[global].accordion.options, opt);
 			var id = opt.id;
 			var current = opt.current;
 			var callback = opt.callback;
@@ -2939,7 +2939,9 @@ if (!Object.keys){
 			var para = win[global].para.get('acco'),
 				paras,
 				paraname;
-	
+			
+			console.log(callback);
+
 			//set up
 			if (!!para && !add) {
 				if (para.split('+').length > 1) {
@@ -3023,7 +3025,7 @@ if (!Object.keys){
 			}
 			
 			if (current !== null) {
-				win[global].uiAccordionToggle({ 
+				win[global].accordion.toggle({ 
 					id: id, 
 					current: current, 
 					motion: false 
@@ -3043,7 +3045,7 @@ if (!Object.keys){
 					var $this = $(this);
 	
 					optAcco = $this.closest('.ui-acco').data('opt');
-					win[global].uiAccordionToggle({ 
+					win[global].accordion.toggle({ 
 						id: optAcco.id, 
 						current: [$this.data('n')], 
 						close: optAcco.close, 
@@ -3099,6 +3101,108 @@ if (!Object.keys){
 				function homeKey(e) {
 					e.preventDefault();
 					$('#' + id + '-btn0').focus();
+				}
+			}
+		},
+		toggle: function(opt){
+			if (opt === undefined) {
+				return false;
+			}
+			
+			var id = opt.id,
+				$acco = $('#' + id),
+				dataOpt = $acco.data('opt'),
+				current = opt.current === undefined ? null : opt.current;
+	
+			console.log(dataOpt);
+	
+			var	callback = opt.callback === undefined ? dataOpt.callback : opt.callback,
+				state = opt.state === undefined ? 'toggle' : opt.state,
+				motion = opt.motion === undefined ? true : opt.motion,
+				autoclose = dataOpt.close,
+				open = null,
+				$wrap = $acco.children('.ui-acco-wrap'),
+				$pnl,
+				$tit,
+				$btn,
+				len = $wrap.length,
+				speed = 200,
+				i, c = 0;
+			
+			(motion === false) ? speed = 0 : speed = 200;
+	
+			if (current !== 'all') {
+				for (i = 0 ; i < current.length; i++) {
+					$pnl = $wrap.eq(current[i]).children('.ui-acco-pnl');
+					$tit = $wrap.eq(current[i]).children('.ui-acco-tit');
+					$btn = $tit.find('.ui-acco-btn');
+					
+					if (state === 'toggle') {
+						(!$btn.data('selected')) ? act('down') : act('up');
+					} else {
+						(state === 'open') ? act('down') : (state === 'close') ? act('up') : '';
+					}
+				}
+				!callback ? '' :
+					callback({ 
+						id:id, 
+						open:open, 
+						current:current
+					});
+			} else if (current === 'all') {
+				checking();
+			}
+	
+			function checking() {
+				//열린상태 체크하여 전체 열지 닫을지 결정
+				c = 0;
+				$wrap.each(function(i){
+					c = ($wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').attr('aria-expanded') === 'true') ? c + 1 : c + 0;
+				});
+				//state option 
+				if (state === 'open') {
+					c = 0;
+					$acco.data('allopen', false);
+				} else if (state === 'close') {
+					c = len;
+					$acco.data('allopen', true);
+				}
+				//all check action
+				if (c === 0 || !$acco.data('allopen')) {
+					$acco.data('allopen', true);
+					act('down');
+				} else if (c === len || !!$acco.data('allopen')) {
+					$acco.data('allopen', false);
+					act('up');
+				}
+			}
+			function act(v) {
+				var isDown = v === 'down',
+					a = isDown ? true : false, 
+					cls = isDown ? 'addClass' : 'removeClass', 
+					updown = isDown ? 'slideDown' : 'slideUp';
+				
+				open = isDown ? true : false;
+	
+				if (autoclose === true && isDown) {
+					$wrap.each(function(i){
+						$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', false).removeClass('selected').attr('aria-expanded', false);
+						$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden',true).stop().slideUp(speed);
+					});
+				}
+	
+				if (current === 'all') {
+					$wrap.each(function(i){
+						$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', a)[cls]('selected').attr('aria-expanded', a);
+						$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden', !a).stop()[updown](speed, function(){
+							$(this).css({ height: '', padding: '', margin: '' }); 
+						});
+					});
+				} else {
+					$btn.data('selected', a).attr('aria-expanded', a)[cls]('selected');
+					$pnl.attr('aria-hidden', !a).stop()[updown](speed, function(){
+						$(this).css({ height: '', padding: '', margin: '' }); 
+					});
 				}
 			}
 		}
@@ -3320,8 +3424,11 @@ if (!Object.keys){
 		var id = opt.id,
 			$acco = $('#' + id),
 			dataOpt = $acco.data('opt'),
-			current = opt.current === undefined ? null : opt.current,
-			callback = opt.callback === undefined ? dataOpt.callback : opt.callback,
+			current = opt.current === undefined ? null : opt.current;
+
+		console.log(dataOpt);
+
+		var	callback = opt.callback === undefined ? dataOpt.callback : opt.callback,
 			state = opt.state === undefined ? 'toggle' : opt.state,
 			motion = opt.motion === undefined ? true : opt.motion,
 			autoclose = dataOpt.close,
