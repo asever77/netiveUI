@@ -1603,8 +1603,6 @@ if (!Object.keys){
 	}
 
 
-
-
 	win[global].datepicker = {
 		destroy: function(opt){
 			var is_dim = !!$('.sheet-dim').length;
@@ -2387,495 +2385,518 @@ if (!Object.keys){
 			callback: false
 		},
 		init: function(opt){
+			var opt = opt === undefined ? {} : opt;
+			var opt = $.extend(true, {}, win[global].select.options, opt);
+			var current = opt.current;
+			var callback = opt.callback;
+			var customscroll = opt.customscroll;
+			var id = opt.id;
+			var is_id = id === false ? false : true;
+			var $ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.find('.ui-select') : $('.ui-select');
+			var keys = win[global].option.keys;
 
-		}
-	}
-	/* ------------------------
-	* name : select
-	* date : 2020-06-16
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiSelect: function (opt) {
-			return createUiSelect(opt);
-		},
-		uiSelectAction: function (opt) {
-			return createuiSelectAction(opt);
-		}
-	});
-	win[global].uiSelect.option = {
-		id: false, 
-		current: null,
-		customscroll: true,
-		callback: false
-	};
-	function createUiSelect(opt) {
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiSelect.option, opt),
-			current = opt.current,
-			callback = opt.callback,
-			customscroll = opt.customscroll,
-			id = opt.id,
-			is_id = id === false ? false : true,
-			$ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.find('.ui-select') : $('.ui-select'),
-			keys = win[global].option.keys,
-			len = $ui_select.length;
+			var $sel;
+			var $selectCurrent;
+			var selectID;
+			var listID;
+			var optionSelectedID;
+			var selectN;
+			var selectTitle;
+			var selectDisabled;
 
-		var $sel,
-			$selectCurrent,
-			selectID,
-			listID,
-			optionSelectedID,
-			selectN,
-			selectTitle,
-			selectDisabled,
-			btnTxt = '',
-			hiddenClass = '',
-			htmlOption = '',
-			htmlButton = '' ;
+			var btnTxt = '';
+			var hiddenClass = '';
+			var htmlOption = '';
+			var htmlButton = '' ;
 
-		//init
-		win[global].browser.mobile ? customscroll = false : '';
+			//init
+			win[global].browser.mobile ? customscroll = false : '';
 
-		$ui_select.find('.ui-select-btn').remove();
-		$ui_select.find('.ui-select-wrap').remove();
-		$ui_select.find('.dim').remove();
+			//reset
+			$ui_select.find('.ui-select-btn').remove();
+			$ui_select.find('.ui-select-wrap').remove();
+			$ui_select.find('.dim').remove();
 
-		var idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
+			var idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
 
-		//select set
-		for (var i = 0; i < len; i++) {
-			$selectCurrent = $ui_select.eq(i);
-			$sel = $selectCurrent.find('select');
- 			selectID = $sel.attr('id');
-			selectID === undefined && $sel.attr('id', 'uiSelect_' + idN);
-			listID = selectID + '_list';
-			selectDisabled = $sel.prop('disabled');
-			selectTitle = $sel.attr('title');
-			hiddenClass = '';
-			$selectCurrent.css('max-width', $selectCurrent.outerWidth());
-			(!$sel.data('callback') || !!callback) && $sel.data('callback', callback);
+			//select set
+			for (var i = 0, len = $ui_select.length; i < len; i++) {
+				$selectCurrent = $ui_select.eq(i);
+				$sel = $selectCurrent.find('select');
 
-			if (customscroll) {
-				htmlOption += '<div class="ui-select-wrap ui-scrollbar" scroll-id="uiSelectScrollBar_'+ idN +'">';
-				idN = idN + 1;
-				sessionStorage.setItem('scrollbarID', idN);
-			} else {
-				htmlOption += '<div class="ui-select-wrap" style="min-width:' + $selectCurrent.outerWidth() + 'px">';
+				selectID = $sel.attr('id');
+				(selectID === undefined) && $sel.attr('id', 'uiSelect_' + idN);
+				listID = selectID + '_list';
+
+				selectDisabled = $sel.prop('disabled');
+				selectTitle = $sel.attr('title');
+				hiddenClass = '';
+
+				//$selectCurrent.css('max-width', $selectCurrent.outerWidth());
+
+				(!$sel.data('callback') || !!callback) && $sel.data('callback', callback);
+
+				if (customscroll) {
+					htmlOption += '<div class="ui-select-wrap ui-scrollbar" scroll-id="uiSelectScrollBar_'+ idN +'">';
+					idN = idN + 1;
+					sessionStorage.setItem('scrollbarID', idN);
+				} else {
+					htmlOption += '<div class="ui-select-wrap" style="min-width:' + $selectCurrent.outerWidth() + 'px">';
+				}
+
+				htmlOption += '<strong class="ui-select-title">'+ selectTitle +'</strong>';
+				htmlOption += '<div class="ui-select-opts" role="listbox" id="' + listID + '" aria-hidden="false">';
+
+				setOption();
+
+				htmlOption += '</div>';
+				htmlOption += '<button type="button" class="ui-select-cancel"><span>취소</span></strong>';
+				htmlOption += '<button type="button" class="ui-select-confirm"><span>확인</span></strong>';
+				htmlOption += '</div>';
+
+				htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
+
+				
+
+				$selectCurrent.append(htmlButton);
+				$sel.addClass('off');
+				//$sel.attr('aria-hidden', true).attr('tabindex', -1);
+				$selectCurrent.append(htmlOption);
+
+				selectDisabled ? $selectCurrent.find('.ui-select-btn').prop('disabled', true).addClass('disabled') : '';
+
+				htmlOption = '';
+				htmlButton = '';
 			}
-
-			htmlOption += '<strong class="ui-select-title">'+ selectTitle +'</strong>';
-			htmlOption += '<div class="ui-select-opts" role="listbox" id="' + listID + '" aria-hidden="false">';
-
-			setOption();
-
-			htmlOption += '</div>';
-			htmlOption += '<button type="button" class="ui-select-confirm"><span>확인</span></strong>';
-			htmlOption += '</div>';
-			htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
-
 			
+			function setOption(t, v){
+				var _$sel = (t !== undefined) ? $(t).closest('.ui-select').find('select') : $sel;
+				var _$option = _$sel.find('option');
+				var _$optionCurrent = _$option.eq(0);
 
-			$selectCurrent.append(htmlButton);
-			$sel.addClass('off');
-			//$sel.attr('aria-hidden', true).attr('tabindex', -1);
-			$selectCurrent.append(htmlOption);
+				selectID = _$sel.attr('id');
 
-			selectDisabled ? $selectCurrent.find('.ui-select-btn').prop('disabled', true).addClass('disabled') : '';
+				var _optionID = selectID + '_opt';
+				var _optLen = _$option.length;
+				var _current = current;
+				var _selected = false;
+				var _disabled = false;
+				var _hidden = false;
+				var _val = false;
+				var _hiddenCls;
+				var _optionIdName;
 
-			htmlOption = '';
-			htmlButton = '';
-		}
-		
-		function setOption(t, v){
-			var _$sel = (t !== undefined) ? $(t).closest('.ui-select').find('select') : $sel;
-			var _$option = _$sel.find('option');
-			var _$optionCurrent = _$option.eq(0);
+				if (v !== undefined) {
+					_current = v;
+				}
 
-			selectID = _$sel.attr('id');
+				for (var j = 0; j < _optLen; j++) {
+					_$optionCurrent = _$option.eq(j);
+					_hidden = _$optionCurrent.prop('hidden');
 
-			var _optionID = selectID + '_opt';
-			var _optLen = _$option.length;
-			var _current = current;
-			var _selected = false;
-			var _disabled = false;
-			var _hidden = false;
-			var _val = false;
-			var _hiddenCls;
-			var _optionIdName;
+					if (_current !== null) {
+						
+						if (_current === j) {
+							_selected = true;
+							_$optionCurrent.prop('selected', true);
+						} else {
+							_selected = false;
+							_$optionCurrent.prop('selected', false);
+						}
 
-			if (v !== undefined) {
-				_current = v;
-			}
-
-			for (var j = 0; j < _optLen; j++) {
-				_$optionCurrent = _$option.eq(j);
-				_hidden = _$optionCurrent.prop('hidden');
-
-				if (_current !== null) {
-					
-					if (_current === j) {
-						_selected = true;
-						_$optionCurrent.prop('selected', true);
 					} else {
-						_selected = false;
-						_$optionCurrent.prop('selected', false);
+						_selected = _$optionCurrent.prop('selected');
 					}
 
-				} else {
-					_selected = _$optionCurrent.prop('selected');
+					_disabled = _$optionCurrent.prop('disabled');
+					_hiddenCls =  _hidden ? 'hidden' : '';
+
+					if (_selected) {
+						_val = _$optionCurrent.val();
+						btnTxt = _$optionCurrent.text();
+						optionSelectedID = _optionID + '_' + j;
+						selectN = j;
+					}
+
+					_selected && _hidden ? hiddenClass = 'opt-hidden' : '';
+					_optionIdName = _optionID + '_' + j;
+
+					if (win[global].browser.mobile) {
+						_disabled ?
+							_selected ?
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+							_selected ?
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">';
+					} else {
+						_disabled ?
+							_selected ?
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+							_selected ?
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">';
+					}
+
+					htmlOption += '<span class="ui-select-txt">' + _$optionCurrent.text() + '</span>';
+					htmlOption += '</button>';
 				}
 
-				_disabled = _$optionCurrent.prop('disabled');
-				_hiddenCls =  _hidden ? 'hidden' : '';
-
-				if (_selected) {
-					_val = _$optionCurrent.val();
-					btnTxt = _$optionCurrent.text();
-					optionSelectedID = _optionID + '_' + j;
-					selectN = j;
+				if (t !== undefined) {
+					_$sel.closest('.ui-select').find('.ui-select-opts button').remove();
+					_$sel.closest('.ui-select').find('.ui-select-opts').append(htmlOption);
+					htmlOption = '';
+					eventFn();
 				}
-
-				_selected && _hidden ? hiddenClass = 'opt-hidden' : '';
-				_optionIdName = _optionID + '_' + j;
-
-				if (win[global].browser.mobile) {
-					_disabled ?
-						_selected ?
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
-						_selected ?
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">' :
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">';
-				} else {
-					_disabled ?
-						_selected ?
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
-						_selected ?
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">' :
-							htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">';
-				}
-
-				htmlOption += '<span class="ui-select-txt">' + _$optionCurrent.text() + '</span>';
-				htmlOption += '</button>';
 			}
 
-			if (t !== undefined) {
-				_$sel.closest('.ui-select').find('.ui-select-opts button').remove();
-				_$sel.closest('.ui-select').find('.ui-select-opts').append(htmlOption);
-				htmlOption = '';
-				eventFn();
-			}
-		}
+			//event
+			eventFn();
+			function eventFn(){
+				var $doc = $(doc);
 
-		//event
-		eventFn();
-		function eventFn(){
-			var $doc = $(doc);
-
-			$doc.find('.dim-select').off('click.dim').on('click.dim', function () {
-				if ($('body').data('select-open')) {
-					optBlur();
-				}
-			});
-			$doc.find('.ui-select-confirm').off('click.cfm').on('click.cfm', optClose);
-			$doc.find('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
-				'click.ui': selectClick,
-				'keydown.ui': selectKey,
-				'mouseover.ui': selectOver,
-				'focus.ui': selectOver,
-				'mouseleave.ui': selectLeave
-			});
-			$doc.find('.ui-select-opt').off('click.ui mouseover.ui').on({
-				'click.ui': optClick,
-				'mouseover.ui': selectOver
-			});
-			$doc.find('.ui-select-wrap').off('mouseleave.ui').on({ 'mouseleave.ui': selectLeave });
-			$doc.find('.ui-select-wrap').off('blur.ui').on({ 'blur.ui': optBlur });
-			$doc.find('.ui-select-label').off('click.ui').on('click.ui', function () {
-				var idname = $(this).attr('for');
-
-				setTimeout(function () {
-					$('#' + idname + '_inp').focus();
-				}, 0);
-			});
-			$doc.find('.ui-select select').off('change.ui').on('change.ui', selectChange );
-		}
-
-		function selectLeave() {
-			$('body').data('select-open', true);
-		}
-		function selectChange() {
-			var $this = $(this);
-			$this.closest('.ui-select').data('fn');
-
-			win[global].uiSelectAction({
-				id:$this .attr('id'),
-				current: $this.find('option:selected').index(),
-				callback: $this.data('callback'), original:true
-			});
-		}
-		function optBlur() {
-			optClose();
-		}
-		function selectClick() {
-			var $btn = $(this);
-			$btn.data('sct', $(doc).scrollTop());
-
-			setOption(this, $btn.closest('.ui-select').find('option:selected').index() );
-			optExpanded(this);
-		}
-		function optClick() {
-			var t = this;
-			var idx =  $(t).index();
-
-			if (customscroll) {
-				win[global].uiSelectAction({ 
-					id: $(t).closest('.ui-select').find('.ui-select-btn').data('id'), 
-					current: idx 
-				});
-
-				$(t).closest('.ui-select').find('.ui-select-btn').focus();
-				optClose();
-			} else {
-				scrollSelect(idx, $(t).closest('.ui-select').find('.ui-select-wrap') );
-			}
-		}
-		function selectOver() {
-			$('body').data('select-open', false);
-		}
-		function selectKey(e) {
-			var t = this,
-				$btn = $(this),
-				id = $btn.data('id'),
-				$list = $('#' + id + '_list'),
-				$wrap = $list.closest('.ui-select-wrap'),
-				$opts = $wrap.find('.ui-select-opts'),
-				$opt = $wrap.find('.ui-select-opt'),
-
-				n = Number($list.find('.selected').index()),
-				nn = 0,
-				nnn = 0,
-				wrap_h = $wrap.outerHeight(),
-				len = $opt.length,
-				n_top = 0;
-
-			if (e.altKey) {
-				if (e.keyCode === keys.up) {
-					optOpen(t);
-				}
-
-				e.keyCode === keys.down && optClose();
-				return;
-			}
-
-			switch (e.keyCode) {
-				case keys.up:
-				case keys.left:
-					nn = n - 1 < 0 ? 0 : n - 1;
-					nnn = Math.abs($opts.position().top);
-					n_top = $opt.eq(nn).position().top + nnn;
-
-					optScroll($wrap, n_top, wrap_h, 'up');
-					optPrev(e, id, n, len);
-					break;
-
-				case keys.down:
-				case keys.right:
-					nn = n + 1 > len - 1 ? len - 1 : n + 1;
-					nnn = Math.abs($opts.position().top);
-					n_top = $opt.eq(nn).position().top + nnn;
+				// $(doc).off('click.dp').on('click.dp', '.ui-select-btn', function(e){
 					
-					optScroll($wrap, n_top, wrap_h, 'down');
-					optNext(e, id, n, len);
-					break;
-			}
-		}
-		function optExpanded(t) {
-			if (win[global].browser.mobile) {
-				optOpen(t)
-			} else {
-				if ($(t).attr('aria-expanded') === 'false') {
-					optClose();
-					optOpen(t);
-				} else {
-					optClose();
-				}
-			}
-		}
-		function optScroll($wrap, n_top, wrap_h, key) {
-			win[global].scroll.move({ 
-				value: Number(n_top), 
-				selector: customscroll ? $wrap.find('> .ui-scrollbar-item') : $wrap, 
-				effect: 'auto', 
-				ps: 'top' 
-			});
-		}
-		function optPrev(e, id, n, len) {
-			e.preventDefault();
-			n === 0 ? n = 0 : n = n - 1;
-			win[global].uiSelectAction({ id: id, current: n });
-		}
-		function optNext(e, id, n, len) {
-			e.preventDefault();
-			n === len - 1 ? n = len - 1 : n = n + 1;
-			win[global].uiSelectAction({ id: id, current: n });
-		}
-		function optOpen(t) {
-			var $body = $('body'),
-				_$sel = $(t),
-				_$uisel = _$sel.closest('.ui-select'),
-				_$wrap = _$uisel.find('.ui-select-wrap'),
-				_$opts = _$wrap.find('.ui-select-opts'),
-				_$opt = _$opts.find('.ui-select-opt');
+				// 	var $this = $(this).closest('.ui-datepicker').find('.inp-base');
+				// 	win[global].sheets.bottom({
+				// 		id: $this.attr('id'),
+				// 		callback: function(){
 
-			var offtop = _$uisel.offset().top,
-				scrtop = $(doc).scrollTop(),
-				wraph = _$wrap.outerHeight(),
-				btn_h = _$sel.outerHeight(),
-				opt_h = _$opt.outerHeight(),
-				win_h = $(win).outerHeight(),
-				className = win_h - ((offtop - scrtop) + btn_h) > wraph ? 'bottom' : 'top';
-
-			$body.addClass('dim-select');
-
-			if (!_$sel.data('expanded')) {
-				_$sel.data('expanded', true).attr('aria-expanded', true);
-				_$uisel.addClass('on');
-				_$wrap.addClass('on ' + className).attr('aria-hidden', false);
-				_$opts.find('.ui-select-opt').eq(_$uisel.find(':selected').index());
-			}
-			
-			if (customscroll) {
-				win[global].scrollBar.init({
-					id : _$wrap
-				});
-				win[global].scroll.move({ 
-					value: Number(opt_h * _$uisel.find(':checked').index()), 
-					selector: _$wrap.find('> .ui-scrollbar-item'), 
-					effect: 'auto', 
-					ps: 'top' 
-				});
-			} else {
-				win[global].scroll.move({ 
-					value: Number(opt_h * _$uisel.find(':checked').index()), 
-					selector: _$wrap, 
-					effect: 'auto', 
-					ps: 'top' 
-				});
-			}
-
-			openScrollMove(_$uisel);
-
-			var timerScroll = null;
-			var touchMoving = false;
-
-			_$wrap.off('touchstart.uiscroll').on('touchstart.uiscroll', function(e){
-				var $this = $(this);
-				var getScrollTop = $this.scrollTop();
-				var currentN = 0;
-				clearTimeout(timerScroll);
-				touchMoving = false;
-
-				$this.stop();
+				// 		}
+				// 	});
+				// });
 				
-				_$wrap.off('touchmove.uiscroll').on('touchmove.uiscroll', function(e){
-					touchMoving = true;
-					getScrollTop = $this.scrollTop();
-				}).off('touchcancel.uiscroll touchend.uiscroll').on('touchcancel.uiscroll touchend.uiscroll', function(e){
-					var _$this = $(this);
-
-					
-
-					function scrollCompare(){
-						timerScroll = setTimeout(function(){
-							if (getScrollTop !== _$wrap.scrollTop()) {
-								getScrollTop = _$wrap.scrollTop();
-								scrollCompare();
-							} else {
-								currentN = Math.floor((Math.floor(getScrollTop) + 20) / 40);
-								scrollSelect(currentN, _$this );
-							}
-						},100);
-					} 
-					touchMoving && scrollCompare();
-					_$wrap.off('touchmove.uiscroll');
+				$doc.find('.dim-select').off('click.dim').on('click.dim', function () {
+					if ($('body').data('select-open')) {
+						optBlur();
+					}
 				});
+				$doc.find('.ui-select-confirm').off('click.cfm').on('click.cfm', optConfirm);
+				$doc.find('.ui-select-cancel').off('click.cfm').on('click.cfm', optClose);
+				$doc.find('.ui-select-btn').off('click.ui keydown.ui mouseover.ui focus.ui mouseleave.ui').on({
+					'click.ui': selectClick,
+					'keydown.ui': selectKey,
+					'mouseover.ui': selectOver,
+					'focus.ui': selectOver,
+					'mouseleave.ui': selectLeave
+				});
+				$doc.find('.ui-select-opt').off('click.ui mouseover.ui').on({
+					'click.ui': optClick,
+					'mouseover.ui': selectOver
+				});
+				$doc.find('.ui-select-wrap').off('mouseleave.ui').on({ 'mouseleave.ui': selectLeave });
+				$doc.find('.ui-select-wrap').off('blur.ui').on({ 'blur.ui': optBlur });
+				$doc.find('.ui-select-label').off('click.ui').on('click.ui', function () {
+					var idname = $(this).attr('for');
+
+					setTimeout(function () {
+						$('#' + idname + '_inp').focus();
+					}, 0);
+				});
+				$doc.find('.ui-select select').off('change.ui').on('change.ui', selectChange );
+			}
+
+			function selectLeave() {
+				$('body').data('select-open', true);
+			}
+			function selectChange() {
+				var $this = $(this);
+				$this.closest('.ui-select').data('fn');
+
+				win[global].select.act({
+					id:$this .attr('id'),
+					current: $this.find('option:selected').index(),
+					callback: $this.data('callback'), original:true
+				});
+			}
+			function optBlur() {
+				optClose();
+			}
+			function selectClick() {
+				var $btn = $(this);
+				$btn.data('sct', $(doc).scrollTop());
+
+				setOption(this, $btn.closest('.ui-select').find('option:selected').index() );
+				optExpanded(this);
+			}
+			function optClick() {
+				var t = this;
+				var idx =  $(t).index();
+
+				if (customscroll) {
+					win[global].select.act({ 
+						id: $(t).closest('.ui-select').find('.ui-select-btn').data('id'), 
+						current: idx 
+					});
+
+					$(t).closest('.ui-select').find('.ui-select-btn').focus();
+					optClose();
+				} else {
+					scrollSelect(idx, $(t).closest('.ui-select').find('.ui-select-wrap') );
+				}
+			}
+			function selectOver() {
+				$('body').data('select-open', false);
+			}
+			function selectKey(e) {
+				var t = this,
+					$btn = $(this),
+					id = $btn.data('id'),
+					$list = $('#' + id + '_list'),
+					$wrap = $list.closest('.ui-select-wrap'),
+					$opts = $wrap.find('.ui-select-opts'),
+					$opt = $wrap.find('.ui-select-opt'),
+
+					n = Number($list.find('.selected').index()),
+					nn = 0,
+					nnn = 0,
+					wrap_h = $wrap.outerHeight(),
+					len = $opt.length,
+					n_top = 0;
+
+				if (e.altKey) {
+					if (e.keyCode === keys.up) {
+						optOpen(t);
+					}
+
+					e.keyCode === keys.down && optClose();
+					return;
+				}
+
+				switch (e.keyCode) {
+					case keys.up:
+					case keys.left:
+						nn = n - 1 < 0 ? 0 : n - 1;
+						nnn = Math.abs($opts.position().top);
+						n_top = $opt.eq(nn).position().top + nnn;
+
+						optScroll($wrap, n_top, wrap_h, 'up');
+						optPrev(e, id, n, len);
+						break;
+
+					case keys.down:
+					case keys.right:
+						nn = n + 1 > len - 1 ? len - 1 : n + 1;
+						nnn = Math.abs($opts.position().top);
+						n_top = $opt.eq(nn).position().top + nnn;
+						
+						optScroll($wrap, n_top, wrap_h, 'down');
+						optNext(e, id, n, len);
+						break;
+				}
+			}
+			function optExpanded(t) {
+				if (win[global].browser.mobile) {
+					optOpen(t)
+				} else {
+					if ($(t).attr('aria-expanded') === 'false') {
+						optClose();
+						optOpen(t);
+					} else {
+						optClose();
+					}
+				}
+			}
+			function optScroll($wrap, n_top, wrap_h, key) {
+				win[global].scroll.move({ 
+					value: Number(n_top), 
+					selector: customscroll ? $wrap.find('> .ui-scrollbar-item') : $wrap, 
+					effect: 'auto', 
+					ps: 'top' 
+				});
+			}
+			function optPrev(e, id, n, len) {
+				e.preventDefault();
+				n === 0 ? n = 0 : n = n - 1;
+				win[global].select.act({ id: id, current: n });
+			}
+			function optNext(e, id, n, len) {
+				e.preventDefault();
+				n === len - 1 ? n = len - 1 : n = n + 1;
+				win[global].select.act({ id: id, current: n });
+			}
+			function optOpen(t) {
+				var $body = $('body'),
+					_$sel = $(t),
+					_$uisel = _$sel.closest('.ui-select'),
+					_$wrap = _$uisel.find('.ui-select-wrap'),
+					_$opts = _$wrap.find('.ui-select-opts'),
+					_$opt = _$opts.find('.ui-select-opt');
+
+				var offtop = _$uisel.offset().top,
+					scrtop = $(doc).scrollTop(),
+					wraph = _$wrap.outerHeight(),
+					btn_h = _$sel.outerHeight(),
+					opt_h = _$opt.outerHeight(),
+					win_h = $(win).outerHeight(),
+					className = win_h - ((offtop - scrtop) + btn_h) > wraph ? 'bottom' : 'top';
+
+				$body.addClass('dim-select');
+
+				if (!_$sel.data('expanded')) {
+					_$sel.data('expanded', true).attr('aria-expanded', true);
+					_$uisel.addClass('on');
+					_$wrap.addClass('on ' + className).attr('aria-hidden', false);
+					_$opts.find('.ui-select-opt').eq(_$uisel.find(':selected').index());
+				}
+				
+				if (customscroll) {
+					win[global].scrollBar.init({
+						id : _$wrap
+					});
+					win[global].scroll.move({ 
+						value: Number(opt_h * _$uisel.find(':checked').index()), 
+						selector: _$wrap.find('> .ui-scrollbar-item'), 
+						effect: 'auto', 
+						ps: 'top' 
+					});
+				} else {
+					win[global].scroll.move({ 
+						value: Number(opt_h * _$uisel.find(':checked').index()), 
+						selector: _$wrap, 
+						effect: 'auto', 
+						ps: 'top' 
+					});
+				}
+
+				openScrollMove(_$uisel);
+
+				var timerScroll = null;
+				var touchMoving = false;
+
+				_$wrap.off('touchstart.uiscroll').on('touchstart.uiscroll', function(e){
+					var $this = $(this);
+					var getScrollTop = $this.scrollTop();
+					var currentN = 0;
+					clearTimeout(timerScroll);
+					touchMoving = false;
+
+					$this.stop();
+					
+					_$wrap.off('touchmove.uiscroll').on('touchmove.uiscroll', function(e){
+						touchMoving = true;
+						getScrollTop = $this.scrollTop();
+
+					}).off('touchcancel.uiscroll touchend.uiscroll').on('touchcancel.uiscroll touchend.uiscroll', function(e){
+						var _$this = $(this);
+
+						function scrollCompare(){
+							timerScroll = setTimeout(function(){
+								if (getScrollTop !== _$wrap.scrollTop()) {
+									getScrollTop = _$wrap.scrollTop();
+									scrollCompare();
+								} else {
+									currentN = Math.floor((Math.floor(getScrollTop) + 20) / 40);
+									scrollSelect(currentN, _$this );
+								}
+							},100);
+						} 
+
+						touchMoving && scrollCompare();
+						_$wrap.off('touchmove.uiscroll');
+					});
+				});
+			}
+
+			function scrollSelect(v, _$this){
+				console.log(v);
+				_$this.stop().animate({
+					scrollTop : 40 * v
+				}, 100);
+				_$this.closest('.ui-select').find('.ui-select-opt').removeClass('selected');
+				_$this.closest('.ui-select').find('.ui-select-opt').eq(v).addClass('selected');
+
+				// win[global].select.act({ 
+				// 	id: _$this.closest('.ui-select').find('.ui-select-btn').data('id'), 
+				// 	current: v
+				// });
+			}
+
+			function openScrollMove(_$uisel){
+				var __$uiSel = _$uisel;
+				var __scrollTop = Math.floor($(doc).scrollTop());
+				var __winH = $(win).outerHeight();
+				var __$uiSelBtn = __$uiSel.find('.ui-select-btn');
+				var __btnTop = __$uiSelBtn.offset().top;
+				var __btnH = __$uiSelBtn.outerHeight();
+				var a = Math.floor(__btnTop - __scrollTop);
+				var b = __winH - 240;
+
+				__$uiSel.data('orgtop', __scrollTop);
+
+				(a > b) && $('html, body').scrollTop(a - b + __btnH + 10 + __scrollTop);
+			}
+
+			function optConfirm() {
+				var $this = $(this);
+				
+				var $body = $('body');
+				var $btn = $('.ui-select-btn[aria-expanded="true"]');
+				var $select = $btn.closest('.ui-select');
+				var $wrap = $select.find('.ui-select-wrap');
+				var orgTop = $select.data('orgtop');
+
+				win[global].select.act({ 
+					id: $btn.data('id'), 
+					current: $wrap.find('.selected').index()
+				});
+
+				$body.removeClass('dim-select');
+				$btn.data('expanded', false).attr('aria-expanded', false).focus();
+				$select.removeClass('on');
+				$wrap.removeClass('on top bottom').attr('aria-hidden', true);
+				$('html, body').scrollTop(orgTop);
+			}
+
+			function optClose() {
+				var $body = $('body');
+				var $btn = $('.ui-select-btn[aria-expanded="true"]');
+				var $select = $btn.closest('.ui-select');
+				var $wrap = $select.find('.ui-select-wrap');
+				var orgTop = $select.data('orgtop');
+
+				$body.removeClass('dim-select');
+				$btn.data('expanded', false).attr('aria-expanded', false).focus();
+				$select.removeClass('on');
+				$wrap.removeClass('on top bottom').attr('aria-hidden', true);
+				$('html, body').scrollTop(orgTop);
+			}
+		},
+		act: function(opt){
+			var id = typeof opt.id === 'string' ? opt.id : opt.id.attr('id'),
+				$sel = $('#' + id),
+				$uiSelect = $sel.closest('.ui-select');
+
+			var dataCallback = $sel.data('callback'),
+				callback = opt.callback === undefined ? dataCallback === undefined ? false : dataCallback : opt.callback,
+				current = opt.current,
+				org = opt.original === undefined ? false : opt.original;
+
+			//!org && $uiSelect.find('option').prop('selected', false).eq(current).prop('selected', true);
+			!org && $uiSelect.find('option').prop('selected', false).eq(current).prop('selected', true).trigger('change');
+			//trigger 오류 확인필요
+			
+			var $optCurrent = $sel.find('option').eq(current);
+			var $selButton = $sel.closest('.ui-select').find('.ui-select-btn');
+
+			!$optCurrent.prop('hidden')
+				?  $selButton.removeClass('opt-hidden')
+				:  $selButton.addClass('opt-hidden');
+
+			$uiSelect.find('.ui-select-btn span').text($optCurrent.text());
+			$uiSelect.find('.ui-select-opt').removeClass('selected').eq(current).addClass('selected');
+
+			win[global].browser.mobile && $uiSelect.find('.ui-select-opt').eq(current).focus();
+
+			callback && callback({ 
+				id: id, 
+				current: current, 
+				val: $optCurrent.val() 
 			});
 		}
-
-		function scrollSelect(v, _$this){
-			_$this.stop().animate({
-				scrollTop : 40 * v
-			}, 100);
-			win[global].uiSelectAction({ 
-				id: _$this.closest('.ui-select').find('.ui-select-btn').data('id'), 
-				current: v
-			});
-		}
-
-		function openScrollMove(_$uisel){
-			var __$uiSel = _$uisel;
-			var __scrollTop = Math.floor($(doc).scrollTop());
-			var __winH = $(win).outerHeight();
-			var __$uiSelBtn = __$uiSel.find('.ui-select-btn');
-			var __btnTop = __$uiSelBtn.offset().top;
-			var __btnH = __$uiSelBtn.outerHeight();
-			var a = Math.floor(__btnTop - __scrollTop);
-			var b = __winH - 240;
-
-			__$uiSel.data('orgtop', __scrollTop);
-
-			(a > b) && $('html, body').scrollTop(a - b + __btnH + 10 + __scrollTop);
-		}
-
-
-		function optClose() {
-			var $body = $('body');
-			var $btn = $('.ui-select-btn[aria-expanded="true"]');
-			var $select = $btn.closest('.ui-select');
-			var $wrap = $select.find('.ui-select-wrap');
-			var orgTop = $select.data('orgtop');
-
-			$body.removeClass('dim-select');
-			$btn.data('expanded', false).attr('aria-expanded', false).focus();
-			$select.removeClass('on');
-			$wrap.removeClass('on top bottom').attr('aria-hidden', true);
-			$('html, body').scrollTop(orgTop);
-		}
 	}
-	function createuiSelectAction(opt) {
-		var id = typeof opt.id === 'string' ? opt.id : opt.id.attr('id'),
-			$sel = $('#' + id),
-			$uiSelect = $sel.closest('.ui-select');
 
-		var dataCallback = $sel.data('callback'),
-			callback = opt.callback === undefined ? dataCallback === undefined ? false : dataCallback : opt.callback,
-			current = opt.current,
-			org = opt.original === undefined ? false : opt.original;
-
-		//!org && $uiSelect.find('option').prop('selected', false).eq(current).prop('selected', true);
-		!org && $uiSelect.find('option').prop('selected', false).eq(current).prop('selected', true).trigger('change');
-		//trigger 오류 확인필요
-		
-		var $optCurrent = $sel.find('option').eq(current);
-		var $selButton = $sel.closest('.ui-select').find('.ui-select-btn');
-
-		!$optCurrent.prop('hidden')
-			?  $selButton.removeClass('opt-hidden')
-			:  $selButton.addClass('opt-hidden');
-
-		$uiSelect.find('.ui-select-btn span').text($optCurrent.text());
-		$uiSelect.find('.ui-select-opt').removeClass('selected').eq(current).addClass('selected');
-
-		win[global].browser.mobile && $uiSelect.find('.ui-select-opt').eq(current).focus();
-
-		callback && callback({ 
-			id: id, 
-			current: current, 
-			val: $optCurrent.val() 
-		});
-	}
 
 	/* ------------------------
 	* accordion tab  
@@ -7789,449 +7810,6 @@ if (!Object.keys){
 
 		base.opt.auto ? uiSlideAutoEvt(base, opt.play) : '';
 
-	}
-
-
-
-	/* ------------------------------------------------------------------------
-	* name : slider
-	* Ver. : v1.0.0
-	* date : 2018-12-21
-	* EXEC statement
-	* - $plugins.uiSlider({ option });
-	------------------------------------------------------------------------ */
-
-
-	win[global].range = {
-		options: {
-			range: false, //범위슬라이더
-			reverse : false, //역순
-			acc: false, //select 연결
-			stepname: false,
-			callback: false,
-			
-			tooltip: false,
-			unit: '',
-			txt_s:'',
-			txt_e:'',
-
-			now: [0],
-			step: 10,
-			min: 0,
-			max: 100,
-		},
-		init: function(opt){
-			var opt = $.extend(true, {}, win[global].range.options, opt),
-				$slider = $('#' + opt.id),
-				$wrap = $slider.find('.ui-slider-wrap'),
-				$divwrap = $slider.find('.ui-slider-divwrap'),
-				$bg = $wrap.find('.ui-slider-bg'),
-				$btn = $wrap.find('button'),
-				$btn_s = $wrap.find('.ui-slider-btn-s'),
-				$btn_e = $wrap.find('.ui-slider-btn-e'),
-				$bar = $bg.find('.ui-slider-bar');
-
-			var vertical = opt.vertical,
-				range = opt.range,
-				rev = opt.reverse,
-				stepname = opt.stepname,
-				acc = opt.acc;//select 연결
-
-			rev ? $slider.addClass('type-reverse') : $slider.removeClass('type-reverse');
-			vertical ? $slider.addClass('type-vertical') : $slider.removeClass('type-vertical');
-
-			var	step = opt.step,
-				id = opt.id,
-				min = opt.min,
-				max = opt.max,
-				tooltip = opt.tooltip,
-				callback = opt.callback,
-				unit = opt.unit,
-				txt_e = opt.txt_e,
-				txt_s = opt.txt_s,
-				txt_e2 = '', 
-				txt_s2 = '',
-
-				slider_w = !vertical ? $bg.outerWidth() : $bg.outerHeight(),
-				step_w = 100 / step,
-				unit_sum = (max - min) / step,
-				now_s = opt.now[0] < min ? min : opt.now[0],
-				now_e = opt.now[1] > max ? max : opt.now[1],
-				per_min = ((now_s - min) / (max - min)) * 100,
-				per_max = ((now_e - min) / (max - min)) * 100,
-				div_w = Math.ceil(slider_w / step),
-				lmt_max,
-				lmt_min,
-				now_sum = [],
-				sliderstep = [],
-				p, keyCode, $sel_s, $sel_e, txt_val,
-				dir = !vertical ? rev ? 'right' : 'left' : rev ? 'bottom' : 'top',
-				siz = !vertical ? 'width' : 'height';
-
-			//percent change
-			per_min = perStep(per_min);
-			range ? per_max = perStep(per_max) : '';
-
-			//web accessibility : select 
-			if (acc) {
-				$sel_s = $('[data-sliderselect="' + opt.id + '"]').find('.ui-slider-min');
-				range ? $sel_e = $('[data-sliderselect="' + opt.id + '"]').find('.ui-slider-max') : '';
-			}
-			
-			//reset
-			$wrap.find('.ui-slider-tooltip').remove();
-			$divwrap.find('span').remove();
-			
-			//tooltip setting
-			if (!!tooltip) {
-				$wrap.append('<div class="ui-slider-tooltip"></div>');
-				sliderTooltip({ unit:unit, now_1:opt.now[0], now_2:opt.now[1], per_min:per_min, per_max:per_max });
-				sliderCallback({ callback:callback, now_1:opt.now[0], now_2:opt.now[1] });
-			} 
-			
-			//button setting
-			$btn_s.css(dir, per_min + '%').find('.ui-slider-txt').text(((per_min / step_w) * unit_sum) + min);
-			range ? $btn_e.css(dir, per_max + '%').find('.ui-slider-txt').text(((per_max / step_w) * unit_sum) + min) : '';
-			//range 타입 : 버튼이 겹치는 경우 우선 클릭될 버튼 설정
-			if (per_min === per_max && per_min >= 50 && range) {
-				$btn_s.addClass('on');
-				$btn_e.removeClass('on');
-			} else if (per_min === per_max && per_max < 50 && range){
-				$btn_s.removeClass('on');
-				$btn_e.addClass('on');
-			}
-			
-			//graph bar setting
-			!range ? $bar.css(siz,per_min + '%').css(dir,0) : $bar.css(siz,per_max - per_min + '%').css(dir,per_min + '%' );
-
-			//graph step & select option setting
-			for (var i = 0; i < step + 1; i++) {
-				txt_s2 = (i === 0) && opt.txt_s;
-				txt_e2 = (i === step) && opt.txt_e;
-				
-				txt_val = parseInt(min + (unit_sum * i));
-				now_sum.push(txt_val);
-
-				if (stepname) {
-					$divwrap.append('<span class="ui-slider-div n'+ i +'" style="'+ dir +':' + step_w * i + '%; '+ siz +':' + div_w + 'px; margin-'+ dir +':' + (div_w / 2) * -1 + 'px"><em>' + stepname[i] + '</em></div>');
-				} else {
-					$divwrap.append('<span class="ui-slider-div n'+ i +'" style="'+ dir +':' + step_w * i + '%; '+ siz +':' + div_w + 'px; margin-'+ dir +':' + (div_w / 2) * -1 + 'px"><em>' + txt_val + ' ' + txt_e2 + '' + txt_s2 + '</em></div>');
-				}
-				
-				sliderstep.push(parseInt(min + (unit_sum * i)));
-
-				if (stepname) {
-					if (acc) {
-						if (now_s === txt_val) {
-							$sel_s.append('<option value="' + txt_val + '" selected>' + stepname[i] + '</option>');
-						} else if (now_e < txt_val) {
-							$sel_s.append('<option value="' + txt_val + '" disabled>' + stepname[i] + '</option>');
-						} else {
-							$sel_s.append('<option value="' + txt_val + '">' + stepname[i] + '</option>');
-						}
-						
-						if (now_e === txt_val && range) {
-							$sel_e.append('<option value="' + txt_val + '" selected>' + stepname[i] + '</option>');
-						} else if (now_s > txt_val && range) {
-							$sel_e.append('<option value="' + txt_val + '" disabled>' + stepname[i] + '</option>');
-						} else if (range){
-							$sel_e.append('<option value="' + txt_val + '">' + stepname[i] + '</option>');
-						}
-					}
-				} else {
-					if (acc) {
-						console.log(txt_e2);
-						if (now_s === txt_val) {
-							$sel_s.append('<option value="' + txt_val + '" selected>' + txt_val + '' + unit + ' ' + txt_e +'' + txt_s + '</option>');
-						} else if (now_e < txt_val) {
-							$sel_s.append('<option value="' + txt_val + '" disabled>' + txt_val + '' + unit + ' ' + txt_e +'' + txt_s + '</option>');
-						} else {
-							$sel_s.append('<option value="' + txt_val + '">' + txt_val + '' + unit + ' ' + txt_e +'' + txt_s + '</option>');
-						}
-						
-						if (now_e === txt_val && range) {
-							$sel_e.append('<option value="' + txt_val + '" selected>' + txt_val + '' + unit + ' ' + txt_e +'' + txt_s + '</option>');
-						} else if (now_s > txt_val && range) {
-							$sel_e.append('<option value="' + txt_val + '" disabled>' + txt_val + '' + unit + ' ' + txt_e +'' + txt_s + '</option>');
-						} else if (range){
-							$sel_e.append('<option value="' + txt_val + '">' + txt_val + '' + unit + ' ' + txt_e +'' + txt_s + '</option>');
-						}
-					}
-				}
-				
-			}
-			
-			if (acc) {
-				$('[data-sliderselect="' + opt.id + '"]').find('.ui-slider-min').on('change', function(){
-					per_min = (($(this).val() - min) / (max - min)) * 100;
-					per_min = perStep(per_min);
-					actSel($(this).find('option:selected').index(), 'min');
-					act($btn_s, 'min');
-				});
-				$('[data-sliderselect="' + opt.id + '"]').find('.ui-slider-max').on('change', function(){
-					per_max = (($(this).val() - min) / (max - min)) * 100,
-					per_max = perStep(per_max);
-					actSel($(this).find('option:selected').index(), 'max');
-					act($btn_e, 'max');
-				});
-			}
-
-			$('body	.ui-slider-wrap button').on('touchmove.uislider', function(e){
-				e.preventDefault()
-			});
-
-			$btn.off('mousedown.sliderstart touchstart.sliderstart').on('mousedown.sliderstart touchstart.sliderstart', function(e){
-				e.preventDefault();
-				var $this = $(this),
-					minmax = $this.data('btn'),
-					moving = false;
-
-				$(doc).off('mousemove.slidermove touchmove.slidermove').on('mousemove.slidermove touchmove.slidermove', function(e){
-					moving = true;
-					($('html').is('.ui-m')) ? per($this, event, minmax) : per($this, e, minmax);
-					sliderTooltip({ now_1:((per_min / step_w) * unit_sum) + min, now_2:((per_max / step_w) * unit_sum) + min, per_min:perStep(per_min), per_max:perStep(per_max) });
-					
-				}).off('mouseup.sliderend touchcancel.slidermove touchend.slidermove').on('mouseup.sliderend touchcancel.slidermove touchend.slidermove', function(e){
-					$this.closest('.ui-slider').find('.ui-slider-wrap button').removeClass('on');
-					moving ? act($this, minmax) : '';
-					$(doc).off('mousemove.slidermove mouseup.sliderend touchmove.slidermove');
-				});
-			});
-			
-			/* 접근성 이슈 : 키보드와 스크리리더기의 키 중복 */
-			$btn_s.off('keyup.' + opt.id).on('keyup.' + opt.id, function(e){
-				e.preventDefault();
-				keyCode = e.keyCode || e.which;
-				p = per_min;
-				
-				var $btnthis = $(this),
-					$barthis = $btnthis.closest('.ui-slider').find('.ui-slider-bar');
-
-				if(keyCode == 39 || keyCode == 40) {
-					per_min = per_min + step_w;
-					if (per_min > per_max) {
-						per_min = per_max;
-						alert('최대값을 수정하세요');
-					} else {
-						$btnthis.css(dir, per_min + '%').find('.ui-slider-txt').text(((per_min / step_w) * unit_sum) + min);
-						$barthis.css(dir,per_min + '%').css(siz,(per_max - per_min) + '%');
-					}
-				}
-				
-				if(keyCode == 37 || keyCode ==  38) {
-					per_min = per_min - step_w;
-					if (per_min < 0) {
-						per_min = 0;
-						alert('최소값입니다.');
-					} else {
-						$btnthis.css(dir, per_min + '%').find('.ui-slider-txt').text(((per_min / step_w) * unit_sum) + min);
-						$barthis.css(dir,per_min + '%').css(siz,(per_max - per_min) + '%');
-					}
-				}
-				
-				sliderTooltip({ now_1:((per_min / step_w) * unit_sum) + min, now_2:((per_max / step_w) * unit_sum) + min, per_min:per_min, per_max:per_max });
-				sliderCallback({ callback:callback, now_1:((per_min / step_w) * unit_sum) + min, now_2:((per_max / step_w) * unit_sum) + min });
-			});
-			
-			$btn_e.off('keyup.' + opt.id).on('keyup.' + opt.id, function(e){
-				e.preventDefault();
-				keyCode = e.keyCode || e.which;
-				p = per_max;
-				
-				var $btnthis = $(this),
-					$barthis = $btnthis.closest('.ui-slider').find('.ui-slider-bar');
-				
-				if(keyCode == 39 || keyCode == 40) {
-					per_max = per_max + step_w;
-					if (per_max > 100) {
-						per_max = 100;
-						alert('최대값입니다');
-					} else {
-						$btnthis.css(dir, per_max + '%').find('.ui-slider-txt').text(((per_max / step_w) * unit_sum) + min);
-						$barthis.css(dir,per_min + '%').css(siz, (per_max - per_min) + '%');
-					}
-				}
-				
-				if(keyCode == 37 || keyCode ==  38) {
-					per_max = per_max - step_w;
-					if (per_max < per_min) {
-						per_max = per_min;
-						alert('최소값을 수정하세요.');
-					} else {
-						$btnthis.css(dir, per_max + '%').find('.ui-slider-txt').text(((per_max / step_w) * unit_sum) + min);
-						$barthis.css(dir,per_min + '%').css(siz, (per_max - per_min) + '%');
-					}
-				}
-				
-				sliderTooltip({ now_1:((per_min / step_w) * unit_sum) + min, now_2:((per_max / step_w) * unit_sum) + min, per_min:per_min, per_max:per_max });
-				sliderCallback({ callback:callback, now_1:((per_min / step_w) * unit_sum) + min, now_2:((per_max / step_w) * unit_sum) + min });
-			});
-			
-			function act($this, minmax){
-				if (minmax === 'min') {
-					per_min = perStep(per_min);
-					!range ? $bar.css(siz, per_min + '%').css(dir, 0) : $bar.css(siz, per_max - per_min + '%').css(dir, per_min + '%');
-					lmt_min = per_min;
-					if (acc) {
-						now_sum.forEach(function(v, i){
-							(v === ((per_min / step_w) * unit_sum) + min) ? actSel(i, minmax) : '';
-						});
-					}
-
-					$this.css(dir, per_min + '%').addClass('on').find('.ui-slider-txt').text(((per_min / step_w) * unit_sum) + min);
-				} else {
-					per_max = perStep(per_max);
-					$bar.css(siz, (per_max - per_min) + '%').css(dir,per_min + '%');
-
-					lmt_max = per_max;
-					if (acc) {
-						now_sum.forEach(function(v, i){
-							(v === ((per_max / step_w) * unit_sum) + min) ? actSel(i, minmax): '';
-						});
-					}
-					$this.css(dir, per_max + '%').addClass('on').find('.ui-slider-txt').text(((per_max / step_w) * unit_sum) + min);
-				}
-
-				sliderTooltip({ now_1: ((per_min / step_w) * unit_sum) + min, now_2: ((per_max / step_w) * unit_sum) + min, per_min: per_min, per_max: per_max });
-				sliderCallback({ callback:callback, now_1:Number(((per_min / step_w) * unit_sum) + min), now_2:Number(((per_max / step_w) * unit_sum) + min) });
-			}
-			function actSel(n, minmax){
-				if (minmax === 'min') {
-					range ? $sel_e.find('option').removeAttr('disabled') : '';
-					$sel_s.find('option').eq(n).prop('selected', 'selected');
-					range ? $sel_e.find('option:lt('+ n +')').prop('disabled', 'disabled') : '';
-				} else {
-					$sel_s.find('option').removeAttr('disabled');
-					$sel_e.find('option').eq(n).prop('selected', 'selected');
-					$sel_s.find('option:gt('+ n +')').prop('disabled', 'disabled');
-				}
-			}
-			function perStep(v){
-				var n = ((v % step_w) >= step_w / 2) ? 1 : 0;
-				
-				return (Math.floor(v / step_w) + n) * step_w;
-			}
-			function per($this, e, minmax){
-				var value_l;
-				slider_w = !vertical ? $bg.outerWidth() : $bg.outerHeight();
-				if (!vertical) {
-					if (e.touches !== undefined) {
-						value_l = e.touches[0].pageX - $bg.offset().left - 0;
-					}
-					if (e.touches === undefined) {
-						if (e.pageX !== undefined) {
-							value_l = e.pageX - $bg.offset().left - 0;
-						}
-						//ie
-						if (e.pageX === undefined) {
-							value_l = e.clientX - $bg.offset().left - 0;
-						}
-					}
-				} else {
-					if (e.touches !== undefined) {
-						value_l = e.touches[0].pageY - $bg.offset().top - 0;
-					}
-					if (e.touches === undefined) {
-						if (e.pageX !== undefined) {
-							value_l = e.pageY - $bg.offset().top - 0;
-						}
-						//ie
-						if (e.pageX === undefined) {
-							value_l = e.clientY - $bg.offset().top - 0;
-						}
-					}
-				}
-
-				p = (value_l <= 0) ? 0 : (value_l >= slider_w) ? slider_w - 0 : value_l;
-				p = (p / slider_w) * 100;
-				rev ? p = 100 - p : ''; 
-				p > 50 ? Math.floor(p/10) * 10 : Math.ceil(p/10) * 10;
-				p = p.toFixed(0);
-				p = p < 0 ? 0 : p > 100 ? 100 : p;
-
-
-				if (minmax === 'min') {
-					lmt_min = 0;
-					isNaN(lmt_max) ? lmt_max = per_max : '';
-					p * 1 >= lmt_max * 1 ? p = lmt_max: '';
-					per_min = p; 
-					!range ? $bar.css(siz, per_min + '%').css(dir, 0) : $bar.css(siz, lmt_max - per_min + '%').css(dir, per_min + '%');
-				}  
-				
-				if (minmax === 'max') {
-					lmt_max = 100;
-					isNaN(lmt_min) ? lmt_min = per_min : '';
-					p * 1 <= lmt_min * 1 ? p = lmt_min: '';
-					per_max = p;
-					$bar.css(siz, per_max - per_min + '%');
-				}
-				$this.css(dir, p + '%');
-			}
-
-			function sliderCallback(opt){
-				$(doc).off('mouseup.sliderend touchcancel.slidermove touchend.slidermove');
-				opt.callback ? opt.callback({ id:id, per_min:per_min, per_max:per_max, min: opt.now_1, max: opt.now_2 }) : '';
-			}
-
-			function sliderTooltip(opt){
-				var $tooltip = $('#' + id).find('.ui-slider-tooltip'),
-					tooltip_w, 
-					bar_w,
-					timer, 
-					per_min = opt.per_min,
-					per_max = opt.per_max,
-					n_min = opt.now_1,
-					n_max = opt.now_2,
-					in_s = (per_min === 0) ? txt_s : '',
-					in_e = (per_max === 100) ? txt_e : '',
-					in_se = (per_min === 0) ? txt_s : (per_max === 100) ? txt_e : '';
-
-				!range ? in_e = (per_min === 100) ? txt_e : '' : '';
-
-				if (per_min === 0 && per_max === 100) {
-					$tooltip.text('전체');
-				} else if (n_min === n_max) {
-					$tooltip.text(n_min.toFixed(0) + '' + unit + ' ' + in_se);
-				} else {
-					if (!range) {
-						$tooltip.text(n_min.toFixed(0) + '' + unit + '' + in_s + '' + in_e);
-					} else {
-						$tooltip.text(n_min.toFixed(0) + '' + unit + '' + in_s + ' ~ '+ n_max.toFixed(0) + '' + unit + '' + in_e);
-					}
-				}
-
-				clearTimeout(timer);
-				timer = setTimeout(function(){
-					var tt_l, tt_ml;
-
-					if (!vertical) {
-						tooltip_w = $tooltip.outerWidth();
-						bar_w = $('#' + id).find('.ui-slider-bar').outerWidth();
-					} else {
-						tooltip_w = $tooltip.outerHeight();
-						bar_w = $('#' + id).find('.ui-slider-bar').outerHeight();
-					}
-
-					if (!range) {
-						tt_l = per_min + '%';
-						tt_ml = (per_min === 0) ? 0 : (per_min === 100) ? tooltip_w * -1 : (tooltip_w / 2) * -1;
-					} else {
-						if (per_min === 0 && tooltip_w > bar_w) {
-							tt_l = '0%';
-							tt_ml = 0;
-						} else if (per_max === 100 && tooltip_w > bar_w) {
-							tt_l = '100%';
-							tt_ml = tooltip_w * -1;
-						} else {
-							tt_l = per_min + ((per_max - per_min)/ 2) + '%';
-							tt_ml = (tooltip_w / 2) * -1;
-						}
-					}
-
-					$tooltip.css(dir, tt_l).css('margin-' + dir, tt_ml);
-				},0);
-			}
-		}
 	}
 
 

@@ -12,7 +12,7 @@
     
     $plugins.page.pageInnerLabel = function(){
         $plugins.form.init();
-        $plugins.uiSelect();
+        $plugins.select.init();
         //$plugins.uiDatePicker();
         // $plugins.form.innerLabel();
 
@@ -357,7 +357,7 @@
     $plugins.page.pageTooltip = function(){
         $plugins.uiTooltip();
     }
-    $plugins.page.pageSlider = function(){
+    $plugins.page.pageRange = function(){
         //range slider
         $plugins.range.init({ 
             id:"uiSlider", 
@@ -461,27 +461,7 @@
     }
 
     $plugins.page.pageSelect = function(){
-        $plugins.uiSelect();
-
-        $plugins.uiSelect({ 
-            id:'forSelLocal', 
-            current:0,
-            callback:function(v){ } 
-        });
-
-        $plugins.uiSelect({ 
-            id:'uiSel1', 
-            current:1, 
-            callback:function(v){ 
-                $('#baseWrap').css('display','block');
-            } 
-        });
         
-        var opttxt = 5;
-        $('#changeOption').on('click', function(){
-            $('#uiSel2').append('<option value="'+ opttxt +'">'+ opttxt +'</option>');
-            opttxt = opttxt + 1;
-        });
 
     }
 

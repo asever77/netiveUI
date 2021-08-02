@@ -132,7 +132,7 @@
 						fristHref = '/netiveUI/html/components/fileUpload.html';
 						break;
 					case 'slider' :
-						fristHref = '/netiveUI/html/components/slider.html';
+						fristHref = '/netiveUI/html/components/range.html';
 						break;
 					case 'issue' :
 						fristHref = '/netiveUI/html/memory/issue.html';
