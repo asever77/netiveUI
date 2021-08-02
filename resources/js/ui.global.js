@@ -1493,6 +1493,12 @@ if (!Object.keys){
 					id: id,
 					type: 'single'
 				});
+				el_from.addEventListener("input", function(){
+					win[global].rangeSlider.rangeFrom({
+						id: id,
+						type: 'single'
+					});
+				});
 			}
 		},
 		rangeFrom: function(opt){
