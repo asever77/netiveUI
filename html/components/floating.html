@@ -1,12 +1,11 @@
 <input type="hidden" id="uiJsName" value="pageFloating">
 
-<div class="tit-catagory">Components Layout</div>
 <div class="tit-wrap">
 	<h1 class="h-1">Floating</h1>
-	<em>date : 2020.06.10</em>
 </div>
 <p class="txts-m">특정위치에서 고정되거나 고정되었던 오브젝트가 원위치로 돌아가는 설정</p>
 
+<section class="sec-wrap">
 <h2 class="h-2">Examples</h2>
 <h3 class="h-3">상단고정 → 원위치</h3>
 <p>상단에 fixed로 고정에서 원위치로 들어가는 방식</p>
@@ -83,7 +82,9 @@
 		<div class="tst-obj">원위치 → 하단고정3</div>
 	</div>
 </div>
+</section>
 
+<section class="sec-wrap">
 <h2 class="h-2">HTML Structure</h2>
 <h3 class="h-3">basic type</h3>
 <div class="box-code">
@@ -120,15 +121,15 @@
 </div>
 
 <h2 class="h-2">Javascript</h2>
-<h3 class="h-3">$plugins.uiFloating</h3>
+<h3 class="h-3">netive.uiFloating</h3>
 <h4 class="h-4">상단고정 → 원위치</h4>
 <div class="box-code">
 <pre>
 <code>
 <span class="c">// add 로 불러올 요소는 미리 실행이 되야한다.(실행 순서가 중요.)</span>
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix12', ps:'bottom', fix:true</span> });
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix11', ps:'bottom', add:'exeFix12', fix:true</span> });
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix10', ps:'bottom', add:'exeFix11', fix:true</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix12', ps:'bottom', fix:true</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix11', ps:'bottom', add:'exeFix12', fix:true</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix10', ps:'bottom', add:'exeFix11', fix:true</span> });
 </code>
 </pre>
 </div>
@@ -137,9 +138,9 @@ $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix10', ps:
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix1', ps:'top', fix:false</span> });
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix2', ps:'top', add:'exeFix1' fix:false</span> });
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix3', ps:'top', add:'exeFix2' fix:false</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix1', ps:'top', fix:false</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix2', ps:'top', add:'exeFix1' fix:false</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix3', ps:'top', add:'exeFix2' fix:false</span> });
 </code>
 </pre>
 </div>
@@ -149,9 +150,9 @@ $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix3', ps:'
 <pre>
 <code>
 <span class="c">// add 로 불러올 요소는 미리 실행이 되야한다.(실행 순서가 중요.)</span>
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix6', ps:'bottom', fix:true</span> });
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix5', ps:'bottom', add:'exeFix6', fix:true</span> });
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix4', ps:'bottom', add:'exeFix5', fix:true</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix6', ps:'bottom', fix:true</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix5', ps:'bottom', add:'exeFix6', fix:true</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix4', ps:'bottom', add:'exeFix5', fix:true</span> });
 </code>
 </pre>
 </div>
@@ -160,9 +161,9 @@ $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix4', ps:'
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix7', ps:'bottom', fix:false</span> });
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix8', ps:'bottom', add:'exeFix7', fix:false</span> });
-$plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix9', ps:'bottom', add:'exeFix8', fix:false</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix7', ps:'bottom', fix:false</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix8', ps:'bottom', add:'exeFix7', fix:false</span> });
+netive<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix9', ps:'bottom', add:'exeFix8', fix:false</span> });
 </code>
 </pre>
 </div>	
@@ -228,3 +229,4 @@ $plugins<span class="na">.uiFloating</span>({ <span class="s">id:'exeFix9', ps:'
 	</tbody>
 	</table>
 </div>
+</section>
