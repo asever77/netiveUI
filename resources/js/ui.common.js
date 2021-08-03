@@ -2,12 +2,12 @@
 
 	'use strict';
 	
-	$plugins.common = {
+	netive.common = {
 		init: function(){
 			var fristHref = '/netiveUI/html/start/introduction.html';
 
-			if (!!$plugins.para.get('page')) {
-				switch($plugins.para.get('page')) {
+			if (!!netive.para.get('page')) {
+				switch(netive.para.get('page')) {
 					case 'introduction' :
 						fristHref = '/netiveUI/html/start/introduction.html';
 						break;
@@ -142,26 +142,26 @@
 				}
 			} 
 
-			$plugins.ajax.init({ 
+			netive.ajax.init({ 
 				selector: $('.base-header'), 
 				url:'/netiveUI/html/inc/header.html', 
 				page:true, 
-				callback:$plugins.common.header 
+				callback:netive.common.header 
 			});
-			$plugins.ajax.init({ 
+			netive.ajax.init({ 
 				selector: $('base-footer'), 
 				url:'/netiveUI/html/inc/footer.html', 
 				page:true
 			});
-			$plugins.ajax.init({ 
+			netive.ajax.init({ 
 				selector: $('.base-main'), 
 				url: fristHref, 
 				page: true, 
 				effect: true,
 				callback: function(){
 					$(win).off('scroll.win');
-					$plugins.common.pageInit(fristHref);
-					$plugins.common.settingAside();
+					netive.common.pageInit(fristHref);
+					netive.common.settingAside();
  					
 					// $(doc).find('.base-wrap').find('button, a').on('click', function(){
 					// 	var $this = $(this); 
@@ -173,17 +173,17 @@
 
 			
 			
-			// $plugins.ajax.init({ 
+			// netive.ajax.init({ 
 			//	 id:'baseFooter', 
 			//	 url:'/netiveUI/html/inc/footer.html', 
 			//	 page:true, 
-			//	 callback:$plugins.common.footer 
+			//	 callback:netive.common.footer 
 			// });
 			
 			console.log('------------------------------------------------------')
 
-			$plugins.table.caption();
-			$plugins.form.init();
+			netive.table.caption();
+			netive.form.init();
 		},
 		gridSwitch: function(){
 			var $grid = $('.base-grid');
@@ -193,14 +193,14 @@
 		},
 		header: function(){
 			console.log('header load');
-			$plugins.accordion.init({ 
+			netive.accordion.init({ 
 				id: 'exeLNB', 
 				current: 'all', 
 				autoclose: false
 			});
-			$plugins.common.menuAjax();
+			netive.common.menuAjax();
 
-			$('.ui-nav').on('click', $plugins.common.navOpen);
+			$('.ui-nav').on('click', netive.common.navOpen);
 			document.querySelector('.btn-mode').addEventListener('click', function() {
 				document.querySelector('html').classList.toggle('dark-mode');
 			});
@@ -240,7 +240,7 @@
 
 			if (!!doc.querySelector('#uiJsName')) {
 				jsName = doc.querySelector('#uiJsName').value;
-				$plugins.page[jsName]();
+				netive.page[jsName]();
 			}
 
 			if(typeof(history.pushState) == 'function') {
@@ -296,22 +296,22 @@
 		menuAjax: function(){
 			$('.dep-2-btn').off('click.ajax').on('click.ajax', function(){
 				var href = this.getAttribute('data-href');
-				!!$('body').hasClass('nav-open') && $plugins.common.navOpen();
-				$plugins.ajax.init({ 
+				!!$('body').hasClass('nav-open') && netive.common.navOpen();
+				netive.ajax.init({ 
 					selector: $('.base-main'), 
 					url: href, 
 					page: true, 
 					effect: true,
 					callback: function(v){
-						$plugins.scroll.move({ 
+						netive.scroll.move({ 
 							value:0, 
 							speed:0, 
 							focus:  $('.base-main h1').eq(0)
 						});
 						
 						$(win).off('scroll.win');
-						$plugins.common.pageInit(href);
-						$plugins.common.settingAside();
+						netive.common.pageInit(href);
+						netive.common.settingAside();
 						
 						// document.addEventListener('DOMContentLoaded', (event) => {
 						// 	document.querySelectorAll('pre code').forEach((el) => {
@@ -337,10 +337,10 @@
 	
 
 	//page 
-	$plugins.page = {}
+	netive.page = {}
 
 	//callback
-	$plugins.callback = {
+	netive.callback = {
 		modal: function(modalId){
 			switch(modalId) {
 				case 'modalID':
@@ -359,13 +359,13 @@
 		
 	//	 function pageCodeIs(){
 	//		 console.log('common.js ready?')
-	//		 if ($plugins.common.pageid === undefined && n < 10) {
+	//		 if (netive.common.pageid === undefined && n < 10) {
 	//			 n = n + 1;
 	//			 delayExe();
 	//		 } else {
 	//			 console.log('common.js ok')
 	//			 clearTimeout(timer);
-	//			 $plugins.common.init();
+	//			 netive.common.init();
 	//			 $('body').stop().animate({
 	//				 opacity:1
 	//			 }, 150);

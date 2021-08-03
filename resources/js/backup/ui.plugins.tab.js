@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = 'netiveUI.plugins';
 
     /* ------------------------------------------------------------------------
@@ -10,8 +10,8 @@
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - $plugins.uiTab({ option });
-	* - $plugins.uiTabAct({ option });
+	* - netive.uiTab({ option });
+	* - netive.uiTabAct({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiTab: function (opt) {
@@ -212,7 +212,7 @@
 		$btn.eq(current).append('<b class="hide">선택됨</b>');
 		$btn.removeClass('selected').eq(current).addClass('selected').focus();
 
-		$plugins.uiScroll({ 
+		netive.uiScroll({ 
 			value: ps_l[current], 
 			btnwidth : $btn.outerWidth(),
 			target: $btns, 

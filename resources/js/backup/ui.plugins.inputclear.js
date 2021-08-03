@@ -2,13 +2,13 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = 'netiveUI.plugins';
 
     /* ------------------------------------------------------------------------
 	 * input form
 	 * input value clear button v1.0 
-	 * $plugins.uiInputClear
+	 * netive.uiInputClear
 	 * date : 2018-05-18
 	 * input value 값 입력 시 clear버튼 생성
 	 * 

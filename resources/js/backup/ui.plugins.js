@@ -3,7 +3,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
 		namespace = 'netiveUI.plugins';
 
 
@@ -178,7 +178,7 @@
 			var n = 1;
 
 			$(this).off('keyup').on('keyup', function(){
-				if (!!$plugins.uiHasScrollBar({ selector:$(this) })) {
+				if (!!netive.uiHasScrollBar({ selector:$(this) })) {
 					n = n + 1;
 					$(this).addClass('n' + n);
 				}

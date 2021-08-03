@@ -2,9 +2,9 @@
 
 	'use strict';
 
-	console.log($plugins.uiNameSpace);
+	console.log(netive.uiNameSpace);
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
 		namespace = pluginsName;
 		
 	/* ------------------------------------------------------------------------
@@ -12,8 +12,8 @@
 	* Ver. : v1.0.0
 	* date : 2020-05-17
 	* EXEC statement
-	* - $plugins.uiAccordion({ option });
-	* - $plugins.uiAccordionToggle({ option });
+	* - netive.uiAccordion({ option });
+	* - netive.uiAccordionToggle({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiAccordion: function (opt) {

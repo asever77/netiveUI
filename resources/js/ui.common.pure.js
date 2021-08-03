@@ -203,22 +203,22 @@
 
 			// $('.dep-2-btn').off('click.ajax').on('click.ajax', function(){
 			// 	var href = this.getAttribute('data-href');
-			// 	!!$('body').hasClass('nav-open') && $plugins.common.navOpen();
-			// 	$plugins.uiAjax({ 
+			// 	!!$('body').hasClass('nav-open') && netive.common.navOpen();
+			// 	netive.uiAjax({ 
 			// 		id: 'baseMain', 
 			// 		url: href, 
 			// 		page: true, 
 			// 		effect: true,
 			// 		callback: function(v){
-			// 			$plugins.uiScroll({ 
+			// 			netive.uiScroll({ 
 			// 				value:0, 
 			// 				speed:0, 
 			// 				focus:  $('#baseMain h1').eq(0)
 			// 			});
 						
 			// 			$(win).off('scroll.win');
-			// 			$plugins.common.pageInit(href);
-			// 			$plugins.common.settingAside();
+			// 			netive.common.pageInit(href);
+			// 			netive.common.settingAside();
 						
 			// 		}
 			// 	});

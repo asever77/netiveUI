@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = 'netiveUI.plugins';
 
     /* ------------------------------------------------------------------------
@@ -10,8 +10,8 @@
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - $plugins.uiCountStep({ option });
-	* - $plugins.uiCountSlide({ option });
+	* - netive.uiCountStep({ option });
+	* - netive.uiCountSlide({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {	
 		uiCountStep: function (opt) {

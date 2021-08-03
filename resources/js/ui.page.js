@@ -4,74 +4,74 @@
     'use strict';
 
     console.log('page ready after');
-    $plugins.common.init();  
+    netive.common.init();  
 
-    $plugins.page.pageInputPlaceholder = function(){
+    netive.page.pageInputPlaceholder = function(){
 
     };
     
-    $plugins.page.pageInnerLabel = function(){
-        $plugins.form.init();
-        $plugins.select.init();
-        //$plugins.uiDatePicker();
-        // $plugins.form.innerLabel();
+    netive.page.pageInnerLabel = function(){
+        netive.form.init();
+        netive.select.init();
+        //netive.uiDatePicker();
+        // netive.form.innerLabel();
 
-        $plugins.form.init();
+        netive.form.init();
 
     };
-    $plugins.page.pageColor = function(){};
-    $plugins.page.pageUnits = function(){};
-    $plugins.page.pagePlaceholder = function(){};
-    $plugins.page.pageNaming = function(){};
-    $plugins.page.pageMargin = function(){};
-    $plugins.page.pageIntroduction = function(){};
-    $plugins.page.pageDevice = function(){};
-    $plugins.page.pageTypography = function(){};
-    $plugins.page.pageLayout = function(){};
-    $plugins.page.pageLoading = function(){
-        $plugins.loading.show();
-        $plugins.loading.show();
-        $plugins.loading.hide();
-        $plugins.loading.show();
-        $plugins.loading.hide();
+    netive.page.pageColor = function(){};
+    netive.page.pageUnits = function(){};
+    netive.page.pagePlaceholder = function(){};
+    netive.page.pageNaming = function(){};
+    netive.page.pageMargin = function(){};
+    netive.page.pageIntroduction = function(){};
+    netive.page.pageDevice = function(){};
+    netive.page.pageTypography = function(){};
+    netive.page.pageLayout = function(){};
+    netive.page.pageLoading = function(){
+        netive.loading.show();
+        netive.loading.show();
+        netive.loading.hide();
+        netive.loading.show();
+        netive.loading.hide();
     };
-    $plugins.page.pageButton = function(){};
+    netive.page.pageButton = function(){};
 
-    $plugins.page.pageBulletList = function(){};
+    netive.page.pageBulletList = function(){};
 
-    $plugins.page.pagePrint = function(){
+    netive.page.pagePrint = function(){
         $('#prtTest').off('click.print').on('click.print', function(){
-            $plugins.uiPrint({ id:'prtSct' });
+            netive.uiPrint({ id:'prtSct' });
         });
     };
 
-    $plugins.page.pageTableCaption = function(){
-        $plugins.table.caption();
+    netive.page.pageTableCaption = function(){
+        netive.table.caption();
     };
 
-    $plugins.page.pageTableCellFix = function(){
-        $plugins.table.fixTd();
+    netive.page.pageTableCellFix = function(){
+        netive.table.fixTd();
     };
 
-    $plugins.page.pageTableScroll = function(){
-        $plugins.table.scroll({
+    netive.page.pageTableScroll = function(){
+        netive.table.scroll({
             callback:function(){
-                $plugins.scrollBar.init({
+                netive.scrollBar.init({
                     id: 'tblScrollTest1'
                 });
             }
         });
-        // $plugins.uiTableScroll({
+        // netive.uiTableScroll({
         //     callback:function(){
-        //         $plugins.scrollBar.init({
+        //         netive.scrollBar.init({
         //             id: 'tblScrollTest1'
         //         });
         //     }
         // });
     };
 
-    $plugins.page.pageBrickList = function(){
-        $plugins.uiBrickList({ 
+    netive.page.pageBrickList = function(){
+        netive.masonry.init({ 
             id:'uiBrickList1', 
             fixCol: {
                 1500:8,
@@ -82,7 +82,7 @@
             response:true
         });
 
-        $plugins.uiBrickList({ 
+        netive.masonry.init({ 
             id:'uiBrickList2', 
             fixCol: {
                 1500:4,
@@ -154,12 +154,12 @@
                 '</li>';
 
             $('#' + v).find('.ui-bricklist-wrap').append(add);
-            $plugins.uiBrickListItem({ id: v });
+            netive.masonry.act({ id: v });
         }
         
     };
 
-    $plugins.page.pageModal = function(){
+    netive.page.pageModal = function(){
         $(doc).find('button, a').off('click.active').on('click.active', function(){
             var $this = $(this);
 
@@ -171,7 +171,7 @@
         $('.test-modal .btn-base').off('click.modal').on('click.modal', function(e){
             var $btn = $(this);
             
-            $plugins.uiModalOpen({ 
+            netive.uiModalOpen({ 
                 id: $btn.attr('modal-id'), 
                 ps: $btn.attr('modal-ps') === undefined ? 'center' : $btn.attr('modal-ps'), 
                 src: $btn.attr('modal-src') === undefined ? false : $btn.attr('modal-src'), 
@@ -183,7 +183,7 @@
                     //console.log('close callback', v); 
                 },
                 callback: function(v) { 
-                    $plugins.scrollBar.init({
+                    netive.scrollBar.init({
                         id: $('#' + $btn.attr('modal-id')).find('.ui-scrollbar')
                     })
                     //console.log('callback', v); 
@@ -193,15 +193,15 @@
         
     }
 
-    $plugins.page.pageFileUpload = function(){
-        //$plugins.uiFileUpload(); 
-        $plugins.form.fileUpload(); 
-        $plugins.form.fileUpload(); 
-        $plugins.form.fileUpload(); 
-        $plugins.form.fileUpload(); 
+    netive.page.pageFileUpload = function(){
+        //netive.uiFileUpload(); 
+        netive.form.fileUpload(); 
+        netive.form.fileUpload(); 
+        netive.form.fileUpload(); 
+        netive.form.fileUpload(); 
     }
 
-    $plugins.page.pageIssue = function(){
+    netive.page.pageIssue = function(){
 
 
         if ($('#uiIssueSearch').val() !== '') {
@@ -219,7 +219,7 @@
             searchAct();
         });
         $('#uiIssueSearch').on('keydown', function(e){
-            if (e.keyCode === $plugins.option.keys.enter) {
+            if (e.keyCode === netive.option.keys.enter) {
                 searchAct();
             }
         });
@@ -234,10 +234,10 @@
         }
     }
 
-    $plugins.page.pageSlot = function(){
-        $plugins.uiSlot({ id: 'uiSlot1', current: 1, auto: false, single:false });
-        $plugins.uiSlot({ id: 'uiSlot2', current: 4, auto: false, single:false });
-        $plugins.uiSlot({ id: 'uiSlot3', current: 2, auto: false, single:false });
+    netive.page.pageSlot = function(){
+        netive.uiSlot({ id: 'uiSlot1', current: 1, auto: false, single:false });
+        netive.uiSlot({ id: 'uiSlot2', current: 4, auto: false, single:false });
+        netive.uiSlot({ id: 'uiSlot3', current: 2, auto: false, single:false });
         
         var n = 1,
             win = [];
@@ -245,21 +245,21 @@
         $('#start').click(function(){
             n = 1;
             win = [];
-            $plugins.uiSlotStart({ id: 'uiSlot1'});
-            $plugins.uiSlotStart({ id: 'uiSlot2'});
-            $plugins.uiSlotStart({ id: 'uiSlot3'}); 
+            netive.uiSlotStart({ id: 'uiSlot1'});
+            netive.uiSlotStart({ id: 'uiSlot2'});
+            netive.uiSlotStart({ id: 'uiSlot3'}); 
         });
         $('#stop').click(function(){
             if (n < 4) {
-                $plugins.uiSlotStop({ id: 'uiSlot' + n, callback: slotMCallback });
+                netive.uiSlotStop({ id: 'uiSlot' + n, callback: slotMCallback });
                 n = n + 1;
             }
         });
         $('#allstop').click(function(){
             win = [];
-            $plugins.uiSlotStop({ id: 'uiSlot1', callback: slotMCallback });
-            $plugins.uiSlotStop({ id: 'uiSlot2', callback: slotMCallback });
-            $plugins.uiSlotStop({ id: 'uiSlot3', callback: slotMCallback }); 
+            netive.uiSlotStop({ id: 'uiSlot1', callback: slotMCallback });
+            netive.uiSlotStop({ id: 'uiSlot2', callback: slotMCallback });
+            netive.uiSlotStop({ id: 'uiSlot3', callback: slotMCallback }); 
         });
 
         function slotMCallback(v){
@@ -286,16 +286,16 @@
             opacity: 1
         },700);
         
-        $plugins.uiBrickList({ id:'uiListcard', margin:10, response:true });
-        //$plugins.uiCardListRow({ id:'uiListcard' });  추가
+        netive.uiBrickList({ id:'uiListcard', margin:10, response:true });
+        //netive.uiCardListRow({ id:'uiListcard' });  추가
         
 
 
-        $plugins.uiSlot({ id: 'wuiSlot1', current:1, auto:true, single:true });
-        $plugins.uiSlot({ id: 'wuiSlot2', current:9, auto:true, single:true });
-        $plugins.uiSlot({ id: 'wuiSlot3', current:3, auto:true, single:true });
-        $plugins.uiSlot({ id: 'wuiSlot4', current:5, auto:true, single:true });
-        $plugins.uiSlot({ id: 'wuiSlot5', current:7, auto:true, single:true });
+        netive.uiSlot({ id: 'wuiSlot1', current:1, auto:true, single:true });
+        netive.uiSlot({ id: 'wuiSlot2', current:9, auto:true, single:true });
+        netive.uiSlot({ id: 'wuiSlot3', current:3, auto:true, single:true });
+        netive.uiSlot({ id: 'wuiSlot4', current:5, auto:true, single:true });
+        netive.uiSlot({ id: 'wuiSlot5', current:7, auto:true, single:true });
 
         var n = 1,
             j = 1,
@@ -318,7 +318,7 @@
         function slotstop(j){
             if (j < iulen) {
                 setTimeout(function(){
-                    $plugins.uiSlotStop({ id: 'wuiSlot' + j, callback: slotCallback });
+                    netive.uiSlotStop({ id: 'wuiSlot' + j, callback: slotCallback });
                     $('#wuiSlot' + j).closest('.ui-bricklist-item').addClass('ok');
                     $('.ui-bricklist-item.n'+ j).find('strong').stop().animate({
                         opacity: 1
@@ -354,118 +354,118 @@
             }
         }
     }
-    $plugins.page.pageTooltip = function(){
-        $plugins.uiTooltip();
+    netive.page.pageTooltip = function(){
+        netive.uiTooltip();
     }
-    $plugins.page.pageRange = function(){
+    netive.page.pageRange = function(){
         //range slider
-        $plugins.range.init({ 
-            id:"uiSlider", 
-            vertical:false, 
-            reverse:false, 
-            range:true, 
-            now:[1500, 2500], 
-            step:10, 
-            min:1000, 
-            max:6000, 
-            tooltip:true, 
-            unit:'만원', 
-            txt_s:'이하', 
-            txt_e:'이상', 
-            acc:true, 
-            callback:sliderCallback
-        });
+        // netive.range.init({ 
+        //     id:"uiSlider", 
+        //     vertical:false, 
+        //     reverse:false, 
+        //     range:true, 
+        //     now:[1500, 2500], 
+        //     step:10, 
+        //     min:1000, 
+        //     max:6000, 
+        //     tooltip:true, 
+        //     unit:'만원', 
+        //     txt_s:'이하', 
+        //     txt_e:'이상', 
+        //     acc:true, 
+        //     callback:sliderCallback
+        // });
 
 
 
 
-        $plugins.range.init({ 
-            id:"uiSlider2", 
-            vertical:false, 
-            reverse:true, 
-            range:true, 
-            now:[1500, 2500], 
-            step:10, 
-            min:1000, 
-            max:6000, 
-            tooltip:true,
-            unit:'달러', 
-            txt_s:'', 
-            txt_e:'', 
-            acc:true, 
-            callback:sliderCallback
-        });
-        $plugins.range.init({ 
-            id:"uiSlider3", 
-            vertical:true, reverse:false, range:true, 
-            now:[1500, 2500], step:10, min:1000, max:6000, 
-            tooltip:true, unit:'만원', txt_s:'이하', txt_e:'이상', 
-            acc:true, callback:sliderCallback
-        });
-        $plugins.range.init({ 
-            id:"uiSlider4", 
-            vertical:true, reverse:true, range:true, 
-            now:[1500, 2500], step:10, min:1000, max:6000, 
-            tooltip:true, unit:'만원', txt_s:'이하', txt_e:'이상', 
-            acc:true, callback:sliderCallback
-        });
+        // netive.range.init({ 
+        //     id:"uiSlider2", 
+        //     vertical:false, 
+        //     reverse:true, 
+        //     range:true, 
+        //     now:[1500, 2500], 
+        //     step:10, 
+        //     min:1000, 
+        //     max:6000, 
+        //     tooltip:true,
+        //     unit:'달러', 
+        //     txt_s:'', 
+        //     txt_e:'', 
+        //     acc:true, 
+        //     callback:sliderCallback
+        // });
+        // netive.range.init({ 
+        //     id:"uiSlider3", 
+        //     vertical:true, reverse:false, range:true, 
+        //     now:[1500, 2500], step:10, min:1000, max:6000, 
+        //     tooltip:true, unit:'만원', txt_s:'이하', txt_e:'이상', 
+        //     acc:true, callback:sliderCallback
+        // });
+        // netive.range.init({ 
+        //     id:"uiSlider4", 
+        //     vertical:true, reverse:true, range:true, 
+        //     now:[1500, 2500], step:10, min:1000, max:6000, 
+        //     tooltip:true, unit:'만원', txt_s:'이하', txt_e:'이상', 
+        //     acc:true, callback:sliderCallback
+        // });
 
-        //slider
-        $plugins.range.init({
-            id:"uiSlider5",
-            vertical:false, reverse:false, range:false,
-            now:[500], step:10, min:0, max:1000,
-            tooltip:true, unit:'만원', txt_s:'', txt_e:'',
-            acc:true, callback:sliderCallback
-        });
-        $plugins.range.init({
-            id:"uiSlider6",
-            vertical:false, reverse:true, range:false,
-            now:[500], step:10, min:0, max:1000,
-            tooltip:true, unit:'만원', txt_s:'', txt_e:'',
-            acc:true, callback:sliderCallback
-        });
-        $plugins.range.init({
-            id:"uiSlider7",
-            vertical:true, reverse:false, range:false, stepname:['step1','step2','step3','step4','step5','step6','step7','step8','step9','step10', 'step11'], 
-            now:[50], step:10, min:0, max:100,
-            tooltip:true, unit:'', txt_s:'', txt_e:'',
-            acc:true, callback:sliderCallback
-        });
-        $plugins.range.init({
-            id:"uiSlider8",
-            vertical:true, reverse:true, range:false,
-            now:[500], step:10, min:0, max:1000,
-            tooltip:true, unit:'만원', txt_s:'', txt_e:'',
-            acc:true, callback:sliderCallback
-        });
+        // //slider
+        // netive.range.init({
+        //     id:"uiSlider5",
+        //     vertical:false, reverse:false, range:false,
+        //     now:[500], step:10, min:0, max:1000,
+        //     tooltip:true, unit:'만원', txt_s:'', txt_e:'',
+        //     acc:true, callback:sliderCallback
+        // });
+        // netive.range.init({
+        //     id:"uiSlider6",
+        //     vertical:false, reverse:true, range:false,
+        //     now:[500], step:10, min:0, max:1000,
+        //     tooltip:true, unit:'만원', txt_s:'', txt_e:'',
+        //     acc:true, callback:sliderCallback
+        // });
+        // netive.range.init({
+        //     id:"uiSlider7",
+        //     vertical:true, reverse:false, range:false, stepname:['step1','step2','step3','step4','step5','step6','step7','step8','step9','step10', 'step11'], 
+        //     now:[50], step:10, min:0, max:100,
+        //     tooltip:true, unit:'', txt_s:'', txt_e:'',
+        //     acc:true, callback:sliderCallback
+        // });
+        // netive.range.init({
+        //     id:"uiSlider8",
+        //     vertical:true, reverse:true, range:false,
+        //     now:[500], step:10, min:0, max:1000,
+        //     tooltip:true, unit:'만원', txt_s:'', txt_e:'',
+        //     acc:true, callback:sliderCallback
+        // });
         
         
-        function sliderCallback(v){
-            console.log(v);
-        }
+        // function sliderCallback(v){
+        //     console.log(v);
+        // }
     }
 
-    $plugins.page.pageSlide = function(){
-        $plugins.uiSlide();
-        $plugins.uiSlide({ id:'slide1', current:0, loop:false, dot:true, eff:'slide', speed:300, callback:callback});
-        $plugins.uiSlide({ id:'slide2', eff:'fade', dot:true, speed:350 });
+    netive.page.pageSlide = function(){
+        netive.uiSlide();
+        netive.uiSlide({ id:'slide1', current:0, loop:false, dot:true, eff:'slide', speed:300, callback:callback});
+        netive.uiSlide({ id:'slide2', eff:'fade', dot:true, speed:350 });
         
-        $plugins.uiSlide({ id:'slide3', multi:true, margin:10 });
+        netive.uiSlide({ id:'slide3', multi:true, margin:10 });
         
-        $plugins.uiSlide({ id:'slide4', items:3, margin:10 }); 
+        netive.uiSlide({ id:'slide4', items:3, margin:10 }); 
 
         function callback(v){
             console.log(v);
         }
     }
 
-    $plugins.page.pageSelect = function(){
+    netive.page.pageSelect = function(){
         
 
     }
 
-    $plugins.page.pageScrollMove = function(){
+    netive.page.pageScrollMove = function(){
 
          
         function callback(n){            
@@ -475,75 +475,75 @@
     
     
    
-    $plugins.page.pageParallax = function(){
-        $plugins.uiParallax({
+    netive.page.pageParallax = function(){
+        netive.uiParallax({
             callback:function(v) {
                 console.log(v);
             }
         });
     }
 
-    $plugins.page.pagePopupBook = function(){
-        $plugins.uiPopupBook();
+    netive.page.pagePopupBook = function(){
+        netive.uiPopupBook();
     }
 
-    $plugins.page.pageScrollBar = function(){
-        $plugins.scrollBar.init({
+    netive.page.pageScrollBar = function(){
+        netive.scrollBar.init({
             infiniteCallback: function(){
                 console.log('infiniteCallback')
             }
         });
-//$plugins.scrollBar.init({ id:'scrbar1', top:20 });
+//netive.scrollBar.init({ id:'scrbar1', top:20 });
     }
 
-    $plugins.page.pageJsonCodingList = function(){
-        $plugins.uiCodinglist({
+    netive.page.pageJsonCodingList = function(){
+        netive.uiCodinglist({
             id: 'uiCodinglist',
             url: '/netiveUI/resources/data/codinglist.json',
             type: 'text'
         });
     }
 
-    $plugins.page.pagePopup = function(){
+    netive.page.pagePopup = function(){
         $('#uiPopupA').on('click', function(e){
             e.preventDefault();
-            $plugins.popup.open({ link:$(this).attr('href'), width:200  });
+            netive.popup.open({ link:$(this).attr('href'), width:200  });
         });
         $('#uiPopupB').on('click', function(e){
             e.preventDefault();
-            $plugins.popup.open({ link:$(this).attr('href'), name:'list'  });
+            netive.popup.open({ link:$(this).attr('href'), name:'list'  });
         });
     }
 
-    $plugins.page.pageInputFormat = function(){
+    netive.page.pageInputFormat = function(){
        
         
         
     }
 
-    $plugins.page.pageInputClear = function(){
-        $plugins.form.init();
+    netive.page.pageInputClear = function(){
+        netive.form.init();
         
   
     }
 
-    $plugins.page.pageFloatingRange = function(){
-        $plugins.uiFloatingRange({ 
+    netive.page.pageFloatingRange = function(){
+        netive.uiFloatingRange({ 
             id:'uiflRange01', 
             margin: 20
         });
-        $plugins.uiFloatingRange({ 
+        netive.uiFloatingRange({ 
             id:'uiflRange02', 
             margin: 0
         });
     }
 
-    $plugins.page.pageFloating = function(){
-        $plugins.uiFloating({ id:'exeFix12', ps:'top', fix:true });
-        $plugins.uiFloating({ id:'exeFix11', ps:'top', add:'exeFix12', fix:true });
-        $plugins.uiFloating({ id:'exeFix10', ps:'top', add:'exeFix11', fix:true });
+    netive.page.pageFloating = function(){
+        netive.uiFloating({ id:'exeFix12', ps:'top', fix:true });
+        netive.uiFloating({ id:'exeFix11', ps:'top', add:'exeFix12', fix:true });
+        netive.uiFloating({ id:'exeFix10', ps:'top', add:'exeFix11', fix:true });
 
-        $plugins.uiFloating({ 
+        netive.uiFloating({ 
             id:'exeFix1', 
             ps:'top', 
             fix:false, 
@@ -551,74 +551,51 @@
                 console.log(v);
             } 
         });
-        $plugins.uiFloating({ id:'exeFix2', ps:'top', add:'exeFix1', fix:false });
-        $plugins.uiFloating({ id:'exeFix3', ps:'top', add:'exeFix2', fix:false });
+        netive.uiFloating({ id:'exeFix2', ps:'top', add:'exeFix1', fix:false });
+        netive.uiFloating({ id:'exeFix3', ps:'top', add:'exeFix2', fix:false });
         
         
-        $plugins.uiFloating({ id:'exeFix6', ps:'bottom', fix:true});
-        $plugins.uiFloating({ id:'exeFix5', ps:'bottom', add:'exeFix6', fix:true});
-        $plugins.uiFloating({ id:'exeFix4', ps:'bottom', add:'exeFix5', fix:true });
+        netive.uiFloating({ id:'exeFix6', ps:'bottom', fix:true});
+        netive.uiFloating({ id:'exeFix5', ps:'bottom', add:'exeFix6', fix:true});
+        netive.uiFloating({ id:'exeFix4', ps:'bottom', add:'exeFix5', fix:true });
 
-        $plugins.uiFloating({ id:'exeFix7', ps:'bottom', fix:false});
-        $plugins.uiFloating({ id:'exeFix8', ps:'bottom', add:'exeFix7', fix:false});
-        $plugins.uiFloating({ id:'exeFix9', ps:'bottom', add:'exeFix8', fix:false });
+        netive.uiFloating({ id:'exeFix7', ps:'bottom', fix:false});
+        netive.uiFloating({ id:'exeFix8', ps:'bottom', add:'exeFix7', fix:false});
+        netive.uiFloating({ id:'exeFix9', ps:'bottom', add:'exeFix8', fix:false });
 
 
     }
 
-    $plugins.page.pageCountNumber = function(){
-        $plugins.uiCountStep({ id:'exeCount1', value: 504025 });
-        $plugins.uiCountSlot({ id:'exeCount2', value: 1965040.25 });
+    netive.page.pageCountNumber = function(){
+        netive.uiCountStep({ id:'exeCount1', value: 504025 });
+        netive.uiCountSlot({ id:'exeCount2', value: 1965040.25 });
     }
 
-    $plugins.page.pageDropdown = function(){
-        $('.drop-ps-change').on('change', function(){
-            $(this).closest('.mgt-s').find('.ui-drop').attr('data-ps', $(this).val());
-        });
-
-        $plugins.uiDropdown({ 
-            id:'uiDrop1', 
-            ps:'BL',
-            dropSrc:'/netiveUI/html/components/dropdown_ajax.html',
-            dropOffset: true,
-            dropExpanded: true,
-            openback: function(){
-                $plugins.uiTab({ id: 'exeTab1', current:0 });
-            }
-        });
-        $plugins.uiDropdown({ 
-            id:'uiDrop2', 
-            ps:'RT',
-            dim :true
-        });
-        $plugins.uiDropdown({ 
-            id:'uiDrop5', 
-            ps:'RB'
-        });
-
+    netive.page.pageDropdown = function(){
+        
         
     }
 
-    $plugins.page.pageTab = function(){
-        $plugins.uiTab({ 
+    netive.page.pageTab = function(){
+        netive.uiTab({ 
             id:'exeTab1', 
             current:0, 
             effect: 'eff-fade',
             callback:tabCallback 
         });
-        $plugins.uiTab({ 
+        netive.uiTab({ 
             id:'exeTab12', 
             current:0, 
             callback:tabCallback 
         });
-        $plugins.uiTab({ 
+        netive.uiTab({ 
             id:'exeTab2', 
             current:2, 
             onePanel:true, 
             callback: tabCallback2 
         });
 
-        $plugins.uiTab({ 
+        netive.uiTab({ 
             id:'exeTab4', 
             current:0, 
             callback: tabCallback2 
@@ -631,30 +608,30 @@
             $('#'+ v.id).find('.ui-tab-tit').text($('#'+ v.id).find('.ui-tab-btn').eq(v.current).text());
             //console.log(v);
         }
-        $plugins.scrollBar.init();
+        netive.scrollBar.init();
         $('.ui-tab-btns').on('scroll', function(){
             //console.log($(this).scrollLeft());
         });
     }
 
-    $plugins.page.pageTable = function(){
+    netive.page.pageTable = function(){
        
     }
 
-    $plugins.page.pageDraggable = function(){
-        $plugins.uiDraggable({
+    netive.page.pageDraggable = function(){
+        netive.uiDraggable({
             id:'drag1'
         });
-        $plugins.uiDraggable({
+        netive.uiDraggable({
             id:'drag2'
         });
-        $plugins.uiDraggable({
+        netive.uiDraggable({
             id:'drag3'
         });
-        $plugins.uiDraggable({
+        netive.uiDraggable({
             id:'drag4'
         });
-        $plugins.uiDraggable({
+        netive.uiDraggable({
             id:'drag5',
             line: true
         });
@@ -662,37 +639,12 @@
 
     
 
-    $plugins.page.pageAccordion = function(){
-        console.log('page.js-acco');
-        $plugins.accordion.init({ id:'exeAcco1', current:[0,2], callback:function(v){console.log(v)} });
-        $plugins.accordion.init({ id:'exeAcco3', current:null, autoclose:false });
-        $plugins.accordion.init({ id:'exeAcco5', current:'all', autoclose:false });
-
-        var add_html = '';
-        add_html += '<div class="ui-acco-wrap">';
-        add_html += '<dt class="ui-acco-tit">';
-        add_html += '<button type="button" class="ui-acco-btn">[추가] 아코디언이란?</button>';
-        add_html += '</dt>';
-        add_html += '<dd class="ui-acco-pnl">';
-        add_html += '<div class="ui-acco-pnl-wrap">';
-        add_html += '<p>(accordion, 독일어: <a href="#">Akkodeon</a>, 프랑스어: <a href="#">accordéon</a>, 이탈리아어: <a href="#">fisarmonica</a>, 문화어:손풍금)은 바람통과 리드가 달린 상자형의 악기로, 악기학상으로는 리드 오르간의 일종으로 분류된다.</p>';
-        add_html += '</div>';
-        add_html += '</dd>';
-        add_html += '</div>';
-
-        $('#uiAccoAdd').on('click.add', function(){
-            $('#exeAcco1').append(add_html);
-
-            $plugins.accordion.init({ 
-                id: 'exeAcco1', 
-                add: true,
-                callback: function(v){console.log(v)} 
-            });
-        });
+    netive.page.pageAccordion = function(){
+       
     }
     
-    $plugins.page.pageDatePicker = function(){
-        //$plugins.datepicker.init();
+    netive.page.pageDatePicker = function(){
+        //netive.datepicker.init();
 
         
     }
@@ -712,34 +664,34 @@
     
 
 
-    $plugins.page.capture = function(){
+    netive.page.capture = function(){
         $('#uiCaptureBtn').on('click',function(){
-            $plugins.uiCapture({ id: 'capSct' });
+            netive.uiCapture({ id: 'capSct' });
         });
     }
 
-    $plugins.page.countNumber = function(){
-        $plugins.uiCountStep({ id:'exeCount1', value: 504025 });
-        $plugins.uiCountSlide({ id:'exeCount2', value: 5040.25 });
+    netive.page.countNumber = function(){
+        netive.uiCountStep({ id:'exeCount1', value: 504025 });
+        netive.uiCountSlide({ id:'exeCount2', value: 5040.25 });
     }
 
     
-    $plugins.page.fileupload = function(){
+    netive.page.fileupload = function(){
 
         /* 파일 업로드 */
-        $plugins.uiFileUpload(); 
+        netive.uiFileUpload(); 
  
     }
 
     
-    $plugins.page.slide = function(){
-        $plugins.uiSlide();
-        $plugins.uiSlide({ id:'slide1', current:0, loop:false, dot:true, eff:'slide', speed:300, callback:callback});
-        $plugins.uiSlide({ id:'slide2', eff:'fade', dot:true, speed:350 });
+    netive.page.slide = function(){
+        netive.uiSlide();
+        netive.uiSlide({ id:'slide1', current:0, loop:false, dot:true, eff:'slide', speed:300, callback:callback});
+        netive.uiSlide({ id:'slide2', eff:'fade', dot:true, speed:350 });
         
-        $plugins.uiSlide({ id:'slide3', multi:true, margin:10 });
+        netive.uiSlide({ id:'slide3', multi:true, margin:10 });
         
-        $plugins.uiSlide({ id:'slide4', items:3, margin:10 }); 
+        netive.uiSlide({ id:'slide4', items:3, margin:10 }); 
 
         function callback(v){
             console.log(v);

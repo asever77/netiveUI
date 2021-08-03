@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = 'netiveUI.plugins';
         
     /* ------------------------------------------------------------------------
@@ -10,22 +10,22 @@
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - $plugins.uidropdown({ option });
-	* - $plugins.uiDropdownToggle({ option });
-	* - $plugins.uiDropdownHide();
+	* - netive.dropdown.init({ option });
+	* - netive.dropdown.toggle({ option });
+	* - netive.dropdown.hide();
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
-		uiDropdown: function (opt) {
-			return createUiDropdown(opt);
+		dropdown.: function (opt) {
+			return createdropdown.init(opt);
 		},
-		uiDropdownToggle: function (opt) {
-			return createUiDropdownToggle(opt);
+		dropdown.toggle: function (opt) {
+			return createdropdown.toggle(opt);
 		},
-		uiDropdownHide: function () {
-			return createUiDropdownHide();
+		dropdown.hide: function () {
+			return createdropdown.hide();
 		},
 	});
-	$ui.uiDropdown.option = {
+	$ui.dropdown..option = {
 		eff: 'base',
 		ps: 'bl',
 		hold: true,
@@ -40,12 +40,12 @@
 		eff_ps: 10,
 		eff_speed: 100
 	};
-	function createUiDropdown(opt){
+	function createdropdown.init(opt){
 		if (opt === undefined || !$('#' + opt.id).length) {
 			return false;
 		}
 
-		var opt = $.extend(true, {}, $ui.uiDropdown.option, opt),
+		var opt = $.extend(true, {}, $ui.dropdown..option, opt),
 			id = opt.id,
 			eff = opt.eff,
 			auto = opt.auto,
@@ -116,7 +116,7 @@
 			var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
 
 			pnl_opt._expanded = true;
-			$ui.uiDropdownToggle({ id: pnl_opt.id });
+			$ui.dropdown.toggle({ id: pnl_opt.id });
 			$('#' + pnl_opt.id).focus();
 		})
 		.off('click.bd').on('click.bd', function(e){
@@ -124,7 +124,7 @@
 			if (!!$('body').data('dropdownOpened')){
 				console.log($(doc).find('.ui-drop-pnl').has(e.target).length, )
 				if ($(doc).find('.ui-drop-pnl').has(e.target).length < 1) {
-					$ui.uiDropdownHide();
+					$ui.dropdown.hide();
 				}
 			}
 		});
@@ -136,10 +136,10 @@
 				btn_opt = $this.data('opt');
 
 			$this.data('sct', $(doc).scrollTop());
-			$ui.uiDropdownToggle({ id: btn_opt.id });
+			$ui.dropdown.toggle({ id: btn_opt.id });
 		}
 	}
-	function createUiDropdownToggle(opt){
+	function createdropdown.toggle(opt){
 		if (opt === undefined) {
 			return false;
 		}
@@ -204,7 +204,7 @@
 					$('.ui-drop').not('#' + drop_inner).attr('aria-expanded', false);
 					$('.ui-drop-pnl').not('[data-id="' + drop_inner +'"]').attr('aria-hidden', true).attr('tabindex', -1).removeAttr('style');
 				} else {
-					$ui.uiDropdownHide();
+					$ui.dropdown.hide();
 				}
 			}
 
@@ -319,7 +319,7 @@
 			$(this).remove();
 		});
 	}
-	function createUiDropdownHide(){
+	function createdropdown.hide(){
 		$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
 		$('.ui-drop').attr('aria-expanded', false);
 		

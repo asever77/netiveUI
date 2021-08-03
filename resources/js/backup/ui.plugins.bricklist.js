@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = pluginsName;
 
     /* ------------------------------------------------------------------------
@@ -10,8 +10,8 @@
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - $plugins.uibricklist({ option });
-	* - $plugins.uibricklistAdd({ option });
+	* - netive.uibricklist({ option });
+	* - netive.uibricklistAdd({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiBrickList: function (opt) {
@@ -120,7 +120,7 @@
 				minH = Math.min.apply(null, item_top);
 				nextN = item_top.indexOf(minH);
 				item_h = Number($item.eq(i).outerHeight() + mg);
-				$plugins.uiLoading({ visible:true });
+				netive.uiLoading({ visible:true });
 				$item.eq(i).css({
 					position: 'absolute',
 					left : (item_w * nextN) + (mg * nextN),
@@ -128,7 +128,7 @@
 				}).stop().delay(50 * i).animate({
 					 top : item_top[nextN]
 				},150, function(){
-					$plugins.uiLoading({ visible:false });
+					netive.uiLoading({ visible:false });
 					$(this).addClass('on');
 				});
 				item_top[nextN] = Number(minH + item_h);

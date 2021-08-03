@@ -92,42 +92,45 @@ if (!Object.keys){
 
 	'use strict';
 
-	var global = '$plugins';
+	var global = 'netive';
 	var namespace = 'netiveUI.plugins';
+	
 	
 	//global namespace
 	if (!!win[global]) {
 		throw new Error("already exists global!> " + global);
 	} else {
-		win[global] = createNameSpace(namespace, {
+		function createNameSpace(identifier, module) {
+			var name = identifier.split('.'),
+				w = win,
+				p;
+	
+			if (!!identifier) {
+				for (var i = 0, len = name.length; i < len; i += 1) {
+					(!w[name[i]]) ? (i === 0) ? w[name[i]] = {} : w[name[i]] = {} : '';
+					w = w[name[i]];
+				}
+			}
+	
+			if (!!module) {
+				for (p in module) {
+					if (!w[p]) {
+						w[p] = module[p];
+					} else {
+						throw new Error("module already exists! >> " + p);
+					}
+				}
+			}
+			return w;
+		}
+
+		win[global] = createNameSpace('netiveUI.plugins', {
 			uiNameSpace: function (identifier, module) { 
 				return createNameSpace(identifier, module); 
 			}
 		});
 	}
-	function createNameSpace(identifier, module) {
-		var name = identifier.split('.'),
-			w = win,
-			p;
 
-		if (!!identifier) {
-			for (var i = 0, len = name.length; i < len; i += 1) {
-				(!w[name[i]]) ? (i === 0) ? w[name[i]] = {} : w[name[i]] = {} : '';
-				w = w[name[i]];
-			}
-		}
-
-		if (!!module) {
-			for (p in module) {
-				if (!w[p]) {
-					w[p] = module[p];
-				} else {
-					throw new Error("module already exists! >> " + p);
-				}
-			}
-		}
-		return w;
-	}
 
 	//requestAnimationFrame
 	win.requestAFrame = (function () {
@@ -2925,23 +2928,20 @@ if (!Object.keys){
 			var level = opt.level;
 			var add = opt.add;
 
+			var	$acco = $('#' + id);
+			var	$wrap = $acco.children('.ui-acco-wrap');
+			var	$pnl = $wrap.children('.ui-acco-pnl');
+			var	$tit = $wrap.children('.ui-acco-tit');
+			var	$btn = $tit.find('.ui-acco-btn');
 	
-			var	$acco = $('#' + id),
-				$wrap = $acco.children('.ui-acco-wrap'),
-				$pnl = $wrap.children('.ui-acco-pnl'),
-				$tit = $wrap.children('.ui-acco-tit'),
-				$btn = $tit.find('.ui-acco-btn');
+			var	len = $wrap.length; 
+			var	keys = win[global].option.keys;
+			var	optAcco;
 	
-			var	len = $wrap.length, 
-				keys = win[global].option.keys,
-				optAcco;
-	
-			var para = win[global].para.get('acco'),
-				paras,
-				paraname;
+			var para = win[global].para.get('acco');
+			var	paras;
+			var	paraname;
 			
-			console.log(callback);
-
 			//set up
 			if (!!para && !add) {
 				if (para.split('+').length > 1) {
@@ -2979,7 +2979,7 @@ if (!Object.keys){
 			}
 	
 			sessionStorage.setItem(id, JSON.stringify({ 'close': autoclose, 'current': current }) );
-			win[global].uiAccordion[id] = callback;
+			win[global].accordion[id] = callback;
 	
 			//set up
 			!$pnl ? $pnl = $tit.children('.ui-acco-pnl') : '';
@@ -3208,762 +3208,447 @@ if (!Object.keys){
 		}
 	}
 
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiAccordion: function (opt) {
-			return createUiAccordion(opt);
-		},
-		uiAccordionToggle: function (opt) {
-			return createUiAccordionToggle(opt);
-		}
-	});
-	win[global].uiAccordion.option = {
-		current: null,
-		autoclose: false,
-		callback: false,
-		add: false,
-		level: 3,
-		effect: win[global].option.effect.easeInOut,
-		effTime: '.2'
-	};
-	function createUiAccordion(opt){
-		if (opt === undefined || !$('#' + opt.id).length) {
-			return false;
-		}
-
-		var opt = $.extend(true, {}, win[global].uiAccordion.option, opt),
-			id = opt.id,
-			current = opt.current,
-			callback = opt.callback,
-			autoclose = opt.autoclose,
-			level = opt.level,
-			add = opt.add,
-			effect = opt.effect,
-			effTime = opt.effTime;
-
-		var	$acco = $('#' + id),
-			$wrap = $acco.children('.ui-acco-wrap'),
-			$pnl = $wrap.children('.ui-acco-pnl'),
-			$tit = $wrap.children('.ui-acco-tit'),
-			$btn = $tit.find('.ui-acco-btn');
-
-		var	len = $wrap.length, 
-			keys = win[global].option.keys,
-			optAcco;
-
-		var para = win[global].para.get('acco'),
-			paras,
-			paraname;
-
-		//set up
-		if (!!para && !add) {
-			if (para.split('+').length > 1) {
-				//2 or more : acco=exeAcco1*2+exeAcco2*3
-				paras = para.split('+');
-
-				for (var j = 0; j < paras.length; j++ ) {
-					paraname = paras[j].split('*');
-					opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
-				}
-			} else {
-				//only one : tab=1
-			 	if (para.split('*').length > 1) {
-					paraname = para.split('*');
-					opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
-				} else {
-					current = [Number(para)];
-				}
-			}
-		}
-
-		if (add) {
-			current = [];
-			var ss = JSON.parse(sessionStorage.getItem(id));
-
-			autoclose = autoclose || ss.close;
-
-			$acco.find('.ui-acco-btn.selected').each(function(){
-				current.push($(this).closest('.ui-acco-wrap').index());
-			});
-			$btn.removeAttr('acco-last').removeAttr('acco-first');
-
-			autoclose = $acco.data('opt').close;
-			callback = $acco.data('opt').callback;
-		}
-
-		sessionStorage.setItem(id, JSON.stringify({ 'close': autoclose, 'current': current, 'effTime':effTime, 'effect':effect }) );
-		win[global].uiAccordion[id] = callback;
-
-		//set up
-		!$pnl ? $pnl = $tit.children('.ui-acco-pnl') : '';
-		$acco.data('opt', { 
-			id: id, 
-			close: autoclose, 
-			callback: callback
-		});
-
-		for (var i = 0; i < len; i++) {
-			var $wrap_i = $wrap.eq(i),
-				$accotit = $wrap_i.find('> .ui-acco-tit'),
-				$accopln = $wrap_i.find('> .ui-acco-pnl'),
-				$accobtn = $accotit.find('.ui-acco-btn');
-
-			if ($accotit.prop('tagName') !== 'DT') {
-				$accotit.attr('role','heading');
-				$accotit.attr('aria-level', level);
-			}
-			
-			if (!$accopln) {
-				$accopln = $accotit.children('.ui-acco-pnl');
-			}
-
-			($accotit.attr('id') === undefined) && $accobtn.attr('id', id + '-btn' + i);
-			($accopln.attr('id') === undefined) && $accopln.attr('id', id + '-pnl' + i);
-			
-			$accobtn
-				.data('selected', false)
-				.attr('data-n', i)
-				.attr('data-len', len)
-				.attr('aria-expanded', false)
-				.attr('aria-controls', $accopln.attr('id'))
-				.removeClass('selected');
-			$accopln
-				.attr('data-n', i)
-				.attr('data-len', len)
-				.attr('aria-labelledby', $accobtn.attr('id'))
-				.attr('aria-hidden', true).hide();
-
-			(i === 0) && $accobtn.attr('acco-first', true);
-			(i === len - 1) && $accobtn.attr('acco-last', true);
-		}
-		
-		if (current !== null) {
-			win[global].uiAccordionToggle({ 
-				id: id, 
-				current: current, 
-				motion: false 
-			});
-		}
-
-		//event
-		$btn.off('click.uiaccotab keydown.uiaccotab')
-			.on({
-				'click.uiaccotab': evtClick,
-				'keydown.uiaccotab': evtKeys
-			});
-
-		function evtClick(e) {
-			if (!!$(this).closest('.ui-acco-wrap').find('.ui-acco-pnl').length) {
-				e.preventDefault();
-				var $this = $(this);
-
-				optAcco = $this.closest('.ui-acco').data('opt');
-				win[global].uiAccordionToggle({ 
-					id: optAcco.id, 
-					current: [$this.data('n')], 
-					close: optAcco.close, 
-					callback: optAcco.callback
-				});
-			}
-		}
-		function evtKeys(e) {
-			var $this = $(this),
-				n = Number($this.data('n')),
-				m = Number($this.data('len')),
-				id = $this.closest('.ui-acco').attr('id');
-
-			switch(e.keyCode){
-				case keys.up: upLeftKey(e);
-				break;
-
-				case keys.left: upLeftKey(e);
-				break;
-
-				case keys.down: downRightKey(e);
-				break;
-
-				case keys.right: downRightKey(e);
-				break;
-
-				case keys.end: endKey(e);
-				break;
-
-				case keys.home: homeKey(e);
-				break;
-			}
-
-			function upLeftKey(e) {
-				e.preventDefault();
-				
-				!$this.attr('acco-first') ?
-				$('#' + id + '-btn' + (n - 1)).focus():
-				$('#' + id + '-btn' + (m - 1)).focus();
-			}
-			function downRightKey(e) {
-				e.preventDefault();
-
-				!$this.attr('acco-last') ? 
-				$('#' + id + '-btn' + (n + 1)).focus():
-				$('#' + id + '-btn0').focus();
-			}
-			function endKey(e) {
-				e.preventDefault();
-
-				$('#' + id + '-btn' + (m - 1)).focus();
-			}
-			function homeKey(e) {
-				e.preventDefault();
-				$('#' + id + '-btn0').focus();
-			}
-		}
-	}
-	function createUiAccordionToggle(opt){
-		if (opt === undefined) {
-			return false;
-		}
-		
-		var id = opt.id,
-			$acco = $('#' + id),
-			dataOpt = $acco.data('opt'),
-			current = opt.current === undefined ? null : opt.current;
-
-		console.log(dataOpt);
-
-		var	callback = opt.callback === undefined ? dataOpt.callback : opt.callback,
-			state = opt.state === undefined ? 'toggle' : opt.state,
-			motion = opt.motion === undefined ? true : opt.motion,
-			autoclose = dataOpt.close,
-			open = null,
-			$wrap = $acco.children('.ui-acco-wrap'),
-			$pnl,
-			$tit,
-			$btn,
-			len = $wrap.length,
-			speed = 200,
-			i, c = 0;
-		
-		(motion === false) ? speed = 0 : speed = 200;
-
-		if (current !== 'all') {
-			for (i = 0 ; i < current.length; i++) {
-				$pnl = $wrap.eq(current[i]).children('.ui-acco-pnl');
-				$tit = $wrap.eq(current[i]).children('.ui-acco-tit');
-				$btn = $tit.find('.ui-acco-btn');
-				
-				if (state === 'toggle') {
-					(!$btn.data('selected')) ? act('down') : act('up');
-				} else {
-					(state === 'open') ? act('down') : (state === 'close') ? act('up') : '';
-				}
-			}
-			!callback ? '' :
-				callback({ 
-					id:id, 
-					open:open, 
-					current:current
-				});
-		} else if (current === 'all') {
-			checking();
-		}
-
-		function checking() {
-			//열린상태 체크하여 전체 열지 닫을지 결정
-			c = 0;
-			$wrap.each(function(i){
-				c = ($wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').attr('aria-expanded') === 'true') ? c + 1 : c + 0;
-			});
-			//state option 
-			if (state === 'open') {
-				c = 0;
-				$acco.data('allopen', false);
-			} else if (state === 'close') {
-				c = len;
-				$acco.data('allopen', true);
-			}
-			//all check action
-			if (c === 0 || !$acco.data('allopen')) {
-				$acco.data('allopen', true);
-				act('down');
-			} else if (c === len || !!$acco.data('allopen')) {
-				$acco.data('allopen', false);
-				act('up');
-			}
-		}
-		function act(v) {
-			var isDown = v === 'down',
-				a = isDown ? true : false, 
-				cls = isDown ? 'addClass' : 'removeClass', 
-				updown = isDown ? 'slideDown' : 'slideUp';
-			
-			open = isDown ? true : false;
-
-			if (autoclose === true && isDown) {
-				$wrap.each(function(i){
-					$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', false).removeClass('selected').attr('aria-expanded', false);
-					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden',true).stop().slideUp(speed);
-				});
-			}
-
-			if (current === 'all') {
-				$wrap.each(function(i){
-					$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', a)[cls]('selected').attr('aria-expanded', a);
-					$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden', !a).stop()[updown](speed, function(){
-						$(this).css({ height: '', padding: '', margin: '' }); 
-					});
-				});
-			} else {
-				$btn.data('selected', a).attr('aria-expanded', a)[cls]('selected');
-				$pnl.attr('aria-hidden', !a).stop()[updown](speed, function(){
-					$(this).css({ height: '', padding: '', margin: '' }); 
-				});
-			}
-		}
-	}
-
 
 	/* ------------------------
 	* name : brick list
 	* date : 2020-06-09
 	* date : 2020-08-18 : 반응형 추가
 	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiBrickList: function (opt) {
-			return createUiBrickList(opt);
+	win[global].masonry = {
+		options: {
+			fixCol: {
+				1500:4,
+				1200:3,
+				800:2,
+				400:1,
+			},
+			response: true
 		},
-		uiBrickListItem: function (opt) {
-			return createUiBrickListItem(opt);
-		}
-	});
-	win[global].uiBrickList.option = {
-		fixCol: {
-			1500:4,
-			1200:3,
-			800:2,
-			400:1,
-		},
-		response: true
-	}
-	function createUiBrickList(opt){
-		if (opt === undefined) { return false; }
+		init: function(opt){
+			if (opt === undefined) { return false; }
 		
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiBrickList.option, opt),
-			$base = $('#' + opt.id), 
-			$item = $base.find('.ui-bricklist-item').not('.disabled'),
-			fixCol = opt.fixCol,
-			re = opt.response,
-			wrapW = $base.outerWidth(),
-			itemW = $item.outerWidth(),
-			itemSum = $item.length,
-			itemCol = Math.floor(wrapW / itemW),
-			itemRow = (itemSum / itemCol) + (itemSum % itemCol) ? 1 : 0,
-			itemTopArray = [],
-			timer;
+			var opt = opt === undefined ? {} : opt,
+				opt = $.extend(true, {}, win[global].masonry.options, opt),
+				$base = $('#' + opt.id), 
+				$item = $base.find('.ui-bricklist-item').not('.disabled'),
+				fixCol = opt.fixCol,
+				re = opt.response,
+				wrapW = $base.outerWidth(),
+				itemW = $item.outerWidth(),
+				itemSum = $item.length,
+				itemCol = Math.floor(wrapW / itemW),
+				itemRow = (itemSum / itemCol) + (itemSum % itemCol) ? 1 : 0,
+				itemTopArray = [],
+				timer;
 
-		if (!!fixCol) {
-			var key = Object.keys(fixCol);
-			key.sort(function(a,b){
-				return a - b;
-			});
-			var fixCol__;
-			for (var i = 0; i < key.length; i++) {
-				if (Number(key[i]) > $(win).outerWidth()) {
-					fixCol__ = fixCol[key[i]];
-					break;
-				} else {
-					fixCol__ = fixCol[key[key.length - 1]];
-				}
-			}
-
-			itemCol = fixCol__;
-			if (!!re) {
-				itemW = wrapW / fixCol__;
-			}
-		} 
-		$base.data('orgcol', itemCol);
-
-		//the number of columns 
-		for (var i = 0; i < itemCol; i++) {		
-			var $itemN = $item.eq(i);
-
-			$itemN.attr('role','listitem').css({
-				position: 'absolute',
-				left : itemW * i,
-				top : 0
-			});
-
-			if (!!fixCol && !!re) {
-				$itemN.css('width', itemW + 'px');
-			} 
-			itemTopArray[i] = 0;
-		}
-		//save option information
-		$base.data('opt', { 
-			'wrap': wrapW, 
-			'width': itemW, 
-			'itemTopArray': itemTopArray, 
-			'row': itemRow, 
-			'col': itemCol, 
-			'response': re,
-			'fixCol': fixCol,
-			'start': 0
-		});
-
-		win[global].uiBrickListItem({ id: opt.id });
-		var winW = $(win).outerWidth();
-		if (re) {
-			$(win).off('resize.win').on('resize.win', function(){
-				var $uiBricklist = $('.ui-bricklist');
-
-				clearTimeout(timer);
-				timer = setTimeout(function(){
-					if (winW !== $(win).outerWidth()) {
-						console.log('re');
-						$uiBricklist.each(function(){
-							var $this = $(this);
-							var dataOpt = $this.data('opt');
-							var reColN = Math.floor($this.outerWidth() / $this.find('.ui-bricklist-item').outerWidth());
-
-							if ($this.data('orgcol') !== reColN || !!dataOpt.fixCol) {
-								win[global].uiBrickList({ 
-									id : $this.attr('id'),
-									fixCol: dataOpt.fixCol,
-									response: dataOpt.response
-								});
-								
-								$this.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
-							}
-						});
+			if (!!fixCol) {
+				var key = Object.keys(fixCol);
+				key.sort(function(a,b){
+					return a - b;
+				});
+				var fixCol__;
+				for (var i = 0; i < key.length; i++) {
+					if (Number(key[i]) > $(win).outerWidth()) {
+						fixCol__ = fixCol[key[i]];
+						break;
+					} else {
+						fixCol__ = fixCol[key[key.length - 1]];
 					}
-				},300);
-			});
-		}	
-	}
-	function createUiBrickListItem(opt){
-		if (opt === undefined) { return false; }
-		
-		var $base = $('#' + opt.id), 
-			$item = $base.find('.ui-bricklist-item').not('.disabled'),
-			dataOpt = $base.data('opt'),
-			fixCol = dataOpt.fixCol,
-			re = dataOpt.response,
-			wrapW = dataOpt.wrap,
-			itemW = dataOpt.width,
-			itemRow = dataOpt.row,
-			itemTopArray = dataOpt.itemTopArray,
-			itemSum = $item.length;
-		
-		//$plugins.uiLoading({ id: opt.id, visible:true });
+				}
 
-		var n = dataOpt.start;
-		var timer;
-		var setItem = function(){
-			var $itemN = $item.eq(n);
-			var $itemImg = $itemN.find('img');
-			
-			$itemImg.attr('src', $itemImg.attr('data-src'));
-			$itemImg.load(function(){
+				itemCol = fixCol__;
+				if (!!re) {
+					itemW = wrapW / fixCol__;
+				}
+			} 
+			$base.data('orgcol', itemCol);
+
+			//the number of columns 
+			for (var i = 0; i < itemCol; i++) {		
+				var $itemN = $item.eq(i);
+
+				$itemN.attr('role','listitem').css({
+					position: 'absolute',
+					left : itemW * i,
+					top : 0
+				});
+
 				if (!!fixCol && !!re) {
 					$itemN.css('width', itemW + 'px');
 				} 
-				
-				var minH = Math.min.apply(null, itemTopArray);
-				var nextN = itemTopArray.indexOf(minH);
-				var itemH = Number($itemN.outerHeight());
-
-				$itemN.attr('data-left', itemW * nextN).attr('data-top', itemTopArray[nextN]);
-				itemTopArray[nextN] = Number(minH + itemH);
-				n = n + 1;
-
-				clearTimeout(timer);
-				if (n < itemSum) {
-					setItem();
-				} else {
-					win[global].loading.hide();
-				}
-
-				timer = setTimeout(function(){
-					$item.each(function(){
-						$(this).css({
-							position: 'absolute',
-							top : $(this).attr('data-top') + 'px',
-							left:  $(this).attr('data-left') + 'px'
-						}).addClass('on');
-					});
-					$base.data('opt', { 
-						'wrap': wrapW, 
-						'width':itemW, 
-						'itemTopArray':itemTopArray, 
-						'row':itemRow, 
-						'col':n, 
-						'response': re,
-						'fixCol': fixCol,
-						'start': itemSum 
-					});
-					$base.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
-				},100);
+				itemTopArray[i] = 0;
+			}
+			//save option information
+			$base.data('opt', { 
+				'wrap': wrapW, 
+				'width': itemW, 
+				'itemTopArray': itemTopArray, 
+				'row': itemRow, 
+				'col': itemCol, 
+				'response': re,
+				'fixCol': fixCol,
+				'start': 0
 			});
-		} 
-		setItem();
+
+			win[global].masonry.act({ id: opt.id });
+			var winW = $(win).outerWidth();
+			if (re) {
+				$(win).off('resize.win').on('resize.win', function(){
+					var $uiBricklist = $('.ui-bricklist');
+
+					clearTimeout(timer);
+					timer = setTimeout(function(){
+						if (winW !== $(win).outerWidth()) {
+							console.log('re');
+							$uiBricklist.each(function(){
+								var $this = $(this);
+								var dataOpt = $this.data('opt');
+								var reColN = Math.floor($this.outerWidth() / $this.find('.ui-bricklist-item').outerWidth());
+
+								if ($this.data('orgcol') !== reColN || !!dataOpt.fixCol) {
+									win[global].masonry.init({ 
+										id : $this.attr('id'),
+										fixCol: dataOpt.fixCol,
+										response: dataOpt.response
+									});
+									
+									$this.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
+								}
+							});
+						}
+					},300);
+				});
+			}	
+		},
+		act: function(opt){
+			if (opt === undefined) { return false; }
+		
+			var $base = $('#' + opt.id), 
+				$item = $base.find('.ui-bricklist-item').not('.disabled'),
+				dataOpt = $base.data('opt'),
+				fixCol = dataOpt.fixCol,
+				re = dataOpt.response,
+				wrapW = dataOpt.wrap,
+				itemW = dataOpt.width,
+				itemRow = dataOpt.row,
+				itemTopArray = dataOpt.itemTopArray,
+				itemSum = $item.length;
+			
+			//netive.uiLoading({ id: opt.id, visible:true });
+
+			var n = dataOpt.start;
+			var timer;
+			var setItem = function(){
+				var $itemN = $item.eq(n);
+				var $itemImg = $itemN.find('img');
+				
+				$itemImg.attr('src', $itemImg.attr('data-src'));
+				$itemImg.load(function(){
+					if (!!fixCol && !!re) {
+						$itemN.css('width', itemW + 'px');
+					} 
+					
+					var minH = Math.min.apply(null, itemTopArray);
+					var nextN = itemTopArray.indexOf(minH);
+					var itemH = Number($itemN.outerHeight());
+
+					$itemN.attr('data-left', itemW * nextN).attr('data-top', itemTopArray[nextN]);
+					itemTopArray[nextN] = Number(minH + itemH);
+					n = n + 1;
+
+					clearTimeout(timer);
+					if (n < itemSum) {
+						setItem();
+					} else {
+						win[global].loading.hide();
+					}
+
+					timer = setTimeout(function(){
+						$item.each(function(){
+							$(this).css({
+								position: 'absolute',
+								top : $(this).attr('data-top') + 'px',
+								left:  $(this).attr('data-left') + 'px'
+							}).addClass('on');
+						});
+						$base.data('opt', { 
+							'wrap': wrapW, 
+							'width':itemW, 
+							'itemTopArray':itemTopArray, 
+							'row':itemRow, 
+							'col':n, 
+							'response': re,
+							'fixCol': fixCol,
+							'start': itemSum 
+						});
+						$base.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
+					},100);
+				});
+			} 
+			setItem();
+		}
 	}
+
+
 
 	/* ------------------------
 	* name : dropdown
 	* date : 2020-06-10
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiDropdown: function (opt) {
-			return createUiDropdown(opt);
+	------------------------ */
+	win[global].dropdown = {
+		options: {
+			ps: 'BL',
+			hold: true,
+			dropSpace: $('body'),
+			dropSrc: false,
+			dropOffset: true,
+			openback:false,
+			closeback:false
 		},
-		uiDropdownToggle: function (opt) {
-			return createUiDropdownToggle(opt);
-		},
-		uiDropdownHide: function () {
-			return createUiDropdownHide();
-		},
-	});
-	win[global].uiDropdown.option = {
-		ps: 'BL',
-		hold: true,
-		dropSpace: $('body'),
-		dropSrc: false,
-		dropOffset: false,
-		openback:false,
-		closeback:false
-	};
-	function createUiDropdown(opt){
-		if (opt === undefined || !$('#' + opt.id).length) {
-			return false;
-		}
-
-		var opt = $.extend(true, {}, win[global].uiDropdown.option, opt),
-			id = opt.id,
-			ps = opt.ps,
-			hold = opt.hold,
-			dropSpace = opt.dropSpace,
-			dropSrc = opt.dropSrc,
-			dropOffset = opt.dropOffset,
-			openback = opt.openback,
-			closeback = opt.closeback;
-
-		if (!!dropSrc && !$('[data-id="' + opt.id + '"]').length) {
-			
-			win[global].ajax.init({
-				selector: dropSpace,
-				url: dropSrc,
-				add: true,
-				callback: function(){
-					setDropdown();
-				}
-			});
-		} else {
-			setDropdown();
-		}
-		
-		function setDropdown(){
-			var $btn = $('#' + id),
-				$pnl = $('[data-id="'+ id +'"]'); 
-
-			//set up
-			$btn.attr('aria-expanded', false)
-				.data('opt', { 
-					id: id, 
-					ps: ps,
-					hold: hold, 
-					openback: openback,
-					closeback: closeback,
-					dropOffset: dropOffset
-				});
-			$pnl.attr('aria-hidden', true).attr('aria-labelledby', id).addClass(ps)
-				.data('opt', { 
-					id: id, 
-					ps: ps,
-					hold: hold, 
-					openback: openback,
-					closeback: closeback,
-					dropOffset: dropOffset
-				});
-			
-			//event
-			$btn.off('click.dp').on('click.dp', function(e){
-				action(this);
-			});
-			$(doc).find('.ui-drop-close').off('click.dp').on('click.dp', function(e){
-				var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
-				win[global].uiDropdownToggle({ 
-					id: pnl_opt.id 
-				});
-				$('#' + pnl_opt.id).focus();
-			})
-
-			//dropdown 영역 외에 클릭 시 
-			$(doc).off('click.dpb').on('click.dpb', function(e){
-				if (!!$('body').data('dropdownOpened')){
-					if ($(doc).find('.ui-drop-pnl').has(e.target).length < 1) {
-						win[global].uiDropdownHide();
-					}
-				}
-			});
-
-			function action(t) {
-				var $this = $(t),
-					btn_opt = $this.data('opt');
-
-				$this.data('sct', $(doc).scrollTop());
-				win[global].uiDropdownToggle({ 
-					id: btn_opt.id 
-				});
+		init: function(opt){
+			if (opt === undefined || !$('#' + opt.id).length) {
+				return false;
 			}
-		}
-	}
-	function createUiDropdownToggle(opt){
-		if (opt === undefined) {
-			return false;
-		}
-		
-		var id = opt.id,
-			$btn = $('#' + id),
-			$pnl = $('.ui-drop-pnl[data-id="'+ id +'"]'),
-			defaults = $btn.data('opt'),
-			opt = $.extend(true, {}, defaults, opt),
-			
-			ps = opt.ps,
-			openback = opt.openback,
-			closeback = opt.closeback,
-			hold = opt.hold,
-			state = opt.state,
-			dropOffset = opt.dropOffset,
-			btnExpanded =  $btn.attr('aria-expanded'),
-			is_modal = !!$btn.closest('.ui-modal').length,
-
-			btn_w = Math.ceil($btn.outerWidth()),
-			btn_h = Math.ceil($btn.outerHeight()),
-			btn_t = Math.ceil($btn.position().top) + parseInt($btn.css('margin-top')),
-			btn_l = Math.ceil($btn.position().left) + parseInt($btn.css('margin-left')),
-			pnl_w = Math.ceil($pnl.outerWidth()),
-			pnl_h = Math.ceil($pnl.outerHeight());
-
-		//dropOffset: ture 이거나 modal안의 dropdown 일때 position -> offset 으로 위치 값 변경
-		if (dropOffset || is_modal) {
-			btn_t = Math.ceil($btn.offset().top);
-			btn_l = Math.ceil($btn.offset().left);
-			is_modal ? btn_t = btn_t - $(win).scrollTop(): '';
-		}
-
-		//test 
-		!!$btn.attr('data-ps') ? ps = $btn.attr('data-ps') : '';
-		
-		if (state === 'open') {
-			btnExpanded = 'false';
-		} else if (state === 'close') {
-			btnExpanded = 'true';
-		}
-
-		btnExpanded === 'false' ? pnlShow(): pnlHide();
-
-		function pnlShow(){
-			var drop_inner = $btn.closest('.ui-drop-pnl').data('id');
-			
-			//dropdown in dropdown 인 경우
-			if (!!drop_inner) {
-				$('.ui-drop').not('#' + drop_inner).attr('aria-expanded', false);
-				$('.ui-drop-pnl').not('[data-id="' + drop_inner +'"]')
-						.attr('aria-hidden', true)
-						.attr('tabindex', -1)
-						.removeAttr('style');
-			} else {
-				win[global].uiDropdownHide();
-			}
-
-			$btn.attr('aria-expanded', true);
-			$pnl.attr('aria-hidden', false).addClass('on');
-
-			win[global].focus.loop({
-				selector: $('.ui-drop-pnl[data-id="'+ id +'"]'),
-				callback:pnlHide
-			});
-			//focus hold or sense
-			// hold ?	
-			// 	win[global].focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
-			// 	win[global].focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
-
-			switch (ps) {
-				case 'BL': 
-					$pnl.css({ 
-						top: btn_t + btn_h, 
-						left: btn_l
-					}); 
-					break;
-				case 'BC': 
-					$pnl.css({ top: btn_t + btn_h, left: btn_l - ((pnl_w - btn_w) / 2) }); 
-					break;
-				case 'BR': 
-					$pnl.css({ top: btn_t + btn_h, left: btn_l - (pnl_w - btn_w) }); 
-					break;
-				case 'TL': 
-					$pnl.css({ top: btn_t - pnl_h, left: btn_l }); 
-					break;
-				case 'TC': 
-					$pnl.css({ top: btn_t - pnl_h, left: btn_l - ((pnl_w - btn_w) / 2) }); 
-					break;
-				case 'TR': 
-					$pnl.css({ top: btn_t - pnl_h, left: btn_l - (pnl_w - btn_w) }); 
-					break;
-				case 'RT': 
-					$pnl.css({ top: btn_t, left: btn_l + btn_w }); 
-					break;
-				case 'RM': 
-					$pnl.css({ top: btn_t - ((pnl_h - btn_h) / 2), left:  btn_l + btn_w  }); 
-					break;
-				case 'RB': 
-					$pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l + btn_w }); 
-					break;
-				case 'LT': 
-					$pnl.css({ top: btn_t, left: btn_l - pnl_w }); 
-					break;
-				case 'LM': 
-					$pnl.css({ top: btn_t - ((pnl_h - btn_h) / 2), left: btn_l - pnl_w  }); 
-					break;
-				case 'LB': 
-					$pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l - pnl_w }); 
-					break; 
-				case 'CM': 
-					$pnl.css({ top: '50%', left: '50%', marginTop: (pnl_h / 2 ) * -1, marginLeft: (pnl_w / 2 ) * -1 }); 
-					break;
-			}
-
-			setTimeout(function(){
-				$('body').data('dropdownOpened',true).addClass('dropdownOpened');
-				setTimeout(function(){
-					$pnl.focus();
-				},0);
-			},0);
-
-			!!openback ? openback() : '';			
-		}
-		function pnlHide(){
-			if ($('#' + id).closest('.ui-drop-pnl').length < 1) {
-				$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
-			}
-
-			$btn.attr('aria-expanded', false).focus();
-			$pnl.attr('aria-hidden', true).attr('tabindex', -1).removeClass('on');
-			
-			!!closeback ? closeback() : '';
-		}
-	}
-	function createUiDropdownHide(){
-		$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
-		$('.ui-drop').attr('aria-expanded', false);
-		$('.ui-drop-pnl[aria-hidden="false"]').each(function(){
-			var $pnl = $(this),
-				defaults = $pnl.data('opt'),
-				opt = $.extend(true, {}, defaults),
+	
+			var opt = $.extend(true, {}, win[global].dropdown.options, opt),
+				id = opt.id,
+				ps = opt.ps,
+				hold = opt.hold,
+				dropSpace = opt.dropSpace,
+				dropSrc = opt.dropSrc,
+				dropOffset = opt.dropOffset,
+				openback = opt.openback,
 				closeback = opt.closeback;
+	
+			if (!!dropSrc && !$('[data-id="' + opt.id + '"]').length) {
+				win[global].ajax.init({
+					selector: dropSpace,
+					url: dropSrc,
+					add: true,
+					callback: function(){
+						setDropdown();
+					}
+				});
+			} else {
+				setDropdown();
+			}
 			
-			$pnl.attr('aria-hidden', true).attr('tabindex', -1).removeClass('on');
-			!!closeback ? closeback() : '';
-		});	
-	}
+			function setDropdown(){
+				var $btn = $('#' + id),
+					$pnl = $('[data-id="'+ id +'"]'); 
+	
+				//set up
+				$btn.attr('aria-expanded', false)
+					.data('opt', { 
+						id: id, 
+						ps: ps,
+						hold: hold, 
+						openback: openback,
+						closeback: closeback,
+						dropOffset: dropOffset
+					});
+				$pnl.attr('aria-hidden', true).attr('aria-labelledby', id)
+					.data('opt', { 
+						id: id, 
+						ps: ps,
+						hold: hold, 
+						openback: openback,
+						closeback: closeback,
+						dropOffset: dropOffset
+					});
+				
+				//event
+				$btn.off('click.dp').on('click.dp', function(e){
+					e.preventDefault();
+					action(this);
+				});
+				$(doc).find('.ui-drop-close').off('click.dp').on('click.dp', function(e){
+					var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
+					win[global].dropdown.toggle({ 
+						id: pnl_opt.id 
+					});
+					$('#' + pnl_opt.id).focus();
+				});
+				//dropdown 영역 외에 클릭 시 
+				$(doc).off('click.dpb').on('click.dpb', function(e){
+					e.preventDefault();
+					if (!!$('body').data('dropdownOpened')){
+						if ($(doc).find('.ui-drop-pnl').has(e.target).length < 1) {
+							win[global].dropdown.hide();
+						}
+					}
+				});
+
+				
+				function action(t) {
+					var $this = $(t),
+						btn_opt = $this.data('opt');
+	
+					$this.data('sct', $(doc).scrollTop());
+					win[global].dropdown.toggle({ 
+						id: btn_opt.id 
+					});
+				}
+			}
+		},
+		toggle: function(opt) {
+			if (opt === undefined) {
+				return false;
+			}
+			
+			var id = opt.id,
+				$btn = $('#' + id),
+				$pnl = $('.ui-drop-pnl[data-id="'+ id +'"]'),
+				defaults = $btn.data('opt'),
+				opt = $.extend(true, {}, defaults, opt),
+				
+				ps = opt.ps,
+				openback = opt.openback,
+				closeback = opt.closeback,
+				hold = opt.hold,
+				state = opt.state,
+				dropOffset = opt.dropOffset,
+				btnExpanded =  $btn.attr('aria-expanded'),
+				is_modal = !!$btn.closest('.ui-modal').length,
+	
+				btn_w = Math.ceil($btn.outerWidth()),
+				btn_h = Math.ceil($btn.outerHeight()),
+				btn_t = Math.ceil($btn.position().top) + parseInt($btn.css('margin-top')),
+				btn_l = Math.ceil($btn.position().left) + parseInt($btn.css('margin-left')),
+				pnl_w = Math.ceil($pnl.outerWidth()),
+				pnl_h = Math.ceil($pnl.outerHeight());
+	
+			//dropOffset: ture 이거나 modal안의 dropdown 일때 position -> offset 으로 위치 값 변경
+			if (dropOffset || is_modal) {
+				btn_t = Math.ceil($btn.offset().top);
+				btn_l = Math.ceil($btn.offset().left);
+				is_modal ? btn_t = btn_t - $(win).scrollTop(): '';
+			}
+			
+			//test 
+			!!$btn.attr('data-ps') ? ps = $btn.attr('data-ps') : '';
+			
+			if (state === 'open') {
+				btnExpanded = 'false';
+			} else if (state === 'close') {
+				btnExpanded = 'true';
+			}
+			
+			btnExpanded === 'false' ? pnlShow(): pnlHide();
+
+			
+			
+
+			
+	
+			function pnlShow(){
+				var drop_inner = $btn.closest('.ui-drop-pnl').data('id');
+				
+				//dropdown in dropdown 인 경우
+				if (!!drop_inner) {
+					$('.ui-drop').not('#' + drop_inner).attr('aria-expanded', false);
+					$('.ui-drop-pnl').not('[data-id="' + drop_inner +'"]')
+							.attr('aria-hidden', true)
+							.attr('tabindex', -1)
+							.removeAttr('style');
+				} else {
+					win[global].dropdown.hide();
+				}
+				
+				win[global].focus.loop({
+					selector: $('.ui-drop-pnl[data-id="'+ id +'"]'),
+					callback:pnlHide
+				});
+				//focus hold or sense
+				// hold ?	
+				// 	win[global].focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
+				// 	win[global].focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
+				$btn.attr('aria-expanded', true);				
+				
+				switch (ps) {
+					case 'BL': 
+						$pnl.css({ 
+							top: btn_t + btn_h, 
+							left: btn_l
+						}); 
+						break;
+					case 'BC': 
+						$pnl.css({ top: btn_t + btn_h, left: btn_l - ((pnl_w - btn_w) / 2) }); 
+						break;
+					case 'BR': 
+						$pnl.css({ top: btn_t + btn_h, left: btn_l - (pnl_w - btn_w) }); 
+						break;
+					case 'TL': 
+						$pnl.css({ top: btn_t - pnl_h, left: btn_l }); 
+						break;
+					case 'TC': 
+						$pnl.css({ top: btn_t - pnl_h, left: btn_l - ((pnl_w - btn_w) / 2) }); 
+						break;
+					case 'TR': 
+						$pnl.css({ top: btn_t - pnl_h, left: btn_l - (pnl_w - btn_w) }); 
+						break;
+					case 'RT': 
+						$pnl.css({ top: btn_t, left: btn_l + btn_w }); 
+						break;
+					case 'RM': 
+						$pnl.css({ top: btn_t - ((pnl_h - btn_h) / 2), left:  btn_l + btn_w  }); 
+						break;
+					case 'RB': 
+						$pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l + btn_w }); 
+						break;
+					case 'LT': 
+						$pnl.css({ top: btn_t, left: btn_l - pnl_w }); 
+						break;
+					case 'LM': 
+						$pnl.css({ top: btn_t - ((pnl_h - btn_h) / 2), left: btn_l - pnl_w  }); 
+						break;
+					case 'LB': 
+						$pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l - pnl_w }); 
+						break; 
+					case 'CM': 
+						$pnl.css({ top: '50%', left: '50%', marginTop: (pnl_h / 2 ) * -1, marginLeft: (pnl_w / 2 ) * -1 }); 
+						break;
+				}
+				
+				$pnl.attr('aria-hidden', false).addClass('on');
+
+				setTimeout(function(){
+					$('body').data('dropdownOpened',true).addClass('dropdownOpened');
+					setTimeout(function(){
+						$pnl.focus();
+					},0);
+				},0);
+	
+				!!openback ? openback() : '';							
+			}
+			function pnlHide(){
+				if ($('#' + id).closest('.ui-drop-pnl').length < 1) {
+					$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
+				}
+	
+				$btn.attr('aria-expanded', false).focus();
+				$pnl.attr('aria-hidden', true).attr('tabindex', -1).removeClass('on');
+				
+				!!closeback ? closeback() : '';
+			}
+
+			
+		}, 
+		hide: function(opt) {
+			$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
+			$('.ui-drop').attr('aria-expanded', false);
+			$('.ui-drop-pnl[aria-hidden="false"]').each(function(){
+				var $pnl = $(this),
+					defaults = $pnl.data('opt'),
+					opt = $.extend(true, {}, defaults),
+					closeback = opt.closeback;
+				
+				$pnl.attr('aria-hidden', true).attr('tabindex', -1).removeClass('on');
+				!!closeback ? closeback() : '';
+			});	
+		}
+	}	
+	
 	
 
 	/* ------------------------
@@ -4236,7 +3921,7 @@ if (!Object.keys){
 
 		if (type === 'normal') {
 			if (!!src && !$('#' + opt.id).length) {
-				$plugins.ajax.init({
+				netive.ajax.init({
 					selector: wrap,
 					url: src,
 					add: true,
@@ -4395,7 +4080,7 @@ if (!Object.keys){
 						var currentID = $('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id');
 
 						if (currentID !== 'uiSystemModal') {
-							$plugins.uiModalClose({ 
+							netive.uiModalClose({ 
 								id: currentID, 
 								remove: remove,
 								closeCallback: closeCallback
@@ -4410,7 +4095,7 @@ if (!Object.keys){
 			},150);
 
 			$(doc).find('.ui-modal-close').off('click.close').on('click.close', function(e){
-				$plugins.uiModalClose({ 
+				netive.uiModalClose({ 
 					id: $(this).closest('.ui-modal').attr('id'), 
 					remove: remove,
 					closeCallback: closeCallback
@@ -4443,7 +4128,7 @@ if (!Object.keys){
 		endfocus: false
 	}
 	function createUiSystemModalClose(){
-		$plugins.uiModalClose({ 
+		netive.uiModalClose({ 
 			id: 'uiSystemModal', 
 			remove: true
 		});
@@ -5079,7 +4764,7 @@ if (!Object.keys){
 			if (!!src && !$('#' + id).length) {
 				$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><button class="ui-tooltip-close" type="button"><span class="a11y-hidden">툴팁닫기</span></button><div class="ui-tooltip-arrow"></div>')
 
-				$plugins.ajax.init({
+				netive.ajax.init({
 					id: $('#' + id),
 					url: src,
 					add: true,
@@ -5087,7 +4772,7 @@ if (!Object.keys){
 						act();
 					}
 				});
-				// $plugins.uiAjax({
+				// netive.uiAjax({
 				// 	id: $('#' + id),
 				// 	url: src,
 				// 	add: true,
@@ -5166,986 +4851,6 @@ if (!Object.keys){
 			});
 		}
 	}
-
-
-	/* ------------------------
-	* name : date picker
-	* date : 2020-06-15
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiDatePicker: function (opt) {
-			return createUiDatePicker(opt);
-		}
-	});
-	win[global].uiDatePicker.option = {
-		selector: '.ui-datepicker',
-		type : 'normal',
-		period: false,
-		title: false,
-		dateSplit: '-',
-
-		openback: false,
-		closeback: false,
-		dual: false,
-		callback: null,
-		shortDate: false, //DDMMYYYY
-		dateMonths: new Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'),
-		weekDay: new Array('일', '월', '화', '수', '목', '금', '토')
-	};
-	function createUiDatePicker(opt) {
-		var opt = $.extend(true, {}, win[global].uiDatePicker.option, opt),
-			dateSplit = opt.dateSplit,
-			selector = opt.selector,
-			period = opt.period,
-			dual = opt.dual,
-			type = opt.type,
-			openback = opt.openback,
-			date_title = opt.title,
-			closeback = opt.closeback,
-			callback = opt.callback,
-			dateMonths = opt.dateMonths,
-			weekDay = opt.weekDay,
-			shortDate = opt.shortDate;
-
-		var	$datepicker = $(selector),
-			date = new Date(),
-			dateToday = date,
-			calVar,
-			day_start,
-			day_end;
-
-		win[global].uiDatePicker.option.dual = dual;
-		$datepicker.data('opt', { callback: callback, shortDate: shortDate, openback: openback, closeback: closeback, period: period });
-
-		//이달의 날짜 텍스트화
-		function textDate(d, m, y, whatday) {
-			var _date = new Date(y, m - 1, d);
-			var gDate = _date.getFullYear() + dateSplit + dateMonths[_date.getMonth()] + dateSplit + win[global].option.partsAdd0(_date.getDate());
-
-			if (whatday === true) {
-				//요일 추가
-				return (gDate + " (" + weekDay[_date.getDay()] + ")");
-			} else {
-				return (gDate);
-			}
-		}
-
-		//사용여부확인 필요
-		function subtractDate(oneDate, anotherDate) {
-			return (anotherDate - oneDate);
-		}
-
-		//DD.MM.YYYY 순으로 정렬
-		function toDDMMYYYY(d) {
-			var d = new Date(d);
-			return (win[global].option.partsAdd0(d.getDate()) + dateSplit + win[global].option.partsAdd0(d.getMonth() + 1) + dateSplit + d.getFullYear());
-		}
-
-		//input에 출력
-		function writeInputDateValue(calendarEl, obj, end) {
-			var d = $(obj).data("day"),
-				id = calendarEl.inputId,
-				org_id = id,
-				opt = $("#" + id).closest('.ui-datepicker').data('opt');
-
-			!!end ? id = id + '_end' : '';
-
-			//DD.MM.YYYY로 설정
-			calendarEl.shortDate ? d = toDDMMYYYY(d) : '';
-
-			$("#" + id).val(d);
-
-			//기간설정
-			d !== '' ? $("#" + id).closest('.form-item').addClass('activated') : '';
-			!!opt.callback ? opt.callback({ id: id, value: d, name: end ? $('#' + id).attr('name') : $('#' + org_id).attr('name')}) : '';
-		}
-		function writeInputMonthValue(calendarEl, obj) {
-			var getMonth = $(obj).data("month"),
-				getyear = $(obj).closest('.datepicker-head-select').find('select').val(),
-				id = calendarEl.inputId,
-				opt = $("#" + id).closest('.ui-datepicker').data('opt'),
-				getYM = getyear + dateSplit + win[global].option.partsAdd0(getMonth);
-
-			//DD.MM.YYYY로 설정
-			calendarEl.shortDate ? getYM = toDDMMYYYY(getYM) : '';
-
-			$("#" + id).val(getYM);
-
-			//기간설정
-			getYM !== '' ? $("#" + id).closest('.form-item').addClass('activated') : '';
-			!!opt.callback ? opt.callback({ id: id, value: getYM, name: $('#' + id).attr('name')}) : '';
-		}
-
-		function calendarObject(opt) {
-			this.calId = opt.calId;
-			this.dpId = opt.dpId;
-			this.inputId = opt.inputId;
-			this.buttonId = opt.buttonId;
-			this.shortDate = opt.shortDate;
-		}
-
-		//사용여부확인 필요
-		function matchToday() {
-			$('.tbl-datepicker button').not(':disabled').each(function () {
-				var $this = $(this);
-
-				$this.data('day') === textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), false)
-					? $this.attr('title', $this.attr('aria-label') + ' 오늘 입니다.').addClass('today')
-					: '';
-			});
-		}
-
-		//달력 Build
-		function buildCalendar(date, calendarEl, v) {
-			var inp_val = $('#' + calendarEl.inputId).val(),
-				nVal = inp_val.split(dateSplit),
-				generate = v === 'generate' ? true : false,
-				day = !generate ? date.getDate() : inp_val === '' ? date.getDate() : Number(nVal[2]),
-				month = !generate ? date.getMonth() : inp_val === '' ? date.getMonth() : Number(nVal[1] - 1),
-				year = !generate ? date.getFullYear() : inp_val === '' ? date.getFullYear() : Number(nVal[0]),
-				prevMonth = new Date(year, month - 1, 1),
-				thisMonth = new Date(year, month, 1),
-				nextMonth = new Date(year, month + 1, 1),
-				firstWeekDay = thisMonth.getDay(),
-				daysInMonth = Math.floor((nextMonth.getTime() - thisMonth.getTime()) / (1000 * 60 * 60 * 24)),
-				daysInMonth_prev = Math.floor((thisMonth.getTime() - prevMonth.getTime()) / (1000 * 60 * 60 * 24)),
-				$input = $('#' + calendarEl.inputId).eq(0),
-				tit = !date_title ? $input.attr('title') : date_title,
-				_minDay = new Array(),
-				_maxDay = new Array(),
-				htmlHead = '',
-				//_isOver = false,
-				mm = nextMonth.getMonth(),
-				week_day;
-
-			$input.attr('data-min') !== undefined ? _minDay = $input.attr('data-min').split(dateSplit, 3) : _minDay[0] = 1910;// 최소 선택 가능
-			$input.attr('data-max') !== undefined ? _maxDay = $input.attr('data-max').split(dateSplit, 3) : _maxDay[0] = 2050;// 최대 선택 가능
-			month === 2 ? daysInMonth = 31 : '';
-
-			$('#' + calendarEl.dpId).data('min-month', _minDay[0] + _minDay[1]).data('max-month', _maxDay[0] + _maxDay[1]);
-
-			/* datepicker-head -------------------- */
-			htmlHead += '<button type="button" class="btn-close ui-datepicker-close"><span class="hide">닫기</span></button>';
-			htmlHead += '<div class="datepicker-head">';
-
-			/* title: datepicker-head-tit */
-			if (period && !date_title) {
-				htmlHead += '<div class="datepicker-head-tit">' + tit + ' ~ '+ $('#' + calendarEl.inputId + '_end').attr('title') +'</div>';
-			} else {
-				htmlHead += '<div class="datepicker-head-tit">' + tit + '</div>';
-			}
-			
-			/* 년월 선택: datepicker-head-select */
-			// if (type === 'normal') {
-				
-			// 	htmlHead += '<div class="datepicker-head-select">';
-			// 	htmlHead += '<div class="ui-select datepicker-head-year">';
-			// 	htmlHead += '<select title="년도 선택" id="sel_' + calendarEl.inputId + '_year">';
-			// 	console.log('_minDay[0]', _minDay[0], _minDay[1],  _maxDay[1])
-			// 	for (var y = Number(_minDay[0]); y < Number(_maxDay[0]) + 1; y++) {
-			// 		htmlHead += y === year ? '<option value="' + y + '" selected>' + y + '년</option>' : '<option value="' + y + '">' + y + '년</option>';
-			// 	}
-
-			// 	htmlHead += '</select>';
-			// 	htmlHead += '</div>';
-			// 	htmlHead += '<div class="ui-select datepicker-head-month">';
-			// 	htmlHead += '<select title="월 선택" id="sel_' + calendarEl.inputId + '_month">';
-
-			// 	for (var m = Number(_minDay[1]); m < Number(_maxDay[1]) + 1; m++) {
-			// 		m < 10 ? m = '0' + m : '';
-			// 		htmlHead += m === month + 1 ? '<option value="' + Number(m) + '" selected>' + m + '월</option>' : '<option value="' + Number(m) + '">' + m + '월</option>';
-			// 		m = Number(m);
-			// 	}
-
-			// 	htmlHead += '</select>';
-			// 	htmlHead += '</div>';
-			// 	htmlHead += '</div>';
-		
-			// }  
-			if (type === 'month') {
-				htmlHead += '<div class="datepicker-head-select">';
-				htmlHead += '<div class="ui-select">';
-				htmlHead += '<select title="년도 선택" id="sel_' + calendarEl.inputId + '_year">';
-
-				for (var y = Number(_minDay[0]); y < Number(_maxDay[0]) + 1; y++) {
-					htmlHead += y === year ? '<option value="' + y + '" selected>' + y + '년</option>' : '<option value="' + y + '">' + y + '년</option>';
-				}
-
-				htmlHead += '</select>';
-				htmlHead += '</div>';
-				htmlHead += '<div class="datepicker-head-month">';
-				for (var m = 1; m < 13; m++) {
-					m < 10 ? m = '0' + m : '';
-					htmlHead += m === month + 1 ? 
-						'<button type="button" class="btn-base datepicker-month" data-month="' + Number(m) + '" selected><span>' + m + '월</span></button>' : 
-						'<button type="button" class="btn-base datepicker-month" data-month="' + Number(m) + '"><span>' + m + '월</span></button>';
-					m = Number(m);
-				}
-				htmlHead += '</div>';
-				htmlHead += '</div>';
-			}
-			
-
-			if (type === 'normal') {
-				/* 년월 선택: button */
-				htmlHead += '<div class="datepicker-head-btn">';
-				htmlHead += '<div class="datepicker-head-y">';
-				htmlHead += '<button type="button" class="btn-arrow ui-datepicker-prev-y" title="이전 년도"><span class="hide">이전 ' + (year - 1) + ' 년으로 이동</span></button>';
-				htmlHead += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
-				htmlHead += '<button type="button" class="btn-arrow ui-datepicker-next-y" title="다음 년도"><span class="hide">다음 ' + (year + 1) + ' 년으로 이동</span></button>';
-				htmlHead += '</div>';
-
-				htmlHead += '<div class="datepicker-head-m">';
-				htmlHead += '<button type="button" class="btn-arrow ui-datepicker-prev" title="이전 달">';
-				(dual) 
-					? htmlHead += '<span class="hide">이전 ' + dateMonths[(month === 0) ? 11 : month - 2] + ' 월로 이동</span></button>'
-					: htmlHead += '<span class="hide">이전 ' + dateMonths[(month === 0) ? 11 : month - 1] + ' 월로 이동</span></button>';
-				htmlHead += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
-				htmlHead += '<button type="button" class="btn-arrow ui-datepicker-next" title="다음 달">';
-				(dual) 
-					? htmlHead += '<span class="hide">다음 ' + dateMonths[(month == 11) ? 0 : month + 2] + ' 월로 이동</span></button>'
-					: htmlHead += '<span class="hide">다음 ' + dateMonths[(month == 11) ? 0 : month + 1] + ' 월로 이동</span></button>';
-				
-				htmlHead += '</div>';
-
-				htmlHead += '</div>';
-
-				/* today */
-				htmlHead += '<div class="datepicker-head-today">';
-				htmlHead += '<button type="button" class="btn-today" data-day=' + textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), false) + ' title="오늘'+ textDate(dateToday.getDate(), dateToday.getMonth() + 1, dateToday.getFullYear(), true) +'로 이동"><span class="hide">today</span></button>';
-				htmlHead += '</div>';
-				htmlHead += '<div class="datepicker-head-week">';
-				htmlHead += '<span scope="col" class="day-sun"><abbr title="일요일">' + weekDay[0] + '</abbr></span>';
-				htmlHead += '<span scope="col"><abbr title="월요일">' + weekDay[1] + '</abbr></span>';
-				htmlHead += '<span scope="col"><abbr title="화요일">' + weekDay[2] + '</abbr></span>';
-				htmlHead += '<span scope="col"><abbr title="수요일">' + weekDay[3] + '</abbr></span>';
-				htmlHead += '<span scope="col"><abbr title="목요일">' + weekDay[4] + '</abbr></span>';
-				htmlHead += '<span scope="col"><abbr title="금요일">' + weekDay[5] + '</abbr></span>';
-				htmlHead += '<span scope="col" class="day-sat"><abbr title="토요일">' + weekDay[6] + '</abbr></span>';
-				htmlHead += '</div>';
-
-				/* datepicker-head-date */
-				// htmlHead += '<div class="datepicker-head-date">';
-
-				// if (dual) {
-				// 	htmlHead += '<div class="datepicker-period-head">';
-
-				// 	htmlHead += '<div class="n1">';
-				// 	htmlHead += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
-				// 	htmlHead += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
-				// 	htmlHead += '</div>';
-
-				// 	htmlHead += '<div class="n2">';
-
-				// 	if (month === 11) {
-				// 		htmlHead += '<span class="year2" data-y="' + (year + 1) + '"><strong>' + (year + 1) + '</strong>년</span> ';
-				// 		htmlHead += '<span class="month2" data-m="' + dateMonths[0] + '"><strong>' + dateMonths[0] + '</strong>월</span>';
-				// 	} else {
-				// 		htmlHead += '<span class="year2" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
-				// 		htmlHead += '<span class="month2" data-m="' + dateMonths[month + 1] + '"><strong>' + dateMonths[month + 1] + '</strong>월</span>';
-				// 	}
-
-				// 	htmlHead += '</div>';
-				// 	htmlHead += '</div>';
-					
-				// } else {
-				// 	htmlHead += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
-				// 	htmlHead += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
-				// }
-
-				// htmlHead += '</div>';
-				htmlHead += '</div>';
-
-				/* datepicker-core -------------------- */
-				htmlHead += '<div class="datepicker-core"></div>';
-			}
-			
-			htmlHead += '<div class="datepicker-foot">';
-			htmlHead += '<button type="button" class="btn-base-s ui-datepicker-close"><span>닫기</span></button>';
-			htmlHead += '</div>';
-
-
-			return htmlHead;
-		}
-		function buildCore(date, calendarEl, v , endMinMax) {
-			var $base = $('#' + calendarEl.calId);
-			var $end = $('#' + calendarEl.inputId + '_end');
-			var $prevM = $base.find('.ui-datepicker-prev');
-			var $nextM = $base.find('.ui-datepicker-next');
-			var $prevY = $base.find('.ui-datepicker-prev-y');
-			var $nextY = $base.find('.ui-datepicker-next-y')
-			var $headDate = $base.find('.datepicker-head-btn');
-			var $headDateYearE = $headDate.find('.year2');
-			var $headDateMonthE = $headDate.find('.month2');
-			var $headYear = $base.find('.datepicker-head-year');
-			var $headmonth = $base.find('.datepicker-head-month');
-
-			var inp_val = $('#' + calendarEl.inputId).val(),
-				nVal = inp_val.split(dateSplit),
-				generate = v === 'generate' ? true : false,
-				day = !generate ? date.getDate() : inp_val === '' ? date.getDate() : Number(nVal[2]),
-				month = !generate ? date.getMonth() : inp_val === '' ? date.getMonth() : Number(nVal[1] - 1),
-				year = !generate ? date.getFullYear() : inp_val === '' ? date.getFullYear() : Number(nVal[0]),
-				prevMonth = new Date(year, month - 1, 1),
-				thisMonth = new Date(year, month, 1),
-				nextMonth = new Date(year, month + 1, 1),
-				nextMonth2 = new Date(year, month + 2, 1),
-				firstWeekDay = thisMonth.getDay(),
-				nextWeekDay = nextMonth.getDay(),
-				prevWeekDay = prevMonth.getDay(),
-				daysInMonth = Math.floor((nextMonth.getTime() - thisMonth.getTime()) / (1000 * 60 * 60 * 24)),
-				daysInMonth_prev = Math.floor((thisMonth.getTime() - prevMonth.getTime()) / (1000 * 60 * 60 * 24)),
-				daysInMonth_next = Math.floor((nextMonth2.getTime() - nextMonth.getTime()) / (1000 * 60 * 60 * 24)),
-				
-				$input = $('#' + calendarEl.inputId).eq(0),
-				tit = $input.attr('title'),
-				_minDay = new Array(),
-				_maxDay = new Array(),
-				mm = nextMonth.getMonth(),
-				week_day,
-				empty_before = daysInMonth_prev - firstWeekDay,
-				empty_after = 0,
-				endMinMax = endMinMax === undefined ? false : endMinMax;
-
-			var dateMonthsNext = dateMonths[month + 1];
-			var dateMonthsNow = dateMonths[month];
-
-			dateMonthsNext === undefined ? dateMonthsNext = '01' : '';
-
-			// 최소,최대 선택 가능
-			if (endMinMax) {
-				$end.attr('data-min', $input.attr('data-min'));
-				$end.attr('data-min') !== undefined ? _minDay = $end.attr('data-min').split(dateSplit, 3) : _minDay[0] = 1910;
-				$end.attr('data-max') !== undefined ? _maxDay = $end.attr('data-max').split(dateSplit, 3) : _maxDay[0] = 2050;
-			} else {
-				$input.attr('data-min') !== undefined ? _minDay = $input.attr('data-min').split(dateSplit, 3) : _minDay[0] = 1910;
-				$input.attr('data-max') !== undefined ? _maxDay = $input.attr('data-max').split(dateSplit, 3) : _maxDay[0] = 2050;
-			}
-
-			month === 2 ? daysInMonth = 31 : '';
-			
-			if (dual) {
-				$prevM.find('span').text('이전 ' + dateMonths[(month - 2 < 0) ? (month - 2 < -1) ? 10 : 11 : month - 2] + '월로 이동');
-				$nextM.find('span').text('다음 ' + dateMonths[(month + 2 > 11) ? (month + 2 > 12) ? 1 : 0 : month + 2] + '월로 이동');
-			} else {
-				$prevM.find('span').text('이전 ' + dateMonths[(month - 1 < 0) ? 11 : month - 1] + '월로 이동');
-				$nextM.find('span').text('다음 ' + dateMonths[(month + 1 > 11) ? 0 : month + 1] + '월로 이동');
-			}
-			
-			$headDate.find('.year').data('y', year).find('strong').text(year);
-			$headDate.find('.month').data('m', dateMonthsNow).find('strong').text(dateMonthsNow);
-
-			if (dual) {
-				if (month + 1 === 12) {
-					$headDateYearE.data('y', year + 1).find('strong').text(year + 1);
-					$headDateMonthE.data('m', dateMonths[0]).find('strong').text(dateMonths[0]);
-				} else {
-					$headDateYearE.data('y', year).find('strong').text(year);
-					$headDateMonthE.data('m', dateMonthsNext).find('strong').text(dateMonthsNext);
-				}
-			}
-
-			$headYear.find('option').prop('selected', false).removeAttr('selected');
-			$headYear.find('option[value="' + year + '"]').prop('selected', true);
-			$headmonth.find('option').prop('selected', false).removeAttr('selected');
-			$headmonth.find('option[value="' + (month + 1) + '"]').prop('selected', true);
-
-			year <= _minDay[0] && dateMonthsNow <= _minDay[1] ?
-				$prevM.addClass('disabled').attr('disabled') :
-				$prevM.removeAttr('disabled').removeClass('disabled');
-
-			year <= _minDay[0] ?
-				$prevY.addClass('disabled').attr('disabled') :
-				$prevY.removeAttr('disabled').removeClass('disabled');
-
-			year >= _maxDay[0] && dateMonthsNow >= _maxDay[1] ?
-				$nextM.addClass('disabled').attr('disabled') :
-				$nextM.removeAttr('disabled').removeClass('disabled');
-
-			year >= _maxDay[0] ?
-				$nextY.addClass('disabled').attr('disabled') :
-				$nextY.removeAttr('disabled').removeClass('disabled');
-
-			//table datepicker
-			var htmlCalendar = '';
-			htmlCalendar += '<div class="tbl-datepicker" data-date="' + year + '' + dateMonthsNow + '">';
-
-			htmlCalendar += '<div class="tbl-datepicker-head" role="text">';
-			htmlCalendar += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
-			htmlCalendar += '<span class="month" data-m="' + dateMonths[month] + '"><strong>' + dateMonths[month] + '</strong>월</span>';
-			htmlCalendar += '</div>';
-
-			htmlCalendar += '<table>';
-			// htmlCalendar += '<caption>' + year + '년 ' + dateMonthsNow + '월 일자 선택</caption>';
-			htmlCalendar += '<colgroup>';
-			htmlCalendar += '<col class="n1">';
-			htmlCalendar += '<col span="5" class="n1">';
-			htmlCalendar += '<col class="n1">';
-			htmlCalendar += '</colgroup>';
-			// htmlCalendar += '<thead><tr>';
-			// htmlCalendar += '<th scope="col" class="day-sun"><abbr title="일요일">' + weekDay[0] + '</abbr></th>';
-			// htmlCalendar += '<th scope="col"><abbr title="월요일">' + weekDay[1] + '</abbr></th>';
-			// htmlCalendar += '<th scope="col"><abbr title="화요일">' + weekDay[2] + '</abbr></th>';
-			// htmlCalendar += '<th scope="col"><abbr title="수요일">' + weekDay[3] + '</abbr></th>';
-			// htmlCalendar += '<th scope="col"><abbr title="목요일">' + weekDay[4] + '</abbr></th>';
-			// htmlCalendar += '<th scope="col"><abbr title="금요일">' + weekDay[5] + '</abbr></th>';
-			// htmlCalendar += '<th scope="col" class="day-sat"><abbr title="토요일">' + weekDay[6] + '</abbr></th>';
-			// htmlCalendar += '</tr></thead>';
-			htmlCalendar += '<tbody><tr>';
-
-			//이전 달
-			prevMonthday(firstWeekDay);
-
-			mm < 1 ? mm = 12 : '';
-			mm = win[global].option.partsAdd0(mm);
-			week_day = firstWeekDay;
-
-			//현재 달
-			for (var dayCounter = 1; dayCounter <= daysInMonth; dayCounter++) {
-				
-				week_day %= 7;
-				week_day === 0 ? daysInMonth - dayCounter < 7 ? htmlCalendar += '</tr>' : htmlCalendar += '</tr><tr>' : '';
-
-				if (week_day === 0) {
-					htmlCalendar += '<td class="day-sun">';
-				} else if (week_day === 6) {
-					htmlCalendar += '<td class="day-sat">';
-				} else {
-					htmlCalendar += '<td>';
-				}
-
-				if ((year < _minDay[0]) || (year == _minDay[0] && dateMonthsNow < _minDay[1]) || (year == _minDay[0] && dateMonthsNow == _minDay[1] && dayCounter < _minDay[2])) {
-					//선택 불가월
-					htmlCalendar += '<button type="button" disabled class="disabled" aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
-				} else if ((year > _maxDay[0]) || (year == _maxDay[0] && dateMonthsNow > _maxDay[1]) || (year == _maxDay[0] && dateMonthsNow == _maxDay[1] && dayCounter > _maxDay[2])) {
-					//선택 불가일
-					htmlCalendar += '<button type="button" disabled class="disabled" aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
-				} else {
-					//선택가능 일
-					htmlCalendar += '<button type="button" aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false) + '" value="' + dayCounter + '">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
-				}
-				week_day++;
-			}
-
-			//다음 달
-			nextMonthday(week_day);
-
-			htmlCalendar += '</tr></tbody></table></div>';
-
-			// period datepicker table
-			if (dual) {
-				empty_after = 0;
-				empty_before = daysInMonth - nextWeekDay;
-				htmlCalendar += '<div class="tbl-datepicker type-period" data-date="' + year + '' + dateMonthsNext + '">';
-				htmlCalendar += '<div class="tbl-datepicker-head" role="text">';
-				htmlCalendar += '<span class="year" data-y="' + year + '"><strong>' + year + '</strong>년</span> ';
-				htmlCalendar += '<span class="month" data-m="' + dateMonthsNext + '"><strong>' + dateMonthsNext + '</strong>월</span>';
-				htmlCalendar += '</div>';
-				htmlCalendar += '<table>';
-				// htmlCalendar += '<caption>' + year + '년 ' + dateMonthsNext + '월 일자 선택</caption>';
-				htmlCalendar += '<colgroup>';
-				htmlCalendar += '<col class="n1">';
-				htmlCalendar += '<col span="5" class="n1">';
-				htmlCalendar += '<col class="n1">';
-				htmlCalendar += '</colgroup>';
-				// htmlCalendar += '<thead><tr>';
-				// htmlCalendar += '<th scope="col" class="day-sun"><abbr title="일요일">' + weekDay[0] + '</abbr></th>';
-				// htmlCalendar += '<th scope="col"><abbr title="월요일">' + weekDay[1] + '</abbr></th>';
-				// htmlCalendar += '<th scope="col"><abbr title="화요일">' + weekDay[2] + '</abbr></th>';
-				// htmlCalendar += '<th scope="col"><abbr title="수요일">' + weekDay[3] + '</abbr></th>';
-				// htmlCalendar += '<th scope="col"><abbr title="목요일">' + weekDay[4] + '</abbr></th>';
-				// htmlCalendar += '<th scope="col"><abbr title="금요일">' + weekDay[5] + '</abbr></th>';
-				// htmlCalendar += '<th scope="col" class="day-sat"><abbr title="토요일">' + weekDay[6] + '</abbr></th>';
-				// htmlCalendar += '</tr></thead>';
-				htmlCalendar += '<tbody><tr>';
-
-				//이전 달
-				prevMonthday(nextWeekDay);
-
-				mm = Number(mm) + 1;
-				mm < 1 ? mm = 12 : '';
-
-				if (mm > 12) {
-					mm = 1;
-					year = year + 1;
-				};
-
-				mm = win[global].option.partsAdd0(mm);
-				week_day = nextWeekDay;
-
-				//현재 달
-				for (var dayCounter = 1; dayCounter <= daysInMonth_next; dayCounter++) {
-					week_day %= 7;
-					week_day === 0 ? daysInMonth_next - dayCounter < 7 ? htmlCalendar += '</tr>' : htmlCalendar += '</tr><tr>' : '';
-
-					if (week_day === 0) {
-						htmlCalendar += '<td class="day-sun">';
-					} else if (week_day === 6) {
-						htmlCalendar += '<td class="day-sat">';
-					} else {
-						htmlCalendar += '<td>';
-					}
-
-					if ((year < _minDay[0]) || (year == _minDay[0] && dateMonthsNext < _minDay[1]) || (year == _minDay[0] && dateMonthsNext == _minDay[1] && dayCounter < _minDay[2])) {
-						htmlCalendar += '<button type="button" class="disabled" aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'" disabled>' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
-					} 
-					else if ((year > _maxDay[0]) || (year == _maxDay[0] && dateMonthsNext > _maxDay[1]) || (year == _maxDay[0] && dateMonthsNext == _maxDay[1] && dayCounter > _maxDay[2])) {
-						htmlCalendar += '<button type="button"class="disabled"  aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false)+'" disabled>' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
-					} 
-					else {
-						htmlCalendar += '<button type="button" aria-label="' + textDate(dayCounter, mm, year, true) + '" data-day="' + textDate(dayCounter, mm, year, false) + '" value="' + dayCounter + '">' + win[global].option.partsAdd0(dayCounter) + '</button></td>';
-					}
-					week_day++;
-				}
-
-				//다음 달
-				nextMonthday(week_day);
-
-				htmlCalendar += '</tr></tbody></table></div>';
-			}
-
-			//이전달 다시보기
-			function prevMonthday(weekDay) {
-				for (var week = 0; week < weekDay; week++) {
-					empty_before = empty_before + 1;
-
-					if (week < weekDay - 1) {
-						htmlCalendar += '<td class="empty"><button type="button" disabled>' + win[global].option.partsAdd0(empty_before) + '</button></td>';
-					} else {
-						htmlCalendar += '<td class="empty last"><button type="button" disabled>' + win[global].option.partsAdd0(empty_before) + '</button></td>';
-					}
-				}
-			}
-			//다음달 미리보기
-			function nextMonthday(week_day) {
-				for (var _week_day = week_day; _week_day < 7; _week_day++) {
-					empty_after = empty_after + 1;
-					if (_week_day > week_day) {
-						htmlCalendar += '<td class="empty"><button type="button" disabled>' + win[global].option.partsAdd0(empty_after) + '</button></td>';
-					} else {
-						htmlCalendar += '<td class="empty first"><button type="button" disabled>' + win[global].option.partsAdd0(empty_after) + '</button></td>';
-					}
-					
-
-				}
-			}
-			return htmlCalendar;
-		}
-
-		//달력 Hide&Remove
-		function hideCalendar() {
-			var $dp = $('.ui-datepicker.visible'),
-				$wrap = $dp.find('.datepicker-sec');
-			
-			$dp.removeClass('visible');
-			$dp.find('.ui-datepicker-btn').data('selected',false);
-			$dp.on('transitionend', function(){
-				$wrap.remove();
-			});
-
-		}
-		function datepickerClose(calendarEl) {
-			var $btn = $('#' + calendarEl.calId).closest('.ui-datepicker').find('.ui-datepicker-btn'),
-				$dp = $("#" + calendarEl.dpId),
-				$sec = $('#' + calendarEl.calId);
-
-			$('body').removeClass('open-datepicker');
-			$dp.removeClass('visible');
-			$dp.find('.ui-datepicker-btn').data('selected',false);
-
-			var closeback = !!$dp.data('opt').closeback ? $dp.data('opt').closeback : false;
-
-			closeback ? closeback() : '';
-			
-			$dp.on('transitionend', function(){
-				//win[global].uiScroll({ value: $btn.data('sct'), speed: 200 });
-				
-				$sec.remove();
-			});
-		}
-
-		//달력 table
-		function reDisplayCalendar(calendarEl, v, endMinMax) {
-			var $calWrap = $("#" + calendarEl.calId),
-				endMinMax = endMinMax === undefined ? false : endMinMax;
-
-			if (endMinMax) {
-				$calWrap.find('.tbl-datepicker').remove();
-				$calWrap.find('.datepicker-core').append(buildCore(date, calendarEl, v, endMinMax));
-			} else {
-				$calWrap.find('.datepicker-core').empty().append(buildCore(date, calendarEl, v, false));
-			}
-			matchToday();
-			dayPeriodSelect(calendarEl);
-		}
-		//달력 layout
-		function displayCalendar(calendarEl, v) {
-			var id_ = "#" + calendarEl.calId,
-				$dp = $("#" + calendarEl.dpId),
-				$calWrap = $(id_);
-				
-			//date = new Date();
-			$calWrap.empty().append(buildCalendar(date, calendarEl, v));
-			reDisplayCalendar(calendarEl, v);
-			$dp.addClass('visible');
-			win[global].focus.loop({ selector: $calWrap, type: 'hold' });
-
-			//datepicker event--------------------------------------------------------
-			$('.datepicker-head-year select').off('change.uidpsel').on('change.uidpsel', function (e) {
-				e.preventDefault();
-				yearMonthSelect(this, 'year');
-			});
-			$('.datepicker-head-month select').off('change.uidpsel').on('change.uidpsel', function (e) {
-				e.preventDefault();
-				yearMonthSelect(this, 'month');
-			});
-			$('.ui-datepicker-prev').off('click.uidatepicker').on('click.uidatepicker', function (e) {
-				e.preventDefault();
-				monthNextPrev(this, 'prev');
-			});
-			$('.ui-datepicker-next').off('click.uidatepicker').on('click.uidatepicker', function (e) {
-				e.preventDefault();
-				monthNextPrev(this, 'next');
-			});
-			$('.ui-datepicker-prev-y').off('click.uidatepicker').on('click.uidatepicker', function (e) {
-				e.preventDefault();
-				yearNextPrev(this, 'prev');
-			});
-			$('.ui-datepicker-next-y').off('click.uidatepicker').on('click.uidatepicker', function (e) {
-				e.preventDefault();
-				yearNextPrev(this, 'next');
-			});
-			$('.ui-datepicker-close').off('click.uidayclose').on('click.uidayclose', function () {
-				datepickerClose(calendarEl);
-			});
-
-			function yearMonthSelect(t, v) {
-				var $currentDate = $(t).closest('.datepicker-sec').find('.tbl-datepicker-head'),
-					$core = $(t).closest('.ui-datepicker').find('.datepicker-core'),
-					_y = v === 'year' ?
-						$(t).closest('.datepicker-head-year').find('select').eq(0).val() :
-						Number($currentDate.find('.year').data('y')),
-					_m = v === 'month' ?
-						$(t).closest('.datepicker-head-month').find('select').eq(0).val() :
-						Number($currentDate.find('.month').data('m') - 1),
-					dateTemp = v === 'year' ? new Date(_y, _m, 1) : new Date(_y, _m - 1, 1);
-
-				date = dateTemp;
-
-				reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
-
-				v === 'year' ?
-					$calWrap.find('.datepicker-head-year select').eq(0).focus() :
-					$calWrap.find('.datepicker-head-month select').eq(0).focus();
-			}
-			function monthNextPrev(t, v) {
-				var $this = $(t),
-					$core = $this.closest('.ui-datepicker').find('.datepicker-core'),
-					limit = v === 'next' ? 'max' : 'min',
-					$currentDate = $this.closest('.datepicker-sec').find('.tbl-datepicker-head'),
-					_y = Number($currentDate.find('.year').data('y')),
-					_m = Number($currentDate.find('.month').data('m') - 1),
-					dateTemp = v === 'next' ? (dual) ? new Date(_y, _m + 2, 1) : new Date(_y, _m + 1, 1) : (dual) ? new Date(_y, _m - 2, 1) : new Date(_y, _m - 1, 1);
-
-				date = dateTemp;
-
-				reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
-				$this.eq(0).focus();
-			}
-			function yearNextPrev(t, v) {
-				var $this = $(t),
-					$core = $this.closest('.ui-datepicker').find('.datepicker-core'),
-					limit = v === 'next' ? 'max' : 'min',
-					$currentDate = $this.closest('.datepicker-sec').find('.tbl-datepicker-head'),
-					_y = Number($currentDate.find('.year').data('y')),
-					_m = Number($currentDate.find('.month').data('m') - 1),
-					dateTemp = v === 'next' ? new Date(_y + 1, _m, 1) : new Date(_y - 1, _m, 1);
-
-				date = dateTemp;
-				reDisplayCalendar(calendarEl, v, period && (!!$core.data('start') || !!$core.data('end')) ? true : false);
-				$this.eq(0).focus();
-			}
-
-			if (period) {
-				$(doc).off('click.'+ id_).on('click.'+ id_, id_ + ' td button', function (e) {
-					e.preventDefault();
-					daySelectAct(calendarEl, this);
-				}).off('mouseover.'+ id_ +'sel').on('mouseover.'+ id_ +'sel', id_ + ' td button', function () {
-					dayHover(this);
-				}).off('mouseover.'+ id_ +'sel2').on('mouseover.'+ id_ +'sel2', id_ + ' .type-period td button', function () {
-					monthHover(this);
-				}).off('mouseleave.'+ id_ +'sel3').on('mouseleave.'+ id_ +'sel3', id_ + ' .tbl-datepicker', function () {
-					$('.tbl-datepicker').find('.hover').removeClass('hover');
-				});
-
-				$(doc).off('click.'+ id_ +'today').on('click.'+ id_ +'today', id_ + ' .datepicker-head-today button', function () {
-					date = new Date();
-					reDisplayCalendar(calendarEl);
-				}).off('click.'+ id_ +'d').on('click.'+ id_ +'d', id_ + ' .btn-base', function () {
-					day_start ? writeInputDateValue(calendarEl, day_start) : '';
-					day_end ? writeInputDateValue(calendarEl, day_end, true) : '';
-
-					datepickerClose(calendarEl);
-				});
-			} else {
-				$(doc).off('click.'+ id_).on('click.'+ id_ , id_ + ' td button', function () {
-					var $this = $(this);
-
-					writeInputDateValue(calendarEl, $this);
-					datepickerClose(calendarEl);
-				}).off('click.'+ id_ +'today').on('click.'+ id_+'today', id_ + ' .datepicker-head-today button', function () {
-					date = new Date();
-					reDisplayCalendar(calendarEl);
-					$calWrap.find('td button.today').eq(0).focus();
-				});
-			}	
-			
-			$('.datepicker-month').on('click', function(){
-				var $this = $(this);
-				writeInputMonthValue(calendarEl, $this);
-				datepickerClose(calendarEl);
-			});
-			return false;
-		}
-
-		function monthHover(t) {
-			var $this = $(t),
-				$core = $this.closest('.datepicker-core'),
-				$tbl = $this.closest('.tbl-datepicker');
-
-			if ($tbl.hasClass('on-start-tbl')) {
-				$tbl.prev().addClass('off-tbl')
-			}
-
-			if (!!$core.data('start') && !$tbl.hasClass('on-start-tbl')) {
-
-				if ($tbl.prev().data('date') > $this.closest('.ui-datepicker').data('min-month')) {
-					$tbl.prev().find('tr').addClass('hover').find('td').addClass('hover');
-				}
-				
-			}
-		}
-		function dayHover(t) {
-			var $this = $(t),
-				$core = $this.closest('.datepicker-core');
-
-			if (!!$core.data('start')) {
-				$this.closest('td').addClass('hover').prevAll().addClass('hover');
-				$this.closest('tr').addClass('hover').prevAll().find('td').addClass('hover');
-
-				$this.closest('td').nextAll().removeClass('hover');
-				$this.closest('tr').removeClass('hover').nextAll().find('td').removeClass('hover');
-			}
-		}
-		function daySelectAct(calendarEl, t) {
-			var $this = $(t),
-				$core = $this.closest('.datepicker-core'),
-				n_day = $this.data('day').replace(/\-/g, ''),
-				n_day_ = $core.data('day') === undefined ? false : $core.data('day').replace(/\-/g, '');
-
-			if (win[global].uiDatePicker.option.dateSplit === '.') {
-				n_day = $this.data('day').replace(/\./g, '');
-				n_day_ = $core.data('day') === undefined ? false : $core.data('day').replace(/\./g, '');
-			}
-
-			var sam_day = n_day === n_day_,
-				next_day = n_day > n_day_,
-				prev_day = n_day < n_day_;
-
-			//first event start, next event end
-			if (!$core.data('start') && !$core.data('end')) {
-				$core.data('end', false);
-				$core.data('start', true);
-				$core.data('day', n_day);
-
-				//init
-				$core.find('.selected-end').removeClass('selected-end').removeAttr('aria-selected');
-				$core.find('.disabled').removeClass('disabled');
-				$core.find('.hover-on').removeClass('hover-on');
-				$core.find('.selected-start').removeClass('selected-start').removeAttr('aria-selected');
-				$core.find('.selected').removeClass('selected').removeAttr('aria-selected');
-				$core.find('td').removeClass('on-start on-end');
-				$core.find('tr').removeClass('on-start on-end');
-
-				//선택 및 반영
-				$core.addClass('state-ready');
-				$this.addClass('selected-start').attr('aria-selected', true);
-				if (!!$this.closest('table').hasClass('type-period')) {
-					$this.closest('table').prev().find('tr').addClass('disabled').find('td').addClass('disabled').find('button');
-				}
-				$this.closest('td').addClass('on-start').prevAll().addClass('disabled').find('button');
-				$this.closest('tr').addClass('on-start').prevAll().addClass('disabled').find('td').addClass('disabled').find('button');
-				$('.on-start').find('tr.on-start').find('button').attr('disabled');
-				$('#' + $this.closest('.ui-datepicker').find('.inp-base').attr('id') + '_end').val('');
-
-				day_start = $this;
-				writeInputDateValue(calendarEl, $this);
-				reDisplayCalendar(calendarEl, $this, true);
-			} else if (next_day || sam_day) {
-				$core.data('start', false);
-				$core.removeClass('state-ready');
-				$core.data('end', true).data('endday', n_day);
-				$core.find('.selected-end').removeClass('selected-end').removeAttr('aria-selected');
-				$this.addClass('selected-end').attr('aria-selected', true);
-				$core.find('.on-ing').removeClass('on-ing');
-				$core.find('.on-end').removeClass('on-end');
-				$this.closest('td').addClass('on-end');
-				$this.closest('tr').addClass('on-end');
-				$core.find('.hover').addClass('on-ing');
-				$core.addClass('date-ing-on');
-
-				day_end = $this;
-				writeInputDateValue(calendarEl, $this, true);
-				datepickerClose(calendarEl);
-			} else if (prev_day) {
-				$core.find('.selected-end').removeClass('selected-end').removeAttr('aria-selected');
-				$core.find('.hover-on').removeClass('hover-on');
-				$core.find('.selected-start').removeClass('selected-start').removeAttr('aria-selected');
-				$core.find('.selected').removeClass('selected').removeAttr('aria-selected');
-				$core.data('day', n_day);
-				$core.find('td').removeClass('on-start on-end');
-				$core.find('tr').removeClass('on-start on-end');
-
-				$this.addClass('selected-start').attr('aria-selected', true);
-				if (!!$this.closest('table').hasClass('type-period')) {
-					$this.closest('table').prev().find('tr').addClass('disabled').find('td').addClass('disabled').find('button');
-				}
-				$this.closest('td').addClass('on-start').prevAll().addClass('disabled').find('button');
-				$this.closest('tr').addClass('on-start').prevAll().addClass('disabled').find('td').addClass('disabled').find('button');
-				$this.closest('td').addClass('on-start').nextAll().removeClass('disabled').find('button');
-				$this.closest('tr').addClass('on-start').nextAll().removeClass('disabled').find('td').removeClass('disabled').find('button');
-				$('.on-start').find('tr.on-start').find('button').attr('disabled');
-
-				day_start = $this;
-				writeInputDateValue(calendarEl, $this);
-			}
-		}
-
-		//event
-		$datepicker.find('.ui-datepicker-btn').off('click.uidatepicker').on('click.uidatepicker', function () {
-			var btn = $(this);
-
-			if (!btn.data('selected')) {
-				$('.ui-datepicker-btn').data('selected', false);
-				btn.data('selected', true);
-				datepickerReady(this);
-			} else {
-				btn.data('selected', false);
-				hideCalendar();
-			}
-		});
-		$datepicker.find('.inp-base').off('focus.uidpinp').on('focus.uidpinp', function () {
-			$(this).closest('.inp-datepicker').addClass('focus');
-		}).off('blur.uidpinp').on('blur.uidpinp', function () {
-			$(this).closest('.inp-datepicker').removeClass('focus');
-		});
-
-		//datepicker ready
-		function datepickerReady(v) {
-			var $this = $(v),
-				$datepicker = $this.closest('.ui-datepicker'),
-				dataPeriod = $datepicker.attr('data-period'),
-				dataDual = $datepicker.attr('data-dual'),
-				dataTitle = $datepicker.attr('data-title'),
-				dataType = $datepicker.attr('data-type'),
-				$this_inp = $datepicker.find('.ui-datepicker-inp'),
-				dp_id = $datepicker.attr('id'),
-				inputId = $this_inp.attr('id'),
-				regExp = /^([0-9]{4})-([0-9]{2})-([0-9]{2})/g,
-				_val = $this_inp.val();
-				//_val = $('#' + inputId).val();
-
-			(win[global].uiDatePicker.option.date_split === '.') ? regExp = /^([0-9]{4}).([0-9]{2}).([0-9]{2})/g : '';
-			
-			var openback = !!$datepicker.data('opt').openback ? $datepicker.data('opt').openback : false;
-			openback ? openback() : '';
-			
-			win[global].browser.mobile && $('body').addClass('open-datepicker');
-
-			hideCalendar();
-			
-			if (!!dataType) {
-				type = dataType;
-			}
-			if (!!dataPeriod) {
-				period = dataPeriod === 'true' ? true : false;
-			}
-			if (!!dataDual) {
-				dual = dataDual === 'true' ? true : false;
-			}
-			if (!!dataTitle) {
-				date_title = dataTitle;
-			}
-
-			var reset = regExp.test(_val),
-				htmlWrap = '';
-
-			$this.data('sct', $(doc).scrollTop());
-			!reset ? $this_inp.val('') : '';
-			date = new Date();
-			$datepicker.find('.datepicker-sec').remove();
-
-			calVar = new calendarObject({
-				calId: "calWrap_" + dp_id,
-				dpId: dp_id,
-				inputId: inputId,
-				buttonId: "calBtn_" + dp_id,
-				shortDate: shortDate
-			});
-
-			htmlWrap += '<div id="' + calVar.calId + '" class="datepicker-sec">';
-			htmlWrap += '<div class="datepicker-wrap">';
-			htmlWrap += '</div>';
-			htmlWrap += '</div>';
-
-			$this.closest('.ui-datepicker').find('.ui-datepicker-wrap').append(htmlWrap);
-			
-			displayCalendar(calVar, 'generate');
-
-			dual ? $datepicker.addClass('type-dual') : $datepicker.removeClass('type-dual');
-			dataType === 'month' ? $datepicker.addClass('type-month') : $datepicker.removeClass('type-month');
-			(period && dual) && $datepicker.find('.ui-datepicker-wrap').addClass('period');
-
-		}
-
-		function dayPeriodSelect(calendarEl) {
-			if (period) {
-				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + calendarEl.inputId).val() + '"]').addClass('selected-start').attr('aria-selected', true).closest('td').addClass('on-start').closest('tr').addClass('on-start').closest('table').addClass('on-start-tbl');
-				
-				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + calendarEl.inputId + '_end').val() + '"]').addClass('selected-end').attr('aria-selected', true).closest('td').addClass('on-end').closest('tr').addClass('on-end').closest('table').addClass('on-end-tbl');
-
-				var s = $('#' + calendarEl.inputId).val().replace(/\-/g, '').substring(0, 6),
-					e = $('#' + calendarEl.inputId + '_end').val().replace(/\-/g, '').substring(0, 6);
-
-				if (win[global].uiDatePicker.option.dateSplit === '.') {
-					s = $('#' + calendarEl.inputId).val().replace(/\./g, '').substring(0, 6);
-					e = $('#' + calendarEl.inputId + '_end').val().replace(/\./g, '').substring(0, 6);
-				}
-				
-				$datepicker.find('.tbl-datepicker').find('.on-start').prevAll().addClass('disabled').find('td').addClass('disabled');
-				$datepicker.find('.tbl-datepicker').find('.on-start').nextAll().addClass('hover-on').find('td').addClass('hover-on');
-				$datepicker.find('.tbl-datepicker').find('.on-end').prevAll().addClass('hover-on').find('td').addClass('hover-on');
-				$datepicker.find('.tbl-datepicker').find('.on-end').nextAll().removeClass('hover-on').find('td').removeClass('hover-on');
-				$datepicker.find('.tbl-datepicker').find('.on-start').prevAll().removeClass('hover-on').find('td').removeClass('hover-on');
-
-				if (!$('#' + calendarEl.inputId + '_end').val()) {
-					$datepicker.find('.hover-on').removeClass('hover-on');
-				} else {
-					$datepicker.find('.tbl-datepicker').each(function () {
-						var $this = $(this);
-						var thisDate = $this.data('date');
-
-						if (s < thisDate && thisDate < e) {
-							$this.find('table').addClass('on-ing-tbl');
-							$this.find('td').addClass('hover-on');
-						}
-					});
-				}
-			} else {
-				$datepicker.find('.tbl-datepicker button[data-day="' + $('#' + calendarEl.inputId).val() + '"]').addClass('selected').attr('aria-selected', true);
-			}
-		}
-	}  
 
 
 
@@ -7037,6 +5742,9 @@ if (!Object.keys){
 	}
 
 
+
+
+	
 
 
 

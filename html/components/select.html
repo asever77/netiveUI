@@ -133,14 +133,14 @@
 
 	<h3 class="h-3">Javascript</h3>
 
-	<h4 class="h-4">$plugins.select.init()</h4>
+	<h4 class="h-4">netive.select.init()</h4>
 	<p>현재 select box기준으로 디자인 select 생성. 첫적용이나 동적인 변경이 있을때 사용한다. 특히 동적인 변경일 경우는 id로 개별 실행해주는게 좋다.</p>
 <pre class="box-code"><code class="javascript">
 //전체 실행
-$plugins.select.init();
+netive.select.init();
 
 //개별 실행
-$plugins.select.init({ 
+netive.select.init({ 
 	id: false, 
 	current: null,
 	customscroll: true,
@@ -148,11 +148,11 @@ $plugins.select.init({
 });
 </code></pre>
 
-	<h4 class="h-4">$plugins.select.act()</h4>
-	<p>마우스, 키보드 이벤트가 아닌 option값 선택을 할 때 사용. $plugins.uiSelect()을 사용해도 되나 불필요한 재구성을 하지 않아 값변경 시에는 $plugins.select.act를
+	<h4 class="h-4">netive.select.act()</h4>
+	<p>마우스, 키보드 이벤트가 아닌 option값 선택을 할 때 사용. netive.uiSelect()을 사용해도 되나 불필요한 재구성을 하지 않아 값변경 시에는 netive.select.act를
 		사용한다. </p>
 <pre class="box-code"><code class="javascript">
-$plugins.select.act({ 
+netive.select.act({ 
 	id:'forSelLocal', 
 	current:0,
 	callback:function(v){console.log(v)}
@@ -212,15 +212,15 @@ $plugins.select.act({
 
 
 <script>
-	$plugins.select.init();
+	netive.select.init();
 
-	$plugins.select.init({
+	netive.select.init({
 		id: 'forSelLocal',
 		current: 0,
 		callback: function (v) {}
 	});
 
-	$plugins.select.init({
+	netive.select.init({
 		id: 'uiSel1',
 		current: 1,
 		callback: function (v) {

@@ -1,7 +1,7 @@
 ;(function($, win, doc, undefined) {
     
 
-    $plugins.uiParallaxScroll = function(v){
+    netive.uiParallaxScroll = function(v){
         var winScrTop = $(window).scrollTop();
 
         $(win).off('scroll.scrpage').on('scroll.scrpage', function(){
@@ -23,7 +23,7 @@
     }
 
     $(doc).ready(function(){
-        $plugins.uiParallaxScroll();
+        netive.uiParallaxScroll();
     });
     
 })(jQuery, window, document);

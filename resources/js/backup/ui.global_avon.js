@@ -125,7 +125,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 
 	'use strict';
 
-	var global = '$plugins';
+	var global = 'netive';
 	var namespace = 'netiveUI.plugins';
 
 	//global namespace
@@ -496,14 +496,14 @@ HTMLElement.prototype.closestByClass = function(className) {
 		uiAccordionToggle: function (opt) {
 			return createUiAccordionToggle(opt);
 		},
-		uiDropdown: function (opt) {
-			return createUiDropdown(opt);
+		dropdown.: function (opt) {
+			return createdropdown.init(opt);
 		},
-		uiDropdownToggle: function (opt) {
-			return createUiDropdownToggle(opt);
+		dropdown.toggle: function (opt) {
+			return createdropdown.toggle(opt);
 		},
-		uiDropdownHide: function () {
-			return createUiDropdownHide();
+		dropdown.hide: function () {
+			return createdropdown.hide();
 		},
 		uiFloating: function (opt) {
 			return createUiFloating(opt);
@@ -1031,18 +1031,18 @@ HTMLElement.prototype.closestByClass = function(className) {
 				p_h = Math.floor($this.parent().height());
 
 			// if (Number($(win).outerWidth()) > 960) {
-			if ($plugins.breakpoint) {
+			if (netive.breakpoint) {
 				$this.addClass('ready').css({
 					width: p_w,
 					height: p_h
 				});
 			}
 
-			if (win[global].uiHasScrollBar({ selector: $this }) && !$plugins.browser.mobile) {
+			if (win[global].uiHasScrollBar({ selector: $this }) && !netive.browser.mobile) {
 				scrollbarReady($this, i);
 			}
 
-			if (win[global].uiHasScrollBarX({ selector: $this }) && !$plugins.browser.mobile) {
+			if (win[global].uiHasScrollBarX({ selector: $this }) && !netive.browser.mobile) {
 				scrollbarReady($this, i);
 			}
 
@@ -1062,8 +1062,8 @@ HTMLElement.prototype.closestByClass = function(className) {
 			var $wrap = wrap_this,
 				$item = $wrap.children('.ui-scrollbar-item'),
 				html_scrollbar = '',
-				is_scrollY = true, //win[global].uiHasScrollBar({ selector: wrap_this }) && !$plugins.browser.mobile,
-				is_scrollX = win[global].uiHasScrollBarX({ selector: wrap_this }) && !$plugins.browser.mobile;
+				is_scrollY = true, //win[global].uiHasScrollBar({ selector: wrap_this }) && !netive.browser.mobile,
+				is_scrollX = win[global].uiHasScrollBarX({ selector: wrap_this }) && !netive.browser.mobile;
 
 			if (!$wrap.data('ready') || !$wrap.attr('id')) {
 				!$wrap.attr('id') ?
@@ -1707,7 +1707,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 			timer;
 
         if (!!src && !$('#' + opt.id).length) {
-            $plugins.uiAjax({
+            netive.uiAjax({
                 id: wrap,
                 url: src,
                 add: true,
@@ -1728,7 +1728,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 
 			try {
 				var p_h = $(parent.window).outerHeight(true);
-				!win[global].breakpoint ? $plugins.common.menuShowHide(false) : '';
+				!win[global].breakpoint ? netive.common.menuShowHide(false) : '';
 				parent.$('#uiBrochureIframe').css('height', p_h + 'px');
 			} catch(err) { }
 			
@@ -1769,7 +1769,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 								openN.push($(this).attr('n')) : '';
 						});
 
-						$plugins.uiSimpleModalClose({ 
+						netive.uiSimpleModalClose({ 
 							id: $('.ui-modal-simple.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id'), 
 							remove: remove,
 							callback: closeCallback
@@ -1780,7 +1780,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 				// if (!$modal.find('.ui-modal-close').length) {
 				// 	// $modal.append('<button type="button" class="ui-modal-close type-trans"><span class="hidden">modal close</span></button>');
 				// 	// $('.ui-modal-close').off('click.uimodal').on('click.uimodal', function(){
-				// 	// 	$plugins.uiSimpleModalClose({ 
+				// 	// 	netive.uiSimpleModalClose({ 
 				// 	// 		id: $(this).closest('.ui-modal-simple').attr('id'), 
 				// 	// 		remove: remove,
 				// 	// 		callback: closeCallback
@@ -1796,16 +1796,16 @@ HTMLElement.prototype.closestByClass = function(className) {
 				// 	}
                 // } 
 
-				$plugins.uiScrollBarReset();
+				netive.uiScrollBarReset();
 
-				if( $(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight() && $plugins.breakpoint) {
+				if( $(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight() && netive.breakpoint) {
 					$modal.addClass('is-over');
 				} else {
 					$modal.removeClass('is-over');
 				}
 
 				if ($('#' + id ).hasClass('type-copybook')) {
-					$plugins.uiScrollBarCancel();
+					netive.uiScrollBarCancel();
 				}
 
 			},150);
@@ -1826,7 +1826,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 				var $modal = $('#' + $(this).closest('.ui-modal-simple').attr('id'));
 				// 	$wr = $modal.find('.ui-modal-wrap');
 
-				$plugins.uiSimpleModalClose({ 
+				netive.uiSimpleModalClose({ 
 					id: $(this).closest('.ui-modal-simple').attr('id'), 
 					remove: remove,
 					callback: closeCallback
@@ -1834,7 +1834,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 				
 			});
 
-			if ($plugins.browser.mobile) {
+			if (netive.browser.mobile) {
 				$(doc).find('.ui-modal-head').off('mousedown.updown touchstart.updown').on('mousedown.updown touchstart.updown', function(e){
 					//e.preventDefault();
 					var $this = $(this),
@@ -1903,7 +1903,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 		$('#baseMain').removeAttr('style');
 
 
-		//!$plugins.common.iframeReSize.sub ? $plugins.common.iframeFull(false) : '';
+		//!netive.common.iframeReSize.sub ? netive.common.iframeFull(false) : '';
 		
 		win[global].uiScroll({
 			value: Number($modal.data('scrolltop'))
@@ -1918,15 +1918,15 @@ HTMLElement.prototype.closestByClass = function(className) {
             callback ? callback(opt) : '';
             remove ? $modal.remove() : '';
             !!endfocus ? endfocus.focus() : '';
-			!win[global].breakpoint ? $plugins.common.menuShowHide(true) : '';
+			!win[global].breakpoint ? netive.common.menuShowHide(true) : '';
 			if (id === 'modalVideo') {
 				if (!!$('#modalVideo video').attr('id')) {
                     var myPlayer = bc($('#modalVideo video').attr('id'));
                     myPlayer.pause();
                 }
 			}
-			// if (!$plugins.parentHeadHide) {
-			// 	$plugins.common.parentScrollTopInfo(false);
+			// if (!netive.parentHeadHide) {
+			// 	netive.common.parentScrollTopInfo(false);
 			// }
         },150);
     }
@@ -2674,7 +2674,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 				var $this = $(e.target).closest('.ui-mapimg-wrap').find('.ui-mapimg-img'),
 					$map = $this.closest('.ui-mapimg');
 
-				$plugins.uiImgMapPointShowhide({
+				netive.uiImgMapPointShowhide({
 					id : $map.attr('id'),
 					visible: !$map.data('visible')
 				});
@@ -2717,7 +2717,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 		if (auto) {
 			clearTimeout(timer);
 			timer = setTimeout(function(){
-				$plugins.uiImgMapPointShowhide({
+				netive.uiImgMapPointShowhide({
 					id : opt.id,
 					visible: false
 				});
@@ -3002,7 +3002,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 	}
 
 
-	win[global].uiDropdown.option = {
+	win[global].dropdown..option = {
 		eff: 'base',
 		ps: 'bl',
 		hold: true,
@@ -3017,12 +3017,12 @@ HTMLElement.prototype.closestByClass = function(className) {
 		eff_ps: 10,
 		eff_speed: 100
 	};
-	function createUiDropdown(opt){
+	function createdropdown.init(opt){
 		if (opt === undefined) {
 			return false;
 		}
 
-		var opt = $.extend(true, {}, win[global].uiDropdown.option, opt),
+		var opt = $.extend(true, {}, win[global].dropdown..option, opt),
 			id = opt.id,
 			eff = opt.eff,
 			auto = opt.auto,
@@ -3093,14 +3093,14 @@ HTMLElement.prototype.closestByClass = function(className) {
 			var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
 
 			pnl_opt._expanded = true;
-			win[global].uiDropdownToggle({ id: pnl_opt.id });
+			win[global].dropdown.toggle({ id: pnl_opt.id });
 			$('#' + pnl_opt.id).focus();
 		})
 		.off('click.bd').on('click.bd', function(e){
 			//dropdown 영역 외에 클릭 시 판단
 			if (!!$('body').data('dropdownOpened')){
 				if ($(doc).find('.ui-drop-pnl').has(e.target).length < 1) {
-					win[global].uiDropdownHide();
+					win[global].dropdown.hide();
 				}
 			}
 		});
@@ -3112,10 +3112,10 @@ HTMLElement.prototype.closestByClass = function(className) {
 				btn_opt = $this.data('opt');
 
 			$this.data('sct', $(doc).scrollTop());
-			win[global].uiDropdownToggle({ id: btn_opt.id });
+			win[global].dropdown.toggle({ id: btn_opt.id });
 		}
 	}
-	function createUiDropdownToggle(opt){
+	function createdropdown.toggle(opt){
 		if (opt === undefined) {
 			return false;
 		}
@@ -3180,7 +3180,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 					$('.ui-drop').not('#' + drop_inner).attr('aria-expanded', false);
 					$('.ui-drop-pnl').not('[data-id="' + drop_inner +'"]').attr('aria-hidden', true).attr('tabindex', -1).removeAttr('style');
 				} else {
-					win[global].uiDropdownHide();
+					win[global].dropdown.hide();
 				}
 			}
 
@@ -3295,7 +3295,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 			$(this).remove();
 		});
 	}
-	function createUiDropdownHide(){
+	function createdropdown.hide(){
 		$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
 		$('.ui-drop').attr('aria-expanded', false);
 		
@@ -3477,7 +3477,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 					$this.addClass('visible').siblings().removeClass('visible');
 					
 					if (v > vod_h || v < vod_h2) {
-						$plugins.common.vodPlayPause({
+						netive.common.vodPlayPause({
 							item: 'all',
 							status: 'pause'
 						});
@@ -3487,13 +3487,13 @@ HTMLElement.prototype.closestByClass = function(className) {
 
 						if ($cardnews.length){
 							if ($cardnews_vod.length) {
-								$plugins.common.vodPlayPause({
+								netive.common.vodPlayPause({
 									item: $cardnews.find('> .view video'),
 									status: 'play'
 								});
 							}
 						} else {
-							$plugins.common.vodPlayPause({
+							netive.common.vodPlayPause({
 								item: $this.find('.swiper-slide-active video'),
 								status: 'play'
 							});
@@ -3504,7 +3504,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 
 					return false;
 				} else {
-					$plugins.common.vodPlayPause({
+					netive.common.vodPlayPause({
 						item: 'all',
 						status: 'pause'
 					});
@@ -3748,7 +3748,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 		$btn.eq(current).append('<b class="hide">선택됨</b>');
 		$btn.removeClass('selected').eq(current).addClass('selected').focus();
 
-		$plugins.uiScroll({ 
+		netive.uiScroll({ 
 			value: ps_l[current], 
 			btnwidth : $btn.outerWidth(),
 			target: $btns, 
@@ -4216,7 +4216,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 			$body.addClass('dim-dropdown');
 			$body.data('scrolling') === 'yes' ? win[global].uiScrollingCancel() : '';
 
-			$plugins.uiScrollBarReset({
+			netive.uiScrollBarReset({
 				id: _$wrap.attr('id')
 			});
 			
@@ -4235,7 +4235,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 					'min-height': _$opts.outerHeight(),
 					overflow: 'hidden'
 				});
-				$plugins.uiScrollBarReset({
+				netive.uiScrollBarReset({
 					id: _$wrap.attr('id')
 				});
 			} else {
@@ -4286,7 +4286,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 
 	function createUiProduct360(opt){
 		var $wrap = $(opt.canvasId),
-			imgLen = $plugins.onlypub ? 51 : 78, //51 , 78
+			imgLen = netive.onlypub ? 51 : 78, //51 , 78
 			imgPath = opt.path,
 			imgName = opt.file,
 			fileName = null,
@@ -4309,7 +4309,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 			}
 			
 			$wrap.append(html_360);
-			$plugins.uiLoading({
+			netive.uiLoading({
 				id: $wrap,
 				visible:true
 			});
@@ -4326,7 +4326,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 						$wrap.css('width', iw + 'px');
 						$wrap.closest('.ui-modal-wrap').find('.ui-modal-head').css('width', iw + 'px');
 						$wrap.closest('.ui-modal-wrap').find('type-item360-arr').css('width', iw + 'px');
-						$plugins.uiLoading({
+						netive.uiLoading({
 							visible:false
 						});
 					}
@@ -4605,7 +4605,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 			}
 			
 			var startPreload = function () {
-				$plugins.uiLoading({
+				netive.uiLoading({
 					wrap:$('#pop360'),
 					visible:true
 				});
@@ -4668,7 +4668,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 				}
 			}
 			var drawFrame = function () {
-				$plugins.uiLoading({
+				netive.uiLoading({
 					wrap:$('#pop360'),
 					visible:false
 				});
@@ -4705,7 +4705,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 					if (win[global].breakpoint) { // in PC
 						x = (maxW - minW) / 2;
 						y = (maxH - minH) / 2;
-						$plugins.common.setCanvas360(x, y, w, h);
+						netive.common.setCanvas360(x, y, w, h);
 					} else { 
 						x = 0;
 						y = (params.canvasHeight - h) / 2;

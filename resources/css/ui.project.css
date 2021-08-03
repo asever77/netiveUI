@@ -26,7 +26,7 @@
 }
 
 a {
-	color: var(--text-400);
+	color: blue;
 	outline-offset: 1px;
 }
 
@@ -700,10 +700,6 @@ fieldset {
 	color: cornflowerblue;
 	font-size: 11px;
 	margin: 3px 3px 0 0;
-}
-
-.ui-drop-pnl {
-	width: 400px
 }
 
 .parallax-test:first-child .parallax-cont {

@@ -92,7 +92,7 @@ if (!Object.keys){
 
 	'use strict';
 
-	var global = '$plugins';
+	var global = 'netive';
 	var namespace = 'netiveUI.plugins';
 	
 	//global namespace
@@ -459,7 +459,7 @@ if (!Object.keys){
 			htmlLoading += '';
 
 		htmlLoading += '</div>';
-		htmlLoading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="$plugins.uiLoading({ visible:false });"><span>$plugins.uiLoading({ visible:false })</span></button>';
+		htmlLoading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="netive.uiLoading({ visible:false });"><span>netive.uiLoading({ visible:false })</span></button>';
 		htmlLoading += '</div>';
 
 		if(loadingVisible) {
@@ -2026,7 +2026,7 @@ if (!Object.keys){
 			itemTopArray = dataOpt.itemTopArray,
 			itemSum = $item.length;
 		
-		//$plugins.uiLoading({ id: opt.id, visible:true });
+		//netive.uiLoading({ id: opt.id, visible:true });
 
 		var n = dataOpt.start;
 		var timer;
@@ -2052,7 +2052,7 @@ if (!Object.keys){
 				if (n < itemSum) {
 					setItem();
 				} else {
-					$plugins.uiLoading({ visible:false });
+					netive.uiLoading({ visible:false });
 				}
 
 				timer = setTimeout(function(){
@@ -2085,17 +2085,17 @@ if (!Object.keys){
 	* date : 2020-06-10
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiDropdown: function (opt) {
-			return createUiDropdown(opt);
+		dropdown.: function (opt) {
+			return createdropdown.init(opt);
 		},
-		uiDropdownToggle: function (opt) {
-			return createUiDropdownToggle(opt);
+		dropdown.toggle: function (opt) {
+			return createdropdown.toggle(opt);
 		},
-		uiDropdownHide: function () {
-			return createUiDropdownHide();
+		dropdown.hide: function () {
+			return createdropdown.hide();
 		},
 	});
-	win[global].uiDropdown.option = {
+	win[global].dropdown..option = {
 		ps: 'BL',
 		hold: true,
 		dropSpace: $('body'),
@@ -2104,12 +2104,12 @@ if (!Object.keys){
 		openback:false,
 		closeback:false
 	};
-	function createUiDropdown(opt){
+	function createdropdown.init(opt){
 		if (opt === undefined || !$('#' + opt.id).length) {
 			return false;
 		}
 
-		var opt = $.extend(true, {}, win[global].uiDropdown.option, opt),
+		var opt = $.extend(true, {}, win[global].dropdown..option, opt),
 			id = opt.id,
 			ps = opt.ps,
 			hold = opt.hold,
@@ -2120,7 +2120,7 @@ if (!Object.keys){
 			closeback = opt.closeback;
 
 		if (!!dropSrc && !$('[data-id="' + opt.id + '"]').length) {
-			$plugins.uiAjax({
+			netive.uiAjax({
 				id: dropSpace,
 				url: dropSrc,
 				add: true,
@@ -2162,7 +2162,7 @@ if (!Object.keys){
 			});
 			$(doc).find('.ui-drop-close').off('click.dp').on('click.dp', function(e){
 				var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
-				win[global].uiDropdownToggle({ 
+				win[global].dropdown.toggle({ 
 					id: pnl_opt.id 
 				});
 				$('#' + pnl_opt.id).focus();
@@ -2172,7 +2172,7 @@ if (!Object.keys){
 			$(doc).off('click.dpb').on('click.dpb', function(e){
 				if (!!$('body').data('dropdownOpened')){
 					if ($(doc).find('.ui-drop-pnl').has(e.target).length < 1) {
-						win[global].uiDropdownHide();
+						win[global].dropdown.hide();
 					}
 				}
 			});
@@ -2182,13 +2182,13 @@ if (!Object.keys){
 					btn_opt = $this.data('opt');
 
 				$this.data('sct', $(doc).scrollTop());
-				win[global].uiDropdownToggle({ 
+				win[global].dropdown.toggle({ 
 					id: btn_opt.id 
 				});
 			}
 		}
 	}
-	function createUiDropdownToggle(opt){
+	function createdropdown.toggle(opt){
 		if (opt === undefined) {
 			return false;
 		}
@@ -2244,7 +2244,7 @@ if (!Object.keys){
 						.attr('tabindex', -1)
 						.removeAttr('style');
 			} else {
-				win[global].uiDropdownHide();
+				win[global].dropdown.hide();
 			}
 
 			$btn.attr('aria-expanded', true);
@@ -2320,7 +2320,7 @@ if (!Object.keys){
 			!!closeback ? closeback() : '';
 		}
 	}
-	function createUiDropdownHide(){
+	function createdropdown.hide(){
 		$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
 		$('.ui-drop').attr('aria-expanded', false);
 		$('.ui-drop-pnl[aria-hidden="false"]').each(function(){
@@ -2574,7 +2574,7 @@ if (!Object.keys){
 
 		if (type === 'normal') {
 			if (!!src && !$('#' + opt.id).length) {
-				$plugins.uiAjax({
+				netive.uiAjax({
 					id: wrap,
 					url: src,
 					add: true,
@@ -2643,7 +2643,7 @@ if (!Object.keys){
 				.data('active', endfocus)
 				.data('closecallback', closeCallback);
 
-			if (mobileFull && !$plugins.breakpoint) {
+			if (mobileFull && !netive.breakpoint) {
 				$modal.addClass('type-full');
 				mg = 0;
 			} 
@@ -2714,7 +2714,7 @@ if (!Object.keys){
 						var currentID = $('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id');
 
 						if (currentID !== 'uiSystemModal') {
-							$plugins.uiModalClose({ 
+							netive.uiModalClose({ 
 								id: currentID, 
 								remove: remove,
 								closeCallback: closeCallback
@@ -2729,7 +2729,7 @@ if (!Object.keys){
 			},150);
 
 			$(doc).find('.ui-modal-close').off('click.close').on('click.close', function(e){
-				$plugins.uiModalClose({ 
+				netive.uiModalClose({ 
 					id: $(this).closest('.ui-modal').attr('id'), 
 					remove: remove,
 					closeCallback: closeCallback
@@ -2752,7 +2752,7 @@ if (!Object.keys){
 		endfocus: false
 	}
 	function createUiSystemModalClose(){
-		$plugins.uiModalClose({ 
+		netive.uiModalClose({ 
 			id: 'uiSystemModal', 
 			remove: true
 		});
@@ -3376,7 +3376,7 @@ if (!Object.keys){
 			if (!!src && !$('#' + id).length) {
 				$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><div class="ui-tooltip-arrow"></div>')
 
-				$plugins.uiAjax({
+				netive.uiAjax({
 					id: $('#' + id),
 					url: src,
 					add: true,
@@ -6733,7 +6733,7 @@ if (!Object.keys){
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - $plugins.uiSlider({ option });
+	* - netive.uiSlider({ option });
 	------------------------------------------------------------------------ */
 	win[global] = win[global].uiNameSpace(namespace, {
 		uiSlider: function (opt) {

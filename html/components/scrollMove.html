@@ -52,7 +52,7 @@
 
 					console.log('-------------', $('.test-scrollmove-hor-wrap').scrollLeft());
 
-					$plugins.scroll.move({ 
+					netive.scroll.move({ 
 						value: $('.test-scrollmove-hor .test').eq(n).position().left + $('.test-scrollmove-hor').scrollLeft() + 10, 
 						selector: document.querySelector('.test-scrollmove-hor'), 
 						speed:  300, 
@@ -67,7 +67,7 @@
 				});
 
 				$('.test-scrollmove-top').on('click', function(){
-					$plugins.scroll.move({ 
+					netive.scroll.move({ 
 						selector: document.querySelector('.test-scrollmove-ver'),
 						value: 0, 
 						speed: 300, 
@@ -79,7 +79,7 @@
 				});
 				
 				$('.test-scrollmove-bottom').on('click', function(){
-					$plugins.scroll.move({ 
+					netive.scroll.move({ 
 						selector: $('.test-scrollmove-ver'),
 						value: $('.test-scrollmove-ver').prop('scrollHeight'), 
 						speed:300,
@@ -91,7 +91,7 @@
 
 			
 				// document.querySelectorAll('.test-scrollmove-hor-item').forEach(function (v) {
-				// 	$plugins.io.observe(v);
+				// 	netive.io.observe(v);
 				// });
 			});
 		})(jQuery, window, document);
@@ -104,7 +104,7 @@
 	<h3 class="h-3">Javascript</h3>
 
 <pre class="box-code"><code class="script">
-$plugins.scroll.move({ 
+netive.scroll.move({ 
 	selector: $('name'), 
 	value: 0,
 	speed: 0,

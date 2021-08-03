@@ -493,6 +493,9 @@
 
 .ui-acco-tit {
     position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .ui-acco-btn {
@@ -543,6 +546,7 @@ a.ui-acco-btn {
     border-top: 1px solid #ccc;
     padding: 0;
     background: #fff;
+    min-height: 4.2rem;
 }
 
 .ui-acco-tit-wrap {
@@ -2130,7 +2134,7 @@ td button.today {
 }
 
 
-/* $plugins.uiSelect */
+/* netive.uiSelect */
 
 
 

@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = 'netiveUI.plugins';
 
 	/* ------------------------------------------------------------------------
@@ -10,8 +10,8 @@
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - $plugins.uiSelect({ option });
-	* - $plugins.uiSelectAct({ option });
+	* - netive.uiSelect({ option });
+	* - netive.uiSelectAct({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiSelect: function (opt) {
@@ -330,7 +330,7 @@
 			$body.addClass('dim-dropdown');
 			$body.data('scrolling') === 'yes' ? $ui.uiScrollingCancel() : '';
 
-			$plugins.uiScrollBarReset({
+			netive.uiScrollBarReset({
 				id: _$wrap.attr('id')
 			});
 			
@@ -349,7 +349,7 @@
 					'min-height': _$opts.outerHeight(),
 					overflow: 'hidden'
 				});
-				$plugins.uiScrollBarReset({
+				netive.uiScrollBarReset({
 					id: _$wrap.attr('id')
 				});
 			} else {

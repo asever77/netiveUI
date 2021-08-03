@@ -123,9 +123,9 @@ b {
 
 a {
 	font: inherit;
-	color: inherit;
+	color: blue;
 	outline-offset: 1px;
-	text-decoration: none;
+	text-decoration: underline;
 }
 
 button {

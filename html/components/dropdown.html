@@ -3,87 +3,38 @@
 
 <div class="tit-wrap">
 	<h1 class="h-1">Dropdown</h1>
-	<em>date : 2020.06.10</em>
-</div>
-<p class="txts-m">Dropdown은 기본적으로 토글방식으로 문맥상에서 추가적인 콘텐츠나 메뉴에 사용한다.<br>
-기본적으로 12가지 위치를 제공하고 있으며 위치에 따른 자동설정도 가능하다. <br>
-크게 두가지로 하나는 문장의 흐름에 맞추어 위치한 경우와 모달팝업과 같이 위치가 밖에 있는 경우가 있다.</p>
-
-<h2 class="h-2">Examples</h2>
-<h3 class="h-3">.ui-drop-pnl이 body 바로 안에 있는 구조</h3>
-<p>z-index 값 상속이나 overflow:hidden 속성으로 body의 자식 태그로 위치한다. </p>
-<div class="mgt-s">
-	<div class="ui-select">
-		<select class="drop-ps-change" title="정렬선택" id="testPs1">
-			<option>Test 위치 선택</option>
-			<option value="TL">상단 좌측정렬</option>
-			<option value="TC">상단 중앙정렬</option>
-			<option value="TR">상단 우측정렬</option>
-			<option value="BL">하단 좌측정렬</option>
-			<option value="BC">하단 중앙정렬</option>
-			<option value="BR">하단 우측정렬</option>
-			<option value="RT">우측 상단정렬</option>
-			<option value="RM">우측 중앙정렬</option>
-			<option value="RB">우측 하단정렬</option>
-			<option value="LT">좌측 상단정렬</option>
-			<option value="LM">좌측 중앙정렬</option>
-			<option value="LB">좌측 하단정렬</option>
-		</select>
-	</div>
-	<button type="button" class="btn-base ui-drop mgl-xxs" id="uiDrop1" aria-expanded="true"><span>ajax dropdown</span></button>
 </div>
 
-<h3 class="h-3">.ui-drop-pnl이 .ui-drop과 같은 영역에 있는 구조</h3>
-<div class="mgt-s">
-	<div class="ui-select">
-		<select class="drop-ps-change" title="정렬선택" id="testPs2">
-			<option>Test 위치 선택</option>
-			<option value="TL">상단 좌측정렬</option>
-			<option value="TC">상단 중앙정렬</option>
-			<option value="TR">상단 우측정렬</option>
-			<option value="BL">하단 좌측정렬</option>
-			<option value="BC">하단 중앙정렬</option>
-			<option value="BR">하단 우측정렬</option>
-			<option value="RT">우측 상단정렬</option>
-			<option value="RM">우측 중앙정렬</option>
-			<option value="RB">우측 하단정렬</option>
-			<option value="LT">좌측 상단정렬</option>
-			<option value="LM">좌측 중앙정렬</option>
-			<option value="LB">좌측 하단정렬</option>
-		</select>
-	</div>
+<section class="sec-wrap">
+	<h2 class="h-2">Examples</h2>
 
-	<button type="button" class="btn-base ui-drop mgl-xxs" id="uiDrop2"><span>Dropdown</span></button>
-	<section class="ui-drop-pnl" data-id="uiDrop2">
-		<div class="ui-drop-box">
-			<h1>자바스크립트란?</h1>
-			<p>자바스크립트(JavaScript)가 언어로서 지닌 특징에 대해 알아보겠습니다. 이어서 자바스크립트로 무엇을 할 수 있을지, 다른 기술들이 자바스크립트를 어떻게 활용하고 있는지도 이야기해 보겠습니다.</p>
-			
-			<!-- dropdown in dropdown -->
-			<button type="button" class="btn-base ui-drop" id="uiDrop5"><span>정의란?</span></button>
-			<section class="ui-drop-pnl" data-id="uiDrop5">
-				<div class="ui-drop-box">
-					<h1>정의</h1>
-					<p>자바스크립트는 ‘웹페이지에 생동감을 불어넣기 위해’ 만들어진 프로그래밍 언어입니다.</p>
-					<p>자바스크립트로 작성한 프로그램을 스크립트(script) 라고 부릅니다. 스크립트는 웹페이지의 HTML 안에 작성할 수 있는데, 웹페이지를 불러올 때 스크립트가 자동으로 실행됩니다.</p>
-					<p>스크립트는 특별한 준비나 컴파일 없이 보통의 문자 형태로 작성할 수 있고, 실행도 할 수 있습니다.</p>
-					<p>이런 관점에서 보면 자바스크립트는 자바(Java)와는 매우 다른 언어라고 할 수 있습니다.</p>
-				</div>
-				<button type="button" class="ui-drop-close btn-close">닫기</button>
-			</section>
-			<!-- //dropdown in dropdown -->
-			
-			<p>자바스크립트는 브라우저뿐만 아니라 서버에서도 실행할 수 있습니다. 이 외에도 자바스크립트 엔진(JavaScript engine)이라 불리는 특별한 프로그램이 들어 있는 모든 디바이스에서도 동작합니다.</p>
+	<div class="box-guide ta-c">
+		<div class="ui-select">
+			<select class="drop-ps-change" title="정렬선택" id="testPs1">
+				<option>Test 위치 선택</option>
+				<option value="TL">상단 좌측정렬</option>
+				<option value="TC">상단 중앙정렬</option>
+				<option value="TR">상단 우측정렬</option>
+				<option value="BL">하단 좌측정렬</option>
+				<option value="BC">하단 중앙정렬</option>
+				<option value="BR">하단 우측정렬</option>
+				<option value="RT">우측 상단정렬</option>
+				<option value="RM">우측 중앙정렬</option>
+				<option value="RB">우측 하단정렬</option>
+				<option value="LT">좌측 상단정렬</option>
+				<option value="LM">좌측 중앙정렬</option>
+				<option value="LB">좌측 하단정렬</option>
+			</select>
 		</div>
-		<button type="button" class="ui-drop-close btn-close"><span class="hide">닫기</span></button>
-	</section>
-</div>
+		<button type="button" class="btn-base ui-drop mgt-s" id="uiDrop1"><span>dropdown</span></button>
+	</div>
 
+</section>
 
-<h2 class="h-2">HTML Structure</h2>
-<div class="box-code">
-<pre>
-<code>
+<section class="sec-wrap">
+	<h2 class="h-2">Source Code</h2>
+	<h3 class="h-3">HTML</h3>
+<pre class="box-code"><code class="html">
 &lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-drop"</span> <span class="na">id=</span><span class="s">"uiDrop1"</span>&gt;&lt;span&gt;드롭다운&lt;/span&gt;&lt;/button&gt;
 
 &lt;section <span class="na">class=</span><span class="s">"ui-drop-pnl"</span> <span class="na">data-id=</span><span class="s">"uiDrop1"</span>&gt;
@@ -96,204 +47,205 @@
 &lt;/section&gt;
 </code>
 </pre>
-</div>
 
-<h2 class="h-2">CSS Style</h2>
-<h3 class="h-3">base style</h3>
-<div class="box-code">
-<pre>
-<code>
-.ui-drop {position:relative; display:inline-block;}
-.ui-drop-pnl {display:none; position:absolute; z-index:100; }
-.ui-drop-pnl.on {display:block;}
-.ui-drop-box {background:#fff;}
+	<h3 class="h-3">CSS</h3>
+<pre class="box-code"><code class="css">
+
 </code>
 </pre>
-</div>
-<h3 class="h-3">style : netive UI</h3>
-<div class="box-code">
-<pre>
-<code>
-.ui-drop-box {border:1px solid #222; padding:10px; }
-.ui-drop-pnl .btn-close {position:absolute; top:6px; right:6px;}
-.ui-drop-pnl .btn-close:before,
-.ui-drop-pnl .btn-close:after {background:#222;}
-</code>
-</pre>
-</div>
 			
-<h2 class="h-2">Javascript</h2>
-<h3 class="h-3">$plugins.uiDropdown</h3>
-<div class="box-code">
-<pre>
-<code>
-$plugins<span class="na">.uiDropdown</span>({ <span class="s">
+	<h3 class="h-3">Javascript</h3>
+	<h4 class="h-4">netive.dropdown.init</h4>
+<pre class="box-code"><code class="javascript">
+netive.dropdown.init({ 
+	id:'uiDrop1', 
+	ps:'BL',
+	dropSrc:'/netiveUI/html/components/dropdown_ajax.html',
+	dropExpanded: true,
+	openback: function(){
+		...
+	}
+});
+</code>
+</pre>
+
+	<div class="tbl-base type-option">
+		<table>
+			<caption>
+				<strong>dropdown 기본 옵션</strong>
+				<span class="ui-caption"></span>
+			</caption>
+			<colgroup>
+				<col class="col-xs">
+				<col class="col-xs">
+				<col class="col-xs">
+				<col class="col-auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">Options</th>
+					<th scope="col">Type</th>
+					<th scope="col">Default</th>
+					<th scope="col">Explanation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="nec">
+					<th scope="row">id:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>(필수) ui-drop의 아이디명 기입</td>
+				</tr>
+				<tr>
+					<th scope="row">ps:</th>
+					<td>[string]</td>
+					<td>'BL'</td>
+					<td>총 12가지 위치 설정
+						<ul>
+						<li>TL : 상단 좌측정렬</li>
+						<li>TC : 상단 중앙정렬</li>
+						<li>TR : 상단 우측정렬</li>
+						<li>BL : 하단 좌측정렬</li>
+						<li>BC : 하단 중앙정렬</li>
+						<li>BR : 하단 우측정렬</li>
+						<li>RT : 우측 상단정렬</li>
+						<li>RM : 우측 중앙정렬</li>
+						<li>RB : 우측 하단정렬</li>
+						<li>LT : 좌측 상단정렬</li>
+						<li>LM : 좌측 중앙정렬</li>
+						<li>LB : 좌측 하단정렬</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">hold:</th>
+					<td>[boolean]</td>
+					<td>true</td>
+					<td>포커스 홀드 여부
+						<ul>
+							<li>true : 'hold' 포커스 홀드</li>
+							<li>false : 'sense' 포커스 벗어날 때 자동으로 닫힘</li>
+						</ul>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">dropSpace:</th>
+					<td>[string][object]</td>
+					<td>$('body')</td>
+					<td>Ajax로 파일을 불러올 위치<br>
+						'id' or $('#id')</td>
+				</tr>
+				<tr>
+					<th scope="row">dropSrc:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>Ajax로 파일을 불러올 url경로</td>
+				</tr>
+				<tr>
+					<th scope="row">dropOffset:</th>
+					<td>[boolean]</td>
+					<td>false</td>
+					<td>드롭다운 콘텐츠의 위치에 따라 설정
+						<ul>
+							<li>true : 위치값 절대값(offset)</li>
+							<li>false : 위치값 상대값(position)</li>
+						</ul>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">openback:</th>
+					<td>[function]</td>
+					<td>false</td>
+					<td>오픈 시 콜백</td>
+				</tr>
+				<tr>
+					<th scope="row">closeback:</th>
+					<td>[function]</td>
+					<td>false</td>
+					<td>닫을 시 콜백</td>
+				</tr>
+				
+				
+			</tbody>
+		</table>
+	</div>
+
+	<h4 class="h-4">netive.dropdown.toggle</h4>
+<pre class="box-code">,<code class="javascript">
+netive.dropdown.toggle({ 
 	id:'uiDrop1',
-	ps: 'BL',
-	hold: true,
-	dropSpace: $('body'),
-	dropSrc: false,
-	dropOffset: false,
-	openback:function() { console.log('open callback'); },
-	closeback:function() { console.log('close callback'); }</span> 
+	state: 'open' 
 });
 </code>
 </pre>
-</div>
+	<div class="tbl-base type-option">
+		<table>
+			<caption>
+				<strong>dropdown 기본 옵션</strong>
+				<span class="ui-caption"></span>
+			</caption>
+			<colgroup>
+				<col class="col-xs">
+				<col class="col-xs">
+				<col class="col-xs">
+				<col class="col-auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">Options</th>
+					<th scope="col">Type</th>
+					<th scope="col">Default</th>
+					<th scope="col">Explanation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="nec">
+					<th scope="row">id:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>(필수) ui-drop의 아이디명 기입</td>
+				</tr>
+				
+				<tr>
+					<th scope="row">state:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>
+						<ul>
+							<li>'open' : 열림</li>
+							<li>'close' : 닫힘</li>
+						</ul>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
-<div class="tbl-base type-option">
-	<table>
-		<caption>
-			<strong>dropdown 기본 옵션</strong>
-			<span class="ui-caption"></span>
-		</caption>
-		<colgroup>
-			<col class="col-xs">
-			<col class="col-xs">
-			<col class="col-xs">
-			<col class="col-auto">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">Options</th>
-				<th scope="col">Type</th>
-				<th scope="col">Default</th>
-				<th scope="col">Explanation</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="nec">
-				<th scope="row">id:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>(필수) ui-drop의 아이디명 기입</td>
-			</tr>
-			<tr>
-				<th scope="row">ps:</th>
-				<td>[string]</td>
-				<td>'BL'</td>
-				<td>총 12가지 위치 설정
-					<ul>
-					<li>TL : 상단 좌측정렬</li>
-					<li>TC : 상단 중앙정렬</li>
-					<li>TR : 상단 우측정렬</li>
-					<li>BL : 하단 좌측정렬</li>
-					<li>BC : 하단 중앙정렬</li>
-					<li>BR : 하단 우측정렬</li>
-					<li>RT : 우측 상단정렬</li>
-					<li>RM : 우측 중앙정렬</li>
-					<li>RB : 우측 하단정렬</li>
-					<li>LT : 좌측 상단정렬</li>
-					<li>LM : 좌측 중앙정렬</li>
-					<li>LB : 좌측 하단정렬</li>
-					</ul>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">hold:</th>
-				<td>[boolean]</td>
-				<td>true</td>
-				<td>포커스 홀드 여부
-					<ul>
-						<li>true : 'hold' 포커스 홀드</li>
-						<li>false : 'sense' 포커스 벗어날 때 자동으로 닫힘</li>
-					</ul>
-				</td>
-			</tr>
+<script>
+	$('.drop-ps-change').on('change', function(){
+		$(this).closest('.box-guide').find('.ui-drop').attr('data-ps', $(this).val());
+	});
 
-			<tr>
-				<th scope="row">dropSpace:</th>
-				<td>[string][object]</td>
-				<td>$('body')</td>
-				<td>Ajax로 파일을 불러올 위치<br>
-					'id' or $('#id')</td>
-			</tr>
-			<tr>
-				<th scope="row">dropSrc:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>Ajax로 파일을 불러올 url경로</td>
-			</tr>
-			<tr>
-				<th scope="row">dropOffset:</th>
-				<td>[boolean]</td>
-				<td>false</td>
-				<td>드롭다운 콘텐츠의 위치에 따라 설정
-					<ul>
-						<li>true : 위치값 절대값(offset)</li>
-						<li>false : 위치값 상대값(position)</li>
-					</ul>
-				</td>
-			</tr>
+	netive.dropdown.init({ 
+		id:'uiDrop1', 
+		ps:'BL',
+		dropSrc:'/netiveUI/html/components/dropdown_ajax.html',
+		dropExpanded: true,
+		openback: function(){
+			netive.uiTab({ 
+				id: 'exeTab1', 
+				current:0 
+			});
+			netive.dropdown.init({ 
+				id:'uiDrop5', 
+				ps:'RB',
+				dropSrc:'/netiveUI/html/components/dropdown_ajax2.html',
+			});
+		}
+	});
 
-			<tr>
-				<th scope="row">openback:</th>
-				<td>[function]</td>
-				<td>false</td>
-				<td>오픈 시 콜백</td>
-			</tr>
-			<tr>
-				<th scope="row">closeback:</th>
-				<td>[function]</td>
-				<td>false</td>
-				<td>닫을 시 콜백</td>
-			</tr>
-			
-			
-		</tbody>
-	</table>
-</div>
 
-<h3 class="h-3">$plugins.uiDropdownToggle</h3>
-<div class="box-code">
-<pre>
-<code>
-$plugins<span class="na">.uiDropdownToggle</span>({ 
-	<span class="s">id:'uiDrop1'
-	state: 'open'</span> 
-});
-</code>
-</pre>
-</div>
-<div class="tbl-base type-option">
-	<table>
-		<caption>
-			<strong>dropdown 기본 옵션</strong>
-			<span class="ui-caption"></span>
-		</caption>
-		<colgroup>
-			<col class="col-xs">
-			<col class="col-xs">
-			<col class="col-xs">
-			<col class="col-auto">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">Options</th>
-				<th scope="col">Type</th>
-				<th scope="col">Default</th>
-				<th scope="col">Explanation</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="nec">
-				<th scope="row">id:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>(필수) ui-drop의 아이디명 기입</td>
-			</tr>
-			
-			<tr>
-				<th scope="row">state:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>
-					<ul>
-						<li>'open' : 열림</li>
-						<li>'close' : 닫힘</li>
-					</ul>
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+</script>
+

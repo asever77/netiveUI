@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = 'netiveUI.plugins';
 
     /* ------------------------------------------------------------------------
@@ -10,7 +10,7 @@
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - $plugins.uiLoading({ option });
+	* - netive.uiLoading({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiLoading: function (opt) {
@@ -29,7 +29,7 @@
 		loading += '<div class="ui-loading-wrap">';
 		loading += '<strong class="ui-loading-txt"><span>'+ txt +'</span></strong>';
 		loading += '</div>';
-		loading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="$plugins.uiLoading({ visible:false });"><span>$plugins.uiLoading({ visible:false })</span></button>';
+		loading += '<button type="button" class="btn-base" style="position:fixed; bottom:10%; right:10%; z-index:100;" onclick="netive.uiLoading({ visible:false });"><span>netive.uiLoading({ visible:false })</span></button>';
 		loading += '</div>';
 
 		clearTimeout($ui.uiLoading.timer);

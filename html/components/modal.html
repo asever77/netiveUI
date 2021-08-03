@@ -24,19 +24,19 @@
 <p>시스템 알림 모달</p>
 <div class="btn-wrap mgt-s txta-l">
 	<button type="button" class="btn-base" onclick="
-		$plugins.uiModalOpen({
+		netive.uiModalOpen({
 			type : 'alert',
 			sMessage: '<strong>Please</strong> <br>check the information you entered again.',
 			sBtnConfirmTxt: 'Ok',
 			sClass: 'type-alert',
 			sConfirmCallback: function(){
 				console.log('alert ok');
-				$plugins.uiSystemModalClose();
+				netive.uiSystemModalClose();
 				$('#testEndFocus').focus();
 			}
 	});"><span>alert system</span></button>
 	<button type="button" class="btn-base" onclick="
-		$plugins.uiModalOpen({
+		netive.uiModalOpen({
 			type : 'alert',
 			ps: 'top',
 			sMessage: '<strong>Please</strong> <br>check the information you entered again.',
@@ -44,12 +44,12 @@
 			sClass: 'type-alert',
 			sConfirmCallback: function(){
 				console.log('alert ok');
-				$plugins.uiSystemModalClose();
+				netive.uiSystemModalClose();
 				$('#testEndFocus').focus();
 			}
 	});"><span>alert system / top</span></button>
 	<button type="button" class="btn-base" onclick="
-		$plugins.uiModalOpen({
+		netive.uiModalOpen({
 			type : 'alert',
 			ps: 'bottom',
 			sMessage: '<strong>Please</strong> <br>check the information you entered again.',
@@ -57,7 +57,7 @@
 			sClass: 'type-alert',
 			sConfirmCallback: function(){
 				console.log('alert ok');
-				$plugins.uiSystemModalClose();
+				netive.uiSystemModalClose();
 				$('#testEndFocus').focus();
 			}
 	});"><span>alert system / bottom</span></button>
@@ -65,7 +65,7 @@
 <input type="text" class="inp-base" placeholder="focus" id="testEndFocus">
 <div class="btn-wrap mgt-s txta-l">
 	<button type="button" class="btn-base" onclick="
-		$plugins.uiModalOpen({
+		netive.uiModalOpen({
 			type : 'confirm',
 			sMessage: 'Would you like to send <br>the information you entered?',
 			sBtnConfirmTxt: 'Ok',
@@ -73,16 +73,16 @@
 			sClass: 'type-confirm',
 			sConfirmCallback: function(){
 				console.log('confirm ok');
-				$plugins.uiSystemModalClose();
+				netive.uiSystemModalClose();
 			},
 			sCancelCallback: function(){
 				console.log('confirm cancel');
-				$plugins.uiSystemModalClose();
+				netive.uiSystemModalClose();
 				$('#testEndFocus').focus();
 			}
 	});"><span>confirm system</span></button>
 	<button type="button" class="btn-base" onclick="
-		$plugins.uiModalOpen({
+		netive.uiModalOpen({
 			type : 'confirm',
 			ps: 'top',
 			sMessage: 'Would you like to send <br>the information you entered?',
@@ -91,16 +91,16 @@
 			sClass: 'type-confirm',
 			sConfirmCallback: function(){
 				console.log('confirm ok');
-				$plugins.uiSystemModalClose();
+				netive.uiSystemModalClose();
 			},
 			sCancelCallback: function(){
 				console.log('confirm cancel');
-				$plugins.uiSystemModalClose();
+				netive.uiSystemModalClose();
 				$('#testEndFocus').focus();
 			}
 	});"><span>confirm system / top</span></button>
 	<button type="button" class="btn-base" onclick="
-		$plugins.uiModalOpen({
+		netive.uiModalOpen({
 			type : 'confirm',
 			ps: 'bottom',
 			sMessage: 'Would you like to send <br>the information you entered?',
@@ -109,11 +109,11 @@
 			sClass: 'type-confirm',
 			sConfirmCallback: function(){
 				console.log('confirm ok');
-				$plugins.uiSystemModalClose();
+				netive.uiSystemModalClose();
 			},
 			sCancelCallback: function(){
 				console.log('confirm cancel');
-				$plugins.uiSystemModalClose();
+				netive.uiSystemModalClose();
 				$('#testEndFocus').focus();
 			}
 	});"><span>confirm system / bottom</span></button>
@@ -210,12 +210,12 @@
 </div>
 
 <h2 class="h-2">Javascript</h2>
-<h3 class="h-3">$plugins.uiModalOpen</h3>
+<h3 class="h-3">netive.uiModalOpen</h3>
 <h4 class="h-4">content modal option</h4>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiModalOpen</span>({ <span class="s">
+netive<span class="na">.uiModalOpen</span>({ <span class="s">
 	id:'IDname', 
 	type: 'normal',
 	wrap: $('body'),
@@ -237,7 +237,7 @@ $plugins<span class="na">.uiModalOpen</span>({ <span class="s">
 <div class="tbl-base type-option">
 	<table>
 		<caption>
-			<strong>$plugins.uiModal 옵션 설명</strong>
+			<strong>netive.uiModal 옵션 설명</strong>
 			<span class="ui-caption"></span>
 		</caption>
 		<colgroup>
@@ -371,7 +371,7 @@ $plugins<span class="na">.uiModalOpen</span>({ <span class="s">
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiModalOpen</span>({ <span class="s">
+netive<span class="na">.uiModalOpen</span>({ <span class="s">
 	id:'IDname', 
 	type: 'alert', //'confirm'
 	ps: 'center',
@@ -390,7 +390,7 @@ $plugins<span class="na">.uiModalOpen</span>({ <span class="s">
 <div class="tbl-base type-option">
 	<table>
 		<caption>
-			<strong>$plugins.uiModal - system modal option 설명</strong>
+			<strong>netive.uiModal - system modal option 설명</strong>
 			<span class="ui-caption"></span>
 		</caption>
 		<colgroup>
@@ -455,12 +455,12 @@ $plugins<span class="na">.uiModalOpen</span>({ <span class="s">
 </div>
 
 
-<h3 class="h-3">$plugins.uiModalClose</h3>
+<h3 class="h-3">netive.uiModalClose</h3>
 <p>모달 레이어 팝업 닫을 시 사용</p>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiModalClose</span>({ <span class="s">
+netive<span class="na">.uiModalClose</span>({ <span class="s">
 	id: 'modal_name', 
 	remove: false,
 	endfocus: 'idname', //$('#idname')
@@ -472,7 +472,7 @@ $plugins<span class="na">.uiModalClose</span>({ <span class="s">
 <div class="tbl-base type-option">
 	<table>
 		<caption>
-			<strong>$plugins.uiModalClose 옵션 설명</strong>
+			<strong>netive.uiModalClose 옵션 설명</strong>
 			<span class="ui-caption"></span>
 		</caption>
 		<colgroup>
