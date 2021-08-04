@@ -123,9 +123,9 @@ b {
 
 a {
 	font: inherit;
-	color: inherit;
+	color: blue;
 	outline-offset: 1px;
-	text-decoration: none;
+	text-decoration: underline;
 }
 
 button {
@@ -1855,6 +1855,184 @@ a.btn-base-l {
 .ui-m .tbl-base .ui-tablescroll-clone {
 	width: 100%;
 }
+
+/* ui-drop : base */
+.ui-drop {
+    position: relative;
+    display: inline-block;
+}
+
+.ui-drop-pnl {
+    display: none;
+    position: absolute;
+    z-index: 100;
+}
+
+.ui-drop-pnl.on {
+    display: block;
+}
+
+.ui-drop-box {
+    background: #fff;
+}
+
+/* ui-drop : netvie UI style */
+.ui-drop-box {
+    border: 1px solid #222;
+    padding: 10px;
+}
+
+.ui-drop-pnl .btn-close {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+}
+
+.ui-drop-pnl .btn-close:before,
+.ui-drop-pnl .btn-close:after {
+    background: #222;
+}
+
+/* tab */
+.ui-tab {
+    position: relative;
+    margin: 10px 0
+}
+
+.ui-tab.type-scroll .ui-tab-btns {
+    overflow: auto;
+}
+
+.ui-tab.type-scroll .ui-tab-btns .btn-wrap {
+    display: flex;
+    flex-wrap: nowrap;
+    margin: 0;
+}
+
+.ui-tab.type-scroll .ui-tab-btns .btn-wrap .ui-tab-btn {
+    flex: 1;
+    min-width: 100px
+}
+
+.ui-tab-btns {
+    position: relative;
+    overflow: hidden;
+    z-index: 1
+}
+
+.ui-tab-btns:after {
+    content: "";
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1;
+    clear: both;
+    width: 100%;
+    height: 1px;
+    background: #ccc;
+}
+
+.ui-tab-btn {
+    box-sizing: border-box;
+    float: left;
+    position: relative;
+    z-index: 0;
+	flex:1;
+}
+
+.ui-tab-btn:hover span,
+.ui-tab-btn:focus span {
+    border-bottom: 1px solid #666;
+}
+
+.ui-tab-btn.selected {
+    z-index: 2;
+}
+
+.ui-tab-btn.selected:hover span,
+.ui-tab-btn.selected:focus span {
+    border-bottom: 1px solid #fff;
+}
+
+.ui-tab-pnls {
+    box-sizing: border-box;
+    position: relative;
+    width: 100%;
+}
+
+.ui-tab-pnl {
+    box-sizing: border-box;
+    top: 0;
+    left: 0;
+}
+
+.ui-tab-pnl,
+.ui-tab-pnl[aria-hidden='true'] {
+    visibility: hidden;
+    position: absolute;
+    opacity: 0;
+    display: none
+}
+
+.ui-tab-pnl.selected,
+.ui-tab-pnl[aria-hidden='false'] {
+    visibility: visible;
+    position: relative;
+    opacity: 1;
+    z-index: 1;
+    display: block
+}
+
+/* ui-tab :base style */
+.ui-tab-btn {
+    padding: 10px 20px 9px;
+    min-height: 40px;
+    background: #ececec;
+    border: 1px solid #ccc;
+    border-left: 0;
+    font-size: 14px;
+}
+
+.ui-tab-btn:first-child {
+    border-left: 1px solid #ccc;
+}
+
+.ui-tab-btn.selected {
+    background: #fff;
+    color: #000;
+    border-bottom: 1px solid #fff;
+    font-weight: 400;
+}
+
+.ui-tab-pnl {
+    width: 100%;
+    padding: 10px;
+    top: 0;
+    left: 0;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-top: 0
+}
+
+/* ui-tab : eff */
+.ui-tab.eff-fade>.ui-tab-pnls>.ui-tab-pnl {
+    animation-name: fadeIn;
+    animation-duration: .2s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+.ui-tab.eff-fade>.ui-tab-pnls>.ui-tab-pnl[aria-hidden="false"] {
+    animation-name: fadeIn;
+    animation-duration: .2s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+
 
 /* ui-fixtd */
 .ui-fixtd-btn {

@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = 'netiveUI.plugins';
 
     $ui = $ui.uiNameSpace(namespace, {
@@ -31,7 +31,7 @@
         let timer;
 
         if (!!src) {
-            $plugins.uiAjax({
+            netive.uiAjax({
                 id: wrap,
                 url: src,
                 add: true,
@@ -108,18 +108,18 @@
     * Ver. : v1.0.0
     * date : 2018-12-21
     * EXEC statement
-    * - $plugins.uiModal({ option });
-    * - $plugins.uiModalClose({ option });
-    * - $plugins.uiModalResize({ option });
-    * - $plugins.uiCookieModal({ option });
-    * - $plugins.uiCookieModalClose({ option });
+    * - netive.uiModal({ option });
+    * - netive.modal.hide({ option });
+    * - netive.uiModalResize({ option });
+    * - netive.uiCookieModal({ option });
+    * - netive.uiCookieModalClose({ option });
     ------------------------------------------------------------------------ */
     $ui = $ui.uiNameSpace(namespace, {
         uiModal: function (opt) {
             return createUiModal(opt);
         },
-        uiModalClose: function (opt) {
-            return createUiModalClose(opt);
+        modal.hide: function (opt) {
+            return createmodal.hide(opt);
         },
         uiModalResize: function (opt) {
             return createUiModalResize(opt);
@@ -200,7 +200,7 @@
             modal_html += '<iframe id="' + iname + '" name="' + iname + '" src="' + parasrc + '" width="' + iwidth + '" height="' + iheight + '" title="' + ititle + '" orgw="' + iwidth + '" orgh="' + iheight + '"></iframe>';
             modal_html += '</div>';
             !$ui.browser.mobile ?
-                modal_html += '<button type="button" class="btn-close ui-modal-closecallback" onclick="$plugins.uiModalClose({ id:\'' + opt.id + '\', remove: ' + remove + ' })"><span>닫기</span></button>' : '';
+                modal_html += '<button type="button" class="btn-close ui-modal-closecallback" onclick="netive.modal.hide({ id:\'' + opt.id + '\', remove: ' + remove + ' })"><span>닫기</span></button>' : '';
             modal_html += '</div>';
             modal_html += '</section>';
 
@@ -241,20 +241,20 @@
             });
             // document.getElementById(iname).onload = function () {
             // 	$('#' + opt.id).data('iframeload', true);
-            // 	$ui.callback !== undefined ? frames[iname].$plugins.callback.modal(opt.id) : '';
+            // 	$ui.callback !== undefined ? frames[iname].netive.callback.modal(opt.id) : '';
             // 	!!icallback ? icallback() : '';
             // };
             
-            uiModalOpen(opt);
+            modal.show(opt);
         }
         console.log(!opt.link)
         if (!opt.link) {
             //모달코드가 이미 페이지안에 있을 경우
-            ($('#' + opt.id).attr('aria-hidden') === 'true') ? uiModalOpen(opt) : '';
+            ($('#' + opt.id).attr('aria-hidden') === 'true') ? modal.show(opt) : '';
         } else {
             // Ajax 모달 
             !!$('#' + opt.id).length ?
-                uiModalOpen(opt) :
+                modal.show(opt) :
                 $ui.uiAjax({
                     id: !!opt.born ? opt.born : !$('#baseLayer').length ? opt.born = $('body') : 'baseLayer',
                     url: opt.link,
@@ -263,12 +263,12 @@
                     type: opt.ajax_type,
                     add: true,
                     callback: function () {
-                        uiModalOpen(opt);
+                        modal.show(opt);
                     }
                 });
         }
     }
-    function uiModalOpen(opt) {
+    function modal.show(opt) {
         
         var $modal = $('#' + opt.id),
             $modalWrap = $modal.find('.ui-modal-wrap'),
@@ -709,16 +709,16 @@
                     }, 0) : '';
 
                 if (is_iframe) {
-                    //$ui.browser.ie8 ? frames[opt.iname].$plugins.page.formReset() : '';
+                    //$ui.browser.ie8 ? frames[opt.iname].netive.page.formReset() : '';
                     if (!$ui.browser.ie8) {
                         window.mCustomScrollbar && isMscroll ?
                             frames[opt.iname].$('.wrap-iframe').mCustomScrollbar({ scrollButtons: { enable: true } }) : '';
-                        // $ui.callback !== undefined ? frames[opt.iname].$plugins.callback.modal(opt.id) : '';
+                        // $ui.callback !== undefined ? frames[opt.iname].netive.callback.modal(opt.id) : '';
                     }
                 }
 
                 !!system_words ? '' : 
-                $ui.callback !== undefined ? $plugins.callback.modal(opt.id) : '';
+                $ui.callback !== undefined ? netive.callback.modal(opt.id) : '';
                 !!openback ? openback() : '';
 
                 //!words ? $ui.uiModalResize({ id: opt.id }) : '';
@@ -739,7 +739,7 @@
         }
         $modal.find('.ui-modal-close').off('click.uilayerpop').on('click.uilayerpop', function (e) {
             e.preventDefault();
-            $ui.uiModalClose({ id: opt.id });
+            $ui.modal.hide({ id: opt.id });
         });
     }
     function createUiModalResize(opt) {
@@ -927,8 +927,8 @@
             }
         }
     }
-    $plugins.uiModal.focusid = '';
-    function createUiModalClose(opt) {
+    netive.uiModal.focusid = '';
+    function createmodal.hide(opt) {
         var opt = $.extend(true, {}, $('#' + opt.id).data('opt'), opt),
             $modal = $('#' + opt.id),
             $modalshow = $('.ui-modal[opened="true"]'),
@@ -1087,11 +1087,11 @@
     function creaeteUiCookieModalClose(opt){
         $('#' + opt.cookiename).prop('checked') ?
             $ui.uiCookieSet({ name:opt.cookiename, value:true, term:365 }) : '';
-        $ui.uiModalClose({ id:opt.modalid });
+        $ui.modal.hide({ id:opt.modalid });
     }
 
     /*
-	$plugins.modal.system({
+	netive.modal.system({
 		type : 'confirm' or 'alert'
 		btn_confirm_yes : '확인',
 		btn_confirm_no : '취소'
@@ -1141,7 +1141,7 @@
 					class_name = 'system-type-c';
 					break;
 			}
-			$plugins.uiModal({
+			netive.uiModal({
 				id: 'modalSystem', 
 				link: system_url, 
 				autofocus: false, 
@@ -1154,14 +1154,14 @@
 			});
 
 			$('#modalSystemBtn1').off('click.confirm').on('click.confirm', function () {
-				$plugins.uiModalClose({ 
+				netive.modal.hide({ 
 					id: 'modalSystem',
 					remove: true, 
 					closeback: opt.confirmCallback
 				});
 			});
 			$('#modalSystemBtn2, .btn-close').off('click.confirm').on('click.confirm', function () {
-				$plugins.uiModalClose({ 
+				netive.modal.hide({ 
 					id: 'modalSystem', 
 					remove: true, 
 					closeback: opt.cancelCallback 
@@ -1170,20 +1170,20 @@
 		},
 		
 		terms: function (title, url) {
-			//$plugins.modal.terms('개인정보 수집/이용 동의 (SKT)', '/terms/phone_skt_01.html');
+			//netive.modal.terms('개인정보 수집/이용 동의 (SKT)', '/terms/phone_skt_01.html');
 			var title = title === undefined ? '약관' : title,
 				url = url === undefined ? false : url;
 
 			if (!!url) {
 				$('body.type-iframe').length ?
-					parent.$plugins.uiModal({
+					parent.netive.uiModal({
 						id: '__modalTerms',
 						link: '/modal/modalTerms.html',
 						remove: true,
 						termsTit: title,
 						termsUrl: url
 					}) :
-					$plugins.uiModal({
+					netive.uiModal({
 						id: '__modalTerms',
 						link: '/modal/modalTerms.html',
 						remove: true,

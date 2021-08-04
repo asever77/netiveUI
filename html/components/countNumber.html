@@ -11,13 +11,13 @@
 ','콤마를 자동 생성합니다.</p>
 <div class="ui-count" id="exeCount1" style="font-size:5.0rem; color:#000; width:100%">504025.012</div>
 <div class="btn-wrap txta-l">
-	<button type="button" class="btn-base" onclick="$plugins.uiCountStep({ id:'exeCount1', value: 10245879.234 });">10245879 재실행</button>
+	<button type="button" class="btn-base" onclick="netive.count.step({ id:'exeCount1', value: 10245879.234 });">10245879 재실행</button>
 </div>
 
 <h3 class="h-3">Slot Count</h3>
 <div class="ui-count" id="exeCount2" style="font-size:5.0rem; color:#000; width:100%">5040.25</div>
 <div class="btn-wrap txta-l">
-	<button type="button" class="btn-base" onclick="$plugins.uiCountSlot({ id:'exeCount2', value: 5040.25 });">재실행</button>
+	<button type="button" class="btn-base" onclick="netive.count.slot({ id:'exeCount2', value: 5040.25 });">재실행</button>
 </div>
 
 <h2 class="h-2">HTML Structure</h2>
@@ -31,11 +31,11 @@
 </div>
 
 <h2 class="h-2">Javascript</h2>
-<h3 class="h-3">$plugins.uiCountStep</h3>
+<h3 class="h-3">netive.count.step</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins.uiCountStep({ 
+netive.count.step({ 
 	id:'exeCount1', 
 	value: 504025 
 });
@@ -43,11 +43,11 @@ $plugins.uiCountStep({
 </pre>
 </div>
 
-<h3 class="h-3">$plugins.uiCountSlot</h3>		
+<h3 class="h-3">netive.count.slot</h3>		
 <div class="box-code">
 <pre>
 <code>
-$plugins.uiCountSlot({ 
+netive.count.slot({ 
 	id:'exeCount2', 
 	value: 5040.25 
 });

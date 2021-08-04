@@ -8,14 +8,14 @@ modify		:
 	- createUiModal : iframe,ios 일 경우 높이값 설정
 
 	2018-11-27
-	- createUiTab : 고정탭번호 추가
+	- createtab.init : 고정탭번호 추가
 
 */
 ; (function ($, win, doc, undefined) {
 
 	'use strict';
 
-	var global = "$plugins",
+	var global = "netive",
 		namespace = "SSF.plugins",
 		isMscroll = !$global.uiCheck.ie8;
 
@@ -40,15 +40,15 @@ modify		:
 		uiAllcheckToggle: function (opt) { return createUiAllcheckToggle(opt); },
 		uiCaption: function () { return createUiCaption(); },
 		uiCFList: function (opt) { return createUiCFList(opt); },
-		uiCodinglist: function (opt) { return createUiCodinglist(opt); },
+		project.list: function (opt) { return createproject.list(opt); },
 		uiDatepicker: function (opt) { return createUiDatepicker(opt); },
-		uiDropdown: function (opt) { return createUiDropdown(opt); },
-		uiDropdownToggle: function (opt) { return createUiDropdownToggle(opt); },
-		uiDropdownHide: function (opt) { return createUiDropdownHide(opt); },
+		dropdown.: function (opt) { return createdropdown.init(opt); },
+		dropdown.toggle: function (opt) { return createdropdown.toggle(opt); },
+		dropdown.hide: function (opt) { return createdropdown.hide(opt); },
 		uiError: function (opt) { return createUiError(opt) },
 		uiErrorTooltip: function (opt) { return createUiErrorTooltip(opt) },
 		uiFileUpload: function (opt) { return createUiFileUpload(opt); },
-		uiFloating: function (opt) { return createUiFloating(opt); },
+		floating.base: function (opt) { return createfloating.base(opt); },
 		uiFocusTab: function (opt) { return createUiFocusTab(opt); },
 		uiForm: function (opt) { return createUiForm(opt); },
 		uiFormCheck: function (opt) { return createUiFormCheck(opt); },
@@ -59,7 +59,7 @@ modify		:
 		uiJsonList: function (opt) { return createUiJsonList(opt); },
 		uiLiCheck: function () { return createUiLiCheck(); },
 		uiModal: function (opt) { return createUiModal(opt); },
-		uiModalClose: function (opt) { return createUiModalClose(opt); },
+		modal.hide: function (opt) { return createmodal.hide(opt); },
 		uiModalResize: function (opt) { return createUiModalResize(opt); },
 		uiModalScrollReset: function (opt) { return createUiModalScrollReset(opt); },
 		uiPageStep: function (opt) { return createUiPageStep(opt); },
@@ -78,12 +78,12 @@ modify		:
 		uiSlide: function (opt) { return createUiSlide(opt); },
 		uiSlideFnEvt: function (opt) { return createUiSlideFnEvt(opt); },
 		uiSlideFnAuto: function (opt) { return createUiSlideFnAuto(opt); },
-		uiTab: function (opt) { return createUiTab(opt); },
-		uiTabToggle: function (opt) { return createUiTabToggle(opt); },
+		tab.init: function (opt) { return createtab.init(opt); },
+		tab.initToggle: function (opt) { return createtab.initToggle(opt); },
 		uiTextareaAutoHeight: function () { return createUiTextareaAutoHeight(); },
 		uiTblScroll: function () { return createUiTblScroll(); },
 		uiTbodyCheck: function () { return createUiTbodyCheck(); },
-		uiTooltip: function (opt) { return createUiTooltip(opt); },
+		tooltip.init: function (opt) { return createtooltip.init(opt); },
 		uiTrCheck: function () { return createUiTrCheck(); },
 		uiTrEvent: function (opt) { return createUiTrEvent(opt); },
 	});
@@ -285,13 +285,13 @@ modify		:
 				// $this.data('checked', true).attr('aria-checked', true).addClass('checked').append('<span class="hide ui-allcheck-txt">선택됨</span>');
 				$this.find('.ui-allcheck-txt').length > 0 ? '' :
 					$this.data('checked', true).addClass('checked').append('<span class="hide ui-allcheck-txt">선택됨</span>');
-				$plugins.uiAllcheckToggle({ id: allId, checked: $this.data('checked'), callback: callback });
+				netive.uiAllcheckToggle({ id: allId, checked: $this.data('checked'), callback: callback });
 
 				if (!!$this.data('checked')) {
 					if (!$this.closest('.ui-modal').length && !$this.closest('.html-iframe').length) {
 						$global.uiCheck.mobile ?
-							$plugins.uiScroll({ value: $(doc).scrollTop() + $('#' + allId).outerHeight() - 53, speed: 200 }) :
-							$plugins.uiScroll({ value: $(doc).scrollTop() + $('#' + allId).outerHeight(), speed: 200 });
+							netive.uiScroll({ value: $(doc).scrollTop() + $('#' + allId).outerHeight() - 53, speed: 200 }) :
+							netive.uiScroll({ value: $(doc).scrollTop() + $('#' + allId).outerHeight(), speed: 200 });
 					} else {
 						if (!$this.closest('.html-iframe').length) {
 							window.mCustomScrollbar && isMscroll ?
@@ -450,14 +450,14 @@ modify		:
 
 				for (var j = 0; j < len_cf; j++) {
 					html_pnl += '<li>';
-					html_pnl += '<a href="#" role="button" class="ui-CFList-btn" onclick="$plugins.modal.cfVod(' + i + ', ' + j + ')">';
+					html_pnl += '<a href="#" role="button" class="ui-CFList-btn" onclick="netive.modal.cfVod(' + i + ', ' + j + ')">';
 					html_pnl += '<div class="thumb">';
 					html_pnl += '<img src="' + year[j].img + '" alt="">';
 					html_pnl += '</div>';
 					html_pnl += '</a>';
 					html_pnl += '<dl class="info">';
 					html_pnl += '<dt>';
-					html_pnl += '<a href="#" role="button" class="ui-CFList-btn" onclick="$plugins.modal.cfVod(' + i + ', ' + j + ')">' + year[j].tit + '</a>';
+					html_pnl += '<a href="#" role="button" class="ui-CFList-btn" onclick="netive.modal.cfVod(' + i + ', ' + j + ')">' + year[j].tit + '</a>';
 					html_pnl += '</dt>';
 					html_pnl += '<dd>';
 					html_pnl += '<ul class="bul-round">';
@@ -480,7 +480,7 @@ modify		:
 				e.preventDefault();
 			});
 
-			$plugins.uiTab({
+			netive.tab.init({
 				id: 'exeTab1',
 				current: 0
 			});
@@ -770,7 +770,7 @@ modify		:
 
 			$(".ui-datepicker-close").off('click.uidclose').on('click.uidclose', function (e) {
 				var $btn = $(this).closest('.ui-datepicker').find('.ui-datepicker-btn');
-				$plugins.uiDropdownToggle({ id: $btn.attr('id'), eff: 'st', ps: 'bl', expanded: true });
+				netive.dropdown.toggle({ id: $btn.attr('id'), eff: 'st', ps: 'bl', expanded: true });
 				$btn.focus();
 
 				win[global].uiScroll({ value: $btn.data('sct'), speed: 200 });
@@ -780,7 +780,7 @@ modify		:
 				var $btn = $(this).closest('.ui-datepicker').find('.ui-datepicker-btn');
 
 				writeInputDateValue(calendarEl, $(this));
-				$plugins.uiDropdownToggle({ id: $btn.attr('id'), eff: 'st', ps: 'bl', expanded: true });
+				netive.dropdown.toggle({ id: $btn.attr('id'), eff: 'st', ps: 'bl', expanded: true });
 				$btn.focus();
 				hideCalendar(calendarEl);
 				return false;
@@ -821,7 +821,7 @@ modify		:
 				$btn = $(this).find('.ui-datepicker-btn');
 
 			callback = !!$this.data('callback') ? $this.data('callback') : (opt === undefined || opt.callback === undefined) ? baseOpt.callback : opt.callback;
-			win[global].uiDropdown({ id: $btn.attr('id'), eff: 'st', ps: 'bc' });
+			win[global].dropdown.init({ id: $btn.attr('id'), eff: 'st', ps: 'bc' });
 			$global.uiCheck.mobile ?
 				$('#' + $btn.data('inp')).prop('readonly', true) : '';
 		});
@@ -842,7 +842,7 @@ modify		:
 				$('#' + dropid + '_pnl').addClass('type-top').removeClass('type-bottom');
 			}
 			$this.attr('ps', _ps).attr('eff', _ef);
-			!$this.hasClass('selected') ? win[global].uiDropdown({ id: dropid, eff: _ef, ps: _ps }) : '';
+			!$this.hasClass('selected') ? win[global].dropdown.init({ id: dropid, eff: _ef, ps: _ps }) : '';
 		});
 
 		$datepicker.find('.ui-datepicker-btn').off('click.datepicker').on('click.datepicker', function (e) {
@@ -858,7 +858,7 @@ modify		:
 
 			$this.data('sct', $(doc).scrollTop());
 			!reset ? $('#' + inputId).val('') : '';
-			//win[global].uiDropdownHide({ id:dropid });
+			//win[global].dropdown.hide({ id:dropid });
 			$this.closest('.ui-datepicker').find('.datepicker-sec').remove();
 			calVar = new calendarObject({
 				calId: 'calWrap_' + dropid,
@@ -874,9 +874,9 @@ modify		:
 
 	}
 
-	/* uidropdown */
-	win[global].uiDropdown.openId = '';
-	win[global].uiDropdown.option = {
+	/* dropdown. */
+	win[global].dropdown..openId = '';
+	win[global].dropdown..option = {
 		eff: 'base',
 		ps: 'bl',
 		dim: false,
@@ -885,12 +885,12 @@ modify		:
 		expanded: null,
 		callback: false
 	};
-	function createUiDropdown(opt) {
+	function createdropdown.init(opt) {
 		if (opt === undefined) {
 			return false;
 		}
 
-		var opt = $.extend(true, {}, win[global].uiDropdown.option, opt),
+		var opt = $.extend(true, {}, win[global].dropdown..option, opt),
 			id = opt.id,
 			$btn = $('#' + id),
 			$pnl = $('[data-id="' + id + '"]'),
@@ -917,10 +917,10 @@ modify		:
 			$(this).data('sct', $(doc).scrollTop());
 
 			if (!$(this).closest('.ui-drop-pnl').length) {
-				win[global].uiDropdownHide({ id: $(this).attr('id') });
+				win[global].dropdown.hide({ id: $(this).attr('id') });
 			}
 
-			win[global].uiDropdownToggle({
+			win[global].dropdown.toggle({
 				id: _opt.id,
 				eff: __ef !== undefined ? __ef : _opt.eff,
 				ps: __ps !== undefined ? __ps : _opt.ps,
@@ -938,13 +938,13 @@ modify		:
 			thisOpt.ing = false;
 			thisOpt.expanded = true;
 
-			win[global].uiDropdownToggle(thisOpt);
+			win[global].dropdown.toggle(thisOpt);
 			$('#' + $pnl_.data('id')).focus();
 		});
 	}
 
-	function createUiDropdownToggle(opt) {
-		win[global].uiDropdown.openId = opt.id
+	function createdropdown.toggle(opt) {
+		win[global].dropdown..openId = opt.id
 		var id = opt.id,
 			$btn = $('#' + id),
 			$pnl = $('.ui-drop-pnl[data-id="' + id + '"]'),
@@ -1014,7 +1014,7 @@ modify		:
 			setTimeout(function(){
 				$(doc).off('click.dropcloseauto').on('click.dropcloseauto', function(e){
 					if(!$(e.target).closest('.ui-drop-pnl').length){
-						$plugins.uiDropdownToggle({ id:win[global].uiDropdown.openId });
+						netive.dropdown.toggle({ id:win[global].dropdown..openId });
 					}
 				});
 			},10);
@@ -1095,7 +1095,7 @@ modify		:
 		}
 	}
 
-	function createUiDropdownHide(opt) {
+	function createdropdown.hide(opt) {
 		var $drop = opt === undefined ? $('body').find('.ui-drop') : $('.ui-drop').not('#' + opt.id),
 			$wrap = opt === undefined ? $('body').find('.ui-drop-pnl') : $('.ui-drop-pnl').not('[data-id="' + opt.id + '"]');
 
@@ -2126,13 +2126,13 @@ modify		:
 	function createUiTextareaAutoHeight() {
 		$('.ui-autoheight').each(function () {
 			var n = 1;
-			// if (!!$plugins.uiHasScrollBar({ selector: $(this) })) {
+			// if (!!netive.uiHasScrollBar({ selector: $(this) })) {
 			// 	n = n + 1
 			// 	$(this).addClass('n' + n);
 			// }
 			
 			$(this).off('keyup').on('keyup', function () {
-				if (!!$plugins.uiHasScrollBar({ selector: $(this) })) {
+				if (!!netive.uiHasScrollBar({ selector: $(this) })) {
 					n = n + 1
 					$(this).addClass('n' + n);
 				}
@@ -2272,7 +2272,7 @@ modify		:
 		history.replaceState(null, null, href_new);
 	}
 
-	function createUiTab(opt) {
+	function createtab.init(opt) {
 		var id = opt.id,
 			current = isNaN(opt.current) ? 0 : opt.current,
 			unres = (opt.unres === undefined) ? false : opt.unres,
@@ -2374,10 +2374,10 @@ modify		:
 		}
 
 		$btn.data('psl', ps_l);
-		$plugins.uiScroll({ value: ps_l[current], target: $btn.parent(), speed: 0, ps: 'left' });
+		netive.uiScroll({ value: ps_l[current], target: $btn.parent(), speed: 0, ps: 'left' });
 		//event
 		control ?
-			$btn.off('click.uitab').on('click.uitab', function () {
+			$btn.off('click.tab.init').on('click.tab.init', function () {
 				var $this = $(this);
 
 				$global.uiCheck.mobile ? 
@@ -2386,7 +2386,7 @@ modify		:
 					current: $this.index()
 				}) : '';
 			
-				win[global].uiTabToggle({ 
+				win[global].tab.initToggle({ 
 					id: id, 
 					current: $this.index() 
 				});
@@ -2417,7 +2417,7 @@ modify		:
 				history.replaceState(null, null, renewURL);
 				*/
 			}) : '';
-		// .off('keyup.uitab').on('keyup.uitab', function(e){
+		// .off('keyup.tab.init').on('keyup.tab.init', function(e){
 		// 	var $this = $(this);
 		// 	e.preventDefault();
 		// 	win[global].uiEventKey({ selector:$this, index:$this.index(), e:event, scope:$this.closest('.ui-tab-btns').find('.ui-tab-btn') });
@@ -2425,7 +2425,7 @@ modify		:
 
 	}
 
-	function createUiTabToggle(opt) {
+	function createtab.initToggle(opt) {
 		var id = opt.id,
 			$tab = $('#' + id),
 			$btns = $tab.children('.ui-tab-btns'),
@@ -2440,12 +2440,12 @@ modify		:
 		$btn.find('b.hide').remove();
 		$btn.eq(current).append('<b class="hide">선택됨</b>');
 		$btn.removeClass('selected').eq(current).addClass('selected').focus();
-		$plugins.uiScroll({ value: ps_l[current], target: $btn.parent(), speed: 300, ps: 'left' });
+		netive.uiScroll({ value: ps_l[current], target: $btn.parent(), speed: 300, ps: 'left' });
 
 		var h_add = 15;
 		if ($global.uiCheck.mobile) {
 			$tab.hasClass('mgt-n') ? h_add = 0 : h_add = 0;
-			$global.uiCheck.mobile ? $plugins.uiScroll({ value: $tab.position().top + h_add, speed: 100 }) : '';
+			$global.uiCheck.mobile ? netive.uiScroll({ value: $tab.position().top + h_add, speed: 100 }) : '';
 		}
 
 		if ($tab.data('unres') === false) {
@@ -2517,7 +2517,7 @@ modify		:
 			modal_html += '<iframe id="' + iname + '" name="' + iname + '" src="' + parasrc + '" width="' + iwidth + '" height="' + iheight + '" title="' + ititle + '" orgw="' + iwidth + '" orgh="' + iheight + '"></iframe>';
 			modal_html += '</div>';
 			!$global.uiCheck.mobile ?
-				modal_html += '<button type="button" class="btn-close ui-modal-closecallback" onclick="$plugins.uiModalClose({ id:\'' + opt.id + '\', remove: ' + remove + ' })"><span>닫기</span></button>' : '';
+				modal_html += '<button type="button" class="btn-close ui-modal-closecallback" onclick="netive.modal.hide({ id:\'' + opt.id + '\', remove: ' + remove + ' })"><span>닫기</span></button>' : '';
 			modal_html += '</div>';
 			modal_html += '</section>';
 
@@ -2544,7 +2544,7 @@ modify		:
 			
 			$('#' + iname).on('load', function(){
 				$('#' + opt.id).data('iframeload', true);
-				win[global].callback !== undefined ? frames[iname].$plugins.callback.modal(opt.id) : '';
+				win[global].callback !== undefined ? frames[iname].netive.callback.modal(opt.id) : '';
 				!!icallback ? icallback() : '';
 
 				/* 2018-11-26 : IOS iframe fixed bug */
@@ -2558,16 +2558,16 @@ modify		:
 			});
 			// document.getElementById(iname).onload = function () {
 			// 	$('#' + opt.id).data('iframeload', true);
-			// 	win[global].callback !== undefined ? frames[iname].$plugins.callback.modal(opt.id) : '';
+			// 	win[global].callback !== undefined ? frames[iname].netive.callback.modal(opt.id) : '';
 			// 	!!icallback ? icallback() : '';
 			// };
 			
-			uiModalOpen(opt);
+			modal.show(opt);
 		}
 
 		if (!opt.link) {
 			//모달코드가 이미 페이지안에 있을 경우
-			($('#' + opt.id).attr('aria-hidden') === 'true') ? uiModalOpen(opt) : '';
+			($('#' + opt.id).attr('aria-hidden') === 'true') ? modal.show(opt) : '';
 		} else {
 			//aJax 모달 
 			var paralink = opt.link;
@@ -2578,7 +2578,7 @@ modify		:
 			}
 
 			!!$('#' + opt.id).length ?
-				uiModalOpen(opt) :
+				modal.show(opt) :
 				$global.uiAjax({
 					id: !!opt.born ? opt.born : !$('#baseLayer').length ? opt.born = $('body') : 'baseLayer',
 					url: paralink,
@@ -2587,12 +2587,12 @@ modify		:
 					type: opt.type === 'post' ? opt.type : 'GET',
 					add: true,
 					callback: function () {
-						uiModalOpen(opt);
+						modal.show(opt);
 					}
 				});
 		}
 	}
-	function uiModalOpen(opt) {
+	function modal.show(opt) {
 		var $modal = $('#' + opt.id),
 			$modalWrap = $modal.find('.ui-modal-wrap'),
 			$modalTit = $modal.find('.ui-modal-tit'),
@@ -2793,7 +2793,7 @@ modify		:
 			//modal height 100 작거나 iframeload 전 일때 재 실행, resize 옵션 false 일경우
 	
 			if ($modalCont.outerHeight() < 100 && $modal.data('iframeload') === undefined && !v.resize ) {
-				//$plugins.page.formReset();
+				//netive.page.formReset();
 				if (re_num === 0) {
 					$global.uiLoading({ visible: true });
 					re_num = re_num + 1;
@@ -2968,16 +2968,16 @@ modify		:
 					}, 0) : '';
 
 				if (is_iframe) {
-					//$global.uiCheck.ie8 ? frames[opt.iname].$plugins.page.formReset() : '';
+					//$global.uiCheck.ie8 ? frames[opt.iname].netive.page.formReset() : '';
 					if (!$global.uiCheck.ie8) {
 						window.mCustomScrollbar && isMscroll ?
 							frames[opt.iname].$('.wrap-iframe').mCustomScrollbar({ scrollButtons: { enable: true } }) : '';
-						// win[global].callback !== undefined ? frames[opt.iname].$plugins.callback.modal(opt.id) : '';
+						// win[global].callback !== undefined ? frames[opt.iname].netive.callback.modal(opt.id) : '';
 					}
 				}
 
 				!!words ? '' : 
-				win[global].callback !== undefined ? $plugins.callback.modal(opt.id) : '';
+				win[global].callback !== undefined ? netive.callback.modal(opt.id) : '';
 
 				//!words ? win[global].uiModalResize({ id: opt.id }) : '';
 			}
@@ -2997,7 +2997,7 @@ modify		:
 		}
 		$modal.find('.ui-modal-close').off('click.uilayerpop').on('click.uilayerpop', function (e) {
 			e.preventDefault();
-			win[global].uiModalClose({ id: opt.id, closecallback: closecallback });
+			win[global].modal.hide({ id: opt.id, closecallback: closecallback });
 		});
 	}
 	function createUiModalResize(opt) {
@@ -3185,8 +3185,8 @@ modify		:
 			}
 		}
 	}
-	$plugins.uiModal.focusid = '';
-	function createUiModalClose(opt) {
+	netive.uiModal.focusid = '';
+	function createmodal.hide(opt) {
 		var now_callback = opt === undefined || opt.callback === undefined ? false : opt.callback,
 			opt = $.extend(true, {}, $('#' + opt.id).data('opt'), opt),
 			$modal = $('#' + opt.id),
@@ -3346,11 +3346,11 @@ modify		:
 			$('#baseLayer').append('<div class="ui-tooltip type-auto" id="' + id + '" role="tooltip" aria-hidden="true"><span class="tt-arrow"></span><div class="tip-cont">' + msg + '</div></div>');
 		}
 
-		show ? win[global].uiTooltip({ id: id, visible: show, ps: 'left' }) : win[global].uiTooltip({ visible: false });
+		show ? win[global].tooltip.init({ id: id, visible: show, ps: 'left' }) : win[global].tooltip.init({ visible: false });
 
 		if (!!time && id !== null) {
 			setTimeout(function () {
-				win[global].uiTooltip({ visible: false });
+				win[global].tooltip.init({ visible: false });
 				$tip.removeAttr('aria-describedby');
 				$('#' + id).remove();
 			}, time);
@@ -3358,12 +3358,12 @@ modify		:
 
 		if (id !== null) {
 			$tip.off('blur.tooltiperror').on('blur.tooltiperror', function () {
-				win[global].uiTooltip({ visible: false })
+				win[global].tooltip.init({ visible: false })
 			});
 		}
 	}
 
-	function createUiTooltip(opt) {
+	function createtooltip.init(opt) {
 		var $btn = $('.ui-tooltip-btn'),
 			visible = opt === undefined || opt.visible === undefined ? null : opt.visible,
 			$tip = opt === undefined || opt.id === undefined ? false : typeof opt.id === 'string' ? $('#' + opt.id) : opt.id,
@@ -3476,7 +3476,7 @@ modify		:
 		}
 	}
 
-	function createUiFloating(opt) {
+	function createfloating.base(opt) {
 		var id = opt.id,
 			ps = opt.ps === undefined ? 'bottom' : opt.ps,
 			add = opt.add === undefined ? false : typeof opt.add === 'string' ? $('#' + opt.add) : opt.add,
@@ -3691,7 +3691,7 @@ modify		:
 			$tit.eq(n).removeClass('show').attr('aria-hidden', true);
 			$tit.eq(n + 1).addClass('show').attr('aria-hidden', false);
 			$prcs_step.removeClass('selected').eq(n + 1).addClass('selected');
-			type ? $plugins.uiModalResize({ id: $page.closest('.ui-modal').attr('id') }) : '';
+			type ? netive.uiModalResize({ id: $page.closest('.ui-modal').attr('id') }) : '';
 			callback ? callback({ current: n + 1, id: opt.id }) : '';
 			$prcs.attr('role', 'img').attr('aria-label', '총 ' + len + '단계중 현재 ' + (n + 2) + '' + $prcs_step.eq(n + 1).find('strong').text() + ' 진행중').attr('tabindex', 0).focus();
 			$('body').data('steppage', n + 2);
@@ -3705,7 +3705,7 @@ modify		:
 			$tit.eq(n).removeClass('show').attr('aria-hidden', true);
 			$tit.eq(n - 1).addClass('show').attr('aria-hidden', false);
 			$prcs_step.removeClass('selected').eq(n - 1).addClass('selected');
-			type ? $plugins.uiModalResize({ id: $page.closest('.ui-modal').attr('id') }) : '';
+			type ? netive.uiModalResize({ id: $page.closest('.ui-modal').attr('id') }) : '';
 			callback ? callback({ current: n - 1, id: opt.id }) : '';
 			$prcs.attr('role', 'img').attr('aria-label', '총 ' + len + '단계중 현재 ' + (n) + '' + $prcs_step.eq(n - 1).find('strong').text() + ' 진행중').attr('tabindex', 0).focus();
 			$('body').data('steppage', n);
@@ -4062,7 +4062,7 @@ modify		:
 		});
 	}
 
-	function createUiCodinglist(opt) {
+	function createproject.list(opt) {
 		var dataExecel;
 
 		win[global].uiAjax({ url: opt.url, page: false, callback: callback });
@@ -4271,17 +4271,17 @@ modify		:
 							'<td class="id "><span></span></td>';
 					} else {
 						table += id !== '' ? overl !== '' ? ifm === '' ? pop === '1' ? tabIs === 'T' ?
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html?tab=' + (tab - 1) + '\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, termsTit:\'약관제목\', termsUrl:\'/terms/' + overl + '.html\' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ iframe:true, isrc:\'/modal/' + overl + '_iframe.html\', iname:\'name_' + overl + '\', id:\'modal_' + overl + '\', full:' + full + ' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
+							'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html?tab=' + (tab - 1) + '\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
+							'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
+							'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, termsTit:\'약관제목\', termsUrl:\'/terms/' + overl + '.html\' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
+							'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ iframe:true, isrc:\'/modal/' + overl + '_iframe.html\', iname:\'name_' + overl + '\', id:\'modal_' + overl + '\', full:' + full + ' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
 							(ifm === '') ?
 								(pop === '1') ?
 									tabIs === 'T' ?
-										'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html?tab=' + (tab - 1) + '\'});">' + id + '</button></td>' :
-										'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html\' });">' + id + '</button></td>' :
-									'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, termsTit:\'약관제목\', termsUrl:\'/terms/' + id + '.html\' });">' + id + '</button></td>' :
-								'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ iframe:true, isrc:\'/modal/' + id + '_iframe.html\', iname:\'name_' + id + '\', id:\'modal_' + id + '\', full:' + full + ' });">' + id + '</button></td>' :
+										'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html?tab=' + (tab - 1) + '\'});">' + id + '</button></td>' :
+										'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html\' });">' + id + '</button></td>' :
+									'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, termsTit:\'약관제목\', termsUrl:\'/terms/' + id + '.html\' });">' + id + '</button></td>' :
+								'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ iframe:true, isrc:\'/modal/' + id + '_iframe.html\', iname:\'name_' + id + '\', id:\'modal_' + id + '\', full:' + full + ' });">' + id + '</button></td>' :
 							'<td class="id "><span></span></td>';
 					}
 					(dataExecel.list[i].d1 !== '') ? table += '<td class="d d1"><span>' + d1 + '</span></td>' : table += '<td class="d"></td>';
@@ -5254,13 +5254,13 @@ modify		:
 
 	//modal Alert & Confirm
 	//warning-type1: !(경고), warning-type2: ?(선택), warning-type3: √(확인)
-	// $plugins.modal.confirm(txt, confirmCallback, cancelCallback, confirmButton, cancelButton, type ) type은 기본으로 '알림'. 4가지 타입 '알림', '선택', '확인', '오류'
-	$plugins.modal = {
+	// netive.modal.confirm(txt, confirmCallback, cancelCallback, confirmButton, cancelButton, type ) type은 기본으로 '알림'. 4가지 타입 '알림', '선택', '확인', '오류'
+	netive.modal = {
 		pointInfo: function (t, i) {
 			var title = title === undefined ? '약관' : title,
 				url = url === undefined ? false : url;
 
-			$plugins.uiModal({
+			netive.uiModal({
 				id: '__modalPointInfo',
 				link: $global.uiCheck.mobile ? '/m/modal/modalPointInfo.html' : '/modal/modalPointInfo.html',
 				full: $global.uiCheck.mobile ? true : false,
@@ -5298,16 +5298,16 @@ modify		:
 					break;
 			}
 
-			$plugins.uiModal({ id: '__modalConfirm', link: linkadr, words: txt, btntxt1: btn, btntxt2: btn2, type: class_name, autofocus: false, width:s, zindex:z });
+			netive.uiModal({ id: '__modalConfirm', link: linkadr, words: txt, btntxt1: btn, btntxt2: btn2, type: class_name, autofocus: false, width:s, zindex:z });
 
 			$('#__confirm').off('click.confirm').on('click.confirm', function () {
-				$plugins.uiModalClose({ id: '__modalConfirm', remove: true, callback: confirmCallback })
+				netive.modal.hide({ id: '__modalConfirm', remove: true, callback: confirmCallback })
 			});
 			$('#__cancel, .btn-close').off('click.confirm').on('click.confirm', function () {
-				$plugins.uiModalClose({ id: '__modalConfirm', remove: true, callback: cancelCallback })
+				netive.modal.hide({ id: '__modalConfirm', remove: true, callback: cancelCallback })
 			});
 		},
-		// $plugins.modal.alert(txt, confirmCallback, confirmButton, type, size, z-index) type은 기본으로 '알림'. 4가지 타입 '알림', '선택', '확인', '오류'
+		// netive.modal.alert(txt, confirmCallback, confirmButton, type, size, z-index) type은 기본으로 '알림'. 4가지 타입 '알림', '선택', '확인', '오류'
 		alert: function (txt, confirmCallback, confirmButton, type, size, zidx) {
 			var btn = confirmButton === undefined ? '확인' : confirmButton,
 				type = type === undefined ? '알림' : type,
@@ -5333,27 +5333,27 @@ modify		:
 					break;
 			}
 
-			$plugins.uiModal({ id: '__modalAlert', link: linkadr, words: txt, btntxt1: btn, type: class_name, autofocus: false, width:s, zindex:z });
+			netive.uiModal({ id: '__modalAlert', link: linkadr, words: txt, btntxt1: btn, type: class_name, autofocus: false, width:s, zindex:z });
 
 			$('#__confirm, .btn-close').off('click.alert').on('click.alert', function () {
-				$plugins.uiModalClose({ id: '__modalAlert', remove: true, callback: confirmCallback })
+				netive.modal.hide({ id: '__modalAlert', remove: true, callback: confirmCallback })
 			});
 		},
 		terms: function (title, url) {
-			//$plugins.modal.terms('개인정보 수집/이용 동의 (SKT)', '/terms/phone_skt_01.html');
+			//netive.modal.terms('개인정보 수집/이용 동의 (SKT)', '/terms/phone_skt_01.html');
 			var title = title === undefined ? '약관' : title,
 				url = url === undefined ? false : url;
 
 			if (!!url) {
 				$('body.type-iframe').length ?
-					parent.$plugins.uiModal({
+					parent.netive.uiModal({
 						id: '__modalTerms',
 						link: '/modal/modalTerms.html',
 						remove: true,
 						termsTit: title,
 						termsUrl: url
 					}) :
-					$plugins.uiModal({
+					netive.uiModal({
 						id: '__modalTerms',
 						link: '/modal/modalTerms.html',
 						remove: true,
@@ -5363,7 +5363,7 @@ modify		:
 			}
 		},
 		cfVod: function (y, n) {
-			$plugins.uiModal({
+			netive.uiModal({
 				id: '__modalCF',
 				link: '/modal/modalCF.html',
 				remove: true,

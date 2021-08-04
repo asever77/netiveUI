@@ -53,8 +53,8 @@
 					<input type="radio" name="r3" id="r3_3">
 					<label class="lb-radio" for="r3_3"><span>장애용</span></label>
 
-					<button type="button" class="btn-base" onclick="$plugins.uiSelectionChange({ id:'r3_3', checked:true })"><span>checked 설정</span></button>
-					<button type="button" class="btn-base" onclick="$plugins.uiSelectionChange({ id:'r3_2', disabled:true })"><span>disabled 설정</span></button>
+					<button type="button" class="btn-base" onclick="netive.uiSelectionChange({ id:'r3_3', checked:true })"><span>checked 설정</span></button>
+					<button type="button" class="btn-base" onclick="netive.uiSelectionChange({ id:'r3_2', disabled:true })"><span>disabled 설정</span></button>
 				</div>
 
 				<h3 class="h-3">checkbox <small>(Multi selection controls)</small></h3>
@@ -69,8 +69,8 @@
 					<input type="checkbox" id="c1_4" disabled="disabled" checked="checked">
 					<label class="lb-check" for="c1_4"><span>하이브리드</span></label>
 
-					<button type="button" class="btn-base" onclick="$plugins.uiSelectionChange({ id:'c1_3', checked:true })"><span>checked 설정</span></button>
-					<button type="button" class="btn-base" onclick="$plugins.uiSelectionChange({ id:'c1_4', disabled:false })"><span>disabled 설정</span></button>
+					<button type="button" class="btn-base" onclick="netive.uiSelectionChange({ id:'c1_3', checked:true })"><span>checked 설정</span></button>
+					<button type="button" class="btn-base" onclick="netive.uiSelectionChange({ id:'c1_4', disabled:false })"><span>disabled 설정</span></button>
 				</fieldset>
 
 				<fieldset role="group">
@@ -144,15 +144,15 @@
 </div>
 					
 				<h2 class="h-2">Javascript</h2>
-				<h3 class="h-3">$plugins.uiSelection</h3>
+				<h3 class="h-3">netive.uiSelection</h3>
 <div class="box-code">
 <pre>
 <code>
 <span class="c">// 전체실행</span>
-$plugins<span class="na">.uiSelection</span>();
+netive<span class="na">.uiSelection</span>();
 
 <span class="c">// 특정 아이디 실행</span>
-$plugins<span class="na">.uiSelection</span>({ <span class="s">
+netive<span class="na">.uiSelection</span>({ <span class="s">
 	id:'name', 
 	all:true, 
 	callback:function(v){...}</span> 
@@ -203,11 +203,11 @@ $plugins<span class="na">.uiSelection</span>({ <span class="s">
 					</tbody>
 				</table>
 
-				<h3 class="h-3">$plugins.uiDisabled</h3>
+				<h3 class="h-3">netive.uiDisabled</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiDisabled</span>({ <span class="s">
+netive<span class="na">.uiDisabled</span>({ <span class="s">
 	id:'name', 
 	disabled:true, 
 	callback:function(v){...}</span> 
@@ -258,11 +258,11 @@ $plugins<span class="na">.uiDisabled</span>({ <span class="s">
 					</tbody>
 				</table>
 
-				<h3 class="h-3">$plugins.uiChecked</h3>
+				<h3 class="h-3">netive.uiChecked</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na">.uiChecked</span>({ <span class="s">
+netive<span class="na">.uiChecked</span>({ <span class="s">
 	id:'name', 
 	checked:true, 
 	callback:function(v){...}</span> 
@@ -322,16 +322,16 @@ $plugins<span class="na">.uiChecked</span>({ <span class="s">
 	<script>
 		;(function($, win, doc, undefined) {
 			console.log('page ready before')
-			$plugins.common.pageid = 'G_03_17_00_00';
+			netive.common.pageid = 'G_03_17_00_00';
 
 			$(doc).ready(function(){
 				
 				console.log('page ready after')
-				$plugins.uiSelection();
-					$plugins.uiSelection({ id:'uiChk2', all:true, callback:allCheckCallback });
-					$plugins.uiSelection({ id:'c3_0', all:true, callback:allCheckCallback });
-					$plugins.uiSelection({ id:'c3_4', callback:inpCheckCallback });
-					$plugins.uiSelection();
+				netive.uiSelection();
+					netive.uiSelection({ id:'uiChk2', all:true, callback:allCheckCallback });
+					netive.uiSelection({ id:'c3_0', all:true, callback:allCheckCallback });
+					netive.uiSelection({ id:'c3_4', callback:inpCheckCallback });
+					netive.uiSelection();
 					
 					function allCheckCallback(v){
 						console.log(v.id, v);

@@ -71,11 +71,11 @@
 </code>
 </pre>
 </div>
-                <h3 class="h-3">$plugins.uiMenu</h3>
+                <h3 class="h-3">netive.uiMenu</h3>
 <div class="box-code">
 <pre>
 <code>
-$plugins<span class="na"></span>.uiMenu</span>({ <span class="si">
+netive<span class="na"></span>.uiMenu</span>({ <span class="si">
     url:'/netiveUI/resources/data/menu.json', 
     ctg:'개인', 
     selected:'P_02_01_01_00', 
@@ -149,12 +149,12 @@ $plugins<span class="na"></span>.uiMenu</span>({ <span class="si">
 	<script>
 		;(function($, win, doc, undefined) {
 			console.log('page ready before')
-			$plugins.common.pageid = 'G_03_11_00_00';
+			netive.common.pageid = 'G_03_11_00_00';
 
 			$(doc).ready(function(){
 				
 				console.log('page ready after')
-				$plugins.uiMenu({ id:'uiTest', url:'/netiveUI/resources/data/menu.json', ctg:'전체', selected:'G_01_03_02_00', callback:fncallback });
+				netive.uiMenu({ id:'uiTest', url:'/netiveUI/resources/data/menu.json', ctg:'전체', selected:'G_01_03_02_00', callback:fncallback });
                 function fncallback(opt){
                     var d1 = opt.d1,
                         d2 = opt.d2,

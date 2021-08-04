@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = 'netiveUI.plugins';
 
     /* ------------------------------------------------------------------------
@@ -10,22 +10,22 @@
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - $plugins.uiFloating({ option });
+	* - netive.floating.base({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
-		uiFloating: function (opt) {
-			return createUiFloating(opt);
+		floating.base: function (opt) {
+			return createfloating.base(opt);
 		}
 	});
-	$ui.uiFloating.option = {
+	$ui.floating.base.option = {
 		ps: 'bottom',
 		add: false,
 		fix: true,
 		callback: false
 	};
-	function createUiFloating(opt) {
+	function createfloating.base(opt) {
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, $ui.uiFloating.option, opt),
+			opt = $.extend(true, {}, $ui.floating.base.option, opt),
 			id = opt.id,
 			ps = opt.ps,
 			add = opt.add,

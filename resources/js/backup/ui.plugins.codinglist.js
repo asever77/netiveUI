@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = 'netiveUI.plugins';
 
     /* ------------------------------------------------------------------------
@@ -10,11 +10,11 @@
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
-		uiCodinglist: function (opt) {
-			return createUiCodinglist(opt);
+		project.list: function (opt) {
+			return createproject.list(opt);
 		}
 	});
-	function createUiCodinglist(opt) {
+	function createproject.list(opt) {
 		var dataExecel;
 
 		$ui.uiAjax({ 
@@ -216,17 +216,17 @@
 							'<td class="id "><span></span></td>';
 					/*} else {
 						table += id !== '' ? overl !== '' ? ifm === '' ? pop === '1' ? tabIs === 'T' ?
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html?tab=' + (tab - 1) + '\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, terms_tit:\'약관제목\', terms_url:\'/terms/' + overl + '.html\' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
-							'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ iframe:true, isrc:\'/modal/' + overl + '_iframe.html\', iname:\'name_' + overl + '\', id:\'modal_' + overl + '\', full:' + full + ' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
+							'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html?tab=' + (tab - 1) + '\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
+							'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'modal_' + overl + '\', full:' + full + ', link:\'' + root + '/' + overl + '.html\'});">' + overl + '</button><span class="overl">' + id + '</span></td>' :
+							'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, terms_tit:\'약관제목\', terms_url:\'/terms/' + overl + '.html\' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
+							'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ iframe:true, isrc:\'/modal/' + overl + '_iframe.html\', iname:\'name_' + overl + '\', id:\'modal_' + overl + '\', full:' + full + ' });">' + overl + '</button><span class="overl">' + id + '</span></td>' :
 							(ifm === '') ?
 								(pop === '1') ?
 									tabIs === 'T' ?
-										'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html?tab=' + (tab - 1) + '\'});">' + id + '</button></td>' :
-										'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html\' });">' + id + '</button></td>' :
-									'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, terms_tit:\'약관제목\', terms_url:\'/terms/' + id + '.html\' });">' + id + '</button></td>' :
-								'<td class="id ico_pg"><span><button type="button" onclick="$plugins.uiModal({ iframe:true, isrc:\'/modal/' + id + '_iframe.html\', iname:\'name_' + id + '\', id:\'modal_' + id + '\', full:' + full + ' });">' + id + '</button></td>' :
+										'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html?tab=' + (tab - 1) + '\'});">' + id + '</button></td>' :
+										'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'modal_' + id + '\', full:' + full + ', link:\'' + root + '/' + id + '.html\' });">' + id + '</button></td>' :
+									'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ id:\'__modalTerms\', link:\'/modal/modalTerms.html\', remove:true, terms_tit:\'약관제목\', terms_url:\'/terms/' + id + '.html\' });">' + id + '</button></td>' :
+								'<td class="id ico_pg"><span><button type="button" onclick="netive.uiModal({ iframe:true, isrc:\'/modal/' + id + '_iframe.html\', iname:\'name_' + id + '\', id:\'modal_' + id + '\', full:' + full + ' });">' + id + '</button></td>' :
 							'<td class="id "><span></span></td>';
 					}
 					*/
@@ -281,7 +281,7 @@
 			sel += '</div>';
 			sel += '<div class="box-srch mgb-xxxs">';
 			sel += '<div class="srch-area">';
-			sel += '<input type="search" id="uiCodinglistSrchCode" class="inp-srch ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
+			sel += '<input type="search" id="project.listSrchCode" class="inp-srch ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
 			sel += '</div>';
 			sel += '</div>';
 			
@@ -378,8 +378,8 @@
 				$(this).closest('tr').addClass('selected').siblings().removeClass('selected');
 			});
 
-			if ($('#uiCodinglistSrchCode').val() !== '') {
-				var temp = $('.ui-codinglist tbody tr td *:contains('+ $('#uiCodinglistSrchCode').val() +')');
+			if ($('#project.listSrchCode').val() !== '') {
+				var temp = $('.ui-codinglist tbody tr td *:contains('+ $('#project.listSrchCode').val() +')');
 
 				$('.ui-codinglist tbody tr').hide();
 				$(temp).closest('tr').show();
@@ -389,7 +389,7 @@
 					return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
 				}
 			});
-			$('#uiCodinglistSrchCode').on('keyup', function(){
+			$('#project.listSrchCode').on('keyup', function(){
 				var k = $(this).val(),
 					temp = $('.ui-codinglist tbody tr td *:contains('+ k +')');
 				$('.ui-codinglist tbody tr').hide();

@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = 'netiveUI.plugins';
 
    /* ------------------------------------------------------------------------
@@ -10,7 +10,7 @@
 	* Ver. : v2.0
 	* date : 2020-01-02
 	* EXEC statement
-	* - $plugins.uiDatePicker({ option });
+	* - netive.uiDatePicker({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiDatePicker: function (opt) {

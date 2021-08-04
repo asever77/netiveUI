@@ -2,7 +2,7 @@
     <div class="ui-modal-wrap">
         <div class="ui-modal-header">
             <h1 class="ui-modal-tit">modal title</h1>
-            <button type="button" class="btn-close" aria-label="close" onclick="$plugins.uiModalClose({ id:'modal_sample1', callback:function(v){ console.log(v); } });"><span class="hide">close</span></button>
+            <button type="button" class="btn-close" aria-label="close" onclick="netive.modal.hide({ id:'modal_sample1', callback:function(v){ console.log(v); } });"><span class="hide">close</span></button>
         </div>
         <div class="ui-modal-body ui-scrollbar test-modal">
             <p>모들 윈도(Modal Window)는 사용자 인터페이스 디자인 개념에서 자식 윈도에서 부모 윈도로 돌아가기 전에 사용자의 상호동작을 요구하는 창을 말한다. 그래서 응용 프로그램의 주 창의 작업 흐름을 방해한다. 일반적으로 모달 대화상자로 불리는데, 그 이유는 대화상자를 부를 때 흔히 사용되기 때문이다. 우리가 자주 사용하는 파일 열기/저장 대화상자를 생각하면 이해하기 쉽다.</p>
@@ -31,5 +31,5 @@
 </section>
 
 <script>
-    $plugins.page.pageModal();
+    netive.page.pageModal();
 </script>

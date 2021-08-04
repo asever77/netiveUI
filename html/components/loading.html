@@ -8,8 +8,8 @@
     <h2 class="h-2">Examples</h2>
     <div class="box-guide">
         <div class="btn-wrap">
-            <button type="button" class="btn-base " onclick="$plugins.loading.show({ styleClass:'clock', message:'<button type=\'button\' class=\'btn-base text\' onclick=\'$plugins.loading.hide();\'>loading close</button>' });"><span>Clock</span></button>
-            <button type="button" class="btn-base" onclick="$plugins.loading.show({ styleClass:'orbit', message:'<button type=\'button\' class=\'btn-base text\' onclick=\'$plugins.loading.hide();\'>loading close</button>' });"><span>Orbit</span></button>
+            <button type="button" class="btn-base " onclick="netive.loading.show({ styleClass:'clock', message:'<button type=\'button\' class=\'btn-base text\' onclick=\'netive.loading.hide();\'>loading close</button>' });"><span>Clock</span></button>
+            <button type="button" class="btn-base" onclick="netive.loading.show({ styleClass:'orbit', message:'<button type=\'button\' class=\'btn-base text\' onclick=\'netive.loading.hide();\'>loading close</button>' });"><span>Orbit</span></button>
         </div>  
     </div>
 </section>
@@ -243,12 +243,12 @@
 
     <h3 class="h-3">Javascript</h3>
 <pre class="box-code"><code class="javascript">
-    $plugins.loading.show({
+    netive.loading.show({
         selector: $('target'),
         message: '{html}',
         styleClass: 'orbit' // time | orbit
     });
-    $plugins.loading.hide();
+    netive.loading.hide();
 </code>
 </pre>
 </section>

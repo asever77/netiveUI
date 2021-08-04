@@ -3,7 +3,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
 		namespace = 'netiveUI.plugins';
 		
 	/* ------------------------------------------------------------------------
@@ -11,8 +11,8 @@
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - $plugins.uiAccordion({ option });
-	* - $plugins.uiAccordionToggle({ option });
+	* - netive.uiAccordion({ option });
+	* - netive.uiAccordionToggle({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
 		uiScrollBox: function (opt) {

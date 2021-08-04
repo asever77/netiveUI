@@ -1,7 +1,7 @@
 ;(function($, win, doc, undefined) {
     
 
-    $plugins.uiPerspectiveSlide = function(v){
+    netive.uiPerspectiveSlide = function(v){
         var $wrap = $('.ui-perspective-wrap');
 					
         $wrap.on('mouseover', function(event){
@@ -81,7 +81,7 @@
     }
 
     $(doc).ready(function(){
-        $plugins.uiPerspectiveSlide();
+        netive.uiPerspectiveSlide();
     });
     
 })(jQuery, window, document);

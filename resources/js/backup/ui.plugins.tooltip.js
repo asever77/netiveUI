@@ -2,7 +2,7 @@
 
 	'use strict';
 
-	var $ui = win.$plugins,
+	var $ui = win.netive,
         namespace = 'netiveUI.plugins';
 
     /* ------------------------------------------------------------------------
@@ -10,22 +10,22 @@
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - $plugins.uiTooltip();
-	* - $plugins.uiTooltip({ option });
+	* - netive.tooltip.init();
+	* - netive.tooltip.init({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
-		uiTooltip: function (opt) {
-			return createUiTooltip(opt);
+		tooltip.init: function (opt) {
+			return createtooltip.init(opt);
 		}
 	});
-	$ui.uiTooltip.option = {
+	$ui.tooltip.init.option = {
 		visible: null,
 		id: false,
 		ps: false
 	};
-	function createUiTooltip(opt){
+	function createtooltip.init(opt){
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, $ui.uiTooltip.option, opt),
+			opt = $.extend(true, {}, $ui.tooltip.init.option, opt),
 			$btn = $('.ui-tooltip-btn'),
 			$tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false,
 			visible = opt.visible,
@@ -64,7 +64,7 @@
 		})
 
 		$btn
-		.off('touchstart.uitooltip').on('touchstart.uitooltip', function(e){
+		.off('touchstart.tooltip.init').on('touchstart.tooltip.init', function(e){
 			e.preventDefault();
 			if (!$(this).data('view')){
 				$(this).data('view', true);
