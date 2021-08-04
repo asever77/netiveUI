@@ -1,7 +1,8 @@
 @charset "utf-8";
-
-:focus *,
-:focus {
+button:focus *,
+a:focus *,
+button:focus,
+a:focus {
 	text-decoration: underline;
 }
 
@@ -2467,6 +2468,9 @@ dl[class*="bul-"]>dt {
 	margin-left: .8rem;
 }
 
+.fx-wrap[data-wrap="wrap"]{
+	flex-wrap: wrap;
+}
 .fx-wrap[data-dir="row"] {
 	-webkit-box-orient: horizontal;
 	-ms-flex-direction: row;

@@ -10,14 +10,14 @@
 }
 
 @keyframes slideDownIn {
-    0% {display:block;}
+    0% {display:block; opacity:0;}
     1% {top:-100px; opacity:0;}
     100% {top:0; opacity:1;}
 }
 @keyframes slideDownOut {
     0% {top:0; opacity:1;}
     99% {top:-100px; opacity:0;}
-    100% {display:none;}
+    100% {display:none; opacity:0;}
 }
 
 @keyframes slideUpIn {
@@ -800,7 +800,9 @@ a.ui-acco-btn:after {
     opacity: 0;
     background: rgba(0, 0, 0, .5);
 }
-
+.ui-m .ui-modal-wrap {
+    margin:2rem;
+}
 .ui-modal-wrap {
     opacity: 0;
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
@@ -809,9 +811,7 @@ a.ui-acco-btn:after {
     background: #fff;
 }
 
-.ui-modal-wrap {
-    width: 400px
-}
+
 
 .ui-modal.ps-center.is-over {
     align-items: flex-start;
@@ -836,12 +836,18 @@ a.ui-acco-btn:after {
     align-items: flex-end;
 }
 
+.ui-m .ui-modal.ps-top .ui-modal-wrap{
+    margin-top:0;
+}
+.ui-m .ui-modal.ps-bottom .ui-modal-wrap{
+    margin-bottom:0;
+}
 .ui-modal.ps-top .ui-modal-wrap {
-    margin-top: 10px
+    margin-top: 1rem
 }
 
 .ui-modal.ps-bottom .ui-modal-wrap {
-    margin-bottom: 10px
+    margin-bottom: 1rem
 }
 
 .ui-modal.ready.open.current:after {
@@ -950,23 +956,26 @@ a.ui-acco-btn:after {
     top: 0;
     left: 0;
     width: 100%;
-    height: 40px;
-    background: #444;
-    color: #fff;
-    padding: 7px 35px 0 15px;
+    min-height: 4rem;
+    background: var(--primary);
+    
+    padding: .8rem 3.5rem 1.2rem 1.6rem;
     border-bottom: 1px solid #ccc;
 }
 
 .ui-modal-header h1 {
-    font-size: 16px;
+    font-size: 1.6rem;
     font-weight: 500;
+    color: #fff;
 }
 
 .ui-modal-header .btn-close {
     position: absolute;
-    right: 9px;
-    top: 9px;
+    right: .8rem;
+    top: .8rem;
     border: 0;
+    font-family: 'Material Icons';
+    color:#fff;
 }
 
 .ui-modal-body {
@@ -999,11 +1008,13 @@ a.ui-acco-btn:after {
     position: relative;
     left: 0;
     top: auto;
-    bottom: -100vh;
+    bottom: -10vh;
     transition: opacity 0.2s ease-in, bottom 0.2s ease-in;
     overflow: hidden;
     border-radius: 0;
+    opacity: 0;
 }
+
 
 .ui-m .ui-modal.open.type-full .ui-modal-wrap {
     bottom: 0;
@@ -1015,14 +1026,17 @@ a.ui-acco-btn:after {
     padding: 10px 15px;
 }
 
+.ui-m .ui-modal.ps-top .ui-modal-wrap,
+.ui-m .ui-modal.ps-bottom .ui-modal-wrap {
+    margin:0;
+}
+
 .ui-m .ui-modal.open.ps-top .ui-modal-wrap {
     top: 0;
-    opacity: 1;
 }
 
 .ui-m .ui-modal.open.ps-bottom .ui-modal-wrap {
     bottom: 0;
-    opacity: 1;
 }
 
 .ui-m .ui-modal.ps-center.is-over .ui-modal-wrap {

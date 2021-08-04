@@ -4020,6 +4020,8 @@ if (!Object.keys){
 				$('.ui-modal').removeClass('current');
 				$('body').addClass('scroll-no');
 				
+				
+
 				$modal
 					.attr('tabindex', '0')
 					.attr('n', $('.ui-modal.open').length)
@@ -4028,6 +4030,7 @@ if (!Object.keys){
 					.data('scrolltop', scr_t)
 					.data('active', endfocus)
 					.data('closecallback', closeCallback);
+				
 
 				if (full) {
 					$modal.addClass('type-full');
@@ -4082,13 +4085,15 @@ if (!Object.keys){
 						});
 					} else {
 						$modalBody.css({ 
-							'min-height': $(window).outerHeight() + 'px', 
-							'overflow-y' : 'auto' ,
-							'padding-top': (headerH + 10)  + 'px',
-							'padding-bottom': '75px'
+							height: '100%',
+							'max-height': ($(window).outerHeight() - headerH - footerH)  + 'px', 
+							'overflow-y' : 'auto' 
 						});
 					}
 				}
+
+				console.log($modalBody.outerHeight());
+
 				
 				clearTimeout(timer);
 				timer = setTimeout(function(){

@@ -1,125 +1,130 @@
 
 <input type="hidden" id="uiJsName" value="pageModal">
 
-<div class="tit-catagory">Components Layout</div>
 <div class="tit-wrap">
 	<h1 class="h-1">Modal</h1>
-</div>
-<p class="txts-m">시스템 알림창, 컨텐츠창 사용</p>
-
-<h2 class="h-2">Examples</h2>
-
-<h3 class="h-3">Base Modal</h3>
-<p>기본적인 콘텐츠 모달</p>
-<div class="btn-wrap mgt-s txta-l test-modal">
-	<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-mobilefull="true"><span>Ajax / center</span></button>
-	<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-mobilefull="true" modal-scroll="true"><span>Ajax / center / scroll</span></button>
-	<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="/netiveUI/html/modal/modalSample2.html" modal-ps="top"><span>Ajax / top</span></button>
-	<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="/netiveUI/html/modal/modalSample2.html" modal-ps="bottom"><span>Ajax / bottom</span></button>
-	<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-height="500"><span>Ajax / center / scroll / height)</span></button>
-	<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-width="800"><span>Ajax / center / scroll / width)</span></button>
+	<p>시스템 알림창, 컨텐츠창 사용</p>
 </div>
 
-<h3 class="h-3">System Modal</h3>
-<p>시스템 알림 모달</p>
-<div class="btn-wrap mgt-s txta-l">
-	<button type="button" class="btn-base" onclick="
-		netive.modal.show({
-			type : 'alert',
-			sMessage: '<strong>Please</strong> <br>check the information you entered again.',
-			sBtnConfirmTxt: 'Ok',
-			sClass: 'type-alert',
-			sConfirmCallback: function(){
-				console.log('alert ok');
-				netive.modal.hideSystem();
-				$('#testEndFocus').focus();
-			}
-	});"><span>alert system</span></button>
-	<button type="button" class="btn-base" onclick="
-		netive.modal.show({
-			type : 'alert',
-			ps: 'top',
-			sMessage: '<strong>Please</strong> <br>check the information you entered again.',
-			sBtnConfirmTxt: 'Ok',
-			sClass: 'type-alert',
-			sConfirmCallback: function(){
-				console.log('alert ok');
-				netive.modal.hideSystem();
-				$('#testEndFocus').focus();
-			}
-	});"><span>alert system / top</span></button>
-	<button type="button" class="btn-base" onclick="
-		netive.modal.show({
-			type : 'alert',
-			ps: 'bottom',
-			sMessage: '<strong>Please</strong> <br>check the information you entered again.',
-			sBtnConfirmTxt: 'Ok',
-			sClass: 'type-alert',
-			sConfirmCallback: function(){
-				console.log('alert ok');
-				netive.modal.hideSystem();
-				$('#testEndFocus').focus();
-			}
-	});"><span>alert system / bottom</span></button>
-</div>
-<input type="text" class="inp-base" placeholder="focus" id="testEndFocus">
-<div class="btn-wrap mgt-s txta-l">
-	<button type="button" class="btn-base" onclick="
-		netive.modal.show({
-			type : 'confirm',
-			sMessage: 'Would you like to send <br>the information you entered?',
-			sBtnConfirmTxt: 'Ok',
-			sBtnCancelTxt: 'Cancel',
-			sClass: 'type-confirm',
-			sConfirmCallback: function(){
-				console.log('confirm ok');
-				netive.modal.hideSystem();
-			},
-			sCancelCallback: function(){
-				console.log('confirm cancel');
-				netive.modal.hideSystem();
-				$('#testEndFocus').focus();
-			}
-	});"><span>confirm system</span></button>
-	<button type="button" class="btn-base" onclick="
-		netive.modal.show({
-			type : 'confirm',
-			ps: 'top',
-			sMessage: 'Would you like to send <br>the information you entered?',
-			sBtnConfirmTxt: 'Ok',
-			sBtnCancelTxt: 'Cancel',
-			sClass: 'type-confirm',
-			sConfirmCallback: function(){
-				console.log('confirm ok');
-				netive.modal.hideSystem();
-			},
-			sCancelCallback: function(){
-				console.log('confirm cancel');
-				netive.modal.hideSystem();
-				$('#testEndFocus').focus();
-			}
-	});"><span>confirm system / top</span></button>
-	<button type="button" class="btn-base" onclick="
-		netive.modal.show({
-			type : 'confirm',
-			ps: 'bottom',
-			sMessage: 'Would you like to send <br>the information you entered?',
-			sBtnConfirmTxt: 'Ok',
-			sBtnCancelTxt: 'Cancel',
-			sClass: 'type-confirm',
-			sConfirmCallback: function(){
-				console.log('confirm ok');
-				netive.modal.hideSystem();
-			},
-			sCancelCallback: function(){
-				console.log('confirm cancel');
-				netive.modal.hideSystem();
-				$('#testEndFocus').focus();
-			}
-	});"><span>confirm system / bottom</span></button>
-</div>
+<section class="sec-wrap">
+	<h2 class="h-2">Examples</h2>
+	<h3 class="h-3">Base Modal</h3>
+	<p>기본적인 콘텐츠 모달</p>
+	<div class="box-guide">
+		<div class="test-modal fx-wrap" data-wrap="wrap">
+			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-mobilefull="true"><span>Ajax / center</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-mobilefull="true" modal-scroll="true"><span>Ajax / center / scroll</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="/netiveUI/html/modal/modalSample2.html" modal-ps="top"><span>Ajax / top</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="/netiveUI/html/modal/modalSample2.html" modal-ps="bottom"><span>Ajax / bottom</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-height="500"><span>Ajax / center / scroll / height)</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-width="800"><span>Ajax / center / scroll / width)</span></button>
+		</div>
+	</div>
 
+	<h3 class="h-3">System Modal</h3>
+	<p>시스템 알림 모달</p>
+	<div class="box-guide">
+		<div class="btn-wrap mgt-s txta-l">
+			<button type="button" class="btn-base" onclick="
+				netive.modal.show({
+					type : 'alert',
+					sMessage: '<strong>Please</strong> <br>check the information you entered again.',
+					sBtnConfirmTxt: 'Ok',
+					sClass: 'type-alert',
+					sConfirmCallback: function(){
+						console.log('alert ok');
+						netive.modal.hideSystem();
+						$('#testEndFocus').focus();
+					}
+			});"><span>alert system</span></button>
+			<button type="button" class="btn-base" onclick="
+				netive.modal.show({
+					type : 'alert',
+					ps: 'top',
+					sMessage: '<strong>Please</strong> <br>check the information you entered again.',
+					sBtnConfirmTxt: 'Ok',
+					sClass: 'type-alert',
+					sConfirmCallback: function(){
+						console.log('alert ok');
+						netive.modal.hideSystem();
+						$('#testEndFocus').focus();
+					}
+			});"><span>alert system / top</span></button>
+			<button type="button" class="btn-base" onclick="
+				netive.modal.show({
+					type : 'alert',
+					ps: 'bottom',
+					sMessage: '<strong>Please</strong> <br>check the information you entered again.',
+					sBtnConfirmTxt: 'Ok',
+					sClass: 'type-alert',
+					sConfirmCallback: function(){
+						console.log('alert ok');
+						netive.modal.hideSystem();
+						$('#testEndFocus').focus();
+					}
+			});"><span>alert system / bottom</span></button>
+		</div>
+		<input type="text" class="inp-base" placeholder="focus" id="testEndFocus">
+		<div class="btn-wrap mgt-s txta-l">
+			<button type="button" class="btn-base" onclick="
+				netive.modal.show({
+					type : 'confirm',
+					sMessage: 'Would you like to send <br>the information you entered?',
+					sBtnConfirmTxt: 'Ok',
+					sBtnCancelTxt: 'Cancel',
+					sClass: 'type-confirm',
+					sConfirmCallback: function(){
+						console.log('confirm ok');
+						netive.modal.hideSystem();
+					},
+					sCancelCallback: function(){
+						console.log('confirm cancel');
+						netive.modal.hideSystem();
+						$('#testEndFocus').focus();
+					}
+			});"><span>confirm system</span></button>
+			<button type="button" class="btn-base" onclick="
+				netive.modal.show({
+					type : 'confirm',
+					ps: 'top',
+					sMessage: 'Would you like to send <br>the information you entered?',
+					sBtnConfirmTxt: 'Ok',
+					sBtnCancelTxt: 'Cancel',
+					sClass: 'type-confirm',
+					sConfirmCallback: function(){
+						console.log('confirm ok');
+						netive.modal.hideSystem();
+					},
+					sCancelCallback: function(){
+						console.log('confirm cancel');
+						netive.modal.hideSystem();
+						$('#testEndFocus').focus();
+					}
+			});"><span>confirm system / top</span></button>
+			<button type="button" class="btn-base" onclick="
+				netive.modal.show({
+					type : 'confirm',
+					ps: 'bottom',
+					sMessage: 'Would you like to send <br>the information you entered?',
+					sBtnConfirmTxt: 'Ok',
+					sBtnCancelTxt: 'Cancel',
+					sClass: 'type-confirm',
+					sConfirmCallback: function(){
+						console.log('confirm ok');
+						netive.modal.hideSystem();
+					},
+					sCancelCallback: function(){
+						console.log('confirm cancel');
+						netive.modal.hideSystem();
+						$('#testEndFocus').focus();
+					}
+			});"><span>confirm system / bottom</span></button>
+		</div>
+	</div>
 
+</section>
+
+<section class="sec-wrap">
 <h2 class="h-2">HTML Structure</h2>
 <h3 class="h-3">base type</h3>
 <div class="box-code">
@@ -525,5 +530,5 @@ netive<span class="na">.modal.hide</span>({ <span class="s">
 	</table>
 </div>
 			
-
+</section>
 

@@ -413,7 +413,10 @@ p {
 	width: 100%;
 }
 
-
+.test-modal .btn-base {
+	margin-bottom:.8rem;
+	margin-right:.8rem;
+}
 
 .tst-obj {
 	width: 100%;
