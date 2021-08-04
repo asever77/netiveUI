@@ -1543,14 +1543,14 @@ if (!Object.keys){
 	* date : 2020-05-17
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiTableScroll: function (opt) {
-			return createUiTableScroll(opt);
+		tab.initleScroll: function (opt) {
+			return createtab.initleScroll(opt);
 		}
 	});
-	win[global].uiTableScroll.option = {
+	win[global].tab.initleScroll.option = {
 		callback:false
 	};
-	function createUiTableScroll(opt){
+	function createtab.initleScroll(opt){
 		var opt = $.extend(true, {}, win[global].uiAccordion.option, opt);
 		var callback = opt.callback;
 		var $tblWrap = $('.ui-tablescroll');
@@ -2098,9 +2098,9 @@ if (!Object.keys){
 	win[global].dropdown..option = {
 		ps: 'BL',
 		hold: true,
-		dropSpace: $('body'),
-		dropSrc: false,
-		dropOffset: false,
+		area: $('body'),
+		src: false,
+		offset: false,
 		openback:false,
 		closeback:false
 	};
@@ -2113,16 +2113,16 @@ if (!Object.keys){
 			id = opt.id,
 			ps = opt.ps,
 			hold = opt.hold,
-			dropSpace = opt.dropSpace,
-			dropSrc = opt.dropSrc,
-			dropOffset = opt.dropOffset,
+			area = opt.area,
+			src = opt.src,
+			offset = opt.offset,
 			openback = opt.openback,
 			closeback = opt.closeback;
 
-		if (!!dropSrc && !$('[data-id="' + opt.id + '"]').length) {
+		if (!!src && !$('[data-id="' + opt.id + '"]').length) {
 			netive.uiAjax({
-				id: dropSpace,
-				url: dropSrc,
+				id: area,
+				url: src,
 				add: true,
 				callback: function(){
 					setDropdown();
@@ -2144,7 +2144,7 @@ if (!Object.keys){
 					hold: hold, 
 					openback: openback,
 					closeback: closeback,
-					dropOffset: dropOffset
+					offset: offset
 				});
 			$pnl.attr('aria-hidden', true).attr('aria-labelledby', id).addClass(ps)
 				.data('opt', { 
@@ -2153,7 +2153,7 @@ if (!Object.keys){
 					hold: hold, 
 					openback: openback,
 					closeback: closeback,
-					dropOffset: dropOffset
+					offset: offset
 				});
 			
 			//event
@@ -2204,7 +2204,7 @@ if (!Object.keys){
 			closeback = opt.closeback,
 			hold = opt.hold,
 			state = opt.state,
-			dropOffset = opt.dropOffset,
+			offset = opt.offset,
 			btnExpanded =  $btn.attr('aria-expanded'),
 			is_modal = !!$btn.closest('.ui-modal').length,
 
@@ -2215,8 +2215,8 @@ if (!Object.keys){
 			pnl_w = Math.ceil($pnl.outerWidth()),
 			pnl_h = Math.ceil($pnl.outerHeight());
 
-		//dropOffset: ture 이거나 modal안의 dropdown 일때 position -> offset 으로 위치 값 변경
-		if (dropOffset || is_modal) {
+		//offset: ture 이거나 modal안의 dropdown 일때 position -> offset 으로 위치 값 변경
+		if (offset || is_modal) {
 			btn_t = Math.ceil($btn.offset().top);
 			btn_l = Math.ceil($btn.offset().left);
 			is_modal ? btn_t = btn_t - $(win).scrollTop(): '';
@@ -2340,19 +2340,19 @@ if (!Object.keys){
 	* date : 2020-06-10
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiFloating: function (opt) {
-			return createUiFloating(opt);
+		floating.base: function (opt) {
+			return createfloating.base(opt);
 		}
 	});
-	win[global].uiFloating.option = {
+	win[global].floating.base.option = {
 		ps: 'bottom',
 		add: false,
 		fix: true,
 		callback: false
 	};
-	function createUiFloating(opt) {
+	function createfloating.base(opt) {
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiFloating.option, opt),
+			opt = $.extend(true, {}, win[global].floating.base.option, opt),
 			id = opt.id,
 			ps = opt.ps,
 			add = opt.add,
@@ -2464,16 +2464,16 @@ if (!Object.keys){
 	* date : 2020-06-10
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiFloatingRange: function (opt) {
-			return createUiFloatingRange(opt);
+		floating.range: function (opt) {
+			return createfloating.range(opt);
 		}
 	});
-	win[global].uiFloatingRange.option = {
+	win[global].floating.range.option = {
 		margin: 0
 	};
-	function createUiFloatingRange(opt) {
+	function createfloating.range(opt) {
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiFloatingRange.option, opt),
+			opt = $.extend(true, {}, win[global].floating.range.option, opt),
 			id = opt.id,
 			mg = opt.margin,
 			$range = $('#' + id),
@@ -2512,17 +2512,17 @@ if (!Object.keys){
 	------------------------ */	
 	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiModalOpen: function (opt) {
-			return createUiModalOpen(opt);
+		modal.show: function (opt) {
+			return createmodal.show(opt);
 		},
-		uiModalClose: function (opt) {
-			return createUiModalClose(opt);
+		modal.hide: function (opt) {
+			return createmodal.hide(opt);
 		},
 		uiSystemModalClose: function () {
 			return createUiSystemModalClose();
 		}
 	});
-	win[global].uiModalOpen.option = {
+	win[global].modal.show.option = {
 		type: 'normal',
 		wrap: false,
 		mobileFull: false,
@@ -2545,8 +2545,8 @@ if (!Object.keys){
 		sConfirmCallback: false,
 		sCancelCallback: false
 	}
-	function createUiModalOpen(opt) {
-		var opt = $.extend(true, {}, win[global].uiModalOpen.option, opt),
+	function createmodal.show(opt) {
+		var opt = $.extend(true, {}, win[global].modal.show.option, opt),
 			wrap = opt.wrap === false ? $('body') : typeof opt.wrap === 'object' ? opt.wrap : $('#' + opt.wrap),
 			type = opt.type,
 			id = opt.id,
@@ -2714,7 +2714,7 @@ if (!Object.keys){
 						var currentID = $('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id');
 
 						if (currentID !== 'uiSystemModal') {
-							netive.uiModalClose({ 
+							netive.modal.hide({ 
 								id: currentID, 
 								remove: remove,
 								closeCallback: closeCallback
@@ -2729,7 +2729,7 @@ if (!Object.keys){
 			},150);
 
 			$(doc).find('.ui-modal-close').off('click.close').on('click.close', function(e){
-				netive.uiModalClose({ 
+				netive.modal.hide({ 
 					id: $(this).closest('.ui-modal').attr('id'), 
 					remove: remove,
 					closeCallback: closeCallback
@@ -2747,18 +2747,18 @@ if (!Object.keys){
 			});
 		}
 	}
-	win[global].uiModalClose.option = {
+	win[global].modal.hide.option = {
 		remove: false,
 		endfocus: false
 	}
 	function createUiSystemModalClose(){
-		netive.uiModalClose({ 
+		netive.modal.hide({ 
 			id: 'uiSystemModal', 
 			remove: true
 		});
 	}
-	function createUiModalClose(v) {
-		var opt = $.extend(true, {}, win[global].uiModalClose.option, v),
+	function createmodal.hide(v) {
+		var opt = $.extend(true, {}, win[global].modal.hide.option, v),
 			id = opt.id,
 			remove = opt.remove,
 			$modal = $('#' + id),
@@ -2810,16 +2810,16 @@ if (!Object.keys){
 	* date : 2020-06-13
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiParallax: function (opt) {
-			return createUiParallax(opt);
+		scroll.parallax: function (opt) {
+			return createscroll.parallax(opt);
 		}
 	});
-	win[global].uiParallax.option = {
+	win[global].scroll.parallax.option = {
 		id : null,
 		scope : 'window'
 	}
-	function createUiParallax(opt) {	
-		var opt = $.extend(true, {}, win[global].uiParallax.option, opt),
+	function createscroll.parallax(opt) {	
+		var opt = $.extend(true, {}, win[global].scroll.parallax.option, opt),
 			$scope = opt.scope === 'window' ? $(win) : opt.scope,
 			$parallax = opt.id === null ? $('.ui-parallax') : $('#' + opt.id),
 			$item = $parallax.find('> .ui-parallax-item'),
@@ -3006,23 +3006,23 @@ if (!Object.keys){
 	* date : 2020-06-14
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiTab: function (opt) {
-			return createUiTab(opt);
+		tab.init: function (opt) {
+			return createtab.init(opt);
 		},
-		uiTabAction: function (opt) {
-			return createuiTabAction(opt);
+		tab.initAction: function (opt) {
+			return createtab.initAction(opt);
 		}
 	});
-	win[global].uiTab.option = {
+	win[global].tab.init.option = {
 		current: 0,
 		onePanel: false,
 		callback: false,
 		effect: false,
 		align : 'center'
 	};
-	function createUiTab(opt) {
+	function createtab.init(opt) {
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiTab.option, opt),
+			opt = $.extend(true, {}, win[global].tab.init.option, opt),
 			id = opt.id,
 			effect = opt.effect,
 			current = isNaN(opt.current) ? 0 : opt.current,
@@ -3125,14 +3125,14 @@ if (!Object.keys){
 		});
 
 		//event
-		$btn.off('click.uitab keydown.uitab')
+		$btn.off('click.tab.init keydown.tab.init')
 			.on({
-				'click.uitab': evtClick,
-				'keydown.uitab': evtKeys
+				'click.tab.init': evtClick,
+				'keydown.tab.init': evtKeys
 			});
 
 		function evtClick() {
-			win[global].uiTabAction({ 
+			win[global].tab.initAction({ 
 				id: id, 
 				current: $(this).index(), 
 				align:align 
@@ -3166,26 +3166,26 @@ if (!Object.keys){
 			function upLeftKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-first') ? 
-				win[global].uiTabAction({ id: id, current: n - 1, align:align }): 
-				win[global].uiTabAction({ id: id, current: m - 1, align:align});
+				win[global].tab.initAction({ id: id, current: n - 1, align:align }): 
+				win[global].tab.initAction({ id: id, current: m - 1, align:align});
 			}
 			function downRightKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-last') ? 
-				win[global].uiTabAction({ id: id, current: n + 1, align:align }): 
-				win[global].uiTabAction({ id: id, current: 0, align:align });
+				win[global].tab.initAction({ id: id, current: n + 1, align:align }): 
+				win[global].tab.initAction({ id: id, current: 0, align:align });
 			}
 			function endKey(e) {
 				e.preventDefault();
-				win[global].uiTabAction({ id: id, current: m - 1, align:align });
+				win[global].tab.initAction({ id: id, current: m - 1, align:align });
 			}
 			function homeKey(e) {
 				e.preventDefault();
-				win[global].uiTabAction({ id: id, current: 0, align:align });
+				win[global].tab.initAction({ id: id, current: 0, align:align });
 			}
 		}
 	}
-	function createuiTabAction(opt) {
+	function createtab.initAction(opt) {
 		var id = opt.id,
 			$tab = $('#' + id),
 			$btns = $tab.children('.ui-tab-btns'),
@@ -3285,18 +3285,18 @@ if (!Object.keys){
 	* date : 2020-06-15
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiTooltip: function (opt) {
-			return createUiTooltip(opt);
+		tooltip.init: function (opt) {
+			return createtooltip.init(opt);
 		}
 	});
-	win[global].uiTooltip.option = {
+	win[global].tooltip.init.option = {
 		visible: null,
 		id: false,
 		ps: false
 	};
-	function createUiTooltip(opt){
+	function createtooltip.init(opt){
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiTooltip.option, opt);
+			opt = $.extend(true, {}, win[global].tooltip.init.option, opt);
 
 		var $btn = $('.ui-tooltip-btn'),
 			$tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false,
@@ -3334,7 +3334,7 @@ if (!Object.keys){
 		});
 
 		$btn
-		.off('touchstart.uitooltip').on('touchstart.uitooltip', function(e){
+		.off('touchstart.tooltip.init').on('touchstart.tooltip.init', function(e){
 			e.preventDefault();
 			var $this = $(this);
 
@@ -4480,11 +4480,11 @@ if (!Object.keys){
 	* date : 2020-05-17
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiTableFixTd: function () {
-			return createUiTableFixTd();
+		tab.initleFixTd: function () {
+			return createtab.initleFixTd();
 		}
 	});
-	function createUiTableFixTd() {
+	function createtab.initleFixTd() {
 		var $tbl = $('.ui-fixtd');
 
 		$tbl.each(function(i){
@@ -5021,11 +5021,11 @@ if (!Object.keys){
 	* date : 2020-06-20
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {
-		uiCodinglist: function (opt) {
-			return createUiCodinglist(opt);
+		project.list: function (opt) {
+			return createproject.list(opt);
 		}
 	});
-	function createUiCodinglist(opt) {
+	function createproject.list(opt) {
 		var dataExecel;
 
 		win[global].uiAjax({ 
@@ -5312,7 +5312,7 @@ if (!Object.keys){
 			sel += '</div>';
 			sel += '<div class="box-srch mgb-xxxs">';
 			sel += '<div class="srch-area">';
-			sel += '<input type="search" id="uiCodinglistSrchCode" class="inp-base ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
+			sel += '<input type="search" id="project.listSrchCode" class="inp-base ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
 			sel += '</div>';
 			sel += '</div>';
 			
@@ -5404,8 +5404,8 @@ if (!Object.keys){
 				$(this).closest('tr').addClass('selected').siblings().removeClass('selected');
 			});
 
-			if ($('#uiCodinglistSrchCode').val() !== '') {
-				var temp = $('.ui-codinglist tbody tr td *:contains('+ $('#uiCodinglistSrchCode').val() +')');
+			if ($('#project.listSrchCode').val() !== '') {
+				var temp = $('.ui-codinglist tbody tr td *:contains('+ $('#project.listSrchCode').val() +')');
 
 				$('.ui-codinglist tbody tr').hide();
 				$(temp).closest('tr').show();
@@ -5415,7 +5415,7 @@ if (!Object.keys){
 					return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
 				}
 			});
-			$('#uiCodinglistSrchCode').on('keyup', function(){
+			$('#project.listSrchCode').on('keyup', function(){
 				var k = $(this).val(),
 					temp = $('.ui-codinglist tbody tr td *:contains('+ k +')');
 				$('.ui-codinglist tbody tr').hide();
@@ -5480,14 +5480,14 @@ if (!Object.keys){
 	* date : 2020-06-20
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {	
-		uiCountStep: function (opt) {
-			return createUiCountStep(opt);
+		count.step: function (opt) {
+			return createcount.step(opt);
 		},
-		uiCountSlot: function (opt) {
-			return createUiCountSlot(opt);
+		count.slot: function (opt) {
+			return createcount.slot(opt);
 		}
 	});
-	function createUiCountSlot(opt){
+	function createcount.slot(opt){
 		var $base = $('#' + opt.id),
 			countNum = !!opt.value === true ? opt.value : $base.text(),
 			base_h = $base.outerHeight(),
@@ -5555,7 +5555,7 @@ if (!Object.keys){
 			}
 		}
 	}
-	function createUiCountStep(opt) {
+	function createcount.step(opt) {
 		var $base = $('#' + opt.id);
 		var countNum = !!opt.value === true ? opt.value : $base.text();
 
@@ -5597,14 +5597,14 @@ if (!Object.keys){
 	* date : 2020-06-20
 	------------------------ */	
 	win[global] = win[global].uiNameSpace(namespace, {	
-		uiDraggable: function (opt) {
-			return createUiDraggable(opt);
+		draggable.init: function (opt) {
+			return createdraggable.init(opt);
 		},
-		uiDraggableReset: function (opt) {
-			return createUiDraggableReset(opt);
+		draggable.reset: function (opt) {
+			return createdraggable.reset(opt);
 		}
 	});
-	function createUiDraggable(opt){
+	function createdraggable.init(opt){
 		var $wrap = $('#' + opt.id);
 		var $item = $wrap.find('.ui-draggable-item');
 		var $area = $wrap.find('.ui-draggable-area');
@@ -5816,7 +5816,7 @@ if (!Object.keys){
 			});
 		}
 	}
-	function createUiDraggableReset(opt){
+	function createdraggable.reset(opt){
 		var $wrap = opt !== undefined ? $('#' + opt.id) :$('.ui-draggable');
 		var $item = $wrap.find('.ui-draggable-item');
 		var $area = $wrap.find('.ui-draggable-area');

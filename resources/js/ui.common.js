@@ -135,6 +135,12 @@
 					case 'slider' :
 						fristHref = '/netiveUI/html/components/range.html';
 						break;
+					case 'slide' :
+						fristHref = '/netiveUI/html/components/slide.html';
+						break;
+					case 'slot' :
+						fristHref = '/netiveUI/html/components/slot.html';
+						break;
 					case 'issue' :
 						fristHref = '/netiveUI/html/memory/issue.html';
 						break;
@@ -143,18 +149,18 @@
 			} 
 
 			netive.ajax.init({ 
-				selector: $('.base-header'), 
+				area: $('.base-header'), 
 				url:'/netiveUI/html/inc/header.html', 
 				page:true, 
 				callback:netive.common.header 
 			});
 			netive.ajax.init({ 
-				selector: $('base-footer'), 
+				area: $('base-footer'), 
 				url:'/netiveUI/html/inc/footer.html', 
 				page:true
 			});
 			netive.ajax.init({ 
-				selector: $('.base-main'), 
+				area: $('.base-main'), 
 				url: fristHref, 
 				page: true, 
 				effect: true,
@@ -298,10 +304,10 @@
 				var href = this.getAttribute('data-href');
 				!!$('body').hasClass('nav-open') && netive.common.navOpen();
 				netive.ajax.init({ 
-					selector: $('.base-main'), 
+					area: $('.base-main'), 
 					url: href, 
 					page: true, 
-					effect: true,
+					effect: 'page-change',
 					callback: function(v){
 						netive.scroll.move({ 
 							value:0, 

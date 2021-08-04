@@ -505,20 +505,20 @@ HTMLElement.prototype.closestByClass = function(className) {
 		dropdown.hide: function () {
 			return createdropdown.hide();
 		},
-		uiFloating: function (opt) {
-			return createUiFloating(opt);
+		floating.base: function (opt) {
+			return createfloating.base(opt);
 		},
 		uiScrollBox: function (opt) {
 			return createUiScrollBox(opt);
 		},
-		uiTab: function (opt) {
-			return createUiTab(opt);
+		tab.init: function (opt) {
+			return createtab.init(opt);
 		},
-		uiTabAct: function (opt) {
-			return createUiTabAct(opt);
+		tab.initAct: function (opt) {
+			return createtab.initAct(opt);
 		},
-		uiTooltip: function (opt) {
-			return createUiTooltip(opt);
+		tooltip.init: function (opt) {
+			return createtooltip.init(opt);
 		},
 		uiSelect: function (opt) {
 			return createUiSelect(opt);
@@ -3334,15 +3334,15 @@ HTMLElement.prototype.closestByClass = function(className) {
 		dimHide();
 	}
 
-	win[global].uiFloating.option = {
+	win[global].floating.base.option = {
 		ps: 'bottom',
 		add: false,
 		fix: true,
 		callback: false
 	};
-	function createUiFloating(opt) {
+	function createfloating.base(opt) {
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiFloating.option, opt),
+			opt = $.extend(true, {}, win[global].floating.base.option, opt),
 			id = opt.id,
 			ps = opt.ps,
 			add = opt.add,
@@ -3557,16 +3557,16 @@ HTMLElement.prototype.closestByClass = function(className) {
         // });
     }
 
-	win[global].uiTab.option = {
+	win[global].tab.init.option = {
 		current: 0,
 		unres: false,
 		label: false,
 		callback: false,
 		align : 'center'
 	};
-	function createUiTab(opt) {
+	function createtab.init(opt) {
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiTab.option, opt),
+			opt = $.extend(true, {}, win[global].tab.init.option, opt),
 			id = opt.id,
 			current = isNaN(opt.current) ? 0 : opt.current,
 			unres = opt.unres,
@@ -3674,14 +3674,14 @@ HTMLElement.prototype.closestByClass = function(className) {
 		});
 
 		//event
-		$btn.off('click.uitab keydown.uitab')
+		$btn.off('click.tab.init keydown.tab.init')
 			.on({
-				'click.uitab': evtClick,
-				'keydown.uitab': evtKeys
+				'click.tab.init': evtClick,
+				'keydown.tab.init': evtKeys
 			});
 
 		function evtClick() {
-			win[global].uiTabAct({ id: id, current: $(this).index(), align:align }); 
+			win[global].tab.initAct({ id: id, current: $(this).index(), align:align }); 
 		}
 		function evtKeys(e) {
 			var $this = $(this),
@@ -3711,26 +3711,26 @@ HTMLElement.prototype.closestByClass = function(className) {
 			function upLeftKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-first') ? 
-				win[global].uiTabAct({ id: id, current: n - 1, align:align }): 
-				win[global].uiTabAct({ id: id, current: m - 1, align:align});
+				win[global].tab.initAct({ id: id, current: n - 1, align:align }): 
+				win[global].tab.initAct({ id: id, current: m - 1, align:align});
 			}
 			function downRightKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-last') ? 
-				win[global].uiTabAct({ id: id, current: n + 1, align:align }): 
-				win[global].uiTabAct({ id: id, current: 0, align:align });
+				win[global].tab.initAct({ id: id, current: n + 1, align:align }): 
+				win[global].tab.initAct({ id: id, current: 0, align:align });
 			}
 			function endKey(e) {
 				e.preventDefault();
-				win[global].uiTabAct({ id: id, current: m - 1, align:align });
+				win[global].tab.initAct({ id: id, current: m - 1, align:align });
 			}
 			function homeKey(e) {
 				e.preventDefault();
-				win[global].uiTabAct({ id: id, current: 0, align:align });
+				win[global].tab.initAct({ id: id, current: 0, align:align });
 			}
 		}
 	}
-	function createUiTabAct(opt) {
+	function createtab.initAct(opt) {
 		var id = opt.id,
 			$tab = $('#' + id),
 			$btns = $tab.children('.ui-tab-btns'),
@@ -3763,14 +3763,14 @@ HTMLElement.prototype.closestByClass = function(className) {
 		!!callback ? callback(opt) : '';
 	}
 
-	win[global].uiTooltip.option = {
+	win[global].tooltip.init.option = {
 		visible: null,
 		id: false,
 		ps: false
 	};
-	function createUiTooltip(opt){
+	function createtooltip.init(opt){
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiTooltip.option, opt),
+			opt = $.extend(true, {}, win[global].tooltip.init.option, opt),
 			$btn = $('.ui-tooltip-btn'),
 			$tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false,
 			visible = opt.visible,
@@ -3809,7 +3809,7 @@ HTMLElement.prototype.closestByClass = function(className) {
 		})
 
 		$btn
-		.off('touchstart.uitooltip').on('touchstart.uitooltip', function(e){
+		.off('touchstart.tooltip.init').on('touchstart.tooltip.init', function(e){
 			e.preventDefault();
 			if (!$(this).data('view')){
 				$(this).data('view', true);

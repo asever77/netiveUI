@@ -10,27 +10,27 @@
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - netive.uiTab({ option });
-	* - netive.uiTabAct({ option });
+	* - netive.tab.init({ option });
+	* - netive.tab.initAct({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
-		uiTab: function (opt) {
-			return createUiTab(opt);
+		tab.init: function (opt) {
+			return createtab.init(opt);
 		},
-		uiTabAct: function (opt) {
-			return createUiTabAct(opt);
+		tab.initAct: function (opt) {
+			return createtab.initAct(opt);
 		}
 	});
-	$ui.uiTab.option = {
+	$ui.tab.init.option = {
 		current: 0,
 		unres: false,
 		label: false,
 		callback: false,
 		align : 'center'
 	};
-	function createUiTab(opt) {
+	function createtab.init(opt) {
 		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, $ui.uiTab.option, opt),
+			opt = $.extend(true, {}, $ui.tab.init.option, opt),
 			id = opt.id,
 			current = isNaN(opt.current) ? 0 : opt.current,
 			unres = opt.unres,
@@ -138,14 +138,14 @@
 		});
 
 		//event
-		$btn.off('click.uitab keydown.uitab')
+		$btn.off('click.tab.init keydown.tab.init')
 			.on({
-				'click.uitab': evtClick,
-				'keydown.uitab': evtKeys
+				'click.tab.init': evtClick,
+				'keydown.tab.init': evtKeys
 			});
 
 		function evtClick() {
-			$ui.uiTabAct({ id: id, current: $(this).index(), align:align }); 
+			$ui.tab.initAct({ id: id, current: $(this).index(), align:align }); 
 		}
 		function evtKeys(e) {
 			var $this = $(this),
@@ -175,26 +175,26 @@
 			function upLeftKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-first') ? 
-				$ui.uiTabAct({ id: id, current: n - 1, align:align }): 
-				$ui.uiTabAct({ id: id, current: m - 1, align:align});
+				$ui.tab.initAct({ id: id, current: n - 1, align:align }): 
+				$ui.tab.initAct({ id: id, current: m - 1, align:align});
 			}
 			function downRightKey(e) {
 				e.preventDefault();
 				!$this.attr('tab-last') ? 
-				$ui.uiTabAct({ id: id, current: n + 1, align:align }): 
-				$ui.uiTabAct({ id: id, current: 0, align:align });
+				$ui.tab.initAct({ id: id, current: n + 1, align:align }): 
+				$ui.tab.initAct({ id: id, current: 0, align:align });
 			}
 			function endKey(e) {
 				e.preventDefault();
-				$ui.uiTabAct({ id: id, current: m - 1, align:align });
+				$ui.tab.initAct({ id: id, current: m - 1, align:align });
 			}
 			function homeKey(e) {
 				e.preventDefault();
-				$ui.uiTabAct({ id: id, current: 0, align:align });
+				$ui.tab.initAct({ id: id, current: 0, align:align });
 			}
 		}
 	}
-	function createUiTabAct(opt) {
+	function createtab.initAct(opt) {
 		var id = opt.id,
 			$tab = $('#' + id),
 			$btns = $tab.children('.ui-tab-btns'),

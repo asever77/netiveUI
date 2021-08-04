@@ -10,12 +10,12 @@
 	* Ver. : v1.0.0
 	* date : 2018-12-21
 	* EXEC statement
-	* - netive.uiCountStep({ option });
+	* - netive.count.step({ option });
 	* - netive.uiCountSlide({ option });
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {	
-		uiCountStep: function (opt) {
-			return createUiCountStep(opt);
+		count.step: function (opt) {
+			return createcount.step(opt);
 		},
 		uiCountSlide: function (opt) {
 			return createUiCountSlide(opt);
@@ -87,7 +87,7 @@
 			}
 		}
 	}
-	function createUiCountStep(opt) {
+	function createcount.step(opt) {
 		const $base = $('#' + opt.id);
 		const countNum = !!opt.value === true ? opt.value : $base.text();
 

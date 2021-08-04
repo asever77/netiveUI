@@ -8,7 +8,7 @@ modify		:
 	- createUiModal : iframe,ios 일 경우 높이값 설정
 
 	2018-11-27
-	- createUiTab : 고정탭번호 추가
+	- createtab.init : 고정탭번호 추가
 
 */
 ; (function ($, win, doc, undefined) {
@@ -40,7 +40,7 @@ modify		:
 		uiAllcheckToggle: function (opt) { return createUiAllcheckToggle(opt); },
 		uiCaption: function () { return createUiCaption(); },
 		uiCFList: function (opt) { return createUiCFList(opt); },
-		uiCodinglist: function (opt) { return createUiCodinglist(opt); },
+		project.list: function (opt) { return createproject.list(opt); },
 		uiDatepicker: function (opt) { return createUiDatepicker(opt); },
 		dropdown.: function (opt) { return createdropdown.init(opt); },
 		dropdown.toggle: function (opt) { return createdropdown.toggle(opt); },
@@ -48,7 +48,7 @@ modify		:
 		uiError: function (opt) { return createUiError(opt) },
 		uiErrorTooltip: function (opt) { return createUiErrorTooltip(opt) },
 		uiFileUpload: function (opt) { return createUiFileUpload(opt); },
-		uiFloating: function (opt) { return createUiFloating(opt); },
+		floating.base: function (opt) { return createfloating.base(opt); },
 		uiFocusTab: function (opt) { return createUiFocusTab(opt); },
 		uiForm: function (opt) { return createUiForm(opt); },
 		uiFormCheck: function (opt) { return createUiFormCheck(opt); },
@@ -59,7 +59,7 @@ modify		:
 		uiJsonList: function (opt) { return createUiJsonList(opt); },
 		uiLiCheck: function () { return createUiLiCheck(); },
 		uiModal: function (opt) { return createUiModal(opt); },
-		uiModalClose: function (opt) { return createUiModalClose(opt); },
+		modal.hide: function (opt) { return createmodal.hide(opt); },
 		uiModalResize: function (opt) { return createUiModalResize(opt); },
 		uiModalScrollReset: function (opt) { return createUiModalScrollReset(opt); },
 		uiPageStep: function (opt) { return createUiPageStep(opt); },
@@ -78,12 +78,12 @@ modify		:
 		uiSlide: function (opt) { return createUiSlide(opt); },
 		uiSlideFnEvt: function (opt) { return createUiSlideFnEvt(opt); },
 		uiSlideFnAuto: function (opt) { return createUiSlideFnAuto(opt); },
-		uiTab: function (opt) { return createUiTab(opt); },
-		uiTabToggle: function (opt) { return createUiTabToggle(opt); },
+		tab.init: function (opt) { return createtab.init(opt); },
+		tab.initToggle: function (opt) { return createtab.initToggle(opt); },
 		uiTextareaAutoHeight: function () { return createUiTextareaAutoHeight(); },
 		uiTblScroll: function () { return createUiTblScroll(); },
 		uiTbodyCheck: function () { return createUiTbodyCheck(); },
-		uiTooltip: function (opt) { return createUiTooltip(opt); },
+		tooltip.init: function (opt) { return createtooltip.init(opt); },
 		uiTrCheck: function () { return createUiTrCheck(); },
 		uiTrEvent: function (opt) { return createUiTrEvent(opt); },
 	});
@@ -480,7 +480,7 @@ modify		:
 				e.preventDefault();
 			});
 
-			netive.uiTab({
+			netive.tab.init({
 				id: 'exeTab1',
 				current: 0
 			});
@@ -2272,7 +2272,7 @@ modify		:
 		history.replaceState(null, null, href_new);
 	}
 
-	function createUiTab(opt) {
+	function createtab.init(opt) {
 		var id = opt.id,
 			current = isNaN(opt.current) ? 0 : opt.current,
 			unres = (opt.unres === undefined) ? false : opt.unres,
@@ -2377,7 +2377,7 @@ modify		:
 		netive.uiScroll({ value: ps_l[current], target: $btn.parent(), speed: 0, ps: 'left' });
 		//event
 		control ?
-			$btn.off('click.uitab').on('click.uitab', function () {
+			$btn.off('click.tab.init').on('click.tab.init', function () {
 				var $this = $(this);
 
 				$global.uiCheck.mobile ? 
@@ -2386,7 +2386,7 @@ modify		:
 					current: $this.index()
 				}) : '';
 			
-				win[global].uiTabToggle({ 
+				win[global].tab.initToggle({ 
 					id: id, 
 					current: $this.index() 
 				});
@@ -2417,7 +2417,7 @@ modify		:
 				history.replaceState(null, null, renewURL);
 				*/
 			}) : '';
-		// .off('keyup.uitab').on('keyup.uitab', function(e){
+		// .off('keyup.tab.init').on('keyup.tab.init', function(e){
 		// 	var $this = $(this);
 		// 	e.preventDefault();
 		// 	win[global].uiEventKey({ selector:$this, index:$this.index(), e:event, scope:$this.closest('.ui-tab-btns').find('.ui-tab-btn') });
@@ -2425,7 +2425,7 @@ modify		:
 
 	}
 
-	function createUiTabToggle(opt) {
+	function createtab.initToggle(opt) {
 		var id = opt.id,
 			$tab = $('#' + id),
 			$btns = $tab.children('.ui-tab-btns'),
@@ -2517,7 +2517,7 @@ modify		:
 			modal_html += '<iframe id="' + iname + '" name="' + iname + '" src="' + parasrc + '" width="' + iwidth + '" height="' + iheight + '" title="' + ititle + '" orgw="' + iwidth + '" orgh="' + iheight + '"></iframe>';
 			modal_html += '</div>';
 			!$global.uiCheck.mobile ?
-				modal_html += '<button type="button" class="btn-close ui-modal-closecallback" onclick="netive.uiModalClose({ id:\'' + opt.id + '\', remove: ' + remove + ' })"><span>닫기</span></button>' : '';
+				modal_html += '<button type="button" class="btn-close ui-modal-closecallback" onclick="netive.modal.hide({ id:\'' + opt.id + '\', remove: ' + remove + ' })"><span>닫기</span></button>' : '';
 			modal_html += '</div>';
 			modal_html += '</section>';
 
@@ -2562,12 +2562,12 @@ modify		:
 			// 	!!icallback ? icallback() : '';
 			// };
 			
-			uiModalOpen(opt);
+			modal.show(opt);
 		}
 
 		if (!opt.link) {
 			//모달코드가 이미 페이지안에 있을 경우
-			($('#' + opt.id).attr('aria-hidden') === 'true') ? uiModalOpen(opt) : '';
+			($('#' + opt.id).attr('aria-hidden') === 'true') ? modal.show(opt) : '';
 		} else {
 			//aJax 모달 
 			var paralink = opt.link;
@@ -2578,7 +2578,7 @@ modify		:
 			}
 
 			!!$('#' + opt.id).length ?
-				uiModalOpen(opt) :
+				modal.show(opt) :
 				$global.uiAjax({
 					id: !!opt.born ? opt.born : !$('#baseLayer').length ? opt.born = $('body') : 'baseLayer',
 					url: paralink,
@@ -2587,12 +2587,12 @@ modify		:
 					type: opt.type === 'post' ? opt.type : 'GET',
 					add: true,
 					callback: function () {
-						uiModalOpen(opt);
+						modal.show(opt);
 					}
 				});
 		}
 	}
-	function uiModalOpen(opt) {
+	function modal.show(opt) {
 		var $modal = $('#' + opt.id),
 			$modalWrap = $modal.find('.ui-modal-wrap'),
 			$modalTit = $modal.find('.ui-modal-tit'),
@@ -2997,7 +2997,7 @@ modify		:
 		}
 		$modal.find('.ui-modal-close').off('click.uilayerpop').on('click.uilayerpop', function (e) {
 			e.preventDefault();
-			win[global].uiModalClose({ id: opt.id, closecallback: closecallback });
+			win[global].modal.hide({ id: opt.id, closecallback: closecallback });
 		});
 	}
 	function createUiModalResize(opt) {
@@ -3186,7 +3186,7 @@ modify		:
 		}
 	}
 	netive.uiModal.focusid = '';
-	function createUiModalClose(opt) {
+	function createmodal.hide(opt) {
 		var now_callback = opt === undefined || opt.callback === undefined ? false : opt.callback,
 			opt = $.extend(true, {}, $('#' + opt.id).data('opt'), opt),
 			$modal = $('#' + opt.id),
@@ -3346,11 +3346,11 @@ modify		:
 			$('#baseLayer').append('<div class="ui-tooltip type-auto" id="' + id + '" role="tooltip" aria-hidden="true"><span class="tt-arrow"></span><div class="tip-cont">' + msg + '</div></div>');
 		}
 
-		show ? win[global].uiTooltip({ id: id, visible: show, ps: 'left' }) : win[global].uiTooltip({ visible: false });
+		show ? win[global].tooltip.init({ id: id, visible: show, ps: 'left' }) : win[global].tooltip.init({ visible: false });
 
 		if (!!time && id !== null) {
 			setTimeout(function () {
-				win[global].uiTooltip({ visible: false });
+				win[global].tooltip.init({ visible: false });
 				$tip.removeAttr('aria-describedby');
 				$('#' + id).remove();
 			}, time);
@@ -3358,12 +3358,12 @@ modify		:
 
 		if (id !== null) {
 			$tip.off('blur.tooltiperror').on('blur.tooltiperror', function () {
-				win[global].uiTooltip({ visible: false })
+				win[global].tooltip.init({ visible: false })
 			});
 		}
 	}
 
-	function createUiTooltip(opt) {
+	function createtooltip.init(opt) {
 		var $btn = $('.ui-tooltip-btn'),
 			visible = opt === undefined || opt.visible === undefined ? null : opt.visible,
 			$tip = opt === undefined || opt.id === undefined ? false : typeof opt.id === 'string' ? $('#' + opt.id) : opt.id,
@@ -3476,7 +3476,7 @@ modify		:
 		}
 	}
 
-	function createUiFloating(opt) {
+	function createfloating.base(opt) {
 		var id = opt.id,
 			ps = opt.ps === undefined ? 'bottom' : opt.ps,
 			add = opt.add === undefined ? false : typeof opt.add === 'string' ? $('#' + opt.add) : opt.add,
@@ -4062,7 +4062,7 @@ modify		:
 		});
 	}
 
-	function createUiCodinglist(opt) {
+	function createproject.list(opt) {
 		var dataExecel;
 
 		win[global].uiAjax({ url: opt.url, page: false, callback: callback });
@@ -5301,10 +5301,10 @@ modify		:
 			netive.uiModal({ id: '__modalConfirm', link: linkadr, words: txt, btntxt1: btn, btntxt2: btn2, type: class_name, autofocus: false, width:s, zindex:z });
 
 			$('#__confirm').off('click.confirm').on('click.confirm', function () {
-				netive.uiModalClose({ id: '__modalConfirm', remove: true, callback: confirmCallback })
+				netive.modal.hide({ id: '__modalConfirm', remove: true, callback: confirmCallback })
 			});
 			$('#__cancel, .btn-close').off('click.confirm').on('click.confirm', function () {
-				netive.uiModalClose({ id: '__modalConfirm', remove: true, callback: cancelCallback })
+				netive.modal.hide({ id: '__modalConfirm', remove: true, callback: cancelCallback })
 			});
 		},
 		// netive.modal.alert(txt, confirmCallback, confirmButton, type, size, z-index) type은 기본으로 '알림'. 4가지 타입 '알림', '선택', '확인', '오류'
@@ -5336,7 +5336,7 @@ modify		:
 			netive.uiModal({ id: '__modalAlert', link: linkadr, words: txt, btntxt1: btn, type: class_name, autofocus: false, width:s, zindex:z });
 
 			$('#__confirm, .btn-close').off('click.alert').on('click.alert', function () {
-				netive.uiModalClose({ id: '__modalAlert', remove: true, callback: confirmCallback })
+				netive.modal.hide({ id: '__modalAlert', remove: true, callback: confirmCallback })
 			});
 		},
 		terms: function (title, url) {

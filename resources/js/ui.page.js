@@ -40,9 +40,9 @@
     netive.page.pageBulletList = function(){};
 
     netive.page.pagePrint = function(){
-        $('#prtTest').off('click.print').on('click.print', function(){
-            netive.uiPrint({ id:'prtSct' });
-        });
+        // $('#prtTest').off('click.print').on('click.print', function(){
+        //     netive.uiPrint({ id:'prtSct' });
+        // });
     };
 
     netive.page.pageTableCaption = function(){
@@ -61,7 +61,7 @@
                 });
             }
         });
-        // netive.uiTableScroll({
+        // netive.tab.initleScroll({
         //     callback:function(){
         //         netive.scrollBar.init({
         //             id: 'tblScrollTest1'
@@ -171,7 +171,7 @@
         $('.test-modal .btn-base').off('click.modal').on('click.modal', function(e){
             var $btn = $(this);
             
-            netive.uiModalOpen({ 
+            netive.modal.show({ 
                 id: $btn.attr('modal-id'), 
                 ps: $btn.attr('modal-ps') === undefined ? 'center' : $btn.attr('modal-ps'), 
                 src: $btn.attr('modal-src') === undefined ? false : $btn.attr('modal-src'), 
@@ -235,9 +235,9 @@
     }
 
     netive.page.pageSlot = function(){
-        netive.uiSlot({ id: 'uiSlot1', current: 1, auto: false, single:false });
-        netive.uiSlot({ id: 'uiSlot2', current: 4, auto: false, single:false });
-        netive.uiSlot({ id: 'uiSlot3', current: 2, auto: false, single:false });
+        netive.slot.init({ id: 'uiSlot1', current: 1, auto: false, single:false });
+        netive.slot.init({ id: 'uiSlot2', current: 4, auto: false, single:false });
+        netive.slot.init({ id: 'uiSlot3', current: 2, auto: false, single:false });
         
         var n = 1,
             win = [];
@@ -245,21 +245,21 @@
         $('#start').click(function(){
             n = 1;
             win = [];
-            netive.uiSlotStart({ id: 'uiSlot1'});
-            netive.uiSlotStart({ id: 'uiSlot2'});
-            netive.uiSlotStart({ id: 'uiSlot3'}); 
+            netive.slot.start({ id: 'uiSlot1'});
+            netive.slot.start({ id: 'uiSlot2'});
+            netive.slot.start({ id: 'uiSlot3'}); 
         });
         $('#stop').click(function(){
             if (n < 4) {
-                netive.uiSlotStop({ id: 'uiSlot' + n, callback: slotMCallback });
+                netive.slot.stop({ id: 'uiSlot' + n, callback: slotMCallback });
                 n = n + 1;
             }
         });
         $('#allstop').click(function(){
             win = [];
-            netive.uiSlotStop({ id: 'uiSlot1', callback: slotMCallback });
-            netive.uiSlotStop({ id: 'uiSlot2', callback: slotMCallback });
-            netive.uiSlotStop({ id: 'uiSlot3', callback: slotMCallback }); 
+            netive.slot.stop({ id: 'uiSlot1', callback: slotMCallback });
+            netive.slot.stop({ id: 'uiSlot2', callback: slotMCallback });
+            netive.slot.stop({ id: 'uiSlot3', callback: slotMCallback }); 
         });
 
         function slotMCallback(v){
@@ -282,80 +282,9 @@
             }
         }
 
-        $('.box').stop().delay(800).animate({
-            opacity: 1
-        },700);
-        
-        netive.uiBrickList({ id:'uiListcard', margin:10, response:true });
-        //netive.uiCardListRow({ id:'uiListcard' });  추가
-        
-
-
-        netive.uiSlot({ id: 'wuiSlot1', current:1, auto:true, single:true });
-        netive.uiSlot({ id: 'wuiSlot2', current:9, auto:true, single:true });
-        netive.uiSlot({ id: 'wuiSlot3', current:3, auto:true, single:true });
-        netive.uiSlot({ id: 'wuiSlot4', current:5, auto:true, single:true });
-        netive.uiSlot({ id: 'wuiSlot5', current:7, auto:true, single:true });
-
-        var n = 1,
-            j = 1,
-            m = [],
-            w = [],
-            iulen = 6;
-        
-        $('#allstop2').on('click',function(){
-            if (j === 1) {
-                $('body').addClass('on');
-                slotstop(j);
-            } else {
-                $('body').removeClass('on');
-                j = 1;
-                m = [],
-                w = [];
-            }
-        });
-       
-        function slotstop(j){
-            if (j < iulen) {
-                setTimeout(function(){
-                    netive.uiSlotStop({ id: 'wuiSlot' + j, callback: slotCallback });
-                    $('#wuiSlot' + j).closest('.ui-bricklist-item').addClass('ok');
-                    $('.ui-bricklist-item.n'+ j).find('strong').stop().animate({
-                        opacity: 1
-                    },500);
-                    $('.ui-bricklist-item.n'+ j).find('p').stop().animate({
-                        opacity: 1
-                    },500);
-                },100);
-            }
-        }
-
-        function slotCallback(v){
-            if (j < iulen && j > 1) {
-                var len = w.length;
-                for (var i = 0; i < len ; i++) {
-                    if (w[i] === v) {
-                        slotstop(j);
-                        break;
-                    } else { 
-                        if(i === len - 1){
-                            w.push(v);
-                            j = j + 1;
-                            if (j < iulen) {
-                                slotstop(j);
-                            }
-                        }
-                    }
-                }
-            } else if(j === 1) {
-                w.push(v);
-                j = j + 1;
-                slotstop(j);
-            }
-        }
     }
     netive.page.pageTooltip = function(){
-        netive.uiTooltip();
+        netive.tooltip.init();
     }
     netive.page.pageRange = function(){
         //range slider
@@ -447,13 +376,13 @@
     }
 
     netive.page.pageSlide = function(){
-        netive.uiSlide();
-        netive.uiSlide({ id:'slide1', current:0, loop:false, dot:true, eff:'slide', speed:300, callback:callback});
-        netive.uiSlide({ id:'slide2', eff:'fade', dot:true, speed:350 });
+        netive.swiper.init();
+        netive.swiper.init({ id:'slide1', current:0, loop:false, dot:true, eff:'slide', speed:300, callback:callback});
+        netive.swiper.init({ id:'slide2', eff:'fade', dot:true, speed:350 });
         
-        netive.uiSlide({ id:'slide3', multi:true, margin:10 });
+        netive.swiper.init({ id:'slide3', multi:true, margin:10 });
         
-        netive.uiSlide({ id:'slide4', items:3, margin:10 }); 
+        netive.swiper.init({ id:'slide4', items:3, margin:10 }); 
 
         function callback(v){
             console.log(v);
@@ -476,7 +405,7 @@
     
    
     netive.page.pageParallax = function(){
-        netive.uiParallax({
+        netive.scroll.parallax({
             callback:function(v) {
                 console.log(v);
             }
@@ -484,7 +413,7 @@
     }
 
     netive.page.pagePopupBook = function(){
-        netive.uiPopupBook();
+        //netive.uiPopupBook();
     }
 
     netive.page.pageScrollBar = function(){
@@ -497,8 +426,8 @@
     }
 
     netive.page.pageJsonCodingList = function(){
-        netive.uiCodinglist({
-            id: 'uiCodinglist',
+        netive.project.list({
+            id: 'projectList',
             url: '/netiveUI/resources/data/codinglist.json',
             type: 'text'
         });
@@ -528,22 +457,22 @@
     }
 
     netive.page.pageFloatingRange = function(){
-        netive.uiFloatingRange({ 
+        netive.floating.range({ 
             id:'uiflRange01', 
             margin: 20
         });
-        netive.uiFloatingRange({ 
+        netive.floating.range({ 
             id:'uiflRange02', 
             margin: 0
         });
     }
 
     netive.page.pageFloating = function(){
-        netive.uiFloating({ id:'exeFix12', ps:'top', fix:true });
-        netive.uiFloating({ id:'exeFix11', ps:'top', add:'exeFix12', fix:true });
-        netive.uiFloating({ id:'exeFix10', ps:'top', add:'exeFix11', fix:true });
+        netive.floating.base({ id:'exeFix12', ps:'top', fix:true });
+        netive.floating.base({ id:'exeFix11', ps:'top', add:'exeFix12', fix:true });
+        netive.floating.base({ id:'exeFix10', ps:'top', add:'exeFix11', fix:true });
 
-        netive.uiFloating({ 
+        netive.floating.base({ 
             id:'exeFix1', 
             ps:'top', 
             fix:false, 
@@ -551,24 +480,24 @@
                 console.log(v);
             } 
         });
-        netive.uiFloating({ id:'exeFix2', ps:'top', add:'exeFix1', fix:false });
-        netive.uiFloating({ id:'exeFix3', ps:'top', add:'exeFix2', fix:false });
+        netive.floating.base({ id:'exeFix2', ps:'top', add:'exeFix1', fix:false });
+        netive.floating.base({ id:'exeFix3', ps:'top', add:'exeFix2', fix:false });
         
         
-        netive.uiFloating({ id:'exeFix6', ps:'bottom', fix:true});
-        netive.uiFloating({ id:'exeFix5', ps:'bottom', add:'exeFix6', fix:true});
-        netive.uiFloating({ id:'exeFix4', ps:'bottom', add:'exeFix5', fix:true });
+        netive.floating.base({ id:'exeFix6', ps:'bottom', fix:true});
+        netive.floating.base({ id:'exeFix5', ps:'bottom', add:'exeFix6', fix:true});
+        netive.floating.base({ id:'exeFix4', ps:'bottom', add:'exeFix5', fix:true });
 
-        netive.uiFloating({ id:'exeFix7', ps:'bottom', fix:false});
-        netive.uiFloating({ id:'exeFix8', ps:'bottom', add:'exeFix7', fix:false});
-        netive.uiFloating({ id:'exeFix9', ps:'bottom', add:'exeFix8', fix:false });
+        netive.floating.base({ id:'exeFix7', ps:'bottom', fix:false});
+        netive.floating.base({ id:'exeFix8', ps:'bottom', add:'exeFix7', fix:false});
+        netive.floating.base({ id:'exeFix9', ps:'bottom', add:'exeFix8', fix:false });
 
 
     }
 
     netive.page.pageCountNumber = function(){
-        netive.uiCountStep({ id:'exeCount1', value: 504025 });
-        netive.uiCountSlot({ id:'exeCount2', value: 1965040.25 });
+        netive.count.step({ id:'exeCount1', value: 504025 });
+        netive.count.slot({ id:'exeCount2', value: 1965040.25 });
     }
 
     netive.page.pageDropdown = function(){
@@ -577,25 +506,25 @@
     }
 
     netive.page.pageTab = function(){
-        netive.uiTab({ 
+        netive.tab.init({ 
             id:'exeTab1', 
             current:0, 
             effect: 'eff-fade',
             callback:tabCallback 
         });
-        netive.uiTab({ 
+        netive.tab.init({ 
             id:'exeTab12', 
             current:0, 
             callback:tabCallback 
         });
-        netive.uiTab({ 
+        netive.tab.init({ 
             id:'exeTab2', 
             current:2, 
             onePanel:true, 
             callback: tabCallback2 
         });
 
-        netive.uiTab({ 
+        netive.tab.init({ 
             id:'exeTab4', 
             current:0, 
             callback: tabCallback2 
@@ -619,19 +548,19 @@
     }
 
     netive.page.pageDraggable = function(){
-        netive.uiDraggable({
+        netive.draggable.init({
             id:'drag1'
         });
-        netive.uiDraggable({
+        netive.draggable.init({
             id:'drag2'
         });
-        netive.uiDraggable({
+        netive.draggable.init({
             id:'drag3'
         });
-        netive.uiDraggable({
+        netive.draggable.init({
             id:'drag4'
         });
-        netive.uiDraggable({
+        netive.draggable.init({
             id:'drag5',
             line: true
         });
@@ -671,7 +600,7 @@
     }
 
     netive.page.countNumber = function(){
-        netive.uiCountStep({ id:'exeCount1', value: 504025 });
+        netive.count.step({ id:'exeCount1', value: 504025 });
         netive.uiCountSlide({ id:'exeCount2', value: 5040.25 });
     }
 
@@ -684,19 +613,19 @@
     }
 
     
-    netive.page.slide = function(){
-        netive.uiSlide();
-        netive.uiSlide({ id:'slide1', current:0, loop:false, dot:true, eff:'slide', speed:300, callback:callback});
-        netive.uiSlide({ id:'slide2', eff:'fade', dot:true, speed:350 });
+    // netive.page.slide = function(){
+    //     netive.swiper.init();
+    //     netive.swiper.init({ id:'slide1', current:0, loop:false, dot:true, eff:'slide', speed:300, callback:callback});
+    //     netive.swiper.init({ id:'slide2', eff:'fade', dot:true, speed:350 });
         
-        netive.uiSlide({ id:'slide3', multi:true, margin:10 });
+    //     netive.swiper.init({ id:'slide3', multi:true, margin:10 });
         
-        netive.uiSlide({ id:'slide4', items:3, margin:10 }); 
+    //     netive.swiper.init({ id:'slide4', items:3, margin:10 }); 
 
-        function callback(v){
-            console.log(v);
-        }
-    }
+    //     function callback(v){
+    //         console.log(v);
+    //     }
+    // }
 
     
         

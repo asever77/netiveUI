@@ -109,7 +109,7 @@
     * date : 2018-12-21
     * EXEC statement
     * - netive.uiModal({ option });
-    * - netive.uiModalClose({ option });
+    * - netive.modal.hide({ option });
     * - netive.uiModalResize({ option });
     * - netive.uiCookieModal({ option });
     * - netive.uiCookieModalClose({ option });
@@ -118,8 +118,8 @@
         uiModal: function (opt) {
             return createUiModal(opt);
         },
-        uiModalClose: function (opt) {
-            return createUiModalClose(opt);
+        modal.hide: function (opt) {
+            return createmodal.hide(opt);
         },
         uiModalResize: function (opt) {
             return createUiModalResize(opt);
@@ -200,7 +200,7 @@
             modal_html += '<iframe id="' + iname + '" name="' + iname + '" src="' + parasrc + '" width="' + iwidth + '" height="' + iheight + '" title="' + ititle + '" orgw="' + iwidth + '" orgh="' + iheight + '"></iframe>';
             modal_html += '</div>';
             !$ui.browser.mobile ?
-                modal_html += '<button type="button" class="btn-close ui-modal-closecallback" onclick="netive.uiModalClose({ id:\'' + opt.id + '\', remove: ' + remove + ' })"><span>닫기</span></button>' : '';
+                modal_html += '<button type="button" class="btn-close ui-modal-closecallback" onclick="netive.modal.hide({ id:\'' + opt.id + '\', remove: ' + remove + ' })"><span>닫기</span></button>' : '';
             modal_html += '</div>';
             modal_html += '</section>';
 
@@ -245,16 +245,16 @@
             // 	!!icallback ? icallback() : '';
             // };
             
-            uiModalOpen(opt);
+            modal.show(opt);
         }
         console.log(!opt.link)
         if (!opt.link) {
             //모달코드가 이미 페이지안에 있을 경우
-            ($('#' + opt.id).attr('aria-hidden') === 'true') ? uiModalOpen(opt) : '';
+            ($('#' + opt.id).attr('aria-hidden') === 'true') ? modal.show(opt) : '';
         } else {
             // Ajax 모달 
             !!$('#' + opt.id).length ?
-                uiModalOpen(opt) :
+                modal.show(opt) :
                 $ui.uiAjax({
                     id: !!opt.born ? opt.born : !$('#baseLayer').length ? opt.born = $('body') : 'baseLayer',
                     url: opt.link,
@@ -263,12 +263,12 @@
                     type: opt.ajax_type,
                     add: true,
                     callback: function () {
-                        uiModalOpen(opt);
+                        modal.show(opt);
                     }
                 });
         }
     }
-    function uiModalOpen(opt) {
+    function modal.show(opt) {
         
         var $modal = $('#' + opt.id),
             $modalWrap = $modal.find('.ui-modal-wrap'),
@@ -739,7 +739,7 @@
         }
         $modal.find('.ui-modal-close').off('click.uilayerpop').on('click.uilayerpop', function (e) {
             e.preventDefault();
-            $ui.uiModalClose({ id: opt.id });
+            $ui.modal.hide({ id: opt.id });
         });
     }
     function createUiModalResize(opt) {
@@ -928,7 +928,7 @@
         }
     }
     netive.uiModal.focusid = '';
-    function createUiModalClose(opt) {
+    function createmodal.hide(opt) {
         var opt = $.extend(true, {}, $('#' + opt.id).data('opt'), opt),
             $modal = $('#' + opt.id),
             $modalshow = $('.ui-modal[opened="true"]'),
@@ -1087,7 +1087,7 @@
     function creaeteUiCookieModalClose(opt){
         $('#' + opt.cookiename).prop('checked') ?
             $ui.uiCookieSet({ name:opt.cookiename, value:true, term:365 }) : '';
-        $ui.uiModalClose({ id:opt.modalid });
+        $ui.modal.hide({ id:opt.modalid });
     }
 
     /*
@@ -1154,14 +1154,14 @@
 			});
 
 			$('#modalSystemBtn1').off('click.confirm').on('click.confirm', function () {
-				netive.uiModalClose({ 
+				netive.modal.hide({ 
 					id: 'modalSystem',
 					remove: true, 
 					closeback: opt.confirmCallback
 				});
 			});
 			$('#modalSystemBtn2, .btn-close').off('click.confirm').on('click.confirm', function () {
-				netive.uiModalClose({ 
+				netive.modal.hide({ 
 					id: 'modalSystem', 
 					remove: true, 
 					closeback: opt.cancelCallback 

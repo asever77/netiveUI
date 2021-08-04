@@ -124,7 +124,7 @@ if (!Object.keys){
 			return w;
 		}
 
-		win[global] = createNameSpace('netiveUI.plugins', {
+		win[global] = createNameSpace(namespace, {
 			uiNameSpace: function (identifier, module) { 
 				return createNameSpace(identifier, module); 
 			}
@@ -202,6 +202,58 @@ if (!Object.keys){
 		}
 	};
 
+	//jquery easing add
+	var easings = {
+		linear : function(t,b,c,d){return c*t/d+b;},
+		easeInQuad : function(t,b,c,d){return c*(t/=d)*t+b;},
+		easeOutQuad : function(t,b,c,d){return -c*(t/=d)*(t-2)+b;},
+		easeInOutQuad : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t+b;return -c/2*((--t)*(t-2)-1)+b;},
+		easeOutInQuad : function(t,b,c,d){if(t < d/2)return easings.easeOutQuad(t*2,b,c/2,d);return easings.easeInQuad((t*2)-d,b+c/2,c/2,d);},
+		easeInCubic : function(t,b,c,d){return c*(t/=d)*t*t+b;},
+		easeOutCubic : function(t,b,c,d){return c*((t=t/d-1)*t*t+1)+b;},
+		easeInOutCubic : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t+b;return c/2*((t-=2)*t*t+2)+b;},
+		easeOutInCubic : function(t,b,c,d){if(t<d/2)return easings.easeOutCubic(t*2,b,c/2,d);return easings.easeInCubic((t*2)-d,b+c/2,c/2,d);},
+		easeInQuart : function(t,b,c,d){return c*(t/=d)*t*t*t+b;},
+		easeOutQuart : function(t,b,c,d){return -c*((t=t/d-1)*t*t*t-1)+b;},
+		easeInOutQuart : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t+b;return -c/2*((t-=2)*t*t*t-2)+b;},
+		easeOutInQuart : function(t,b,c,d){if(t<d/2)return easings.easeOutQuart(t*2,b,c/2,d);return easings.easeInQuart((t*2)-d,b+c/2,c/2,d);},
+		easeInQuint : function(t,b,c,d){return c*(t/=d)*t*t*t*t+b;},
+		easeOutQuint : function(t,b,c,d){return c*((t=t/d-1)*t*t*t*t+1)+b;},
+		easeInOutQuint : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t*t+b;return c/2*((t-=2)*t*t*t*t+2)+b;},
+		easeOutInQuint : function(t,b,c,d){if(t<d/2)return easings.easeOutQuint(t*2,b,c/2,d);return easings.easeInQuint((t*2)-d,b+c/2,c/2,d);},
+		easeInSine : function(t,b,c,d){return -c*Math.cos(t/d*(Math.PI/2))+c+b;},
+		easeOutSine : function(t,b,c,d){return c*Math.sin(t/d*(Math.PI/2))+b;},
+		easeInOutSine : function(t,b,c,d){return -c/2*(Math.cos(Math.PI*t/d)-1)+b;},
+		easeOutInSine : function(t,b,c,d){if(t<d/2)return easings.easeOutSine(t*2,b,c/2,d);return easings.easeInSine((t*2)-d,b+c/2,c/2,d);},
+		easeInExpo : function(t,b,c,d){return (t===0)? b : c*Math.pow(2,10*(t/d-1))+b-c*0.001;},
+		easeOutExpo : function(t,b,c,d){return (t==d)? b+c : c*1.001*(-Math.pow(2,-10*t/d)+1)+b;},
+		easeInOutExpo : function(t,b,c,d){if(t===0)return b;if(t==d)return b+c;if((t/=d/2)<1)return c/2*Math.pow(2,10*(t-1))+b-c*0.0005;return c/2*1.0005*(-Math.pow(2,-10*--t)+2)+b;},
+		easeOutInExpo : function(t,b,c,d){if(t<d/2)return easings.easeOutExpo(t*2,b,c/2,d);return easings.easeInExpo((t*2)-d,b+c/2,c/2,d);},
+		easeInCirc : function(t,b,c,d){return -c*(Math.sqrt(1-(t/=d)*t)-1)+b;},
+		easeOutCirc : function(t,b,c,d){return c*Math.sqrt(1-(t=t/d-1)*t)+b;},
+		easeInOutCirc : function(t,b,c,d){if((t/=d/2)<1)return -c/2*(Math.sqrt(1-t*t)-1)+b;return c/2*(Math.sqrt(1-(t-=2)*t)+1)+b;},
+		easeOutInCirc : function(t,b,c,d){if (t<d/2)return easings.easeOutCirc(t*2,b,c/2,d);return easings.easeInCirc((t*2)-d,b+c/2,c/2,d);},		
+		easeInElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return -(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;},
+		easeOutElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return (a*Math.pow(2,-10*t)*Math.sin((t*d-s)*(2*Math.PI)/p)+c+b);},
+		easeInOutElastic : function(t,b,c,d,a,p){if(t===0)return b;if((t/=d/2)==2)return b+c;var s,p=d*(.3*1.5),a=0;var s,p=(!p||typeof(p)!='number')? d*(.3*1.5) : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);if(t<1)return -.5*(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;return a*Math.pow(2,-10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p)*.5+c+b;},
+		easeOutInElastic : function(t,b,c,d,a,p){if (t<d/2)return easings.easeOutElastic(t*2,b,c/2,d,a,p);return easings.easeInElastic((t*2)-d,b+c/2,c/2,d,a,p);},
+		easeInBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*(t/=d)*t*((s+1)*t-s)+b;},
+		easeOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*((t=t/d-1)*t*((s+1)*t+s)+1)+b;},
+		easeInOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;if((t/=d/2)<1)return c/2*(t*t*(((s*=(1.525))+1)*t-s))+b;return c/2*((t-=2)*t*(((s*=(1.525))+1)*t+s)+2)+b;},
+		easeOutInBack : function(t,b,c,d,s){if(t<d/2)return easings.easeOutBack(t*2,b,c/2,d,s);return easings.easeInBack((t*2)-d,b+c/2,c/2,d,s);},			
+		easeInBounce : function(t,b,c,d){return c-easings.easeOutBounce(d-t,0,c,d)+b;},
+		easeOutBounce : function(t,b,c,d){if((t/=d)<(1/2.75))return c*(7.5625*t*t)+b;else if(t<(2/2.75))return c*(7.5625*(t-=(1.5/2.75))*t+.75)+b;else if(t<(2.5/2.75))return c*(7.5625*(t-=(2.25/2.75))*t+.9375)+b;else return c*(7.5625*(t-=(2.625/2.75))*t+.984375)+b;},
+		easeInOutBounce : function(t,b,c,d){if(t<d/2)return easings.easeInBounce(t*2,0,c,d)*.5+b;else return easings.easeOutBounce(t*2-d,0,c,d)*.5+c*.5+b;},
+		easeOutInBounce : function(t,b,c,d){if(t<d/2)return easings.easeOutBounce(t*2,b,c/2,d);return easings.easeInBounce((t*2)-d,b+c/2,c/2,d);}
+	};
+	var easing;
+	for (easing in easings) {
+		$.easing[easing] = (function(easingname) {
+			return function(x, t, b, c, d) {
+				return easings[easingname](t, b, c, d);
+			};
+		})(easing);
+	}
 
 	//set device information
 	(function () {
@@ -370,19 +422,19 @@ if (!Object.keys){
 
 			var xhr = new XMLHttpRequest();	
 			var opt = $.extend(true, {}, this.options, opt);
-			var $base = opt.selector;
+			var $area = opt.area;
 			var loading = opt.loading;
 			var effect = opt.effect;
-			var callback = opt.callback === undefined ? false : opt.callback;
+			var callback = opt.callback || false;
 			var errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
 	
 			if (loading) {
 				win[global].loading.show();
 			}
 	
-			if (effect) {
-				$base.removeClass('changeover action');
-				$base.addClass('changeover');
+			if (!!effect) {
+				$area.removeClass(effect + ' action');
+				$area.addClass(effect);
 			}
 
 			xhr.open(opt.type, opt.url);
@@ -399,9 +451,10 @@ if (!Object.keys){
 					}
 	
 					if (opt.page) {
-						opt.add ? opt.prepend ? $base.prepend(xhr.responseText) : $base.append(xhr.responseText) : $base.html(xhr.responseText);
+						console.log($area);
+						opt.add ? opt.prepend ? $area.prepend(xhr.responseText) : $area.append(xhr.responseText) : $area.html(xhr.responseText);
 						callback && callback();
-						effect && $base.addClass('action');
+						effect && $area.addClass('action');
 					} else {
 						callback && callback(xhr.responseText);
 					}
@@ -546,29 +599,32 @@ if (!Object.keys){
 			}
 
 			var opt = $.extend(true, {}, this.options, opt);
-			var psVal = opt.value;
-			var callback = opt.callback;
-			var ps = opt.ps;
-			var add = opt.add;
-			var focus = opt.focus;
-			var $selector = opt.selector;
-			var effect = opt.effect;
+
+			var { value, callback, ps, add, focus, selector, effect } = opt;
+
+			// var value = opt.value;
+			// var callback = opt.callback;
+			// var ps = opt.ps;
+			// var add = opt.add;
+			// var focus = opt.focus;
+			// var selector = opt.selector;
+			// var effect = opt.effect;
 			
 			//jquery selector인 경우 변환
-			if (!!$selector[0]) {
-				$selector = $selector[0];
+			if (!!selector[0]) {
+				selector = selector[0];
 			}
 
 			switch (ps) {
 				case 'top':
-					$selector.scrollTo({
-						top: psVal + add,
+					selector.scrollTo({
+						top: value + add,
 						behavior: effect
 					});
 	
 					this.checkEnd({
-						selector : $selector,
-						now : $selector.scrollTop,
+						selector : selector,
+						now : selector.scrollTop,
 						ps : 'top',
 						callback : callback,
 						focus : focus
@@ -576,14 +632,14 @@ if (!Object.keys){
 					break;
 
 				case 'left':
-					$selector.scrollTo({
-						left: psVal + add,
+					selector.scrollTo({
+						left: value + add,
 						behavior: effect
 					});
 	
 					this.checkEnd({
-						selector : $selector,
-						now : $selector.scrollTop,
+						selector : selector,
+						now : selector.scrollTop,
 						ps : 'left',
 						callback : callback,
 						focus : focus
@@ -591,17 +647,17 @@ if (!Object.keys){
 					break;
 
 				case 'center':
-					var w = $selector.offsetWidth ;
+					var w = selector.offsetWidth ;
 				
-					$selector.scrollTo({
-						left: psVal - (w / 2) + add,
+					selector.scrollTo({
+						left: value - (w / 2) + add,
 						behavior: effect
 					});
 
 					
 					this.checkEnd({
-						selector : $selector,
-						now : $selector.scrollLeft,
+						selector : selector,
+						now : selector.scrollLeft,
 						ps : 'left',
 						callback : callback,
 						focus : focus
@@ -641,8 +697,73 @@ if (!Object.keys){
 					});
 				}
 			},100);
+		},
+
+		optionsParllax: {
+			id : null,
+			scope : 'window'
+		},
+		parallax: function(opt) {
+			var opt = $.extend(true, {}, win[global].scroll.optionsParllax, opt),
+				$scope = opt.scope === 'window' ? $(win) : opt.scope,
+				$parallax = opt.id === null ? $('.ui-parallax') : $('#' + opt.id),
+				$item = $parallax.find('> .ui-parallax-item'),
+				len = $item.length,
+				i = 0;
+
+			// var checkVisible = function (){
+			// 	var itemTop = $item.eq(i).offset().top;
+
+			// 	if ($scope.outerHeight() > itemTop && i < len) {
+			// 		$item.eq(i).addClass('parallax-s');
+			// 		i = i + 1;
+			// 		checkVisible();
+			// 	}
+			// }
+			// checkVisible();
+
+			act();
+
+			$scope.off('scroll.win').on('scroll.win', act);
+			$item.find('*').off('focus.parallax').on('focus.parallax', function(){
+				$(this).closest('.ui-parallax-item').addClass('parallax-s');
+			});
+
+			function act() {
+				var $parallax = $('.ui-parallax');
+				var $item = $parallax.find('.ui-parallax-item');
+
+				var scopeH = $scope.outerHeight();
+				var scopeT = Math.floor($scope.scrollTop());
+				var baseT = Math.floor($item.eq(0).offset().top);
+
+				for (var i = 0; i < len; i++) {
+					var $current = $item.eq(i);
+					
+					var attrStart = $current.attr('start');
+					var attrEnd = $current.attr('end');
+
+					attrStart === undefined ? attrStart = 0 : '';
+					attrEnd === undefined ? attrEnd = 0 : '';
+
+					var h = Math.floor($current.outerHeight());
+					var start = Math.floor($current.offset().top);
+					var end = h + start;
+					var s = scopeH * Number(attrStart) / 100;
+					var e = scopeH * Number(attrEnd) / 100;
+					
+					if (opt.scope !== 'window') {
+						start = (start + scopeT) - (baseT + scopeT);
+						end = (end + scopeT) - (baseT + scopeT);
+					}
+
+					(scopeT >= start - s) ? $current.addClass('parallax-s') : $current.removeClass('parallax-s');
+					(scopeT >= end - e) ? $current.addClass('parallax-e') : $current.removeClass('parallax-e');
+				}
+			}
 		}
 	}
+
 
 	/**
 	 * parameter get
@@ -1604,7 +1725,6 @@ if (!Object.keys){
 			}
 		}
 	}
-
 
 	win[global].datepicker = {
 		destroy: function(opt){
@@ -2900,11 +3020,6 @@ if (!Object.keys){
 		}
 	}
 
-
-	/* ------------------------
-	* accordion tab  
-	* date : 2020-05-17
-	------------------------ */
 	win[global].accordion = {
 		options: {
 			current: null,
@@ -3208,12 +3323,6 @@ if (!Object.keys){
 		}
 	}
 
-
-	/* ------------------------
-	* name : brick list
-	* date : 2020-06-09
-	* date : 2020-08-18 : 반응형 추가
-	------------------------ */	
 	win[global].masonry = {
 		options: {
 			fixCol: {
@@ -3389,19 +3498,13 @@ if (!Object.keys){
 		}
 	}
 
-
-
-	/* ------------------------
-	* name : dropdown
-	* date : 2020-06-10
-	------------------------ */
 	win[global].dropdown = {
 		options: {
 			ps: 'BL',
 			hold: true,
-			dropSpace: $('body'),
-			dropSrc: false,
-			dropOffset: true,
+			area: $('body'),
+			src: false,
+			offset: true,
 			openback:false,
 			closeback:false
 		},
@@ -3410,20 +3513,21 @@ if (!Object.keys){
 				return false;
 			}
 	
-			var opt = $.extend(true, {}, win[global].dropdown.options, opt),
-				id = opt.id,
-				ps = opt.ps,
-				hold = opt.hold,
-				dropSpace = opt.dropSpace,
-				dropSrc = opt.dropSrc,
-				dropOffset = opt.dropOffset,
-				openback = opt.openback,
-				closeback = opt.closeback;
-	
-			if (!!dropSrc && !$('[data-id="' + opt.id + '"]').length) {
+			var opt = $.extend(true, {}, win[global].dropdown.options, opt);
+			var id = opt.id;
+			var ps = opt.ps;
+			var hold = opt.hold;
+			var area = opt.area;
+			var src = opt.src;
+			var offset = opt.offset;
+			var openback = opt.openback;
+			var closeback = opt.closeback;
+			
+			//ajax 
+			if (!!src && !$('[data-id="' + opt.id + '"]').length) {
 				win[global].ajax.init({
-					selector: dropSpace,
-					url: dropSrc,
+					area: area,
+					url: src,
 					add: true,
 					callback: function(){
 						setDropdown();
@@ -3433,6 +3537,7 @@ if (!Object.keys){
 				setDropdown();
 			}
 			
+			//set
 			function setDropdown(){
 				var $btn = $('#' + id),
 					$pnl = $('[data-id="'+ id +'"]'); 
@@ -3445,7 +3550,7 @@ if (!Object.keys){
 						hold: hold, 
 						openback: openback,
 						closeback: closeback,
-						dropOffset: dropOffset
+						offset: offset
 					});
 				$pnl.attr('aria-hidden', true).attr('aria-labelledby', id)
 					.data('opt', { 
@@ -3454,7 +3559,7 @@ if (!Object.keys){
 						hold: hold, 
 						openback: openback,
 						closeback: closeback,
-						dropOffset: dropOffset
+						offset: offset
 					});
 				
 				//event
@@ -3507,19 +3612,21 @@ if (!Object.keys){
 				closeback = opt.closeback,
 				hold = opt.hold,
 				state = opt.state,
-				dropOffset = opt.dropOffset,
+				offset = opt.offset,
 				btnExpanded =  $btn.attr('aria-expanded'),
 				is_modal = !!$btn.closest('.ui-modal').length,
 	
 				btn_w = Math.ceil($btn.outerWidth()),
 				btn_h = Math.ceil($btn.outerHeight()),
+
 				btn_t = Math.ceil($btn.position().top) + parseInt($btn.css('margin-top')),
 				btn_l = Math.ceil($btn.position().left) + parseInt($btn.css('margin-left')),
+
 				pnl_w = Math.ceil($pnl.outerWidth()),
 				pnl_h = Math.ceil($pnl.outerHeight());
 	
-			//dropOffset: ture 이거나 modal안의 dropdown 일때 position -> offset 으로 위치 값 변경
-			if (dropOffset || is_modal) {
+			//offset: ture 이거나 modal안의 dropdown 일때 position -> offset 으로 위치 값 변경
+			if (offset || is_modal) {
 				btn_t = Math.ceil($btn.offset().top);
 				btn_l = Math.ceil($btn.offset().left);
 				is_modal ? btn_t = btn_t - $(win).scrollTop(): '';
@@ -3536,11 +3643,6 @@ if (!Object.keys){
 			
 			btnExpanded === 'false' ? pnlShow(): pnlHide();
 
-			
-			
-
-			
-	
 			function pnlShow(){
 				var drop_inner = $btn.closest('.ui-drop-pnl').data('id');
 				
@@ -3649,174 +3751,151 @@ if (!Object.keys){
 		}
 	}	
 	
-	
 
-	/* ------------------------
-	* name : object floating
-	* date : 2020-06-10
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiFloating: function (opt) {
-			return createUiFloating(opt);
-		}
-	});
-	win[global].uiFloating.option = {
-		ps: 'bottom',
-		add: false,
-		fix: true,
-		callback: false
-	};
-	function createUiFloating(opt) {
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiFloating.option, opt),
-			id = opt.id,
-			ps = opt.ps,
-			add = opt.add,
-			fix = opt.fix,
-			callback = opt.callback,
-			$id = $('#' + id),
-			$idwrap = $id.find('.ui-floating-wrap'),
-			$add = $('#' + add),
-			$addwrap = $add.find('.ui-floating-wrap').length ? $add.find('.ui-floating-wrap') : $add,
-			c = 'ui-fixed-' + ps,
-			timer;
-		
-		!!fix ? $id.addClass(c) : '';
-		
-		if ($id.length) {
-			clearTimeout(timer);
-			timer = setTimeout(act, 300);
-		}
-		
-		$(win).on('scroll.win', function(){
-			if ($id.length) {
-				act();
-				clearTimeout(timer);
-				timer = setTimeout(act, 500);
-			}
-		});
-		
-		function act(){
-			var tt = Math.ceil($id.offset().top),
-				th = Math.ceil($idwrap.outerHeight()),
-				st = $(win).scrollTop(),
-				wh = Math.ceil( win[global].browser.mobile ? window.screen.height : $(win).outerHeight() ),
-				dh = Math.ceil($(doc).outerHeight()),
-				lh = (!!add) ? $add.outerHeight() : 0 ,
-				lt = (!!add) ? dh - ($add.offset().top).toFixed(0) : 0,
-				lb = 0, 
-				_lb;
+	win[global].floating = {
+		options: {
+			ps: 'bottom',
+			add: false,
+			fix: true,
+			callback: false
+		}, 
+		base: function(opt) {
+			var opt = opt === undefined ? {} : opt,
+				opt = $.extend(true, {}, win[global].floating.options, opt),
+				id = opt.id,
+				ps = opt.ps,
+				add = opt.add,
+				fix = opt.fix,
+				callback = opt.callback,
+				$id = $('#' + id),
+				$idwrap = $id.find('.ui-floating-wrap'),
+				$add = $('#' + add),
+				$addwrap = $add.find('.ui-floating-wrap').length ? $add.find('.ui-floating-wrap') : $add,
+				c = 'ui-fixed-' + ps,
+				timer;
 			
-			$idwrap.removeAttr('style');
-			$id.data('fixbottom', th);
-
-			if (!!add) {
-				if ($add.data('fixbottom') === undefined) {
-					$add.data('fixbottom', th + $addwrap.outerHeight());
-				}
+			!!fix ? $id.addClass(c) : '';
+			
+			if ($id.length) {
+				clearTimeout(timer);
+				timer = setTimeout(act, 300);
 			}
+			
+			$(win).on('scroll.win', function(){
+				if ($id.length) {
+					act();
+					clearTimeout(timer);
+					timer = setTimeout(act, 500);
+				}
+			});
+			
+			function act(){
+				var tt = Math.ceil($id.offset().top),
+					th = Math.ceil($idwrap.outerHeight()),
+					st = $(win).scrollTop(),
+					wh = Math.ceil( win[global].browser.mobile ? window.screen.height : $(win).outerHeight() ),
+					dh = Math.ceil($(doc).outerHeight()),
+					lh = (!!add) ? $add.outerHeight() : 0 ,
+					lt = (!!add) ? dh - ($add.offset().top).toFixed(0) : 0,
+					lb = 0, 
+					_lb;
+				
+				$idwrap.removeAttr('style');
+				$id.data('fixbottom', th);
 
-			!!add ? lh = lh + Number($add.data('fixtop') === undefined ? 0 : $add.data('fixtop')) : '';
-			!!callback ? callback({ id:id, scrolltop:st, boundaryline: tt - lh }) : '';
-			$id.css('height', th);
+				if (!!add) {
+					if ($add.data('fixbottom') === undefined) {
+						$add.data('fixbottom', th + $addwrap.outerHeight());
+					}
+				}
 
-			// 상단으로 고정
-			if (ps === 'top') {
-				// 고정 > 흐름
-				if (fix === true) {
-					if (tt - lh <= st) { 
-						$id.removeClass(c).data('fixtop', false);
-						$idwrap.removeAttr('style');
-					} else { 
-						$id.addClass(c).data('fixtop', lh);
-						$idwrap.css('top', lh);
+				!!add ? lh = lh + Number($add.data('fixtop') === undefined ? 0 : $add.data('fixtop')) : '';
+				!!callback ? callback({ id:id, scrolltop:st, boundaryline: tt - lh }) : '';
+				$id.css('height', th);
+
+				// 상단으로 고정
+				if (ps === 'top') {
+					// 고정 > 흐름
+					if (fix === true) {
+						if (tt - lh <= st) { 
+							$id.removeClass(c).data('fixtop', false);
+							$idwrap.removeAttr('style');
+						} else { 
+							$id.addClass(c).data('fixtop', lh);
+							$idwrap.css('top', lh);
+						}
+					} 
+					// 흐름 > 고정	
+					else {
+						if (tt - lh <= st) { 
+							$id.addClass(c).data('fixtop', lh);
+							$idwrap.css('top', lh);
+						} else { 
+							$id.removeClass(c).data('fixtop', false);
+							$idwrap.removeAttr('style');
+						}
 					}
 				} 
-				// 흐름 > 고정	
-				else {
-					if (tt - lh <= st) { 
-						$id.addClass(c).data('fixtop', lh);
-						$idwrap.css('top', lh);
-					} else { 
-						$id.removeClass(c).data('fixtop', false);
-						$idwrap.removeAttr('style');
+				// 하단으로 고정
+				else if (ps === 'bottom') {
+					if (!!add) { 
+						lb = th + Number($add.data('fixbottom'));
+						$id.data('fixbottom', lb);
 					}
-				}
-			} 
-			// 하단으로 고정
-			else if (ps === 'bottom') {
-				if (!!add) { 
-					lb = th + Number($add.data('fixbottom'));
-					$id.data('fixbottom', lb);
-				}
-				_lb = (lb - th < 0) ? 0 : lb - th;
-				// 고정 > 흐름
-				if (fix === true) {
-					if (tt + th + _lb - wh <= st) { 
-						$id.removeClass(c);
-						$idwrap.removeAttr('style');
+					_lb = (lb - th < 0) ? 0 : lb - th;
+					// 고정 > 흐름
+					if (fix === true) {
+						if (tt + th + _lb - wh <= st) { 
+							$id.removeClass(c);
+							$idwrap.removeAttr('style');
+						} else {
+							$id.addClass(c)
+							$idwrap.css('bottom', _lb);
+						}
+							
+					// 흐름 > 고정		
 					} else {
-						$id.addClass(c)
-						$idwrap.css('bottom', _lb);
-					}
-						
-				// 흐름 > 고정		
-				} else {
-					if (tt + th + _lb - wh <= st) {
-						$id.addClass(c);
-						$idwrap.css('bottom', _lb);
-					} else {
-						$id.removeClass(c);
-						$idwrap.removeAttr('style');
+						if (tt + th + _lb - wh <= st) {
+							$id.addClass(c);
+							$idwrap.css('bottom', _lb);
+						} else {
+							$id.removeClass(c);
+							$idwrap.removeAttr('style');
+						}
 					}
 				}
 			}
-		}
-	}
-
-
-	/* ------------------------
-	* name : object floating Range
-	* date : 2020-06-10
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiFloatingRange: function (opt) {
-			return createUiFloatingRange(opt);
-		}
-	});
-	win[global].uiFloatingRange.option = {
-		margin: 0
-	};
-	function createUiFloatingRange(opt) {
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiFloatingRange.option, opt),
-			id = opt.id,
-			mg = opt.margin,
-			$range = $('#' + id),
-			$item = $range.find('.ui-floating-range-item'),
-			item_h = $item.outerHeight(),
-			range_t = $range.offset().top,
-			range_h = $range.outerHeight(),
-			win_scrt = $(win).scrollTop(),
-			itemTop = $item.position().top;
-						
-		$(win).on('scroll.win', function(){
-			act();
-		});
-		
-		function act(){
-			range_t = $range.offset().top;
-			range_h = $range.outerHeight();
-			win_scrt = $(win).scrollTop();
+		},
+		range: function(opt) {
+			var opt = opt === undefined ? {} : opt,
+				id = opt.id,
+				mg = opt.margin ?? 0,
+				$range = $('#' + id),
+				$item = $range.find('.ui-floating-range-item'),
+				item_h = $item.outerHeight(),
+				range_t = $range.offset().top,
+				range_h = $range.outerHeight(),
+				win_scrt = $(win).scrollTop(),
+				itemTop = $item.position().top;
+							
+			$(win).on('scroll.win', function(){
+				act();
+			});
 			
-			if (range_t <= (win_scrt - itemTop + mg)) {
-				if ((range_t + range_h) - item_h < (win_scrt + mg)) {
-					$item.css('top', range_h - item_h - itemTop);
+			function act(){
+				range_t = $range.offset().top;
+				range_h = $range.outerHeight();
+				win_scrt = $(win).scrollTop();
+				
+				if (range_t <= (win_scrt - itemTop + mg)) {
+					if ((range_t + range_h) - item_h < (win_scrt + mg)) {
+						$item.css('top', range_h - item_h - itemTop);
+					} else {
+						$item.css('top', (win_scrt - itemTop + mg) - range_t );
+					}
 				} else {
-					$item.css('top', (win_scrt - itemTop + mg) - range_t );
+					$item.css('top', 0);
 				}
-			} else {
-				$item.css('top', 0);
 			}
 		}
 	}
@@ -3846,537 +3925,300 @@ if (!Object.keys){
 			sConfirmCallback: false,
 			sCancelCallback: false
 		},
+		optionsClose : {
+			remove: false,
+			endfocus: false
+		},
 		show: function(opt){
+			var opt = $.extend(true, {}, win[global].modal.options, opt),
+				wrap = opt.wrap === false ? $('body') : typeof opt.wrap === 'object' ? opt.wrap : $('#' + opt.wrap),
+				type = opt.type,
+				id = opt.id,
+				src = opt.src,
+				full = opt.full,
+				ps = opt.ps,
+				mg = opt.mg,
+				remove = opt.remove,
+				w = opt.modalWidth,
+				h = opt.modalHeight,
+				innerScroll = opt.innerScroll,
+				scr_t = $(win).scrollTop(),
+				endfocus = opt.endfocus === false ? document.activeElement : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus,
+				callback = opt.callback,
+				closeCallback = opt.closeCallback,
+				timer;
+			
+			var sMessage = opt.sMessage,
+				sBtnConfirmTxt = opt.sBtnConfirmTxt,
+				sBtnCancelTxt = opt.sBtnCancelTxt,
+				sZindex = opt.sZindex,
+				sClass = opt.sClass,
+				sConfirmCallback = opt.sConfirmCallback,
+				sCancelCallback = opt.sCancelCallback;
 
-		},
-		hide: function(){
-
-		}
-	}
-	/* ------------------------
-	* name : modal
-	* date : 2020-06-11
-	------------------------ */	
-	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiModalOpen: function (opt) {
-			return createUiModalOpen(opt);
-		},
-		uiModalClose: function (opt) {
-			return createUiModalClose(opt);
-		},
-		uiSystemModalClose: function () {
-			return createUiSystemModalClose();
-		}
-	});
-	win[global].uiModalOpen.option = {
-		type: 'normal',
-		wrap: false,
-		full: false,
-		ps: 'center',
-		src: false,
-		remove: false,
-		modalWidth: false,
-		modalHeight: false,
-		innerScroll: false,
-		mg: 20,
-		callback:false,
-		closeCallback:false,
-		endfocus:false,
-
-		sMessage: '',
-		sBtnConfirmTxt: 'Ok',
-		sBtnCancelTxt: 'Cancel',
-		sZindex: false,
-		sClass: 'type-system',
-		sConfirmCallback: false,
-		sCancelCallback: false
-	}
-	function createUiModalOpen(opt) {
-		var opt = $.extend(true, {}, win[global].uiModalOpen.option, opt),
-			wrap = opt.wrap === false ? $('body') : typeof opt.wrap === 'object' ? opt.wrap : $('#' + opt.wrap),
-			type = opt.type,
-			id = opt.id,
-			src = opt.src,
-			full = opt.full,
-			ps = opt.ps,
-			mg = opt.mg,
-			remove = opt.remove,
-			w = opt.modalWidth,
-			h = opt.modalHeight,
-			innerScroll = opt.innerScroll,
-			scr_t = $(win).scrollTop(),
-			endfocus = opt.endfocus === false ? document.activeElement : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus,
-			callback = opt.callback,
-			closeCallback = opt.closeCallback,
-			timer;
-		
-		var sMessage = opt.sMessage,
-			sBtnConfirmTxt = opt.sBtnConfirmTxt,
-			sBtnCancelTxt = opt.sBtnCancelTxt,
-			sZindex = opt.sZindex,
-			sClass = opt.sClass,
-			sConfirmCallback = opt.sConfirmCallback,
-			sCancelCallback = opt.sCancelCallback;
-
-		if (type === 'normal') {
-			if (!!src && !$('#' + opt.id).length) {
-				netive.ajax.init({
-					selector: wrap,
-					url: src,
-					add: true,
-					callback: function(){
-						act();
-					}
-				});
+			if (type === 'normal') {
+				if (!!src && !$('#' + opt.id).length) {
+					win[global].ajax.init({
+						area: wrap,
+						url: src,
+						add: true,
+						callback: function(){
+							act();
+						}
+					});
+				} else {
+					act();
+				}
 			} else {
+				endfocus = null;
+				remove = true;
+				id = 'uiSystemModal';
+				makeSystemModal();
+			}
+
+			if (endfocus === 'body') {
+				endfocus = $('body').data('active');
+			}
+
+			function makeSystemModal(){
+				var htmlSystem = '';
+				
+				htmlSystem += '<div class="ui-modal '+ sClass +'" id="uiSystemModal">';
+				htmlSystem += '<div class="ui-modal-wrap">';
+				htmlSystem += '<div class="ui-modal-body">';
+				htmlSystem += sMessage;
+				htmlSystem += '</div>';
+				htmlSystem += '<div class="ui-modal-footer">';
+				htmlSystem += '<div class="btn-area stick">';
+
+				if (type === 'confirm') {
+					htmlSystem += '<button type="button" class="btn-base ui-modal-cancel"><span>'+ sBtnCancelTxt +'</span></button>';
+				}
+
+				htmlSystem += '<button type="button" class="btn-base ui-modal-confirm"><span>'+ sBtnConfirmTxt +'</span></button>';	
+				htmlSystem += '</div>';
+				htmlSystem += '</div>';
+				htmlSystem += '</div>';
+				htmlSystem += '</div>';
+
+				$('body').append(htmlSystem);
+				htmlSystem = '';
 				act();
 			}
-		} else {
-			endfocus = null;
-			remove = true;
-			id = 'uiSystemModal';
-			makeSystemModal();
-		}
 
-		if (endfocus === 'body') {
-			endfocus = $('body').data('active');
-		}
+			function act(){
+				var $modal = $('#' + id);
+				var $modalWrap = $modal.find('> .ui-modal-wrap');
+				var $modalBody = $modalWrap.find('> .ui-modal-body');
+				var $modalHeader = $modalWrap.find('> .ui-modal-header');
+				var $modalFooter = $modalWrap.find('> .ui-modal-footer');
+				var headerH = 0;
+				var footerH = 0;
 
-		function makeSystemModal(){
-			var htmlSystem = '';
-			
-			htmlSystem += '<div class="ui-modal '+ sClass +'" id="uiSystemModal">';
-			htmlSystem += '<div class="ui-modal-wrap">';
-			htmlSystem += '<div class="ui-modal-body">';
-			htmlSystem += sMessage;
-			htmlSystem += '</div>';
-			htmlSystem += '<div class="ui-modal-footer">';
-			htmlSystem += '<div class="btn-area stick">';
+				$('.ui-modal').removeClass('current');
+				$('body').addClass('scroll-no');
+				
+				$modal
+					.attr('tabindex', '0')
+					.attr('n', $('.ui-modal.open').length)
+					.attr('role', 'dialog')
+					.addClass('n' + $('.ui-modal.open').length + ' current')
+					.data('scrolltop', scr_t)
+					.data('active', endfocus)
+					.data('closecallback', closeCallback);
 
-			if (type === 'confirm') {
-				htmlSystem += '<button type="button" class="btn-base ui-modal-cancel"><span>'+ sBtnCancelTxt +'</span></button>';
+				if (full) {
+					$modal.addClass('type-full');
+					mg = 0;
+				} 
+
+				$('html').addClass('is-modal');
+				
+				switch (ps) {
+					case 'center' :
+						$modal.addClass('ready ps-center');
+						break;
+					case 'top' :
+						$modal.addClass('ready ps-top');
+						break;
+					case 'bottom' :
+						$modal.addClass('ready ps-bottom');
+						break;
+				}
+
+				headerH = $modalHeader.length ? $modalHeader.outerHeight() : 0;
+				footerH = $modalFooter.length ? $modalFooter.outerHeight() : 0;
+
+				if (!full) {
+					//lyaer modal
+					if (!h) {
+						var win_h = $(win).outerHeight();
+						var max_h = win_h - (headerH + footerH + (mg * 2));
+
+						$modalBody
+						.addClass('is-scrollable')
+						.css({
+							'max-height' : max_h + 'px',
+							'overflow-y' : 'auto',
+							'height' : '100%'
+						});
+					} else {
+						$modalBody
+						.addClass('is-scrollable')
+						.css({
+							'overflow-y' : 'auto',
+							'height' : h + 'px'
+						});
+					}
+				} else {
+					//full modal
+					!!w && $modalWrap.css('width', w);
+					if (!!h) {
+						$modalBody.css({ 
+							'height': h + 'px', 
+							'overflow-y' : 'auto' 
+						});
+					} else {
+						$modalBody.css({ 
+							'min-height': $(window).outerHeight() + 'px', 
+							'overflow-y' : 'auto' ,
+							'padding-top': (headerH + 10)  + 'px',
+							'padding-bottom': '75px'
+						});
+					}
+				}
+				
+				clearTimeout(timer);
+				timer = setTimeout(function(){
+					win[global].focus.loop({ 
+						selector: $modal, 
+					});
+					// win[global].focus.loop({ 
+					// 	selector: $modal, 
+					// 	type:'hold' 
+					// });
+
+					$modal.addClass('open');
+
+					!!sZindex && $modal.css('z-index', sZindex);
+					callback && callback(opt);
+
+					$('html').off('click.uimodaldim').on('click.uimodaldim', function(e){
+						if(!$(e.target).closest('.ui-modal-wrap').length) {
+							var openN = [];
+							
+							$('.ui-modal.open').each(function(){
+								var thisN = $(this).attr('n');
+
+								thisN !== undefined ?
+									openN.push(thisN) : '';
+							});
+							
+							var currentID = $('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id');
+
+							if (currentID !== 'uiSystemModal') {
+								netive.modal.hide({ 
+									id: currentID, 
+									remove: remove,
+									closeCallback: closeCallback
+								});
+							}
+						}
+					});
+
+					$(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight() ?
+						$modal.addClass('is-over'):
+						$modal.removeClass('is-over');
+				},150);
+
+				$(doc).find('.ui-modal-close').off('click.close').on('click.close', function(e){
+					netive.modal.hide({ 
+						id: $(this).closest('.ui-modal').attr('id'), 
+						remove: remove,
+						closeCallback: closeCallback
+					});
+				});
+				$(doc).find('.ui-modal-confirm').off('click.callback').on('click.callback', function(e){
+					sConfirmCallback();
+				});
+				$(doc).find('.ui-modal-cancel').off('click.callback').on('click.callback', function(e){
+					sCancelCallback();
+				});
+				$(doc).find('.ui-modal').find('button, a').off('click.act').on('click.act', function(e){
+					var $this = $(this); 
+					$this.closest('.ui-modal').data('active', $this);
+				});
+
+				$modalWrap.on('transitionend.modal', function(){
+					if (!!full) {
+						$modal.addClass('fix-header');
+						$modalBody.css({
+							'padding-top': (headerH + 10)  + 'px',
+
+						});
+					}
+				});
 			}
-
-			htmlSystem += '<button type="button" class="btn-base ui-modal-confirm"><span>'+ sBtnConfirmTxt +'</span></button>';	
-			htmlSystem += '</div>';
-			htmlSystem += '</div>';
-			htmlSystem += '</div>';
-			htmlSystem += '</div>';
-
-			$('body').append(htmlSystem);
-			htmlSystem = '';
-			act();
-		}
-
-		function act(){
+		},
+		hide: function(opt){
+			var opt = $.extend(true, {}, win[global].modal.optionsClose, opt);
+			var id = opt.id;
+			var type = opt.type;
+			var remove = opt.remove;
 			var $modal = $('#' + id);
+			var endfocus = opt.endfocus;
+			var closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') === undefined ? false : $modal.data('closecallback') : opt.closeCallback;
 			var $modalWrap = $modal.find('> .ui-modal-wrap');
-			var $modalBody = $modalWrap.find('> .ui-modal-body');
-			var $modalHeader = $modalWrap.find('> .ui-modal-header');
-			var $modalFooter = $modalWrap.find('> .ui-modal-footer');
-			var headerH = 0;
-			var footerH = 0;
 
-			$('.ui-modal').removeClass('current');
-			$('body').addClass('scroll-no');
-			
-			$modal
-				.attr('tabindex', '0')
-				.attr('n', $('.ui-modal.open').length)
-				.attr('role', 'dialog')
-				.addClass('n' + $('.ui-modal.open').length + ' current')
-				.data('scrolltop', scr_t)
-				.data('active', endfocus)
-				.data('closecallback', closeCallback);
+			$modalWrap.off('transitionend.modal');
+			$modal.removeClass('open').addClass('close');
+			$modal.removeClass('fix-header');
 
-			if (full) {
-				$modal.addClass('type-full');
-				mg = 0;
-			} 
+			var timer;
+			var $modalPrev = $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1));
 
-			$('html').addClass('is-modal');
-			
-			switch (ps) {
-				case 'center' :
-					$modal.addClass('ready ps-center');
-					break;
-				case 'top' :
-					$modal.addClass('ready ps-top');
-					break;
-				case 'bottom' :
-					$modal.addClass('ready ps-bottom');
-					break;
-			}
+			if (type !== 'system') {
+				if (!$('.ui-modal.open').length) {
+					endfocus = endfocus === false ? $('body').data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
 
-			headerH = $modalHeader.length ? $modalHeader.outerHeight() : 0;
-			footerH = $modalFooter.length ? $modalFooter.outerHeight() : 0;
-
-			if (!full) {
-				//lyaer modal
-				if (!h) {
-					var win_h = $(win).outerHeight();
-					var max_h = win_h - (headerH + footerH + (mg * 2));
-
-					$modalBody
-					.addClass('is-scrollable')
-					.css({
-						'max-height' : max_h + 'px',
-						'overflow-y' : 'auto',
-						'height' : '100%'
-					});
+					$('html').off('click.uimodaldim');
+					$('html').removeClass('is-modal');
 				} else {
-					$modalBody
-					.addClass('is-scrollable')
-					.css({
-						'overflow-y' : 'auto',
-						'height' : h + 'px'
-					});
-				}
-			} else {
-				//full modal
-				!!w && $modalWrap.css('width', w);
-				if (!!h) {
-					$modalBody.css({ 
-						'height': h + 'px', 
-						'overflow-y' : 'auto' 
-					});
-				} else {
-					$modalBody.css({ 
-						'min-height': $(window).outerHeight() + 'px', 
-						'overflow-y' : 'auto' ,
-						'padding-top': (headerH + 10)  + 'px',
-						'padding-bottom': '75px'
-					});
+					endfocus = endfocus === false ? $modalPrev.data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
 				}
 			}
+
+			$modalPrev.addClass('current');
+			
+			win[global].scroll.move({
+				value: Number($modal.data('scrolltop'))
+			});
 			
 			clearTimeout(timer);
 			timer = setTimeout(function(){
-				win[global].focus.loop({ 
-					selector: $modal, 
-				});
-				// win[global].focus.loop({ 
-				// 	selector: $modal, 
-				// 	type:'hold' 
-				// });
-
-				$modal.addClass('open');
-
-				!!sZindex && $modal.css('z-index', sZindex);
-				callback && callback(opt);
-
-				$('html').off('click.uimodaldim').on('click.uimodaldim', function(e){
-					if(!$(e.target).closest('.ui-modal-wrap').length) {
-						var openN = [];
-						
-						$('.ui-modal.open').each(function(){
-							var thisN = $(this).attr('n');
-
-							thisN !== undefined ?
-								openN.push(thisN) : '';
-						});
-						
-						var currentID = $('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id');
-
-						if (currentID !== 'uiSystemModal') {
-							netive.uiModalClose({ 
-								id: currentID, 
-								remove: remove,
-								closeCallback: closeCallback
-							});
-						}
-					}
-				});
-
-				$(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight() ?
-					$modal.addClass('is-over'):
-					$modal.removeClass('is-over');
-			},150);
-
-			$(doc).find('.ui-modal-close').off('click.close').on('click.close', function(e){
-				netive.uiModalClose({ 
-					id: $(this).closest('.ui-modal').attr('id'), 
-					remove: remove,
-					closeCallback: closeCallback
-				});
-			});
-			$(doc).find('.ui-modal-confirm').off('click.callback').on('click.callback', function(e){
-				sConfirmCallback();
-			});
-			$(doc).find('.ui-modal-cancel').off('click.callback').on('click.callback', function(e){
-				sCancelCallback();
-			});
-			$(doc).find('.ui-modal').find('button, a').off('click.act').on('click.act', function(e){
-				var $this = $(this); 
-				$this.closest('.ui-modal').data('active', $this);
-			});
-
-			$modalWrap.on('transitionend.modal', function(){
-				if (!!full) {
-					$modal.addClass('fix-header');
-					$modalBody.css({
-						'padding-top': (headerH + 10)  + 'px',
-
-					});
-				}
-			});
-		}
-	}
-	win[global].uiModalClose.option = {
-		remove: false,
-		endfocus: false
-	}
-	function createUiSystemModalClose(){
-		netive.uiModalClose({ 
-			id: 'uiSystemModal', 
-			remove: true
-		});
-	}
-	function createUiModalClose(v) {
-		var opt = $.extend(true, {}, win[global].uiModalClose.option, v);
-		var id = opt.id;
-		var remove = opt.remove;
-		var $modal = $('#' + id);
-		var endfocus = opt.endfocus;
-		var closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') === undefined ? false : $modal.data('closecallback') : opt.closeCallback;
-		var $modalWrap = $modal.find('> .ui-modal-wrap');
-
-		$modalWrap.off('transitionend.modal');
-		$modal.removeClass('open').addClass('close');
-		$modal.removeClass('fix-header');
-
-		var timer;
-		var $modalPrev = $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1));
-
-		if (!$('.ui-modal.open').length) {
-			endfocus = endfocus === false ? $('body').data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
-
-			$('html').off('click.uimodaldim');
-			$('html').removeClass('is-modal');
-		} else {
-			endfocus = endfocus === false ? $modalPrev.data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
-		}
-
-		$modalPrev.addClass('current');
-		
-		win[global].scroll.move({
-			value: Number($modal.data('scrolltop'))
-		});
-		
-		clearTimeout(timer);
-		timer = setTimeout(function(){
-			$modal.find('.ui-modal-wrap').removeAttr('style');
-			$modal.find('.ui-modal-body').removeAttr('style');
-			$modal.removeClass('ready is-over current close ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
-			$modal.removeAttr('n');
-			
-			if (!$('.ui-modal.open').length) {
-				$("html, body").removeClass('scroll-no');
-			}
-			closeCallback ? closeCallback(opt) : '';
-			remove ? $modal.remove() : '';
-
-			console.log($modal.attr('id'), endfocus);
-
-			!!endfocus ? endfocus.focus() : '';
-		},210);
-	}
-
-
-	/* ------------------------
-	* name : parallax box
-	* date : 2020-06-13
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiParallax: function (opt) {
-			return createUiParallax(opt);
-		}
-	});
-	win[global].uiParallax.option = {
-		id : null,
-		scope : 'window'
-	}
-	function createUiParallax(opt) {	
-		var opt = $.extend(true, {}, win[global].uiParallax.option, opt),
-			$scope = opt.scope === 'window' ? $(win) : opt.scope,
-			$parallax = opt.id === null ? $('.ui-parallax') : $('#' + opt.id),
-			$item = $parallax.find('> .ui-parallax-item'),
-			len = $item.length,
-			i = 0;
-
-		// var checkVisible = function (){
-		// 	var itemTop = $item.eq(i).offset().top;
-
-		// 	if ($scope.outerHeight() > itemTop && i < len) {
-		// 		$item.eq(i).addClass('parallax-s');
-		// 		i = i + 1;
-		// 		checkVisible();
-		// 	}
-		// }
-		// checkVisible();
-
-		parallax();
-		$scope.off('scroll.win').on('scroll.win', parallax);
-		$item.find('*').off('focus.parallax').on('focus.parallax', function(){
-			$(this).closest('.ui-parallax-item').addClass('parallax-s');
-		});
-
-		function parallax() {
-			var $parallax = $('.ui-parallax');
-			var $item = $parallax.find('.ui-parallax-item');
-
-			var scopeH = $scope.outerHeight();
-			var scopeT = Math.floor($scope.scrollTop());
-			var baseT = Math.floor($item.eq(0).offset().top);
-
-			for (var i = 0; i < len; i++) {
-				var $current = $item.eq(i);
+				$modal.find('.ui-modal-wrap').removeAttr('style');
+				$modal.find('.ui-modal-body').removeAttr('style');
+				$modal.removeClass('ready is-over current close ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
+				$modal.removeAttr('n');
 				
-				var attrStart = $current.attr('start');
-				var attrEnd = $current.attr('end');
-
-				attrStart === undefined ? attrStart = 0 : '';
-				attrEnd === undefined ? attrEnd = 0 : '';
-
-				var h = Math.floor($current.outerHeight());
-				var start = Math.floor($current.offset().top);
-				var end = h + start;
-				var s = scopeH * Number(attrStart) / 100;
-				var e = scopeH * Number(attrEnd) / 100;
-				
-				if (opt.scope !== 'window') {
-					start = (start + scopeT) - (baseT + scopeT);
-					end = (end + scopeT) - (baseT + scopeT);
+				if (!$('.ui-modal.open').length) {
+					$("html, body").removeClass('scroll-no');
 				}
+				closeCallback ? closeCallback(opt) : '';
+				remove ? $modal.remove() : '';
 
-				(scopeT >= start - s) ? $current.addClass('parallax-s') : $current.removeClass('parallax-s');
-				(scopeT >= end - e) ? $current.addClass('parallax-e') : $current.removeClass('parallax-e');
-			}
+				console.log($modal.attr('id'), endfocus);
+
+				!!endfocus ? endfocus.focus() : '';
+			},210);
+		}, 
+		hideSystem: function(opt){
+			netive.modal.hide({ 
+				id: 'uiSystemModal', 
+				remove: true,
+				type: 'system'
+			});
 		}
-
-		function act() {
-			var scopeH = $scope.outerHeight();
-			var scopeT = $scope.scrollTop();
-			var addH = (scopeH / 6);
-
-			var $parallax = $('.ui-parallax');
-			var $item = $parallax.find('> .ui-parallax-item');
-
-			
-
-			var n = i;
-			var itemCheck = function () {
-				var $itemN = $item.eq(n >= len ? len - 1 : n);
-				var itemTop = opt.scope === 'window' ? $itemN.offset().top : $itemN.position().top;
-
-				// var h = $current.outerHeight();
-				// var start = $current.position().top;
-				// var end = h - winH + start;
-
-				
-				if (n >= len) {
-					return false;
-				}
-
-				Math.abs(scopeH - itemTop) + addH < scopeT ?
-					itemShow():
-					itemHide();
-
-				function itemShow(){
-					$itemN.addClass('visible');
-					n = n + 1;
-					itemCheck();
-				}
-				function itemHide(){
-					n = n - 1;
-					$itemN.removeClass('visible');
-				}
-			}
-			itemCheck();
-		}
-	}
-
-	/* ------------------------
-	* name : parallax box
-	* date : 2020-06-13
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiPopupBook: function () {
-			return createUiPopupBook();
-		}
-	});
-	function createUiPopupBook() {	
-		var $wrap = $('.ui-popupbook');
-					
-				$wrap.off('mouseover.pspt').on('mouseover.pspt', function(){
-						$wrap.off('mousemove.pspt').on('mousemove.pspt', function(event){
-								event = event || window.event;
-				
-				var wrapL = $wrap.position().left;
-								var _x = ( event.pageX ) ? event.pageX - wrapL : event.clientX + document.body.scrollLeft + document.documentElement.scrollLeft - wrapL; 
-								var isMove = $wrap.data('move');
-
-								if (_x > $wrap.outerWidth() / 2) {
-										if (!isMove || isMove === 'right') {
-												moving('.ui-popupbook-scene-a', true, 'left');
-												moving('.ui-popupbook-scene-b', true, 'left');
-												moving('.ui-popupbook-scene-c', true, 'left');
-										} 
-								} else {
-										if (!isMove || isMove === 'left') {
-												moving('.ui-popupbook-scene-a', true, 'right');
-												moving('.ui-popupbook-scene-b', true, 'right');
-												moving('.ui-popupbook-scene-c', true, 'right');
-										} 
-								}
-						});
-				}).off('mouseleave.pspt').on('mouseleave.pspt', function(){
-						moving('.ui-popupbook-scene-a', false);
-						moving('.ui-popupbook-scene-b', false);
-						moving('.ui-popupbook-scene-c', false);
-				});
-
-				$wrap.find('.ui-popupbook-item').off('mouseover.pspti').on('mouseover.pspti', function(event){
-						pause();
-				}).off('mouseleave.pspti').on('mouseleave.pspti', function(event){
-						moving('.ui-popupbook-scene-a', false);
-						moving('.ui-popupbook-scene-b', false);
-						moving('.ui-popupbook-scene-c', false);
-				});
-
-				function pause() {
-			$wrap.data('move', 'stop');
-			$('.ui-popupbook-scene-a').stop();
-			$('.ui-popupbook-scene-b').stop();
-			$('.ui-popupbook-scene-c').stop();
-				}
-				function moving(t, v, w){
-						var $scene = $(t);
-
-						if (v) {
-								var n = $scene.outerWidth() - $wrap.outerWidth();
-								var per = Math.floor((n - Math.abs($scene.position().left)) / n * 100);
-								var per2 = Math.floor(Math.abs($scene.position().left) / n * 100);
-								var speed = 8000 * (per / 100);
-								var speed2 = 8000 * (per2 / 100);
-
-								if (w === 'left') {
-										$wrap.data('move', 'left');
-										$scene.stop().animate({
-												left: ($scene.outerWidth() - $wrap.outerWidth()) * -1 + 'px'
-										}, speed);
-								} else {
-										$wrap.data('move', 'right');
-										$scene.stop().animate({
-												left: 0
-										}, speed2);
-								}
-						} else {
-				$wrap.data('move', false);
-				$scene.stop();	
-						}
-				}
 	}
 
 
@@ -4384,1364 +4226,1320 @@ if (!Object.keys){
 	* name : tab
 	* date : 2020-06-14
 	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiTab: function (opt) {
-			return createUiTab(opt);
+	win[global].tab = {
+		options: {
+			current: 0,
+			onePanel: false,
+			callback: false,
+			effect: false,
+			align : 'center'
 		},
-		uiTabAction: function (opt) {
-			return createuiTabAction(opt);
-		}
-	});
-	win[global].uiTab.option = {
-		current: 0,
-		onePanel: false,
-		callback: false,
-		effect: false,
-		align : 'center'
-	};
-	function createUiTab(opt) {
-		var opt = opt === undefined ? {} : opt,
-			opt = $.extend(true, {}, win[global].uiTab.option, opt),
-			id = opt.id,
-			effect = opt.effect,
-			current = isNaN(opt.current) ? 0 : opt.current,
-			onePanel = opt.onePanel,
-			callback = opt.callback,
-			align = opt.align;
-			
-		var	$tab = $('#' + id),
-			$btns = $tab.find('> .ui-tab-btns'),
-			$btn = $btns.find('.ui-tab-btn'),
-			$pnls = $tab.find('> .ui-tab-pnls'),
-			$pnl = $pnls.find('> .ui-tab-pnl');
-
-		var	len = $btn.length,
-			keys = win[global].option.keys;
-			
-		var	para = win[global].para.get('tab'),
-			paras,
-			paraname;
-
-		//set up
-		if (!!para) {
-			if (para.split('+').length > 1) {
-				//2 or more : tab=exeAcco1*2+exeAcco2*3
-				paras = para.split('+');
-
-				for (var j = 0; j < paras.length; j++ ) {
-					paraname = paras[j].split('*');
-					opt.id === paraname[0] ? current = Number(paraname[1]) : '';
-				}
-			} else {
-				//only one : tab=1
-			 	if (para.split('*').length > 1) {
-					paraname = para.split('*');
-					opt.id === paraname[0] ? current = Number(paraname[1]) : '';
-				} else {
-					current = Number(para);
-				}
-			}
-		}
-
-		//set up
-		!!effect && $tab.addClass(effect);
-		$tab.data('opt', opt);
-		$btns.attr('role','tablist');
-		$btn.attr('role','tab');
-		$pnl.attr('role','tabpanel');
-		
-		var ps_l = [];
-
-		for (var i = 0; i < len; i++) {
-			var $btnN = $btn.eq(i);
-			var $pnlN = $pnl.eq(i);
-			
-			if ($btnN.data('tabnum') === undefined ) {
-				$btnN.attr('data-tabnum', i);
-			}
-
-			var tabN = Number($btnN.data('tabnum'));
-			var isCurrent = current === tabN;
-			var cls = isCurrent ? 'addClass' : 'removeClass';
-			var attrs = isCurrent ? 'removeAttr' : 'attr';
-			
-			//make ID
-			$btnN.attr('id') === undefined ? $btnN.attr('id', id + 'Btn' + tabN) : '';
-			$pnlN.attr('id') === undefined ? $pnlN.attr('id', id + 'Pnl' + tabN) : '';
-			
-			var btnID = $btnN.attr('id');
-			var pnlID = $pnlN.attr('id');
-
-			if (!onePanel) {
-				$btnN.attr('aria-controls', pnlID)[cls]('selected');
-				$btnN.attr('aria-controls', $pnlN.attr('id'));
-				$pnlN.attr('aria-labelledby', btnID).attr('aria-hidden', (current === tabN) ? false : true)[attrs]('tabindex', -1)[cls]('selected');
-			} else {
-				$btnN.attr('aria-controls', $pnl.eq(0).attr('id')).addClass('selected');
-				isCurrent && $pnl.attr('aria-labelledby', btnID).addClass('selected');
-			}
-
-			if (isCurrent) {
-				$btnN.attr('aria-selected', true).addClass('selected');
-			} else {
-				$btnN.attr('aria-selected', false).removeClass('selected');
-			}
+		init: function(opt) {
+			var opt = opt === undefined ? {} : opt,
+				opt = $.extend(true, {}, win[global].tab.options, opt),
+				id = opt.id,
+				effect = opt.effect,
+				current = isNaN(opt.current) ? 0 : opt.current,
+				onePanel = opt.onePanel,
+				callback = opt.callback,
+				align = opt.align;
 				
-			ps_l.push(Math.ceil($btnN.position().left));
+			var	$tab = $('#' + id),
+				$btns = $tab.find('> .ui-tab-btns'),
+				$btn = $btns.find('.ui-tab-btn'),
+				$pnls = $tab.find('> .ui-tab-pnls'),
+				$pnl = $pnls.find('> .ui-tab-pnl');
 
-			i === 0 ? $btnN.attr('tab-first', true) : '';
-			i === len - 1 ? $btnN.attr('tab-last', true) : ''
-		}
+			var	len = $btn.length,
+				keys = win[global].option.keys;
+				
+			var	para = win[global].para.get('tab'),
+				paras,
+				paraname;
 
-		callback ? callback(opt) : '';
-		$btn.data('psl', ps_l).data('len', len);
+			//set up
+			if (!!para) {
+				if (para.split('+').length > 1) {
+					//2 or more : tab=exeAcco1*2+exeAcco2*3
+					paras = para.split('+');
 
-		win[global].scroll.move({ 
-			value: ps_l[current], 
-			target: $btns,
-			effect: 'auto', 
-			ps: align
-		});
+					for (var j = 0; j < paras.length; j++ ) {
+						paraname = paras[j].split('*');
+						opt.id === paraname[0] ? current = Number(paraname[1]) : '';
+					}
+				} else {
+					//only one : tab=1
+					if (para.split('*').length > 1) {
+						paraname = para.split('*');
+						opt.id === paraname[0] ? current = Number(paraname[1]) : '';
+					} else {
+						current = Number(para);
+					}
+				}
+			}
 
-		//event
-		$btn.off('click.uitab keydown.uitab')
-			.on({
-				'click.uitab': evtClick,
-				'keydown.uitab': evtKeys
+			//set up
+			!!effect && $tab.addClass(effect);
+			$tab.data('opt', opt);
+			$btns.attr('role','tablist');
+			$btn.attr('role','tab');
+			$pnl.attr('role','tabpanel');
+			
+			var ps_l = [];
+
+			for (var i = 0; i < len; i++) {
+				var $btnN = $btn.eq(i);
+				var $pnlN = $pnl.eq(i);
+				
+				if ($btnN.data('tabnum') === undefined ) {
+					$btnN.attr('data-tabnum', i);
+				}
+
+				var tabN = Number($btnN.data('tabnum'));
+				var isCurrent = current === tabN;
+				var cls = isCurrent ? 'addClass' : 'removeClass';
+				var attrs = isCurrent ? 'removeAttr' : 'attr';
+				
+				//make ID
+				$btnN.attr('id') === undefined ? $btnN.attr('id', id + 'Btn' + tabN) : '';
+				$pnlN.attr('id') === undefined ? $pnlN.attr('id', id + 'Pnl' + tabN) : '';
+				
+				var btnID = $btnN.attr('id');
+				var pnlID = $pnlN.attr('id');
+
+				if (!onePanel) {
+					$btnN.attr('aria-controls', pnlID)[cls]('selected');
+					$btnN.attr('aria-controls', $pnlN.attr('id'));
+					$pnlN.attr('aria-labelledby', btnID).attr('aria-hidden', (current === tabN) ? false : true)[attrs]('tabindex', -1)[cls]('selected');
+				} else {
+					$btnN.attr('aria-controls', $pnl.eq(0).attr('id')).addClass('selected');
+					isCurrent && $pnl.attr('aria-labelledby', btnID).addClass('selected');
+				}
+
+				if (isCurrent) {
+					$btnN.attr('aria-selected', true).addClass('selected');
+				} else {
+					$btnN.attr('aria-selected', false).removeClass('selected');
+				}
+					
+				ps_l.push(Math.ceil($btnN.position().left));
+
+				i === 0 ? $btnN.attr('tab-first', true) : '';
+				i === len - 1 ? $btnN.attr('tab-last', true) : ''
+			}
+
+			callback ? callback(opt) : '';
+			$btn.data('psl', ps_l).data('len', len);
+
+			win[global].scroll.move({ 
+				value: ps_l[current], 
+				target: $btns,
+				effect: 'auto', 
+				ps: align
 			});
 
-		function evtClick() {
-			win[global].uiTabAction({ 
-				id: id, 
-				current: $(this).index(), 
-				align:align 
-			}); 
-		}
-		function evtKeys(e) {
-			var $this = $(this),
-				n = $this.index(),
-				m = Number($this.data('len'));
+			//event
+			$btn.off('click.tab.init keydown.tab.init')
+				.on({
+					'click.tab.init': evtClick,
+					'keydown.tab.init': evtKeys
+				});
 
-			switch(e.keyCode){
-				case keys.up: upLeftKey(e);
-				break;
+			function evtClick() {
+				win[global].tab.toggle({ 
+					id: id, 
+					current: $(this).index(), 
+					align:align 
+				}); 
+			}
+			function evtKeys(e) {
+				var $this = $(this),
+					n = $this.index(),
+					m = Number($this.data('len'));
 
-				case keys.left: upLeftKey(e);
-				break;
+				switch(e.keyCode){
+					case keys.up: upLeftKey(e);
+					break;
 
-				case keys.down: downRightKey(e);
-				break;
+					case keys.left: upLeftKey(e);
+					break;
 
-				case keys.right: downRightKey(e);
-				break;
+					case keys.down: downRightKey(e);
+					break;
 
-				case keys.end: endKey(e);
-				break;
+					case keys.right: downRightKey(e);
+					break;
 
-				case keys.home: homeKey(e);
-				break;
+					case keys.end: endKey(e);
+					break;
+
+					case keys.home: homeKey(e);
+					break;
+				}
+
+				function upLeftKey(e) {
+					e.preventDefault();
+					!$this.attr('tab-first') ? 
+					win[global].tab.toggle({ id: id, current: n - 1, align:align }): 
+					win[global].tab.toggle({ id: id, current: m - 1, align:align});
+				}
+				function downRightKey(e) {
+					e.preventDefault();
+					!$this.attr('tab-last') ? 
+					win[global].tab.toggle({ id: id, current: n + 1, align:align }): 
+					win[global].tab.toggle({ id: id, current: 0, align:align });
+				}
+				function endKey(e) {
+					e.preventDefault();
+					win[global].tab.toggle({ id: id, current: m - 1, align:align });
+				}
+				function homeKey(e) {
+					e.preventDefault();
+					win[global].tab.toggle({ id: id, current: 0, align:align });
+				}
+			}
+		},
+		toggle: function(opt) {
+			var id = opt.id,
+				$tab = $('#' + id),
+				$btns = $tab.children('.ui-tab-btns'),
+				$btn = $btns.find('.ui-tab-btn'),
+				$pnls = $tab.children('.ui-tab-pnls'),
+				$pnl = $pnls.children('.ui-tab-pnl'),
+				$target = $btns;
+
+			var ps_l = $btn.data('psl'),
+				
+				opt = $.extend(true, {}, $tab.data('opt'), opt),
+				current = isNaN(opt.current) ? 0 : opt.current,
+				onePanel = opt.onePanel,
+				align = opt.align,
+				callback = opt.callback;
+
+			//$btn.eq(current).append('<b class="hide">선택됨</b>');
+
+			var currentPnl = $btns.find('.ui-tab-btn[data-tabnum="'+ current +'"]').index();
+			$btn.removeClass('selected').eq(current).addClass('selected').focus();
+
+			var $btnN = $btn.eq(current),
+				btnId = $btn.eq(currentPnl).attr('id');
+
+			if ($btns.hasClass('ui-scrollbar')) {
+				$target = $btns.find('> .ui-scrollbar-item');
 			}
 
-			function upLeftKey(e) {
-				e.preventDefault();
-				!$this.attr('tab-first') ? 
-				win[global].uiTabAction({ id: id, current: n - 1, align:align }): 
-				win[global].uiTabAction({ id: id, current: m - 1, align:align});
+			win[global].scroll.move({ 
+				value: ps_l[current], 
+				add : $btn.outerWidth(),
+				selector: $target, 
+				ps: align 
+			});
+
+			if (onePanel === false) {
+				$pnl.attr('aria-hidden', true).removeClass('selected').attr('tabindex', '-1');
+				$pnl.eq(current).addClass('selected').attr('aria-hidden', false).removeAttr('tabindex');
+			} else {
+				$pnl.attr('aria-labelledby', btnId);
 			}
-			function downRightKey(e) {
-				e.preventDefault();
-				!$this.attr('tab-last') ? 
-				win[global].uiTabAction({ id: id, current: n + 1, align:align }): 
-				win[global].uiTabAction({ id: id, current: 0, align:align });
-			}
-			function endKey(e) {
-				e.preventDefault();
-				win[global].uiTabAction({ id: id, current: m - 1, align:align });
-			}
-			function homeKey(e) {
-				e.preventDefault();
-				win[global].uiTabAction({ id: id, current: 0, align:align });
-			}
-		}
-	}
-	function createuiTabAction(opt) {
-		var id = opt.id,
-			$tab = $('#' + id),
-			$btns = $tab.children('.ui-tab-btns'),
-			$btn = $btns.find('.ui-tab-btn'),
-			$pnls = $tab.children('.ui-tab-pnls'),
-			$pnl = $pnls.children('.ui-tab-pnl'),
-			$target = $btns;
 
-		var ps_l = $btn.data('psl'),
-			
-			opt = $.extend(true, {}, $tab.data('opt'), opt),
-			current = isNaN(opt.current) ? 0 : opt.current,
-			onePanel = opt.onePanel,
-			align = opt.align,
-			callback = opt.callback;
-
-		//$btn.eq(current).append('<b class="hide">선택됨</b>');
-
-		var currentPnl = $btns.find('.ui-tab-btn[data-tabnum="'+ current +'"]').index();
-		$btn.removeClass('selected').eq(current).addClass('selected').focus();
-
-		var $btnN = $btn.eq(current),
-			btnId = $btn.eq(currentPnl).attr('id');
-
-		if ($btns.hasClass('ui-scrollbar')) {
-			$target = $btns.find('> .ui-scrollbar-item');
-		}
-
-		win[global].scroll.move({ 
-			value: ps_l[current], 
-			add : $btn.outerWidth(),
-			selector: $target, 
-			ps: align 
-		});
-
-		if (onePanel === false) {
-			$pnl.attr('aria-hidden', true).removeClass('selected').attr('tabindex', '-1');
-			$pnl.eq(current).addClass('selected').attr('aria-hidden', false).removeAttr('tabindex');
-		} else {
-			$pnl.attr('aria-labelledby', btnId);
-		}
-
-		!!callback ? callback(opt) : '';
-	}   
-
-
-	/* ------------------------
-	* name : print
-	* date : 2020-06-14
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiPrint: function (opt) {
-			return createUiPrint(opt);
-		}
-	});
-	function createUiPrint(opt) {
-		var $print = typeof opt.id === 'object' ? opt.id : $('[print-id="'+ opt.id+'"]'),
-			$body = $('body'),
-			clone = $print.clone(),
-			html = '<div class="ui-print"></div>';
-		
-		function preview_print(){ 
-			var webBrowser ='<OBJECT ID="previewWeb" WIDTH=0 HEIGHT=0 CLASSID="CLSID:8856F961-340A-11D0-A96B-00C04FD705A2"></OBJECT>';
-			
-			doc.body.insertAdjacentHTML('beforeEnd', webBrowser);
-			previewWeb.ExecWB(7,1);
-			previewWeb.outerHTML='';
-		} 
-
-		if (self !== top) {
-			parent.$body.append(html);
-			parent.$('.ui-print').append(clone);
-			
-			win[global].browser.ie ? preview_print() : win.parent.print();
-
-			setTimeout(function () {
-				parent.$('.ui-print').remove();
-			}, 0);
-		} else {
-			$body.addClass('ui-print-ing').append(html);
-
-			$('.ui-print').append(clone);
-			
-			win[global].browser.ie ? preview_print() : win.print();
-			
-			setTimeout(function () {
-				$body.removeClass('ui-print-ing')
-				$('.ui-print').remove();
-			}, 0);
+			!!callback ? callback(opt) : '';
 		}
 	}
 
-
+	
 	/* ------------------------
 	* name : tooltip
 	* date : 2020-06-15
 	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiTooltip: function (opt) {
-			return createUiTooltip(opt);
-		}
-	});
-	win[global].uiTooltip.option = {
-		visible: null,
-		id: false,
-		ps: false
-	};
-	function createUiTooltip(opt){
-		var opt = opt === undefined ? {} : opt;
+	win[global].tooltip = {
+		options: {
+			visible: null,
+			id: false,
+			ps: false
+		},
+		init: function(opt) {
+			var opt = opt === undefined ? {} : opt;
 
-		opt = $.extend(true, {}, win[global].uiTooltip.option, opt);
+			opt = $.extend(true, {}, win[global].tooltip.options, opt);
 
-		var $btn = $('.ui-tooltip-btn');
-		var $tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false;
-		var visible = opt.visible;
-		var id = opt.id ? $tip.attr('id') : '';
-		var sp = 4;
-		var ps = opt.ps;
-		var timer;
-		var class_ps = 'ps-ct ps-cb ps-lt ps-lb ps-rt ps-rb';
+			var $btn = $('.ui-tooltip-btn');
+			var $tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false;
+			var visible = opt.visible;
+			var id = opt.id ? $tip.attr('id') : '';
+			var sp = 4;
+			var ps = opt.ps;
+			var timer;
+			var class_ps = 'ps-ct ps-cb ps-lt ps-lb ps-rt ps-rb';
 
-		if (visible !== null) {
-			visible ? tooltipSet(id) : tooltipHide();
-		}
+			
 
-		// $btn
-		// .on('click', function(e){
-		// 	e.preventDefault();
-		// 	tooltipSet($(this).attr('aria-describedby'));
-		// });
+			if (visible !== null) {
+				console.log(visible);
 
-		// $btn.off('mouseover.ui focus.ui').on('mouseover.ui focus.ui', function(e){
-		// 	e.preventDefault();
-		// 	tooltipSet(this);
-		// }).off('mouseleave.ui ').on('mouseleave.ui', function(){
-		// 	tooltipHideDelay();
-
-		// 	$('.ui-tooltip').on('mouseover.ui', function(){
-		// 		clearTimeout(timer);
-		// 	}).on('mouseleave.ui', function(e){
-		// 		tooltipHideDelay();
-		// 	});
-		// });
-
-		$('.ui-tooltip-close').off('click.uitooltip').on('click.uitooltip', function(){
-			$btn.data('view', false);
-			tooltipHide();
-		});
-
-		$btn.off('touchstart.uitooltip').on('touchstart.uitooltip', function(){
-			var $this = $(this);
-
-			if (!$this.data('view')){
-				$this.data('view', true);
-				tooltipHide();
-				tooltipSet(this);
-			} else {
-				$this.data('view', false);
-				tooltipHide();
+				visible ? tooltipSet(id) : tooltipHide();
 			}
-			
-			setTimeout(function(){
-				$(doc).on('click.bdd', function(){
-					$btn.data('view', false);
-					tooltipHide();
-					console.log(22222);
-				});
-			},100);
-			
 
-			// $(doc).off('click.bdd').on('click.bdd', function(e){
-			// 	//dropdown 영역 외에 클릭 시 판단
-			// 	if (!!$('body').data('dropdownOpened')){
-			// 		if ($('.ui-tooltip').has(e.target).length < 1) {
-			// 			tooltipHide();
-			// 		}
-			// 	}
+			// $btn
+			// .on('click', function(e){
+			// 	e.preventDefault();
+			// 	tooltipSet($(this).attr('aria-describedby'));
 			// });
-		});
 
-		function tooltipSet(v) {
-			var $t = $(v);
-			var $win = $(win);
-			var $doc = $(doc);
-			var id = $t.attr('aria-describedby');
-			var src = $t.data('src');
+			$btn.off('mouseover.ui focus.ui').on('mouseover.ui focus.ui', function(e){
+				e.preventDefault();
+				tooltipSet(this);
+			}).off('mouseleave.ui ').on('mouseleave.ui', function(){
+				tooltipHideDelay();
 
-			var off_t = $t.offset().top;
-			var off_l =$t.offset().left;
-			var w = $t.outerWidth();
-			var h = $t.outerHeight();
-			var bw = $win.innerWidth();
-			var bh = $win.innerHeight();
-			var st = $doc.scrollTop();
-			var sl = $doc.scrollLeft();
-			
-			if (!!src && !$('#' + id).length) {
-				$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><button class="ui-tooltip-close" type="button"><span class="a11y-hidden">툴팁닫기</span></button><div class="ui-tooltip-arrow"></div>')
-
-				netive.ajax.init({
-					id: $('#' + id),
-					url: src,
-					add: true,
-					callback: function(){
-						act();
-					}
+				$('.ui-tooltip').on('mouseover.ui', function(){
+					clearTimeout(timer);
+				}).on('mouseleave.ui', function(e){
+					tooltipHideDelay();
 				});
-				// netive.uiAjax({
-				// 	id: $('#' + id),
-				// 	url: src,
-				// 	add: true,
-				// 	callback: function(){
-				// 		act();
+			});
+
+			$('.ui-tooltip-close').off('click.tooltip.init').on('click.tooltip.init', function(){
+				$btn.data('view', false);
+				tooltipHide();
+			});
+
+			$btn.off('touchstart.tooltip.init').on('touchstart.tooltip.init', function(){
+				var $this = $(this);
+
+				if (!$this.data('view')){
+					$this.data('view', true);
+					tooltipHide();
+					tooltipSet(this);
+				} else {
+					$this.data('view', false);
+					tooltipHide();
+				}
+				
+				setTimeout(function(){
+					$(doc).on('click.bdd', function(){
+						$btn.data('view', false);
+						tooltipHide();
+						console.log(22222);
+					});
+				},100);
+				
+
+				// $(doc).off('click.bdd').on('click.bdd', function(e){
+				// 	//dropdown 영역 외에 클릭 시 판단
+				// 	if (!!$('body').data('dropdownOpened')){
+				// 		if ($('.ui-tooltip').has(e.target).length < 1) {
+				// 			tooltipHide();
+				// 		}
 				// 	}
 				// });
-			} else {
-				act();
-			}
-			
-			function act(){
-				$('#' + id).removeClass(class_ps);	
-				tooltipShow(off_t, off_l, w, h, bw, bh, st, sl, id, false);
-			}
-		}
-		function tooltipHide() {
-			$(doc).off('click.bdd');
-			$('.ui-tooltip').removeAttr('style').attr('aria-hidden', true).removeClass(class_ps);
-		}
-		function tooltipHideDelay(){
-			timer = setTimeout(tooltipHide, 100);
-		}
-
-		function tooltipShow(off_t, off_l, w, h, bw, bh, st, sl, id) {
-			var $id = $('#' + id);
-			var pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false;
-			var psl = (bw / 2 > (off_l - sl) + (w / 2)) ? true : false;
-			var tw = $id.outerWidth();
-			var th = $id.outerHeight();
-			var ps_l; 
-			var ps_r; 
-			var cursorCls = 'ps-';
-				
-			if (psl) {
-				if (off_l - sl > tw / 2) {
-					cursorCls += 'c';
-					ps_l = off_l - (tw / 2) + (w / 2);
-				} else {
-					cursorCls += 'l';
-					ps_l = off_l;
-				}
-			} else {
-				if (bw - (off_l - sl + w) > tw / 2) {
-					cursorCls += 'c';
-					ps_r = Math.ceil(off_l) - (tw / 2) + (w / 2);
-				} else {
-					cursorCls += 'r';
-					ps_r = off_l - tw + w;
-				}
-			}
-
-			ps ? cursorCls = 'ps-l' : '';
-			ps ? ps_l = off_l : '';
-			ps ? psl = true : '';
-			pst ? cursorCls += 'b' : cursorCls += 't';
-
-			if (!!$id.attr('modal')) {
-				if (!win[global].browser.oldie) {
-					ps_l = ps_l;
-					ps_r = ps_r;
-				}
-
-				win[global].browser.ie ? '' : off_t = off_t;
-			}
-
-			if (!!$id.closest('.type-fixed-bottom').length) {
-				off_t = off_t - $('ui-modal-tit').outerHeight();
-			}
-			console.log(sp);
-			$id.addClass(cursorCls).attr('aria-hidden', false).css({ 
-				display:'block'
-			}).css({
-				top : pst ? off_t + h + sp : off_t - th - sp,
-				left : 0
 			});
-		}
-	}
 
+			function tooltipSet(v) {
+				var $t = $(v);
+				var $win = $(win);
+				var $doc = $(doc);
+				var id = $t.attr('aria-describedby');
+				var src = $t.data('src');
 
+				var off_t = $t.offset().top;
+				var off_l =$t.offset().left;
+				var w = $t.outerWidth();
+				var h = $t.outerHeight();
+				var bw = $win.innerWidth();
+				var bh = $win.innerHeight();
+				var st = $doc.scrollTop();
+				var sl = $doc.scrollLeft();
+				
+				if (!!src && !$('#' + id).length) {
+					$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><button class="ui-tooltip-close" type="button"><span class="a11y-hidden">툴팁닫기</span></button><div class="ui-tooltip-arrow"></div>')
 
-	
+					console.log(id, src);
 
-	/* ------------------------
-	* table cell fix(horizontal)
-	* date : 2020-05-17
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiTableFixTd: function () {
-			return createUiTableFixTd();
-		}
-	});
-	function createUiTableFixTd() {
-		var $tbl = $('.ui-fixtd');
-
-		$tbl.each(function(i){
-			var $tbln = $(this);
-			var $tbl_col = $tbln.find('col');
-			var $tbl_tr = $tbln.find('tr');
-			var col_len = $tbl_col.length;
-			var fix_sum = col_len - $tbln.attr('fix');
-			var len = $tbl_tr.length;
-			var tit = [];
-
-			$tbln.attr('current', 1).attr('total', col_len);
-
-			for (var i = 0; i < len; i++) {
-				for (var j = 0; j < fix_sum; j++) {
-					var $tr_this = $tbl_tr.eq(i);
-					var $td_this = $tr_this.find('> *').eq(j - fix_sum);
-					var jj = (j + 1);
-
-					$td_this.addClass('ui-fixtd-n' + jj).data('n', j);
-					if ($tr_this.closest('thead').length) {
-						tit.push($td_this.text());
-						$td_this.prepend('<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="hide">previous</span></button>');
-						$td_this.append('<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="hide">next</span></button>');
-					}
-					$tbl_col.eq(j - fix_sum).addClass('ui-fixtd-n' + jj);
+					win[global].ajax.init({
+						area: $('#' + id),
+						url: src,
+						add: true,
+						callback: function(){
+							act();
+						}
+					});
+					// netive.uiAjax({
+					// 	id: $('#' + id),
+					// 	url: src,
+					// 	add: true,
+					// 	callback: function(){
+					// 		act();
+					// 	}
+					// });
+				} else {
+					act();
+				}
+				
+				function act(){
+					$('#' + id).removeClass(class_ps);	
+					tooltipShow(off_t, off_l, w, h, bw, bh, st, sl, id, false);
 				}
 			}
-		});
-
-		$tbl.find('.ui-fixtd-btn').off('click.uifixtd').on('click.uifixtd', function(){
-			var $tbl_this = $(this).closest('.ui-fixtd');
-			var this_sum =  Number($tbl_this.attr('total') - $tbl_this.attr('fix'));
-			var n = Number($(this).data('idx'));
-
-			if ($(this).data('btn') === 'next') {
-				$tbl_this.attr('current', n + 1 > this_sum ? n = 1 : n + 1);
-			} else {
-				$tbl_this.attr('current', n - 1 <= 0 ? n = this_sum : n - 1);
+			function tooltipHide() {
+				$(doc).off('click.bdd');
+				$('.ui-tooltip').removeAttr('style').attr('aria-hidden', true).removeClass(class_ps);
 			}
-		});
+			function tooltipHideDelay(){
+				timer = setTimeout(tooltipHide, 100);
+			}
+
+			function tooltipShow(off_t, off_l, w, h, bw, bh, st, sl, id) {
+				var $id = $('#' + id);
+				var pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false;
+				var psl = (bw / 2 > (off_l - sl) + (w / 2)) ? true : false;
+				var tw = $id.outerWidth();
+				var th = $id.outerHeight();
+				var ps_l; 
+				var ps_r; 
+				var cursorCls = 'ps-';
+					
+				console.log(off_t, off_l, w, h, bw, bh, st, sl, id);
+
+				if (psl) {
+					if (off_l - sl > tw / 2) {
+						cursorCls += 'c';
+						ps_l = off_l - (tw / 2) + (w / 2);
+					} else {
+						cursorCls += 'l';
+						ps_l = off_l;
+					}
+				} else {
+					if (bw - (off_l - sl + w) > tw / 2) {
+						cursorCls += 'c';
+						ps_r = Math.ceil(off_l) - (tw / 2) + (w / 2);
+					} else {
+						cursorCls += 'r';
+						ps_r = off_l - tw + w;
+					}
+				}
+
+				ps ? cursorCls = 'ps-l' : '';
+				ps ? ps_l = off_l : '';
+				ps ? psl = true : '';
+				pst ? cursorCls += 'b' : cursorCls += 't';
+
+				if (!!$id.attr('modal')) {
+					if (!win[global].browser.oldie) {
+						ps_l = ps_l;
+						ps_r = ps_r;
+					}
+
+					win[global].browser.ie ? '' : off_t = off_t;
+				}
+
+				if (!!$id.closest('.type-fixed-bottom').length) {
+					off_t = off_t - $('ui-modal-tit').outerHeight();
+				}
+
+				$id.addClass(cursorCls).attr('aria-hidden', false).css({ 
+					display:'block'
+				}).css({
+					top : pst ? off_t + h + sp : off_t - th - sp,
+					left : psl ? ps_l : ps_r 
+				});
+			}
+		}
 	}
-
-
-	
 
 
 	/* ------------------------
 	* name : coding list
 	* date : 2020-06-20
 	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiCodinglist: function (opt) {
-			return createUiCodinglist(opt);
-		}
-	});
-	function createUiCodinglist(opt) {
-		var dataExecel;
-
-		win[global].ajax.init({
-			url: opt.url, 
-			page: false, 
-			callback: callback 
-		});
-
-		function callback(v) {
-			dataExecel = v;
-
-			var today = new Date();
-			today = getFormatDate(today); 
-
-			function getFormatDate(date){
-				var year = date.getFullYear();
-				var month = (1 + date.getMonth());
-				month = month >= 10 ? month : '0' + month;
-				var day = date.getDate();
-				day = day >= 10 ? day : '0' + day;
-				return  year + '-' + month + '-' + day;
-			}
-			function changeFormatDate(date){
-				var year = date.substring(0,4);
-				var month = date.substring(5,6); 
-				month = month >= 10 ? month : '0' + month;
-				var day = date.substring(6,8);
-				day = day >= 10 ? day : '0' + day; 
-				return year + '-' + month + '-' + day; 
-			}
-
-			function dateDiff(_date1, _date2) {
-				var diffDate_1 = _date1 instanceof Date ? _date1 :new Date(_date1);
-				var diffDate_2 = _date2 instanceof Date ? _date2 :new Date(_date2);
-				diffDate_1 =new Date(diffDate_1.getFullYear(), diffDate_1.getMonth()+1, diffDate_1.getDate());
-				diffDate_2 =new Date(diffDate_2.getFullYear(), diffDate_2.getMonth()+1, diffDate_2.getDate());
-				var isAbs = diffDate_2.getTime() - diffDate_1.getTime() < 0 ? '' : '-';
-				var diff = Math.abs(diffDate_2.getTime() - diffDate_1.getTime());
-
-				diff = isAbs + Math.ceil(diff / (1000 * 3600 * 24));
+	win[global].project = {
+		list: function(opt){
 			
-				return diff;
-			}
 
-			var len = dataExecel.list.length,
-				i = 0,
-				state, date, enddate, moddate, pub, dev, id, idm, memo, overl,
-				d1, d2, d3, d4, d5, d6, d7, d8,
-				r1, r2, r3, r4,
-				d1_, d2_, d3_, d4_, d5_, d6_, d7_, d8_,
-				c1, c2, c3, c4, c5, c6, c7, c8;
+			win[global].ajax.init({
+				url: opt.url, 
+				page: false, 
+				callback: callback 
+			});
 
-			var	endsum = 0, delsum = 0, tstsum = 0, ingsum = 0, watsum = 0, chksum = 0, num = -1,
-				ctg_state = [],
-				ctg_pub = [],
-				ctg_dev = [],
-				ctg_date = [],
-				ctg_enddate = [],
-				ctg_mdate = [],
-				ctg_menu = [],
-				ctg_dev = [],
-				cls2 = '',
-				cls = '',
-				root = '',
-				depth = '',
+			
+			function callback(v) {
+				var dataExecel = JSON.parse(v); 
+
+				var today = new Date();
+				today = getFormatDate(today); 
+
+				function getFormatDate(date){
+					var year = date.getFullYear();
+					var month = (1 + date.getMonth());
+					month = month >= 10 ? month : '0' + month;
+					var day = date.getDate();
+					day = day >= 10 ? day : '0' + day;
+					return  year + '-' + month + '-' + day;
+				}
+				function changeFormatDate(date){
+					var year = date.substring(0,4);
+					var month = date.substring(5,6); 
+					month = month >= 10 ? month : '0' + month;
+					var day = date.substring(6,8);
+					day = day >= 10 ? day : '0' + day; 
+					return year + '-' + month + '-' + day; 
+				}
+
+				function dateDiff(_date1, _date2) {
+					var diffDate_1 = _date1 instanceof Date ? _date1 :new Date(_date1);
+					var diffDate_2 = _date2 instanceof Date ? _date2 :new Date(_date2);
+					diffDate_1 =new Date(diffDate_1.getFullYear(), diffDate_1.getMonth()+1, diffDate_1.getDate());
+					diffDate_2 =new Date(diffDate_2.getFullYear(), diffDate_2.getMonth()+1, diffDate_2.getDate());
+					var isAbs = diffDate_2.getTime() - diffDate_1.getTime() < 0 ? '' : '-';
+					var diff = Math.abs(diffDate_2.getTime() - diffDate_1.getTime());
+
+					diff = isAbs + Math.ceil(diff / (1000 * 3600 * 24));
+				
+					return diff;
+				}
+
+
+				var len = dataExecel.list.length;
+				
+				var i = 0;
+				var state, date, enddate, moddate, pub, dev, id, idm, memo, overl;
+				var d1, d2, d3, d4, d5, d6, d7, d8;
+				var r1, r2, r3, r4;
+				var d1_, d2_, d3_, d4_, d5_, d6_, d7_, d8_;
+				var c1, c2, c3, c4, c5, c6, c7, c8;
+
+				var	endsum = 0, delsum = 0, tstsum = 0, ingsum = 0, watsum = 0, chksum = 0, num = -1,
+					ctg_state = [],
+					ctg_pub = [],
+					ctg_dev = [],
+					ctg_date = [],
+					ctg_enddate = [],
+					ctg_mdate = [],
+					ctg_menu = [],
+					ctg_dev = [],
+					cls2 = '',
+					cls = '',
+					root = '',
+					depth = '',
+					table = '';
+
+				for (i = 0; i < len; i++) {
+					state = dataExecel.list[i].state || '';
+					date = dataExecel.list[i].date || '';
+					enddate = dataExecel.list[i].enddate || '';
+					moddate = dataExecel.list[i].moddate || '';
+					pub = dataExecel.list[i].pub || '';
+					dev = dataExecel.list[i].dev || '';
+					id = dataExecel.list[i].id || '';
+					idm = dataExecel.list[i].idm || '';
+
+					memo = dataExecel.list[i].memo || '';
+					d1 = dataExecel.list[i].d1 || '';
+					d2 = dataExecel.list[i].d2 || '';
+					d3 = dataExecel.list[i].d3 || '';
+					d4 = dataExecel.list[i].d4 || '';
+					d5 = dataExecel.list[i].d5 || '';
+					d6 = dataExecel.list[i].d6 || '';
+					d7 = dataExecel.list[i].d7 || '';
+					d8 = dataExecel.list[i].d8 || '';
+					r1 = dataExecel.list[i].r1 || '';
+					r2 = dataExecel.list[i].r2 || '';
+					r3 = dataExecel.list[i].r3 || '';
+					r4 = dataExecel.list[i].r4 || '';
+					overl = dataExecel.list[i].overlap || '';
+					root = dataExecel.list[i].root || '';
+
+					(d1 !== '') ? d1_ = dataExecel.list[i - 1 < 0 ? 0 : i].d1 : d1 = d1_;
+
+					(dataExecel.list[i].d1 === '') ?
+						(d2 !== '') ? d2_ = dataExecel.list[i - 1 < 0 ? 0 : i].d2 : d2 = d2_ :
+						(!!dataExecel.list[i - 1 < 0 ? 0 : i].d2) ? d2_ = dataExecel.list[i - 1 < 0 ? 0 : i].d2 : d2_ = '';
+
+					(dataExecel.list[i].d1 === '' && dataExecel.list[i].d2 === '') ?
+						(d3 !== '') ? d3_ = dataExecel.list[i - 1 < 0 ? 0 : i].d3 : d3 = d3_ :
+						(!!dataExecel.list[i - 1 < 0 ? 0 : i].d3) ? d3_ = dataExecel.list[i - 1 < 0 ? 0 : i].d3 : d3_ = '';
+
+					(dataExecel.list[i].d1 === '' && dataExecel.list[i].d2 === '' && dataExecel.list[i].d3 === '') ?
+						(d4 !== '') ? d4_ = dataExecel.list[i - 1 < 0 ? 0 : i].d4 : d4 = d4_ :
+						(!!dataExecel.list[i - 1 < 0 ? 0 : i].d4) ? d4_ = dataExecel.list[i - 1 < 0 ? 0 : i].d4 : d4_ = '';
+
+					(dataExecel.list[i].d1 === '' && dataExecel.list[i].d2 === '' && dataExecel.list[i].d3 === '' && dataExecel.list[i].d4 === '') ?
+						(d5 !== '') ? d5_ = dataExecel.list[i - 1 < 0 ? 0 : i].d5 : d5 = d5_ :
+						(!!dataExecel.list[i - 1 < 0 ? 0 : i].d5) ? d5_ = dataExecel.list[i - 1 < 0 ? 0 : i].d5 : d5_ = '';
+
+					(dataExecel.list[i].d1 === '' && dataExecel.list[i].d2 === '' && dataExecel.list[i].d3 === '' && dataExecel.list[i].d4 === '' && dataExecel.list[i].d5 === '') ?
+						(d6 !== '') ? d6_ = dataExecel.list[i - 1 < 0 ? 0 : i].d6 : d6 = d6_ :
+						(!!dataExecel.list[i - 1 < 0 ? 0 : i].d6) ? d6_ = dataExecel.list[i - 1 < 0 ? 0 : i].d6 : d6_ = '';
+
+					(dataExecel.list[i].d1 === '' && dataExecel.list[i].d2 === '' && dataExecel.list[i].d3 === '' && dataExecel.list[i].d4 === '' && dataExecel.list[i].d5 === '' && dataExecel.list[i].d6 === '') ?
+						(d7 !== '') ? d7_ = dataExecel.list[i - 1 < 0 ? 0 : i].d7 : d7 = d7_ :
+						(!!dataExecel.list[i - 1 < 0 ? 0 : i].d7) ? d7_ = dataExecel.list[i - 1 < 0 ? 0 : i].d7 : d7_ = '';
+
+					!!dataExecel.list[i].d1 ? d1 = dataExecel.list[i].d1 : '';
+					!!dataExecel.list[i].d2 ? d2 = dataExecel.list[i].d2 : '';
+					!!dataExecel.list[i].d3 ? d3 = dataExecel.list[i].d3 : '';
+					!!dataExecel.list[i].d4 ? d4 = dataExecel.list[i].d4 : '';
+					!!dataExecel.list[i].d5 ? d5 = dataExecel.list[i].d5 : '';
+					!!dataExecel.list[i].d6 ? d6 = dataExecel.list[i].d6 : '';
+					!!dataExecel.list[i].d7 ? d7 = dataExecel.list[i].d7 : '';
+					!!dataExecel.list[i].d8 ? d8 = dataExecel.list[i].d8 : '';
+
+					endsum = (state === "완료") ? endsum + 1 : endsum;
+					tstsum = (state === "검수") ? tstsum + 1 : tstsum;
+					delsum = (state === "제외") ? delsum + 1 : delsum;
+					watsum = (state === "대기") ? watsum + 1 : watsum;
+
+					var x = (i === 0) ? 0 : i - 1;
+
+					c1 = (dataExecel.list[i].d1 !== dataExecel.list[x].d1) ? ' c1' : '';
+					c2 = (dataExecel.list[i].d2 !== dataExecel.list[x].d2) ? ' c2' : '';
+					c3 = (dataExecel.list[i].d3 !== dataExecel.list[x].d3) ? ' c3' : '';
+					c4 = (dataExecel.list[i].d4 !== dataExecel.list[x].d4) ? ' c4' : '';
+					c5 = (dataExecel.list[i].d5 !== dataExecel.list[x].d5) ? ' c5' : '';
+					c6 = (dataExecel.list[i].d6 !== dataExecel.list[x].d6) ? ' c6' : '';
+					c7 = (dataExecel.list[i].d7 !== dataExecel.list[x].d7) ? ' c7' : '';
+					c8 = (dataExecel.list[i].d8 !== dataExecel.list[x].d8) ? ' c8' : '';
+
+					cls2 = 
+						state === '완료' ? 'end' : 
+						state === '검수' ? 'tst' : 
+						state === '제외' ? 'del' : 
+						state === '약관' ? 'trm' : '';
+
+					cls = cls2 + c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8;
+
+					ctg_state.push(dataExecel.list[i].state);
+					ctg_pub.push(dataExecel.list[i].pub);
+					ctg_dev.push(dataExecel.list[i].dev);
+					state !== '제외' ? ctg_date.push(dataExecel.list[i].date) : '';
+					ctg_enddate.push(dataExecel.list[i].enddate);
+					ctg_menu.push(dataExecel.list[i].d2);
+
+					if (state !== '제외' && i === 0) {
+						table += '<table>';
+						table += '<caption>코딩리스트</caption>';
+
+						table += '<colgroup>';
+						table += '<col class="col-1">';//상태
+						table += '<col class="col-2">';//일정
+						table += '<col class="col-3">';//완료일
+						table += '<col class="col-3">';//수정일
+						table += '<col class="col-4">';//퍼블담당자
+						table += '<col class="col-4">';//개발담당자
+
+						table += '<col class="col-8">';//화면아이디
+						table += '</colgroup>';
+
+						table += '<colgroup>';
+						(dataExecel.list[i].d1 !== undefined) ? table += '<col class="col-9">' : '';
+						(dataExecel.list[i].d2 !== undefined) ? table += '<col class="col-9">' : '';
+						(dataExecel.list[i].d3 !== undefined) ? table += '<col class="col-9">' : '';
+						(dataExecel.list[i].d4 !== undefined) ? table += '<col class="col-9">' : '';
+						(dataExecel.list[i].d5 !== undefined) ? table += '<col class="col-9">' : '';
+						(dataExecel.list[i].d6 !== undefined) ? table += '<col class="col-9">' : '';
+						(dataExecel.list[i].d7 !== undefined) ? table += '<col class="col-9">' : '';
+						(dataExecel.list[i].d8 !== undefined) ? table += '<col class="col-9">' : '';
+						table += '</colgroup>';
+
+						table += '<col class="col-10">';//메모
+
+						table += '<thead>';
+						table += '<th scope="col">' + state + '</th>';
+						table += '<th scope="col">' + date + '</th>';
+						table += '<th scope="col">' + enddate + '</th>';
+						table += '<th scope="col">' + moddate + '</th>';
+						table += '<th scope="col">' + pub + '</th>';
+						table += '<th scope="col">' + dev + '</th>';
+
+						table += '<th scope="col">' + id + '</th>';
+						(dataExecel.list[i].d1 !== undefined) ? table += '<th scope="col">' + d1 + '</th>' : '';
+						(dataExecel.list[i].d2 !== undefined) ? table += '<th scope="col">' + d2 + '</th>' : '';
+						(dataExecel.list[i].d3 !== undefined) ? table += '<th scope="col">' + d3 + '</th>' : '';
+						(dataExecel.list[i].d4 !== undefined) ? table += '<th scope="col">' + d4 + '</th>' : '';
+						(dataExecel.list[i].d5 !== undefined) ? table += '<th scope="col">' + d5 + '</th>' : '';
+						(dataExecel.list[i].d6 !== undefined) ? table += '<th scope="col">' + d6 + '</th>' : '';
+						(dataExecel.list[i].d7 !== undefined) ? table += '<th scope="col">' + d7 + '</th>' : '';
+						(dataExecel.list[i].d8 !== undefined) ? table += '<th scope="col">' + d8 + '</th>' : '';
+						table += '<th scope="col">' + memo + '</th>';
+						table += '</thead>';
+						table += '</tbody>';
+					}
+					else if (state !== '제외') {
+						num = num + 1;
+
+						if (!(date === '미정' || date === '일정' || date === undefined) && state !== '완료' && state !== '검수' && state !== '체크') {
+							var dateStart = date;
+							dateStart = changeFormatDate(dateStart)
+
+							var care = dateDiff(dateStart, new Date());
+		
+							if (care < 3 && care >= 0) {
+								cls = cls + ' sch_care';
+							} else if (care < 0) {
+								cls = cls + ' sch_warn';
+							}
+		
+						}
+
+
+						win[global].browser.mobile ?
+							table += '<tr class="' + cls + '" >' :
+							table += '<tr class="' + cls + '">';
+						table += '<td class="state"><span>' + state + '</span></td>';
+						table += '<td class="date"><span>' + date + '</span></td>';
+						table += '<td class="enddate"><span>' + enddate + '</span></td>';
+						table += '<td class="enddate"><span>' + moddate + '</span></td>';
+						table += '<td class="name pub"><span>' + pub + '</span></td>';
+						table += '<td class="name dev"><span>' + dev + '</span></td>';
+						table += id !== '' ?
+							'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
+							'<td class="id "><span></span></td>';	
+						
+						(dataExecel.list[i].d1 !== '') ? table += '<td class="d d1"><span>' + d1 + '</span></td>' : table += '<td class="d"></td>';
+						(dataExecel.list[i].d2 !== '') ? table += '<td class="d d2"><span>' + d2 + '</span></td>' : table += '<td class="d"></td>';
+						(dataExecel.list[i].d3 !== '') ? table += '<td class="d d3"><span>' + d3 + '</span></td>' : table += '<td class="d"></td>';
+						(dataExecel.list[i].d4 !== '') ? table += '<td class="d d4"><span>' + d4 + '</span></td>' : table += '<td class="d"></td>';
+						(dataExecel.list[i].d5 !== '') ? table += '<td class="d d5"><span>' + d5 + '</span></td>' : table += '<td class="d"></td>';
+						(dataExecel.list[i].d6 !== '') ? table += '<td class="d d6"><span>' + d6 + '</span></td>' : table += '<td class="d"></td>';
+						(dataExecel.list[i].d7 !== '') ? table += '<td class="d d7"><span>' + d7 + '</span></td>' : table += '<td class="d"></td>';
+						(dataExecel.list[i].d8 !== '') ? table += '<td class="d d8"><span>' + d8 + '</span></td>' : table += '<td class="d"></td>';
+						(dataExecel.list[i].memo === '') ? table += '<td class="memo none"><span>' + memo + '</span></td>' : table += '<td class="memo"><span>' + memo + '</span></td>';
+						table += '</tr>';
+						(i === len - 1) ? table += '</tbody>' : '';
+						(i === len - 1) ? table += '</table>' : '';
+					}
+					root = '';
+				}
+				$('#' + opt.id).html(table);
 				table = '';
 
-			for (i = 0; i < len; i++) {
-				state = dataExecel.list[i].state || '';
-				date = dataExecel.list[i].date || '';
-				enddate = dataExecel.list[i].enddate || '';
-				moddate = dataExecel.list[i].moddate || '';
-				pub = dataExecel.list[i].pub || '';
-				dev = dataExecel.list[i].dev || '';
-				id = dataExecel.list[i].id || '';
-				idm = dataExecel.list[i].idm || '';
+				var info = '';
+				info += '<dl class="ui-codinglist-state"><dt>'+ today +'</dt><dd>'
+				info += '<ul class="ui-codinglist-info">';
+				info += '<li>진행율(완료+검수) : <span class="n_all">0</span> / <span class="total">0</span> (<span class="per0">0</span>%)</li>';
+				info += '<li>완료 : <span class="n_end">0</span> (<span class="per1">0</span>%)</li>';
+				info += '<li>검수 : <span class="n_tst">0</span> (<span class="per2">0</span>%)</li>';
+				info += '<li>대기 : <span class="n_wat">0</span> (<span class="per4">0</span>%)</li>';
+				info += '</ul></dd></dl>';
 
-				memo = dataExecel.list[i].memo || '';
-				d1 = dataExecel.list[i].d1 || '';
-				d2 = dataExecel.list[i].d2 || '';
-				d3 = dataExecel.list[i].d3 || '';
-				d4 = dataExecel.list[i].d4 || '';
-				d5 = dataExecel.list[i].d5 || '';
-				d6 = dataExecel.list[i].d6 || '';
-				d7 = dataExecel.list[i].d7 || '';
-				d8 = dataExecel.list[i].d8 || '';
-				r1 = dataExecel.list[i].r1 || '';
-				r2 = dataExecel.list[i].r2 || '';
-				r3 = dataExecel.list[i].r3 || '';
-				r4 = dataExecel.list[i].r4 || '';
-				overl = dataExecel.list[i].overlap || '';
-				root = dataExecel.list[i].root || '';
+				var sel = '';
+				sel += '<div class="ui-codinglist-sel mgb-xxxs">';
+				sel += '<button type="button" class="btn-base"><span>전체</span></button>';
+				sel += '<select id="uiCLstate" data-ctg="state">';
+				sel += '<option value="0">상태선택</option>';
+				sel += '</select>';
+				sel += '<select id="uiCLpub" data-ctg="pub">';
+				sel += '<option value="0">퍼블선택</option>';
+				sel += '</select>';
+				sel += '<select id="uiCLdev" data-ctg="dev">';
+				sel += '<option value="0">개발선택</option>';
+				sel += '</select>';
+				sel += '<select id="uiCLDate" data-ctg="date">';
+				sel += '<option value="0">일정선택</option>';
+				sel += '</select>';
+				// sel += '<select id="uiCLdepth" data-ctg="d2">';
+				// sel += '<option value="0">메뉴선택</option>';
+				// sel += '</select>';
+				sel += '</div>';
+				sel += '<div class="box-srch mgb-xxxs">';
+				sel += '<div class="srch-area">';
+				sel += '<input type="search" id="projectListSrchCode" class="inp-base ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
+				sel += '</div>';
+				sel += '</div>';
+				
+				$('#' + opt.id).prepend(sel);
+				$('#' + opt.id).prepend(info);
 
-				(d1 !== '') ? d1_ = dataExecel.list[i - 1 < 0 ? 0 : i].d1 : d1 = d1_;
-
-				(dataExecel.list[i].d1 === '') ?
-					(d2 !== '') ? d2_ = dataExecel.list[i - 1 < 0 ? 0 : i].d2 : d2 = d2_ :
-					(!!dataExecel.list[i - 1 < 0 ? 0 : i].d2) ? d2_ = dataExecel.list[i - 1 < 0 ? 0 : i].d2 : d2_ = '';
-
-				(dataExecel.list[i].d1 === '' && dataExecel.list[i].d2 === '') ?
-					(d3 !== '') ? d3_ = dataExecel.list[i - 1 < 0 ? 0 : i].d3 : d3 = d3_ :
-					(!!dataExecel.list[i - 1 < 0 ? 0 : i].d3) ? d3_ = dataExecel.list[i - 1 < 0 ? 0 : i].d3 : d3_ = '';
-
-				(dataExecel.list[i].d1 === '' && dataExecel.list[i].d2 === '' && dataExecel.list[i].d3 === '') ?
-					(d4 !== '') ? d4_ = dataExecel.list[i - 1 < 0 ? 0 : i].d4 : d4 = d4_ :
-					(!!dataExecel.list[i - 1 < 0 ? 0 : i].d4) ? d4_ = dataExecel.list[i - 1 < 0 ? 0 : i].d4 : d4_ = '';
-
-				(dataExecel.list[i].d1 === '' && dataExecel.list[i].d2 === '' && dataExecel.list[i].d3 === '' && dataExecel.list[i].d4 === '') ?
-					(d5 !== '') ? d5_ = dataExecel.list[i - 1 < 0 ? 0 : i].d5 : d5 = d5_ :
-					(!!dataExecel.list[i - 1 < 0 ? 0 : i].d5) ? d5_ = dataExecel.list[i - 1 < 0 ? 0 : i].d5 : d5_ = '';
-
-				(dataExecel.list[i].d1 === '' && dataExecel.list[i].d2 === '' && dataExecel.list[i].d3 === '' && dataExecel.list[i].d4 === '' && dataExecel.list[i].d5 === '') ?
-					(d6 !== '') ? d6_ = dataExecel.list[i - 1 < 0 ? 0 : i].d6 : d6 = d6_ :
-					(!!dataExecel.list[i - 1 < 0 ? 0 : i].d6) ? d6_ = dataExecel.list[i - 1 < 0 ? 0 : i].d6 : d6_ = '';
-
-				(dataExecel.list[i].d1 === '' && dataExecel.list[i].d2 === '' && dataExecel.list[i].d3 === '' && dataExecel.list[i].d4 === '' && dataExecel.list[i].d5 === '' && dataExecel.list[i].d6 === '') ?
-					(d7 !== '') ? d7_ = dataExecel.list[i - 1 < 0 ? 0 : i].d7 : d7 = d7_ :
-					(!!dataExecel.list[i - 1 < 0 ? 0 : i].d7) ? d7_ = dataExecel.list[i - 1 < 0 ? 0 : i].d7 : d7_ = '';
-
-				!!dataExecel.list[i].d1 ? d1 = dataExecel.list[i].d1 : '';
-				!!dataExecel.list[i].d2 ? d2 = dataExecel.list[i].d2 : '';
-				!!dataExecel.list[i].d3 ? d3 = dataExecel.list[i].d3 : '';
-				!!dataExecel.list[i].d4 ? d4 = dataExecel.list[i].d4 : '';
-				!!dataExecel.list[i].d5 ? d5 = dataExecel.list[i].d5 : '';
-				!!dataExecel.list[i].d6 ? d6 = dataExecel.list[i].d6 : '';
-				!!dataExecel.list[i].d7 ? d7 = dataExecel.list[i].d7 : '';
-				!!dataExecel.list[i].d8 ? d8 = dataExecel.list[i].d8 : '';
-
-				endsum = (state === "완료") ? endsum + 1 : endsum;
-				tstsum = (state === "검수") ? tstsum + 1 : tstsum;
-				delsum = (state === "제외") ? delsum + 1 : delsum;
-				watsum = (state === "대기") ? watsum + 1 : watsum;
-
-				var x = (i === 0) ? 0 : i - 1;
-
-				c1 = (dataExecel.list[i].d1 !== dataExecel.list[x].d1) ? ' c1' : '';
-				c2 = (dataExecel.list[i].d2 !== dataExecel.list[x].d2) ? ' c2' : '';
-				c3 = (dataExecel.list[i].d3 !== dataExecel.list[x].d3) ? ' c3' : '';
-				c4 = (dataExecel.list[i].d4 !== dataExecel.list[x].d4) ? ' c4' : '';
-				c5 = (dataExecel.list[i].d5 !== dataExecel.list[x].d5) ? ' c5' : '';
-				c6 = (dataExecel.list[i].d6 !== dataExecel.list[x].d6) ? ' c6' : '';
-				c7 = (dataExecel.list[i].d7 !== dataExecel.list[x].d7) ? ' c7' : '';
-				c8 = (dataExecel.list[i].d8 !== dataExecel.list[x].d8) ? ' c8' : '';
-
-				cls2 = 
-					state === '완료' ? 'end' : 
-					state === '검수' ? 'tst' : 
-					state === '제외' ? 'del' : 
-					state === '약관' ? 'trm' : '';
-
-				cls = cls2 + c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8;
-
-				ctg_state.push(dataExecel.list[i].state);
-				ctg_pub.push(dataExecel.list[i].pub);
-				ctg_dev.push(dataExecel.list[i].dev);
-				state !== '제외' ? ctg_date.push(dataExecel.list[i].date) : '';
-				ctg_enddate.push(dataExecel.list[i].enddate);
-				ctg_menu.push(dataExecel.list[i].d2);
-
-				if (state !== '제외' && i === 0) {
-					table += '<table>';
-					table += '<caption>코딩리스트</caption>';
-
-					table += '<colgroup>';
-					table += '<col class="col-1">';//상태
-					table += '<col class="col-2">';//일정
-					table += '<col class="col-3">';//완료일
-					table += '<col class="col-3">';//수정일
-					table += '<col class="col-4">';//퍼블담당자
-					table += '<col class="col-4">';//개발담당자
-
-					table += '<col class="col-8">';//화면아이디
-					table += '</colgroup>';
-
-					table += '<colgroup>';
-					(dataExecel.list[i].d1 !== undefined) ? table += '<col class="col-9">' : '';
-					(dataExecel.list[i].d2 !== undefined) ? table += '<col class="col-9">' : '';
-					(dataExecel.list[i].d3 !== undefined) ? table += '<col class="col-9">' : '';
-					(dataExecel.list[i].d4 !== undefined) ? table += '<col class="col-9">' : '';
-					(dataExecel.list[i].d5 !== undefined) ? table += '<col class="col-9">' : '';
-					(dataExecel.list[i].d6 !== undefined) ? table += '<col class="col-9">' : '';
-					(dataExecel.list[i].d7 !== undefined) ? table += '<col class="col-9">' : '';
-					(dataExecel.list[i].d8 !== undefined) ? table += '<col class="col-9">' : '';
-					table += '</colgroup>';
-
-					table += '<col class="col-10">';//메모
-
-					table += '<thead>';
-					table += '<th scope="col">' + state + '</th>';
-					table += '<th scope="col">' + date + '</th>';
-					table += '<th scope="col">' + enddate + '</th>';
-					table += '<th scope="col">' + moddate + '</th>';
-					table += '<th scope="col">' + pub + '</th>';
-					table += '<th scope="col">' + dev + '</th>';
-
-					table += '<th scope="col">' + id + '</th>';
-					(dataExecel.list[i].d1 !== undefined) ? table += '<th scope="col">' + d1 + '</th>' : '';
-					(dataExecel.list[i].d2 !== undefined) ? table += '<th scope="col">' + d2 + '</th>' : '';
-					(dataExecel.list[i].d3 !== undefined) ? table += '<th scope="col">' + d3 + '</th>' : '';
-					(dataExecel.list[i].d4 !== undefined) ? table += '<th scope="col">' + d4 + '</th>' : '';
-					(dataExecel.list[i].d5 !== undefined) ? table += '<th scope="col">' + d5 + '</th>' : '';
-					(dataExecel.list[i].d6 !== undefined) ? table += '<th scope="col">' + d6 + '</th>' : '';
-					(dataExecel.list[i].d7 !== undefined) ? table += '<th scope="col">' + d7 + '</th>' : '';
-					(dataExecel.list[i].d8 !== undefined) ? table += '<th scope="col">' + d8 + '</th>' : '';
-					table += '<th scope="col">' + memo + '</th>';
-					table += '</thead>';
-					table += '</tbody>';
+				if (!$('.ui-codinglist-info .total').data('data')) {
+					$('.ui-codinglist-info .total').data('data', true).text(len - delsum - 1);
+					$('.ui-codinglist-info .n_all').text(endsum + tstsum);
+					$('.ui-codinglist-info .per0').text(((endsum + tstsum) / (len - delsum - 1) * 100).toFixed(0));
+					$('.ui-codinglist-info .n_end').text(endsum);
+					$('.ui-codinglist-info .per1').text((endsum / (len - delsum - 1) * 100).toFixed(0));
+					$('.ui-codinglist-info .n_tst').text(tstsum);
+					$('.ui-codinglist-info .per2').text((tstsum / (len - delsum - 1) * 100).toFixed(0));
+					$('.ui-codinglist-info .n_wat').text(watsum);
+					$('.ui-codinglist-info .per4').text((watsum / (len - delsum - 1) * 100).toFixed(0));
 				}
-				else if (state !== '제외') {
-					num = num + 1;
 
-					if (!(date === '미정' || date === '일정' || date === undefined) && state !== '완료' && state !== '검수' && state !== '체크') {
-						var dateStart = date;
-						dateStart = changeFormatDate(dateStart)
+				selectoption('uiCLstate', ctg_state);
+				selectoption('uiCLpub', ctg_pub);
+				selectoption('uiCLDate', ctg_date, true);
+				selectoption('uiCLdepth', ctg_menu);
+				selectoption('uiCLdev', ctg_dev);
+				selectAct();
 
-						var care = dateDiff(dateStart, new Date());
-	
-						if (care < 3 && care >= 0) {
-							cls = cls + ' sch_care';
-						} else if (care < 0) {
-							cls = cls + ' sch_warn';
-						}
-	
-					}
+				function selectoption(id, optarray, v) {
+					var $sel = $('#' + id);
+					var nn = 1,
+						nnn = 1;
+					if (!$sel.data('data')) {
+						var optionArray = [],
+							optionSum = [],
+							j = 0,
+							optionHtml = '';
+						v ? optarray.push('일정') : '';
+						optarray.splice(0, 1);
 
-
-					win[global].browser.mobile ?
-						table += '<tr class="' + cls + '" >' :
-						table += '<tr class="' + cls + '">';
-					table += '<td class="state"><span>' + state + '</span></td>';
-					table += '<td class="date"><span>' + date + '</span></td>';
-					table += '<td class="enddate"><span>' + enddate + '</span></td>';
-					table += '<td class="enddate"><span>' + moddate + '</span></td>';
-					table += '<td class="name pub"><span>' + pub + '</span></td>';
-					table += '<td class="name dev"><span>' + dev + '</span></td>';
-					table += id !== '' ?
-						'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
-						'<td class="id "><span></span></td>';	
-					
-					(dataExecel.list[i].d1 !== '') ? table += '<td class="d d1"><span>' + d1 + '</span></td>' : table += '<td class="d"></td>';
-					(dataExecel.list[i].d2 !== '') ? table += '<td class="d d2"><span>' + d2 + '</span></td>' : table += '<td class="d"></td>';
-					(dataExecel.list[i].d3 !== '') ? table += '<td class="d d3"><span>' + d3 + '</span></td>' : table += '<td class="d"></td>';
-					(dataExecel.list[i].d4 !== '') ? table += '<td class="d d4"><span>' + d4 + '</span></td>' : table += '<td class="d"></td>';
-					(dataExecel.list[i].d5 !== '') ? table += '<td class="d d5"><span>' + d5 + '</span></td>' : table += '<td class="d"></td>';
-					(dataExecel.list[i].d6 !== '') ? table += '<td class="d d6"><span>' + d6 + '</span></td>' : table += '<td class="d"></td>';
-					(dataExecel.list[i].d7 !== '') ? table += '<td class="d d7"><span>' + d7 + '</span></td>' : table += '<td class="d"></td>';
-					(dataExecel.list[i].d8 !== '') ? table += '<td class="d d8"><span>' + d8 + '</span></td>' : table += '<td class="d"></td>';
-					(dataExecel.list[i].memo === '') ? table += '<td class="memo none"><span>' + memo + '</span></td>' : table += '<td class="memo"><span>' + memo + '</span></td>';
-					table += '</tr>';
-					(i === len - 1) ? table += '</tbody>' : '';
-					(i === len - 1) ? table += '</table>' : '';
-				}
-				root = '';
-			}
-			$('#' + opt.id).html(table);
-			table = '';
-
-			var info = '';
-			info += '<dl class="ui-codinglist-state"><dt>'+ today +'</dt><dd>'
-			info += '<ul class="ui-codinglist-info">';
-			info += '<li>진행율(완료+검수) : <span class="n_all">0</span> / <span class="total">0</span> (<span class="per0">0</span>%)</li>';
-			info += '<li>완료 : <span class="n_end">0</span> (<span class="per1">0</span>%)</li>';
-			info += '<li>검수 : <span class="n_tst">0</span> (<span class="per2">0</span>%)</li>';
-			info += '<li>대기 : <span class="n_wat">0</span> (<span class="per4">0</span>%)</li>';
-			info += '</ul></dd></dl>';
-
-			var sel = '';
-			sel += '<div class="ui-codinglist-sel mgb-xxxs">';
-			sel += '<button type="button" class="btn-base"><span>전체</span></button>';
-			sel += '<select id="uiCLstate" data-ctg="state">';
-			sel += '<option value="0">상태선택</option>';
-			sel += '</select>';
-			sel += '<select id="uiCLpub" data-ctg="pub">';
-			sel += '<option value="0">퍼블선택</option>';
-			sel += '</select>';
-			sel += '<select id="uiCLdev" data-ctg="dev">';
-			sel += '<option value="0">개발선택</option>';
-			sel += '</select>';
-			sel += '<select id="uiCLDate" data-ctg="date">';
-			sel += '<option value="0">일정선택</option>';
-			sel += '</select>';
-			// sel += '<select id="uiCLdepth" data-ctg="d2">';
-			// sel += '<option value="0">메뉴선택</option>';
-			// sel += '</select>';
-			sel += '</div>';
-			sel += '<div class="box-srch mgb-xxxs">';
-			sel += '<div class="srch-area">';
-			sel += '<input type="search" id="uiCodinglistSrchCode" class="inp-base ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
-			sel += '</div>';
-			sel += '</div>';
-			
-			$('#' + opt.id).prepend(sel);
-			$('#' + opt.id).prepend(info);
-
-			if (!$('.ui-codinglist-info .total').data('data')) {
-				$('.ui-codinglist-info .total').data('data', true).text(len - delsum - 1);
-				$('.ui-codinglist-info .n_all').text(endsum + tstsum);
-				$('.ui-codinglist-info .per0').text(((endsum + tstsum) / (len - delsum - 1) * 100).toFixed(0));
-				$('.ui-codinglist-info .n_end').text(endsum);
-				$('.ui-codinglist-info .per1').text((endsum / (len - delsum - 1) * 100).toFixed(0));
-				$('.ui-codinglist-info .n_tst').text(tstsum);
-				$('.ui-codinglist-info .per2').text((tstsum / (len - delsum - 1) * 100).toFixed(0));
-				$('.ui-codinglist-info .n_wat').text(watsum);
-				$('.ui-codinglist-info .per4').text((watsum / (len - delsum - 1) * 100).toFixed(0));
-			}
-
-			selectoption('uiCLstate', ctg_state);
-			selectoption('uiCLpub', ctg_pub);
-			selectoption('uiCLDate', ctg_date, true);
-			selectoption('uiCLdepth', ctg_menu);
-			selectoption('uiCLdev', ctg_dev);
-			selectAct();
-
-			function selectoption(id, optarray, v) {
-				var $sel = $('#' + id);
-				var nn = 1,
-					nnn = 1;
-				if (!$sel.data('data')) {
-					var optionArray = [],
-						optionSum = [],
-						j = 0,
-						optionHtml = '';
-					v ? optarray.push('일정') : '';
-					optarray.splice(0, 1);
-
-					// 숫자 .sort(function(a,b){return a-b}) , 문자 sort()
-					optionArray = optarray.slice().sort().reduce(function (a, b) {
-						if (a.slice(-1)[0] !== b && b !== '') {
-							a.push(b);
-							v ? optionSum.push(nn) : '';
-							nn = 1;
-						} else {
-							nn = nn + 1;
-						}
-						return a;
-					}, []);
-
-					var alen = optionArray.length;
-					for (j; j < alen; j++) {
-						if (v) {
-							if (j < alen - 1) {
-								optionHtml += '<option value="' + optionArray[j] + '">' + optionArray[j] + ' [' + optionSum[j + 1] + ']건</option>';
+						// 숫자 .sort(function(a,b){return a-b}) , 문자 sort()
+						optionArray = optarray.slice().sort().reduce(function (a, b) {
+							if (a.slice(-1)[0] !== b && b !== '') {
+								a.push(b);
+								v ? optionSum.push(nn) : '';
+								nn = 1;
+							} else {
+								nn = nn + 1;
 							}
-						} else {
-							optionHtml += '<option value="' + optionArray[j] + '">' + optionArray[j] + '</option>';
+							return a;
+						}, []);
+
+						var alen = optionArray.length;
+						for (j; j < alen; j++) {
+							if (v) {
+								if (j < alen - 1) {
+									optionHtml += '<option value="' + optionArray[j] + '">' + optionArray[j] + ' [' + optionSum[j + 1] + ']건</option>';
+								}
+							} else {
+								optionHtml += '<option value="' + optionArray[j] + '">' + optionArray[j] + '</option>';
+							}
 						}
+						$sel.data('data', true).append(optionHtml);
 					}
-					$sel.data('data', true).append(optionHtml);
 				}
-			}
 
-			function selectAct() {
-				$('.ui-codinglist-sel select').on('change', function () {
-					var $this = $(this),
-						v = $this.val(),
-						c = $this.data('ctg'),
-						$sel = $('#' + opt.id + ' .' + c);
+				function selectAct() {
+					$('.ui-codinglist-sel select').on('change', function () {
+						var $this = $(this),
+							v = $this.val(),
+							c = $this.data('ctg'),
+							$sel = $('#' + opt.id + ' .' + c);
 
-					if (v === '0') {
-						$sel.closest('tr').removeClass('hidden');
-					} else {
-						$this.siblings().find('option:eq(0)').prop('selected', true);
-						$sel.each(function (i) {
-							v === 'all' ? $sel.closest('tr').removeClass('hidden') :
-								v !== $sel.find('span').eq(i).text() ?
-									$(this).closest('tr').addClass('hidden') : $(this).closest('tr').removeClass('hidden');
-						});
+						if (v === '0') {
+							$sel.closest('tr').removeClass('hidden');
+						} else {
+							$this.siblings().find('option:eq(0)').prop('selected', true);
+							$sel.each(function (i) {
+								v === 'all' ? $sel.closest('tr').removeClass('hidden') :
+									v !== $sel.find('span').eq(i).text() ?
+										$(this).closest('tr').addClass('hidden') : $(this).closest('tr').removeClass('hidden');
+							});
+						}
+					});
+				}
+
+				$('.ui-codinglist-sel button').on('click', function (e) {
+					$('#' + opt.id + ' tr').removeClass('hidden');
+					$('.ui-codinglist-sel select').find('option:eq(0)').prop('selected', true);
+				});
+				$('.ui-codinglist table a, .ui-codinglist table button').off('click.uicoding').on('click.uicoding', function () {
+					$(this).closest('tr').addClass('selected').siblings().removeClass('selected');
+				});
+
+				if ($('#projectListSrchCode').val() !== '') {
+					var temp = $('.ui-codinglist tbody tr td *:contains('+ $('#projectListSrchCode').val() +')');
+
+					$('.ui-codinglist tbody tr').hide();
+					$(temp).closest('tr').show();
+				}
+				$.expr[":"].contains = $.expr.createPseudo(function(arg){
+					return function(elem) {
+						return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
 					}
 				});
+				$('#projectListSrchCode').on('keyup', function(){
+					var k = $(this).val(),
+						temp = $('.ui-codinglist tbody tr td *:contains('+ k +')');
+					$('.ui-codinglist tbody tr').hide();
+					$(temp).closest('tr').show();
+				});
+
+				win[global].form.init();
 			}
-
-			$('.ui-codinglist-sel button').on('click', function (e) {
-				$('#' + opt.id + ' tr').removeClass('hidden');
-				$('.ui-codinglist-sel select').find('option:eq(0)').prop('selected', true);
-			});
-			$('.ui-codinglist table a, .ui-codinglist table button').off('click.uicoding').on('click.uicoding', function () {
-				$(this).closest('tr').addClass('selected').siblings().removeClass('selected');
-			});
-
-			if ($('#uiCodinglistSrchCode').val() !== '') {
-				var temp = $('.ui-codinglist tbody tr td *:contains('+ $('#uiCodinglistSrchCode').val() +')');
-
-				$('.ui-codinglist tbody tr').hide();
-				$(temp).closest('tr').show();
-			}
-			$.expr[":"].contains = $.expr.createPseudo(function(arg){
-				return function(elem) {
-					return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
-				}
-			});
-			$('#uiCodinglistSrchCode').on('keyup', function(){
-				var k = $(this).val(),
-					temp = $('.ui-codinglist tbody tr td *:contains('+ k +')');
-				$('.ui-codinglist tbody tr').hide();
-				$(temp).closest('tr').show();
-			});
-
-			win[global].form.init();
 		}
 	}
-
-
-	
-	/* ------------------------
-	* name : file uploadt
-	* date : 2020-06-20
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiFileUpload: function (opt) {
-			return createUiFileUpload(opt);
-		}
-	});
-	function createUiFileUpload(opt){
-		$(doc).on('change', '.ui-file-inp', function(){
-				upload(this);
-			})
-			.on('click', '.ui-file-del', function(){
-				fileDel(this);
-			});
-			
-		//fn
-		function upload(t){
-			var $this = $(t),
-				files= $this[0].files,
-				id = $this.attr('id'),
-				len = files.length,
-				$list = $('.ui-file-list[aria-labelledby="'+ id +'"]');
-
-			$list.find('.ui-file-item').remove();
-			$list.find('.ui-file-del').remove();
-			for (var i = 0; i < len; i++) {
-				$list.append('<div class="ui-file-item n'+ i +'">'+ files[i].name +'</div>');
-
-			}
-			$list.append('<button type="button" class="ui-file-del"><span class="hide">Delete attachment</span></button>');
-		}
-		function fileDel(t){
-			var $this = $(t),
-				$list = $this.closest('.ui-file-list'),
-				id = $list.attr('aria-labelledby'),
-				$id = $('#' + id);
-
-			win[global].browser.ie ?
-				$id.replaceWith( $id.clone(true) ) : $id.val(''); 
-			$list.find('.ui-file-item').remove();
-			$this.remove();
-		}
-	}
-	
 
 	/* ------------------------
 	* name : count number
 	* date : 2020-06-20
-	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {	
-		uiCountStep: function (opt) {
-			return createUiCountStep(opt);
+	------------------------ */
+	win[global].count = {
+		step: function(opt) {
+			var $base = $('#' + opt.id),
+				countNum = !!opt.value === true ? opt.value : $base.text(),
+				base_h = $base.outerHeight(),
+				textNum = 0,
+				len = countNum.toString().length,
+				speed = !!opt.speed === true ? opt.speed + 's' : '1.0s',
+				eff  = !!opt.eff === true ? opt.eff : 'easeOutQuart',
+				transitionEnd = 'transitionend webkitTransitionEnd oTransitionEnd otransitionend',
+				i = 0,
+				step, 
+				// re, 
+				timer, 
+				r;
+				
+			if ($base.data('ing') !== true) {
+				textNum = win[global].option.uiComma(countNum);
+				base_h === 0 ? base_h = $base.text('0').outerHeight() : '';
+				$base.data('ing',true).empty().css('height', base_h);
+				len = textNum.length;
+				step = len;
+				// re = Math.ceil(len / 9); 
+				(step < 9) ? step = 9 - len : step = 1;	
+
+				// 숫자 단위만큼 
+				for (i; i < len; i++) {
+					var n = Number(textNum.substr(i, 1)),
+						$thisNum, $base_div;
+					
+					if (isNaN(n)) {
+						// 숫자가 아닐때 ', . ' 
+						$base.append('<div class="n' + i + '"><div class="ui-count-og" style="top:' + base_h + 'px">' + textNum.substr(i, 1) + '</div></div>');
+						$base.find('.n' + i).append('<span>' + textNum.substr(i, 1) + '</span>');
+					}
+					else {
+						// 숫자일때
+						$base.append('<div class="n' + i + '"><div class="ui-count-og" style="top:' + base_h + 'px">' + n + '</div></div>');
+						$base.find('.n' + i).append('<span>9<br>8<br>7<br>6<br>5<br>4<br>3<br>2<br>1<br>0<br>' + n + '</span>');
+						step = step + 1;
+					}
+					
+					$base_div = $base.children('.n' + i);
+					$base_div.find('span').wrapAll('<div class="ui-count-num" style="top:' + base_h + 'px; transition:top '+ speed +' cubic-bezier(' + win[global].option.effect[eff] + ');"></div>');
+					$thisNum = $base_div.find('.ui-count-num');
+					$thisNum.data('height', $thisNum.height()); 
+				}
+
+				r = len;
+				timer = setInterval(function() {
+					count(r)
+					r = r - 1; 
+					(r < 0) ? clearInterval(timer) : '';
+				},150);
+				
+				
+			}
+			function count(r){
+				var $current_num = $base.children('.n' + r).find('.ui-count-num'),
+					num_h = Number($current_num.data('height'));
+				$current_num.css('top', (num_h - base_h) * -1); 
+				
+				if (r === 0) {
+					$current_num.one(transitionEnd, function(){
+						$base.text(textNum).data('ing', false);
+					});
+				}
+			}
 		},
-		uiCountSlot: function (opt) {
-			return createUiCountSlot(opt);
-		}
-	});
-	function createUiCountSlot(opt){
-		var $base = $('#' + opt.id),
-			countNum = !!opt.value === true ? opt.value : $base.text(),
-			base_h = $base.outerHeight(),
-			textNum = 0,
-			len = countNum.toString().length,
-			speed = !!opt.speed === true ? opt.speed + 's' : '1.0s',
-			eff  = !!opt.eff === true ? opt.eff : 'easeOutQuart',
-			transitionEnd = 'transitionend webkitTransitionEnd oTransitionEnd otransitionend',
-			i = 0,
-			step, 
-			// re, 
-			timer, 
-			r;
-			
-		if ($base.data('ing') !== true) {
-			textNum = win[global].option.uiComma(countNum);
-			base_h === 0 ? base_h = $base.text('0').outerHeight() : '';
-			$base.data('ing',true).empty().css('height', base_h);
-			len = textNum.length;
-			step = len;
-			// re = Math.ceil(len / 9); 
-			(step < 9) ? step = 9 - len : step = 1;	
+		slot: function(opt) {
+			var $base = $('#' + opt.id);
+			var countNum = !!opt.value === true ? opt.value : $base.text();
 
-			// 숫자 단위만큼 
-			for (i; i < len; i++) {
-				var n = Number(textNum.substr(i, 1)),
-					$thisNum, $base_div;
-				
-				if (isNaN(n)) {
-					// 숫자가 아닐때 ', . ' 
-					$base.append('<div class="n' + i + '"><div class="ui-count-og" style="top:' + base_h + 'px">' + textNum.substr(i, 1) + '</div></div>');
-					$base.find('.n' + i).append('<span>' + textNum.substr(i, 1) + '</span>');
+			var count = 0,
+				timer, diff, counter,
+				add = Math.ceil((countNum - count) / (countNum - count), -2),
+				j = 1,
+				v = 0,
+				s = 100;
+			
+			if ($base.data('ing') !== true) {
+				counter = function(){
+					j = v < 10? j = 0 : v < 10 ? j + 11 : v < 40 ? j +111 : v < 70 ? j + 1111 : j + 11111;
+					s = s < 0 ? s = 0 : s - 10;
+					diff = countNum - count;
+					(diff > 0) ? count += add + j : '';
+
+					var n = win[global].option.uiComma(count);
+					$base.text(n);
+					v = v + 1;
+
+					if(count < countNum) {
+						timer = setTimeout(function() { 
+							counter(); 
+						}, s);
+					} else {
+						$base.text(win[global].option.uiComma(countNum));
+						clearTimeout(timer);
+					}
 				}
-				else {
-					// 숫자일때
-					$base.append('<div class="n' + i + '"><div class="ui-count-og" style="top:' + base_h + 'px">' + n + '</div></div>');
-					$base.find('.n' + i).append('<span>9<br>8<br>7<br>6<br>5<br>4<br>3<br>2<br>1<br>0<br>' + n + '</span>');
-					step = step + 1;
-				}
-				
-				$base_div = $base.children('.n' + i);
-				$base_div.find('span').wrapAll('<div class="ui-count-num" style="top:' + base_h + 'px; transition:top '+ speed +' cubic-bezier(' + win[global].option.effect[eff] + ');"></div>');
-				$thisNum = $base_div.find('.ui-count-num');
-				$thisNum.data('height', $thisNum.height()); 
+				counter();
 			}
-
-			r = len;
-			timer = setInterval(function() {
-				count(r)
-				r = r - 1; 
-				(r < 0) ? clearInterval(timer) : '';
-			},150);
-			
-			
 		}
-		function count(r){
-			var $current_num = $base.children('.n' + r).find('.ui-count-num'),
-				num_h = Number($current_num.data('height'));
-			$current_num.css('top', (num_h - base_h) * -1); 
+	}
+
+	win[global].slot = {
+		play: {},
+		init: function(opt) {
+			if (opt === undefined) {
+				return false;
+			}
 			
-			if (r === 0) {
-				$current_num.one(transitionEnd, function(){
-					$base.text(textNum).data('ing', false);
+			var $slot = $('#' + opt.id),
+				current = opt.current === undefined ? 0 : opt.current,
+				auto = opt.auto === undefined ? false : opt.auto,
+				single = opt.single === undefined ? true : opt.single,
+				$wrap = $slot.find('.ui-slot-wrap'),
+				$item = $wrap.find('.ui-slot-item'),
+				item_h = $item.outerHeight(),
+				len = $item.length,
+				cut, clone;
+			
+			//common set up
+			$slot.data('n', len).data('single', single);
+			$item.each(function(i){
+				$(this).attr('n', i + 1).data('n', i + 1);
+			});
+			
+			//single or multi set up
+			if (single) {
+				$wrap.css({ 
+					marginTop: 0, 
+					top: (current - 1) * item_h * -1
 				});
-			}
-		}
-	}
-	function createUiCountStep(opt) {
-		var $base = $('#' + opt.id);
-		var countNum = !!opt.value === true ? opt.value : $base.text();
-
-		var count = 0,
-			timer, diff, counter,
-			add = Math.ceil((countNum - count) / (countNum - count), -2),
-			j = 1,
-			v = 0,
-			s = 100;
-		
-		if ($base.data('ing') !== true) {
-			counter = function(){
-				j = v < 10? j = 0 : v < 10 ? j + 11 : v < 40 ? j +111 : v < 70 ? j + 1111 : j + 11111;
-				s = s < 0 ? s = 0 : s - 10;
-				diff = countNum - count;
-				(diff > 0) ? count += add + j : '';
-
-				var n = win[global].option.uiComma(count);
-				$base.text(n);
-				v = v + 1;
-
-				if(count < countNum) {
-					timer = setTimeout(function() { 
-						counter(); 
-					}, s);
+				itemClone({ n: 0, append: true });
+			} else {
+				$wrap.css({ 
+					marginTop: ((item_h/2) + item_h) * -1, 
+					top: 0
+				});
+				if (current - 1 > 0) {
+					for(var i = 0; i < current - 1; i++){
+						// 2일경우
+						if (current - 2 === i) {
+							itemClone({ n: i - 1, append: false });
+							itemClone({ n: i, append: true });
+							itemClone({ n: i + 1, append: true });
+							itemClone({ n: i + 2, append: true });
+						} else {
+							cut = $item.eq(i).detach();
+							$wrap.append(cut);
+						}
+					}
 				} else {
-					$base.text(win[global].option.uiComma(countNum));
-					clearTimeout(timer);
+					itemClone({ n: - 1, append: false });
+					itemClone({ n: - 2, append: false });
+					itemClone({ n: current - 1, append: true });
+					itemClone({ n: current, append: true });
 				}
 			}
-			counter();
+	
+			function itemClone(opt) {
+				//var stickitem = opt.append ? 'append' : 'prepend';
+				clone = $item.eq(opt.n).clone().addClass('clone').removeAttr('n');
+				$wrap[opt.append ? 'append' : 'prepend'](clone);
+			}
+			auto ? win[global].slot.start(opt) : '';
+		},
+		start: function(opt) {
+			if (opt === undefined) {
+				return false;
+			}
+			
+			var $slot = $('#' + opt.id),
+				$wrap = $slot.find('.ui-slot-wrap'),
+				$item = $wrap.find('.ui-slot-item'),
+				single = $slot.data('single'),
+				item_h = $item.outerHeight(),
+				len = $item.length,
+				wrap_h = len * item_h,
+				h = 0;
+			
+			var s = 500;
+			if (!$slot.data('ing')) {
+				$slot.data('ing', true);
+				win[global].slot[opt.id] = win.setInterval(steplot, s);
+			}
+			
+			function steplot(){
+				$wrap.css('top', 0).stop().animate({
+					top: single ? item_h * (len - 1) * -1 : Math.ceil(item_h * (len - 3) * -1)
+				},s , 'linear') ;
+				win.clearInterval(win[global].slot[opt.id]);
+				win[global].slot[opt.id] = win.setInterval(steplot, s);
+			}
+		},
+		stop: function(opt) {
+			if (opt === undefined) {
+				return false;
+			}
+			
+			var $slot = $('#' + opt.id),
+				$wrap = $slot.find('.ui-slot-wrap'),
+				$item = $wrap.find('.ui-slot-item'),
+				item_h = $item.outerHeight(),
+				len = $item.length,
+				
+				callback = opt.callback,
+				single = $slot.data('single'),
+				n = $slot.data('n'),
+				result = Math.floor(Math.random() * n) + 1,
+				index =  $wrap.find('.ui-slot-item[n="' + result + '"]').index(),
+				x = single ? index : index - 2,
+				timer, t, s = 500;
+			
+			$slot.data('ing', false);
+			$item.removeClass('selected');
+			single ? $wrap.css('margin-top', 0): '';
+	
+			clearTimeout(timer);
+			timer = setTimeout(function(){
+				win.clearInterval(win[global].slot[opt.id]);
+				t = item_h * x * -1 > 0 ? item_h * x : item_h * x * -1;
+				$wrap.stop().animate({
+					top: t
+				},1000, 'easeOutQuad', function(){
+					$wrap.find('.ui-slot-item').eq(index).addClass('selected');
+					callback(result);
+				});
+			},10);
 		}
 	}
-
-
 
 	/* ------------------------
 	* name : dragglable
 	* date : 2020-06-20
 	------------------------ */	
-	win[global] = win[global].uiNameSpace(namespace, {	
-		uiDraggable: function (opt) {
-			return createUiDraggable(opt);
-		},
-		uiDraggableReset: function (opt) {
-			return createUiDraggableReset(opt);
-		}
-	});
-	function createUiDraggable(opt){
-		var $wrap = $('#' + opt.id);
-		var $item = $wrap.find('.ui-draggable-item');
-		var $area = $wrap.find('.ui-draggable-area');
-		var scale = 1;
-		var $svg = $wrap.find('svg');
-		
-		//기본값 세팅
-		$(window).off('resize.aaa').on('resize.aaa', function(){
+	win[global].draggable = {
+		init: function(opt) {
+			var $wrap = $('#' + opt.id);
+			var $item = $wrap.find('.ui-draggable-item');
+			var $area = $wrap.find('.ui-draggable-area');
+			var scale = 1;
+			var $svg = $wrap.find('svg');
+			
+			//기본값 세팅
+			$(window).off('resize.aaa').on('resize.aaa', function(){
+				set();
+			});
 			set();
-		});
-		set();
-		function set(){
-			scale =1;
-			$item.each(function(i){
-				var $this = $(this);
-				
-				$this.addClass('original');
-				$this.attr('orgt', $this.offset().top / scale - ($wrap.offset().top / scale));
-				$this.attr('orgl', $this.offset().left / scale - ($wrap.offset().left / scale));
-				
-				if (!$this.attr('onlymove')) {
-					$this.after($this.clone().removeClass('original').addClass('clone').prop('disabled', true));
-				}
-				if (!!$this.attr('line')) {
-					var nm = $this.attr('name');
-					var strokWidth = 4 / scale;
-					var lineX = Number($this.attr('orgl')) + ($this.outerWidth() / 2 / scale ) - strokWidth / 2;
-					var lineY = Number($this.attr('orgt')) + ($this.outerHeight() / 2 / scale ) - strokWidth / 2;
+			function set(){
+				scale =1;
+				$item.each(function(i){
+					var $this = $(this);
+					
+					$this.addClass('original');
+					$this.attr('orgt', $this.offset().top / scale - ($wrap.offset().top / scale));
+					$this.attr('orgl', $this.offset().left / scale - ($wrap.offset().left / scale));
+					
+					if (!$this.attr('onlymove')) {
+						$this.after($this.clone().removeClass('original').addClass('clone').prop('disabled', true));
+					}
+					if (!!$this.attr('line')) {
+						var nm = $this.attr('name');
+						var strokWidth = 4 / scale;
+						var lineX = Number($this.attr('orgl')) + ($this.outerWidth() / 2 / scale ) - strokWidth / 2;
+						var lineY = Number($this.attr('orgt')) + ($this.outerHeight() / 2 / scale ) - strokWidth / 2;
 
-					$this.attr('linex', lineX);
-					$this.attr('liney', lineY);
-					$svg.find('line[name="'+ nm +'"]')
-						.attr('x1', lineX)
-						.attr('y1', lineY)
-						.attr('x2', lineX)
-						.attr('y2', lineY)
-						.attr('stroke-width', strokWidth);
-				}
-			});
-
-			$wrap.attr('ts',$wrap.offset().top / scale);
-			$wrap.attr('te',$wrap.offset().top / scale + $wrap.outerHeight() / scale);
-			$wrap.attr('ls',$wrap.offset().left / scale);
-			$wrap.attr('le',$wrap.offset().left / scale + $wrap.outerWidth() / scale);
-
-			$area.each(function(i){
-				scale = 1;
-				var $this = $(this);
-
-				$this.attr('ts',$this.offset().top / scale);
-				$this.attr('te',$this.offset().top / scale + $this.outerHeight() / scale);
-				$this.attr('ls',$this.offset().left / scale);
-				$this.attr('le',$this.offset().left / scale + $this.outerWidth() / scale);
-			});
-
-			$item.off('mousedown.drag').on('mousedown.drag', function (e) {
-				scale = 1;
-				//dragStart(e, this);
-				var $this = $(this);
-				var $wrap_ = $this.closest('.ui-draggable');
-				var itemName = $this.attr('name');
-				var $area = $wrap_.find('.ui-draggable-area[name="'+ itemName +'"]');
-				var wrapW = $wrap_.outerWidth();
-				var wrapH = $wrap_.outerHeight();
-				var itemW = $this.outerWidth();
-				var itemH = $this.outerHeight();
-				var moving = false;
-				var onlymove = !!$this.attr('onlymove');
-				var line = !!$this.attr('line');
-				var x, y;
-				
-				var scopeW = wrapW - itemW,
-					scopeH = wrapH - itemH;
-
-				var arrTs = [],
-					arrTe = [],
-					arrLs = [],
-					arrLe = [];	
-
-				var off_tw = $wrap.offset().top / scale,
-					off_lw = $wrap.offset().left / scale,
-					off_t = $this.position().top / scale,
-					off_l = $this.position().left / scale;
-
-				for (var i = 0, len = $area.length; i < len; i++) {
-					console.log(i);
-					arrTs.push($area.eq(i).position().top);
-					arrTe.push($area.eq(i).position().top + $area.eq(i).outerHeight() * scale);
-					arrLs.push($area.eq(i).position().left);
-					arrLe.push($area.eq(i).position().left + $area.eq(i).outerWidth() * scale);
-				}
-
-				$this.css({
-					top: off_t + 'px',
-					left: off_l + 'px'
+						$this.attr('linex', lineX);
+						$this.attr('liney', lineY);
+						$svg.find('line[name="'+ nm +'"]')
+							.attr('x1', lineX)
+							.attr('y1', lineY)
+							.attr('x2', lineX)
+							.attr('y2', lineY)
+							.attr('stroke-width', strokWidth);
+					}
 				});
 
-				$(document).off('mousemove.drag').on('mousemove.drag', function (e) {
-					moving = true;
+				$wrap.attr('ts',$wrap.offset().top / scale);
+				$wrap.attr('te',$wrap.offset().top / scale + $wrap.outerHeight() / scale);
+				$wrap.attr('ls',$wrap.offset().left / scale);
+				$wrap.attr('le',$wrap.offset().left / scale + $wrap.outerWidth() / scale);
 
-					if (e.touches !== undefined) {
-						y = e.touches[0].pageY / scale;
-						x = e.touches[0].pageX / scale;
-					} else {
-						if (e.pageY !== undefined) {
-							y = e.pageY / scale;
-							x = e.pageX / scale;
-						}
-						if (e.pageY === undefined) {
-							y = e.clientY / scale;
-							x = e.clientX / scale;
-						}
-					}
+				$area.each(function(i){
+					scale = 1;
+					var $this = $(this);
+
+					$this.attr('ts',$this.offset().top / scale);
+					$this.attr('te',$this.offset().top / scale + $this.outerHeight() / scale);
+					$this.attr('ls',$this.offset().left / scale);
+					$this.attr('le',$this.offset().left / scale + $this.outerWidth() / scale);
+				});
+
+				$item.off('mousedown.drag').on('mousedown.drag', function (e) {
+					scale = 1;
+					//dragStart(e, this);
+					var $this = $(this);
+					var $wrap_ = $this.closest('.ui-draggable');
+					var itemName = $this.attr('name');
+					var $area = $wrap_.find('.ui-draggable-area[name="'+ itemName +'"]');
+					var wrapW = $wrap_.outerWidth();
+					var wrapH = $wrap_.outerHeight();
+					var itemW = $this.outerWidth();
+					var itemH = $this.outerHeight();
+					var moving = false;
+					var onlymove = !!$this.attr('onlymove');
+					var line = !!$this.attr('line');
+					var x, y;
 					
-					var $body = $('body');
-					var nowT = y - (itemH / 2) - off_tw;
-					var nowL = x - (itemW / 2) - off_lw;
-					
-					if (0 > nowT) {
-						nowT = 0;
-					} 
-					if (scopeH < nowT) {
-						nowT = scopeH;
-					} 
-					if (0 > nowL) {
-						nowL = 0;
-					} 
-					if (scopeW < nowL) {
-						nowL = scopeW;
-					} 
-					if (onlymove) {
-						for(var i = 0; i < arrTs.length; i++) {
-							var isInVer = (nowT * scale > arrTs[i] - (itemH * scale / 2) && nowT * scale < arrTe[i] - (itemH * scale / 2));
-							var isInHor = (nowL * scale > arrLs[i] - (itemW * scale / 2) && nowL * scale < arrLe[i] - (itemW * scale / 2));
+					var scopeW = wrapW - itemW,
+						scopeH = wrapH - itemH;
 
-							if (isInVer && isInHor) {
-								if (Number($body.attr('dragps')) !== i) {
-									$body.attr('dragps', i);
-								}
-								break;
-							} else {
-								if (0 <= nowT && scopeH >= nowT && 0 <= nowL && scopeW >= nowL) {
-									$body.removeAttr('dragps');
-								}
-							} 
-						}
+					var arrTs = [],
+						arrTe = [],
+						arrLs = [],
+						arrLe = [];	
+
+					var off_tw = $wrap.offset().top / scale,
+						off_lw = $wrap.offset().left / scale,
+						off_t = $this.position().top / scale,
+						off_l = $this.position().left / scale;
+
+					for (var i = 0, len = $area.length; i < len; i++) {
+						console.log(i);
+						arrTs.push($area.eq(i).position().top);
+						arrTe.push($area.eq(i).position().top + $area.eq(i).outerHeight() * scale);
+						arrLs.push($area.eq(i).position().left);
+						arrLe.push($area.eq(i).position().left + $area.eq(i).outerWidth() * scale);
 					}
 
-					if (line) {
-						var lineName = $this.attr('name');
-						var lineX = Number(nowL) + Number($this.outerWidth() / 2);
-						var lineY = Number(nowT) + Number($this.outerHeight() / 2);
-
-						$svg.find('line[name="'+ lineName +'"]')
-							.attr('x2', lineX)
-							.attr('y2', lineY);
-
-						(0 > nowT) && $svg.find('line[name="'+ lineName +'"]').attr('y2', 0);
-						(scopeH < nowT) && $svg.find('line[name="'+ lineName +'"]').attr('y2', scopeH);
-						(0 > nowL) && $svg.find('line[name="'+ lineName +'"]').attr('x2', 0);
-						(scopeW < nowL) && $svg.find('line[name="'+ lineName +'"]').attr('x2', scopeW);
-					}
-					
 					$this.css({
-						top: nowT + 'px',
-						left: nowL + 'px'
+						top: off_t + 'px',
+						left: off_l + 'px'
 					});
-				}).off('mouseup.drag').on('mouseup.drag', function (e) {
-					if (moving && !onlymove) {
-						var nowT = $this.position().top + (itemH / 2);
-						var nowL = $this.position().left + (itemW / 2);
 
-						for(var i = 0; i < arrTs.length; i++) {
-							var isIn = (nowT > arrTs[i] && nowT < arrTe[i]) && (nowL > arrLs[i] && nowL < arrLe[i]);
-							var $area_ = $area.eq(i);
+					$(document).off('mousemove.drag').on('mousemove.drag', function (e) {
+						moving = true;
 
-							if (isIn && !$area_.attr('full')) {
-								if(!$area_.attr('full')) {
-									if (!!$area_.attr('limit')) {
-										$area_.attr('full', true);
-										$area_.addClass('ok');
-									} else {
-										$area.eq(0).addClass('ok');
+						if (e.touches !== undefined) {
+							y = e.touches[0].pageY / scale;
+							x = e.touches[0].pageX / scale;
+						} else {
+							if (e.pageY !== undefined) {
+								y = e.pageY / scale;
+								x = e.pageX / scale;
+							}
+							if (e.pageY === undefined) {
+								y = e.clientY / scale;
+								x = e.clientX / scale;
+							}
+						}
+						
+						var $body = $('body');
+						var nowT = y - (itemH / 2) - off_tw;
+						var nowL = x - (itemW / 2) - off_lw;
+						
+						if (0 > nowT) {
+							nowT = 0;
+						} 
+						if (scopeH < nowT) {
+							nowT = scopeH;
+						} 
+						if (0 > nowL) {
+							nowL = 0;
+						} 
+						if (scopeW < nowL) {
+							nowL = scopeW;
+						} 
+						if (onlymove) {
+							for(var i = 0; i < arrTs.length; i++) {
+								var isInVer = (nowT * scale > arrTs[i] - (itemH * scale / 2) && nowT * scale < arrTe[i] - (itemH * scale / 2));
+								var isInHor = (nowL * scale > arrLs[i] - (itemW * scale / 2) && nowL * scale < arrLe[i] - (itemW * scale / 2));
+
+								if (isInVer && isInHor) {
+									if (Number($body.attr('dragps')) !== i) {
+										$body.attr('dragps', i);
 									}
-									
-									$this.addClass('ok');
-									$this.prop('disabled', true);
+									break;
+								} else {
+									if (0 <= nowT && scopeH >= nowT && 0 <= nowL && scopeW >= nowL) {
+										$body.removeAttr('dragps');
+									}
 								} 
-							} 
+							}
 						}
 
-						if (!$this.hasClass('ok')) {
-							if (line) {
-								var lineName = $this.attr('name');
-								$svg.find('line[name="'+ lineName +'"]')
-									.attr('x2', $this.attr('linex'))
-									.attr('y2', $this.attr('liney'));
+						if (line) {
+							var lineName = $this.attr('name');
+							var lineX = Number(nowL) + Number($this.outerWidth() / 2);
+							var lineY = Number(nowT) + Number($this.outerHeight() / 2);
+
+							$svg.find('line[name="'+ lineName +'"]')
+								.attr('x2', lineX)
+								.attr('y2', lineY);
+
+							(0 > nowT) && $svg.find('line[name="'+ lineName +'"]').attr('y2', 0);
+							(scopeH < nowT) && $svg.find('line[name="'+ lineName +'"]').attr('y2', scopeH);
+							(0 > nowL) && $svg.find('line[name="'+ lineName +'"]').attr('x2', 0);
+							(scopeW < nowL) && $svg.find('line[name="'+ lineName +'"]').attr('x2', scopeW);
+						}
+						
+						$this.css({
+							top: nowT + 'px',
+							left: nowL + 'px'
+						});
+					}).off('mouseup.drag').on('mouseup.drag', function (e) {
+						if (moving && !onlymove) {
+							var nowT = $this.position().top + (itemH / 2);
+							var nowL = $this.position().left + (itemW / 2);
+
+							for(var i = 0; i < arrTs.length; i++) {
+								var isIn = (nowT > arrTs[i] && nowT < arrTe[i]) && (nowL > arrLs[i] && nowL < arrLe[i]);
+								var $area_ = $area.eq(i);
+
+								if (isIn && !$area_.attr('full')) {
+									if(!$area_.attr('full')) {
+										if (!!$area_.attr('limit')) {
+											$area_.attr('full', true);
+											$area_.addClass('ok');
+										} else {
+											$area.eq(0).addClass('ok');
+										}
+										
+										$this.addClass('ok');
+										$this.prop('disabled', true);
+									} 
+								} 
 							}
 
-							$this.stop().animate({
-								top: $this.attr('orgt') + 'px',
-								left: $this.attr('orgl') + 'px'
-							});
+							if (!$this.hasClass('ok')) {
+								if (line) {
+									var lineName = $this.attr('name');
+									$svg.find('line[name="'+ lineName +'"]')
+										.attr('x2', $this.attr('linex'))
+										.attr('y2', $this.attr('liney'));
+								}
+
+								$this.stop().animate({
+									top: $this.attr('orgt') + 'px',
+									left: $this.attr('orgl') + 'px'
+								});
+							}
 						}
-					}
-					$(document).off('mousemove.drag');
-					$(document).off('mouseup.drag');
+						$(document).off('mousemove.drag');
+						$(document).off('mouseup.drag');
+					});
 				});
+			}
+		},
+		reset: function(opt) {
+			var $wrap = opt !== undefined ? $('#' + opt.id) :$('.ui-draggable');
+			var $item = $wrap.find('.ui-draggable-item');
+			var $area = $wrap.find('.ui-draggable-area');
+			var $svg = $wrap.find('svg');
+
+			$('body').removeAttr('draggable');
+			$area.removeClass('ok').removeAttr('full');
+			$item.each(function(){
+				var $this = $(this);
+
+				$this.prop('disabled', false).removeClass('ok');
+				$this.stop().animate({
+					top: $this.attr('orgt') + 'px',
+					left: $this.attr('orgl') + 'px'
+				});
+
+				if (!!$this.attr('line')) {
+					var nm = $this.attr('name');
+					
+					$svg.find('line[name="'+ nm +'"]')
+						.attr('x2', $this.attr('linex'))
+						.attr('y2', $this.attr('liney'));
+				}
 			});
 		}
 	}
-	function createUiDraggableReset(opt){
-		var $wrap = opt !== undefined ? $('#' + opt.id) :$('.ui-draggable');
-		var $item = $wrap.find('.ui-draggable-item');
-		var $area = $wrap.find('.ui-draggable-area');
-		var $svg = $wrap.find('svg');
-
-		$('body').removeAttr('draggable');
-		$area.removeClass('ok').removeAttr('full');
-		$item.each(function(){
-			var $this = $(this);
-
-			$this.prop('disabled', false).removeClass('ok');
-			$this.stop().animate({
-				top: $this.attr('orgt') + 'px',
-				left: $this.attr('orgl') + 'px'
-			});
-
-			if (!!$this.attr('line')) {
-				var nm = $this.attr('name');
-				
-				$svg.find('line[name="'+ nm +'"]')
-					.attr('x2', $this.attr('linex'))
-					.attr('y2', $this.attr('liney'));
-			}
-		});
-	}
-
-
+	
 
 
 	
@@ -5816,65 +5614,72 @@ if (!Object.keys){
 	 * slide(carousel) v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiSlide: function (opt) {
-			return createUiSlide(opt);
+	win[global].swiper = {
+		options: {
+			current:0,
+			multi:false,
+			loop:true,
+			items:1,
+			eff:'slide',
+			dot:true,
+			nav:true,
+			auto:true,
+			play:false,
+			gauge:true,
+			resize: true,
+			speed:300,
+			autoTime:3000,
+			callback: false,
+			/* multi use */
+			margin:0,
+			mouseDrag:true,
+			touchDrag:true
 		},
-		uiSlideFnEvt: function (opt) {
-			return createUiSlideFnEvt(opt);
-		},
-		uiSlideFnAuto: function (opt) {
-			return createUiSlideFnAuto(opt);
-		}
-	});
-	win[global].uiSlide.options = {
-		current:0,
-		multi:false,
-		loop:true,
-		items:1,
-		eff:'slide',
-		dot:true,
-		nav:true,
-		auto:true,
-		play:false,
-		gauge:true,
-		resize: true,
-		speed:300,
-		autoTime:3000,
-		callback: false,
-		/* multi use */
-		margin:0,
-		mouseDrag:true,
-		touchDrag:true
-	};
-	function createUiSlide(opt) {
-		//option guide
-		if (opt === undefined) {
-			return false;
-		}
-		
-		win[global].uiSlide[opt.id] = {};
-		var base = win[global].uiSlide[opt.id];
-
-		//루트설정
-		base.root = $('#' + opt.id);
-		base.tit = base.root.find('.ui-slide-tit');
-		base.wrap = base.root.find('.ui-slide-wrap');
-		base.itemwrap = base.root.find('.ui-slide-itemwrap');
-		base.item = base.root.find('.ui-slide-item');
-		base.itemtit = base.root.find('.ui-slide-itemtit');
-
-		//옵션저장
-		base.opt = $.extend({}, win[global].uiSlide.options, opt);
-		
-		//중복실행 방지
-		if (!base.root.is('.load')) {
-			base.root.addClass('load');
-			uiSlideSet(base);
-
+		init: function(opt) {
+			//option guide
+			if (opt === undefined) {
+				return false;
+			}
 			
+			win[global].swiper[opt.id] = {};
+			var base = win[global].swiper[opt.id];
+
+			//루트설정
+			base.root = $('#' + opt.id);
+			base.tit = base.root.find('.ui-slide-tit');
+			base.wrap = base.root.find('.ui-slide-wrap');
+			base.itemwrap = base.root.find('.ui-slide-itemwrap');
+			base.item = base.root.find('.ui-slide-item');
+			base.itemtit = base.root.find('.ui-slide-itemtit');
+
+			//옵션저장
+			base.opt = $.extend({}, win[global].swiper.options, opt);
+			
+			//중복실행 방지
+			if (!base.root.is('.load')) {
+				base.root.addClass('load');
+				uiSlideSet(base);
+
+				
+			}
+		},
+		fnEvt: function(opt) {
+			//함수실행
+			var base = $('#' + opt.id).data('base');
+				
+			base.opt.current = opt.current;
+			base.dir = base.opt.past < base.opt.current ? 'next' : 'prev';
+			
+			uiSlideAct(base);
+		},
+		fnAuto: function(opt) {
+			//함수실행
+			var base = $('#' + opt.id).data('base');
+
+			base.opt.auto ? uiSlideAutoEvt(base, opt.play) : '';
 		}
 	}
+
 	function uiSlideSet(base){
 		var base = base;
 
@@ -6610,160 +6415,8 @@ if (!Object.keys){
 			v = { 'id':base.opt.id, 'current':base.opt.current};
 		base.opt.callback(v);		
 	}
-	function createUiSlideFnEvt(opt) {
-		//함수실행
-		var base = $('#' + opt.id).data('base');
-			
-		base.opt.current = opt.current;
-		base.dir = base.opt.past < base.opt.current ? 'next' : 'prev';
-		
-		uiSlideAct(base);
-	}
-	function createUiSlideFnAuto(opt) {
-		//함수실행
-		var base = $('#' + opt.id).data('base');
-
-		base.opt.auto ? uiSlideAutoEvt(base, opt.play) : '';
-
-	}
 
 
-	win[global] = win[global].uiNameSpace(namespace, {
-		uiSlot: function (opt) {
-			return createUiSlot(opt);
-		},
-		uiSlotStart: function (opt) {
-			return createUiSlotStart(opt);
-		},
-		uiSlotStop: function (opt) {
-			return createUiSlotStop(opt);
-		}
-	});
-	win[global].uiSlot.play = {}
-	function createUiSlot(opt){
-		if (opt === undefined) {
-			return false;
-		}
-		
-		var $slot = $('#' + opt.id),
-			current = opt.current === undefined ? 0 : opt.current,
-			auto = opt.auto === undefined ? false : opt.auto,
-			single = opt.single === undefined ? true : opt.single,
-			$wrap = $slot.find('.ui-slot-wrap'),
-			$item = $wrap.find('.ui-slot-item'),
-			item_h = $item.outerHeight(),
-			len = $item.length,
-			cut, clone;
-		
-		//common set up
-		$slot.data('n', len).data('single', single);
-		$item.each(function(i){
-			$(this).attr('n', i + 1).data('n', i + 1);
-		});
-		
-		//single or multi set up
-		if (single) {
-			$wrap.css({ 
-				marginTop: 0, 
-				top: (current - 1) * item_h * -1
-			});
-			itemClone({ n: 0, append: true });
-		} else {
-			$wrap.css({ 
-				marginTop: ((item_h/2) + item_h) * -1, 
-				top: 0
-			});
-			if (current - 1 > 0) {
-				for(var i = 0; i < current - 1; i++){
-					// 2일경우
-					if (current - 2 === i) {
-						itemClone({ n: i - 1, append: false });
-						itemClone({ n: i, append: true });
-						itemClone({ n: i + 1, append: true });
-						itemClone({ n: i + 2, append: true });
-					} else {
-						cut = $item.eq(i).detach();
-						$wrap.append(cut);
-					}
-				}
-			} else {
-				itemClone({ n: - 1, append: false });
-				itemClone({ n: - 2, append: false });
-				itemClone({ n: current - 1, append: true });
-				itemClone({ n: current, append: true });
-			}
-		}
+	
 
-		function itemClone(opt) {
-			//var stickitem = opt.append ? 'append' : 'prepend';
-			clone = $item.eq(opt.n).clone().addClass('clone').removeAttr('n');
-			$wrap[opt.append ? 'append' : 'prepend'](clone);
-		}
-		auto ? win[global].uiSlotStart(opt) : '';
-	}
-	function createUiSlotStart(opt){
-		//option guide
-		if (opt === undefined) {
-			return false;
-		}
-		
-		var $slot = $('#' + opt.id),
-			$wrap = $slot.find('.ui-slot-wrap'),
-			$item = $wrap.find('.ui-slot-item'),
-			single = $slot.data('single'),
-			item_h = $item.outerHeight(),
-			len = $item.length,
-			wrap_h = len * item_h,
-			h = 0;
-		
-		var s = 500;
-		if (!$slot.data('ing')) {
-			$slot.data('ing', true);
-			win[global].uiSlot.play[opt.id] = win.setInterval(steplot, s);
-		}
-		
-		function steplot(){
-			$wrap.css('top', 0).stop().animate({
-				top: single ? item_h * (len - 1) * -1 : Math.ceil(item_h * (len - 3) * -1)
-			},s , 'linear') ;
-			win.clearInterval(win[global].uiSlot.play[opt.id]);
-			win[global].uiSlot.play[opt.id] = win.setInterval(steplot, s);
-		}
-	}
-	function createUiSlotStop(opt){
-		//option guide
-		if (opt === undefined) {
-			return false;
-		}
-		
-		var $slot = $('#' + opt.id),
-			$wrap = $slot.find('.ui-slot-wrap'),
-			$item = $wrap.find('.ui-slot-item'),
-			item_h = $item.outerHeight(),
-			len = $item.length,
-			
-			callback = opt.callback,
-			single = $slot.data('single'),
-			n = $slot.data('n'),
-			result = Math.floor(Math.random() * n) + 1,
-			index =  $wrap.find('.ui-slot-item[n="' + result + '"]').index(),
-			x = single ? index : index - 2,
-			timer, t, s = 500;
-		
-		$slot.data('ing', false);
-		$item.removeClass('selected');
-		single ? $wrap.css('margin-top', 0): '';
-
-		clearTimeout(timer);
-		timer = setTimeout(function(){
-			win.clearInterval(win[global].uiSlot.play[opt.id]);
-			t = item_h * x * -1 > 0 ? item_h * x : item_h * x * -1;
-			$wrap.stop().animate({
-				top: t
-			},1000, 'easeOutQuad', function(){
-				$wrap.find('.ui-slot-item').eq(index).addClass('selected');
-				callback(result);
-			});
-		},10);
-	}
 })(jQuery, window, document);

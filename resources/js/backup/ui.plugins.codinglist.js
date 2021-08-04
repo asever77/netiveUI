@@ -10,11 +10,11 @@
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
 	$ui = $ui.uiNameSpace(namespace, {
-		uiCodinglist: function (opt) {
-			return createUiCodinglist(opt);
+		project.list: function (opt) {
+			return createproject.list(opt);
 		}
 	});
-	function createUiCodinglist(opt) {
+	function createproject.list(opt) {
 		var dataExecel;
 
 		$ui.uiAjax({ 
@@ -281,7 +281,7 @@
 			sel += '</div>';
 			sel += '<div class="box-srch mgb-xxxs">';
 			sel += '<div class="srch-area">';
-			sel += '<input type="search" id="uiCodinglistSrchCode" class="inp-srch ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
+			sel += '<input type="search" id="project.listSrchCode" class="inp-srch ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
 			sel += '</div>';
 			sel += '</div>';
 			
@@ -378,8 +378,8 @@
 				$(this).closest('tr').addClass('selected').siblings().removeClass('selected');
 			});
 
-			if ($('#uiCodinglistSrchCode').val() !== '') {
-				var temp = $('.ui-codinglist tbody tr td *:contains('+ $('#uiCodinglistSrchCode').val() +')');
+			if ($('#project.listSrchCode').val() !== '') {
+				var temp = $('.ui-codinglist tbody tr td *:contains('+ $('#project.listSrchCode').val() +')');
 
 				$('.ui-codinglist tbody tr').hide();
 				$(temp).closest('tr').show();
@@ -389,7 +389,7 @@
 					return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
 				}
 			});
-			$('#uiCodinglistSrchCode').on('keyup', function(){
+			$('#project.listSrchCode').on('keyup', function(){
 				var k = $(this).val(),
 					temp = $('.ui-codinglist tbody tr td *:contains('+ k +')');
 				$('.ui-codinglist tbody tr').hide();
