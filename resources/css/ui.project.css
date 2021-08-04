@@ -423,8 +423,9 @@ p {
 	color: #000;
 	text-align: center;
 	padding-top: 10px;
-	border: 1px dashed rgba(201, 187, 247, 0.5);
-	background: rgba(201, 187, 247, 0.1);
+	border: 1px dashed var(--line-b);
+	background: var(--bg-b);
+	opacity: 0.5;
 }
 
 .ui-d .page-floating .ui-floating.ui-fixed-bottom .ui-floating-wrap,

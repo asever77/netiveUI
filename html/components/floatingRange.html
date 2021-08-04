@@ -2,104 +2,90 @@
 
 <input type="hidden" id="uiJsName" value="pageFloatingRange">
 
-<div class="tit-catagory">Components Layout</div>
 <div class="tit-wrap">
 	<h1 class="h-1">Floating Range</h1>
-	<em>date : 2020.06.10</em>
+	<p class="txts-m">특정 범위안에서만 스크롤 이동에 따라 이동하는 오브젝트</p>
 </div>
 
-<p class="txts-m">특정 범위안에서만 스크롤 이동에 따라 이동하는 오브젝트</p>
-
-<h2 class="h-2">Examples</h2>
-<div class="ui-floating-range" id="uiflRange01">
-	<div class="ui-floating-range-item">
-		<div class="tst-obj">특정 영역 안에서만 이동</div>
+<section class="sec-wrap">
+	<h2 class="h-2">Examples</h2>
+	<div class="box-guide fx-wrap" >
+		<div class="ui-floating-range fx-item" id="uiflRange01">
+			<div class="ui-floating-range-item">
+				<div class="tst-obj">특정 영역 안에서만 이동</div>
+			</div>
+		</div>
+		<div class="ui-floating-range fx-item" id="uiflRange02">
+			<div  style="width:100%; height:150px; background:#e4e4e4"></div>
+			<div class="ui-floating-range-item">
+				<div class="tst-obj">특정 영역 안에서만 이동</div>
+			</div>
+		</div>
 	</div>
-</div>
-<div class="ui-floating-range" id="uiflRange02">
-	<div id="aaa" style="width:100%; height:50px; background:#e4e4e4"></div>
-	<div class="ui-floating-range-item">
-		<div class="tst-obj">특정 영역 안에서만 이동</div>
-	</div>
-</div>
+</section>
 
-<h2 class="h-2">HTML Structure</h2>
-<h3 class="h-3">basic type</h3>
-<div class="box-code">
-<pre>
-<code>
-&lt;div <span class="na">class=</span><span class="s">"ui-floating-range"</span> <span class="na">id=</span><span class="s">"uiflRange01"</span>&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-floating-range-item"</span>&gt;
-		...
+<section class="sec-wrap">		
+	<h2 class="h-2">Source Code</h2>
+	<h3 class="h-3">HTML</h3>
+<pre class="box-code"><code class="html">
+&lt;div class="ui-floating-range fx-item" id="uiflRange01"&gt;
+	&lt;div class="ui-floating-range-item"&gt;
+		&lt;div class="tst-obj"&gt;특정 영역 안에서만 이동&lt;/div&gt;
 	&lt;/div&gt;
 &lt;/div&gt;
 </code>
 </pre>
-</div>
 
-<h2 class="h-2">CSS Style</h2>
-<h3 class="h-3">base style</h3>
-<div class="box-code">
-<pre>
-<code>
+	<h3 class="h-3">CSS</h3>
+<pre class="box-code"><code class="css">
 .ui-floating-range {position:relative; }
 .ui-floating-range-item {position:relative; top:0; left:0;}
-</code>
-</pre>
-</div>
-<h3 class="h-3">style : netive UI</h3>
-<div class="box-code">
-<pre>
-<code>
+
 .ui-floating-range {display:inline-block; vertical-align: middle; height:500px; width:300px; border:1px dashed #ccc;}
 .ui-floating-range-item {width:100%;}
 </code>
 </pre>
-</div>
 
-<h2 class="h-2">Javascript</h2>
-<h3 class="h-3">netive.floating.range</h3>
-<div class="box-code">
-<pre>
-<code>
+	<h3 class="h-3">Javascript</h3>
+<pre class="box-code"><code class="javascript">
 netive.floating.range({ 
 	id:'uiflRange01', 
-	margin: 20
+	margin: 0
 });
 </code>
 </pre>
-</div>
 
-<div class="tbl-base type-option">
-	<table>
-	<caption>옵션 설명</caption>
-	<colgroup>
-		<col class="n1">
-		<col class="n2">
-		<col class="n3">
-		<col class="n4">
-	</colgroup>
-	<thead>
-		<tr>
-			<th scope="col">Options</th>
-			<th scope="col">Type</th>
-			<th scope="col">Default</th>
-			<th scope="col">Explanation</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr class="nec">
-			<th scope="row">id:</th>
-			<td>[string]</td>
-			<td>'name'</td>
-			<td>(필수) fix follow를 적용 시킬 영역(ui-floating)의 id 명</td>
-		</tr>
-		<tr>
-			<th scope="row">margin:</th>
-			<td>[number]</td>
-			<td>0</td>
-			<td>오브젝트 상단영역 마진값 추가로 이동시점 변경</td>
-		</tr>
-	</tbody>
-	</table>
-</div>
+	<div class="tbl-base type-option mgt-s">
+		<table>
+		<caption>옵션 설명</caption>
+		<colgroup>
+			<col class="n1">
+			<col class="n2">
+			<col class="n3">
+			<col class="n4">
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">Options</th>
+				<th scope="col">Type</th>
+				<th scope="col">Default</th>
+				<th scope="col">Explanation</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="nec">
+				<th scope="row">id:</th>
+				<td>[string]</td>
+				<td>'name'</td>
+				<td>(필수) fix follow를 적용 시킬 영역(ui-floating)의 id 명</td>
+			</tr>
+			<tr>
+				<th scope="row">margin:</th>
+				<td>[number]</td>
+				<td>0</td>
+				<td>오브젝트 상단영역 마진값 추가로 이동시점 변경</td>
+			</tr>
+		</tbody>
+		</table>
+	</div>
+</section>	

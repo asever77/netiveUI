@@ -459,7 +459,7 @@
     netive.page.pageFloatingRange = function(){
         netive.floating.range({ 
             id:'uiflRange01', 
-            margin: 20
+            margin: 0
         });
         netive.floating.range({ 
             id:'uiflRange02', 
@@ -468,14 +468,15 @@
     }
 
     netive.page.pageFloating = function(){
+        
+        
         netive.floating.base({ id:'exeFix12', ps:'top', fix:true });
-        netive.floating.base({ id:'exeFix11', ps:'top', add:'exeFix12', fix:true });
-        netive.floating.base({ id:'exeFix10', ps:'top', add:'exeFix11', fix:true });
+        netive.floating.base({ id:'exeFix11', ps:'top', fix:true, add:'exeFix12' });
+        netive.floating.base({ id:'exeFix10', ps:'top', fix:true, add:'exeFix11' });
+        
+       
 
-        netive.floating.base({ 
-            id:'exeFix1', 
-            ps:'top', 
-            fix:false, 
+        netive.floating.base({ id:'exeFix1', ps:'top', fix:false, 
             callback:function(v){
                 console.log(v);
             } 

@@ -3803,6 +3803,8 @@ if (!Object.keys){
 				$idwrap.removeAttr('style');
 				$id.data('fixbottom', th);
 
+				console.log($add, lh);
+
 				if (!!add) {
 					if ($add.data('fixbottom') === undefined) {
 						$add.data('fixbottom', th + $addwrap.outerHeight());
