@@ -192,9 +192,10 @@
         });
 
         $('.test-focus').off('focus.aa').on('focus.aa', function(){
-           $(this).css('border', '1px solid red');
-        }).off('focusout.bb').on('focusout.bb', function(){
-            $(this).css('border', '1px solid sliver');
+           $(this).css('background', 'red');
+        })
+        $('.test-focus').off('blur.bb').on('blur.bb', function(){
+            $(this).css('background', '#ccc');
          });
         
     }
