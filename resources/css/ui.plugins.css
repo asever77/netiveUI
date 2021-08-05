@@ -9,6 +9,15 @@
     100% {opacity:0;}
 }
 
+@keyframes scaleIn {
+    0% {opacity:0; transform: scale(0.9);}
+    100% {opacity:1; transform: scale(1);}
+}
+@keyframes scaleOut {
+    0% {opacity:1; transform: scale(1);}
+    100% {opacity:0; transform: scale(0.9);}
+}
+
 @keyframes slideDownIn {
     0% {display:block; opacity:0;}
     1% {top:-100px; opacity:0;}
@@ -816,14 +825,14 @@ a.ui-acco-btn:after {
 }
 
 .type-full .ui-modal-wrap,
-.ui-modal.ps-top .ui-modal-wrap,
-.ui-modal.ps-bottom .ui-modal-wrap {
+.size-mobile .ui-modal.ps-top .ui-modal-wrap,
+.size-mobile .ui-modal.ps-bottom .ui-modal-wrap {
     margin: 0;
     width: 100%;
 }
 
-.size-desktop .ui-modal.ps-top .ui-modal-wrap {margin-top: 1rem;}
-.size-desktop .ui-modal.ps-bottom .ui-modal-wrap {margin-bottom: 1rem;}
+.ui-modal.ps-top .ui-modal-wrap {margin-top: 1rem;}
+.ui-modal.ps-bottom .ui-modal-wrap {margin-bottom: 1rem;}
 
 .ui-modal.ready.open.current:after {
     animation-name: fadeIn;
@@ -840,15 +849,31 @@ a.ui-acco-btn:after {
     animation-fill-mode: forwards;
 }
 
-.ui-modal.close.ps-center .ui-modal-wrap {
-    animation-name: slideDownOut;
+.ui-modal.type-full.open.ps-center .ui-modal-wrap {
+    animation-name: slideUpIn;
     animation-duration: .2s;
     animation-iteration-count: 1;
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
+.ui-modal.type-full.close.ps-center .ui-modal-wrap {
+    animation-name: slideUpOut;
+    animation-duration: .2s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+
 .ui-modal.open.ps-center .ui-modal-wrap {
-    animation-name: slideDownIn;
+    animation-name: scaleIn;
+    animation-duration: .2s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+.ui-modal.close.ps-center .ui-modal-wrap {
+    animation-name: scaleOut;
     animation-duration: .2s;
     animation-iteration-count: 1;
     animation-timing-function: linear;
@@ -911,13 +936,13 @@ a.ui-acco-btn:after {
     top: 50%
 }
 
-.type-system .ui-modal-wrap {
-    width: 250px;
+.ui-modal.type-system .ui-modal-wrap {
+    width: auto;
     text-align: center;
-    font-size: 14px;
+    font-size: 1.4rem;
 }
 
-.type-system .ui-modal-wrap strong {
+.ui-modal.type-system .ui-modal-wrap strong {
     font-weight: 900;
 }
 

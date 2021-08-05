@@ -348,13 +348,13 @@ if (!Object.keys){
 			timerWin = setTimeout(function(){
 				if (w < win[global].option.breakPoint[0]) {
 					browser.size = 'mobile';
-					$html.removeClass('size-tablet').addClass('size-mobile');
+					$html.removeClass('size-tablet').removeClass('size-desktop').addClass('size-mobile');
 				} else if (w < win[global].option.breakPoint[1]) {
 					browser.size = 'tablet';
-					$html.removeClass('size-mobile').addClass('size-tablet');
+					$html.removeClass('size-mobile').removeClass('size-desktop').addClass('size-tablet');
 				} else {
 					browser.size = 'desktop';
-					$html.removeClass('size-mobile').removeClass('size-tablet')
+					$html.removeClass('size-mobile').removeClass('size-tablet').addClass('size-desktop');
 				}
 			},200);
 		}
@@ -4009,7 +4009,7 @@ if (!Object.keys){
 			function makeSystemModal(){
 				var htmlSystem = '';
 				
-				htmlSystem += '<div class="ui-modal '+ sClass +'" id="uiSystemModal">';
+				htmlSystem += '<div class="ui-modal type-system '+ sClass +'" id="uiSystemModal">';
 				htmlSystem += '<div class="ui-modal-wrap">';
 				htmlSystem += '<div class="ui-modal-body">';
 				htmlSystem += sMessage;

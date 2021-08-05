@@ -1578,6 +1578,12 @@ a.btn-base-l {
 	color: var(--btn-text-primary);
 }
 
+[class*="btn-base"].text.primary {
+	border: 0;
+	background-color: transparent;
+	color: var(--secondary);
+}
+
 /* button icon style */
 [class*="btn-base"] .icon-material {
 	flex: 0 0 auto;
