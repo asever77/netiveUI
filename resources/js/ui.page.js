@@ -57,7 +57,7 @@
         netive.table.scroll({
             callback:function(){
                 netive.scrollBar.init({
-                    id: 'tblScrollTest1'
+                    selector: 'tblScrollTest1'
                 });
             }
         });
@@ -176,20 +176,26 @@
                 ps: $btn.attr('modal-ps') === undefined ? 'center' : $btn.attr('modal-ps'), 
                 src: $btn.attr('modal-src') === undefined ? false : $btn.attr('modal-src'), 
                 full: $btn.attr('modal-mobilefull') === undefined ? false : $btn.attr('modal-mobilefull') === 'true' && true, 
-                modalWidth: $btn.attr('modal-width') === undefined ? false : $btn.attr('modal-width'), 
-                modalHeight: $btn.attr('modal-height') === undefined ? false : $btn.attr('modal-height'), 
+                width: $btn.attr('modal-width') === undefined ? false : $btn.attr('modal-width'), 
+                height: $btn.attr('modal-height') === undefined ? false : $btn.attr('modal-height'), 
                 innerScroll : $btn.attr('modal-scroll') === undefined ? false : $btn.attr('modal-scroll') === 'true' && true, 
                 closeCallback: function(v) { 
                     //console.log('close callback', v); 
                 },
                 callback: function(v) { 
                     netive.scrollBar.init({
-                        id: $('#' + $btn.attr('modal-id')).find('.ui-scrollbar')
+                        selector: $('#' + $btn.attr('modal-id')).find('.ui-scrollbar')
                     })
                     //console.log('callback', v); 
                 }
             });
-        })
+        });
+
+        $('.test-focus').off('focus.aa').on('focus.aa', function(){
+           $(this).css('border', '1px solid red');
+        }).off('focusout.bb').on('focusout.bb', function(){
+            $(this).css('border', '1px solid sliver');
+         });
         
     }
 

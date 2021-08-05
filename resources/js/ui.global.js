@@ -834,21 +834,20 @@ if (!Object.keys){
 	 */
 	win[global].scrollBar = {
 		options : {
-			id: false,
+			selector: false,
 			callback:false,
 			infiniteCallback:false,
 			space: false,
 			remove: false
 		},
 		init: function(opt){
-			var opt = $.extend(true, {}, this.options, opt),
-				id = opt.id,
-				space = opt.space,
-				callback = opt.callback,
-				infiniteCallback = opt.infiniteCallback,
-				remove = opt.remove,
-				$base = !id ? $('.ui-scrollbar') : typeof id === 'object' ? id : $('[scroll-id="' + id +'"]');
-			
+			var opt = $.extend(true, {}, this.options, opt);
+			var selector = opt.id;
+			var space = opt.space;
+			var callback = opt.callback;
+			var infiniteCallback = opt.infiniteCallback;
+			var remove = opt.remove;
+			var $base = !selector ? $('.ui-scrollbar') : typeof selector === 'object' ? selector : $('[scroll-id="' + selector +'"]');
 			var timerResize;
 			
 			// if (win[global].support.touch) {
@@ -2866,7 +2865,7 @@ if (!Object.keys){
 				
 				if (customscroll) {
 					win[global].scrollBar.init({
-						id : _$wrap
+						selector: _$wrap
 					});
 					win[global].scroll.move({ 
 						value: Number(opt_h * _$uisel.find(':checked').index()), 
@@ -3911,8 +3910,8 @@ if (!Object.keys){
 			ps: 'center',
 			src: false,
 			remove: false,
-			modalWidth: false,
-			modalHeight: false,
+			width: false,
+			height: false,
 			innerScroll: false,
 			mg: 20,
 			callback:false,
@@ -3932,31 +3931,31 @@ if (!Object.keys){
 			endfocus: false
 		},
 		show: function(opt){
-			var opt = $.extend(true, {}, win[global].modal.options, opt),
-				wrap = opt.wrap === false ? $('body') : typeof opt.wrap === 'object' ? opt.wrap : $('#' + opt.wrap),
-				type = opt.type,
-				id = opt.id,
-				src = opt.src,
-				full = opt.full,
-				ps = opt.ps,
-				mg = opt.mg,
-				remove = opt.remove,
-				w = opt.modalWidth,
-				h = opt.modalHeight,
-				innerScroll = opt.innerScroll,
-				scr_t = $(win).scrollTop(),
-				endfocus = opt.endfocus === false ? document.activeElement : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus,
-				callback = opt.callback,
-				closeCallback = opt.closeCallback,
-				timer;
+			var opt = $.extend(true, {}, win[global].modal.options, opt);
+			var wrap = opt.wrap === false ? $('body') : typeof opt.wrap === 'object' ? opt.wrap : $('#' + opt.wrap);
+			var type = opt.type;
+			var id = opt.id;
+			var src = opt.src;
+			var full = opt.full;
+			var ps = opt.ps;
+			var mg = opt.mg;
+			var remove = opt.remove;
+			var w = opt.width;
+			var h = opt.height;
+			var innerScroll = opt.innerScroll;
+			var scr_t = $(win).scrollTop();
+			var endfocus = opt.endfocus === false ? document.activeElement : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
+			var callback = opt.callback;
+			var closeCallback = opt.closeCallback;
+			var timer;
 			
-			var sMessage = opt.sMessage,
-				sBtnConfirmTxt = opt.sBtnConfirmTxt,
-				sBtnCancelTxt = opt.sBtnCancelTxt,
-				sZindex = opt.sZindex,
-				sClass = opt.sClass,
-				sConfirmCallback = opt.sConfirmCallback,
-				sCancelCallback = opt.sCancelCallback;
+			var sMessage = opt.sMessage;
+			var sBtnConfirmTxt = opt.sBtnConfirmTxt;
+			var sBtnCancelTxt = opt.sBtnCancelTxt;
+			var sZindex = opt.sZindex;
+			var sClass = opt.sClass;
+			var sConfirmCallback = opt.sConfirmCallback;
+			var sCancelCallback = opt.sCancelCallback;
 
 			if (type === 'normal') {
 				if (!!src && !$('#' + opt.id).length) {
