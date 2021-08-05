@@ -191,26 +191,7 @@
             });
         });
 
-        var n = 0;
-        var timer;
-        function aa(){
-            timer = setTimeout(function(){
-            
-                n = n > 200 ? 0 : n;
-                
-                $('#roll').css('top', (n * -1) + 'px');
-                n = n + 100;
-                aa();
-            },1000);
-        }
-        aa();
 
-        $('#roll2').on('focus', function(){
-            clearTimeout(timer);
-        }).on('blur', function(){
-            aa();
-        });
-        
     }
 
     netive.page.pageFileUpload = function(){
