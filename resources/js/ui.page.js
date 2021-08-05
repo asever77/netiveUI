@@ -191,12 +191,18 @@
             });
         });
 
-        $('.test-focus').off('focus.aa').on('focus.aa', function(){
-           $(this).css('background', 'red');
-        })
-        $('.test-focus').off('blur.bb').on('blur.bb', function(){
-            $(this).css('background', '#ccc');
-         });
+        var n = 0;
+        function aa(){
+            setTimeout(function(){
+            
+                n = n > 200 ? 0 : n;
+                
+                $('#roll').css('top', (n * -1) + 'px');
+                n = n + 100;
+                aa();
+            },1000);
+        }
+        aa();
         
     }
 
