@@ -192,8 +192,9 @@
         });
 
         var n = 0;
+        var timer;
         function aa(){
-            setTimeout(function(){
+            timer = setTimeout(function(){
             
                 n = n > 200 ? 0 : n;
                 
@@ -203,6 +204,12 @@
             },1000);
         }
         aa();
+
+        $('#roll2').on('focus', function(){
+            clearTimeout(timer);
+        }).on('blur', function(){
+            aa();
+        });
         
     }
 
