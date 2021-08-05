@@ -698,8 +698,8 @@ select.off:focus+.ui-select-btn:after {
 }
 
 .ui-select-opts input:focus,
-.ui-d .ui-select-opt:focus,
-.ui-d .ui-select-opt:hover {
+.device-desktop .ui-select-opt:focus,
+.device-desktop .ui-select-opt:hover {
 	background: #444;
 	color: #fff;
 }
@@ -729,15 +729,15 @@ select.off:focus+.ui-select-btn:after {
 }
 
 /* mobile */
-.ui-m .ui-select-wrap.on {
+.device-mobile .ui-select-wrap.on {
 	display: block;
 }
 
-.ui-m .ui-select-cancel,
-.ui-m .ui-select-confirm,
-.ui-m .ui-select-title,
-.ui-m .ui-select-wrap.top,
-.ui-m .ui-select-wrap.bottom {
+.device-mobile .ui-select-cancel,
+.device-mobile .ui-select-confirm,
+.device-mobile .ui-select-title,
+.device-mobile .ui-select-wrap.top,
+.device-mobile .ui-select-wrap.bottom {
 	bottom: -300px;
 	top: auto;
 	animation-name: slideUpIn;
@@ -747,7 +747,7 @@ select.off:focus+.ui-select-btn:after {
 	animation-fill-mode: forwards;
 }
 
-.ui-m .ui-select-wrap {
+.device-mobile .ui-select-wrap {
 	display: none;
 	position: fixed;
 	z-index: 100;
@@ -761,7 +761,7 @@ select.off:focus+.ui-select-btn:after {
 	max-height: 240px;
 }
 
-.ui-m .ui-select-title {
+.device-mobile .ui-select-title {
 	position: fixed;
 	margin-bottom: 200px;
 	left: 0;
@@ -776,11 +776,11 @@ select.off:focus+.ui-select-btn:after {
 	z-index: 10;
 }
 
-.ui-m .ui-select-opts {
+.device-mobile .ui-select-opts {
 	padding: 120px 0 80px;
 }
 
-.ui-m .ui-select-opts:after {
+.device-mobile .ui-select-opts:after {
 	content: "";
 	display: block;
 	position: fixed;
@@ -791,7 +791,7 @@ select.off:focus+.ui-select-btn:after {
 	z-index: 0;
 }
 
-.ui-m .ui-select-opts:before {
+.device-mobile .ui-select-opts:before {
 	content: "";
 	display: block;
 	position: fixed;
@@ -802,7 +802,7 @@ select.off:focus+.ui-select-btn:after {
 	z-index: 0;
 }
 
-.ui-m .ui-select-opt {
+.device-mobile .ui-select-opt {
 	text-align: center;
 	z-index: 1;
 	position: relative;
@@ -810,13 +810,13 @@ select.off:focus+.ui-select-btn:after {
 	color: rgba(255, 255, 255, 0.7)
 }
 
-.ui-m .ui-select-opt.selected {
+.device-mobile .ui-select-opt.selected {
 	color: rgba(255, 255, 255, 1);
 	background-color: rgba(0, 0, 0, 0.1)
 }
 
-.ui-m .ui-select-cancel,
-.ui-m .ui-select-confirm {
+.device-mobile .ui-select-cancel,
+.device-mobile .ui-select-confirm {
 	position: fixed;
 	margin-bottom: 200px;
 	right: 0;
@@ -829,7 +829,7 @@ select.off:focus+.ui-select-btn:after {
 	font-size: 14px;
 	z-index: 11;
 }
-.ui-m .ui-select-cancel {
+.device-mobile .ui-select-cancel {
 	left:0;
 	right:auto;
 }
@@ -1136,7 +1136,7 @@ select.off:focus+.ui-select-btn:after {
 	opacity: 1;
 }
 
-.ui-m .datepicker.sheet-bottom {
+.device-mobile .datepicker.sheet-bottom {
 	max-width: 100%;
 	top: auto !important;
 	left: 0 !important;
@@ -1144,16 +1144,16 @@ select.off:focus+.ui-select-btn:after {
 	position: fixed;
 }
 
-.ui-m .datepicker-body {
+.device-mobile .datepicker-body {
 	max-width: 23rem;
 	margin: 1rem auto;
 }
 
-.ui-m .datepicker.sheet-bottom {
+.device-mobile .datepicker.sheet-bottom {
 	bottom: -50vh;
 }
 
-.ui-m .datepicker.sheet-bottom.on {
+.device-mobile .datepicker.sheet-bottom.on {
 	top: auto;
 	animation-name: slideUpIn;
 	animation-duration: .2s;
@@ -1162,7 +1162,7 @@ select.off:focus+.ui-select-btn:after {
 	animation-fill-mode: forwards;
 }
 
-.ui-m .datepicker.sheet-bottom.off {
+.device-mobile .datepicker.sheet-bottom.off {
 	top: auto;
 	animation-name: slideUpOut;
 	animation-duration: .2s;
@@ -1853,7 +1853,7 @@ a.btn-base-l {
 	z-index: 1;
 }
 
-.ui-m .tbl-base .ui-tablescroll-clone {
+.device-mobile .tbl-base .ui-tablescroll-clone {
 	width: 100%;
 }
 

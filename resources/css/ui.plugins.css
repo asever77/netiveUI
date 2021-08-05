@@ -709,7 +709,6 @@ a.ui-acco-btn:after {
     z-index: 999;
 }
 
-/* ui position : netvie UI style */
 .ui-floating {
     border: 1px dashed rgb(230, 230, 230);
 }
@@ -717,9 +716,7 @@ a.ui-acco-btn:after {
 .ui-floating-wrap {
     width: 100%;
 }
-
-
-/* ui position range : base */
+ 
 .ui-floating-range {
     position: relative;
 }
@@ -730,7 +727,6 @@ a.ui-acco-btn:after {
     left: 0;
 }
 
-/* ui position range : netvie UI style */
 .ui-floating-range {
     display: inline-block;
     vertical-align: middle;
@@ -784,15 +780,6 @@ a.ui-acco-btn:after {
     background: rgba(0, 0, 0, .5);
 }
 
-.ui-modal-wrap {
-    max-width: 90rem;
-    opacity: 0;
-    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
-    position: relative;
-    z-index: 1;
-    background: #fff;
-}
-
 .ui-modal.ps-center.is-over {
     align-items: flex-start;
 }
@@ -818,13 +805,25 @@ a.ui-acco-btn:after {
     overflow: hidden;
 }
 
-.ui-modal.ps-top .ui-modal-wrap {
-    margin-top: 1rem
+.ui-modal-wrap {
+    max-width: 90rem;
+    opacity: 0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+    position: relative;
+    z-index: 1;
+    background: #fff;
+    margin: 2rem;
 }
 
+.type-full .ui-modal-wrap,
+.ui-modal.ps-top .ui-modal-wrap,
 .ui-modal.ps-bottom .ui-modal-wrap {
-    margin-bottom: 1rem
+    margin: 0;
+    width: 100%;
 }
+
+.size-desktop .ui-modal.ps-top .ui-modal-wrap {margin-top: 1rem;}
+.size-desktop .ui-modal.ps-bottom .ui-modal-wrap {margin-bottom: 1rem;}
 
 .ui-modal.ready.open.current:after {
     animation-name: fadeIn;
@@ -965,27 +964,26 @@ a.ui-acco-btn:after {
     margin: 0;
 }
 
-/* ui modal : mobile */
-.ui-m .scroll-no {
+.device-mobile .scroll-no {
     overflow: hidden;
     padding-right: 0;
 }
 
-.ui-m .ui-modal-wrap {
+.device-mobile .ui-modal-wrap {
     margin:2rem;
 }
-.ui-m .ui-modal.ps-top .ui-modal-wrap{
+.device-mobile .ui-modal.ps-top .ui-modal-wrap{
     margin-top:0;
 }
-.ui-m .ui-modal.ps-bottom .ui-modal-wrap{
+.device-mobile .ui-modal.ps-bottom .ui-modal-wrap{
     margin-bottom:0;
 }
-.ui-m .ui-modal.type-full.ps-center {
+.device-mobile .ui-modal.type-full.ps-center {
     justify-content: center;
     align-items: flex-start;
 }
 
-.ui-m .ui-modal.type-full .ui-modal-wrap {
+.device-mobile .ui-modal.type-full .ui-modal-wrap {
     margin: 0;
     width: 100%;
     height: auto;
@@ -1000,30 +998,30 @@ a.ui-acco-btn:after {
     opacity: 0;
 }
 
-.ui-m .ui-modal.open.type-full .ui-modal-wrap {
+.device-mobile .ui-modal.open.type-full .ui-modal-wrap {
     bottom: 0;
     opacity: 1;
     top: auto;
 }
 
-.ui-m .ui-modal-footer {
+.device-mobile .ui-modal-footer {
     padding: 10px 15px;
 }
 
-.ui-m .ui-modal.ps-top .ui-modal-wrap,
-.ui-m .ui-modal.ps-bottom .ui-modal-wrap {
+.device-mobile .ui-modal.ps-top .ui-modal-wrap,
+.device-mobile .ui-modal.ps-bottom .ui-modal-wrap {
     margin:0;
 }
 
-.ui-m .ui-modal.open.ps-top .ui-modal-wrap {
+.device-mobile .ui-modal.open.ps-top .ui-modal-wrap {
     top: 0;
 }
 
-.ui-m .ui-modal.open.ps-bottom .ui-modal-wrap {
+.device-mobile .ui-modal.open.ps-bottom .ui-modal-wrap {
     bottom: 0;
 }
 
-.ui-m .ui-modal.ps-center.is-over .ui-modal-wrap {
+.device-mobile .ui-modal.ps-center.is-over .ui-modal-wrap {
     margin: 0;
 }
 
@@ -1769,33 +1767,33 @@ td button.today {
 }
 
 /* mobile */
-.ui-m .type-dual .ui-datepicker-wrap {
+.device-mobile .type-dual .ui-datepicker-wrap {
     height: 100vh
 }
 
-.ui-m .datepicker-sec {
+.device-mobile .datepicker-sec {
     border: 0;
 }
 
-.ui-m .datepicker-head {
+.device-mobile .datepicker-head {
     height: 110px
 }
 
-.ui-m .datepicker-head-tit {
+.device-mobile .datepicker-head-tit {
     background: #222;
     color: #fff;
 }
 
-.ui-m .datepicker-head-m,
-.ui-m .datepicker-head-y {
+.device-mobile .datepicker-head-m,
+.device-mobile .datepicker-head-y {
     margin: 0 20px;
 }
 
-.ui-m .ui-datepicker.visible .ui-datepicker-wrap {
+.device-mobile .ui-datepicker.visible .ui-datepicker-wrap {
     top: auto;
 }
 
-.ui-m .ui-datepicker.visible .ui-datepicker-wrap {
+.device-mobile .ui-datepicker.visible .ui-datepicker-wrap {
     animation-name: datepickerUp;
     animation-duration: 0.2s;
     animation-iteration-count: 1;
@@ -1803,7 +1801,7 @@ td button.today {
     animation-fill-mode: forwards;
 }
 
-.ui-m .ui-datepicker-wrap {
+.device-mobile .ui-datepicker-wrap {
     animation-name: datepickerDown;
     animation-duration: 0.2s;
     animation-iteration-count: 1;
@@ -1811,7 +1809,7 @@ td button.today {
     animation-fill-mode: forwards;
 }
 
-.ui-m .ui-datepicker-wrap {
+.device-mobile .ui-datepicker-wrap {
     width: 100%;
     position: fixed;
     top: auto;
@@ -1819,25 +1817,25 @@ td button.today {
     left: 0;
 }
 
-.ui-m .ui-datepicker .btn-close:before,
-.ui-m .ui-datepicker .btn-close:after {
+.device-mobile .ui-datepicker .btn-close:before,
+.device-mobile .ui-datepicker .btn-close:after {
     background: #fff;
 }
 
-.ui-m .tbl-datepicker {
+.device-mobile .tbl-datepicker {
     width: 100%;
     max-width: 91vw;
     margin: 0 auto 10px;
     height: auto
 }
 
-.ui-m .tbl-datepicker.type-period {
+.device-mobile .tbl-datepicker.type-period {
     width: auto;
     margin: 0 auto 10px;
     height: auto
 }
 
-.ui-m .datepicker-core {
+.device-mobile .datepicker-core {
     padding: 0;
     height: auto;
     margin-top: 0;
@@ -1845,83 +1843,83 @@ td button.today {
     overflow-x: auto;
 }
 
-.ui-m .tbl-datepicker td {
+.device-mobile .tbl-datepicker td {
     width: 13vw;
     height: 13vw;
 }
 
-.ui-m .tbl-datepicker td span,
-.ui-m .tbl-datepicker td button {
+.device-mobile .tbl-datepicker td span,
+.device-mobile .tbl-datepicker td button {
     width: 100%;
     height: 100%;
     line-height: 1;
 }
 
-.ui-m .tbl-datepicker td span {
+.device-mobile .tbl-datepicker td span {
     padding-top: 0;
 }
 
-.ui-m .tbl-datepicker th {
+.device-mobile .tbl-datepicker th {
     padding: 0;
 }
 
-.ui-m .tbl-datepicker th abbr {
+.device-mobile .tbl-datepicker th abbr {
     height: 7vw;
 }
 
-.ui-m .ui-datepicker.type-month .datepicker-head-month {
+.device-mobile .ui-datepicker.type-month .datepicker-head-month {
     width: 100%;
 }
 
-.ui-m .ui-datepicker.type-dual .ui-datepicker-wrap {
+.device-mobile .ui-datepicker.type-dual .ui-datepicker-wrap {
     width: 100%;
 }
 
-.ui-m .ui-datepicker.type-dual .ui-datepicker-wrap .tbl-datepicker {
+.device-mobile .ui-datepicker.type-dual .ui-datepicker-wrap .tbl-datepicker {
     width: auto;
     float: none
 }
 
-.ui-m .ui-datepicker.type-dual .ui-datepicker-wrap .tbl-datepicker+.tbl-datepicker {
+.device-mobile .ui-datepicker.type-dual .ui-datepicker-wrap .tbl-datepicker+.tbl-datepicker {
     float: none;
     margin-top: 10px;
 }
 
-.ui-m .ui-datepicker .ui-datepicker-wrap .tbl-datepicker thead {
+.device-mobile .ui-datepicker .ui-datepicker-wrap .tbl-datepicker thead {
     display: none;
 }
 
-.ui-m .datepicker-period-head {
+.device-mobile .datepicker-period-head {
     width: 100%;
     position: relative;
     overflow: visible
 }
 
-.ui-m .datepicker-period-head>div {
+.device-mobile .datepicker-period-head>div {
     width: 100%;
     float: none;
 }
 
-.ui-m .datepicker-period-head .n2 {
+.device-mobile .datepicker-period-head .n2 {
     position: absolute;
     top: 103vw;
 }
 
-.ui-m .datepicker-head-select {
+.device-mobile .datepicker-head-select {
     text-align: center;
 }
 
-.ui-m .datepicker-head-btn {
+.device-mobile .datepicker-head-btn {
     position: relative;
     bottom: auto;
     height: 45px;
 }
 
-.ui-m .datepicker-head-btn button {
+.device-mobile .datepicker-head-btn button {
     top: 8px
 }
 
-.ui-m .tbl-datepicker-head {
+.device-mobile .tbl-datepicker-head {
     width: 100%;
     text-align: left;
     font-size: 14px;
@@ -1929,7 +1927,7 @@ td button.today {
     padding: 5px 13px 3px;
 }
 
-.ui-m .datepicker-head-week {
+.device-mobile .datepicker-head-week {
     width: 100%;
     max-width: 91vw;
     margin: 0 auto;
@@ -1939,7 +1937,7 @@ td button.today {
     padding-bottom: 3px
 }
 
-.ui-m .datepicker-head-week span {
+.device-mobile .datepicker-head-week span {
     width: 13vw;
     height: 20px;
     flex: 1;
@@ -2200,11 +2198,11 @@ td button.today {
     outline: 2px solid #3a3a3a;
 }
 
-.ui-m .ui-codinglist thead {
+.device-mobile .ui-codinglist thead {
     display: none;
 }
 
-.ui-m .ui-codinglist tr {
+.device-mobile .ui-codinglist tr {
     display: block;
     width: 100%;
     border-bottom: 1px solid #d8d8d8;
@@ -2213,46 +2211,46 @@ td button.today {
     box-sizing: border-box;
 }
 
-.ui-m .ui-codinglist .end {
+.device-mobile .ui-codinglist .end {
     border-color: #c9bbf7;
 }
 
-.ui-m .ui-codinglist .ing {
+.device-mobile .ui-codinglist .ing {
     border-color: #b9dff3;
 }
 
-.ui-m .ui-codinglist td {
+.device-mobile .ui-codinglist td {
     display: block;
     float: left;
     border: 0;
     padding: 3px;
 }
 
-.ui-m .ui-codinglist td img {
+.device-mobile .ui-codinglist td img {
     width: 14px;
     margin-top: 2px;
 }
 
-.ui-m .ui-codinglist .root {
+.device-mobile .ui-codinglist .root {
     display: none;
 }
 
-.ui-m .ui-codinglist .d1 {
+.device-mobile .ui-codinglist .d1 {
     margin-left: 5px;
     clear: both;
 }
 
-.ui-m .ui-codinglist .d1:before {
+.device-mobile .ui-codinglist .d1:before {
     content: '-';
     display: inline-block;
     padding-right: 5px;
 }
 
-.ui-m .ui-codinglist .d {
+.device-mobile .ui-codinglist .d {
     color: #222;
 }
 
-.ui-m .ui-codinglist .memo {
+.device-mobile .ui-codinglist .memo {
     clear: both;
     background: rgb(255, 254, 223);
     width: 100%;
@@ -2260,22 +2258,22 @@ td button.today {
     padding: 10px;
 }
 
-.ui-m .ui-codinglist .memo.none {
+.device-mobile .ui-codinglist .memo.none {
     display: none;
 }
 
-.ui-m .ui-codinglist .date:before {
+.device-mobile .ui-codinglist .date:before {
     content: 'ⓢ';
     display: inline-block;
 }
 
-.ui-m .ui-codinglist .date:after {
+.device-mobile .ui-codinglist .date:after {
     content: ' ~';
     display: inline-block;
     padding-left: 5px;
 }
 
-.ui-m .ui-codinglist .enddate:before {
+.device-mobile .ui-codinglist .enddate:before {
     content: 'ⓔ';
     display: inline-block;
 }
@@ -2770,16 +2768,16 @@ td button.today {
 }
 
 /* ui slider mobile */
-.ui-m .ui-slider-div {
+.device-mobile .ui-slider-div {
     font-size: 11px;
 }
 
-.ui-m .ui-slider-.n0 em {
+.device-mobile .ui-slider-.n0 em {
     padding-left: 0;
     text-align: center;
 }
 
-.ui-m .ui-slider-.n10 em {
+.device-mobile .ui-slider-.n10 em {
     padding-right: 0;
     text-align: center;
 }

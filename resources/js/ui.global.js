@@ -155,6 +155,7 @@ if (!Object.keys){
 
 			return pagename[0]
 		},
+		breakPoint: [600, 905],
 		keys: { 
 			'tab': 9, 'enter': 13, 'alt': 18, 'esc': 27, 'space': 32, 'pageup': 33, 'pagedown': 34, 'end': 35, 'home': 36, 'left': 37, 'up': 38, 'right': 39, 'down': 40
 		},
@@ -327,14 +328,37 @@ if (!Object.keys){
 
 		var clsBrowser = browser.chrome ? 'chrome' : browser.firefox ? 'firefox' : browser.opera ? 'opera' : browser.safari ? 'safari' : browser.ie ? 'ie ie' + browser.ie : 'other';
 		var clsMobileSystem = browser.ios ? "ios" : browser.android ? "android" : 'etc';
-		var clsMobile = browser.mobile ? browser.app ? 'ui-a ui-m' : 'ui-m' : 'ui-d';
+		var clsMobile = browser.mobile ? browser.app ? 'device-mobile  device-mobile ' : 'device-mobile ' : 'device-desktop';
 
 		//doc.querySelector('html').classList.add(browser.os, clsBrowser, clsMobileSystem, clsMobile);
-		$('html').addClass(browser.os);
-		$('html').addClass(clsBrowser);
-		$('html').addClass(clsMobileSystem);
-		$('html').addClass(clsMobile);
+		var $html = $('html');
+		$html.addClass(browser.os);
+		$html.addClass(clsBrowser);
+		$html.addClass(clsMobileSystem);
+		$html.addClass(clsMobile);
 
+		
+		$(win).off('resize.base').on('resize.base', breakPointClass);
+		
+		var timerWin;
+		function breakPointClass() {
+			var w = $(win).outerWidth();
+			
+			clearTimeout(timerWin);
+			timerWin = setTimeout(function(){
+				if (w < win[global].option.breakPoint[0]) {
+					browser.size = 'mobile';
+					$html.removeClass('size-tablet').addClass('size-mobile');
+				} else if (w < win[global].option.breakPoint[1]) {
+					browser.size = 'tablet';
+					$html.removeClass('size-mobile').addClass('size-tablet');
+				} else {
+					browser.size = 'desktop';
+					$html.removeClass('size-mobile').removeClass('size-tablet')
+				}
+			},200);
+		}
+		breakPointClass();
 	})();
 
 
@@ -876,7 +900,7 @@ if (!Object.keys){
 				$(win).on('resize', function(){
 					clearTimeout(timerResize);
 					timerResize = setTimeout(function(){
-						$wrap.removeAttr('style');						
+						$wrap.css('height','');						
 						nWrapH = $wrap.outerHeight();
 						$wrap.css('height', nWrapH);
 					}, 300);
@@ -3943,6 +3967,7 @@ if (!Object.keys){
 			var w = opt.width;
 			var h = opt.height;
 			var innerScroll = opt.innerScroll;
+
 			var scr_t = $(win).scrollTop();
 			var endfocus = opt.endfocus === false ? document.activeElement : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
 			var callback = opt.callback;
@@ -3990,13 +4015,13 @@ if (!Object.keys){
 				htmlSystem += sMessage;
 				htmlSystem += '</div>';
 				htmlSystem += '<div class="ui-modal-footer">';
-				htmlSystem += '<div class="btn-area stick">';
+				htmlSystem += '<div class="btn-wrap">';
 
 				if (type === 'confirm') {
-					htmlSystem += '<button type="button" class="btn-base ui-modal-cancel"><span>'+ sBtnCancelTxt +'</span></button>';
+					htmlSystem += '<button type="button" class="btn-base-m text ui-modal-cancel"><span>'+ sBtnCancelTxt +'</span></button>';
 				}
 
-				htmlSystem += '<button type="button" class="btn-base ui-modal-confirm"><span>'+ sBtnConfirmTxt +'</span></button>';	
+				htmlSystem += '<button type="button" class="btn-base-m text primary ui-modal-confirm"><span>'+ sBtnConfirmTxt +'</span></button>';	
 				htmlSystem += '</div>';
 				htmlSystem += '</div>';
 				htmlSystem += '</div>';
@@ -4018,8 +4043,6 @@ if (!Object.keys){
 
 				$('.ui-modal').removeClass('current');
 				$('body').addClass('scroll-no');
-				
-				
 
 				$modal
 					.attr('tabindex', '0')
@@ -4054,6 +4077,7 @@ if (!Object.keys){
 				footerH = $modalFooter.length ? $modalFooter.outerHeight() : 0;
 
 				if (!full) {
+					console.log(1111);
 					//lyaer modal
 					if (!h) {
 						var win_h = $(win).outerHeight();
@@ -4164,6 +4188,40 @@ if (!Object.keys){
 						});
 					}
 				});
+				var timerResize;
+
+				$(win).off('resize.modal').on('resize.modal', function(){
+					clearTimeout(timerResize);
+					timerResize = setTimeout(function(){
+						win[global].modal.reset();
+						
+					}, 200);
+				});
+			}
+		},
+		reset: function(opt) {
+			var $modal = $('.ui-modal.open.ps-center');
+
+			for (var i = 0, len = $modal.length; i < len; i++) {
+				var $this = $modal.eq(i);
+				var $head = $this.find('.ui-modal-header');
+				var $body = $this.find('.ui-modal-body');
+				var $foot = $this.find('.ui-modal-footer');
+				var h_win = $(win).outerHeight();
+				var h_head = $head.outerHeight();
+				var h_foot = $foot.outerHeight();
+
+				if (win[global].browser.size !== 'desktop') {
+					$body.css({
+						'min-height': h_win - (h_head + h_foot) + 'px',
+						'max-height': h_win - (h_head + h_foot) + 'px'
+					});
+				} else {
+					$body.css({
+						'min-height': '',
+						'max-height': ''
+					});
+				}
 			}
 		},
 		hide: function(opt){
@@ -4179,6 +4237,7 @@ if (!Object.keys){
 			$modalWrap.off('transitionend.modal');
 			$modal.removeClass('open').addClass('close');
 			$modal.removeClass('fix-header');
+			$(win).off('resize.modal');
 
 			var timer;
 			var $modalPrev = $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1));

@@ -353,7 +353,7 @@ p {
 
 
 /* box code */
-.ui-m .box-code {
+.device-mobile .box-code {
 	max-height:50vh;
 	overflow:auto;
 }
@@ -431,8 +431,8 @@ p {
 	opacity: 0.5;
 }
 
-.ui-d .page-floating .ui-floating.ui-fixed-bottom .ui-floating-wrap,
-.ui-d .page-floating .ui-floating.ui-fixed-top .ui-floating-wrap {
+.device-desktop .page-floating .ui-floating.ui-fixed-bottom .ui-floating-wrap,
+.device-desktop .page-floating .ui-floating.ui-fixed-top .ui-floating-wrap {
 	width: calc(100% - 250px);
 	left: 230px;
 	max-width: 1180px
