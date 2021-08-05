@@ -780,6 +780,10 @@ if (!Object.keys){
 						start = (start + scopeT) - (baseT + scopeT);
 						end = (end + scopeT) - (baseT + scopeT);
 					}
+					if (i === 1) {
+						console.log('['+i+']', scopeT - (start-s), (scopeH / 2) / 100);
+					}
+					
 
 					(scopeT >= start - s) ? $current.addClass('parallax-s') : $current.removeClass('parallax-s');
 					(scopeT >= end - e) ? $current.addClass('parallax-e') : $current.removeClass('parallax-e');
