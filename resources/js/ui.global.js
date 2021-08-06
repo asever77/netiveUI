@@ -731,15 +731,15 @@ if (!Object.keys){
 			var opt = $.extend(true, {}, win[global].scroll.optionsParllax, opt),
 				$scope = opt.scope === 'window' ? $(win) : opt.scope,
 				$parallax = opt.id === null ? $('.ui-parallax') : $('#' + opt.id),
-				$item = $parallax.find('> .ui-parallax-item'),
-				len = $item.length,
+				$wrap = $parallax.find('> .ui-parallax-wrap'),
+				len = $wrap.length,
 				i = 0;
 
 			// var checkVisible = function (){
-			// 	var itemTop = $item.eq(i).offset().top;
+			// 	var itemTop = $wrap.eq(i).offset().top;
 
 			// 	if ($scope.outerHeight() > itemTop && i < len) {
-			// 		$item.eq(i).addClass('parallax-s');
+			// 		$wrap.eq(i).addClass('parallax-s');
 			// 		i = i + 1;
 			// 		checkVisible();
 			// 	}
@@ -749,23 +749,25 @@ if (!Object.keys){
 			act();
 
 			$scope.off('scroll.win').on('scroll.win', act);
-			$item.find('*').off('focus.parallax').on('focus.parallax', function(){
-				$(this).closest('.ui-parallax-item').addClass('parallax-s');
+			$wrap.find('*').off('focus.parallax').on('focus.parallax', function(){
+				$(this).closest('.ui-parallax-wrap').addClass('parallax-s');
 			});
 
 			function act() {
 				var $parallax = $('.ui-parallax');
-				var $item = $parallax.find('.ui-parallax-item');
+				var $wrap = $parallax.find('.ui-parallax-wrap');
 
 				var scopeH = $scope.outerHeight();
 				var scopeT = Math.floor($scope.scrollTop());
-				var baseT = Math.floor($item.eq(0).offset().top);
+				var baseT = Math.floor($wrap.eq(0).offset().top);
 
 				for (var i = 0; i < len; i++) {
-					var $current = $item.eq(i);
-					
-					var attrStart = $current.attr('start');
-					var attrEnd = $current.attr('end');
+					var $current = $wrap.eq(i);
+					var $item = $current.find('.ui-parallax-item');
+					var item_len = $item.length;
+
+					var attrStart = $current.attr('data-start');
+					var attrEnd = $current.attr('data-end');
 
 					attrStart === undefined ? attrStart = 0 : '';
 					attrEnd === undefined ? attrEnd = 0 : '';
@@ -780,13 +782,26 @@ if (!Object.keys){
 						start = (start + scopeT) - (baseT + scopeT);
 						end = (end + scopeT) - (baseT + scopeT);
 					}
-					if (i === 1) {
-						console.log('['+i+']', scopeT - (start-s), (scopeH / 2) / 100);
-					}
 					
-
 					(scopeT >= start - s) ? $current.addClass('parallax-s') : $current.removeClass('parallax-s');
 					(scopeT >= end - e) ? $current.addClass('parallax-e') : $current.removeClass('parallax-e');
+
+					for (var j = 0; j < item_len; j++) {
+						
+						var n = ((scopeT - (start-s)) * 0.002).toFixed(2);
+						var cssname = $item.eq(j).data('css');
+						var direction = $item.eq(j).data('direction');
+
+						n = n < 0 ? 0 : n > 1 ? 1 : n;
+						n = (direction === 'reverse') ? 1 - n : n;
+
+						console.log(j , n * 100);
+
+						cssname = cssname.replace(/{n}/gi, n);
+
+						$item.eq(j).attr('style', cssname).attr('data-parallax', n);
+						
+					}
 				}
 			}
 		}

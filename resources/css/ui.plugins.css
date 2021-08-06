@@ -1194,7 +1194,7 @@ a.ui-acco-btn:after {
 
 
 /* ui scroll box : base */
-.ui-parallax-item {
+.ui-parallax-wrap {
     position: relative;
 }
 

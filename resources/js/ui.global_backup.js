@@ -2822,7 +2822,7 @@ if (!Object.keys){
 		var opt = $.extend(true, {}, win[global].scroll.parallax.option, opt),
 			$scope = opt.scope === 'window' ? $(win) : opt.scope,
 			$parallax = opt.id === null ? $('.ui-parallax') : $('#' + opt.id),
-			$item = $parallax.find('> .ui-parallax-item'),
+			$item = $parallax.find('> .ui-parallax-wrap'),
 			len = $item.length,
 			i = 0;
 
@@ -2840,12 +2840,12 @@ if (!Object.keys){
 		parallax();
 		$scope.off('scroll.win').on('scroll.win', parallax);
 		$item.find('*').off('focus.parallax').on('focus.parallax', function(){
-			$(this).closest('.ui-parallax-item').addClass('parallax-s');
+			$(this).closest('.ui-parallax-wrap').addClass('parallax-s');
 		});
 
 		function parallax() {
 			var $parallax = $('.ui-parallax');
-			var $item = $parallax.find('.ui-parallax-item');
+			var $item = $parallax.find('.ui-parallax-wrap');
 
 			var scopeH = $scope.outerHeight();
 			var scopeT = Math.floor($scope.scrollTop());
@@ -2882,7 +2882,7 @@ if (!Object.keys){
 			var addH = (scopeH / 6);
 
 			var $parallax = $('.ui-parallax');
-			var $item = $parallax.find('> .ui-parallax-item');
+			var $item = $parallax.find('> .ui-parallax-wrap');
 
 			
 

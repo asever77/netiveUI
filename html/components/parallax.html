@@ -5,7 +5,7 @@
 </div>
 
 <div class="ui-parallax">
-	<section class="sec-wrap ui-parallax-item parallax-test" start="100" end="20">
+	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="100" data-end="20">
 		<h2 class="h-2">Examples</h2>
 		<div class="parallax-cont">
 			<b>A</b>
@@ -13,28 +13,31 @@
 		</div>
 	</section>
 
-	<section class="sec-wrap ui-parallax-item parallax-test" start="70" end="20">
+	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="70" data-end="20">
 		<div class="parallax-cont">
-			<b>B</b>
+			<b class="ui-parallax-item" 
+			data-css="opacity:{n};transform:scale({n});">B</b>
 			<a href="#">aaaaa</a>
 		</div>
 	</section>
 
-	<section class="sec-wrap ui-parallax-item parallax-test" start="50" end="20">
+	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="50" data-end="20">
 		<div class="parallax-cont">
-			<b>C</b>
+			<b class="ui-parallax-item" 
+			data-direction="reverse"  
+			data-css="opacity:{n};transform:scale({n});">C</b>
 			<a href="#">aaaaa</a>
 		</div>
 	</section>
 
-	<section class="sec-wrap ui-parallax-item parallax-test" start="50" end="20">
+	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="50" data-end="20">
 		<div class="parallax-cont">
 			<b>D</b>
 			<a href="#">aaaaa</a>
 		</div>
 	</section>
 
-	<section class="sec-wrap ui-parallax-item" start="50" end="20">
+	<section class="sec-wrap ui-parallax-wrap" data-start="50" data-end="20">
 		<div class="parallax-cont">
 			<h2 class="h-2">HTML Structure</h2>
 			<a href="#">aaaaa</a>
@@ -42,10 +45,10 @@
 <pre>
 <code>
 &lt;div class="ui-parallax&gt;
-	&lt;section class="ui-parallax-item" start="0" end="0"&gt;
+	&lt;section class="ui-parallax-wrap" start="0" end="0"&gt;
 		...
 	&lt;/section&gt;
-	&lt;section class="ui-parallax-item" start="0" end="0"&gt;
+	&lt;section class="ui-parallax-wrap" start="0" end="0"&gt;
 		...
 	&lt;/section&gt;
 	...
@@ -56,21 +59,21 @@
 		</div>
 	</section>
 
-	<section class="ui-parallax-item" start="70" end="20">
+	<section class="ui-parallax-wrap" start="70" end="20">
 		<div class="parallax-cont">
 			<h2 class="h-2">CSS Style</h2>
 			<a href="#">aaaaa</a>
 <div class="box-code">
 <pre>
 <code>
-.ui-parallax-item {position:relative;}
+.ui-parallax-wrap {position:relative;}
 </code>
 </pre>
 </div>
 		</div>
 	</section>
 
-	<section class="ui-parallax-item" start="73" end="20">
+	<section class="ui-parallax-wrap" start="73" end="20">
 		<div class="parallax-cont">
 			<h2 class="h-2">Javascript</h2>
 			<a href="#">aaaaa</a>

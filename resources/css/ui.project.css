@@ -893,12 +893,12 @@ html.col-12 .coln12 {
 	transition: top 0.3s ease-in, opacity 0.5s ease-in;
 }
 
-.ui-parallax-item.parallax-s .parallax-cont {
+.ui-parallax-wrap.parallax-s .parallax-cont {
 	top: 0;
 	opacity: 1;
 }
 
-.ui-parallax-item.parallax-e .parallax-cont {
+.ui-parallax-wrap.parallax-e .parallax-cont {
 	outline: 10px solid lightgray;
 }
 
