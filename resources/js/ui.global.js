@@ -724,44 +724,24 @@ if (!Object.keys){
 		},
 
 		optionsParllax: {
-			id : null,
-			scope : 'window'
+			selector : null,
+			area : null
 		},
 		parallax: function(opt) {
-			var opt = $.extend(true, {}, win[global].scroll.optionsParllax, opt),
-				$scope = opt.scope === 'window' ? $(win) : opt.scope,
-				$parallax = opt.id === null ? $('.ui-parallax') : $('#' + opt.id),
-				$wrap = $parallax.find('> .ui-parallax-wrap'),
-				len = $wrap.length,
-				i = 0;
-
-			// var checkVisible = function (){
-			// 	var itemTop = $wrap.eq(i).offset().top;
-
-			// 	if ($scope.outerHeight() > itemTop && i < len) {
-			// 		$wrap.eq(i).addClass('parallax-s');
-			// 		i = i + 1;
-			// 		checkVisible();
-			// 	}
-			// }
-			// checkVisible();
+			var opt = $.extend(true, {}, win[global].scroll.optionsParllax, opt);
+			var $area = opt.area ?? $(win);
+			var $parallax = opt.selector ?? $('.ui-parallax');
+			var $wrap = $parallax.find('> .ui-parallax-wrap');
 
 			act();
-
-			$scope.off('scroll.win').on('scroll.win', act);
-			$wrap.find('*').off('focus.parallax').on('focus.parallax', function(){
-				$(this).closest('.ui-parallax-wrap').addClass('parallax-s');
-			});
+			$area.off('scroll.win').on('scroll.win', act);
 
 			function act() {
-				var $parallax = $('.ui-parallax');
-				var $wrap = $parallax.find('.ui-parallax-wrap');
-
-				var scopeH = $scope.outerHeight();
-				var scopeT = Math.floor($scope.scrollTop());
+				var areaH = $area.outerHeight();
+				var areaT = Math.floor($area.scrollTop());
 				var baseT = Math.floor($wrap.eq(0).offset().top);
 
-				for (var i = 0; i < len; i++) {
+				for (var i = 0, len = $wrap.length; i < len; i++) {
 					var $current = $wrap.eq(i);
 					var $item = $current.find('.ui-parallax-item');
 					var item_len = $item.length;
@@ -775,38 +755,31 @@ if (!Object.keys){
 					var h = Math.floor($current.outerHeight());
 					var start = Math.floor($current.offset().top);
 					var end = h + start;
-					var s = scopeH * Number(attrStart) / 100;
-					var e = scopeH * Number(attrEnd) / 100;
+					var s = areaH * Number(attrStart) / 100;
+					var e = areaH * Number(attrEnd) / 100;
 					
-					if (opt.scope !== 'window') {
-						start = (start + scopeT) - (baseT + scopeT);
-						end = (end + scopeT) - (baseT + scopeT);
+					if (opt.area !== 'window') {
+						start = (start + areaT) - (baseT + areaT);
+						end = (end + areaT) - (baseT + areaT);
 					}
 					
-					(scopeT >= start - s) ? $current.addClass('parallax-s') : $current.removeClass('parallax-s');
-					(scopeT >= end - e) ? $current.addClass('parallax-e') : $current.removeClass('parallax-e');
+					(areaT >= start - s) ? $current.addClass('parallax-s') : $current.removeClass('parallax-s');
+					(areaT >= end - e) ? $current.addClass('parallax-e') : $current.removeClass('parallax-e');
 
 					for (var j = 0; j < item_len; j++) {
-						
-						var n = ((scopeT - (start-s)) * 0.003).toFixed(2);
-						var cssname = $item.eq(j).data('css');
-						var direction = $item.eq(j).data('direction');
+						var n = ((areaT - (start-s)) * 0.003).toFixed(2);
+						var styleData = $item.eq(j).data('css');
 
 						n = n < 0 ? 0 : n > 1 ? 1 : n;
-						n = (direction === 'reverse') ? 1 - n : n;
 
-						console.log(j , n * 100);
-
-						cssname = cssname.replace(/{n}/gi, n);
-						cssname = cssname.replace(/{nn}/gi, n * 10);
-						cssname = cssname.replace(/{nnn}/gi, n * 100);
-						cssname = cssname.replace(/{-n}/gi, (1 - n).toFixed(2));
-						cssname = cssname.replace(/{-nn}/gi, (10 - n * 10).toFixed(2));
-						cssname = cssname.replace(/{-nnn}/gi, (100 - n * 100).toFixed(2));
+						styleData = styleData.replace(/{n}/gi, n);
+						styleData = styleData.replace(/{nn}/gi, n * 10);
+						styleData = styleData.replace(/{nnn}/gi, n * 100);
+						styleData = styleData.replace(/{-n}/gi, (1 - n).toFixed(2));
+						styleData = styleData.replace(/{-nn}/gi, (10 - n * 10).toFixed(2));
+						styleData = styleData.replace(/{-nnn}/gi, (100 - n * 100).toFixed(2));
 						
-
-						$item.eq(j).attr('style', cssname).attr('data-parallax', n);
-						
+						$item.eq(j).attr('style', styleData).attr('data-parallax', n);
 					}
 				}
 			}
