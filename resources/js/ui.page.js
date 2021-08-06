@@ -408,7 +408,7 @@
     netive.page.pageParallax = function(){
         netive.scroll.parallax({
             callback:function(v) {
-                console.log(v);
+               // console.log(v);
             }
         });
     }

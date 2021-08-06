@@ -788,7 +788,7 @@ if (!Object.keys){
 
 					for (var j = 0; j < item_len; j++) {
 						
-						var n = ((scopeT - (start-s)) * 0.002).toFixed(2);
+						var n = ((scopeT - (start-s)) * 0.003).toFixed(2);
 						var cssname = $item.eq(j).data('css');
 						var direction = $item.eq(j).data('direction');
 
@@ -798,6 +798,12 @@ if (!Object.keys){
 						console.log(j , n * 100);
 
 						cssname = cssname.replace(/{n}/gi, n);
+						cssname = cssname.replace(/{nn}/gi, n * 10);
+						cssname = cssname.replace(/{nnn}/gi, n * 100);
+						cssname = cssname.replace(/{-n}/gi, (1 - n).toFixed(2));
+						cssname = cssname.replace(/{-nn}/gi, (10 - n * 10).toFixed(2));
+						cssname = cssname.replace(/{-nnn}/gi, (100 - n * 100).toFixed(2));
+						
 
 						$item.eq(j).attr('style', cssname).attr('data-parallax', n);
 						
