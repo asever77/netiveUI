@@ -3772,7 +3772,6 @@ if (!Object.keys){
 		}
 	}	
 	
-
 	win[global].floating = {
 		options: {
 			ps: 'bottom',
@@ -4298,27 +4297,27 @@ if (!Object.keys){
 			align : 'center'
 		},
 		init: function(opt) {
-			var opt = opt === undefined ? {} : opt,
-				opt = $.extend(true, {}, win[global].tab.options, opt),
-				id = opt.id,
-				effect = opt.effect,
-				current = isNaN(opt.current) ? 0 : opt.current,
-				onePanel = opt.onePanel,
-				callback = opt.callback,
-				align = opt.align;
+			var opt = opt === undefined ? {} : opt;
+			var opt = $.extend(true, {}, win[global].tab.options, opt);
+			var id = opt.id;
+			var effect = opt.effect;
+			var current = isNaN(opt.current) ? 0 : opt.current;
+			var onePanel = opt.onePanel;
+			var callback = opt.callback;
+			var align = opt.align;
 				
-			var	$tab = $('#' + id),
-				$btns = $tab.find('> .ui-tab-btns'),
-				$btn = $btns.find('.ui-tab-btn'),
-				$pnls = $tab.find('> .ui-tab-pnls'),
-				$pnl = $pnls.find('> .ui-tab-pnl');
+			var $tab = $('#' + id);
+			var $btns = $tab.find('> .ui-tab-btns');
+			var $btn = $btns.find('.ui-tab-btn');
+			var $pnls = $tab.find('> .ui-tab-pnls');
+			var $pnl = $pnls.find('> .ui-tab-pnl');
 
-			var	len = $btn.length,
-				keys = win[global].option.keys;
+			var	len = $btn.length;
+			var keys = win[global].option.keys;
 				
-			var	para = win[global].para.get('tab'),
-				paras,
-				paraname;
+			var	para = win[global].para.get('tab');
+			var paras;
+			var paraname;
 
 			//set up
 			if (!!para) {
@@ -4352,28 +4351,34 @@ if (!Object.keys){
 
 			for (var i = 0; i < len; i++) {
 				var $btnN = $btn.eq(i);
-				var $pnlN = $pnl.eq(i);
 				
-				if ($btnN.data('tabnum') === undefined ) {
-					$btnN.attr('data-tabnum', i);
-				}
 
-				var tabN = Number($btnN.data('tabnum'));
-				var isCurrent = current === tabN;
+				$btnN.data('tab') === undefined && $btnN.attr('data-tab', i);
+				$btnN.attr('data-n', i);
+
+				var n =  Number($btnN.data('tab'));
+ 				var isCurrent = current === i;
 				var cls = isCurrent ? 'addClass' : 'removeClass';
 				var attrs = isCurrent ? 'removeAttr' : 'attr';
-				
+	
 				//make ID
-				$btnN.attr('id') === undefined ? $btnN.attr('id', id + 'Btn' + tabN) : '';
-				$pnlN.attr('id') === undefined ? $pnlN.attr('id', id + 'Pnl' + tabN) : '';
+				$btnN.attr('id') === undefined ? $btnN.attr('id', id + 'Btn' + n) : '';
 				
 				var btnID = $btnN.attr('id');
+
+
+				var $pnlN = $pnl.eq(i);
+				$pnlN.data('tab') === undefined && $pnlN.attr('data-tab', i);
+				$pnlN = $pnls.find('> .ui-tab-pnl[data-tab="'+ n +'"]');
+				
+				$pnlN.attr('id') === undefined ? $pnlN.attr('id', id + 'pnl' + n) : '';
 				var pnlID = $pnlN.attr('id');
+
+				console.log(btnID, pnlID)
 
 				if (!onePanel) {
 					$btnN.attr('aria-controls', pnlID)[cls]('selected');
-					$btnN.attr('aria-controls', $pnlN.attr('id'));
-					$pnlN.attr('aria-labelledby', btnID).attr('aria-hidden', (current === tabN) ? false : true)[attrs]('tabindex', -1)[cls]('selected');
+					$pnlN.attr('aria-labelledby', btnID).attr('aria-hidden', (isCurrent) ? false : true)[cls]('selected');
 				} else {
 					$btnN.attr('aria-controls', $pnl.eq(0).attr('id')).addClass('selected');
 					isCurrent && $pnl.attr('aria-labelledby', btnID).addClass('selected');
@@ -4463,29 +4468,31 @@ if (!Object.keys){
 			}
 		},
 		toggle: function(opt) {
-			var id = opt.id,
-				$tab = $('#' + id),
-				$btns = $tab.children('.ui-tab-btns'),
-				$btn = $btns.find('.ui-tab-btn'),
-				$pnls = $tab.children('.ui-tab-pnls'),
-				$pnl = $pnls.children('.ui-tab-pnl'),
-				$target = $btns;
+			var id = opt.id;
+			var $tab = $('#' + id);
+			var $btns = $tab.children('.ui-tab-btns');
+			var $btn = $btns.find('.ui-tab-btn');
+			var $pnls = $tab.children('.ui-tab-pnls');
+			var $pnl = $pnls.children('.ui-tab-pnl');
+			var $target = $btns;
+			
+			var ps_l = $btn.data('psl');
+			var opt = $.extend(true, {}, $tab.data('opt'), opt);
+			var current = isNaN(opt.current) ? 0 : opt.current;
+			var onePanel = opt.onePanel;
+			var align = opt.align;
+			var callback = opt.callback;
 
-			var ps_l = $btn.data('psl'),
-				
-				opt = $.extend(true, {}, $tab.data('opt'), opt),
-				current = isNaN(opt.current) ? 0 : opt.current,
-				onePanel = opt.onePanel,
-				align = opt.align,
-				callback = opt.callback;
+			
 
-			//$btn.eq(current).append('<b class="hide">선택됨</b>');
+			var n = $btn.eq(current).data('tab');
 
-			var currentPnl = $btns.find('.ui-tab-btn[data-tabnum="'+ current +'"]').index();
 			$btn.removeClass('selected').eq(current).addClass('selected').focus();
+			
+			console.log(current, n);
 
-			var $btnN = $btn.eq(current),
-				btnId = $btn.eq(currentPnl).attr('id');
+			var $btnN = $btns.find('.ui-tab-btn[data-tab="'+ n +'"]');
+			var btnId = $btnN.attr('id');
 
 			if ($btns.hasClass('ui-scrollbar')) {
 				$target = $btns.find('> .ui-scrollbar-item');
@@ -4499,8 +4506,8 @@ if (!Object.keys){
 			});
 
 			if (onePanel === false) {
-				$pnl.attr('aria-hidden', true).removeClass('selected').attr('tabindex', '-1');
-				$pnl.eq(current).addClass('selected').attr('aria-hidden', false).removeAttr('tabindex');
+				$pnl.attr('aria-hidden', true).removeClass('selected');
+				$pnls.children('.ui-tab-pnl[data-tab="'+ n +'"]').addClass('selected').attr('aria-hidden', false);
 			} else {
 				$pnl.attr('aria-labelledby', btnId);
 			}

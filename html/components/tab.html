@@ -12,13 +12,19 @@
 		<div class="ui-tab" id="exeTab1">
 			<div class="ui-tab-btns">
 				<div class="btn-wrap">
-					<button type="button" data-tabnum="2" class="ui-tab-btn"><span>탭1</span></button>
-					<button type="button" data-tabnum="1" class="ui-tab-btn"><span>탭2</span></button>
-					<button type="button" data-tabnum="0" class="ui-tab-btn"><span>탭3</span></button>
+					<button type="button" data-tab="0" class="ui-tab-btn"><span>탭1</span></button>
+					<button type="button" data-tab="1" class="ui-tab-btn"><span>탭2</span></button>
+					<button type="button" data-tab="2" class="ui-tab-btn"><span>탭3</span></button>
 				</div>
 			</div>
 			<div class="ui-tab-pnls">
-				<section class="ui-tab-pnl">
+				
+				<section class="ui-tab-pnl" data-tab="1">
+					<h1 class="ui-tab-tit">탭2</h1>
+					<p>탭2 content</p>
+					<a href="#">더보기</a>
+				</section>
+				<section class="ui-tab-pnl" data-tab="0">
 					<h1 class="ui-tab-tit">탭1</h1>
 					<p>탭1 content</p>
 					<a href="#">더보기</a>
@@ -44,12 +50,7 @@
 						</div>
 					</div>
 				</section>
-				<section class="ui-tab-pnl">
-					<h1 class="ui-tab-tit">탭2</h1>
-					<p>탭2 content</p>
-					<a href="#">더보기</a>
-				</section>
-				<section class="ui-tab-pnl">
+				<section class="ui-tab-pnl" data-tab="2">
 					<h1 class="ui-tab-tit">탭3</h1>
 					<p>탭3 content</p>
 					<a href="#">더보기</a>
@@ -116,26 +117,21 @@
 	
 <pre class="box-code"><code class="html">
 //Base Tab
-&lt;div <span class="na">class=</span><span class="s">"ui-tab"</span> <span class="na">id=</span><span class="s">"exeTab1"</span>&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-tab-btns"</span>&gt;
-		&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
-			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭1&lt;/i&gt;&lt;/button&gt;
-			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭2&lt;/i&gt;&lt;/button&gt;
+<div class="ui-tab" id="exeTab1">
+	<div class="ui-tab-btns">
+		<div class="btn-wrap">
+			<button type="button" data-tabnum="2" class="ui-tab-btn"><span>탭1</span></button>
 			...
-		&lt;/div&gt;
-	&lt;/div&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-tab-pnls"</span>&gt;
-		&lt;section <span class="na">class=</span><span class="s">"ui-tab-pnl"</span>&gt;
-			&lt;h1 <span class="na">class=</span><span class="s">"ui-tab-tit"</span>&gt;탭1&lt;/h1&gt;
-			탭1 내용
-		&lt;/section&gt;
-		&lt;section <span class="na">class=</span><span class="s">"ui-tab-pnl"</span>&gt;
-			&lt;h1 <span class="na">class=</span><span class="s">"ui-tab-tit"</span>&gt;탭2&lt;/h1&gt;
-			탭2 내용
-		&lt;/section&gt;
-		...
-	&lt;/div&gt;
-&lt;/div&gt;
+		</div>
+	</div>
+	<div class="ui-tab-pnls">
+		<section class="ui-tab-pnl">
+			<h1 class="ui-tab-tit">탭1</h1>
+
+			
+		</section>
+	</div>
+</div>
 
 //One Panel Tab
 &lt;div <span class="na">class=</span><span class="s">"ui-tab"</span> <span class="na">id=</span><span class="s">"exeTab1"</span>&gt;
