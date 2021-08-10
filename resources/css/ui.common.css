@@ -1903,7 +1903,7 @@ a.btn-base-l {
 /* tab */
 .ui-tab {
     position: relative;
-    margin: 10px 0
+    margin: 0
 }
 
 .ui-tab.type-scroll .ui-tab-btns {
@@ -1918,9 +1918,11 @@ a.btn-base-l {
 
 .ui-tab.type-scroll .ui-tab-btns .btn-wrap .ui-tab-btn {
     flex: 1;
-    min-width: 100px
+    min-width: 10rem
 }
-
+.ui-tab-btns .btn-wrap{
+	margin:0;
+}
 .ui-tab-btns {
     position: relative;
     overflow: hidden;
@@ -1937,7 +1939,7 @@ a.btn-base-l {
     clear: both;
     width: 100%;
     height: 1px;
-    background: #ccc;
+    background: var(--box-line);
 }
 
 .ui-tab-btn {
@@ -1948,18 +1950,8 @@ a.btn-base-l {
 	flex:1;
 }
 
-.ui-tab-btn:hover span,
-.ui-tab-btn:focus span {
-    border-bottom: 1px solid #666;
-}
-
 .ui-tab-btn.selected {
     z-index: 2;
-}
-
-.ui-tab-btn.selected:hover span,
-.ui-tab-btn.selected:focus span {
-    border-bottom: 1px solid #fff;
 }
 
 .ui-tab-pnls {
@@ -1993,34 +1985,28 @@ a.btn-base-l {
 
 /* ui-tab :base style */
 .ui-tab-btn {
-    padding: 10px 20px 9px;
-    min-height: 40px;
-    background: #ececec;
-    border: 1px solid #ccc;
+    padding: 0 1rem;
+    min-height: 4rem;
+    background: var(--bg-b);
+    border: 1px solid var(--box-line);
     border-left: 0;
-    font-size: 14px;
 }
 
 .ui-tab-btn:first-child {
-    border-left: 1px solid #ccc;
+    border-left: 1px solid var(--box-line);
 }
 
 .ui-tab-btn.selected {
-    background: #fff;
-    color: #000;
-    border-bottom: 1px solid #fff;
-    font-weight: 400;
+    background: var(--bg);
+    color: var(--text-700);
+    border-bottom: 1px solid var(--bg);
 }
 
 .ui-tab-pnl {
     width: 100%;
-    padding: 10px;
-    top: 0;
-    left: 0;
-    background: #fff;
-    border: 1px solid #ccc;
-    border-top: 0
-}
+    padding:1rem;
+    background: var(--bg);
+ }
 
 /* ui-tab : eff */
 .ui-tab.eff-fade>.ui-tab-pnls>.ui-tab-pnl {
