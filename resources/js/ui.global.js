@@ -4349,32 +4349,28 @@ if (!Object.keys){
 			
 			var ps_l = [];
 
+			//setting
 			for (var i = 0; i < len; i++) {
 				var $btnN = $btn.eq(i);
 				
-
-				$btnN.data('tab') === undefined && $btnN.attr('data-tab', i);
+				$btnN.data('tab') ?? $btnN.attr('data-tab', i);
 				$btnN.attr('data-n', i);
 
 				var n =  Number($btnN.data('tab'));
- 				var isCurrent = current === i;
+				var isCurrent = current === i;
 				var cls = isCurrent ? 'addClass' : 'removeClass';
-				var attrs = isCurrent ? 'removeAttr' : 'attr';
 	
 				//make ID
-				$btnN.attr('id') === undefined ? $btnN.attr('id', id + 'Btn' + n) : '';
+				$btnN.attr('id') ?? $btnN.attr('id', id + 'Btn' + n);
 				
 				var btnID = $btnN.attr('id');
-
-
 				var $pnlN = $pnl.eq(i);
-				$pnlN.data('tab') === undefined && $pnlN.attr('data-tab', i);
-				$pnlN = $pnls.find('> .ui-tab-pnl[data-tab="'+ n +'"]');
-				
-				$pnlN.attr('id') === undefined ? $pnlN.attr('id', id + 'pnl' + n) : '';
-				var pnlID = $pnlN.attr('id');
 
-				console.log(btnID, pnlID)
+				$pnlN.data('tab') ?? $pnlN.attr('data-tab', i);
+				$pnlN = $pnls.find('> .ui-tab-pnl[data-tab="'+ n +'"]');
+				$pnlN.attr('id') ?? $pnlN.attr('id', id + 'pnl' + n);
+
+				var pnlID = $pnlN.attr('id');
 
 				if (!onePanel) {
 					$btnN.attr('aria-controls', pnlID)[cls]('selected');
@@ -4384,16 +4380,14 @@ if (!Object.keys){
 					isCurrent && $pnl.attr('aria-labelledby', btnID).addClass('selected');
 				}
 
-				if (isCurrent) {
-					$btnN.attr('aria-selected', true).addClass('selected');
-				} else {
+				(isCurrent) ?
+					$btnN.attr('aria-selected', true).addClass('selected'):
 					$btnN.attr('aria-selected', false).removeClass('selected');
-				}
 					
 				ps_l.push(Math.ceil($btnN.position().left));
 
-				i === 0 ? $btnN.attr('tab-first', true) : '';
-				i === len - 1 ? $btnN.attr('tab-last', true) : ''
+				i === 0 && $btnN.attr('tab-first', true);
+				i === len - 1 && $btnN.attr('tab-last', true);
 			}
 
 			callback ? callback(opt) : '';
@@ -4482,8 +4476,6 @@ if (!Object.keys){
 			var onePanel = opt.onePanel;
 			var align = opt.align;
 			var callback = opt.callback;
-
-			
 
 			var n = $btn.eq(current).data('tab');
 
