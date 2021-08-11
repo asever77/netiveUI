@@ -92,45 +92,15 @@ if (!Object.keys){
 
 	'use strict';
 
-	var global = 'netive';
-	var namespace = 'netiveUI.plugins';
-	
-	
-	//global namespace
-	if (!!win[global]) {
-		throw new Error("already exists global!> " + global);
-	} else {
-		function createNameSpace(identifier, module) {
-			var name = identifier.split('.'),
-				w = win,
-				p;
-	
-			if (!!identifier) {
-				for (var i = 0, len = name.length; i < len; i += 1) {
-					(!w[name[i]]) ? (i === 0) ? w[name[i]] = {} : w[name[i]] = {} : '';
-					w = w[name[i]];
-				}
-			}
-	
-			if (!!module) {
-				for (p in module) {
-					if (!w[p]) {
-						w[p] = module[p];
-					} else {
-						throw new Error("module already exists! >> " + p);
-					}
-				}
-			}
-			return w;
-		}
+	const global = 'netive';
 
-		win[global] = createNameSpace(namespace, {
-			uiNameSpace: function (identifier, module) { 
-				return createNameSpace(identifier, module); 
-			}
-		});
-	}
+	win[global] = {};
 
+	const Global = win[global];
+	const UA = navigator.userAgent.toLowerCase();
+	const deviceSize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360];
+	const deviceInfo = ['android', 'iphone', 'ipod', 'ipad', 'blackberry', 'windows ce', 'windows','samsung', 'lg', 'mot', 'sonyericsson', 'nokia', 'opeara mini', 'opera mobi', 'webos', 'iemobile', 'kfapwi', 'rim', 'bb10'];
+	//const filter = "win16|win32|win64|mac|macintel";
 
 	//requestAnimationFrame
 	win.requestAFrame = (function () {
@@ -147,8 +117,56 @@ if (!Object.keys){
 			};
 	})();
 
-	//components option 
-	win[global].option = {
+	//components state 
+	Global.state = {
+		device: {
+			info: (function() {
+				for (let i = 0, len = deviceInfo.length; i < len; i++) {
+					if (UA.match(deviceInfo[i]) !== null) {
+						return deviceInfo[i];
+					}
+				}
+			})(),
+			width: window.innerWidth,
+			height: window.innerHeight,
+			breakpoint: null,
+			colClass: null,
+			ios: (/ip(ad|hone|od)/i).test(UA),
+			android: (/android/i).test(UA),
+			app: UA.indexOf('appname') > -1 ? true : false,
+			touch: null,
+			mobile: null,
+			os: (navigator.appVersion).match(/(mac|win|linux)/i)
+		},
+		browser: {
+			ie: UA.match(/(?:msie ([0-9]+)|rv:([0-9\.]+)\) like gecko)/i),
+			local: (/^http:\/\//).test(location.href),
+			firefox: (/firefox/i).test(UA),
+			webkit: (/applewebkit/i).test(UA),
+			chrome: (/chrome/i).test(UA),
+			opera: (/opera/i).test(UA),
+			safari: (/applewebkit/i).test(UA) && !(/chrome/i).test(UA),	
+			size: null
+		},
+		keys: { 
+			tab: 9, 
+			enter: 13, 
+			alt: 18, 
+			esc: 27, 
+			space: 32, 
+			pageup: 33, 
+			pagedown: 34, 
+			end: 35, 
+			home: 36, 
+			left: 37, 
+			up: 38, 
+			right: 39, 
+			down: 40
+		},
+		scroll: {
+			y: 0,
+			direction: 'down'
+		},
 		pageName: function() {
 			var page = document.URL.substring(document.URL.lastIndexOf("/") + 1),
 				pagename = page.split('?');
@@ -156,11 +174,7 @@ if (!Object.keys){
 			return pagename[0]
 		},
 		breakPoint: [600, 905],
-		keys: { 
-			'tab': 9, 'enter': 13, 'alt': 18, 'esc': 27, 'space': 32, 'pageup': 33, 'pagedown': 34, 'end': 35, 'home': 36, 'left': 37, 'up': 38, 'right': 39, 'down': 40
-		},
-		effect: {
-			//http://cubic-bezier.com - css easing effect
+		effect: { //http://cubic-bezier.com - css easing effect
 			linear: '0.250, 0.250, 0.750, 0.750',
 			ease: '0.250, 0.100, 0.250, 1.000',
 			easeIn: '0.420, 0.000, 1.000, 1.000',
@@ -190,183 +204,177 @@ if (!Object.keys){
 			easeInOutExpo: '1.000, 0.000, 0.000, 1.000',
 			easeInOutCirc: '0.785, 0.135, 0.150, 0.860',
 			easeInOutBack: '0.680, -0.550, 0.265, 1.550'
+		}
+	}
+
+	Global.uiParts = {
+		//resize state
+		resizeState: function() {
+			let timerWin;
+
+			const act = function() {
+				const browser = Global.state.browser;
+				const device = Global.state.device;
+
+				device.width = window.innerWidth;
+				device.height = window.innerHeight;
+
+				device.touch = device.ios || device.android || (doc.ontouchstart !== undefined && doc.ontouchstart !== null);
+				device.mobile = device.touch && (device.ios || device.android);
+				device.os = device.os ? device.os[0] : '';
+				device.os = device.os.toLowerCase();
+
+				device.breakpoint = device.width >= deviceSize[5] ? true : false;
+				device.colClass = device.width >= deviceSize[5] ? 'col-12' : device.width > deviceSize[8] ? 'col-8' : 'col-4';
+
+				if (browser.ie) {
+					browser.ie = browser.ie = parseInt( browser.ie[1] || browser.ie[2] );
+					( 11 > browser.ie ) ? support.pointerevents = false : '';
+					( 9 > browser.ie ) ? support.svgimage = false : '';
+				} else {
+					browser.ie = false;
+				}
+
+				const clsBrowser = browser.chrome ? 'chrome' : browser.firefox ? 'firefox' : browser.opera ? 'opera' : browser.safari ? 'safari' : browser.ie ? 'ie ie' + browser.ie : 'other';
+				const clsMobileSystem = device.ios ? "ios" : device.android ? "android" : 'etc';
+				const clsMobile = device.mobile ? device.app ? 'ui-a ui-m' : 'ui-m' : 'ui-d';
+				const el_html = doc.querySelector('html');
+
+				el_html.classList.remove('col-12', 'col-8', 'col-4');
+				el_html.classList.add(device.colClass, clsBrowser, clsMobileSystem, clsMobile);
+			
+				const w = window.innerWidth;
+
+				clearTimeout(timerWin);
+				timerWin = setTimeout(function(){
+					el_html.classList.remove('size-tablet');
+					el_html.classList.remove('size-desktop');
+					el_html.classList.remove('size-mobile');
+						el_html.classList.remove('size-desktop');
+
+					if (w < Global.state.breakPoint[0]) {
+						Global.state.browser.size = 'mobile';
+						el_html.classList.add('size-mobile');
+					} else if (w < Global.state.breakPoint[1]) {
+						Global.state.browser.size = 'tablet';
+						el_html.classList.add('size-tablet');
+					} else {
+						Global.state.browser.sizee = 'desktop';
+						el_html.classList.add('size-desktop');
+					}
+				},200);
+			}
+
+			win.addEventListener('resize', act);
+			act();
 		},
-		uiComma: function(n){
-			//숫자 세자리수마다 , 붙이기
+
+		/**
+		* append html : 지정된 영역 안에 마지막에 요소 추가하기
+		* @param {object} el target element
+		* @param {string} str 지정된 영역에 들어갈 값
+		* @param {string} htmltag HTML tag element
+		*/
+		appendHtml: function(el, str, htmltag) {
+			const _htmltag = !!htmltag ? htmltag : 'div';
+			const div = doc.createElement(_htmltag);
+
+			div.innerHTML = str;
+
+			while (div.children.length > 0) {
+				el.appendChild(div.children[0]);
+			}
+		},
+
+		/**
+		* delete parent tag : 지정된 요소의 부모태그 삭제
+		* @param {object} child target element
+		*/
+		deleteParent: function(child) {
+			const parent = child.parentNode;
+
+			parent.parentNode.removeChild(parent);
+		},
+
+		/**
+		* wrap tag : 지정된 요소의 tag 감싸기
+		* @param {object} child target element
+		*/
+		wrapTag: function(front, selector, back) {
+			const org_html = selector.innerHTML;
+			const new_html = front + org_html + back;
+			
+			selector.innerHTML = new_html;
+		},
+
+		//숫자 세자리수마다 ',' 붙이기
+		comma: function(n) {
 			var parts = n.toString().split(".");
 
 			return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
 		},
-		partsAdd0 :function(x) {
-			//숫자 한자리수 일때 0 앞에 붙이기
+
+		//숫자 한자리수 일때 0 앞에 붙이기
+		add0: function(x) {
 			return Number(x) < 10 ? '0' + x : x;
-		}
-	};
+		},
 
-	//jquery easing add
-	var easings = {
-		linear : function(t,b,c,d){return c*t/d+b;},
-		easeInQuad : function(t,b,c,d){return c*(t/=d)*t+b;},
-		easeOutQuad : function(t,b,c,d){return -c*(t/=d)*(t-2)+b;},
-		easeInOutQuad : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t+b;return -c/2*((--t)*(t-2)-1)+b;},
-		easeOutInQuad : function(t,b,c,d){if(t < d/2)return easings.easeOutQuad(t*2,b,c/2,d);return easings.easeInQuad((t*2)-d,b+c/2,c/2,d);},
-		easeInCubic : function(t,b,c,d){return c*(t/=d)*t*t+b;},
-		easeOutCubic : function(t,b,c,d){return c*((t=t/d-1)*t*t+1)+b;},
-		easeInOutCubic : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t+b;return c/2*((t-=2)*t*t+2)+b;},
-		easeOutInCubic : function(t,b,c,d){if(t<d/2)return easings.easeOutCubic(t*2,b,c/2,d);return easings.easeInCubic((t*2)-d,b+c/2,c/2,d);},
-		easeInQuart : function(t,b,c,d){return c*(t/=d)*t*t*t+b;},
-		easeOutQuart : function(t,b,c,d){return -c*((t=t/d-1)*t*t*t-1)+b;},
-		easeInOutQuart : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t+b;return -c/2*((t-=2)*t*t*t-2)+b;},
-		easeOutInQuart : function(t,b,c,d){if(t<d/2)return easings.easeOutQuart(t*2,b,c/2,d);return easings.easeInQuart((t*2)-d,b+c/2,c/2,d);},
-		easeInQuint : function(t,b,c,d){return c*(t/=d)*t*t*t*t+b;},
-		easeOutQuint : function(t,b,c,d){return c*((t=t/d-1)*t*t*t*t+1)+b;},
-		easeInOutQuint : function(t,b,c,d){if((t/=d/2)<1)return c/2*t*t*t*t*t+b;return c/2*((t-=2)*t*t*t*t+2)+b;},
-		easeOutInQuint : function(t,b,c,d){if(t<d/2)return easings.easeOutQuint(t*2,b,c/2,d);return easings.easeInQuint((t*2)-d,b+c/2,c/2,d);},
-		easeInSine : function(t,b,c,d){return -c*Math.cos(t/d*(Math.PI/2))+c+b;},
-		easeOutSine : function(t,b,c,d){return c*Math.sin(t/d*(Math.PI/2))+b;},
-		easeInOutSine : function(t,b,c,d){return -c/2*(Math.cos(Math.PI*t/d)-1)+b;},
-		easeOutInSine : function(t,b,c,d){if(t<d/2)return easings.easeOutSine(t*2,b,c/2,d);return easings.easeInSine((t*2)-d,b+c/2,c/2,d);},
-		easeInExpo : function(t,b,c,d){return (t===0)? b : c*Math.pow(2,10*(t/d-1))+b-c*0.001;},
-		easeOutExpo : function(t,b,c,d){return (t==d)? b+c : c*1.001*(-Math.pow(2,-10*t/d)+1)+b;},
-		easeInOutExpo : function(t,b,c,d){if(t===0)return b;if(t==d)return b+c;if((t/=d/2)<1)return c/2*Math.pow(2,10*(t-1))+b-c*0.0005;return c/2*1.0005*(-Math.pow(2,-10*--t)+2)+b;},
-		easeOutInExpo : function(t,b,c,d){if(t<d/2)return easings.easeOutExpo(t*2,b,c/2,d);return easings.easeInExpo((t*2)-d,b+c/2,c/2,d);},
-		easeInCirc : function(t,b,c,d){return -c*(Math.sqrt(1-(t/=d)*t)-1)+b;},
-		easeOutCirc : function(t,b,c,d){return c*Math.sqrt(1-(t=t/d-1)*t)+b;},
-		easeInOutCirc : function(t,b,c,d){if((t/=d/2)<1)return -c/2*(Math.sqrt(1-t*t)-1)+b;return c/2*(Math.sqrt(1-(t-=2)*t)+1)+b;},
-		easeOutInCirc : function(t,b,c,d){if (t<d/2)return easings.easeOutCirc(t*2,b,c/2,d);return easings.easeInCirc((t*2)-d,b+c/2,c/2,d);},		
-		easeInElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return -(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;},
-		easeOutElastic : function(t,b,c,d,a,p){if(!t)return b;if((t/=d)==1)return b+c;var s,p=(!p||typeof(p)!='number')? d*.3 : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);return (a*Math.pow(2,-10*t)*Math.sin((t*d-s)*(2*Math.PI)/p)+c+b);},
-		easeInOutElastic : function(t,b,c,d,a,p){if(t===0)return b;if((t/=d/2)==2)return b+c;var s,p=d*(.3*1.5),a=0;var s,p=(!p||typeof(p)!='number')? d*(.3*1.5) : p,a=(!a||typeof(a)!='number')? 0 : a;if(!a||a<Math.abs(c)){a=c;s=p/4;}else s=p/(2*Math.PI)*Math.asin(c/a);if(t<1)return -.5*(a*Math.pow(2,10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p))+b;return a*Math.pow(2,-10*(t-=1))*Math.sin((t*d-s)*(2*Math.PI)/p)*.5+c+b;},
-		easeOutInElastic : function(t,b,c,d,a,p){if (t<d/2)return easings.easeOutElastic(t*2,b,c/2,d,a,p);return easings.easeInElastic((t*2)-d,b+c/2,c/2,d,a,p);},
-		easeInBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*(t/=d)*t*((s+1)*t-s)+b;},
-		easeOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;return c*((t=t/d-1)*t*((s+1)*t+s)+1)+b;},
-		easeInOutBack : function(t,b,c,d,s){var s=(!s||typeof(s)!='number')? 1.70158 : s;if((t/=d/2)<1)return c/2*(t*t*(((s*=(1.525))+1)*t-s))+b;return c/2*((t-=2)*t*(((s*=(1.525))+1)*t+s)+2)+b;},
-		easeOutInBack : function(t,b,c,d,s){if(t<d/2)return easings.easeOutBack(t*2,b,c/2,d,s);return easings.easeInBack((t*2)-d,b+c/2,c/2,d,s);},			
-		easeInBounce : function(t,b,c,d){return c-easings.easeOutBounce(d-t,0,c,d)+b;},
-		easeOutBounce : function(t,b,c,d){if((t/=d)<(1/2.75))return c*(7.5625*t*t)+b;else if(t<(2/2.75))return c*(7.5625*(t-=(1.5/2.75))*t+.75)+b;else if(t<(2.5/2.75))return c*(7.5625*(t-=(2.25/2.75))*t+.9375)+b;else return c*(7.5625*(t-=(2.625/2.75))*t+.984375)+b;},
-		easeInOutBounce : function(t,b,c,d){if(t<d/2)return easings.easeInBounce(t*2,0,c,d)*.5+b;else return easings.easeOutBounce(t*2-d,0,c,d)*.5+c*.5+b;},
-		easeOutInBounce : function(t,b,c,d){if(t<d/2)return easings.easeOutBounce(t*2,b,c/2,d);return easings.easeInBounce((t*2)-d,b+c/2,c/2,d);}
-	};
-	var easing;
-	for (easing in easings) {
-		$.easing[easing] = (function(easingname) {
-			return function(x, t, b, c, d) {
-				return easings[easingname](t, b, c, d);
-			};
-		})(easing);
-	}
-
-	//set device information
-	(function () {
-		var ua = navigator.userAgent;
-		var maxTouchPoints = navigator.maxTouchPoints;
-		var ie = ua.match(/(?:msie ([0-9]+)|rv:([0-9\.]+)\) like gecko)/i);
-		var deviceInfo = ['android', 'iphone', 'ipod', 'ipad', 'blackberry', 'windows ce', 'samsung', 'lg', 'mot', 'sonyericsson', 'nokia', 'opeara mini', 'opera mobi', 'webos', 'iemobile', 'kfapwi', 'rim', 'bb10'];
-		var filter = "win16|win32|win64|mac|macintel";
-		var uAgent = ua.toLowerCase();
-		var deviceInfo_len = deviceInfo.length;
-
-		var browser = win[global].browser = {};
-		var support = win[global].support = {};
-		var i = 0;
-		var version;
-		var device;
-
-		for (i = 0; i < deviceInfo_len; i++) {
-			if (uAgent.match(deviceInfo[i]) !== null) {
-				device = deviceInfo[i];
-				break;
-			}
-		}
-		
-		browser.local = (/^http:\/\//).test(location.href);
-		browser.firefox = (/firefox/i).test(ua);
-		browser.webkit = (/applewebkit/i).test(ua);
-		browser.chrome = (/chrome/i).test(ua);
-		browser.opera = (/opera/i).test(ua);
-		browser.ios = (/ip(ad|hone|od)/i).test(ua);
-		browser.android = (/android/i).test(ua);
-		browser.safari = browser.webkit && !browser.chrome;
-		browser.app = ua.indexOf('appname') > -1 ? true : false;
-
-		//touch, mobile 환경 구분
-		support.touch = browser.ios || browser.android || (doc.ontouchstart !== undefined && doc.ontouchstart !== null);
-		browser.mobile = support.touch && ( browser.ios || browser.android);
-		//navigator.platform ? filter.indexOf(navigator.platform.toLowerCase()) < 0 ? browser.mobile = false : browser.mobile = true : '';
-		
-		//false 삭제
-		// for (j in browser) {
-		// 	if (!browser[j]) {
-		// 		delete browser[j]
-		// 	}
-		// }
-		
-		//os 구분
-		browser.os = (navigator.appVersion).match(/(mac|win|linux)/i);
-		browser.os = browser.os ? browser.os[1].toLowerCase() : '';
-
-		//version 체크
-		if (browser.ios || browser.android) {
-			version = ua.match(/applewebkit\/([0-9.]+)/i);
-			version && version.length > 1 ? browser.webkitversion = version[1] : '';
-			if (browser.ios) {
-				version = ua.match(/version\/([0-9.]+)/i);
-				version && version.length > 1 ? browser.ios = version[1] : '';
-			} else if (browser.android) {
-				version = ua.match(/android ([0-9.]+)/i);
-				version && version.length > 1 ? browser.android = parseInt(version[1].replace(/\./g, '')) : '';
-			}
-		}
-
-		if (ie) {
-			browser.ie = ie = parseInt( ie[1] || ie[2] );
-			( 11 > ie ) ? support.pointerevents = false : '';
-			( 9 > ie ) ? support.svgimage = false : '';
-		} else {
-			browser.ie = false;
-		}
-
-		var clsBrowser = browser.chrome ? 'chrome' : browser.firefox ? 'firefox' : browser.opera ? 'opera' : browser.safari ? 'safari' : browser.ie ? 'ie ie' + browser.ie : 'other';
-		var clsMobileSystem = browser.ios ? "ios" : browser.android ? "android" : 'etc';
-		var clsMobile = browser.mobile ? browser.app ? 'device-mobile  device-mobile ' : 'device-mobile ' : 'device-desktop';
-
-		//doc.querySelector('html').classList.add(browser.os, clsBrowser, clsMobileSystem, clsMobile);
-		var $html = $('html');
-		$html.addClass(browser.os);
-		$html.addClass(clsBrowser);
-		$html.addClass(clsMobileSystem);
-		$html.addClass(clsMobile);
-
-		
-		$(win).off('resize.base').on('resize.base', breakPointClass);
-		
-		var timerWin;
-		function breakPointClass() {
-			var w = $(win).outerWidth();
-			
-			clearTimeout(timerWin);
-			timerWin = setTimeout(function(){
-				if (w < win[global].option.breakPoint[0]) {
-					browser.size = 'mobile';
-					$html.removeClass('size-tablet').removeClass('size-desktop').addClass('size-mobile');
-				} else if (w < win[global].option.breakPoint[1]) {
-					browser.size = 'tablet';
-					$html.removeClass('size-mobile').removeClass('size-desktop').addClass('size-tablet');
-				} else {
-					browser.size = 'desktop';
-					$html.removeClass('size-mobile').removeClass('size-tablet').addClass('size-desktop');
+		//주소의 파라미터 값 가져오기
+		para: function(paraname) {
+			const tempUrl = win.location.search.substring(1);
+			const tempArray = tempUrl.split('&');
+			const tempArray_len = tempArray.length;
+			let keyValue;
+	
+			for (var i = 0, len = tempArray_len; i < len; i++) {
+				keyValue = tempArray[i].split('=');
+	
+				if (keyValue[0] === paraname) {
+					return keyValue[1];
 				}
-			},200);
+			}
+		},
+
+		//기본 선택자 설정
+		selectorType: function(v) {
+			let base = document.querySelector('body');
+
+			if (v !== null) {
+				if (typeof v === 'string') {
+					base = document.querySelector(v);
+				} else {
+					base = v;
+				} 
+			}
+
+			return base;
+		},
+
+		RAF: function(start, end, startTime, duration){
+			const _start = start;
+			const _end = end;
+			const _duration = duration ? duration : 300;
+			const unit = (_end - _start) / _duration;
+			const endTime = startTime + _duration;
+
+			let now = new Date().getTime();
+			let passed = now - startTime;
+
+			if (now <= endTime) {
+				Global.uiParts.RAF.time = _start + (unit * passed);
+				requestAnimationFrame(scrollTo);
+			} else {
+				!!callback && callback();
+				console.log('End off.')
+			}
 		}
-		breakPointClass();
-	})();
-
-
+	}
+	Global.uiParts.resizeState();
 
 	/**
 	 * loading show/hide
 	 */
-	win[global].loading = {
+	Global.loading = {
 		timerShow : {},
 		timerHide : {},
 		options : {
@@ -424,7 +432,7 @@ if (!Object.keys){
 	/**
 	 * ajax
 	 */
-	win[global].ajax = {
+	Global.ajax = {
 		options : {
 			page: true,
 			add: false,
@@ -453,7 +461,7 @@ if (!Object.keys){
 			var errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
 	
 			if (loading) {
-				win[global].loading.show();
+				Global.loading.show();
 			}
 	
 			if (!!effect) {
@@ -471,7 +479,7 @@ if (!Object.keys){
 
 				if (xhr.status === 200) {
 					if (loading) {
-						win[global].loading.hide();
+						Global.loading.hide();
 					}
 	
 					if (opt.page) {
@@ -485,7 +493,7 @@ if (!Object.keys){
 
 				} else {
 					if (loading) {
-						win[global].loading.hide();
+						Global.loading.hide();
 					}
 					errorCallback ? errorCallback() : '';
 				}
@@ -502,7 +510,7 @@ if (!Object.keys){
 			// 	},
 			// 	error: function (request, status, err) {
 			// 		if (loading) {
-			// 			win[global].uiLoading({
+			// 			Global.uiLoading({
 			// 				visible: false
 			// 			});
 			// 		}
@@ -510,7 +518,7 @@ if (!Object.keys){
 			// 	},
 			// 	success: function (v) {
 			// 		if (loading) {
-			// 			win[global].uiLoading({
+			// 			Global.uiLoading({
 			// 				visible: false
 			// 			});
 			// 		}
@@ -532,7 +540,7 @@ if (!Object.keys){
 	/**
 	 * toast
 	 */
-	win[global].toast = {
+	Global.toast = {
 		timer : null,
 		options : {
 			delay: 'short',
@@ -554,7 +562,7 @@ if (!Object.keys){
 			}
 
 			if (!!$('.ui-toast-ready').length) {
-				clearTimeout(win[global].toast.timer);
+				clearTimeout(Global.toast.timer);
 				$body.removeClass('ui-toast-show').removeClass('ui-toast-ready');
 				$('.ui-toast').off('transitionend.toastshow').remove();
 			} 
@@ -571,14 +579,14 @@ if (!Object.keys){
 
 				$shanckbar.off('transitionend.toasthide').on('transitionend.toastshow', function(){
 					$(this).off('transitionend.toastshow').addClass('on');
-					win[global].toast.timer = setTimeout(win[global].toast.hide, time);
+					Global.toast.timer = setTimeout(Global.toast.hide, time);
 				});
 			},0);
 		},
 		hide : function(){
 			var $body = $('body');
 			
-			clearTimeout(win[global].toast.timer);
+			clearTimeout(Global.toast.timer);
 			$body.removeClass('ui-toast-show');
 
 			$('.ui-toast').off('transitionend.toastshow').on('transitionend.toasthide', function(){
@@ -591,7 +599,7 @@ if (!Object.keys){
 	/**
 	 * intersection observer
 	 */
-	// win[global].io = new IntersectionObserver(function (entries) {
+	// Global.io = new IntersectionObserver(function (entries) {
 	// 	entries.forEach(function (entry) {
 	// 		if (entry.intersectionRatio > 0) {
 	// 			entry.target.classList.add('tada');
@@ -607,7 +615,7 @@ if (!Object.keys){
 	* move: 특정 위치로 스크롤 이동
 	* checkEnd: 스크롤 이동 완료 체크 후 포커스 및 콜백 실행
 	*/
-	win[global].scroll = {
+	Global.scroll = {
 		options : {
 			value: 0,
 			effect:'smooth', //'auto'
@@ -698,10 +706,10 @@ if (!Object.keys){
 			var focus = opt.focus;
 			var callback = opt.callback;
 
-			win[global].scroll.checkEndTimer = setTimeout(function(){
+			Global.scroll.checkEndTimer = setTimeout(function(){
 				//스크롤 현재 진행 여부 판단
 				if (now === $selector[scrollPs]) {
-					clearTimeout(win[global].scroll.checkEndTimer);
+					clearTimeout(Global.scroll.checkEndTimer);
 					//포커스가 위치할 엘리먼트를 지정하였다면 실행
 					if (!!focus ) {
 						focus.attr('tabindex', 0).focus();
@@ -712,7 +720,7 @@ if (!Object.keys){
 					}
 				} else {
 					now = $selector[scrollPs];
-					win[global].scroll.checkEnd({
+					Global.scroll.checkEnd({
 						selector : opt.selector,
 						now : $selector[scrollPs],
 						ps : opt.ps,
@@ -728,7 +736,7 @@ if (!Object.keys){
 			area : null
 		},
 		parallax: function(opt) {
-			var opt = $.extend(true, {}, win[global].scroll.optionsParllax, opt);
+			var opt = $.extend(true, {}, Global.scroll.optionsParllax, opt);
 			var $area = opt.area ?? $(win);
 			var $parallax = opt.selector ?? $('.ui-parallax');
 			var $wrap = $parallax.find('> .ui-parallax-wrap');
@@ -790,7 +798,7 @@ if (!Object.keys){
 	/**
 	 * parameter get
 	 */
-	win[global].para = {
+	Global.para = {
 		get: function(paraname){
 			var _tempUrl = win.location.search.substring(1),
 			_tempArray = _tempUrl.split('&'),
@@ -810,7 +818,7 @@ if (!Object.keys){
 	/**
 	 * Focus Loop 
 	 */
-	win[global].focus = {
+	Global.focus = {
 		options: {
 			callback: false
 		},
@@ -854,7 +862,7 @@ if (!Object.keys){
 	/**
 	 * custom scroll bar
 	 */
-	win[global].scrollBar = {
+	Global.scrollBar = {
 		options : {
 			selector: false,
 			callback:false,
@@ -872,7 +880,7 @@ if (!Object.keys){
 			var $base = !selector ? $('.ui-scrollbar') : typeof selector === 'object' ? selector : $('[scroll-id="' + selector +'"]');
 			var timerResize;
 			
-			// if (win[global].support.touch) {
+			// if (Global.support.touch) {
 			// 	return false;
 			// } 
 
@@ -1150,7 +1158,7 @@ if (!Object.keys){
 	/**
 	 * window popup
 	 */
-	win[global].popup = {
+	Global.popup = {
 		options: {
 			name: 'new popup',
 			width: 790,
@@ -1185,7 +1193,7 @@ if (!Object.keys){
 	/**
 	 * cookie set/get/del
 	 */
-	win[global].cookie = {
+	Global.cookie = {
 		set: function(){
 			var cookieset = opt.name + '=' + opt.value + ';';
 			var expdate;
@@ -1215,7 +1223,7 @@ if (!Object.keys){
 	/**
 	 * table caption/scroll(vertical)
 	 */
-	win[global].table = {
+	Global.table = {
 		caption: function(){
 			var $cp = $('.ui-caption');
 
@@ -1361,7 +1369,7 @@ if (!Object.keys){
 		}
 	}
 
-	win[global].form = {
+	Global.form = {
 		init: function(opt){
 			var $inp = $('.inp-base');
 			var len = $inp.length;
@@ -1474,10 +1482,10 @@ if (!Object.keys){
 				
 				var $this = $(this).closest('.ui-datepicker').find('.inp-base');
 				//<input type="date" id="uiDate_1" class="inp-base" value="" min="2020-12-05" max="2022-05-20" title="시작일" required="">
-				win[global].sheets.bottom({
+				Global.sheets.bottom({
 					id: $this.attr('id'),
 					callback: function(){
-						win[global].datepicker.init({
+						Global.datepicker.init({
 							id: $this.attr('id'),
 							date: $this.val(),
 							min: $this.attr('min'),
@@ -1606,7 +1614,7 @@ if (!Object.keys){
 		
 	}
 
-	win[global].rangeSlider = {
+	Global.rangeSlider = {
 		init: function(opt){
 			var id = opt.id;
 			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
@@ -1615,31 +1623,31 @@ if (!Object.keys){
 
 			if (el_from && el_to) {
 				//range
-				win[global].rangeSlider.rangeFrom({
+				Global.rangeSlider.rangeFrom({
 					id: id
 				});
-				win[global].rangeSlider.rangeTo({
+				Global.rangeSlider.rangeTo({
 					id: id
 				});
 				el_from.addEventListener("input", function(){
-					win[global].rangeSlider.rangeFrom({
+					Global.rangeSlider.rangeFrom({
 						id: id
 					});
 				});
 				el_to.addEventListener("input", function(){
-					win[global].rangeSlider.rangeTo({
+					Global.rangeSlider.rangeTo({
 						id: id
 					});
 				});
 
 			} else {
 				//single
-				win[global].rangeSlider.rangeFrom({
+				Global.rangeSlider.rangeFrom({
 					id: id,
 					type: 'single'
 				});
 				el_from.addEventListener("input", function(){
-					win[global].rangeSlider.rangeFrom({
+					Global.rangeSlider.rangeFrom({
 						id: id,
 						type: 'single'
 					});
@@ -1747,13 +1755,13 @@ if (!Object.keys){
 		}
 	}
 
-	win[global].datepicker = {
+	Global.datepicker = {
 		destroy: function(opt){
 			var is_dim = !!$('.sheet-dim').length;
 			var callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
 
 			if (is_dim) {
-				win[global].sheets.dim(false);
+				Global.sheets.dim(false);
 			}
 			
 			if (!opt) {
@@ -1786,11 +1794,11 @@ if (!Object.keys){
 			var _viewYear = date.getFullYear();
 			var _viewMonth = date.getMonth();
 			var el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
-			var yyyymm = _viewYear + '-' + win[global].option.partsAdd0(_viewMonth + 1);
+			var yyyymm = _viewYear + '-' + Global.uiParts.add0(_viewMonth + 1);
 			var _dpHtml = '';
 			var callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
 			
-			win[global].datepicker.destroy();
+			Global.datepicker.destroy();
 
 			if (!!period || !!el_end) {
 				period = true;
@@ -1870,13 +1878,13 @@ if (!Object.keys){
 				var today = el_dp.querySelector('.ui-today');
 				var confirm = el_dp.querySelector('.ui-confirm');
 
-				nextY.addEventListener('click', win[global].datepicker.nextYear);
-				prevY.addEventListener('click', win[global].datepicker.prevYear);
-				nextM.addEventListener('click', win[global].datepicker.nextMonth);
-				prevM.addEventListener('click', win[global].datepicker.prevMonth);
-				today.addEventListener('click', win[global].datepicker.goToday);
+				nextY.addEventListener('click', Global.datepicker.nextYear);
+				prevY.addEventListener('click', Global.datepicker.prevYear);
+				nextM.addEventListener('click', Global.datepicker.nextMonth);
+				prevM.addEventListener('click', Global.datepicker.prevMonth);
+				today.addEventListener('click', Global.datepicker.goToday);
 				confirm.addEventListener('click', function(){
-					win[global].datepicker.confirm({
+					Global.datepicker.confirm({
 						id: this.dataset.confirm
 					});
 				});
@@ -1905,17 +1913,17 @@ if (!Object.keys){
 			}
 
 			if (el_dp.classList.contains('sheet-bottom')) {
-				win[global].sheets.bottom({
+				Global.sheets.bottom({
 					id: id,
 					state: false,
 					callback: function(){
-						win[global].datepicker.destroy({
+						Global.datepicker.destroy({
 							id : id
 						});
 					}
 				});
 			} else {
-				win[global].datepicker.destroy({
+				Global.datepicker.destroy({
 					id : id
 				});
 			}
@@ -2118,9 +2126,9 @@ if (!Object.keys){
 					//빈곳
 				} else {
 					if (!_disabled) {
-						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '">';
+						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.uiParts.add0(viewMonth + 1)+'-'+ Global.uiParts.add0(date)+ '">';
 					} else {
-						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ win[global].option.partsAdd0(viewMonth + 1)+'-'+ win[global].option.partsAdd0(date)+ '" disabled>';
+						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.uiParts.add0(viewMonth + 1)+'-'+ Global.uiParts.add0(date)+ '" disabled>';
 					}
 				}
 				
@@ -2142,13 +2150,13 @@ if (!Object.keys){
 			var len = dayBtn.length;
 
 			for (var i = 0; i < len; i++) {
-				dayBtn[i].addEventListener('click', win[global].datepicker.daySelect);
+				dayBtn[i].addEventListener('click', Global.datepicker.daySelect);
 				dayBtn[i].dataset.n = i;
 				dayBtn[i].addEventListener('keydown', keyMove);
 			}
 
 			// for (var dayBtns of dayBtn) {
-			// 	dayBtns.addEventListener('click', win[global].datepicker.daySelect);
+			// 	dayBtns.addEventListener('click', Global.datepicker.daySelect);
 			// 	console.log(dayBtns);
 			// 	dayBtns.addEventListener('keydown', keyMove);
 			// }
@@ -2160,7 +2168,7 @@ if (!Object.keys){
 				var n = Number(e.currentTarget.dataset.n);
 				var current = n;
 				var keycode = e.keyCode;
-				var keys = win[global].option.keys;
+				var keys = Global.state.keys;
 
 				switch (keycode) {
 					case keys.up:
@@ -2185,7 +2193,7 @@ if (!Object.keys){
 							el_dp.querySelector('.ui-confirm').focus();
 						break;
 					case keys.enter:
-						win[global].datepicker.daySelect(e);
+						Global.datepicker.daySelect(e);
 						break;
 				}
 			}
@@ -2268,7 +2276,7 @@ if (!Object.keys){
 					}
 				}
 
-				win[global].datepicker.dateMake({
+				Global.datepicker.dateMake({
 					setDate: date,
 					setId: id
 				});
@@ -2327,8 +2335,8 @@ if (!Object.keys){
 			
 			date.setFullYear(year + 1);
 
-			el_dp.dataset.date = (year + 1) +'-'+ win[global].option.partsAdd0(month); 
-			win[global].datepicker.dateMake({
+			el_dp.dataset.date = (year + 1) +'-'+ Global.uiParts.add0(month); 
+			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
 			});
@@ -2377,8 +2385,8 @@ if (!Object.keys){
 			
 			date.setFullYear(year - 1);
 
-			el_dp.dataset.date = (year - 1) +'-'+ win[global].option.partsAdd0(month); 
-			win[global].datepicker.dateMake({
+			el_dp.dataset.date = (year - 1) +'-'+ Global.uiParts.add0(month); 
+			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
 			});
@@ -2398,8 +2406,8 @@ if (!Object.keys){
 
 			date.setMonth(month);
 
-			el_dp.dataset.date = year +'-'+ win[global].option.partsAdd0(month + 1); 
-			win[global].datepicker.dateMake({
+			el_dp.dataset.date = year +'-'+ Global.uiParts.add0(month + 1); 
+			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
 			});
@@ -2419,8 +2427,8 @@ if (!Object.keys){
 
 			date.setMonth(month - 1);
 
-			el_dp.dataset.date = year +'-'+ win[global].option.partsAdd0(month); 
-			win[global].datepicker.dateMake({
+			el_dp.dataset.date = year +'-'+ Global.uiParts.add0(month); 
+			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
 			});
@@ -2434,15 +2442,15 @@ if (!Object.keys){
 			
 			console.log('goToday', dpId, date);
 
-			el_dp.dataset.date = year +'-'+ win[global].option.partsAdd0(month); 
-			win[global].datepicker.dateMake({
+			el_dp.dataset.date = year +'-'+ Global.uiParts.add0(month); 
+			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
 			});
 		}
 	}
 
-	win[global].sheets = {
+	Global.sheets = {
 		dim: function(opt){
 			var callback = opt.callback;
 
@@ -2487,12 +2495,12 @@ if (!Object.keys){
 				var wrap_w = Number($sheet.outerWidth().toFixed(2));
 				var wrap_h = Number($sheet.height().toFixed(2));
 
-				win[global].sheets.dim({
+				Global.sheets.dim({
 					id: id,
 					show: true,
 					callback: function(){
 						$('.sheet-dim').on('click', function(){
-							win[global].sheets.bottom({
+							Global.sheets.bottom({
 								id:id,
 								state: false
 							})
@@ -2505,7 +2513,7 @@ if (!Object.keys){
 					top: (win_h - ((off_t - scr_t) + base_h) > wrap_h) ? (off_t + base_h) + 'px' : (off_t - wrap_h) + 'px'
 				});
 
-				win[global].focus.loop({
+				Global.focus.loop({
 					selector: $sheet
 				});
 			} else {
@@ -2521,7 +2529,7 @@ if (!Object.keys){
 		}
 	}
 
-	win[global].select = {
+	Global.select = {
 		options: {
 			id: false, 
 			current: null,
@@ -2530,14 +2538,14 @@ if (!Object.keys){
 		},
 		init: function(opt){
 			var opt = opt === undefined ? {} : opt;
-			var opt = $.extend(true, {}, win[global].select.options, opt);
+			var opt = $.extend(true, {}, Global.select.options, opt);
 			var current = opt.current;
 			var callback = opt.callback;
 			var customscroll = opt.customscroll;
 			var id = opt.id;
 			var is_id = id === false ? false : true;
 			var $ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.find('.ui-select') : $('.ui-select');
-			var keys = win[global].option.keys;
+			var keys = Global.state.keys;
 
 			var $sel;
 			var $selectCurrent;
@@ -2554,7 +2562,7 @@ if (!Object.keys){
 			var htmlButton = '' ;
 
 			//init
-			win[global].browser.mobile ? customscroll = false : '';
+			Global.state.device.mobile ? customscroll = false : '';
 
 			//reset
 			$ui_select.find('.ui-select-btn').remove();
@@ -2665,7 +2673,7 @@ if (!Object.keys){
 					_selected && _hidden ? hiddenClass = 'opt-hidden' : '';
 					_optionIdName = _optionID + '_' + j;
 
-					if (win[global].browser.mobile) {
+					if (Global.state.device.mobile) {
 						_disabled ?
 							_selected ?
 								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
@@ -2703,7 +2711,7 @@ if (!Object.keys){
 				// $(doc).off('click.dp').on('click.dp', '.ui-select-btn', function(e){
 					
 				// 	var $this = $(this).closest('.ui-datepicker').find('.inp-base');
-				// 	win[global].sheets.bottom({
+				// 	Global.sheets.bottom({
 				// 		id: $this.attr('id'),
 				// 		callback: function(){
 
@@ -2748,7 +2756,7 @@ if (!Object.keys){
 				var $this = $(this);
 				$this.closest('.ui-select').data('fn');
 
-				win[global].select.act({
+				Global.select.act({
 					id:$this .attr('id'),
 					current: $this.find('option:selected').index(),
 					callback: $this.data('callback'), original:true
@@ -2769,7 +2777,7 @@ if (!Object.keys){
 				var idx =  $(t).index();
 
 				if (customscroll) {
-					win[global].select.act({ 
+					Global.select.act({ 
 						id: $(t).closest('.ui-select').find('.ui-select-btn').data('id'), 
 						current: idx 
 					});
@@ -2831,7 +2839,7 @@ if (!Object.keys){
 				}
 			}
 			function optExpanded(t) {
-				if (win[global].browser.mobile) {
+				if (Global.state.device.mobile) {
 					optOpen(t)
 				} else {
 					if ($(t).attr('aria-expanded') === 'false') {
@@ -2843,7 +2851,7 @@ if (!Object.keys){
 				}
 			}
 			function optScroll($wrap, n_top, wrap_h, key) {
-				win[global].scroll.move({ 
+				Global.scroll.move({ 
 					value: Number(n_top), 
 					selector: customscroll ? $wrap.find('> .ui-scrollbar-item') : $wrap, 
 					effect: 'auto', 
@@ -2853,12 +2861,12 @@ if (!Object.keys){
 			function optPrev(e, id, n, len) {
 				e.preventDefault();
 				n === 0 ? n = 0 : n = n - 1;
-				win[global].select.act({ id: id, current: n });
+				Global.select.act({ id: id, current: n });
 			}
 			function optNext(e, id, n, len) {
 				e.preventDefault();
 				n === len - 1 ? n = len - 1 : n = n + 1;
-				win[global].select.act({ id: id, current: n });
+				Global.select.act({ id: id, current: n });
 			}
 			function optOpen(t) {
 				var $body = $('body'),
@@ -2886,17 +2894,17 @@ if (!Object.keys){
 				}
 				
 				if (customscroll) {
-					win[global].scrollBar.init({
+					Global.scrollBar.init({
 						selector: _$wrap
 					});
-					win[global].scroll.move({ 
+					Global.scroll.move({ 
 						value: Number(opt_h * _$uisel.find(':checked').index()), 
 						selector: _$wrap.find('> .ui-scrollbar-item'), 
 						effect: 'auto', 
 						ps: 'top' 
 					});
 				} else {
-					win[global].scroll.move({ 
+					Global.scroll.move({ 
 						value: Number(opt_h * _$uisel.find(':checked').index()), 
 						selector: _$wrap, 
 						effect: 'auto', 
@@ -2951,7 +2959,7 @@ if (!Object.keys){
 				_$this.closest('.ui-select').find('.ui-select-opt').removeClass('selected');
 				_$this.closest('.ui-select').find('.ui-select-opt').eq(v).addClass('selected');
 
-				// win[global].select.act({ 
+				// Global.select.act({ 
 				// 	id: _$this.closest('.ui-select').find('.ui-select-btn').data('id'), 
 				// 	current: v
 				// });
@@ -2981,7 +2989,7 @@ if (!Object.keys){
 				var $wrap = $select.find('.ui-select-wrap');
 				var orgTop = $select.data('orgtop');
 
-				win[global].select.act({ 
+				Global.select.act({ 
 					id: $btn.data('id'), 
 					current: $wrap.find('.selected').index()
 				});
@@ -3031,7 +3039,7 @@ if (!Object.keys){
 			$uiSelect.find('.ui-select-btn span').text($optCurrent.text());
 			$uiSelect.find('.ui-select-opt').removeClass('selected').eq(current).addClass('selected');
 
-			win[global].browser.mobile && $uiSelect.find('.ui-select-opt').eq(current).focus();
+			Global.state.device.mobile && $uiSelect.find('.ui-select-opt').eq(current).focus();
 
 			callback && callback({ 
 				id: id, 
@@ -3041,14 +3049,14 @@ if (!Object.keys){
 		}
 	}
 
-	win[global].accordion = {
+	Global.accordion = {
 		options: {
 			current: null,
 			autoclose: false,
 			callback: false,
 			add: false,
 			level: 3,
-			effect: win[global].option.effect.easeInOut,
+			effect: Global.state.effect.easeInOut,
 			effTime: '.2'
 		},
 		init: function(opt){
@@ -3056,7 +3064,7 @@ if (!Object.keys){
 				return false;
 			}
 	
-			var opt = $.extend(true, {}, win[global].accordion.options, opt);
+			var opt = $.extend(true, {}, Global.accordion.options, opt);
 			var id = opt.id;
 			var current = opt.current;
 			var callback = opt.callback;
@@ -3071,10 +3079,10 @@ if (!Object.keys){
 			var	$btn = $tit.find('.ui-acco-btn');
 	
 			var	len = $wrap.length; 
-			var	keys = win[global].option.keys;
+			var	keys = Global.state.keys;
 			var	optAcco;
 	
-			var para = win[global].para.get('acco');
+			var para = Global.para.get('acco');
 			var	paras;
 			var	paraname;
 			
@@ -3115,7 +3123,7 @@ if (!Object.keys){
 			}
 	
 			sessionStorage.setItem(id, JSON.stringify({ 'close': autoclose, 'current': current }) );
-			win[global].accordion[id] = callback;
+			Global.accordion[id] = callback;
 	
 			//set up
 			!$pnl ? $pnl = $tit.children('.ui-acco-pnl') : '';
@@ -3161,7 +3169,7 @@ if (!Object.keys){
 			}
 			
 			if (current !== null) {
-				win[global].accordion.toggle({ 
+				Global.accordion.toggle({ 
 					id: id, 
 					current: current, 
 					motion: false 
@@ -3181,7 +3189,7 @@ if (!Object.keys){
 					var $this = $(this);
 	
 					optAcco = $this.closest('.ui-acco').data('opt');
-					win[global].accordion.toggle({ 
+					Global.accordion.toggle({ 
 						id: optAcco.id, 
 						current: [$this.data('n')], 
 						close: optAcco.close, 
@@ -3344,7 +3352,7 @@ if (!Object.keys){
 		}
 	}
 
-	win[global].masonry = {
+	Global.masonry = {
 		options: {
 			fixCol: {
 				1500:4,
@@ -3358,7 +3366,7 @@ if (!Object.keys){
 			if (opt === undefined) { return false; }
 		
 			var opt = opt === undefined ? {} : opt,
-				opt = $.extend(true, {}, win[global].masonry.options, opt),
+				opt = $.extend(true, {}, Global.masonry.options, opt),
 				$base = $('#' + opt.id), 
 				$item = $base.find('.ui-bricklist-item').not('.disabled'),
 				fixCol = opt.fixCol,
@@ -3420,7 +3428,7 @@ if (!Object.keys){
 				'start': 0
 			});
 
-			win[global].masonry.act({ id: opt.id });
+			Global.masonry.act({ id: opt.id });
 			var winW = $(win).outerWidth();
 			if (re) {
 				$(win).off('resize.win').on('resize.win', function(){
@@ -3436,7 +3444,7 @@ if (!Object.keys){
 								var reColN = Math.floor($this.outerWidth() / $this.find('.ui-bricklist-item').outerWidth());
 
 								if ($this.data('orgcol') !== reColN || !!dataOpt.fixCol) {
-									win[global].masonry.init({ 
+									Global.masonry.init({ 
 										id : $this.attr('id'),
 										fixCol: dataOpt.fixCol,
 										response: dataOpt.response
@@ -3490,7 +3498,7 @@ if (!Object.keys){
 					if (n < itemSum) {
 						setItem();
 					} else {
-						win[global].loading.hide();
+						Global.loading.hide();
 					}
 
 					timer = setTimeout(function(){
@@ -3519,7 +3527,7 @@ if (!Object.keys){
 		}
 	}
 
-	win[global].dropdown = {
+	Global.dropdown = {
 		options: {
 			ps: 'BL',
 			hold: true,
@@ -3534,7 +3542,7 @@ if (!Object.keys){
 				return false;
 			}
 	
-			var opt = $.extend(true, {}, win[global].dropdown.options, opt);
+			var opt = $.extend(true, {}, Global.dropdown.options, opt);
 			var id = opt.id;
 			var ps = opt.ps;
 			var hold = opt.hold;
@@ -3546,7 +3554,7 @@ if (!Object.keys){
 			
 			//ajax 
 			if (!!src && !$('[data-id="' + opt.id + '"]').length) {
-				win[global].ajax.init({
+				Global.ajax.init({
 					area: area,
 					url: src,
 					add: true,
@@ -3590,7 +3598,7 @@ if (!Object.keys){
 				});
 				$(doc).find('.ui-drop-close').off('click.dp').on('click.dp', function(e){
 					var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
-					win[global].dropdown.toggle({ 
+					Global.dropdown.toggle({ 
 						id: pnl_opt.id 
 					});
 					$('#' + pnl_opt.id).focus();
@@ -3600,7 +3608,7 @@ if (!Object.keys){
 					e.preventDefault();
 					if (!!$('body').data('dropdownOpened')){
 						if ($(doc).find('.ui-drop-pnl').has(e.target).length < 1) {
-							win[global].dropdown.hide();
+							Global.dropdown.hide();
 						}
 					}
 				});
@@ -3611,7 +3619,7 @@ if (!Object.keys){
 						btn_opt = $this.data('opt');
 	
 					$this.data('sct', $(doc).scrollTop());
-					win[global].dropdown.toggle({ 
+					Global.dropdown.toggle({ 
 						id: btn_opt.id 
 					});
 				}
@@ -3675,17 +3683,17 @@ if (!Object.keys){
 							.attr('tabindex', -1)
 							.removeAttr('style');
 				} else {
-					win[global].dropdown.hide();
+					Global.dropdown.hide();
 				}
 				
-				win[global].focus.loop({
+				Global.focus.loop({
 					selector: $('.ui-drop-pnl[data-id="'+ id +'"]'),
 					callback:pnlHide
 				});
 				//focus hold or sense
 				// hold ?	
-				// 	win[global].focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
-				// 	win[global].focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
+				// 	Global.focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
+				// 	Global.focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
 				$btn.attr('aria-expanded', true);				
 				
 				switch (ps) {
@@ -3772,7 +3780,7 @@ if (!Object.keys){
 		}
 	}	
 	
-	win[global].floating = {
+	Global.floating = {
 		options: {
 			ps: 'bottom',
 			add: false,
@@ -3781,7 +3789,7 @@ if (!Object.keys){
 		}, 
 		base: function(opt) {
 			var opt = opt === undefined ? {} : opt,
-				opt = $.extend(true, {}, win[global].floating.options, opt),
+				opt = $.extend(true, {}, Global.floating.options, opt),
 				id = opt.id,
 				ps = opt.ps,
 				add = opt.add,
@@ -3813,7 +3821,7 @@ if (!Object.keys){
 				var tt = Math.ceil($id.offset().top),
 					th = Math.ceil($idwrap.outerHeight()),
 					st = $(win).scrollTop(),
-					wh = Math.ceil( win[global].browser.mobile ? window.screen.height : $(win).outerHeight() ),
+					wh = Math.ceil( Global.state.device.mobile ? window.screen.height : $(win).outerHeight() ),
 					dh = Math.ceil($(doc).outerHeight()),
 					lh = (!!add) ? $add.outerHeight() : 0 ,
 					lt = (!!add) ? dh - ($add.offset().top).toFixed(0) : 0,
@@ -3922,7 +3930,7 @@ if (!Object.keys){
 		}
 	}
 
-	win[global].modal = {
+	Global.modal = {
 		options : {
 			/* type : normal, system */
 			type: 'normal',
@@ -3952,7 +3960,7 @@ if (!Object.keys){
 			endfocus: false
 		},
 		show: function(opt){
-			var opt = $.extend(true, {}, win[global].modal.options, opt);
+			var opt = $.extend(true, {}, Global.modal.options, opt);
 			var wrap = opt.wrap === false ? $('body') : typeof opt.wrap === 'object' ? opt.wrap : $('#' + opt.wrap);
 			var type = opt.type;
 			var id = opt.id;
@@ -3981,7 +3989,7 @@ if (!Object.keys){
 
 			if (type === 'normal') {
 				if (!!src && !$('#' + opt.id).length) {
-					win[global].ajax.init({
+					Global.ajax.init({
 						area: wrap,
 						url: src,
 						add: true,
@@ -4117,10 +4125,10 @@ if (!Object.keys){
 				
 				clearTimeout(timer);
 				timer = setTimeout(function(){
-					win[global].focus.loop({ 
+					Global.focus.loop({ 
 						selector: $modal, 
 					});
-					// win[global].focus.loop({ 
+					// Global.focus.loop({ 
 					// 	selector: $modal, 
 					// 	type:'hold' 
 					// });
@@ -4190,7 +4198,7 @@ if (!Object.keys){
 				$(win).off('resize.modal').on('resize.modal', function(){
 					clearTimeout(timerResize);
 					timerResize = setTimeout(function(){
-						win[global].modal.reset();
+						Global.modal.reset();
 						
 					}, 200);
 				});
@@ -4208,7 +4216,7 @@ if (!Object.keys){
 				var h_head = $head.outerHeight();
 				var h_foot = $foot.outerHeight();
 
-				if (win[global].browser.size !== 'desktop') {
+				if (Global.browser.size !== 'desktop') {
 					$body.css({
 						'min-height': h_win - (h_head + h_foot) + 'px',
 						'max-height': h_win - (h_head + h_foot) + 'px'
@@ -4222,7 +4230,7 @@ if (!Object.keys){
 			}
 		},
 		hide: function(opt){
-			var opt = $.extend(true, {}, win[global].modal.optionsClose, opt);
+			var opt = $.extend(true, {}, Global.modal.optionsClose, opt);
 			var id = opt.id;
 			var type = opt.type;
 			var remove = opt.remove;
@@ -4252,7 +4260,7 @@ if (!Object.keys){
 
 			$modalPrev.addClass('current');
 			
-			win[global].scroll.move({
+			Global.scroll.move({
 				value: Number($modal.data('scrolltop'))
 			});
 			
@@ -4288,7 +4296,7 @@ if (!Object.keys){
 	* name : tab
 	* date : 2020-06-14
 	------------------------ */	
-	win[global].tab = {
+	Global.tab = {
 		options: {
 			current: 0,
 			onePanel: false,
@@ -4298,7 +4306,7 @@ if (!Object.keys){
 		},
 		init: function(opt) {
 			var opt = opt === undefined ? {} : opt;
-			var opt = $.extend(true, {}, win[global].tab.options, opt);
+			var opt = $.extend(true, {}, Global.tab.options, opt);
 			var id = opt.id;
 			var effect = opt.effect;
 			var current = isNaN(opt.current) ? 0 : opt.current;
@@ -4313,9 +4321,9 @@ if (!Object.keys){
 			var $pnl = $pnls.find('> .ui-tab-pnl');
 
 			var	len = $btn.length;
-			var keys = win[global].option.keys;
+			var keys = Global.state.keys;
 				
-			var	para = win[global].para.get('tab');
+			var	para = Global.para.get('tab');
 			var paras;
 			var paraname;
 
@@ -4393,7 +4401,7 @@ if (!Object.keys){
 			callback ? callback(opt) : '';
 			$btn.data('psl', ps_l).data('len', len);
 
-			win[global].scroll.move({ 
+			Global.scroll.move({ 
 				value: ps_l[current], 
 				target: $btns,
 				effect: 'auto', 
@@ -4408,7 +4416,7 @@ if (!Object.keys){
 				});
 
 			function evtClick() {
-				win[global].tab.toggle({ 
+				Global.tab.toggle({ 
 					id: id, 
 					current: $(this).index(), 
 					align:align 
@@ -4442,22 +4450,22 @@ if (!Object.keys){
 				function upLeftKey(e) {
 					e.preventDefault();
 					!$this.attr('tab-first') ? 
-					win[global].tab.toggle({ id: id, current: n - 1, align:align }): 
-					win[global].tab.toggle({ id: id, current: m - 1, align:align});
+					Global.tab.toggle({ id: id, current: n - 1, align:align }): 
+					Global.tab.toggle({ id: id, current: m - 1, align:align});
 				}
 				function downRightKey(e) {
 					e.preventDefault();
 					!$this.attr('tab-last') ? 
-					win[global].tab.toggle({ id: id, current: n + 1, align:align }): 
-					win[global].tab.toggle({ id: id, current: 0, align:align });
+					Global.tab.toggle({ id: id, current: n + 1, align:align }): 
+					Global.tab.toggle({ id: id, current: 0, align:align });
 				}
 				function endKey(e) {
 					e.preventDefault();
-					win[global].tab.toggle({ id: id, current: m - 1, align:align });
+					Global.tab.toggle({ id: id, current: m - 1, align:align });
 				}
 				function homeKey(e) {
 					e.preventDefault();
-					win[global].tab.toggle({ id: id, current: 0, align:align });
+					Global.tab.toggle({ id: id, current: 0, align:align });
 				}
 			}
 		},
@@ -4490,7 +4498,7 @@ if (!Object.keys){
 				$target = $btns.find('> .ui-scrollbar-item');
 			}
 
-			win[global].scroll.move({ 
+			Global.scroll.move({ 
 				value: ps_l[current], 
 				add : $btn.outerWidth(),
 				selector: $target, 
@@ -4513,7 +4521,7 @@ if (!Object.keys){
 	* name : tooltip
 	* date : 2020-06-15
 	------------------------ */	
-	win[global].tooltip = {
+	Global.tooltip = {
 		options: {
 			visible: null,
 			id: false,
@@ -4522,7 +4530,7 @@ if (!Object.keys){
 		init: function(opt) {
 			var opt = opt === undefined ? {} : opt;
 
-			opt = $.extend(true, {}, win[global].tooltip.options, opt);
+			opt = $.extend(true, {}, Global.tooltip.options, opt);
 
 			var $btn = $('.ui-tooltip-btn');
 			var $tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false;
@@ -4617,7 +4625,7 @@ if (!Object.keys){
 
 					console.log(id, src);
 
-					win[global].ajax.init({
+					Global.ajax.init({
 						area: $('#' + id),
 						url: src,
 						add: true,
@@ -4686,12 +4694,12 @@ if (!Object.keys){
 				pst ? cursorCls += 'b' : cursorCls += 't';
 
 				if (!!$id.attr('modal')) {
-					if (!win[global].browser.oldie) {
+					if (!Global.browser.oldie) {
 						ps_l = ps_l;
 						ps_r = ps_r;
 					}
 
-					win[global].browser.ie ? '' : off_t = off_t;
+					Global.browser.ie ? '' : off_t = off_t;
 				}
 
 				if (!!$id.closest('.type-fixed-bottom').length) {
@@ -4713,11 +4721,11 @@ if (!Object.keys){
 	* name : coding list
 	* date : 2020-06-20
 	------------------------ */	
-	win[global].project = {
+	Global.project = {
 		list: function(opt){
 			
 
-			win[global].ajax.init({
+			Global.ajax.init({
 				url: opt.url, 
 				page: false, 
 				callback: callback 
@@ -4944,7 +4952,7 @@ if (!Object.keys){
 						}
 
 
-						win[global].browser.mobile ?
+						Global.state.device.mobile ?
 							table += '<tr class="' + cls + '" >' :
 							table += '<tr class="' + cls + '">';
 						table += '<td class="state"><span>' + state + '</span></td>';
@@ -5115,7 +5123,7 @@ if (!Object.keys){
 					$(temp).closest('tr').show();
 				});
 
-				win[global].form.init();
+				Global.form.init();
 			}
 		}
 	}
@@ -5124,7 +5132,7 @@ if (!Object.keys){
 	* name : count number
 	* date : 2020-06-20
 	------------------------ */
-	win[global].count = {
+	Global.count = {
 		step: function(opt) {
 			var $base = $('#' + opt.id),
 				countNum = !!opt.value === true ? opt.value : $base.text(),
@@ -5141,7 +5149,7 @@ if (!Object.keys){
 				r;
 				
 			if ($base.data('ing') !== true) {
-				textNum = win[global].option.uiComma(countNum);
+				textNum = Global.uiParts.comma(countNum);
 				base_h === 0 ? base_h = $base.text('0').outerHeight() : '';
 				$base.data('ing',true).empty().css('height', base_h);
 				len = textNum.length;
@@ -5167,7 +5175,7 @@ if (!Object.keys){
 					}
 					
 					$base_div = $base.children('.n' + i);
-					$base_div.find('span').wrapAll('<div class="ui-count-num" style="top:' + base_h + 'px; transition:top '+ speed +' cubic-bezier(' + win[global].option.effect[eff] + ');"></div>');
+					$base_div.find('span').wrapAll('<div class="ui-count-num" style="top:' + base_h + 'px; transition:top '+ speed +' cubic-bezier(' + Global.state.effect[eff] + ');"></div>');
 					$thisNum = $base_div.find('.ui-count-num');
 					$thisNum.data('height', $thisNum.height()); 
 				}
@@ -5211,7 +5219,7 @@ if (!Object.keys){
 					diff = countNum - count;
 					(diff > 0) ? count += add + j : '';
 
-					var n = win[global].option.uiComma(count);
+					var n = Global.uiParts.comma(count);
 					$base.text(n);
 					v = v + 1;
 
@@ -5220,7 +5228,7 @@ if (!Object.keys){
 							counter(); 
 						}, s);
 					} else {
-						$base.text(win[global].option.uiComma(countNum));
+						$base.text(Global.uiParts.comma(countNum));
 						clearTimeout(timer);
 					}
 				}
@@ -5229,7 +5237,7 @@ if (!Object.keys){
 		}
 	}
 
-	win[global].slot = {
+	Global.slot = {
 		play: {},
 		init: function(opt) {
 			if (opt === undefined) {
@@ -5290,7 +5298,7 @@ if (!Object.keys){
 				clone = $item.eq(opt.n).clone().addClass('clone').removeAttr('n');
 				$wrap[opt.append ? 'append' : 'prepend'](clone);
 			}
-			auto ? win[global].slot.start(opt) : '';
+			auto ? Global.slot.start(opt) : '';
 		},
 		start: function(opt) {
 			if (opt === undefined) {
@@ -5309,15 +5317,15 @@ if (!Object.keys){
 			var s = 500;
 			if (!$slot.data('ing')) {
 				$slot.data('ing', true);
-				win[global].slot[opt.id] = win.setInterval(steplot, s);
+				Global.slot[opt.id] = win.setInterval(steplot, s);
 			}
 			
 			function steplot(){
 				$wrap.css('top', 0).stop().animate({
 					top: single ? item_h * (len - 1) * -1 : Math.ceil(item_h * (len - 3) * -1)
 				},s , 'linear') ;
-				win.clearInterval(win[global].slot[opt.id]);
-				win[global].slot[opt.id] = win.setInterval(steplot, s);
+				win.clearInterval(Global.slot[opt.id]);
+				Global.slot[opt.id] = win.setInterval(steplot, s);
 			}
 		},
 		stop: function(opt) {
@@ -5345,11 +5353,11 @@ if (!Object.keys){
 	
 			clearTimeout(timer);
 			timer = setTimeout(function(){
-				win.clearInterval(win[global].slot[opt.id]);
+				win.clearInterval(Global.slot[opt.id]);
 				t = item_h * x * -1 > 0 ? item_h * x : item_h * x * -1;
 				$wrap.stop().animate({
 					top: t
-				},1000, 'easeOutQuad', function(){
+				},1000, function(){
 					$wrap.find('.ui-slot-item').eq(index).addClass('selected');
 					callback(result);
 				});
@@ -5361,7 +5369,7 @@ if (!Object.keys){
 	* name : dragglable
 	* date : 2020-06-20
 	------------------------ */	
-	win[global].draggable = {
+	Global.draggable = {
 		init: function(opt) {
 			var $wrap = $('#' + opt.id);
 			var $item = $wrap.find('.ui-draggable-item');
@@ -5676,7 +5684,7 @@ if (!Object.keys){
 	 * slide(carousel) v1.0 
 	 * date : 2018-04-21
 	------------------------------------------------------------------------ */
-	win[global].swiper = {
+	Global.swiper = {
 		options: {
 			current:0,
 			multi:false,
@@ -5703,8 +5711,8 @@ if (!Object.keys){
 				return false;
 			}
 			
-			win[global].swiper[opt.id] = {};
-			var base = win[global].swiper[opt.id];
+			Global.swiper[opt.id] = {};
+			var base = Global.swiper[opt.id];
 
 			//루트설정
 			base.root = $('#' + opt.id);
@@ -5715,7 +5723,7 @@ if (!Object.keys){
 			base.itemtit = base.root.find('.ui-slide-itemtit');
 
 			//옵션저장
-			base.opt = $.extend({}, win[global].swiper.options, opt);
+			base.opt = $.extend({}, Global.swiper.options, opt);
 			
 			//중복실행 방지
 			if (!base.root.is('.load')) {

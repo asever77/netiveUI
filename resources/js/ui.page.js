@@ -220,7 +220,7 @@
             searchAct();
         });
         $('#uiIssueSearch').on('keydown', function(e){
-            if (e.keyCode === netive.option.keys.enter) {
+            if (e.keyCode === netive.state.keys.enter) {
                 searchAct();
             }
         });

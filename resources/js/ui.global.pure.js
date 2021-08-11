@@ -965,6 +965,7 @@
 
 		move(option) {
 			const opt = Object.assign({}, this, option);
+			
 			const psValue = opt.value;
 			const duration = opt.duration ? opt.duration : 600;
 			const callback = opt.callback;
@@ -976,8 +977,6 @@
 			const scrollEle = document.documentElement || window.scrollingElement;
 			const currentY = targetEle.scrollTop;
 			const targetY = targetEle.offsetTop - (adjust || 0);
-
-		
 
 			console.log(currentY, targetY);
 
