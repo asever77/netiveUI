@@ -4316,6 +4316,7 @@ if (!Object.keys){
 				
 			var $tab = $('#' + id);
 			var $btns = $tab.find('> .ui-tab-btns');
+			var $wrap = $btns.find('> .btn-wrap');
 			var $btn = $btns.find('.ui-tab-btn');
 			var $pnls = $tab.find('> .ui-tab-pnls');
 			var $pnl = $pnls.find('> .ui-tab-pnl');
@@ -4401,6 +4402,7 @@ if (!Object.keys){
 			callback ? callback(opt) : '';
 			$btn.data('psl', ps_l).data('len', len);
 
+			
 			Global.scroll.move({ 
 				value: ps_l[current], 
 				target: $btns,
@@ -4484,26 +4486,24 @@ if (!Object.keys){
 			var onePanel = opt.onePanel;
 			var align = opt.align;
 			var callback = opt.callback;
-
 			var n = $btn.eq(current).data('tab');
 
 			$btn.removeClass('selected').eq(current).addClass('selected').focus();
 			
-			console.log(current, n);
 
 			var $btnN = $btns.find('.ui-tab-btn[data-tab="'+ n +'"]');
 			var btnId = $btnN.attr('id');
 
 			if ($btns.hasClass('ui-scrollbar')) {
 				$target = $btns.find('> .ui-scrollbar-item');
-			}
 
-			Global.scroll.move({ 
-				value: ps_l[current], 
-				add : $btn.outerWidth(),
-				selector: $target, 
-				ps: align 
-			});
+				Global.scroll.move({ 
+					value: ps_l[current], 
+					add : $btn.outerWidth(),
+					selector: $target, 
+					ps: align 
+				});
+			}
 
 			if (onePanel === false) {
 				$pnl.attr('aria-hidden', true).removeClass('selected');
@@ -4568,12 +4568,14 @@ if (!Object.keys){
 				});
 			});
 
-			$('.ui-tooltip-close').off('click.tooltip.init').on('click.tooltip.init', function(){
+			$('.ui-tooltip-close').off('click.tt').on('click.tt', function(){
 				$btn.data('view', false);
 				tooltipHide();
 			});
 
-			$btn.off('touchstart.tooltip.init').on('touchstart.tooltip.init', function(){
+			$btn.off('touchstart.tt click.tt').on('touchstart.tt click.tt', function(e){
+				e.preventDefault();
+				console.log(1111111111111);
 				var $this = $(this);
 
 				if (!$this.data('view')){
@@ -4662,13 +4664,14 @@ if (!Object.keys){
 				var $id = $('#' + id);
 				var pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false;
 				var psl = (bw / 2 > (off_l - sl) + (w / 2)) ? true : false;
+				var ww = $(win).outerWidth();
 				var tw = $id.outerWidth();
 				var th = $id.outerHeight();
 				var ps_l; 
 				var ps_r; 
 				var cursorCls = 'ps-';
 					
-				console.log(off_t, off_l, w, h, bw, bh, st, sl, id);
+				
 
 				if (psl) {
 					if (off_l - sl > tw / 2) {
@@ -4710,7 +4713,7 @@ if (!Object.keys){
 					display:'block'
 				}).css({
 					top : pst ? off_t + h + sp : off_t - th - sp,
-					left : psl ? ps_l : ps_r 
+					left : psl ? ps_l : ps_r
 				});
 			}
 		}
