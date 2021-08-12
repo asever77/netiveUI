@@ -519,16 +519,12 @@
             current:0, 
             callback:tabCallback 
         });
-        netive.tab.init({ 
-            id:'exeTab2', 
-            current:2, 
-            onePanel:true, 
-            callback: tabCallback2 
-        });
+
 
         netive.tab.init({ 
             id:'exeTab4', 
             current:0, 
+            onePanel:true, 
             callback: tabCallback2 
         });
         

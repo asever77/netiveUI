@@ -4541,12 +4541,8 @@ if (!Object.keys){
 			var timer;
 			var class_ps = 'ps-ct ps-cb ps-lt ps-lb ps-rt ps-rb';
 
-			
-
 			if (visible !== null) {
-				console.log(visible);
-
-				visible ? tooltipSet(id) : tooltipHide();
+				visible ? tooltipSet({ selector: $('#' + id), fix: true }) : tooltipHide();
 			}
 
 			// $btn
@@ -4555,18 +4551,22 @@ if (!Object.keys){
 			// 	tooltipSet($(this).attr('aria-describedby'));
 			// });
 
-			$btn.off('mouseover.ui focus.ui').on('mouseover.ui focus.ui', function(e){
+			$btn.off('mouseover.tt focus.tt').on('mouseover.tt focus.tt', function(e){
+				var $this = $(this);
 				e.preventDefault();
-				tooltipSet(this);
-			}).off('mouseleave.ui ').on('mouseleave.ui', function(){
-				tooltipHideDelay();
-
-				$('.ui-tooltip').on('mouseover.ui', function(){
-					clearTimeout(timer);
-				}).on('mouseleave.ui', function(e){
-					tooltipHideDelay();
+				tooltipSet({ 
+					selector: $this, 
+					fix: false 
 				});
-			});
+				$btn.off('mouseleave.tt blur.tt').on('mouseleave.tt blur.tt', tooltipHide);
+			})
+				// tooltipHideDelay();
+
+				// $('.ui-tooltip').on('mouseover.ui', function(){
+				// 	clearTimeout(timer);
+				// }).on('mouseleave.ui', function(e){
+				// 	tooltipHideDelay();
+				// });
 
 			$('.ui-tooltip-close').off('click.tt').on('click.tt', function(){
 				$btn.data('view', false);
@@ -4575,27 +4575,31 @@ if (!Object.keys){
 
 			$btn.off('touchstart.tt click.tt').on('touchstart.tt click.tt', function(e){
 				e.preventDefault();
-				console.log(1111111111111);
-				var $this = $(this);
 
+				console.log('click');
+
+				var $this = $(this);
+				
 				if (!$this.data('view')){
 					$this.data('view', true);
-					tooltipHide();
-					tooltipSet(this);
+					//tooltipHide();
+					tooltipSet({ 
+						selector: $this, 
+						fix: true 
+					});
 				} else {
 					$this.data('view', false);
 					tooltipHide();
 				}
 				
-				setTimeout(function(){
-					$(doc).on('click.bdd', function(){
-						$btn.data('view', false);
-						tooltipHide();
-						console.log(22222);
-					});
-				},100);
+				// setTimeout(function(){
+				// 	$(doc).on('click.bdd', function(){
+				// 		$btn.data('view', false);
+				// 		tooltipHide();
+				// 	});
+				// },100);
 				
-
+				
 				// $(doc).off('click.bdd').on('click.bdd', function(e){
 				// 	//dropdown 영역 외에 클릭 시 판단
 				// 	if (!!$('body').data('dropdownOpened')){
@@ -4606,8 +4610,8 @@ if (!Object.keys){
 				// });
 			});
 
-			function tooltipSet(v) {
-				var $t = $(v);
+			function tooltipSet(opt) {
+				var $t = opt.selector;
 				var $win = $(win);
 				var $doc = $(doc);
 				var id = $t.attr('aria-describedby');
@@ -4624,8 +4628,6 @@ if (!Object.keys){
 				
 				if (!!src && !$('#' + id).length) {
 					$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><button class="ui-tooltip-close" type="button"><span class="a11y-hidden">툴팁닫기</span></button><div class="ui-tooltip-arrow"></div>')
-
-					console.log(id, src);
 
 					Global.ajax.init({
 						area: $('#' + id),
@@ -4649,10 +4651,21 @@ if (!Object.keys){
 				
 				function act(){
 					$('#' + id).removeClass(class_ps);	
-					tooltipShow(off_t, off_l, w, h, bw, bh, st, sl, id, false);
+					tooltipShow({
+						off_t:off_t, 
+						off_l:off_l, 
+						w:w, 
+						h:h, 
+						bw:bw, 
+						bh:bh, 
+						st:st, 
+						sl:sl, 
+						id:id
+					});
 				}
 			}
 			function tooltipHide() {
+				console.log(1111111);
 				$(doc).off('click.bdd');
 				$('.ui-tooltip').removeAttr('style').attr('aria-hidden', true).removeClass(class_ps);
 			}
@@ -4660,7 +4673,8 @@ if (!Object.keys){
 				timer = setTimeout(tooltipHide, 100);
 			}
 
-			function tooltipShow(off_t, off_l, w, h, bw, bh, st, sl, id) {
+			function tooltipShow(opt) {
+				var { off_t, off_l, w, h, bw, bh, st, sl, id } = opt;
 				var $id = $('#' + id);
 				var pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false;
 				var psl = (bw / 2 > (off_l - sl) + (w / 2)) ? true : false;
@@ -4670,8 +4684,6 @@ if (!Object.keys){
 				var ps_l; 
 				var ps_r; 
 				var cursorCls = 'ps-';
-					
-				
 
 				if (psl) {
 					if (off_l - sl > tw / 2) {

@@ -7,9 +7,8 @@
 
 <section class="sec-wrap">
 	<h2 class="h-2">Examples</h2>
-	<h3 class="h-3">Base Tab</h3>
 	<div class="box-guide">
-		<div class="ui-tab" id="exeTab1">
+		<div class="ui-tab type-scroll" id="exeTab1">
 			<div class="ui-tab-btns">
 				<div class="btn-wrap">
 					<button type="button" data-tab="0" class="ui-tab-btn"><span>탭1</span></button>
@@ -18,257 +17,215 @@
 				</div>
 			</div>
 			<div class="ui-tab-pnls">
-				
 				<section class="ui-tab-pnl" data-tab="1">
-					<h1 class="ui-tab-tit">탭2</h1>
+					<h3 class="h-3 ui-tab-tit mgt-n">탭2 title</h3>
 					<p>탭2 content</p>
 					<a href="#">더보기</a>
 				</section>
 				<section class="ui-tab-pnl" data-tab="0">
-					<h1 class="ui-tab-tit">탭1</h1>
+					<h3 class="h-3 ui-tab-tit mgt-n">탭1 title</h3>
 					<p>탭1 content</p>
 					<a href="#">더보기</a>
 					
-					<div class="ui-tab" id="exeTab12">
-						<div class="ui-tab-btns">
+					<!-- tab in tab -->
+					<div class="ui-tab mgt-m" id="exeTab4">
+						<div class="ui-tab-btns ui-scrollbar">
 							<div class="btn-wrap">
-								<button type="button" class="ui-tab-btn"><span>탭1-1</span></button>
-								<button type="button" class="ui-tab-btn"><span>탭1-2</span></button>
+								<button type="button" class="ui-tab-btn"><span>주유/정비</span></button>
+								<button type="button" class="ui-tab-btn"><span>외식</span></button>
+								<button type="button" class="ui-tab-btn"><span>편의/쇼핑</span></button>
+								<button type="button" class="ui-tab-btn"><span>영화/도서</span></button>
+								<button type="button" class="ui-tab-btn"><span>보험/금융</span></button>
+								<button type="button" class="ui-tab-btn"><span>게임</span></button>
+								<button type="button" class="ui-tab-btn"><span>문화</span></button>
+								<button type="button" class="ui-tab-btn"><span>여행</span></button>
 							</div>
 						</div>
 						<div class="ui-tab-pnls">
 							<section class="ui-tab-pnl">
-								<h1 class="ui-tab-tit">탭1-1</h1>
-								<p>탭1-1 content</p>
-								<a href="#">더보기</a>
-							</section>
-							<section class="ui-tab-pnl">
-								<h1 class="ui-tab-tit">탭1-2</h1>
-								<p>탭1-2 content</p>
-								<a href="#">더보기</a>
+								<h3 class="h-3 mgt-n ui-tab-tit">주유/정비 내용</h3>
 							</section>
 						</div>
 					</div>
+					<!-- //tab in tab -->
+
 				</section>
 				<section class="ui-tab-pnl" data-tab="2">
-					<h1 class="ui-tab-tit">탭3</h1>
+					<h3 class="h-3 ui-tab-tit mgt-n">탭3 title</h3>
 					<p>탭3 content</p>
 					<a href="#">더보기</a>
 				</section>
 			</div>
 		</div>
 	</div>
-	<h3 class="h-3">One Panel</h3>
-	<div class="box-guide">
-		<p>하나의 패널로 사용.  (onePanel: true)</p>
-		<div class="ui-tab" id="exeTab2">
-			<div class="ui-tab-btns">
-				<div class="btn-wrap">
-					<button type="button" class="ui-tab-btn" ><span>공지사항</span></button>
-					<button type="button" class="ui-tab-btn"><span>이벤트</span></button>
-					<button type="button" class="ui-tab-btn"><span>FAQ</span></button>
-				</div>
-			</div>
-			<div class="ui-tab-pnls">
-				<section class="ui-tab-pnl">
-					<h1 class="ui-tab-tit">공지사항</h1>
-					<a href="#">더보기</a>
-				</section>
-			</div>
-		</div>
-	</div>
-
-	<h3 class="h-3">Scroll Tab</h3>
-	<div class="box-guide">
-		<p>가로 스크롤이 있는 경우 사용. (.type-scroll)</p>
-		<div class="c">
-			<div class="ui-tab type-scroll" id="exeTab4">
-				<div class="ui-tab-btns ui-scrollbar">
-					<div class="btn-wrap">
-						<button type="button" class="ui-tab-btn"><span>주유/정비</span></button>
-						<button type="button" class="ui-tab-btn"><span>외식</span></button>
-						<button type="button" class="ui-tab-btn"><span>편의/쇼핑</span></button>
-						<button type="button" class="ui-tab-btn"><span>영화/도서</span></button>
-						<button type="button" class="ui-tab-btn"><span>보험/금융</span></button>
-						<button type="button" class="ui-tab-btn"><span>게임</span></button>
-						<button type="button" class="ui-tab-btn"><span>문화</span></button>
-						<button type="button" class="ui-tab-btn"><span>여행</span></button>
-					</div>
-				</div>
-				<div class="ui-tab-pnls">
-					<section class="ui-tab-pnl"><h1 class="ui-tab-tit">주유/정비 내용</h1></section>
-					<section class="ui-tab-pnl"><h1 class="ui-tab-tit">외식 내용</h1></section>
-					<section class="ui-tab-pnl"><h1 class="ui-tab-tit">편의/쇼핑 내용</h1></section>
-					<section class="ui-tab-pnl"><h1 class="ui-tab-tit">영화/도서 내용</h1></section>
-					<section class="ui-tab-pnl"><h1 class="ui-tab-tit">보험/금융 내용</h1></section>
-					<section class="ui-tab-pnl"><h1 class="ui-tab-tit">게임 내용</h1></section>
-					<section class="ui-tab-pnl"><h1 class="ui-tab-tit">문화 내용</h1></section>
-					<section class="ui-tab-pnl"><h1 class="ui-tab-tit">여행 내용</h1></section>
-				</div>
-			</div>
-		</div>
-	</div>
 </section>
 
 <section class="sec-wrap">
-	<section class="sec-wrap">
-		<h2 class="h-2">Source Code</h2>
-		<h3 class="h-3">HTML</h3>
-	
+	<h2 class="h-2">Source Code</h2>
+	<h3 class="h-3">HTML</h3>
+
 <pre class="box-code"><code class="html">
-//Base Tab
-<div class="ui-tab" id="exeTab1">
-	<div class="ui-tab-btns">
-		<div class="btn-wrap">
-			<button type="button" data-tabnum="2" class="ui-tab-btn"><span>탭1</span></button>
-			...
-		</div>
-	</div>
-	<div class="ui-tab-pnls">
-		<section class="ui-tab-pnl">
-			<h1 class="ui-tab-tit">탭1</h1>
-
-			
-		</section>
-	</div>
-</div>
-
-//One Panel Tab
-&lt;div <span class="na">class=</span><span class="s">"ui-tab"</span> <span class="na">id=</span><span class="s">"exeTab1"</span>&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-tab-btns"</span>&gt;
-		&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
-			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭1&lt;/i&gt;&lt;/button&gt;
-			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭2&lt;/i&gt;&lt;/button&gt;
+&lt;div class="ui-tab" id="exeTab1"&gt;
+	&lt;div class="ui-tab-btns"&gt;
+		&lt;div class="btn-wrap"&gt;
+			&lt;button type="button" data-tab="0" class="ui-tab-btn"&gt;&lt;span&gt;탭1&lt;/span&gt;&lt;/button&gt;
 			...
 		&lt;/div&gt;
 	&lt;/div&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-tab-pnls"</span>&gt;
-		&lt;section <span class="na">class=</span><span class="s">"ui-tab-pnl"</span>&gt;
-			&lt;h1 <span class="na">class=</span><span class="s">"ui-tab-tit"</span>&gt;탭1&lt;/h1&gt;
-			탭 내용
-		&lt;/section&gt;
-	&lt;/div&gt;
-&lt;/div&gt;
-
-//Scroll Tab
-&lt;div <span class="na">class=</span><span class="s">"ui-tab type-scroll"</span> <span class="na">id=</span><span class="s">"exeTab1"</span>&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-tab-btns"</span>&gt;
-		&lt;div <span class="na">class=</span><span class="s">"btn-wrap"</span>&gt;
-			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭1&lt;/i&gt;&lt;/button&gt;
-			&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">class=</span><span class="s">"ui-tab-btn"</span>&gt;&lt;i&gt;탭2&lt;/i&gt;&lt;/button&gt;
-			...
-		&lt;/div&gt;
-	&lt;/div&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-tab-pnls"</span>&gt;
-		&lt;section <span class="na">class=</span><span class="s">"ui-tab-pnl"</span>&gt;
-			&lt;h1 <span class="na">class=</span><span class="s">"ui-tab-tit"</span>&gt;탭1&lt;/h1&gt;
-			탭1 내용
-		&lt;/section&gt;
-		&lt;section <span class="na">class=</span><span class="s">"ui-tab-pnl"</span>&gt;
-			&lt;h1 <span class="na">class=</span><span class="s">"ui-tab-tit"</span>&gt;탭2&lt;/h1&gt;
-			탭2 내용
+	&lt;div class="ui-tab-pnls"&gt;
+		&lt;section class="ui-tab-pnl" data-tab="0"&gt;
+			&lt;h3 class="ui-tab-tit"&gt;탭2 title&lt;/h3&gt;
 		&lt;/section&gt;
 		...
 	&lt;/div&gt;
 &lt;/div&gt;
-</code>
-</pre>
+</code></pre>
  
 	<h3 class="h-3">CSS</h3>
 <pre class="box-code"><code class="css">
+/* tab */
+.ui-tab {
+	position: relative;
+	margin: 0
+}
 
+.ui-tab-btns.ui-scrollbar .btn-wrap {
+	overflow-x: initial;
+}
+
+.ui-tab-btns .btn-wrap {
+	display: flex;
+	flex-wrap: nowrap;
+	margin: 0;
+	overflow-x: auto;
+}
+
+.ui-tab-btns {
+	position: relative;
+	overflow: hidden;
+	z-index: 1
+}
+
+.ui-tab-btns:after {
+	content: "";
+	display: block;
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 1;
+	clear: both;
+	width: 100%;
+	height: 1px;
+	background: var(--box-line);
+}
+
+.ui-tab-btn {
+	box-sizing: border-box;
+	float: left;
+	position: relative;
+	z-index: 0;
+	flex: 1;
+	white-space: nowrap;
+}
+
+.ui-tab-btn.selected {
+	z-index: 2;
+}
+
+.ui-tab-pnls {
+	box-sizing: border-box;
+	position: relative;
+	width: 100%;
+}
+
+.ui-tab-pnl {
+	box-sizing: border-box;
+	top: 0;
+	left: 0;
+}
+
+.ui-tab-pnl,
+.ui-tab-pnl[aria-hidden='true'] {
+	visibility: hidden;
+	position: absolute;
+	opacity: 0;
+	display: none
+}
+
+.ui-tab-pnl.selected,
+.ui-tab-pnl[aria-hidden='false'] {
+	visibility: visible;
+	position: relative;
+	opacity: 1;
+	z-index: 1;
+	display: block
+}
+
+/* ui-tab :base style */
+.ui-tab-btn {
+	padding: 0 1rem;
+	min-height: 4rem;
+	background: var(--bg-b);
+	border: 1px solid var(--box-line);
+	border-left: 0;
+}
+
+.ui-tab-btn:first-child {
+	border-left: 1px solid var(--box-line);
+}
+
+.ui-tab-btn.selected {
+	background: var(--bg);
+	color: var(--text-700);
+	border-bottom: 1px solid var(--bg);
+}
+
+.ui-tab-pnl {
+	width: 100%;
+	padding: 1rem;
+	background: var(--bg);
+}
+
+/* ui-tab : eff */
+.ui-tab.eff-fade>.ui-tab-pnls>.ui-tab-pnl {
+	animation-name: fadeIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ui-tab.eff-fade>.ui-tab-pnls>.ui-tab-pnl[aria-hidden="false"] {
+	animation-name: fadeIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
 </code>
 </pre>
 
-<h3 class="h-3">Javascript</h3>
+	<h3 class="h-3">Javascript</h3>
 <pre class="box-code"><code class="javascript">
-netive<span class="na">.tab.init</span>({ <span class="s">
+netive.tab.init({
 	id:'exeTab1', 
 	current:0, 
 	onePanel: false,
 	effect: false,
 	align : 'center',
-	callback:function(v){...}</span> 
+	callback:function(v){ 
+		console.log(v); 
+	}
 });
-</code>
-</pre>
-	<div class="tbl-base type-option mgt-s">
-		<table>
-			<caption>옵션 설명</caption>
-			<colgroup>
-				<col class="n1">
-				<col class="n2">
-				<col class="n3">
-				<col class="n4">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">Options</th>
-					<th scope="col">Type</th>
-					<th scope="col">Default</th>
-					<th scope="col">Explanation</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="nec">
-					<th scope="row">id:</th>
-					<td>[string]</td>
-					<td>'name'</td>
-					<td>(필수) ui-tab의 아이디명 기입</td>
-				</tr>
-				<tr>
-					<th scope="row">current:</th>
-					<td>[number]</td>
-					<td>0</td>
-					<td>처음 열린패널 선택</td>
-				</tr>
-				<tr>
-					<th scope="row">onePanel :</th>
-					<td>[boolean]</td>
-					<td>false</td>
-					<td>탭 선택 시 컨텐츠 변경 여부
-						<ul>
-						<li>true : one panel</li>
-						<li>false : multiple panel</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">effect :</th>
-					<td>[string]</td>
-					<td>false</td>
-					<td>class 추가 (eff-fade)</td>
-				</tr>
-				<tr>
-					<th scope="row">align :</th>
-					<td>[string]</td>
-					<td>center</td>
-					<td>가로 스크롤이 있을 경우 선택된 탭의 위치 기준
-						<ul>
-						<li>center : 중앙에 위치</li>
-						<li>left : 좌측에 위치</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">callback:</th>
-					<td>[function]</td>
-					<td>function</td>
-					<td>콜백값으로 아이디와 현재선택 index값</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
 
-<h4 class="h-4">netive.tab.toggle</h4>
-<pre class="box-code"><code class="javascript">
-netive<span class="na">.tab.toggle</span>({ <span class="s">
+netive.tab.toggle({ 
 	id:'exeTab1', 
 	current:0, 
-	callback:function(v){ console.log(v); }</span> 
+	callback:function(v){ 
+		console.log(v); 
+	}
 });
-</code>
-</pre>
+</code></pre>
 
 <div class="tbl-base type-option mgt-s">
 	<table>
@@ -310,17 +267,16 @@ netive<span class="na">.tab.toggle</span>({ <span class="s">
 	</table>
 </div>
 				
-<h4 class="h-4">parameter 값으로 탭 선택방법</h4>
+<h4 class="h-4">URl parameter</h4>
 <pre class="box-code"><code class="html">
 single 선택
-/netiveUI/html/components/tab.html?tab=1 
+?tab=1 
+탭아이디*선택
 
-복수 선택
-/netiveUI/html/components/tab.html?tab=exeTab1*0+exeTab1_2*1+exeTab2*1 
+dual 선택
+?tab=exeTab1*0+exeTab1_2*1+exeTab2*1 
 탭아이디*선택+탭아이디*선택....
 주의 : tab의 아이디를 '*'이 들어가는 이름으로 설정하면 안된다.
-
-</code>
-</pre>
+</code></pre>
 
 </section>		
