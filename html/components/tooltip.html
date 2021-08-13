@@ -30,43 +30,131 @@
 	<h3 class="h-3">HTML</h3>
 
 <pre class="box-code"><code class="html">
-//툴팁 자동생성 하거나 미리 넣어도 됨.
-&lt;div <span class="na">class=</span><span class="s">"ui-tooltip"</span> <span class="na">id=</span><span class="s">"tt"</span> <span class="na">role=</span><span class="s">"tooltip"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span>&gt;
-	....
-&lt;/div&gt;
+<a href="#tt" aria-describedby="tt" class="ui-tooltip-btn">툴팁</a>
+<div class="ui-tooltip" id="tt" role="tooltip" aria-hidden="true">
+	<div class="ui-tooltip-arrow"></div>
+	...
+</div>
 
-//툴팁 버튼 ajax 로 불러오기
-&lt;a <span class="na">href=</span><span class="s">"#tt"</span> <span class="na">aria-describedby=</span><span class="s">"tt"</span> <span class="na">class=</span><span class="s">"ui-tooltip-btn"</span> <span class="na">data-class=</span><span class="s">"tip-test0"</span> <span class="na">data-src=</span><span class="s">"/netiveUI/html/Components/tooltip_ajax.html"</span>&gt;tooltip&lt;/a&gt; 
-&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">aria-describedby=</span><span class="s">"tt"</span> <span class="na">class=</span><span class="s">"ui-tooltip-btn"</span> <span class="na">data-class=</span><span class="s">"tip-test0"</span> <span class="na">data-src=</span><span class="s">"/netiveUI/html/Components/tooltip_ajax.html"</span>&gt;tooltip&lt;/button&gt; 
+<button type="button" aria-describedby="tt2" class="ui-tooltip-btn" data-src="/netiveUI/html/components/tooltip_ajax2.html">툴팁 설명</button>
+</code></pre>				
 
-//툴팁 버튼 
-&lt;a <span class="na">href=</span><span class="s">"#tt"</span> <span class="na">aria-describedby=</span><span class="s">"tt"</span> <span class="na">class=</span><span class="s">"ui-tooltip-btn"</span> <span class="na">data-class=</span><span class="s">"tip-test0"</span>&gt;tooltip&lt;/a&gt; 
-&lt;button <span class="na">type=</span><span class="s">"button"</span> <span class="na">aria-describedby=</span><span class="s">"tt"</span> <span class="na">class=</span><span class="s">"ui-tooltip-btn"</span> <span class="na">data-class=</span><span class="s">"tip-test0"</span>&gt;tooltip&lt;/button&gt; 
-</code>
-</pre>				
-
-<h3 class="h-3">CSS</h3>
+	<h3 class="h-3">CSS</h3>
 <pre class="box-code"><code class="css">
-.ui-tooltip {display:none; position:absolute; z-index:200; font-size:11px; border:1px solid #555; padding:10px; background:#fff; box-shadow:0 2px 10px rgba(0,0,0,0.3)}
-.ui-tooltip-btn {cursor:help;}
-button.ui-tooltip-btn {position:relative; width:14px; height:14px; border-radius:7px; border:1px solid #222; background:#fff; color:transparent; overflow:hidden; font-size:xx-small;}
-button.ui-tooltip-btn:after {content:"?"; position:absolute; top:-1px; left:0; display:block; width:100%; height:100%; font-size:10px; color:#222; font-weight:700}
+.ui-tooltip {
+	display: none;
+	position: absolute;
+	z-index: 200;
+	font-size: 11px;
+	border: 1px solid #555;
+	padding: 10px;
+	background: #fff;
+	opacity: 0;
+	box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3)
+}
+
+.ui-tooltip[class*="ps-"] {
+	transition: opacity 0 ease-in;
+}
+
+.ui-tooltip.hover {
+	z-index: 299;
+}
+
+.ui-tooltip.fix {
+	display: block !important;
+}
+
+.ui-tooltip-btn {
+	cursor: help;
+}
+
+button.ui-tooltip-btn {
+	position: relative;
+	width: 14px;
+	height: 14px;
+	border-radius: 7px;
+	border: 1px solid #222;
+	background: #fff;
+	color: transparent;
+	overflow: hidden;
+	font-size: xx-small;
+}
+
+button.ui-tooltip-btn:after {
+	content: "?";
+	position: absolute;
+	top: -1px;
+	left: 0;
+	display: block;
+	width: 100%;
+	height: 100%;
+	font-size: 10px;
+	color: #222;
+	font-weight: 700
+}
+
 .ui-tooltip.ps-ct .ui-tooltip-arrow,
 .ui-tooltip.ps-cb .ui-tooltip-arrow,
 .ui-tooltip.ps-lt .ui-tooltip-arrow,
 .ui-tooltip.ps-lb .ui-tooltip-arrow,
 .ui-tooltip.ps-rt .ui-tooltip-arrow,
-.ui-tooltip.ps-rb .ui-tooltip-arrow {content:""; position:absolute; display:block; width:10px; height:10px; background:#fff; border-top:1px solid #222; border-right:1px solid #222}
-.ui-tooltip.ps-ct .ui-tooltip-arrow {left:50%; bottom:-6px; transform:rotate(135deg); margin-left:-5px}
-.ui-tooltip.ps-lt .ui-tooltip-arrow {left:0; bottom:-6px; transform:rotate(135deg); margin-left:10px}
-.ui-tooltip.ps-rt .ui-tooltip-arrow {right:0; bottom:-6px; transform:rotate(135deg); margin-right:10px}
-.ui-tooltip.ps-cb .ui-tooltip-arrow {left:50%; top:-6px; transform:rotate(-45deg); margin-left:-5px}
-.ui-tooltip.ps-lb .ui-tooltip-arrow {left:0; top:-6px; transform:rotate(-45deg); margin-left:10px}
-.ui-tooltip.ps-rb .ui-tooltip-arrow {right:0; top:-6px; transform:rotate(-45deg); margin-right:10px}
+.ui-tooltip.ps-rb .ui-tooltip-arrow {
+	content: "";
+	position: absolute;
+	display: block;
+	width: 10px;
+	height: 10px;
+	background: #fff;
+	border-top: 1px solid #222;
+	border-right: 1px solid #222
+}
+
+.ui-tooltip.ps-ct .ui-tooltip-arrow {
+	left: 50%;
+	bottom: -6px;
+	transform: rotate(135deg);
+	margin-left: -5px
+}
+
+.ui-tooltip.ps-lt .ui-tooltip-arrow {
+	left: 0;
+	bottom: -6px;
+	transform: rotate(135deg);
+	margin-left: 10px
+}
+
+.ui-tooltip.ps-rt .ui-tooltip-arrow {
+	right: 0;
+	bottom: -6px;
+	transform: rotate(135deg);
+	margin-right: 10px
+}
+
+.ui-tooltip.ps-cb .ui-tooltip-arrow {
+	left: 50%;
+	top: -6px;
+	transform: rotate(-45deg);
+	margin-left: -5px
+}
+
+.ui-tooltip.ps-lb .ui-tooltip-arrow {
+	left: 0;
+	top: -6px;
+	transform: rotate(-45deg);
+	margin-left: 10px
+}
+
+.ui-tooltip.ps-rb .ui-tooltip-arrow {
+	right: 0;
+	top: -6px;
+	transform: rotate(-45deg);
+	margin-right: 10px
+}
 </code>
 </pre>
 
-<h3 class="h-3">Javascript</h3>
+	<h3 class="h-3">Javascript</h3>
 <pre class="box-code"><code class="javascript">
 netive.tooltip.init();
 </code></pre>

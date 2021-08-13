@@ -4576,19 +4576,21 @@ if (!Object.keys){
 					tooltipShow({ 
 						selector: $this
 					});
+
+					setTimeout(function(){
+						$(doc).off('click.tt').on('click.tt', function(){
+							console.log('body');
+							$('.ui-tooltip-btn').data('view', false).data('fix', false);
+							tooltipHide(true);
+						});
+					},100);
 				} else {
 					//hide
 					$this.data('view', false).data('fix', false);
 					tooltipHide();
 				}
 				
-				setTimeout(function(){
-					$(doc).off('click.tt').on('click.tt', function(){
-						console.log('body');
-						$('.ui-tooltip-btn').data('view', false).data('fix', false);
-						tooltipHide(true);
-					});
-				},100);
+				
 			});
 
 			function tooltipShow(opt) {
