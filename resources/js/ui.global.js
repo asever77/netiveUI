@@ -4535,7 +4535,6 @@ if (!Object.keys){
 			var id = opt.id ? $tip.attr('id') : '';
 			var sp = 4;
 			var ps = opt.ps;
-			var timer;
 			var class_ps = 'ps-ct ps-cb ps-lt ps-lb ps-rt ps-rb';
 
 			if (visible !== null) {
@@ -4583,13 +4582,13 @@ if (!Object.keys){
 					tooltipHide();
 				}
 				
-				// setTimeout(function(){
-				// 	$(doc).on('click.tt', function(){
-				// 		console.log('body');
-				// 		$('.ui-tooltip-btn').data('view', false).data('fix', false);
-				// 		tooltipHide(true);
-				// 	});
-				// },100);
+				setTimeout(function(){
+					$(doc).off('click.tt').on('click.tt', function(){
+						console.log('body');
+						$('.ui-tooltip-btn').data('view', false).data('fix', false);
+						tooltipHide(true);
+					});
+				},100);
 			});
 
 			function tooltipShow(opt) {
@@ -4685,8 +4684,9 @@ if (!Object.keys){
 			}
 
 			function tooltipHide(v) {
-				console.log(v);
+				
 				if (v === true) {
+					console.log('back');
 					$(doc).off('click.tt');
 				}
 
