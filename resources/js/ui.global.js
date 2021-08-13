@@ -4528,10 +4528,7 @@ if (!Object.keys){
 			ps: false
 		},
 		init: function(opt) {
-			var opt = opt === undefined ? {} : opt;
-
-			opt = $.extend(true, {}, Global.tooltip.options, opt);
-
+			var opt = opt = $.extend(true, {}, Global.tooltip.options, opt);
 			var $btn = $('.ui-tooltip-btn');
 			var $tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false;
 			var visible = opt.visible;
@@ -4542,81 +4539,66 @@ if (!Object.keys){
 			var class_ps = 'ps-ct ps-cb ps-lt ps-lb ps-rt ps-rb';
 
 			if (visible !== null) {
-				visible ? tooltipSet({ selector: $('#' + id), fix: true }) : tooltipHide();
+				visible ? tooltipShow({ selector: $('#' + id) }) : tooltipHide();
 			}
 
-			// $btn
-			// .on('click', function(e){
-			// 	e.preventDefault();
-			// 	tooltipSet($(this).attr('aria-describedby'));
-			// });
-
 			$btn.off('mouseover.tt focus.tt').on('mouseover.tt focus.tt', function(e){
-				var $this = $(this);
 				e.preventDefault();
-				tooltipSet({ 
-					selector: $this, 
-					fix: false 
-				});
-				$btn.off('mouseleave.tt blur.tt').on('mouseleave.tt blur.tt', tooltipHide);
-			})
-				// tooltipHideDelay();
 
-				// $('.ui-tooltip').on('mouseover.ui', function(){
-				// 	clearTimeout(timer);
-				// }).on('mouseleave.ui', function(e){
-				// 	tooltipHideDelay();
-				// });
+				var $this = $(this);
+				var id = $this.attr('aria-describedby');
+				
+				$('#'+ id).addClass('hover');
+
+				if (!$this.data('fix')) {
+					tooltipShow({ 
+						selector: $this,
+						hover: true 
+					});
+					$btn.off('mouseleave.tt blur.tt').on('mouseleave.tt blur.tt', tooltipHide);
+				} 
+			});
 
 			$('.ui-tooltip-close').off('click.tt').on('click.tt', function(){
 				$btn.data('view', false);
 				tooltipHide();
 			});
 
-			$btn.off('touchstart.tt click.tt').on('touchstart.tt click.tt', function(e){
+			$btn.off('click.tt').on('click.tt', function(e){
 				e.preventDefault();
 
-				console.log('click');
-
 				var $this = $(this);
-				
+
 				if (!$this.data('view')){
-					$this.data('view', true);
-					//tooltipHide();
-					tooltipSet({ 
-						selector: $this, 
-						fix: true 
+					$('.ui-tooltip-btn').data('fix', false).data('view', false);
+					//show
+					$this.data('view', true).data('fix', true);
+					tooltipHide();
+					tooltipShow({ 
+						selector: $this
 					});
 				} else {
-					$this.data('view', false);
+					//hide
+					$this.data('view', false).data('fix', false);
 					tooltipHide();
 				}
 				
 				// setTimeout(function(){
-				// 	$(doc).on('click.bdd', function(){
-				// 		$btn.data('view', false);
-				// 		tooltipHide();
+				// 	$(doc).on('click.tt', function(){
+				// 		console.log('body');
+				// 		$('.ui-tooltip-btn').data('view', false).data('fix', false);
+				// 		tooltipHide(true);
 				// 	});
 				// },100);
-				
-				
-				// $(doc).off('click.bdd').on('click.bdd', function(e){
-				// 	//dropdown 영역 외에 클릭 시 판단
-				// 	if (!!$('body').data('dropdownOpened')){
-				// 		if ($('.ui-tooltip').has(e.target).length < 1) {
-				// 			tooltipHide();
-				// 		}
-				// 	}
-				// });
 			});
 
-			function tooltipSet(opt) {
+			function tooltipShow(opt) {
 				var $t = opt.selector;
 				var $win = $(win);
 				var $doc = $(doc);
 				var id = $t.attr('aria-describedby');
 				var src = $t.data('src');
-
+				var fix = opt.fix;
 				var off_t = $t.offset().top;
 				var off_l =$t.offset().left;
 				var w = $t.outerWidth();
@@ -4626,8 +4608,10 @@ if (!Object.keys){
 				var st = $doc.scrollTop();
 				var sl = $doc.scrollLeft();
 				
+				//clearTimeout(timer);
+
 				if (!!src && !$('#' + id).length) {
-					$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><button class="ui-tooltip-close" type="button"><span class="a11y-hidden">툴팁닫기</span></button><div class="ui-tooltip-arrow"></div>')
+					$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><div class="ui-tooltip-arrow"></div>')
 
 					Global.ajax.init({
 						area: $('#' + id),
@@ -4637,97 +4621,90 @@ if (!Object.keys){
 							act();
 						}
 					});
-					// netive.uiAjax({
-					// 	id: $('#' + id),
-					// 	url: src,
-					// 	add: true,
-					// 	callback: function(){
-					// 		act();
-					// 	}
-					// });
 				} else {
 					act();
 				}
 				
 				function act(){
-					$('#' + id).removeClass(class_ps);	
-					tooltipShow({
-						off_t:off_t, 
-						off_l:off_l, 
-						w:w, 
-						h:h, 
-						bw:bw, 
-						bh:bh, 
-						st:st, 
-						sl:sl, 
-						id:id
+					var $id = $('#' + id);
+					var pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false;
+					var psl = (bw / 2 > (off_l - sl) + (w / 2)) ? true : false;
+					var ww = $(win).outerWidth();
+					var tw = $id.outerWidth();
+					var th = $id.outerHeight();
+					var ps_l; 
+					var ps_r; 
+					var cursorCls = 'ps-';
+
+					$id.removeClass(class_ps);	
+
+					if (psl) {
+						if (off_l - sl > tw / 2) {
+							cursorCls += 'c';
+							ps_l = off_l - (tw / 2) + (w / 2);
+						} else {
+							cursorCls += 'l';
+							ps_l = off_l;
+						}
+					} else {
+						if (bw - (off_l - sl + w) > tw / 2) {
+							cursorCls += 'c';
+							ps_r = Math.ceil(off_l) - (tw / 2) + (w / 2);
+						} else {
+							cursorCls += 'r';
+							ps_r = off_l - tw + w;
+						}
+					}
+
+					ps ? cursorCls = 'ps-l' : '';
+					ps ? ps_l = off_l : '';
+					ps ? psl = true : '';
+					pst ? cursorCls += 'b' : cursorCls += 't';
+
+					if (!!$id.attr('modal')) {
+						if (!Global.browser.oldie) {
+							ps_l = ps_l;
+							ps_r = ps_r;
+						}
+
+						Global.browser.ie ? '' : off_t = off_t;
+					}
+
+					if (!!$id.closest('.type-fixed-bottom').length) {
+						off_t = off_t - $('ui-modal-tit').outerHeight();
+					}
+
+					$id.addClass(cursorCls).attr('aria-hidden', false).css({ 
+						display: 'block'
+					}).css({
+						opacity: 1,
+						top: pst ? off_t + h + sp : off_t - th - sp,
+						left: psl ? ps_l : ps_r
 					});
 				}
 			}
-			function tooltipHide() {
-				console.log(1111111);
-				$(doc).off('click.bdd');
-				$('.ui-tooltip').removeAttr('style').attr('aria-hidden', true).removeClass(class_ps);
-			}
-			function tooltipHideDelay(){
-				timer = setTimeout(tooltipHide, 100);
-			}
 
-			function tooltipShow(opt) {
-				var { off_t, off_l, w, h, bw, bh, st, sl, id } = opt;
-				var $id = $('#' + id);
-				var pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false;
-				var psl = (bw / 2 > (off_l - sl) + (w / 2)) ? true : false;
-				var ww = $(win).outerWidth();
-				var tw = $id.outerWidth();
-				var th = $id.outerHeight();
-				var ps_l; 
-				var ps_r; 
-				var cursorCls = 'ps-';
-
-				if (psl) {
-					if (off_l - sl > tw / 2) {
-						cursorCls += 'c';
-						ps_l = off_l - (tw / 2) + (w / 2);
-					} else {
-						cursorCls += 'l';
-						ps_l = off_l;
-					}
-				} else {
-					if (bw - (off_l - sl + w) > tw / 2) {
-						cursorCls += 'c';
-						ps_r = Math.ceil(off_l) - (tw / 2) + (w / 2);
-					} else {
-						cursorCls += 'r';
-						ps_r = off_l - tw + w;
-					}
+			function tooltipHide(v) {
+				console.log(v);
+				if (v === true) {
+					$(doc).off('click.tt');
 				}
 
-				ps ? cursorCls = 'ps-l' : '';
-				ps ? ps_l = off_l : '';
-				ps ? psl = true : '';
-				pst ? cursorCls += 'b' : cursorCls += 't';
+				for (var i = 0, len = $('.ui-tooltip').length; i < len; i++) {
+					var $this = $('.ui-tooltip').eq(i);
+					var id = $this.attr('id');
+					var fix = $('.ui-tooltip-btn[aria-describedby="'+ id +'"]').data('fix');
 
-				if (!!$id.attr('modal')) {
-					if (!Global.browser.oldie) {
-						ps_l = ps_l;
-						ps_r = ps_r;
+					$('#' + id).removeClass('hover');
+
+					if (!fix) {
+						$this.css('opacity', 0);
+						$this.removeAttr('style').attr('aria-hidden', true).removeClass(class_ps);
 					}
-
-					Global.browser.ie ? '' : off_t = off_t;
 				}
-
-				if (!!$id.closest('.type-fixed-bottom').length) {
-					off_t = off_t - $('ui-modal-tit').outerHeight();
-				}
-
-				$id.addClass(cursorCls).attr('aria-hidden', false).css({ 
-					display:'block'
-				}).css({
-					top : pst ? off_t + h + sp : off_t - th - sp,
-					left : psl ? ps_l : ps_r
-				});
 			}
+
+			
 		}
 	}
 
