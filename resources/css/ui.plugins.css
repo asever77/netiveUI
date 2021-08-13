@@ -1,111 +1,330 @@
 @charset "utf-8";
 
 @keyframes fadeIn {
-    0% {opacity:0;}
-    100% {opacity:1;}
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
+
 @keyframes fadeOut {
-    0% {opacity:1;}
-    100% {opacity:0;}
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
 }
 
 @keyframes scaleIn {
-    0% {opacity:0; transform: scale(0.9);}
-    100% {opacity:1; transform: scale(1);}
+    0% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
+
 @keyframes scaleOut {
-    0% {opacity:1; transform: scale(1);}
-    100% {opacity:0; transform: scale(0.9);}
+    0% {
+        opacity: 1;
+        transform: scale(1);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(0.9);
+    }
 }
 
 @keyframes slideDownIn {
-    0% {display:block; opacity:0;}
-    1% {top:-100px; opacity:0;}
-    100% {top:0; opacity:1;}
+    0% {
+        display: block;
+        opacity: 0;
+    }
+
+    1% {
+        top: -100px;
+        opacity: 0;
+    }
+
+    100% {
+        top: 0;
+        opacity: 1;
+    }
 }
+
 @keyframes slideDownOut {
-    0% {top:0; opacity:1;}
-    99% {top:-100px; opacity:0;}
-    100% {display:none; opacity:0;}
+    0% {
+        top: 0;
+        opacity: 1;
+    }
+
+    99% {
+        top: -100px;
+        opacity: 0;
+    }
+
+    100% {
+        display: none;
+        opacity: 0;
+    }
 }
 
 @keyframes slideUpIn {
-    0% {display:block; opacity:0; z-index: 0; top:auto;}
-    1% {bottom:-100px; opacity:0; top:auto;}
-    100% {bottom:0; opacity:1; top:auto;}
+    0% {
+        display: block;
+        opacity: 0;
+        z-index: 0;
+        top: auto;
+    }
+
+    1% {
+        bottom: -100px;
+        opacity: 0;
+        top: auto;
+    }
+
+    100% {
+        bottom: 0;
+        opacity: 1;
+        top: auto;
+    }
 }
+
 @keyframes slideUpOut {
-    0% {bottom:0; opacity:1;}
-    99% {bottom:-100px; opacity:0;}
-    100% {display:none; z-index: -1;}
+    0% {
+        bottom: 0;
+        opacity: 1;
+    }
+
+    99% {
+        bottom: -100px;
+        opacity: 0;
+    }
+
+    100% {
+        display: none;
+        z-index: -1;
+    }
 }
 
 @keyframes slideLeftIn {
-    0% {display:block;}
-    1% {left:-100px; opacity:0;}
-    100% {left:0; opacity:1;}
+    0% {
+        display: block;
+    }
+
+    1% {
+        left: -100px;
+        opacity: 0;
+    }
+
+    100% {
+        left: 0;
+        opacity: 1;
+    }
 }
+
 @keyframes slideLeftOut {
-    0% {left:0; opacity:1;}
-    99% {left:-100px; opacity:0;}
-    100% {display:none;}
+    0% {
+        left: 0;
+        opacity: 1;
+    }
+
+    99% {
+        left: -100px;
+        opacity: 0;
+    }
+
+    100% {
+        display: none;
+    }
 }
 
 @keyframes slideRightIn {
-    0% {display:block;}
-    1% {right:-100px; opacity:0;}
-    100% {right:0; opacity:1;}
+    0% {
+        display: block;
+    }
+
+    1% {
+        right: -100px;
+        opacity: 0;
+    }
+
+    100% {
+        right: 0;
+        opacity: 1;
+    }
 }
+
 @keyframes slideRightOut {
-    0% {right:0; opacity:1;}
-    99% {right:-100px; opacity:0;}
-    100% {display:none;}
+    0% {
+        right: 0;
+        opacity: 1;
+    }
+
+    99% {
+        right: -100px;
+        opacity: 0;
+    }
+
+    100% {
+        display: none;
+    }
 }
 
 @keyframes clockAni {
-    0% {transform:rotate(0)}
-    100% {transform:rotate(360deg)}
+    0% {
+        transform: rotate(0)
+    }
+
+    100% {
+        transform: rotate(360deg)
+    }
 }
+
 @keyframes orbitLeftAni {
-    0% {left:0; z-index:2; opacity:1;}
-    50% {left:calc(100% - 20px); z-index:2; opacity:1;}
-    51% {left:calc(100% - 20px); z-index:1; opacity:1;}
-    100% {left:0; z-index:1; opacity:1;}
+    0% {
+        left: 0;
+        z-index: 2;
+        opacity: 1;
+    }
+
+    50% {
+        left: calc(100% - 20px);
+        z-index: 2;
+        opacity: 1;
+    }
+
+    51% {
+        left: calc(100% - 20px);
+        z-index: 1;
+        opacity: 1;
+    }
+
+    100% {
+        left: 0;
+        z-index: 1;
+        opacity: 1;
+    }
 }
+
 @keyframes orbitRightAni {
-    0% {left:calc(100% - 20px); z-index:1; opacity:1;}
-    50% {left:0; z-index:1; opacity:1;}
-    51% {left:0; z-index:2; opacity:1;}
-    100% {left:calc(100% - 20px); z-index:2; opacity:1;}
+    0% {
+        left: calc(100% - 20px);
+        z-index: 1;
+        opacity: 1;
+    }
+
+    50% {
+        left: 0;
+        z-index: 1;
+        opacity: 1;
+    }
+
+    51% {
+        left: 0;
+        z-index: 2;
+        opacity: 1;
+    }
+
+    100% {
+        left: calc(100% - 20px);
+        z-index: 2;
+        opacity: 1;
+    }
 }
+
 @keyframes orbitScaleShowAni {
-    0% {width:0; height:0;;}
-    100% {width:150vmax; height:150vmax;}
+    0% {
+        width: 0;
+        height: 0;
+        ;
+    }
+
+    100% {
+        width: 150vmax;
+        height: 150vmax;
+    }
 }
+
 @keyframes orbitScaleHideAni {
-    0% {width:150vmax; height:150vmax;}
-    100% {width:0; height:0;;}
-    
+    0% {
+        width: 150vmax;
+        height: 150vmax;
+    }
+
+    100% {
+        width: 0;
+        height: 0;
+        ;
+    }
+
 }
 
 @keyframes fadeInTop {
-    0% {opacity:0; bottom:-40px;}
-    100% {opacity:1; bottom:0;}
+    0% {
+        opacity: 0;
+        bottom: -40px;
+    }
+
+    100% {
+        opacity: 1;
+        bottom: 0;
+    }
 }
+
 @keyframes fadeOutTop {
-    0% {opacity:1; bottom:0;}
-    100% {opacity:0; bottom:-40px;}
+    0% {
+        opacity: 1;
+        bottom: 0;
+    }
+
+    100% {
+        opacity: 0;
+        bottom: -40px;
+    }
 }
 
 @keyframes datepickerUp {
-    0% {display:block; z-index: 0;}
-    1% {bottom:-100vw; opacity:0;}
-    100% {bottom:0; opacity:1;}
+    0% {
+        display: block;
+        z-index: 0;
+    }
+
+    1% {
+        bottom: -100vw;
+        opacity: 0;
+    }
+
+    100% {
+        bottom: 0;
+        opacity: 1;
+    }
 }
+
 @keyframes datepickerDown {
-    0% {bottom:0; opacity:1;}
-    99% {bottom:-100vw; opacity:0;}
-    100% {display:none; z-index: -1;}
+    0% {
+        bottom: 0;
+        opacity: 1;
+    }
+
+    99% {
+        bottom: -100vw;
+        opacity: 0;
+    }
+
+    100% {
+        display: none;
+        z-index: -1;
+    }
 }
 
 /* ui-ajax */
@@ -295,7 +514,7 @@
     top: 50%;
     left: 50%;
     margin: -40px 0 0 -40px;
-    z-index:1;
+    z-index: 1;
 }
 
 .ui-loading.orbit .ui-loading-wrap:after {
@@ -725,7 +944,7 @@ a.ui-acco-btn:after {
 .ui-floating-wrap {
     width: 100%;
 }
- 
+
 .ui-floating-range {
     position: relative;
 }
@@ -757,11 +976,25 @@ a.ui-acco-btn:after {
     padding-right: 1.7rem;
 }
 
-.ui-modal.n1 {z-index: 201;}
-.ui-modal.n2 {z-index: 202;}
-.ui-modal.n3 {z-index: 203;}
-.ui-modal.n4 {z-index: 204;}
-.ui-modal.n5 {z-index: 205;}
+.ui-modal.n1 {
+    z-index: 201;
+}
+
+.ui-modal.n2 {
+    z-index: 202;
+}
+
+.ui-modal.n3 {
+    z-index: 203;
+}
+
+.ui-modal.n4 {
+    z-index: 204;
+}
+
+.ui-modal.n5 {
+    z-index: 205;
+}
 
 .ui-modal {
     display: none;
@@ -775,7 +1008,9 @@ a.ui-acco-btn:after {
     overflow-y: auto;
 }
 
-.ui-modal.ready {display: flex;}
+.ui-modal.ready {
+    display: flex;
+}
 
 .ui-modal.ready.current:after {
     content: "";
@@ -831,8 +1066,13 @@ a.ui-acco-btn:after {
     width: 100%;
 }
 
-.ui-modal.ps-top .ui-modal-wrap {margin-top: 1rem;}
-.ui-modal.ps-bottom .ui-modal-wrap {margin-bottom: 1rem;}
+.ui-modal.ps-top .ui-modal-wrap {
+    margin-top: 1rem;
+}
+
+.ui-modal.ps-bottom .ui-modal-wrap {
+    margin-bottom: 1rem;
+}
 
 .ui-modal.ready.open.current:after {
     animation-name: fadeIn;
@@ -841,6 +1081,7 @@ a.ui-acco-btn:after {
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
+
 .ui-modal.ready.close:after {
     animation-name: fadeOut;
     animation-duration: .2s;
@@ -856,6 +1097,7 @@ a.ui-acco-btn:after {
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
+
 .ui-modal.type-full.close.ps-center .ui-modal-wrap {
     animation-name: slideUpOut;
     animation-duration: .2s;
@@ -872,6 +1114,7 @@ a.ui-acco-btn:after {
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
+
 .ui-modal.close.ps-center .ui-modal-wrap {
     animation-name: scaleOut;
     animation-duration: .2s;
@@ -887,6 +1130,7 @@ a.ui-acco-btn:after {
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
+
 .ui-modal.open.ps-top .ui-modal-wrap {
     animation-name: slideDownIn;
     animation-duration: .2s;
@@ -902,6 +1146,7 @@ a.ui-acco-btn:after {
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
+
 .ui-modal.open.ps-bottom .ui-modal-wrap {
     animation-name: slideUpIn;
     animation-duration: .2s;
@@ -917,6 +1162,7 @@ a.ui-acco-btn:after {
     animation-timing-function: linear;
     animation-fill-mode: forwards;
 }
+
 .ui-modal.open.ps-center.type-system .ui-modal-wrap {
     animation-name: slideDownIn;
     animation-duration: .2s;
@@ -953,7 +1199,7 @@ a.ui-acco-btn:after {
     width: 100%;
     min-height: 4rem;
     background: var(--primary);
-    
+
     padding: .8rem 3.5rem 1.2rem 1.6rem;
     border-bottom: 1px solid #ccc;
 }
@@ -970,7 +1216,7 @@ a.ui-acco-btn:after {
     top: .8rem;
     border: 0;
     font-family: 'Material Icons';
-    color:#fff;
+    color: #fff;
 }
 
 .ui-modal-body {
@@ -995,14 +1241,17 @@ a.ui-acco-btn:after {
 }
 
 .device-mobile .ui-modal-wrap {
-    margin:2rem;
+    margin: 2rem;
 }
-.device-mobile .ui-modal.ps-top .ui-modal-wrap{
-    margin-top:0;
+
+.device-mobile .ui-modal.ps-top .ui-modal-wrap {
+    margin-top: 0;
 }
-.device-mobile .ui-modal.ps-bottom .ui-modal-wrap{
-    margin-bottom:0;
+
+.device-mobile .ui-modal.ps-bottom .ui-modal-wrap {
+    margin-bottom: 0;
 }
+
 .device-mobile .ui-modal.type-full.ps-center {
     justify-content: center;
     align-items: flex-start;
@@ -1035,7 +1284,7 @@ a.ui-acco-btn:after {
 
 .device-mobile .ui-modal.ps-top .ui-modal-wrap,
 .device-mobile .ui-modal.ps-bottom .ui-modal-wrap {
-    margin:0;
+    margin: 0;
 }
 
 .device-mobile .ui-modal.open.ps-top .ui-modal-wrap {
@@ -1245,19 +1494,22 @@ body.ui-print-ing .ui-print {
     border: 1px solid #555;
     padding: 10px;
     background: #fff;
-    opacity:0;
-    /* transition: opacity .2s ease-in; */
+    opacity: 0;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3)
 }
-.ui-tooltip[class*="ps-"]{
+
+.ui-tooltip[class*="ps-"] {
     transition: opacity 0 ease-in;
 }
-.ui-tooltip.hover{
-    z-index:299;
+
+.ui-tooltip.hover {
+    z-index: 299;
 }
-.ui-tooltip.fix{
-    display:block !important;
+
+.ui-tooltip.fix {
+    display: block !important;
 }
+
 .ui-tooltip-btn {
     cursor: help;
 }
@@ -2569,45 +2821,63 @@ td button.today {
 
 /* ui slider */
 .slidecontainer {
-    width: 100%; /* Width of the outside container */
-  }
-  
-  /* The slider itself */
-  .slider {
-    -webkit-appearance: none;  /* Override default CSS styles */
-    appearance: none;
-    width: 100%; /* Full-width */
-    height: 25px; /* Specified height */
-    background: #d3d3d3; /* Grey background */
-    outline: none; /* Remove outline */
-    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
-    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
-    transition: opacity .2s;
-  }
-  
-  /* Mouse-over effects */
-  .slider:hover {
-    opacity: 1; /* Fully shown on mouse-over */
-  }
-  
-  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
-  .slider::-webkit-slider-thumb {
-    -webkit-appearance: none; /* Override default look */
-    appearance: none;
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }
-  
-  .slider::-moz-range-thumb {
-    width: 25px; /* Set a specific slider handle width */
-    height: 25px; /* Slider handle height */
-    background: #04AA6D; /* Green background */
-    cursor: pointer; /* Cursor on hover */
-  }
+    width: 100%;
+    /* Width of the outside container */
+}
 
-  
+/* The slider itself */
+.slider {
+    -webkit-appearance: none;
+    /* Override default CSS styles */
+    appearance: none;
+    width: 100%;
+    /* Full-width */
+    height: 25px;
+    /* Specified height */
+    background: #d3d3d3;
+    /* Grey background */
+    outline: none;
+    /* Remove outline */
+    opacity: 0.7;
+    /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s;
+    /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1;
+    /* Fully shown on mouse-over */
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    /* Override default look */
+    appearance: none;
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #04AA6D;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    /* Set a specific slider handle width */
+    height: 25px;
+    /* Slider handle height */
+    background: #04AA6D;
+    /* Green background */
+    cursor: pointer;
+    /* Cursor on hover */
+}
+
+
 .ui-slider {
     position: relative;
     width: 100%;
@@ -2844,28 +3114,32 @@ td button.today {
 }
 
 /* focus loop */
-[class*="ui-focusloop-"]:focus{
+[class*="ui-focusloop-"]:focus {
     height: auto;
 }
-[class*="ui-focusloop-"]{
-    position:absolute;
-    left:0;
-    width:100%; 
+
+[class*="ui-focusloop-"] {
+    position: absolute;
+    left: 0;
+    width: 100%;
     height: 0;
     overflow: hidden;
 }
-[class*="ui-focusloop-"] span{
+
+[class*="ui-focusloop-"] span {
     display: block;
-    padding:0.5rem 1rem;
-    font-size:1.2rem;
-    background:rgba(0,0,0,0.5);
-    color:#fff;
+    padding: 0.5rem 1rem;
+    font-size: 1.2rem;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
 }
-.ui-focusloop-start{
-    top:0;
+
+.ui-focusloop-start {
+    top: 0;
 }
-.ui-focusloop-end{
-    bottom:0;
+
+.ui-focusloop-end {
+    bottom: 0;
 }
 
 
@@ -2873,169 +3147,169 @@ td button.today {
 
 /* draggable */
 .ui-draggable {
-	position: relative;
-	width: 100%;
-	height: 500px;
-	border: 1px solid rgb(80, 80, 80)
+    position: relative;
+    width: 100%;
+    height: 500px;
+    border: 1px solid rgb(80, 80, 80)
 }
 
 .ui-draggable-item {
-	position: absolute;
-	padding: 10px;
-	background: rgb(36, 36, 36);
-	color: #fff;
-	z-index: 1;
-	width: 50px;
-	height: 50px;
+    position: absolute;
+    padding: 10px;
+    background: rgb(36, 36, 36);
+    color: #fff;
+    z-index: 1;
+    width: 50px;
+    height: 50px;
 }
 
 .ui-draggable-item.n1 {
-	top: 10px;
-	left: 10px
+    top: 10px;
+    left: 10px
 }
 
 .ui-draggable-item.n2 {
-	top: 10px;
-	left: 300px
+    top: 10px;
+    left: 300px
 }
 
 .ui-draggable-item.n3 {
-	top: 10px;
-	left: 500px
+    top: 10px;
+    left: 500px
 }
 
 .ui-draggable-area {
-	position: absolute;
-	padding: 10px;
-	border: 1px solid #000;
-	background: #f2f2f2;
-	text-align: center;
+    position: absolute;
+    padding: 10px;
+    border: 1px solid #000;
+    background: #f2f2f2;
+    text-align: center;
 }
 
 .ui-draggable-area.n1 {
-	bottom: 10px;
-	left: 0;
-	width: 30%;
-	height: 200px
+    bottom: 10px;
+    left: 0;
+    width: 30%;
+    height: 200px
 }
 
 .ui-draggable-area.n2 {
-	bottom: 10px;
-	left: 30%;
-	width: 30%;
-	height: 200px
+    bottom: 10px;
+    left: 30%;
+    width: 30%;
+    height: 200px
 }
 
 .ui-draggable-area.n3 {
-	bottom: 10px;
-	left: 60%;
-	width: 30%;
-	height: 200px
+    bottom: 10px;
+    left: 60%;
+    width: 30%;
+    height: 200px
 }
 
 .ui-draggable.type-line {
-	width: 100%;
-	height: 500px;
-	border: 1px solid #000;
-	position: relative;
+    width: 100%;
+    height: 500px;
+    border: 1px solid #000;
+    position: relative;
 }
 
 .ui-draggable.type-line .ui-draggable-area {
-	position: absolute;
-	width: 10px;
-	height: 10px;
-	background: #fff;
-	border: 1px solid #000;
-	left: auto;
-	width: 50px;
-	height: 50px;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #fff;
+    border: 1px solid #000;
+    left: auto;
+    width: 50px;
+    height: 50px;
 }
 
 .ui-draggable.type-line .ui-draggable-item {
-	position: absolute;
-	width: 10px;
-	height: 10px;
-	background: #000;
-	z-index: 2;
-	width: 50px;
-	height: 50px;
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #000;
+    z-index: 2;
+    width: 50px;
+    height: 50px;
 }
 
 .ui-draggable.type-line .ui-draggable-item.clone {
-	z-index: 0;
-	opacity: .5;
+    z-index: 0;
+    opacity: .5;
 }
 
 .ui-draggable.type-line .ui-draggable-item.n1 {
-	top: 10px;
-	left: 50px
+    top: 10px;
+    left: 50px
 }
 
 .ui-draggable.type-line .ui-draggable-item.n2 {
-	top: 100px;
-	left: 50px
+    top: 100px;
+    left: 50px
 }
 
 .ui-draggable.type-line .ui-draggable-item.n3 {
-	top: 200px;
-	left: 50px
+    top: 200px;
+    left: 50px
 }
 
 .ui-draggable.type-line .ui-draggable-area.n1 {
-	top: 100px;
-	right: 50px
+    top: 100px;
+    right: 50px
 }
 
 .ui-draggable.type-line .ui-draggable-area.n2 {
-	top: 10px;
-	right: 50px
+    top: 10px;
+    right: 50px
 }
 
 .ui-draggable.type-line .ui-draggable-area.n3 {
-	top: 200px;
-	right: 50px
+    top: 200px;
+    right: 50px
 }
 
 .ui-draggable.type-line svg {
-	width: 100%;
-	height: 100%;
-	border: 1px solid #000;
-	position: absolute;
-	top: 0;
-	left: 0;
+    width: 100%;
+    height: 100%;
+    border: 1px solid #000;
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 
 .ui-draggable.type-line svg line {
-	stroke: black;
-	stroke-linecap: round
+    stroke: black;
+    stroke-linecap: round
 }
 
 [draggable="0"] #drag4::after {
-	content: "0";
-	position: absolute;
-	width: 100%;
-	height: 100;
-	font-size: 150px;
-	text-align: center;
-	opacity: 0.4;
+    content: "0";
+    position: absolute;
+    width: 100%;
+    height: 100;
+    font-size: 150px;
+    text-align: center;
+    opacity: 0.4;
 }
 
 [draggable="1"] #drag4::after {
-	content: "1";
-	position: absolute;
-	width: 100%;
-	height: 100;
-	font-size: 150px;
-	text-align: center;
-	opacity: 0.4;
+    content: "1";
+    position: absolute;
+    width: 100%;
+    height: 100;
+    font-size: 150px;
+    text-align: center;
+    opacity: 0.4;
 }
 
 [draggable="2"] #drag4::after {
-	content: "2";
-	position: absolute;
-	width: 100%;
-	height: 100;
-	font-size: 150px;
-	text-align: center;
-	opacity: 0.4;
+    content: "2";
+    position: absolute;
+    width: 100%;
+    height: 100;
+    font-size: 150px;
+    text-align: center;
+    opacity: 0.4;
 }
