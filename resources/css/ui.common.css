@@ -2777,6 +2777,7 @@ dl[class*="bul-"]>dt {
 }
 
 @media all and (min-width:905px) {
+	
 	.box-guide .fx-item>b:nth-child(3) {
 		color: orangered;
 	}

@@ -498,8 +498,8 @@
     }
 
     netive.page.pageCountNumber = function(){
-        netive.count.step({ id:'exeCount1', value: 504025 });
-        netive.count.slot({ id:'exeCount2', value: 1965040.25 });
+        netive.count.step({ id:'exeCount1', value: 12345.678 });
+        netive.count.slot({ id:'exeCount2', value: 12345.678 });
     }
 
     netive.page.pageDropdown = function(){
