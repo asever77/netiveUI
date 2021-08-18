@@ -2,7 +2,7 @@
 script
 ```
 samWidth = (org, target) => {
-		target.forEach( el => el.style.width = org.offsetWidth + 'px');
+	target.forEach(el => el.style.width = org.offsetWidth + 'px');
 }
 ```
 
