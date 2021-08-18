@@ -8,7 +8,7 @@ samWidth = (org, target) => {
 
 실행
 ```
-netive.samWidth(document.querySelector('.aa'), document.querySelectorAll('.bb'));
+samWidth(document.querySelector('.aa'), document.querySelectorAll('.bb'));
 ```
 
 예제
