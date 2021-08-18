@@ -4516,7 +4516,9 @@ if (!Object.keys){
 		}
 	}
 
-	
+	Global.samWidth = (org, target) => {
+		target.forEach( el => el.style.width = org.offsetWidth + 'px');
+	}
 	/* ------------------------
 	* name : tooltip
 	* date : 2020-06-15
@@ -4538,6 +4540,7 @@ if (!Object.keys){
 			var class_ps = 'ps-ct ps-cb ps-lt ps-lb ps-rt ps-rb';
 
 			if (visible !== null) {
+				console.log(visible, 1);
 				visible ? tooltipShow({ selector: $('#' + id) }) : tooltipHide();
 			}
 
@@ -4568,27 +4571,34 @@ if (!Object.keys){
 
 				var $this = $(this);
 
-				if (!$this.data('view')){
-					$('.ui-tooltip-btn').data('fix', false).data('view', false);
-					//show
+				//if (!$this.data('view')){
+
+				$('.ui-tooltip-btn').data('fix', false).data('view', false);
+				//show
+				
+				tooltipHide();
+				setTimeout(function(){
 					$this.data('view', true).data('fix', true);
-					tooltipHide();
 					tooltipShow({ 
 						selector: $this
 					});
-
-					setTimeout(function(){
+				},0);
+				
+				//if (!$('html').data('tooltip')) {
+					//setTimeout(function(){
+						$('html').data('tooltip', true);
 						$(doc).off('click.tt').on('click.tt', function(){
 							console.log('body');
 							$('.ui-tooltip-btn').data('view', false).data('fix', false);
 							tooltipHide(true);
 						});
-					},100);
-				} else {
-					//hide
-					$this.data('view', false).data('fix', false);
-					tooltipHide();
-				}
+					//},100);
+				//}
+					
+				//} else {
+					// $this.data('view', false).data('fix', false);
+					// tooltipHide();
+				//}
 				
 				
 			});
@@ -4626,6 +4636,7 @@ if (!Object.keys){
 					act();
 				}
 				
+
 				function act(){
 					var $id = $('#' + id);
 					var pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false;
@@ -4675,13 +4686,21 @@ if (!Object.keys){
 						off_t = off_t - $('ui-modal-tit').outerHeight();
 					}
 
+					console.log('act');
 					$id.addClass(cursorCls).attr('aria-hidden', false).css({ 
 						display: 'block'
 					}).css({
 						opacity: 1,
 						top: pst ? off_t + h + sp : off_t - th - sp,
-						left: psl ? ps_l : ps_r
+						left: psl ? ps_l : ps_r < 0 ? 10 : ps_r
 					});
+
+					if (psl) {
+
+					} else {
+						$('#'+ id).find('.ui-tooltip-arrow').css('right',  ((ps_r * -1) + 10) + 'px');
+					}
+
 				}
 			}
 
@@ -4689,8 +4708,11 @@ if (!Object.keys){
 				
 				if (v === true) {
 					console.log('back');
+					$('html').data('tooltip', false);
 					$(doc).off('click.tt');
 				}
+
+				
 
 				for (var i = 0, len = $('.ui-tooltip').length; i < len; i++) {
 					var $this = $('.ui-tooltip').eq(i);
