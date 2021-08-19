@@ -2097,7 +2097,7 @@ a.btn-base-l {
 [data-current="11"] .ui-fixtd-n11 {
 	display: table-cell
 }
-
+  
 /* bullet */
 .div-wrap>[class*="bul-"]:first-child {
 	margin-top: 0;
