@@ -25,11 +25,6 @@
     100% {left:-50%;}
 }
 
-a {
-	color: blue;
-	outline-offset: 1px;
-}
-
 /* layout */
 .base-header {
 	position: relative;
