@@ -4538,78 +4538,109 @@ if (!Object.keys){
 			id: false,
 			ps: false
 		},
+		timerShow:null,
+		timerHide:null,
 		show: function(e){
 			e.preventDefault();
 			const elBody = doc.querySelector('body');
 			const el = e.currentTarget;
 			const elId = el.getAttribute('aria-describedby');
 			const elSrc = el.dataset.src;
-			
+			const evType = e.type;
+
 			let elTooltip = doc.querySelector('#' + elId);
 
-			if (!!elSrc && !elTooltip) {
+			if (!!elSrc && !elTooltip) {	
 				elBody.insertAdjacentHTML('beforeend', '<div class="ui-tooltip" id="'+ elId +'" role="tooltip" aria-hidden="true"><div class="ui-tooltip-arrow"></div>');
 				Global.ajax.init({
 					area: doc.querySelector('#' + elId),
 					url: elSrc,
 					add: true,
-					callback: function(){
+					callback: function(){						
 						act();
 					}
 				});
 			} else {
-				act();
+				if (el.dataset.view !== 'fix') {
+					act();
+				} else {
+					if (evType === 'click') {
+						el.dataset.view = 'unfix';
+						console.log('click close');
+						Global.tooltip.hide(e);
+					} else {
+						act();
+					}
+				}
 			}
 
 			function act(){
+				const tooltips = doc.querySelectorAll('.ui-tooltip');
+				const btns = doc.querySelectorAll('.ui-tooltip-btn');
+				const classToggle = evType !== 'click' ? 'add' : 'remove';
+
+				if (evType === 'click' && el.dataset.view !== 'fix') {
+					for (let tts of tooltips) {
+						if (tts.id !== elId) {
+							tts.removeAttribute('style');
+							tts.setAttribute('aria-hidden', true);
+						}
+					}
+
+					for (let bs of btns) {
+						bs.dataset.view = 'unfix';
+					}
+
+					el.dataset.view = 'fix';
+
+					doc.removeEventListener('click', Global.tooltip.back);
+
+					setTimeout(function(){
+						doc.addEventListener('click', Global.tooltip.back);
+					},0);
+				}
+
+				el.addEventListener('blur', Global.tooltip.hide);
+				el.addEventListener('mouseleave', Global.tooltip.hide);
+
 				elTooltip = doc.querySelector('#' + elId);
+				const elArrow = elTooltip.querySelector('.ui-tooltip-arrow');
+
+				for (let tts of tooltips) {
+					if (tts.id !== elId) {
+						tts.classList.remove('hover');
+					}
+				}
+				//elTooltip.style.display = 'block';
+				//elTooltip.style.transition = 'opacity 0.3s';
+				elTooltip.classList[classToggle]('hover');
 
 				const elT = el.getBoundingClientRect().top;
 				const elL = el.getBoundingClientRect().left;
-
 				const elW = el.offsetWidth;
 				const elH = el.offsetHeight;
 				const wW = win.innerWidth;
 				const wH = win.innerHeight;
-
 				const dT = doc.documentElement.scrollTop
 				const dL = doc.documentElement.scrollLeft;
 
-				elTooltip.style.display = 'block';
-
-				const tW = elTooltip.offsetWidth;
-				const tH = elTooltip.offsetHeight;
-				
+				let tW;
+				let tH;
 				let top;
-				let left; 
-				let ps_r; 
-				let cursorCls = 'ps-';
+				let left;
 
-				console.log(tH);
-				
-				if ((tW / 2) > (elL - dL) + (elW / 2)){
-					cursorCls += 'c';
-					left = 20;
-				} else {
-					cursorCls += 'c';
-					left = elL - (tW / 2) + (elW / 2);
-				}
+				clearTimeout(Global.tooltip.timerHide);
+				Global.tooltip.timerShow = setTimeout(function(){
+					tW = elTooltip.offsetWidth;
+					tH = elTooltip.offsetHeight;
+					left = (tW / 2 > (elL - dL) + (elW / 2)) ? 20 : elL - (tW / 2) + (elW / 2);
+					top = (elT - dT > wH / 2) ? elT + dT - tH : elT + elH + dT;
 
-				if (tH - dT < wH / 2 ){
-					top = elT + dT - tH ;
-				} else {
-					top = elT + elH + dT;
-				}
-				
-				console.log('left: ', left, !!elTooltip);
-
-				elTooltip.classList.add(cursorCls);
-				elTooltip.setAttribute('aria-hidden', false);
-				
-				elTooltip.style.opacity = 1;
-				elTooltip.style.left = left + 'px';
-				elTooltip.style.top = top + 'px'; 
-
+					elTooltip.setAttribute('aria-hidden', false);
+					//elTooltip.style.opacity = 1;
+					elTooltip.style.left = left + 'px';
+					elTooltip.style.top = top + 'px'; 
+				},200);
 
 				//if (psl) {
 					//if (off_l - sl > tw / 2) {
@@ -4704,6 +4735,73 @@ if (!Object.keys){
 			*/
 			 
 		},
+		back: function(e){
+			e.preventDefault();
+			console.log('back');
+			const tooltips = doc.querySelectorAll('.ui-tooltip');
+			const btns = doc.querySelectorAll('.ui-tooltip-btn');
+
+			for (let tts of tooltips) {
+				//tts.style.opacity = 0;
+
+				//clearTimeout(Global.tooltip.timerShow);
+				//Global.tooltip.timerHide = setTimeout(function(){
+					//tts.removeAttribute('style');
+					tts.setAttribute('aria-hidden', true);
+				//},300);
+			}
+			for (let bs of btns) {
+				bs.dataset.view = 'unfix';
+			}
+
+			doc.removeEventListener('click', Global.tooltip.back);
+		},
+		hide: function(e){
+			e.preventDefault();
+			const elBody = doc.querySelector('body');
+			const el = e.currentTarget;
+			const elId = el.getAttribute('aria-describedby');
+			const evType = e.type;
+
+			let elTooltip = doc.querySelector('#' + elId);
+
+			console.log(evType, el.dataset.view);
+
+			if (el.dataset.view !== 'fix') {
+				elTooltip.classList.remove('hover');
+				//elTooltip.style.opacity = 0;
+				
+				clearTimeout(Global.tooltip.timerShow);
+				//Global.tooltip.timerHide = setTimeout(function(){
+				//elTooltip.removeAttribute('style');
+				elTooltip.setAttribute('aria-hidden', true);
+				//},300);
+				
+			}
+
+			el.removeEventListener('blur', Global.tooltip.hide);
+			el.removeEventListener('mouseleave', Global.tooltip.hide);
+
+			// console.log('tooltipHide', v);
+			// if (v === true) {
+			// 	console.log('back');
+			// 	$('html').data('tooltip', false);
+			// 	$(doc).off('click.tt');
+			// }
+
+			// for (var i = 0, len = $('.ui-tooltip').length; i < len; i++) {
+			// 	var $this = $('.ui-tooltip').eq(i);
+			// 	var id = $this.attr('id');
+			// 	var fix = $('.ui-tooltip-btn[aria-describedby="'+ id +'"]').data('fix');
+
+			// 	$('#' + id).removeClass('hover');
+
+			// 	if (!fix) {
+			// 		$this.css('opacity', 0);
+			// 		$this.removeAttr('style').attr('aria-hidden', true).removeClass(class_ps);
+			// 	}
+			// }
+		},
 		init: function(opt) {
 			const option = Object.assign({}, Global.tooltip.options, opt);
 			const el_btn = doc.querySelectorAll('.ui-tooltip-btn');
@@ -4721,7 +4819,11 @@ if (!Object.keys){
 			for (let btn of el_btn) {
 				btn.addEventListener('mouseover', Global.tooltip.show);
 				btn.addEventListener('focus', Global.tooltip.show);
+				
+
 				btn.addEventListener('click', Global.tooltip.show);
+
+				
 			}
 
 			
