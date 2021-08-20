@@ -487,7 +487,7 @@ if (!Object.keys){
 						if (opt.add){
 							opt.prepend ? 
 								$area.insertAdjacentHTML('afterbegin', xhr.responseText) : 
-								$area.insertAdjacentHTML('beforeend', xhr.responseText)
+								$area.insertAdjacentHTML('beforeend', xhr.responseText);
 						} else {
 							$area.html(xhr.responseText);
 						}
@@ -3538,7 +3538,7 @@ if (!Object.keys){
 		options: {
 			ps: 'BL',
 			hold: true,
-			area: $('body'),
+			area: doc.querySelector('body'),
 			src: false,
 			offset: true,
 			openback:false,
@@ -3549,18 +3549,18 @@ if (!Object.keys){
 				return false;
 			}
 	
-			var opt = $.extend(true, {}, Global.dropdown.options, opt);
-			var id = opt.id;
-			var ps = opt.ps;
-			var hold = opt.hold;
-			var area = opt.area;
-			var src = opt.src;
-			var offset = opt.offset;
-			var openback = opt.openback;
-			var closeback = opt.closeback;
+			const option = Object.assign({}, Global.dropdown.options, opt);
+			const id = option.id;
+			const ps = option.ps;
+			const hold = option.hold;
+			const area = option.area;
+			const src = option.src;
+			const offset = option.offset;
+			const openback = option.openback;
+			const closeback = option.closeback;
 			
 			//ajax 
-			if (!!src && !$('[data-id="' + opt.id + '"]').length) {
+			if (!!src && !$('[data-id="' + id + '"]').length) {
 				Global.ajax.init({
 					area: area,
 					url: src,
@@ -4682,6 +4682,7 @@ if (!Object.keys){
 				btn.addEventListener('mouseover', Global.tooltip.show);
 				btn.addEventListener('focus', Global.tooltip.show);
 				btn.addEventListener('click', Global.tooltip.show);
+				win.addEventListener('resize',  Global.tooltip.back);
 			}
 		}
 	}
