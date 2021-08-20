@@ -4530,7 +4530,7 @@ if (!Object.keys){
 
 	/* ------------------------
 	* name : tooltip
-	* date : 2020-06-15
+	* date : 2021-08-20
 	------------------------ */	
 	Global.tooltip = {
 		options: {
@@ -4538,10 +4538,11 @@ if (!Object.keys){
 			id: false,
 			ps: false
 		},
-		timerShow:null,
-		timerHide:null,
+		timerShow: null,
+		timerHide: null,
 		show: function(e){
 			e.preventDefault();
+
 			const elBody = doc.querySelector('body');
 			const el = e.currentTarget;
 			const elId = el.getAttribute('aria-describedby');
@@ -4566,7 +4567,6 @@ if (!Object.keys){
 				} else {
 					if (evType === 'click') {
 						el.dataset.view = 'unfix';
-						console.log('click close');
 						Global.tooltip.hide(e);
 					} else {
 						act();
@@ -4575,10 +4575,13 @@ if (!Object.keys){
 			}
 
 			function act(){
+				elTooltip = doc.querySelector('#' + elId);
+
 				const tooltips = doc.querySelectorAll('.ui-tooltip');
 				const btns = doc.querySelectorAll('.ui-tooltip-btn');
+				const elArrow = elTooltip.querySelector('.ui-tooltip-arrow');
 				const classToggle = evType !== 'click' ? 'add' : 'remove';
-
+				
 				if (evType === 'click' && el.dataset.view !== 'fix') {
 					for (let tts of tooltips) {
 						if (tts.id !== elId) {
@@ -4594,25 +4597,17 @@ if (!Object.keys){
 					el.dataset.view = 'fix';
 
 					doc.removeEventListener('click', Global.tooltip.back);
-
 					setTimeout(function(){
 						doc.addEventListener('click', Global.tooltip.back);
 					},0);
 				}
-
-				el.addEventListener('blur', Global.tooltip.hide);
-				el.addEventListener('mouseleave', Global.tooltip.hide);
-
-				elTooltip = doc.querySelector('#' + elId);
-				const elArrow = elTooltip.querySelector('.ui-tooltip-arrow');
 
 				for (let tts of tooltips) {
 					if (tts.id !== elId) {
 						tts.classList.remove('hover');
 					}
 				}
-				//elTooltip.style.display = 'block';
-				//elTooltip.style.transition = 'opacity 0.3s';
+
 				elTooltip.classList[classToggle]('hover');
 
 				const elT = el.getBoundingClientRect().top;
@@ -4624,132 +4619,39 @@ if (!Object.keys){
 				const dT = doc.documentElement.scrollTop
 				const dL = doc.documentElement.scrollLeft;
 
-				let tW;
-				let tH;
-				let top;
-				let left;
-
 				clearTimeout(Global.tooltip.timerHide);
 				Global.tooltip.timerShow = setTimeout(function(){
-					tW = elTooltip.offsetWidth;
-					tH = elTooltip.offsetHeight;
-					left = (tW / 2 > (elL - dL) + (elW / 2)) ? 20 : elL - (tW / 2) + (elW / 2);
-					top = (elT - dT > wH / 2) ? elT + dT - tH : elT + elH + dT;
+					const tW = Math.floor(elTooltip.offsetWidth);
+					const left = (tW / 2 > (elL - dL) + (elW / 2)) ? 10 : elL - (tW / 2) + (elW / 2);
+					wW < Math.floor(left) + tW ? elTooltip.style.right = '10px' : '';
+					elTooltip.style.left = Math.floor(left) + 'px';
 
+					const tH = Math.floor(elTooltip.offsetHeight);
+					const top = (elT - dT > wH / 2) ? elT + dT - tH - 8 : elT + elH + dT + 8;
+					elTooltip.style.top = Math.floor(top) + 'px';
+
+					const arrow = (elT - dT > wH / 2) ? 'top' : 'bottom';
+					elArrow.style.left = Math.floor(elL - left + (elW / 2)) + 'px';
+
+					elTooltip.dataset.ps = arrow;
 					elTooltip.setAttribute('aria-hidden', false);
-					//elTooltip.style.opacity = 1;
-					elTooltip.style.left = left + 'px';
-					elTooltip.style.top = top + 'px'; 
-				},200);
-
-				//if (psl) {
-					//if (off_l - sl > tw / 2) {
-					//	cursorCls += 'c';
-					//	ps_l = off_l - (tw / 2) + (w / 2);
-					// } else {
-					// 	cursorCls += 'l';
-					// 	ps_l = off_l;
-					// }
-				//} else {
-					//if (bw - (off_l - sl + w) > tw / 2) {
-					//	cursorCls += 'c';
-					//	ps_r = Math.ceil(off_l) - (tw / 2) + (w / 2);
-					// } else {
-					// 	cursorCls += 'r';
-					// 	ps_r = off_l - tw + w;
-					// }
-				//}
-
-				// ps ? cursorCls = 'ps-l' : '';
-				// ps ? ps_l = off_l : '';
-				// ps ? psl = true : '';
-				// pst ? cursorCls += 'b' : cursorCls += 't';
-
-				// if (!!$id.attr('modal')) {
-				// 	if (!Global.browser.oldie) {
-				// 		ps_l = ps_l;
-				// 		ps_r = ps_r;
-				// 	}
-
-				// 	Global.browser.ie ? '' : off_t = off_t;
-				// }
-
-				// if (!!$id.closest('.type-fixed-bottom').length) {
-				// 	off_t = off_t - $('ui-modal-tit').outerHeight();
-				// }
-
-				// console.log('act');
-				// $id.addClass(cursorCls).attr('aria-hidden', false).css({ 
-				// 	display: 'block'
-				// }).css({
-				// 	opacity: 1,
-				// 	top: pst ? off_t + h + sp : off_t - th - sp,
-				// 	left: psl ? ps_l : ps_r < 0 ? 10 : ps_r
-				// });
-
-				// if (psl) {
-
-				// } else {
-				// 	$('#'+ id).find('.ui-tooltip-arrow').css('right',  ((ps_r * -1) + 10) + 'px');
-				// }
-			}
-
-			
-
-			/*
-			var $t = opt.selector;
-			var $win = $(win);
-			var $doc = $(doc);
-			var id = $t.attr('aria-describedby');
-			var src = $t.data('src');
-			var fix = opt.fix;
-			var off_t = $t.offset().top;
-			var off_l =$t.offset().left;
-			var w = $t.outerWidth();
-			var h = $t.outerHeight();
-			var bw = $win.innerWidth();
-			var bh = $win.innerHeight();
-			var st = $doc.scrollTop();
-			var sl = $doc.scrollLeft();
-			
-			//clearTimeout(timer);
-
-			if (!!src && !$('#' + id).length) {
-				$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><div class="ui-tooltip-arrow"></div>')
-
-				Global.ajax.init({
-					area: $('#' + id),
-					url: src,
-					add: true,
-					callback: function(){
-						act();
-					}
-				});
-			} else {
-				act();
-			}
-			
-			function act(){
+					console.log(Math.floor(left) + tW, wW);
+				},100);
 				
+				el.addEventListener('blur', Global.tooltip.hide);
+				el.addEventListener('mouseleave', Global.tooltip.hide);
 			}
-			*/
-			 
 		},
 		back: function(e){
 			e.preventDefault();
-			console.log('back');
+
 			const tooltips = doc.querySelectorAll('.ui-tooltip');
 			const btns = doc.querySelectorAll('.ui-tooltip-btn');
 
 			for (let tts of tooltips) {
-				//tts.style.opacity = 0;
-
-				//clearTimeout(Global.tooltip.timerShow);
-				//Global.tooltip.timerHide = setTimeout(function(){
-					//tts.removeAttribute('style');
-					tts.setAttribute('aria-hidden', true);
-				//},300);
+				tts.setAttribute('aria-hidden', true);
 			}
+
 			for (let bs of btns) {
 				bs.dataset.view = 'unfix';
 			}
@@ -4758,269 +4660,29 @@ if (!Object.keys){
 		},
 		hide: function(e){
 			e.preventDefault();
-			const elBody = doc.querySelector('body');
+
 			const el = e.currentTarget;
 			const elId = el.getAttribute('aria-describedby');
-			const evType = e.type;
-
-			let elTooltip = doc.querySelector('#' + elId);
-
-			console.log(evType, el.dataset.view);
+			const elTooltip = doc.querySelector('#' + elId);
 
 			if (el.dataset.view !== 'fix') {
-				elTooltip.classList.remove('hover');
-				//elTooltip.style.opacity = 0;
-				
 				clearTimeout(Global.tooltip.timerShow);
-				//Global.tooltip.timerHide = setTimeout(function(){
-				//elTooltip.removeAttribute('style');
+				elTooltip.classList.remove('hover');
 				elTooltip.setAttribute('aria-hidden', true);
-				//},300);
-				
 			}
 
 			el.removeEventListener('blur', Global.tooltip.hide);
 			el.removeEventListener('mouseleave', Global.tooltip.hide);
-
-			// console.log('tooltipHide', v);
-			// if (v === true) {
-			// 	console.log('back');
-			// 	$('html').data('tooltip', false);
-			// 	$(doc).off('click.tt');
-			// }
-
-			// for (var i = 0, len = $('.ui-tooltip').length; i < len; i++) {
-			// 	var $this = $('.ui-tooltip').eq(i);
-			// 	var id = $this.attr('id');
-			// 	var fix = $('.ui-tooltip-btn[aria-describedby="'+ id +'"]').data('fix');
-
-			// 	$('#' + id).removeClass('hover');
-
-			// 	if (!fix) {
-			// 		$this.css('opacity', 0);
-			// 		$this.removeAttr('style').attr('aria-hidden', true).removeClass(class_ps);
-			// 	}
-			// }
 		},
 		init: function(opt) {
 			const option = Object.assign({}, Global.tooltip.options, opt);
 			const el_btn = doc.querySelectorAll('.ui-tooltip-btn');
-			// var $tip = opt.id ? typeof opt.id === 'string' ? $('#' + opt.id) : opt.id : false;
-			// var visible = opt.visible;
-			// var id = opt.id ? $tip.attr('id') : '';
-			// var sp = 4;
-			// var ps = opt.ps;
-			// var class_ps = 'ps-ct ps-cb ps-lt ps-lb ps-rt ps-rb';
-
-			// if (visible !== null) {
-			// 	visible ? tooltipShow({ selector: $('#' + id) }) : tooltipHide();
-			// }
 
 			for (let btn of el_btn) {
 				btn.addEventListener('mouseover', Global.tooltip.show);
 				btn.addEventListener('focus', Global.tooltip.show);
-				
-
 				btn.addEventListener('click', Global.tooltip.show);
-
-				
 			}
-
-			
-
-			// el_btn.off('mouseover.tt focus.tt').on('mouseover.tt focus.tt', function(e){
-			// 	e.preventDefault();
-
-			// 	var $this = $(this);
-			// 	var id = $this.attr('aria-describedby');
-				
-			// 	$('#'+ id).addClass('hover');
-
-			// 	if (!$this.data('fix')) {
-			// 		tooltipShow({ 
-			// 			selector: $this,
-			// 			hover: true 
-			// 		});
-			// 		el_btn.off('mouseleave.tt blur.tt').on('mouseleave.tt blur.tt', tooltipHide);
-			// 	} 
-			// });
-
-			// $('.ui-tooltip-close').off('click.tt').on('click.tt', function(){
-			// 	el_btn.data('view', false);
-			// 	tooltipHide();
-			// });
-
-			// el_btn.off('click.tt').on('click.tt', function(e){
-			// 	e.preventDefault();
-
-			// 	var $this = $(this);
-
-			// 	//if (!$this.data('view')){
-			// 	$('.ui-tooltip-btn').data('fix', false).data('view', false);
-			// 	//show
-				
-			// 	tooltipHide();
-			// 	setTimeout(function(){
-			// 		$this.data('view', true).data('fix', true);
-			// 		tooltipShow({ 
-			// 			selector: $this
-			// 		});
-			// 	},0);
-				
-			// 	//if (!$('html').data('tooltip')) {
-			// 		//setTimeout(function(){
-			// 	$('html').data('tooltip', true);
-			// 	$(doc).off('click.tt').on('click.tt', function(){
-			// 		console.log('body');
-			// 		$('.ui-tooltip-btn').data('view', false).data('fix', false);
-			// 		tooltipHide(true);
-			// 	});
-			// 		//},100);
-			// 	//}
-					
-			// 	//} else {
-			// 		// $this.data('view', false).data('fix', false);
-			// 		// tooltipHide();
-			// 	//}
-			// });
-
-			function tooltipShow(opt) {
-				var $t = opt.selector;
-				var $win = $(win);
-				var $doc = $(doc);
-				var id = $t.attr('aria-describedby');
-				var src = $t.data('src');
-				var fix = opt.fix;
-				var off_t = $t.offset().top;
-				var off_l =$t.offset().left;
-				var w = $t.outerWidth();
-				var h = $t.outerHeight();
-				var bw = $win.innerWidth();
-				var bh = $win.innerHeight();
-				var st = $doc.scrollTop();
-				var sl = $doc.scrollLeft();
-				
-				//clearTimeout(timer);
-
-				if (!!src && !$('#' + id).length) {
-					$('body').append('<div class="ui-tooltip" id="'+ id +'" role="tooltip" aria-hidden="true"><div class="ui-tooltip-arrow"></div>')
-
-					Global.ajax.init({
-						area: $('#' + id),
-						url: src,
-						add: true,
-						callback: function(){
-							act();
-						}
-					});
-				} else {
-					act();
-				}
-				
-				function act(){
-					var $id = $('#' + id);
-					var ww = $(win).outerWidth();
-
-					$id.css('max-width', (ww - 40) + 'px');
-
-					var pst = (bh / 2 > (off_t - st) + (h / 2)) ? true : false;
-					var psl = (bw / 2 > (off_l - sl) + (w / 2)) ? true : false;
-					
-					var tw = $id.outerWidth();
-					var th = $id.outerHeight();
-					var ps_l; 
-					var ps_r; 
-					var cursorCls = 'ps-';
-
-					console.log('width: ', (tw / 2),  (off_l - sl) + (w / 2));
-
-					$id.removeClass(class_ps);	
-
-					if ((tw / 2) > (off_l - sl) + (w / 2)){
-						cursorCls += 'c';
-						ps_l = 20;
-					} else {
-						cursorCls += 'c';
-						ps_l = off_l - (tw / 2) + (w / 2);
-					}
-					
-
-					//if (psl) {
-						//if (off_l - sl > tw / 2) {
-						//	cursorCls += 'c';
-						//	ps_l = off_l - (tw / 2) + (w / 2);
-						// } else {
-						// 	cursorCls += 'l';
-						// 	ps_l = off_l;
-						// }
-					//} else {
-						//if (bw - (off_l - sl + w) > tw / 2) {
-						//	cursorCls += 'c';
-						//	ps_r = Math.ceil(off_l) - (tw / 2) + (w / 2);
-						// } else {
-						// 	cursorCls += 'r';
-						// 	ps_r = off_l - tw + w;
-						// }
-					//}
-
-					ps ? cursorCls = 'ps-l' : '';
-					ps ? ps_l = off_l : '';
-					ps ? psl = true : '';
-					pst ? cursorCls += 'b' : cursorCls += 't';
-
-					if (!!$id.attr('modal')) {
-						if (!Global.browser.oldie) {
-							ps_l = ps_l;
-							ps_r = ps_r;
-						}
-
-						Global.browser.ie ? '' : off_t = off_t;
-					}
-
-					if (!!$id.closest('.type-fixed-bottom').length) {
-						off_t = off_t - $('ui-modal-tit').outerHeight();
-					}
-
-					console.log('act');
-					$id.addClass(cursorCls).attr('aria-hidden', false).css({ 
-						display: 'block'
-					}).css({
-						opacity: 1,
-						top: pst ? off_t + h + sp : off_t - th - sp,
-						left: psl ? ps_l : ps_r < 0 ? 10 : ps_r
-					});
-
-					if (psl) {
-
-					} else {
-						$('#'+ id).find('.ui-tooltip-arrow').css('right',  ((ps_r * -1) + 10) + 'px');
-					}
-				}
-			}
-
-			function tooltipHide(v) {
-				console.log('tooltipHide', v);
-				if (v === true) {
-					console.log('back');
-					$('html').data('tooltip', false);
-					$(doc).off('click.tt');
-				}
-
-				for (var i = 0, len = $('.ui-tooltip').length; i < len; i++) {
-					var $this = $('.ui-tooltip').eq(i);
-					var id = $this.attr('id');
-					var fix = $('.ui-tooltip-btn[aria-describedby="'+ id +'"]').data('fix');
-
-					$('#' + id).removeClass('hover');
-
-					if (!fix) {
-						$this.css('opacity', 0);
-						$this.removeAttr('style').attr('aria-hidden', true).removeClass(class_ps);
-					}
-				}
-			}
-
-			
 		}
 	}
 
