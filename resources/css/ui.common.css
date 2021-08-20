@@ -125,7 +125,7 @@ b {
 
 a {
 	font: inherit;
-	color: blue;
+	color: var(--link);
 	outline-offset: 1px;
 	text-decoration: underline;
 }
@@ -2097,7 +2097,7 @@ a.btn-base-l {
 [data-current="11"] .ui-fixtd-n11 {
 	display: table-cell
 }
-  
+
 /* bullet */
 .div-wrap>[class*="bul-"]:first-child {
 	margin-top: 0;
