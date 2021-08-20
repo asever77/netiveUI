@@ -1553,12 +1553,8 @@ button.ui-tooltip-btn:after {
     font-weight: 700
 }
 
-.ui-tooltip.ps-ct .ui-tooltip-arrow,
-.ui-tooltip.ps-cb .ui-tooltip-arrow,
-.ui-tooltip.ps-lt .ui-tooltip-arrow,
-.ui-tooltip.ps-lb .ui-tooltip-arrow,
-.ui-tooltip.ps-rt .ui-tooltip-arrow,
-.ui-tooltip.ps-rb .ui-tooltip-arrow {
+
+.ui-tooltip .ui-tooltip-arrow {
     content: "";
     position: absolute;
     display: block;
@@ -1569,12 +1565,20 @@ button.ui-tooltip-btn:after {
     border-right: 1px solid #222
 }
 
-.ui-tooltip.ps-ct .ui-tooltip-arrow {
-    left: 50%;
-    bottom: -6px;
+.ui-tooltip[data-ps="top"] .ui-tooltip-arrow {
+    left: 0;
+    bottom: -.6rem;
     transform: rotate(135deg);
-    margin-left: -5px
+    margin-left: -.6rem
 }
+.ui-tooltip[data-ps="bottom"] .ui-tooltip-arrow {
+    left: 0;
+    top: -.6rem;
+    transform: rotate(-45deg);
+    margin-left: -.6rem
+}
+
+
 
 .ui-tooltip.ps-lt .ui-tooltip-arrow {
     left: 0;
@@ -1590,12 +1594,8 @@ button.ui-tooltip-btn:after {
     margin-right: 10px
 }
 
-.ui-tooltip.ps-cb .ui-tooltip-arrow {
-    left: 50%;
-    top: -6px;
-    transform: rotate(-45deg);
-    margin-left: -5px
-}
+
+
 
 .ui-tooltip.ps-lb .ui-tooltip-arrow {
     left: 0;
