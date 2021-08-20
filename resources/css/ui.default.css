@@ -54,6 +54,8 @@
 	--secondary: rgb(255, 95, 21);
 
 	--error:rgb(255, 21, 21);
+
+	--link: blue;
 	
 }
 
@@ -109,4 +111,6 @@
 	--secondary: rgb(255, 95, 21);
 
 	--error:rgb(255, 21, 21);
+
+	--link: orange;
 }
