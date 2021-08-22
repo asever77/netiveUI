@@ -3941,7 +3941,7 @@ if (!Object.keys){
 		options : {
 			/* type : normal, system */
 			type: 'normal',
-			// wrap: false,
+			wrap: false,
 			full: false,
 			ps: 'center',
 			src: false,
@@ -3950,9 +3950,6 @@ if (!Object.keys){
 			height: false,
 			innerScroll: false,
 			mg: 20,
-
-
-			
 			callback:false,
 			closeCallback:false,
 			endfocus:false,
@@ -3969,45 +3966,38 @@ if (!Object.keys){
 			remove: false,
 			endfocus: false
 		},
-		show: function(option){
-			const opt = Object.assign({}, Global.modal.options, option);
+		show: function(opt){
+			var opt = $.extend(true, {}, Global.modal.options, opt);
+			var wrap = opt.wrap === false ? $('body') : typeof opt.wrap === 'object' ? opt.wrap : $('#' + opt.wrap);
+			var type = opt.type;
+			var id = opt.id;
+			var src = opt.src;
+			var full = opt.full;
+			var ps = opt.ps;
+			var mg = opt.mg;
+			var remove = opt.remove;
+			var w = opt.width;
+			var h = opt.height;
+			var innerScroll = opt.innerScroll;
 
-			const elBody = doc.querySelector('body');
+			var scr_t = $(win).scrollTop();
+			var endfocus = opt.endfocus === false ? document.activeElement : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
+			var callback = opt.callback;
+			var closeCallback = opt.closeCallback;
+			var timer;
 			
-			const type = opt.type;
-			
-			const src = opt.src;
-			const full = opt.full;
-			const ps = opt.ps;
-			let mg = opt.mg;
-			const w = opt.width;
-			const h = opt.height;
-			const innerScroll = opt.innerScroll;
-
-			const scr_t = doc.documentElement.scrollTop;
-
-			let id = opt.id;
-			let remove = opt.remove;
-			let endfocus = opt.endfocus === false ? document.activeElement : typeof opt.endfocus === 'string' ? doc.querySelector('#' + opt.endfocus) : opt.endfocus;
-
-			const callback = opt.callback;
-			const closeCallback = opt.closeCallback;
-			let timer;
-			
-			const sMessage = opt.sMessage;
-			const sBtnConfirmTxt = opt.sBtnConfirmTxt;
-			const sBtnCancelTxt = opt.sBtnCancelTxt;
-			const sZindex = opt.sZindex;
-			const sClass = opt.sClass;
-
-			const sConfirmCallback = opt.sConfirmCallback;
-			const sCancelCallback = opt.sCancelCallback;
+			var sMessage = opt.sMessage;
+			var sBtnConfirmTxt = opt.sBtnConfirmTxt;
+			var sBtnCancelTxt = opt.sBtnCancelTxt;
+			var sZindex = opt.sZindex;
+			var sClass = opt.sClass;
+			var sConfirmCallback = opt.sConfirmCallback;
+			var sCancelCallback = opt.sCancelCallback;
 
 			if (type === 'normal') {
-				//modal
-				if (!!src && !doc.querySelector('#' + opt.id)) {
+				if (!!src && !$('#' + opt.id).length) {
 					Global.ajax.init({
-						area: elBody,
+						area: wrap,
 						url: src,
 						add: true,
 						callback: function(){
@@ -4018,7 +4008,6 @@ if (!Object.keys){
 					act();
 				}
 			} else {
-				//system modal
 				endfocus = null;
 				remove = true;
 				id = 'uiSystemModal';
@@ -4026,11 +4015,11 @@ if (!Object.keys){
 			}
 
 			if (endfocus === 'body') {
-				endfocus = elBody.dataset.active;
+				endfocus = $('body').data('active');
 			}
 
 			function makeSystemModal(){
-				let htmlSystem = '';
+				var htmlSystem = '';
 				
 				htmlSystem += '<div class="ui-modal type-system '+ sClass +'" id="uiSystemModal">';
 				htmlSystem += '<div class="ui-modal-wrap">';
@@ -4050,136 +4039,124 @@ if (!Object.keys){
 				htmlSystem += '</div>';
 				htmlSystem += '</div>';
 
-				elBody.insertAdjacentHTML('beforeend', htmlSystem);
-
+				$('body').append(htmlSystem);
 				htmlSystem = '';
 				act();
 			}
 
 			function act(){
-				const elModal = doc.querySelector('#' + id);
-				console.log(elModal);
-				const elModalWrap = elModal.querySelector('.ui-modal-wrap');
-				const elModalBody = elModalWrap.querySelector('.ui-modal-body');
-				const elModalHeader = elModalWrap.querySelector('.ui-modal-header');
-				const elModalFooter = elModalWrap.querySelector('.ui-modal-footer');
-				
-				const elModals = doc.querySelectorAll('.ui-modal');
+				var $modal = $('#' + id);
+				var $modalWrap = $modal.find('> .ui-modal-wrap');
+				var $modalBody = $modalWrap.find('> .ui-modal-body');
+				var $modalHeader = $modalWrap.find('> .ui-modal-header');
+				var $modalFooter = $modalWrap.find('> .ui-modal-footer');
+				var headerH = 0;
+				var footerH = 0;
 
-				for (let md of elModals) {
-					md.classList.remove('current');
-					elBody.classList.add('scroll-no');
-				}
-				
-				const elModalOpen = doc.querySelectorAll('.ui-modal.open');
-				const openLen = !!elModalOpen ? elModalOpen.length : 0;
+				$('.ui-modal').removeClass('current');
+				$('body').addClass('scroll-no');
 
-				elModal.setAttribute('tabindex', 0);
-				elModal.setAttribute('role', 'dialog');
+				$modal
+					.attr('tabindex', '0')
+					.attr('n', $('.ui-modal.open').length)
+					.attr('role', 'dialog')
+					.addClass('n' + $('.ui-modal.open').length + ' current')
+					.data('scrolltop', scr_t)
+					.data('active', endfocus)
+					.data('closecallback', closeCallback);
 				
-				elModal.classList.add('n' + openLen);
-				elModal.classList.add('current');
-
-				elModal.dataset.n = openLen;
-				elModal.dataset.scrolltop = scr_t;
-				//elModal.dataset.closecallback = closeCallback;
 
 				if (full) {
-					elModal.classList.add('type-full');
+					$modal.addClass('type-full');
 					mg = 0;
 				} 
 
-				doc.querySelector('html').classList.add('is-modal');
+				$('html').addClass('is-modal');
 				
 				switch (ps) {
 					case 'center' :
-						elModal.classList.add('ready');
-						elModal.classList.add('ps-center');
+						$modal.addClass('ready ps-center');
 						break;
 					case 'top' :
-						elModal.classList.add('ready');
-						elModal.classList.add('ps-top');
+						$modal.addClass('ready ps-top');
 						break;
 					case 'bottom' :
-						elModal.classList.add('ready');
-						elModal.classList.add('ps-bottom');
+						$modal.addClass('ready ps-bottom');
 						break;
 				}
-	
-				const headerH = !!elModalHeader ? elModalHeader.offsetHeight : 0;
-				const footerH = !!elModalFooter ? elModalFooter.offsetHeight : 0;
+
+				headerH = $modalHeader.length ? $modalHeader.outerHeight() : 0;
+				footerH = $modalFooter.length ? $modalFooter.outerHeight() : 0;
 
 				if (!full) {
 					console.log(1111);
 					//lyaer modal
 					if (!h) {
-						const win_h = win.innerHeight;
-						const max_h = win_h - (headerH + footerH + (mg * 2));
+						var win_h = $(win).outerHeight();
+						var max_h = win_h - (headerH + footerH + (mg * 2));
 
-						elModalBody.classList.add('is-scrollable');
-						elModalBody.style.maxHeight = max_h + 'px';
-						elModalBody.style.overflowY = 'auto';
-						elModalBody.style.height = '100%';
-
+						$modalBody
+						.addClass('is-scrollable')
+						.css({
+							'max-height' : max_h + 'px',
+							'overflow-y' : 'auto',
+							'height' : '100%'
+						});
 					} else {
-						elModalBody.classList.add('is-scrollable');
-						elModalBody.style.overflowY = 'auto';
-						elModalBody.style.height = h + 'px';
+						$modalBody
+						.addClass('is-scrollable')
+						.css({
+							'overflow-y' : 'auto',
+							'height' : h + 'px'
+						});
 					}
 				} else {
 					//full modal
-					!!w ? elModalWrap.style.width = w : '';
+					!!w && $modalWrap.css('width', w);
 					if (!!h) {
-						elModalBody.style.height = h + 'px';
-						elModalBody.style.overflowY = 'auto';
+						$modalBody.css({ 
+							'height': h + 'px', 
+							'overflow-y' : 'auto' 
+						});
 					} else {
-						elModalBody.style.height = '100%';
-						elModalBody.style.maxHeight = (win.innerHeight - headerH - footerH)  + 'px';
-						elModalBody.style.overflowY = 'auto';
+						$modalBody.css({ 
+							height: '100%',
+							'max-height': ($(window).outerHeight() - headerH - footerH)  + 'px', 
+							'overflow-y' : 'auto' 
+						});
 					}
 				}
+
+				console.log($modalBody.outerHeight());
 
 				
 				clearTimeout(timer);
 				timer = setTimeout(function(){
+					Global.focus.loop({ 
+						selector: $modal, 
+					});
 					// Global.focus.loop({ 
-					// 	selector: elModal, 
-					// });
-
-
-					// Global.focus.loop({ 
-					// 	selector: elModal, 
+					// 	selector: $modal, 
 					// 	type:'hold' 
 					// });
 
-					elModal.classList.add('open');
+					$modal.addClass('open');
 
-					!!sZindex ? elModal.style.zIndex = sZindex : '';
+					!!sZindex && $modal.css('z-index', sZindex);
 					callback && callback(opt);
 
-					//doc.querySelector('html').addEventListener('click', dimAct);
-					
-					function dimAct(e){
-						const elTarget = e.currentTarget;
-						const elWrap = elTarget.closest('.ui-modal-wrap');
-						const elOpens = doc.querySelectorAll('.ui-modal.open');
-
-						console.log(e);
-
-						if (!elWrap) {
-							let openN = [];
-
-							for (let elOpen of elOpens) {
-								const thisN = elOpen.dataset.n;
+					$('html').off('click.uimodaldim').on('click.uimodaldim', function(e){
+						if(!$(e.target).closest('.ui-modal-wrap').length) {
+							var openN = [];
+							
+							$('.ui-modal.open').each(function(){
+								var thisN = $(this).attr('n');
 
 								thisN !== undefined ?
 									openN.push(thisN) : '';
-							}
-
+							});
 							
-
-							const elCurrent = doc.querySelector('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]');
-							const currentID = elCurrent.id;
+							var currentID = $('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]').attr('id');
 
 							if (currentID !== 'uiSystemModal') {
 								netive.modal.hide({ 
@@ -4189,86 +4166,49 @@ if (!Object.keys){
 								});
 							}
 						}
-					}
+					});
 
-					win.innerHeight < elModal.querySelector('.ui-modal-wrap').offsetHeight ? 
-						elModal.classList.add('is-over'):
-						elModal.classList.remove('is-over');
+					$(win).outerHeight() < $modal.find('.ui-modal-wrap').outerHeight() ?
+						$modal.addClass('is-over'):
+						$modal.removeClass('is-over');
 				},150);
 
-				// close button
-				const elCloses = doc.querySelectorAll('.ui-modal-close');
-
-				for (let elClose of elCloses) {
-					elClose.addEventListener('click', closeAct);
-				}
-
-				function closeAct(e){
-					const elThis = e.currentTarget;
-					const elThisModal = elThis.closest('.ui-modal');
+				$(doc).find('.ui-modal-close').off('click.close').on('click.close', function(e){
 					netive.modal.hide({ 
-						id: elThisModal.id, 
+						id: $(this).closest('.ui-modal').attr('id'), 
 						remove: remove,
 						closeCallback: closeCallback
 					});
-				}
+				});
+				$(doc).find('.ui-modal-confirm').off('click.callback').on('click.callback', function(e){
+					sConfirmCallback();
+				});
+				$(doc).find('.ui-modal-cancel').off('click.callback').on('click.callback', function(e){
+					sCancelCallback();
+				});
+				$(doc).find('.ui-modal').find('button, a').off('click.act').on('click.act', function(e){
+					var $this = $(this); 
+					$this.closest('.ui-modal').data('active', $this);
+				});
 
-				const elCofirms = doc.querySelectorAll('.ui-modal-confirm');
-				const elCancels = doc.querySelectorAll('.ui-modal-cancel');
-				/*
-				for (let el of elCofirms) {
-					el.addEventListener('click', sConfirmCallback);
-				}
-
-				for (let el of elCancels) {
-					el.addEventListener('click', sCancelCallback);
-				}
-
-	
-				for (let el of elModals) {
-					const elModalBtns = el.querySelectorAll('button');
-					const elModalAs = el.querySelectorAll('a');
-
-					console.log(elModalBtns);
-
-					for (let el2 of elModalBtns) {
-						el2.addEventListener('click', sCancelCallback);
-					}
-					for (let el3 of elModalAs) {
-						el3.addEventListener('click', sCancelCallback);
-					}
-				}
-				*/
-				
-
-				function active(e){
-					const elThis = e.currentTarget;
-					const elModal = elThis.closest('.ui-modal');
-					elModal.dataset.active = elThis;
-				}
-
-				elModalWrap.addEventListener('transitionend', modalTrEnd);
- 				
-				function modalTrEnd(){
-					console.log('modalTrEnd');
+				$modalWrap.on('transitionend.modal', function(){
 					if (!!full) {
-						elModal.classList.add('fix-header');
-						elModalBody.style.paddingTop = (headerH + 10)  + 'px';
+						$modal.addClass('fix-header');
+						$modalBody.css({
+							'padding-top': (headerH + 10)  + 'px',
+
+						});
 					}
-				}
+				});
+				var timerResize;
 
-
-				let timerResize;
-
-				win.addEventListener('resize', winResize);
-
-				function winResize() {
+				$(win).off('resize.modal').on('resize.modal', function(){
 					clearTimeout(timerResize);
 					timerResize = setTimeout(function(){
 						Global.modal.reset();
+						
 					}, 200);
-				}
-
+				});
 			}
 		},
 		reset: function(opt) {
@@ -4296,79 +4236,55 @@ if (!Object.keys){
 				}
 			}
 		},
-		hide: function(option){
-			
-			const opt = Object.assign({}, Global.modal.optionsClose, option);
-			const id = opt.id;
+		hide: function(opt){
+			var opt = $.extend(true, {}, Global.modal.optionsClose, opt);
+			var id = opt.id;
 			var type = opt.type;
 			var remove = opt.remove;
-			var elModal = doc.querySelector('#' + id);
+			var $modal = $('#' + id);
 			var endfocus = opt.endfocus;
-			var closeCallback = opt.closeCallback === undefined ? elModal.dataset.closecallback === undefined ? false : elModal.dataset.closecallback : opt.closeCallback;
-			var elModalWrap = elModal.querySelector('.ui-modal-wrap');
+			var closeCallback = opt.closeCallback === undefined ? $modal.data('closecallback') === undefined ? false : $modal.data('closecallback') : opt.closeCallback;
+			var $modalWrap = $modal.find('> .ui-modal-wrap');
 
-			//elModalWrap.off('transitionend.modal');
-			elModal.classList.remove('open')
-			elModal.classList.add('close');
-			elModal.classList.remove('fix-header');
-			//$(win).off('resize.modal');
+			$modalWrap.off('transitionend.modal');
+			$modal.removeClass('open').addClass('close');
+			$modal.removeClass('fix-header');
+			$(win).off('resize.modal');
 
 			var timer;
-			const elOpen = doc.querySelectorAll('.ui-modal.open');
-			const len = elOpen.length > 0 ? elOpen.length : false;
-			let elModalPrev = false;
-
-			console.log(len, elModalPrev);
-
-			if (!!len) {
-				elModalPrev = doc.querySelector('.ui-modal.open.n' + len - 1);
-				elModalPrev.classList.add('current');
-			}
-
-			
-			const elBody = doc.querySelector('body');
-			const elHtml = doc.querySelector('html');
+			var $modalPrev = $('.ui-modal.open.n' + ($('.ui-modal.open').length - 1));
 
 			if (type !== 'system') {
-				if (!len) {
-					endfocus = endfocus === false ? elBody.dataset.active : typeof opt.endfocus === 'string' ? doc.querySelector('#' + opt.endfocus) : opt.endfocus;
+				if (!$('.ui-modal.open').length) {
+					endfocus = endfocus === false ? $('body').data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
 
-					//$('html').off('click.uimodaldim');
-					elHtml.classList.remove('is-modal');
+					$('html').off('click.uimodaldim');
+					$('html').removeClass('is-modal');
 				} else {
-					endfocus = endfocus === false ? elModalPrev.data.active : typeof opt.endfocus === 'string' ? doc.querySelector('#' + opt.endfocus) : opt.endfocus;
+					endfocus = endfocus === false ? $modalPrev.data('active') : typeof opt.endfocus === 'string' ? $('#' + opt.endfocus) : opt.endfocus;
 				}
 			}
 
-			
+			$modalPrev.addClass('current');
 			
 			Global.scroll.move({
-				value: Number(elModal.dataset.scrolltop)
+				value: Number($modal.data('scrolltop'))
 			});
 			
 			clearTimeout(timer);
 			timer = setTimeout(function(){
-				const elWrap = elModal.querySelector('.ui-modal-wrap');
-				const elOpen = doc.querySelectorAll('.ui-modal.open');
-				const len = !!elOpen ? elOpen.length : false;
-				const elHtml = doc.querySelector('html');
-				const elBody = doc.querySelector('body');
-
-				elWrap.removeAttribute('style');
-				elBody.removeAttribute('style');
+				$modal.find('.ui-modal-wrap').removeAttr('style');
+				$modal.find('.ui-modal-body').removeAttr('style');
+				$modal.removeClass('ready is-over current close ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
+				$modal.removeAttr('n');
 				
-		
-				//elModal.removeClass('ready is-over current close ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
-				elModal.dataset.n = null;
-				
-				if (!len) {
-					elHtml.classList.remove('scroll-no');
-					elBody.classList.remove('scroll-no');
+				if (!$('.ui-modal.open').length) {
+					$("html, body").removeClass('scroll-no');
 				}
-				//closeCallback ? closeCallback(opt) : '';
-				remove ? elModal.remove() : '';
+				closeCallback ? closeCallback(opt) : '';
+				remove ? $modal.remove() : '';
 
-				console.log(remove);
+				console.log($modal.attr('id'), endfocus);
 
 				!!endfocus ? endfocus.focus() : '';
 			},210);
@@ -4700,7 +4616,7 @@ if (!Object.keys){
 				const elH = el.offsetHeight;
 				const wW = win.innerWidth;
 				const wH = win.innerHeight;
-				const dT = doc.documentElement.scrollTop;
+				const dT = doc.documentElement.scrollTop
 				const dL = doc.documentElement.scrollLeft;
 
 				clearTimeout(Global.tooltip.timerHide);
