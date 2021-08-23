@@ -829,40 +829,44 @@ if (!Object.keys){
 		options: {
 			callback: false
 		},
-		loop : function(opt){
-			if (opt === undefined) {
+		loop : function(option){
+			if (option === undefined) {
 				return false;
 			}
+			const opt = Object.assign({}, Global.focus.options, option);
+			const el = opt.selector;
+			const callback = opt.callback;
+			// var $focusItem = $base.find('input, h1, h2, h3, a, button, label, textarea, select').eq(0);
 
-			var opt = $.extend(true, {}, this.options, opt);
-			var $base = opt.selector;
-			var callback = opt.callback;
-			var $focusItem = $base.find('input, h1, h2, h3, a, button, label, textarea, select').eq(0);
+			// $focusItem.attr('tabindex', 0).focus();
 
-			$focusItem.attr('tabindex', 0).focus();
-
-			if(!$base.find('[class*="ui-focusloop-"]').length) {
-				$base.prepend('<div tabindex="0" class="ui-focusloop-start"><span>시작지점입니다.</span></div>');
-				$base.append('<div tabindex="0" class="ui-focusloop-end"><span>마지막지점입니다.</span></div>');
+			if(!el.querySelector('[class*="ui-focusloop-"]')) {
+				el.insertAdjacentHTML('afterbegin', '<div tabindex="0" class="ui-focusloop-start"><span>시작지점입니다.</span></div>');
+				el.insertAdjacentHTML('beforeend', '<div tabindex="0" class="ui-focusloop-end"><span>마지막지점입니다.</span></div>');
 			}
 
-			var $itemStart = $base.find('.ui-focusloop-start');
-			var $itemEnd = $base.find('.ui-focusloop-end');
+			const el_start = el.querySelector('.ui-focusloop-start');
+			const el_end = el.querySelector('.ui-focusloop-end');
 		
-			$itemStart.off('keydown.loop').on('keydown.loop', function(e) {
+			el_start.addEventListener('keydown', keyStart);
+			el_end.addEventListener('keydown', keyEnd);
+
+			function keyStart(e) {
 				if (e.shiftKey && e.keyCode == 9) {
 					e.preventDefault();
-					$itemEnd.focus();
-					!!callback && callback();
+					el_end.focus();
+					// !!callback && callback();
 				}
-			});
-			$itemEnd.off('keydown.loop').on('keydown.loop', function(e) {
+			}
+
+			function keyEnd(e) {
+				console.log('keyEnd');
 				if (!e.shiftKey && e.keyCode == 9) {
 					e.preventDefault();
-					$itemStart.focus();
-					!!callback && callback();
+					el_start.focus();
+					// !!callback && callback();
 				}
-			});
+			}
 		}
 	}
 
@@ -3945,12 +3949,11 @@ if (!Object.keys){
 			full: false,
 			ps: 'center',
 			src: false,
-			remove: false,
+			remove: 'false',
 			width: false,
 			height: false,
 			innerScroll: false,
 			mg: 20,
-
 
 			
 			callback:false,
@@ -3966,7 +3969,7 @@ if (!Object.keys){
 			sCancelCallback: false
 		},
 		optionsClose : {
-			remove: false,
+			remove: 'false',
 			endfocus: false
 		},
 		show: function(option){
@@ -3975,20 +3978,20 @@ if (!Object.keys){
 			const elBody = doc.querySelector('body');
 			
 			const type = opt.type;
-			
 			const src = opt.src;
 			const full = opt.full;
 			const ps = opt.ps;
-			let mg = opt.mg;
+			
 			const w = opt.width;
 			const h = opt.height;
 			const innerScroll = opt.innerScroll;
 
 			const scr_t = doc.documentElement.scrollTop;
 
+			let mg = opt.mg;
 			let id = opt.id;
 			let remove = opt.remove;
-			let endfocus = opt.endfocus === false ? document.activeElement : typeof opt.endfocus === 'string' ? doc.querySelector('#' + opt.endfocus) : opt.endfocus;
+			let endfocus = opt.endfocus === false ? document.activeElement : opt.endfocus;
 
 			const callback = opt.callback;
 			const closeCallback = opt.closeCallback;
@@ -4003,6 +4006,7 @@ if (!Object.keys){
 			const sConfirmCallback = opt.sConfirmCallback;
 			const sCancelCallback = opt.sCancelCallback;
 
+			//setting
 			if (type === 'normal') {
 				//modal
 				if (!!src && !doc.querySelector('#' + opt.id)) {
@@ -4020,14 +4024,16 @@ if (!Object.keys){
 			} else {
 				//system modal
 				endfocus = null;
-				remove = true;
+				remove = 'true';
 				id = 'uiSystemModal';
 				makeSystemModal();
 			}
 
-			if (endfocus === 'body') {
-				endfocus = elBody.dataset.active;
-			}
+			endfocus.dataset.focus = id;
+
+			// if (endfocus === 'body') {
+			// 	endfocus = elBody.dataset.active;
+			// }
 
 			function makeSystemModal(){
 				let htmlSystem = '';
@@ -4057,139 +4063,86 @@ if (!Object.keys){
 			}
 
 			function act(){
+				const elModals = doc.querySelectorAll('.ui-modal');
 				const elModal = doc.querySelector('#' + id);
-				console.log(elModal);
 				const elModalWrap = elModal.querySelector('.ui-modal-wrap');
 				const elModalBody = elModalWrap.querySelector('.ui-modal-body');
 				const elModalHeader = elModalWrap.querySelector('.ui-modal-header');
 				const elModalFooter = elModalWrap.querySelector('.ui-modal-footer');
+				const elModalTit = elModal.querySelector('.ui-modal-tit');
 				
-				const elModals = doc.querySelectorAll('.ui-modal');
-
 				for (let md of elModals) {
 					md.classList.remove('current');
 					elBody.classList.add('scroll-no');
 				}
 				
+				if (!elModal.querySelector('.ui-modal-dim')) {
+					elModal.insertAdjacentHTML('beforeend','<div class="ui-modal-dim"></div>');
+				}
+				
 				const elModalOpen = doc.querySelectorAll('.ui-modal.open');
 				const openLen = !!elModalOpen ? elModalOpen.length : 0;
 
-				elModal.setAttribute('tabindex', 0);
 				elModal.setAttribute('role', 'dialog');
-				
 				elModal.classList.add('n' + openLen);
+				elModal.classList.remove('close');
 				elModal.classList.add('current');
-
+				elModal.dataset.remove = remove;
 				elModal.dataset.n = openLen;
 				elModal.dataset.scrolltop = scr_t;
+				elModalTit.setAttribute('tabindex', 0);
+				
 				//elModal.dataset.closecallback = closeCallback;
 
-				if (full) {
-					elModal.classList.add('type-full');
-					mg = 0;
-				} 
-
 				doc.querySelector('html').classList.add('is-modal');
-				
-				switch (ps) {
-					case 'center' :
-						elModal.classList.add('ready');
-						elModal.classList.add('ps-center');
-						break;
-					case 'top' :
-						elModal.classList.add('ready');
-						elModal.classList.add('ps-top');
-						break;
-					case 'bottom' :
-						elModal.classList.add('ready');
-						elModal.classList.add('ps-bottom');
-						break;
-				}
-	
+				elModal.classList.add('ready');
+				elModalBody.style.overflowY = 'auto';
+
 				const headerH = !!elModalHeader ? elModalHeader.offsetHeight : 0;
 				const footerH = !!elModalFooter ? elModalFooter.offsetHeight : 0;
 
+				switch (ps) {
+					case 'center' :
+						elModal.classList.add('ps-center');
+						break;
+					case 'top' :
+						elModal.classList.add('ps-top');
+						break;
+					case 'bottom' :
+						elModal.classList.add('ps-bottom');
+						break;
+				}
+				
 				if (!full) {
-					console.log(1111);
 					//lyaer modal
-					if (!h) {
-						const win_h = win.innerHeight;
-						const max_h = win_h - (headerH + footerH + (mg * 2));
-
-						elModalBody.classList.add('is-scrollable');
-						elModalBody.style.maxHeight = max_h + 'px';
-						elModalBody.style.overflowY = 'auto';
-						elModalBody.style.height = '100%';
-
-					} else {
-						elModalBody.classList.add('is-scrollable');
-						elModalBody.style.overflowY = 'auto';
-						elModalBody.style.height = h + 'px';
-					}
+					elModalBody.classList.add('is-scrollable');
 				} else {
 					//full modal
+					elModal.classList.add('type-full');
+					mg = 0;
 					!!w ? elModalWrap.style.width = w : '';
-					if (!!h) {
-						elModalBody.style.height = h + 'px';
-						elModalBody.style.overflowY = 'auto';
-					} else {
-						elModalBody.style.height = '100%';
-						elModalBody.style.maxHeight = (win.innerHeight - headerH - footerH)  + 'px';
-						elModalBody.style.overflowY = 'auto';
-					}
 				}
 
+				if (!h) {
+					elModalBody.style.height = '100%';
+					elModalBody.style.maxHeight = win.innerHeight - (headerH + footerH + (mg * 2))  + 'px';
+				} else {
+					elModalBody.style.height = h + 'px';
+				}
 				
 				clearTimeout(timer);
 				timer = setTimeout(function(){
-					// Global.focus.loop({ 
-					// 	selector: elModal, 
-					// });
-
-
-					// Global.focus.loop({ 
-					// 	selector: elModal, 
-					// 	type:'hold' 
-					// });
+					Global.focus.loop({ 
+						selector: elModal, 
+					});
 
 					elModal.classList.add('open');
 
+					//z-index 지정 시
 					!!sZindex ? elModal.style.zIndex = sZindex : '';
-					callback && callback(opt);
 
-					//doc.querySelector('html').addEventListener('click', dimAct);
-					
-					function dimAct(e){
-						const elTarget = e.currentTarget;
-						const elWrap = elTarget.closest('.ui-modal-wrap');
-						const elOpens = doc.querySelectorAll('.ui-modal.open');
-
-						console.log(e);
-
-						if (!elWrap) {
-							let openN = [];
-
-							for (let elOpen of elOpens) {
-								const thisN = elOpen.dataset.n;
-
-								thisN !== undefined ?
-									openN.push(thisN) : '';
-							}
-
-							
-
-							const elCurrent = doc.querySelector('.ui-modal.open[n="'+ Math.max.apply(null, openN) +'"]');
-							const currentID = elCurrent.id;
-
-							if (currentID !== 'uiSystemModal') {
-								netive.modal.hide({ 
-									id: currentID, 
-									remove: remove,
-									closeCallback: closeCallback
-								});
-							}
-						}
-					}
+					elModalTit.focus();
+					elModal.querySelector('.ui-modal-dim').addEventListener('click', Global.modal.dimAct);
 
 					win.innerHeight < elModal.querySelector('.ui-modal-wrap').offsetHeight ? 
 						elModal.classList.add('is-over'):
@@ -4198,7 +4151,7 @@ if (!Object.keys){
 
 				// close button
 				const elCloses = doc.querySelectorAll('.ui-modal-close');
-
+ 
 				for (let elClose of elCloses) {
 					elClose.addEventListener('click', closeAct);
 				}
@@ -4271,6 +4224,29 @@ if (!Object.keys){
 
 			}
 		},
+		dimAct: function(e){
+			console.log('dimAct----------------');
+			const elTarget = e.target;
+			const elOpens = doc.querySelectorAll('.ui-modal.open');
+			let openN = [];
+
+			for (let elOpen of elOpens) {
+				elOpen.dataset.n && openN.push(elOpen.dataset.n);
+			}
+
+			const elCurrent = doc.querySelector('.ui-modal.open[data-n="'+ Math.max.apply(null, openN) +'"]');
+			const currentID = elCurrent.id;
+
+			console.log(elCurrent);
+
+			if (currentID !== 'uiSystemModal') {
+				netive.modal.hide({ 
+					id: currentID, 
+					remove: elCurrent.dataset.remove
+				});
+			}
+			console.log('-----------------dimAct');
+		},
 		reset: function(opt) {
 			var $modal = $('.ui-modal.open.ps-center');
 
@@ -4297,50 +4273,56 @@ if (!Object.keys){
 			}
 		},
 		hide: function(option){
-			
+			const elBody = doc.querySelector('body');
+			const elHtml = doc.querySelector('html');
 			const opt = Object.assign({}, Global.modal.optionsClose, option);
 			const id = opt.id;
-			var type = opt.type;
-			var remove = opt.remove;
-			var elModal = doc.querySelector('#' + id);
-			var endfocus = opt.endfocus;
+			const type = opt.type;
+			const remove = opt.remove;
+			const elModal = doc.querySelector('#' + id);
+
+			let endfocus = opt.endfocus ;
+
 			var closeCallback = opt.closeCallback === undefined ? elModal.dataset.closecallback === undefined ? false : elModal.dataset.closecallback : opt.closeCallback;
 			var elModalWrap = elModal.querySelector('.ui-modal-wrap');
 
 			//elModalWrap.off('transitionend.modal');
-			elModal.classList.remove('open')
 			elModal.classList.add('close');
+			elModal.classList.remove('open')
 			elModal.classList.remove('fix-header');
 			//$(win).off('resize.modal');
-
-			var timer;
+			
 			const elOpen = doc.querySelectorAll('.ui-modal.open');
 			const len = elOpen.length > 0 ? elOpen.length : false;
+			let timer;
 			let elModalPrev = false;
 
-			console.log(len, elModalPrev);
+			
 
 			if (!!len) {
-				elModalPrev = doc.querySelector('.ui-modal.open.n' + len - 1);
+				elModalPrev = doc.querySelector('.ui-modal.open.n' + (len - 1));
 				elModalPrev.classList.add('current');
 			}
 
-			
-			const elBody = doc.querySelector('body');
-			const elHtml = doc.querySelector('html');
-
+			//시스템팝업이 아닌 경우
 			if (type !== 'system') {
 				if (!len) {
-					endfocus = endfocus === false ? elBody.dataset.active : typeof opt.endfocus === 'string' ? doc.querySelector('#' + opt.endfocus) : opt.endfocus;
+					//단일
+					console.log(111);
+					endfocus = endfocus === false ? 
+						doc.querySelector('[data-focus="'+id+'"]') : 
+						opt.endfocus;
 
 					//$('html').off('click.uimodaldim');
 					elHtml.classList.remove('is-modal');
 				} else {
-					endfocus = endfocus === false ? elModalPrev.data.active : typeof opt.endfocus === 'string' ? doc.querySelector('#' + opt.endfocus) : opt.endfocus;
+					//여러개
+					console.log(222);
+					endfocus = endfocus === false ? 
+						doc.querySelector('[data-focus="'+id+'"]') : 
+						opt.endfocus;
 				}
 			}
-
-			
 			
 			Global.scroll.move({
 				value: Number(elModal.dataset.scrolltop)
@@ -4351,9 +4333,9 @@ if (!Object.keys){
 				const elWrap = elModal.querySelector('.ui-modal-wrap');
 				const elOpen = doc.querySelectorAll('.ui-modal.open');
 				const len = !!elOpen ? elOpen.length : false;
-				const elHtml = doc.querySelector('html');
-				const elBody = doc.querySelector('body');
+	
 
+				
 				elWrap.removeAttribute('style');
 				elBody.removeAttribute('style');
 				
@@ -4366,17 +4348,15 @@ if (!Object.keys){
 					elBody.classList.remove('scroll-no');
 				}
 				//closeCallback ? closeCallback(opt) : '';
-				remove ? elModal.remove() : '';
-
-				console.log(remove);
-
-				!!endfocus ? endfocus.focus() : '';
+				console.log('remove:', remove);
+				remove === 'true' && elModal.remove();
+				!!endfocus && endfocus.focus();
 			},210);
 		}, 
 		hideSystem: function(opt){
 			netive.modal.hide({ 
 				id: 'uiSystemModal', 
-				remove: true,
+				remove: 'true',
 				type: 'system'
 			});
 		}
