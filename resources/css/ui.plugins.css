@@ -1024,7 +1024,7 @@ a.ui-acco-btn:after {
     display: flex;
 }
 
-.ui-modal.ready.current .ui-modal-dim {
+.ui-modal.ready .ui-modal-dim {
     content: "";
     display: block;
     position: fixed;
@@ -1035,7 +1035,7 @@ a.ui-acco-btn:after {
     opacity: 0;
     background: rgba(0, 0, 0, .5);
 }
-.ui-modal.open.current .ui-modal-dim{
+.ui-modal.open .ui-modal-dim{
     opacity: 1;
 }
 .ui-modal.ps-center.is-over {

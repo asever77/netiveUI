@@ -4021,6 +4021,7 @@ if (!Object.keys){
 				} else {
 					act();
 				}
+				endfocus.dataset.focus = id;
 			} else {
 				//system modal
 				endfocus = null;
@@ -4029,7 +4030,7 @@ if (!Object.keys){
 				makeSystemModal();
 			}
 
-			endfocus.dataset.focus = id;
+			
 
 			// if (endfocus === 'body') {
 			// 	endfocus = elBody.dataset.active;
@@ -4070,7 +4071,7 @@ if (!Object.keys){
 				const elModalHeader = elModalWrap.querySelector('.ui-modal-header');
 				const elModalFooter = elModalWrap.querySelector('.ui-modal-footer');
 				const elModalTit = elModal.querySelector('.ui-modal-tit');
-				
+
 				for (let md of elModals) {
 					md.classList.remove('current');
 					elBody.classList.add('scroll-no');
@@ -4090,7 +4091,7 @@ if (!Object.keys){
 				elModal.dataset.remove = remove;
 				elModal.dataset.n = openLen;
 				elModal.dataset.scrolltop = scr_t;
-				elModalTit.setAttribute('tabindex', 0);
+				!!elModalTit && elModalTit.setAttribute('tabindex', 0);
 				
 				//elModal.dataset.closecallback = closeCallback;
 
@@ -4141,7 +4142,7 @@ if (!Object.keys){
 					//z-index 지정 시
 					!!sZindex ? elModal.style.zIndex = sZindex : '';
 
-					elModalTit.focus();
+					!!elModalTit && elModalTit.focus();
 					elModal.querySelector('.ui-modal-dim').addEventListener('click', Global.modal.dimAct);
 
 					win.innerHeight < elModal.querySelector('.ui-modal-wrap').offsetHeight ? 
@@ -4297,7 +4298,10 @@ if (!Object.keys){
 			let timer;
 			let elModalPrev = false;
 
-			
+			const elModals = doc.querySelectorAll('.ui-modal');
+			for (let md of elModals) {
+				md.classList.remove('current');
+			}
 
 			if (!!len) {
 				elModalPrev = doc.querySelector('.ui-modal.open.n' + (len - 1));
