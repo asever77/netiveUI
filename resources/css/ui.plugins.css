@@ -42,6 +42,7 @@
     100% {
         opacity: 0;
         transform: scale(0.9);
+        visibility: hidden;
     }
 }
 
@@ -52,7 +53,7 @@
     }
 
     1% {
-        top: -100px;
+        top: -10rem;
         opacity: 0;
     }
 
@@ -69,7 +70,7 @@
     }
 
     99% {
-        top: -100px;
+        top: -10rem;
         opacity: 0;
     }
 
@@ -88,7 +89,7 @@
     }
 
     1% {
-        bottom: -100px;
+        bottom: -10rem;
         opacity: 0;
         top: auto;
     }
@@ -107,13 +108,14 @@
     }
 
     99% {
-        bottom: -100px;
+        bottom: -10rem;
         opacity: 0;
     }
 
     100% {
-        display: none;
-        z-index: -1;
+        opacity: 0;
+        bottom: -10rem;
+        visibility: hidden;
     }
 }
 
@@ -123,7 +125,7 @@
     }
 
     1% {
-        left: -100px;
+        left: -10rem;
         opacity: 0;
     }
 
@@ -140,12 +142,14 @@
     }
 
     99% {
-        left: -100px;
+        left: -10rem;
         opacity: 0;
     }
 
     100% {
-        display: none;
+        left: -10rem;
+        opacity: 0;
+        visibility: hidden;
     }
 }
 
@@ -155,7 +159,7 @@
     }
 
     1% {
-        right: -100px;
+        right: -10rem;
         opacity: 0;
     }
 
@@ -172,12 +176,14 @@
     }
 
     99% {
-        right: -100px;
+        right: -10rem;
         opacity: 0;
     }
 
     100% {
-        display: none;
+        right: -10rem;
+        opacity: 0;
+        visibility: hidden;
     }
 }
 
@@ -273,7 +279,7 @@
 @keyframes fadeInTop {
     0% {
         opacity: 0;
-        bottom: -40px;
+        bottom: -4rem;
     }
 
     100% {
@@ -287,10 +293,14 @@
         opacity: 1;
         bottom: 0;
     }
-
+    99% {
+        opacity: 0;
+        bottom: -4rem;
+    }
     100% {
         opacity: 0;
-        bottom: -40px;
+        bottom: -4rem;
+        visibility: hidden;
     }
 }
 
@@ -323,8 +333,9 @@
     }
 
     100% {
-        display: none;
-        z-index: -1;
+        bottom: -100vw;
+        opacity: 0;
+        visibility: hidden;
     }
 }
 
@@ -1013,7 +1024,7 @@ a.ui-acco-btn:after {
     display: flex;
 }
 
-.ui-modal.ready.current:after {
+.ui-modal.ready.current .ui-modal-dim {
     content: "";
     display: block;
     position: fixed;
@@ -1024,7 +1035,9 @@ a.ui-acco-btn:after {
     opacity: 0;
     background: rgba(0, 0, 0, .5);
 }
-
+.ui-modal.open.current .ui-modal-dim{
+    opacity: 1;
+}
 .ui-modal.ps-center.is-over {
     align-items: flex-start;
 }
@@ -1075,7 +1088,7 @@ a.ui-acco-btn:after {
     margin-bottom: 1rem;
 }
 
-.ui-modal.ready.open.current:after {
+.ui-modal.ready.open {
     animation-name: fadeIn;
     animation-duration: .2s;
     animation-iteration-count: 1;
@@ -1083,7 +1096,7 @@ a.ui-acco-btn:after {
     animation-fill-mode: forwards;
 }
 
-.ui-modal.ready.close:after {
+.ui-modal.ready.close {
     animation-name: fadeOut;
     animation-duration: .2s;
     animation-iteration-count: 1;
