@@ -264,7 +264,6 @@ if (!Object.keys){
 					}
 				},200);
 			}
-
 			win.addEventListener('resize', act);
 			act();
 		},
@@ -382,51 +381,60 @@ if (!Object.keys){
 			message : null,
 			styleClass : 'orbit' //time
 		},
-		show : function(opt){
-			var opt = $.extend(true, {}, this.options, opt);
-			var selector = opt.selector;
-			var styleClass = opt.styleClass;
-			var message = opt.message;
-			var	$selector = !!selector ? selector : $('body');
-			var htmlLoading = '';
+		show : function(option){
+			const opt = Object.assign({}, this.options, option);
+			const {selector, styleClass, message} = opt;
+			const el = (selector !== null) ? selector : doc.querySelector('body');
+			const el_loadingHides = doc.querySelectorAll('.ui-loading:not(.visible)');
 
-			$('.ui-loading').not('.visible').remove();
+			for (let that of el_loadingHides) {
+				that.remove();
+			}
 
-			selector === null ?
-			htmlLoading += '<div class="ui-loading '+ styleClass +'">':
-			htmlLoading += '<div class="ui-loading '+ styleClass +'" style="position:absolute">';
-				htmlLoading += '<div class="ui-loading-wrap">';
+			let htmlLoading = '';
 
-			message !== null ?
-					htmlLoading += '<strong class="ui-loading-message"><span>'+ message +'</span></strong>':
-					htmlLoading += '';
+			(selector === null) ?
+				htmlLoading += '<div class="ui-loading '+ styleClass +'">':
+				htmlLoading += '<div class="ui-loading type-area '+ styleClass +'">';
+			htmlLoading += '<div class="ui-loading-wrap">';
 
-				htmlLoading += '</div>';
+			(message !== null) ?
+				htmlLoading += '<strong class="ui-loading-message"><span>'+ message +'</span></strong>':
+				htmlLoading += '';
+
+			htmlLoading += '</div>';
 			htmlLoading += '</div>';
 
 			clearTimeout(this.timerShow);
 			clearTimeout(this.timerHide);
-			this.timerShow = setTimeout(showLoading,300);
+			this.timerShow = setTimeout(showLoading, 300);
 			
 			function showLoading(){
-				!$selector.find('.ui-loading').length && $selector.append(htmlLoading);	
+				!el.querySelector('.ui-loading') && el.insertAdjacentHTML('beforeend', htmlLoading);
 				htmlLoading = null;		
 
-				$('.ui-loading').addClass('visible').removeClass('close');			
+				const el_loadings = doc.querySelectorAll('.ui-loading');
+
+				for (let that of el_loadings) {
+					that.classList.add('visible');
+					that.classList.remove('close');
+				}
 			}
 		},
 		hide: function(){
 			clearTimeout(this.timerShow);
 			this.timerHide = setTimeout(function(){
+				const el_loadings = doc.querySelectorAll('.ui-loading');
 
-				$('.ui-loading').addClass('close');	
-				setTimeout(function(){
-					$('.ui-loading').removeClass('visible')
-					$('.ui-loading').remove();
-				},300);
-			},300)
+				for (let that of el_loadings) {
+					that.classList.add('close');
+					setTimeout(function(){
+						that.classList.remove('visible')
+						that.remove();
+					},300);
+				}
+			},300);
 		}
-
 	}
 
 	/**
@@ -3941,6 +3949,10 @@ if (!Object.keys){
 		}
 	}
 
+	/**
+	 * modal (base & system)
+	 * modify: 2021-08-24
+	 */
 	Global.modal = {
 		options : {
 			type: 'normal', /* type : normal, system */
@@ -4153,7 +4165,7 @@ if (!Object.keys){
 				}
 			}
 		},
-		dimAct: function(e){
+		dimAct: () => {
 			const elOpens = doc.querySelectorAll('.ui-modal.open');
 			let openN = [];
 
@@ -4172,7 +4184,7 @@ if (!Object.keys){
 				});
 			}
 		},
-		reset: function() {
+		reset: () => {
 			const elModals = doc.querySelectorALl('.ui-modal.open.ps-center');
 
 			for (let elModal of elModals) {
