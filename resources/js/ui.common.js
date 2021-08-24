@@ -155,7 +155,7 @@
 				callback:netive.common.header 
 			});
 			netive.ajax.init({ 
-				area: document.querySelector('base-footer'), 
+				area: document.querySelector('.base-footer'), 
 				url:'/netiveUI/html/inc/footer.html', 
 				page:true
 			});
@@ -303,7 +303,7 @@
 			$('.dep-2-btn').off('click.ajax').on('click.ajax', function(){
 				var href = this.getAttribute('data-href');
 				!!$('body').hasClass('nav-open') && netive.common.navOpen();
-				
+
 				netive.ajax.init({ 
 					area: document.querySelector('.base-main'), 
 					url: href, 
