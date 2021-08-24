@@ -11,7 +11,6 @@
 	<h3 class="h-3">Base Modal</h3>
 	<p>기본적인 콘텐츠 모달</p>
 	<div class="box-guide">
-		
 		<div class="test-modal fx-wrap" data-wrap="wrap">
 			<button type="button" class="btn-base" 
 				modal-id="modal_sample1" 
@@ -23,8 +22,8 @@
 			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-mobilefull="true" modal-scroll="true"><span>Ajax / center / scroll</span></button>
 			<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="/netiveUI/html/modal/modalSample2.html" modal-ps="top"><span>Ajax / top</span></button>
 			<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="/netiveUI/html/modal/modalSample2.html" modal-ps="bottom"><span>Ajax / bottom</span></button>
-			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-height="500"><span>Ajax / center / scroll / height)</span></button>
-			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-width="400"><span>Ajax / center / scroll / width)</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-height="500"><span>Ajax / center / scroll / height</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-width="400"><span>Ajax / center / scroll / width</span></button>
 		</div>
 	</div>
 
@@ -128,263 +127,604 @@
 			});"><span>confirm system / bottom</span></button>
 		</div>
 	</div>
-
 </section>
 
 <section class="sec-wrap">
-<h2 class="h-2">HTML Structure</h2>
-<h3 class="h-3">base type</h3>
-<div class="box-code">
-<pre>
-<code>
+	<h2 class="h-2">Source Code</h2>
+	<h3 class="h-3">HTML</h3>
+<pre class="box-code"><code class="html">
 //컨텐츠 팝업
-&lt;section <span class="na">class=</span><span class="s">"ui-modal"</span> <span class="na">id=</span><span class="s">"modal_name"</span> <span class="na">role=</span><span class="s">"dialog"</span> <span class="na">aria-hidden=</span><span class="s">"true"</span>&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-modal-wrap"</span>&gt;
-		&lt;header <span class="na">class=</span><span class="s">"ui-modal-header"</span>&gt;
-			&lt;h1 <span class="na">class=</span><span class="s">"ui-modal-tit"</span>&gt;&lt;span&gt;title&lt;/span&gt;&lt;/h1&gt;
-			&lt;button type="button" <span class="na">class=</span><span class="s">"ui-modal-close btn-close"</span>&gt;닫기&lt;/button&gt;
-		&lt;/header&gt;
-		&lt;div <span class="na">class=</span><span class="s">"ui-modal-cont"</span>&gt;
-			....
-		&lt;/div&gt;
-		&lt;div <span class="na">class=</span><span class="s">"ui-modal-footer"</span>&gt;
-			....
-		&lt;/div&gt;
-	&lt;/div&gt;
+&lt;section class="ui-modal" id="modalIdName"&gt;
+    &lt;div class="ui-modal-wrap"&gt;
+        &lt;header class="ui-modal-header"&gt;
+            &lt;h1 class="ui-modal-tit"&gt;modal title&lt;/h1&gt;
+			//onclick
+            &lt;button type="button" class="btn-close" aria-label="close" onclick="
+				netive.modal.hide({ 
+					id:'modalIdName', 
+					callback:function(v){ console.log('close callback', v); } 
+				});
+            "&gt;&lt;span &gt;close&lt;/span&gt;&lt;/button&gt;
+			//close button
+			&lt;button type="button" class="btn-close ui-modal-close" aria-label="close"&gt;&lt;span &gt;close&lt;/span&gt;&lt;/button&gt;
+        &lt;/header&gt;
+        &lt;div class="ui-modal-body"&gt;
+            ...
+        &lt;/div&gt;
+        &lt;div class="ui-modal-footer"&gt;
+            &lt;div class="btn-wrap"&gt;
+                &lt;button type="button" class="btn-base"&gt;
+                    &lt;span&gt;취소&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button type="button" class="btn-base"&gt;
+                    &lt;span&gt;확인&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
 &lt;/section&gt;
 
 //시스템알림 팝업 (자동 생성됨)
-&lt;div class="ui-modal type-system" id="uiSystemModal"&gt;
-    &lt;div class="ui-modal-wrap"&gt;
+&lt;div class="ui-modal type-system type-confirm n0 current ready ps-center open" id="uiSystemModal" data-remove="true" data-n="0" data-scrolltop="0" role="dialog"&gt;
+	&lt;div class="ui-modal-wrap"&gt;
 		&lt;div class="ui-modal-body"&gt;
-			....
+			...
 		&lt;/div&gt;
 		&lt;div class="ui-modal-footer"&gt;
 			&lt;div class="btn-wrap"&gt;
-				&lt;button type="button" class="btn-base ui-modal-cancel"&gt;&lt;span&gt;Cancel&lt;span&gt;&lt;/button&gt;
-				&lt;button type="button" class="btn-base ui-modal-confirm"&gt;&lt;span&gt;Ok&lt;span&gt;&lt;/button&gt;
+				&lt;button type="button" class="btn-base-m text ui-modal-cancel"&gt;
+					&lt;span&gt;Cancel&lt;/span&gt;
+				&lt;/button&gt;
+				&lt;button type="button" class="btn-base-m text primary ui-modal-confirm"&gt;
+					&lt;span&gt;Ok&lt;/span&gt;
+				&lt;/button&gt;
 			&lt;/div&gt;
 		&lt;/div&gt;
-    &lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="ui-modal-dim"&gt;&lt;/div&gt;
 &lt;/div&gt;
-</code>
-</pre>
-</div>
+</code></pre>
 
-<h2 class="h-2">CSS Style</h2>
-<h3 class="h-3">base style</h3>
-<div class="box-code">
-<pre>
-<code>
-.ui-modal.n1 {z-index:201;}
-.ui-modal.n2 {z-index:202;}
-.ui-modal.n3 {z-index:203;}
-.ui-modal.n4 {z-index:204;}
-.ui-modal.n5 {z-index:205;}
-.ui-modal {display:none; position:fixed; top:0; left:0; z-index:200; width:100%; height:100%; overflow:hidden; overflow-y:scroll; }
-.ui-modal.ready {display:flex;}
-.ui-modal.ready.current:after{content:""; display:block; position:fixed; top:0; left:0; width:100%; height:100%; opacity:0; background:rgba(0,0,0,.5); }
-.ui-modal.ready.open.current:after {animation-name:fadeIn; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
-.ui-modal.ready.close:after {animation-name:fadeOut; animation-duration:.2s; animation-iteration-count:1; animation-timing-function:linear; animation-fill-mode: forwards;}
-.ui-modal-wrap {opacity:0; box-shadow:0 5px 10px rgba(0,0,0,0.5); position:relative; z-index:1; background:#fff;}
-.ui-modal-wrap {width:400px}
-.ui-modal.ps-center.is-over {align-items:flex-start;}
-.ui-modal.ps-center.is-over .ui-modal-wrap {margin:20px 0;}
-.ui-modal.ps-center {justify-content:center; align-items:center;}
-.ui-modal.ps-center .ui-modal-wrap {transition:opacity 0.2s ease-in, top 0.2s ease-in; top:-300px;}
-.ui-modal.open.ps-center .ui-modal-wrap {opacity:1; top:0;}
-.ui-modal.ps-top {justify-content:center; align-items:flex-start;}
-.ui-modal.ps-top .ui-modal-wrap {top:-100px; transition:opacity 0.2s ease-in, top 0.2s ease-in;}
-.ui-modal.open.ps-top .ui-modal-wrap {top:10px; opacity:1;}
-.ui-modal.ps-bottom {justify-content:center; align-items:flex-end;}
-.ui-modal.ps-bottom .ui-modal-wrap {bottom:-100px; transition:opacity 0.2s ease-in, bottom 0.2s ease-in;}
-.ui-modal.open.ps-bottom .ui-modal-wrap {bottom:10px; opacity:1;}
-.ui-modal.ps-center.type-system .ui-modal-wrap {transition:opacity 0.2s ease-in; top:0; }
-.ui-modal.open.ps-center.type-system .ui-modal-wrap {opacity:1; top:0;}
-.type-system .ui-modal-wrap {width:250px; text-align:center; font-size:14px;}
-.type-system .ui-modal-wrap strong{font-weight:900;}
-.ui-modal-header {position:relative; top:0; left:0; width:100%; height:40px; background:#444; color:#fff; padding:7px 35px 0 15px; border-bottom:1px solid #ccc;}
-.ui-modal-header h1 {font-size:16px; font-weight:500;}
-.ui-modal-header .btn-close {position:absolute; right:9px; top:9px; border:0;}
-.ui-modal-body {position:relative; margin-top:0; padding:20px 15px;}
-.ui-modal-footer {position:relative; margin-top:0; padding:10px 15px}
-.ui-modal-footer .btn-wrap{margin:0;}
+	<h3 class="h-3">CSS</h3>
+<pre class="box-code"><code class="css">
+/* ui modal : base */
+.scroll-no {
+	overflow: hidden;
+	padding-right: 1.7rem;
+}
 
-.device-mobile .ui-modal.type-full.ps-center{justify-content:center; align-items:flex-start;}
-.device-mobile .ui-modal.type-full .ui-modal-wrap {margin:0; width:100%; height:auto; min-height:100%; position:relative; left:0; top:auto; bottom:-100vh; transition:opacity 0.2s ease-in, bottom 0.2s ease-in; overflow:hidden; border-radius:0;}
-.device-mobile .ui-modal.open.type-full .ui-modal-wrap {bottom:0; opacity:1; top:auto;}
-.device-mobile .ui-modal-footer{padding:10px 15px;}
-.device-mobile .ui-modal.open.ps-top .ui-modal-wrap {top:0; opacity:1;}
-.device-mobile .ui-modal.open.ps-bottom .ui-modal-wrap {bottom:0; opacity:1;}
-.device-mobile .ui-modal.ps-center.is-over .ui-modal-wrap {margin:0;}
-</code>
-</pre>
-</div>
+.ui-modal.n1 {
+	z-index: 201;
+}
 
-<h2 class="h-2">Javascript</h2>
-<h3 class="h-3">netive.modal.show</h3>
-<h4 class="h-4">content modal option</h4>
-<div class="box-code">
-<pre>
-<code>
-netive<span class="na">.modal.show</span>({ <span class="s">
+.ui-modal.n2 {
+	z-index: 202;
+}
+
+.ui-modal.n3 {
+	z-index: 203;
+}
+
+.ui-modal.n4 {
+	z-index: 204;
+}
+
+.ui-modal.n5 {
+	z-index: 205;
+}
+
+.ui-modal {
+	display: none;
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 200;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	overflow-y: auto;
+}
+
+.ui-modal.ready {
+	display: flex;
+}
+
+.ui-modal.ready .ui-modal-dim {
+	content: "";
+	display: block;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	background: rgba(0, 0, 0, .5);
+}
+.ui-modal.open .ui-modal-dim{
+	opacity: 1;
+}
+.ui-modal.ps-center.is-over {
+	align-items: flex-start;
+}
+
+.ui-modal.ps-center.is-over .ui-modal-wrap {
+	margin: 20px 0;
+}
+
+.ui-modal.ps-center {
+	justify-content: center;
+	align-items: center;
+}
+
+.ui-modal.ps-top {
+	justify-content: center;
+	align-items: flex-start;
+	overflow: hidden;
+}
+
+.ui-modal.ps-bottom {
+	justify-content: center;
+	align-items: flex-end;
+	overflow: hidden;
+}
+
+.ui-modal-wrap {
+	max-width: 90rem;
+	opacity: 0;
+	box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
+	position: relative;
+	z-index: 1;
+	background: #fff;
+	margin: 2rem;
+}
+
+.type-full .ui-modal-wrap,
+.size-mobile .ui-modal.ps-top .ui-modal-wrap,
+.size-mobile .ui-modal.ps-bottom .ui-modal-wrap {
+	margin: 0;
+	width: 100%;
+}
+
+.ui-modal.ps-top .ui-modal-wrap {
+	margin-top: 1rem;
+}
+
+.ui-modal.ps-bottom .ui-modal-wrap {
+	margin-bottom: 1rem;
+}
+
+.ui-modal.ready.open {
+	animation-name: fadeIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ui-modal.ready.close {
+	animation-name: fadeOut;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ui-modal.type-full.open.ps-center .ui-modal-wrap {
+	animation-name: slideUpIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ui-modal.type-full.close.ps-center .ui-modal-wrap {
+	animation-name: slideUpOut;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+
+.ui-modal.open.ps-center .ui-modal-wrap {
+	animation-name: scaleIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ui-modal.close.ps-center .ui-modal-wrap {
+	animation-name: scaleOut;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ui-modal.close.ps-top .ui-modal-wrap {
+	animation-name: slideDownOut;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ui-modal.open.ps-top .ui-modal-wrap {
+	animation-name: slideDownIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ui-modal.close.ps-bottom .ui-modal-wrap {
+	animation-name: slideUpOut;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ui-modal.open.ps-bottom .ui-modal-wrap {
+	animation-name: slideUpIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ui-modal.close.ps-center.type-system .ui-modal-wrap {
+	animation-name: slideDownOut;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ui-modal.open.ps-center.type-system .ui-modal-wrap {
+	animation-name: slideDownIn;
+	animation-duration: .2s;
+	animation-iteration-count: 1;
+	animation-timing-function: linear;
+	animation-fill-mode: forwards;
+}
+
+.ie9 .ui-modal.open {
+	display: block;
+}
+
+.ie9 .ui-modal.open .ui-modal-wrap {
+	opacity: 1;
+	margin: 0 auto;
+	transform: translate(0, -50%);
+	top: 50%
+}
+
+.ui-modal.type-system .ui-modal-wrap {
+	width: auto;
+	text-align: center;
+	font-size: 1.4rem;
+}
+
+.ui-modal.type-system .ui-modal-wrap strong {
+	font-weight: 900;
+}
+
+.ui-modal-header {
+	position: relative;
+	top: 0;
+	left: 0;
+	width: 100%;
+	min-height: 4rem;
+	background: var(--primary);
+
+	padding: .8rem 3.5rem 1.2rem 1.6rem;
+	border-bottom: 1px solid #ccc;
+}
+
+.ui-modal-header h1 {
+	font-size: 1.6rem;
+	font-weight: 500;
+	color: #fff;
+}
+
+.ui-modal-header .btn-close {
+	position: absolute;
+	right: .8rem;
+	top: .8rem;
+	border: 0;
+	font-family: 'Material Icons';
+	color: #fff;
+}
+
+.ui-modal-body {
+	position: relative;
+	margin-top: 0;
+	padding: 15px;
+}
+
+.ui-modal-footer {
+	position: relative;
+	margin-top: 0;
+	padding: 10px 15px
+}
+
+.ui-modal-footer .btn-wrap {
+	margin: 0;
+}
+
+.device-mobile .scroll-no {
+	overflow: hidden;
+	padding-right: 0;
+}
+
+.device-mobile .ui-modal-wrap {
+	margin: 2rem;
+}
+
+.device-mobile .ui-modal.ps-top .ui-modal-wrap {
+	margin-top: 0;
+}
+
+.device-mobile .ui-modal.ps-bottom .ui-modal-wrap {
+	margin-bottom: 0;
+}
+
+.device-mobile .ui-modal.type-full.ps-center {
+	justify-content: center;
+	align-items: flex-start;
+}
+
+.device-mobile .ui-modal.type-full .ui-modal-wrap {
+	margin: 0;
+	width: 100%;
+	height: auto;
+	min-height: 100%;
+	position: relative;
+	left: 0;
+	top: auto;
+	bottom: -10vh;
+	transition: opacity 0.2s ease-in, bottom 0.2s ease-in;
+	overflow: hidden;
+	border-radius: 0;
+	opacity: 0;
+}
+
+.device-mobile .ui-modal.open.type-full .ui-modal-wrap {
+	bottom: 0;
+	opacity: 1;
+	top: auto;
+}
+
+.device-mobile .ui-modal-footer {
+	padding: 10px 15px;
+}
+
+.device-mobile .ui-modal.ps-top .ui-modal-wrap,
+.device-mobile .ui-modal.ps-bottom .ui-modal-wrap {
+	margin: 0;
+}
+
+.device-mobile .ui-modal.open.ps-top .ui-modal-wrap {
+	top: 0;
+}
+
+.device-mobile .ui-modal.open.ps-bottom .ui-modal-wrap {
+	bottom: 0;
+}
+
+.device-mobile .ui-modal.ps-center.is-over .ui-modal-wrap {
+	margin: 0;
+}
+	
+</code></pre>
+
+	<h3 class="h-3">Javascript</h3>
+	<h4 class="h-4">base show</h4>
+<pre class="box-code"><code class="javascript">
+//base modal
+netiv.modal.show({ 
 	id:'IDname', 
 	type: 'normal',
-	wrap: $('body'),
-	moblieFull: false,
+	full: false,
 	ps: 'center',
 	src: false,
 	remove: false,
 	width: false,
 	height: false,
-	innerScroll: false,
 	mg: 10,
-	callback:function() { console.log('open callback'); },
-	closeCallback:function() { console.log('close callback'); },
-	endfocus:false</span> 
+	callback: function() { console.log('callback'); },
+	endfocus: false //document.querySelector('...'),
 });
-</code>
-</pre>
-</div>
-<div class="tbl-base type-option">
-	<table>
-		<caption>
-			<strong>netive.uiModal 옵션 설명</strong>
-			<span class="ui-caption"></span>
-		</caption>
-		<colgroup>
-			<col class="col-xs">
-			<col class="col-xs">
-			<col class="col-xs">
-			<col class="col-auto">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">Options</th>
-				<th scope="col">Type</th>
-				<th scope="col">Default</th>
-				<th scope="col">Explanation</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="nec">
-				<th scope="row">id:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>(필수) ui-modal의 아이디명 기입</td>
-			</tr>
-			<tr>
-				<th scope="row">type:</th>
-				<td>[string]</td>
-				<td>'normal'</td>
-				<td>
-					<ul>
-					<li>'normal' : 콘텐츠 모달</li>
-					<li>'alert' : 시스템 팝업</li>
-					<li>'confirm' : 시스템 팝업</li>
-					</ul>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">wrap:</th>
-				<td>[string][object]</td>
-				<td>$('body')</td>
-				<td>모달창 코드가 생성될 위치</td>
-			</tr>
-			<tr>
-				<th scope="row">ps:</th>
-				<td>[string]</td>
-				<td>'center'</td>
-				<td>모달 레이어 팝업 나타날 위치 설정
-					<ul>
-					<li>'top' : 상단 위치</li>
-					<li>'center' : 중앙 위치</li>
-					<li>'bottom' : 하단 위치</li>
-					</ul>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">mobileFull:</th>
-				<td>[boolean]</td>
-				<td>false</td>
-				<td>mobile에서 전체 사이즈 모달 레이어 팝업 설정
-					<ul>
-					<li>true : 전체화면</li>
-					<li>false : 기본 사이즈</li>
-					</ul>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">src:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>Ajax로 파일을 불러올 url경로</ul>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">remove:</th>
-				<td>[boolean]</td>
-				<td>false</td>
-				<td>코드 삭제 여부</ul>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">width:</th>
-				<td>[number]</td>
-				<td></td>
-				<td>모달 레이어 팝업 가로 크기<br>
-					옵션이 없을 경우 모달 팝업의 크기
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">height:</th>
-				<td>[number]</td>
-				<td></td>
-				<td>모달 레이어 팝업 세로 크기<br>
-					옵션이 없을 경우 모달 팝업의 크기
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">innerScroll:</th>
-				<td>[boolean]</td>
-				<td>false</td>
-				<td>true 모달창 콘텐츠 내부에 스크롤 생성</td>
-			</tr>
-			<tr>
-				<th scope="row">mg:</th>
-				<td>[number]</td>
-				<td>10</td>
-				<td>모달창 상하 여백 크기</td>
-			</tr>
-			<tr>
-				<th scope="row">callback:</th>
-				<td>[function]</td>
-				<td>false</td>
-				<td>모달 레이어 팝업 오픈 시 콜백값 실행</td>
-			</tr>
-			<tr>
-				<th scope="row">closeCallback:</th>
-				<td>[function]</td>
-				<td>false</td>
-				<td>모달 레이어 팝업 닫을 시 콜백값 실행</td>
-			</tr>
-			<tr>
-				<th scope="row">endfocus:</th>
-				<td>[string]</td>
-				<td>document.activeElement</td>
-				<td>모달 레이어 팝업 닫을 시 포커스가 갈 위치의 아이디 값 설정<br>
-					기본으로 모달 레이어 팝업 띄우기 전 포커스로 설정되나 그 값도 없을 경우 body로 설정
-				</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
-<h4 class="h-4 mgt-m">system modal option</h4>
-<div class="box-code">
-<pre>
-<code>
-netive<span class="na">.modal.show</span>({ <span class="s">
-	id:'IDname', 
+</code></pre>
+	<div class="tbl-base type-option mgt-s">
+		<table>
+			<caption>
+				<strong>netive.uiModal 옵션 설명</strong>
+				<span class="ui-caption"></span>
+			</caption>
+			<colgroup>
+				<col class="col-xs">
+				<col class="col-xs">
+				<col class="col-xs">
+				<col class="col-auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">Options</th>
+					<th scope="col">Type</th>
+					<th scope="col">Default</th>
+					<th scope="col">Explanation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="nec">
+					<th scope="row">id:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>(필수) ui-modal의 아이디명 기입</td>
+				</tr>
+				<tr>
+					<th scope="row">type:</th>
+					<td>[string]</td>
+					<td>'normal'</td>
+					<td>
+						<ul class="bul-dot">
+							<li>'normal' : 콘텐츠 모달</li>
+							<li>'alert' : 시스템 팝업</li>
+							<li>'confirm' : 시스템 팝업</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">ps:</th>
+					<td>[string]</td>
+					<td>'center'</td>
+					<td>모달 레이어 팝업 나타날 위치 설정
+						<ul class="bul-dot">
+							<li>'top' : 상단 위치</li>
+							<li>'center' : 중앙 위치</li>
+							<li>'bottom' : 하단 위치</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">full:</th>
+					<td>[boolean]</td>
+					<td>false</td>
+					<td>mobile에서 전체 사이즈 모달 레이어 팝업 설정
+						<ul>
+						<li>true : 전체화면</li>
+						<li>false : 기본 사이즈</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">src:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>Ajax로 파일을 불러올 url경로</ul>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">remove:</th>
+					<td>[boolean]</td>
+					<td>false</td>
+					<td>코드 삭제 여부</ul>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">width:</th>
+					<td>[number]</td>
+					<td></td>
+					<td>모달 레이어 팝업 가로 크기<br>
+						옵션이 없을 경우 모달 팝업의 크기
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">height:</th>
+					<td>[number]</td>
+					<td></td>
+					<td>모달 레이어 팝업 세로 크기<br>
+						옵션이 없을 경우 모달 팝업의 크기
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">mg:</th>
+					<td>[number]</td>
+					<td>10</td>
+					<td>모달창 상하 여백 크기</td>
+				</tr>
+				<tr>
+					<th scope="row">callback:</th>
+					<td>[function]</td>
+					<td>false</td>
+					<td>모달 레이어 팝업 오픈 시 콜백값 실행</td>
+				</tr>
+				<tr>
+					<th scope="row">endfocus:</th>
+					<td>[string]</td>
+					<td>document.activeElement</td>
+					<td>모달 레이어 팝업 닫을 시 포커스가 갈 위치의 아이디 값 설정<br>
+						기본으로 모달 레이어 팝업 띄우기 전 포커스로 설정되나 그 값도 없을 경우 body로 설정
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<h4 class="h-4">base hide</h4>
+	<p>모달 레이어 팝업 닫을 시 사용</p>
+<pre class="box-code"><code class="javascript">
+netive.modal.hide({ 
+	id: 'modal_name', 
+	remove: false,
+	endfocus: document.querySelector('...'),
+	callback: function(v){ console.log(v) }
+});
+</code></pre>
+	<div class="tbl-base type-option mgt-s">
+		<table>
+			<caption>
+				<strong>netive.modal.hide 옵션 설명</strong>
+				<span class="ui-caption"></span>
+			</caption>
+			<colgroup>
+				<col class="col-xs">
+				<col class="col-xs">
+				<col class="col-xs">
+				<col class="col-auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">Options</th>
+					<th scope="col">Type</th>
+					<th scope="col">Default</th>
+					<th scope="col">Explanation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="nec">
+					<th scope="row">id:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>(필수) ui-modal의 아이디명 기입</td>
+				</tr>
+				<tr>
+					<th scope="row">remove:</th>
+					<td>[boolean]</td>
+					<td>false</td>
+					<td>모달팝업 콘텐츠 삭제 여부
+						<ul>
+						<li>true: 코드삭제</li>
+						<li>false: 미삭제</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">endfocus:</th>
+					<td>[string]</td>
+					<td>document.activeElement</td>
+					<td>모달팝업 닫을 시 포커스가 갈 위치의 아이디 값 설정<br>
+						기본으로 모달팝업 띄우기 전 포커스로 설정되나 그 값도 없을 경우 body로 설정
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">callback:</th>
+					<td>[function]</td>
+					<td></td>
+					<td>모달팝업 닫을 시 콜백함수 실행</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+
+	<h4 class="h-4">system show</h4>
+<pre class="box-code"><code class="javascript">
+netive.modal.show({ 
 	type: 'alert', //'confirm'
 	ps: 'center',
 
@@ -393,149 +733,82 @@ netive<span class="na">.modal.show</span>({ <span class="s">
 	sBtnCancelTxt: 'Cancel',
 	sZindex: false,
 	sClass: 'type-system',
-	sConfirmCallback: false,
-	sCancelCallback: false</span> 
+	sConfirmCallback: function() { console.log('callback'); },
+	sCancelCallback: function() { console.log('callback'); }
 });
-</code>
-</pre>
-</div>
-<div class="tbl-base type-option">
-	<table>
-		<caption>
-			<strong>netive.uiModal - system modal option 설명</strong>
-			<span class="ui-caption"></span>
-		</caption>
-		<colgroup>
-			<col class="col-xs">
-			<col class="col-xs">
-			<col class="col-xs">
-			<col class="col-auto">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">Options</th>
-				<th scope="col">Type</th>
-				<th scope="col">Default</th>
-				<th scope="col">Explanation</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="nec">
-				<th scope="row">sMessage:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>메시지 입력. 태그가능</td>
-			</tr>
-			<tr>
-				<th scope="row">sBtnConfirmTxt:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>confirm 버튼 명</td>
-			</tr>
-			<tr>
-				<th scope="row">sBtnCancelTxt:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>cancel 버튼 명</td>
-			</tr>
-			<tr>
-				<th scope="row">sZindex:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>zindex 값 지정</td>
-			</tr>
-			<tr>
-				<th scope="row">sClass:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>class 추가</td>
-			</tr>
-			<tr>
-				<th scope="row">sConfirmCallback:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>confirm 클릭 시 콜백</td>
-			</tr>
-			<tr>
-				<th scope="row">sCancelCallback:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>cancel 클릭 시 콜백</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+</code></pre>
+	<div class="tbl-base type-option mgt-s">
+		<table>
+			<caption>
+				<strong>netive.uiModal - system modal option 설명</strong>
+				<span class="ui-caption"></span>
+			</caption>
+			<colgroup>
+				<col class="col-xs">
+				<col class="col-xs">
+				<col class="col-xs">
+				<col class="col-auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">Options</th>
+					<th scope="col">Type</th>
+					<th scope="col">Default</th>
+					<th scope="col">Explanation</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="nec">
+					<th scope="row">sMessage:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>메시지 입력. 태그가능</td>
+				</tr>
+				<tr>
+					<th scope="row">sBtnConfirmTxt:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>confirm 버튼 명</td>
+				</tr>
+				<tr>
+					<th scope="row">sBtnCancelTxt:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>cancel 버튼 명</td>
+				</tr>
+				<tr>
+					<th scope="row">sZindex:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>zindex 값 지정</td>
+				</tr>
+				<tr>
+					<th scope="row">sClass:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>class 추가</td>
+				</tr>
+				<tr>
+					<th scope="row">sConfirmCallback:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>confirm 클릭 시 콜백</td>
+				</tr>
+				<tr>
+					<th scope="row">sCancelCallback:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>cancel 클릭 시 콜백</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
 
-
-<h3 class="h-3">netive.modal.hide</h3>
-<p>모달 레이어 팝업 닫을 시 사용</p>
-<div class="box-code">
-<pre>
-<code>
-netive<span class="na">.modal.hide</span>({ <span class="s">
-	id: 'modal_name', 
-	remove: false,
-	endfocus: 'idname', //$('#idname')
-	closeCallback: function(v){console.log(v)}</span> 
-});
-</code>
-</pre>
-</div>
-<div class="tbl-base type-option">
-	<table>
-		<caption>
-			<strong>netive.modal.hide 옵션 설명</strong>
-			<span class="ui-caption"></span>
-		</caption>
-		<colgroup>
-			<col class="col-xs">
-			<col class="col-xs">
-			<col class="col-xs">
-			<col class="col-auto">
-		</colgroup>
-		<thead>
-			<tr>
-				<th scope="col">Options</th>
-				<th scope="col">Type</th>
-				<th scope="col">Default</th>
-				<th scope="col">Explanation</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class="nec">
-				<th scope="row">id:</th>
-				<td>[string]</td>
-				<td></td>
-				<td>(필수) ui-modal의 아이디명 기입</td>
-			</tr>
-			<tr>
-				<th scope="row">remove:</th>
-				<td>[boolean]</td>
-				<td>false</td>
-				<td>모달팝업 콘텐츠 삭제 여부
-					<ul>
-					<li>true: 코드삭제</li>
-					<li>false: 미삭제</li>
-					</ul>
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">endfocus:</th>
-				<td>[string]</td>
-				<td>document.activeElement</td>
-				<td>모달팝업 닫을 시 포커스가 갈 위치의 아이디 값 설정<br>
-					기본으로 모달팝업 띄우기 전 포커스로 설정되나 그 값도 없을 경우 body로 설정
-				</td>
-			</tr>
-			<tr>
-				<th scope="row">closeCallback:</th>
-				<td>[function]</td>
-				<td></td>
-				<td>모달팝업 닫을 시 콜백함수 실행</td>
-			</tr>
-		</tbody>
-	</table>
-</div>
+	<h4 class="h-4">system hide</h4>
+	<p>모달 레이어 팝업 닫을 시 사용</p>
+<pre class="box-code"><code class="javascript">
+netive.modal.hideSystem();
+</code></pre>
 			
 </section>
 
