@@ -3519,17 +3519,10 @@ if (!Object.keys){
 			}
 	
 			const option = Object.assign({}, Global.dropdown.options, opt);
-			const id = option.id;
-			const ps = option.ps;
-			const hold = option.hold;
-			const area = option.area;
-			const src = option.src;
-			const offset = option.offset;
-			const openback = option.openback;
-			const closeback = option.closeback;
+			const {id, ps, hold, area, src, offset, openback, closeback} = option;
 
 			//ajax 
-			if (!!src && !$('[data-id="' + id + '"]').length) {
+			if (!!src && !doc.querySelector('[data-id="' + id + '"]')) {
 				Global.ajax.init({
 					area: area,
 					url: src,
@@ -3544,34 +3537,48 @@ if (!Object.keys){
 			
 			//set
 			function setDropdown(){
-				var $btn = $('#' + id),
-					$pnl = $('[data-id="'+ id +'"]'); 
+				const el_btn = doc.querySelector('#' + id);
+				const el_pnl = doc.querySelector('[data-id="'+ id +'"]'); 
 	
 				//set up
-				$btn.attr('aria-expanded', false)
-					.data('opt', { 
-						id: id, 
-						ps: ps,
-						hold: hold, 
-						openback: openback,
-						closeback: closeback,
-						offset: offset
-					});
-				$pnl.attr('aria-hidden', true).attr('aria-labelledby', id)
-					.data('opt', { 
-						id: id, 
-						ps: ps,
-						hold: hold, 
-						openback: openback,
-						closeback: closeback,
-						offset: offset
-					});
+				el_btn.setAttribute('aria-expanded', false);
+				el_btn.dataset.ps = ps;
+				el_btn.dataset.hold = hold;
+				el_btn.dataset.offset = offset;
+
+				el_pnl.setAttribute('aria-hidden', true);
+				el_pnl.setAttribute('aria-labelledby', id);
+				el_pnl.dataset.id = id;
+				el_pnl.dataset.ps = ps;
+				el_pnl.dataset.hold = hold;
+				el_pnl.dataset.offset = offset;
+
+				
+				// el_btn.attr('aria-expanded', false)
+				// 	.data('opt', { 
+				// 		id: id, 
+				// 		ps: ps,
+				// 		hold: hold, 
+				// 		openback: openback,
+				// 		closeback: closeback,
+				// 		offset: offset
+				// 	});
+
+				
+				// el_pnl.attr('aria-hidden', true).attr('aria-labelledby', id)
+				// 	.data('opt', { 
+				// 		id: id, 
+				// 		ps: ps,
+				// 		hold: hold, 
+				// 		openback: openback,
+				// 		closeback: closeback,
+				// 		offset: offset
+				// 	});
 				
 				//event
-				$btn.off('click.dp').on('click.dp', function(e){
-					e.preventDefault();
-					action(this);
-				});
+				el_btn.addEventListener('click', action);
+
+
 				$(doc).find('.ui-drop-close').off('click.dp').on('click.dp', function(e){
 					var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
 					Global.dropdown.toggle({ 
@@ -3590,13 +3597,13 @@ if (!Object.keys){
 				});
 
 				
-				function action(t) {
-					var $this = $(t),
-						btn_opt = $this.data('opt');
+				function action(e) {
+					e.preventDefault();
+					const that = e.currentTarget;
 	
-					$this.data('sct', $(doc).scrollTop());
+					that.dataset.sct = doc.documentElement.scrollTop;
 					Global.dropdown.toggle({ 
-						id: btn_opt.id 
+						id: that.id 
 					});
 				}
 			}
@@ -3606,39 +3613,37 @@ if (!Object.keys){
 				return false;
 			}
 			
-			var id = opt.id,
-				$btn = $('#' + id),
-				$pnl = $('.ui-drop-pnl[data-id="'+ id +'"]'),
-				defaults = $btn.data('opt'),
-				opt = $.extend(true, {}, defaults, opt),
-				
-				ps = opt.ps,
-				openback = opt.openback,
-				closeback = opt.closeback,
-				hold = opt.hold,
-				state = opt.state,
-				offset = opt.offset,
-				btnExpanded =  $btn.attr('aria-expanded'),
-				is_modal = !!$btn.closest('.ui-modal').length,
+			const id = opt.id;
+			const el_btn = doc.querySelector('#' + id);
+			const el_pnl = doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]');
+			let ps = el_btn.dataset.ps;
+			const hold = el_btn.dataset.hold;
+			const state = opt.state !== undefined ? opt.state : 'toggle';
+			const offset = el_btn.dataset.offset;
+			const btnExpanded =  el_btn.getAttribute('aria-expanded');
+			const is_modal = !!el_btn.closest('.ui-modal');
 	
-				btn_w = Math.ceil($btn.outerWidth()),
-				btn_h = Math.ceil($btn.outerHeight()),
+			const btn_w = Math.ceil(el_btn.offsetWidth);
+			const btn_h = Math.ceil(el_btn.offsetHeight);
 
-				btn_t = Math.ceil($btn.position().top) + parseInt($btn.css('margin-top')),
-				btn_l = Math.ceil($btn.position().left) + parseInt($btn.css('margin-left')),
+			const btn_t = Math.ceil(el_btn.getBoundingClientRect().top);
+			const btn_l = Math.ceil(el_btn.getBoundingClientRect().left);
 
-				pnl_w = Math.ceil($pnl.outerWidth()),
-				pnl_h = Math.ceil($pnl.outerHeight());
+			const pnl_w = Math.ceil(el_pnl.offsetWidth);
+			const pnl_h = Math.ceil(el_pnl.offsetHeight);
 	
 			//offset: ture 이거나 modal안의 dropdown 일때 position -> offset 으로 위치 값 변경
-			if (offset || is_modal) {
-				btn_t = Math.ceil($btn.offset().top);
-				btn_l = Math.ceil($btn.offset().left);
-				is_modal ? btn_t = btn_t - $(win).scrollTop(): '';
-			}
+			// if (offset || is_modal) {
+			// 	btn_t = Math.ceil(el_btn.offset().top);
+			// 	btn_l = Math.ceil(el_btn.offset().left);
+			// 	is_modal ? btn_t = btn_t - $(win).scrollTop(): '';
+			// }
 			
 			//test 
-			!!$btn.attr('data-ps') ? ps = $btn.attr('data-ps') : '';
+			
+			if (!!el_btn.dataset.ps) {
+				ps = el_btn.dataset.ps;
+			}
 			
 			if (state === 'open') {
 				btnExpanded = 'false';
@@ -3649,19 +3654,21 @@ if (!Object.keys){
 			btnExpanded === 'false' ? pnlShow(): pnlHide();
 
 			function pnlShow(){
-				var drop_inner = $btn.closest('.ui-drop-pnl').data('id');
-				
-				//dropdown in dropdown 인 경우
-				if (!!drop_inner) {
-					$('.ui-drop').not('#' + drop_inner).attr('aria-expanded', false);
-					$('.ui-drop-pnl').not('[data-id="' + drop_inner +'"]')
+				const in_pnl = el_btn.closest('.ui-drop-pnl');
+				if (!!in_pnl) {
+					//dropdown in dropdown 인 경우
+					const pnlID = in_pnl.dataset.id;
+
+					$('.ui-drop').not('#' + pnlID).attr('aria-expanded', false);
+					$('.ui-drop-pnl').not('[data-id="' + pnlID +'"]')
 							.attr('aria-hidden', true)
 							.attr('tabindex', -1)
 							.removeAttr('style');
 				} else {
 					Global.dropdown.hide();
 				}
-				
+
+
 				Global.focus.loop({
 					selector: doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]'),
 					callback:pnlHide
@@ -3670,73 +3677,96 @@ if (!Object.keys){
 				// hold ?	
 				// 	Global.focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
 				// 	Global.focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
-				$btn.attr('aria-expanded', true);				
+				el_btn.setAttribute('aria-expanded', true);				
 				
 				switch (ps) {
 					case 'BL': 
-						$pnl.css({ 
-							top: btn_t + btn_h, 
-							left: btn_l
-						}); 
+						console.log(btn_t + btn_h);
+						el_pnl.style.top = btn_t + btn_h + 'px';
+						el_pnl.style.left = btn_l + 'px';
 						break;
 					case 'BC': 
-						$pnl.css({ top: btn_t + btn_h, left: btn_l - ((pnl_w - btn_w) / 2) }); 
+						el_pnl.style.top = btn_t + btn_h + 'px';
+						el_pnl.style.left = btn_l - ((pnl_w - btn_w) / 2) + 'px';
 						break;
 					case 'BR': 
-						$pnl.css({ top: btn_t + btn_h, left: btn_l - (pnl_w - btn_w) }); 
+						el_pnl.style.top = btn_t + btn_h + 'px';
+						el_pnl.style.left = btn_l - (pnl_w - btn_w) + 'px';
 						break;
 					case 'TL': 
-						$pnl.css({ top: btn_t - pnl_h, left: btn_l }); 
+						el_pnl.style.top = btn_t - pnl_h + 'px';
+						el_pnl.style.left = btn_l + 'px';
 						break;
 					case 'TC': 
-						$pnl.css({ top: btn_t - pnl_h, left: btn_l - ((pnl_w - btn_w) / 2) }); 
+						el_pnl.style.top = btn_t - pnl_h + 'px';
+						el_pnl.style.left = btn_l + 'px';
 						break;
 					case 'TR': 
-						$pnl.css({ top: btn_t - pnl_h, left: btn_l - (pnl_w - btn_w) }); 
+						el_pnl.style.top = btn_t - pnl_h + 'px';
+						el_pnl.style.left =  btn_l - (pnl_w - btn_w) + 'px';
 						break;
 					case 'RT': 
-						$pnl.css({ top: btn_t, left: btn_l + btn_w }); 
+						el_pnl.style.top = btn_t + 'px';
+						el_pnl.style.left = btn_l + btn_w + 'px';
 						break;
 					case 'RM': 
-						$pnl.css({ top: btn_t - ((pnl_h - btn_h) / 2), left:  btn_l + btn_w  }); 
+						el_pnl.style.top = btn_t - ((pnl_h - btn_h) / 2) + 'px';
+						el_pnl.style.left = btn_l + btn_w + 'px';
 						break;
 					case 'RB': 
-						$pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l + btn_w }); 
+						el_pnl.style.top = btn_t - (pnl_h - btn_h) + 'px';
+						el_pnl.style.left = btn_l + btn_w + 'px';
 						break;
 					case 'LT': 
-						$pnl.css({ top: btn_t, left: btn_l - pnl_w }); 
+						el_pnl.style.top = btn_t + 'px';
+						el_pnl.style.left = btn_l - pnl_w + 'px';
 						break;
 					case 'LM': 
-						$pnl.css({ top: btn_t - ((pnl_h - btn_h) / 2), left: btn_l - pnl_w  }); 
+						el_pnl.style.top = btn_t - ((pnl_h - btn_h) / 2) + 'px';
+						el_pnl.style.left = btn_l - pnl_w + 'px';
 						break;
 					case 'LB': 
-						$pnl.css({ top: btn_t - (pnl_h - btn_h), left: btn_l - pnl_w }); 
+					el_pnl.style.top = btn_t - (pnl_h - btn_h) + 'px';
+						el_pnl.style.left = btn_l - pnl_w + 'px';
 						break; 
 					case 'CM': 
-						$pnl.css({ top: '50%', left: '50%', marginTop: (pnl_h / 2 ) * -1, marginLeft: (pnl_w / 2 ) * -1 }); 
+						el_pnl.style.top = '50%';
+						el_pnl.style.left = '50%';
+						el_pnl.style.marginTop = (pnl_h / 2 ) * -1 + 'px';
+						el_pnl.style.marginLeft = (pnl_w / 2 ) * -1 + 'px';
 						break;
 				}
 				
-				$pnl.attr('aria-hidden', false).addClass('on');
+				el_pnl.setAttribute('aria-hidden', false)
+				el_pnl.classList.add('on');
 
+				const elBody = doc.querySelector('body');
 				setTimeout(function(){
-					$('body').data('dropdownOpened',true).addClass('dropdownOpened');
+					elBody.dataset.dropdownOpened = 'true'
+					elBody.classList.add('dropdownOpened');
 					setTimeout(function(){
-						$pnl.focus();
+						el_pnl.focus();
 					},0);
 				},0);
 	
-				!!openback ? openback() : '';							
+				//!!openback ? openback() : '';							
 			}
 			function pnlHide(){
-				if ($('#' + id).closest('.ui-drop-pnl').length < 1) {
-					$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
+				const in_pnl = el_btn.closest('.ui-drop-pnl');
+				const elBody = doc.querySelector('body');
+
+				if (!in_pnl) {
+					elBody.dataset.dropdownOpened = 'false'
+					elBody.classList.remove('dropdownOpened');
 				}
 	
-				$btn.attr('aria-expanded', false).focus();
-				$pnl.attr('aria-hidden', true).attr('tabindex', -1).removeClass('on');
+				el_btn.setAttribute('aria-expanded', false)
+				el_btn.focus();
+				el_pnl.setAttribute('aria-hidden', true)
+				el_pnl.setAttribute('tabindex', -1)
+				el_pnl.classList.remove('on');
 				
-				!!closeback ? closeback() : '';
+				//!!closeback ? closeback() : '';
 			}
 
 			
