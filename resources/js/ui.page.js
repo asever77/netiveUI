@@ -179,14 +179,14 @@
                 width: $btn.attr('modal-width') === undefined ? false : $btn.attr('modal-width'), 
                 height: $btn.attr('modal-height') === undefined ? false : $btn.attr('modal-height'), 
                 innerScroll : $btn.attr('modal-scroll') === undefined ? false : $btn.attr('modal-scroll') === 'true' && true, 
-                closeCallback: function(v) { 
-                    //console.log('close callback', v); 
+                callbackClose: function(v) { 
+                    console.log('close callback', v); 
                 },
                 callback: function(v) { 
                     netive.scrollBar.init({
                         selector: $('#' + $btn.attr('modal-id')).find('.ui-scrollbar')
                     })
-                    //console.log('callback', v); 
+                    console.log('callback', v); 
                 }
             });
         });
