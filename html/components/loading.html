@@ -8,8 +8,37 @@
     <h2 class="h-2">Examples</h2>
     <div class="box-guide">
         <div class="btn-wrap">
-            <button type="button" class="btn-base " onclick="netive.loading.show({ styleClass:'clock', message:'<button type=\'button\' class=\'btn-base text\' onclick=\'netive.loading.hide();\'>loading close</button>' });"><span>Clock</span></button>
-            <button type="button" class="btn-base" onclick="netive.loading.show({ styleClass:'orbit', message:'<button type=\'button\' class=\'btn-base text\' onclick=\'netive.loading.hide();\'>loading close</button>' });"><span>Orbit</span></button>
+            <button type="button" class="btn-base " onclick="
+                netive.loading.show({ 
+                    styleClass:'clock', 
+                    message:'<button type=\'button\' class=\'btn-base text\' onclick=\'netive.loading.hide();\'>loading close</button>' 
+                });
+            "><span>Clock</span></button>
+            <button type="button" class="btn-base" onclick="
+                netive.loading.show({ 
+                    styleClass:'orbit', 
+                    message:'<button type=\'button\' class=\'btn-base text\' onclick=\'netive.loading.hide();\'>loading close</button>' 
+                });
+            "><span>Orbit</span></button>
+        </div>  
+    </div>
+    <div class="box-guide" id="loadingArea" style="position: relative; overflow: hidden;">
+        <h3 lang="h-3">In area</h3>
+        <div class="btn-wrap">
+            <button type="button" class="btn-base " onclick="
+                netive.loading.show({ 
+                    selector: document.querySelector('#loadingArea'),
+                    styleClass:'clock', 
+                    message:'<button type=\'button\' class=\'btn-base text\' onclick=\'netive.loading.hide();\'>loading close</button>' 
+                });
+            "><span>Clock</span></button>
+            <button type="button" class="btn-base" onclick="
+                netive.loading.show({ 
+                    selector: document.querySelector('#loadingArea'),
+                    styleClass:'orbit', 
+                    message:'<button type=\'button\' class=\'btn-base text\' onclick=\'netive.loading.hide();\'>loading close</button>' 
+                });
+            "><span>Orbit</span></button>
         </div>  
     </div>
 </section>
