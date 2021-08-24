@@ -503,8 +503,27 @@
     }
 
     netive.page.pageDropdown = function(){
-        
-        
+        $('.drop-ps-change').on('change', function(){
+            $(this).closest('.box-guide').find('.ui-drop').attr('data-ps', $(this).val());
+        });
+    
+        netive.dropdown.init({ 
+            id:'uiDrop1', 
+            ps:'BL',
+            src:'/netiveUI/html/components/dropdown_ajax.html',
+            dropExpanded: true,
+            openback: function(){
+                netive.tab.init({ 
+                    id: 'exeTab1', 
+                    current:0 
+                });
+                netive.dropdown.init({ 
+                    id:'uiDrop5', 
+                    ps:'RB',
+                    src:'/netiveUI/html/components/dropdown_ajax2.html',
+                });
+            }
+        });
     }
 
     netive.page.pageTab = function(){
