@@ -149,18 +149,18 @@
 			} 
 
 			netive.ajax.init({ 
-				area: $('.base-header'), 
+				area: document.querySelector('.base-header'), 
 				url:'/netiveUI/html/inc/header.html', 
 				page:true, 
 				callback:netive.common.header 
 			});
 			netive.ajax.init({ 
-				area: $('base-footer'), 
+				area: document.querySelector('base-footer'), 
 				url:'/netiveUI/html/inc/footer.html', 
 				page:true
 			});
 			netive.ajax.init({ 
-				area: $('.base-main'), 
+				area: document.querySelector('.base-main'), 
 				url: fristHref, 
 				page: true, 
 				effect: true,
@@ -303,8 +303,9 @@
 			$('.dep-2-btn').off('click.ajax').on('click.ajax', function(){
 				var href = this.getAttribute('data-href');
 				!!$('body').hasClass('nav-open') && netive.common.navOpen();
+				
 				netive.ajax.init({ 
-					area: $('.base-main'), 
+					area: document.querySelector('.base-main'), 
 					url: href, 
 					page: true, 
 					effect: 'page-change',
