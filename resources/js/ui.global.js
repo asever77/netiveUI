@@ -206,7 +206,6 @@ if (!Object.keys){
 			easeInOutBack: '0.680, -0.550, 0.265, 1.550'
 		}
 	}
-
 	Global.uiParts = {
 		//resize state
 		resizeState: function() {
@@ -372,6 +371,7 @@ if (!Object.keys){
 
 	/**
 	 * loading show/hide
+	 * modify: 2021-08-24
 	 */
 	Global.loading = {
 		timerShow : {},
@@ -455,30 +455,26 @@ if (!Object.keys){
 			contType: 'application/x-www-form-urlencoded',
 			dataType: 'html'
 		},
-		init : function(opt){
-			if (opt === undefined) {
+		init : function(option){
+			if (option === undefined) {
 				return false;
 			}
 
-			var xhr = new XMLHttpRequest();	
-			var opt = $.extend(true, {}, this.options, opt);
-			var $area = opt.area;
-			var loading = opt.loading;
-			var effect = opt.effect;
-			var callback = opt.callback || false;
-			var errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
+			const xhr = new XMLHttpRequest();	
+			const opt = Object.assign({}, this.options, option);
+			const {area, loading, effect, type, url, page, add, prepend, mimeType, contType} = opt;
+			const callback = opt.callback || false;
+			const errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
 	
-			if (loading) {
-				Global.loading.show();
-			}
-	
-			if (!!effect) {
-				$area.removeClass(effect + ' action');
-				$area.addClass(effect);
+			loading && Global.loading.show();
+
+			if (!!effect && !!document.querySelector(effect)) {
+				area.classList.remove(effect + ' action');
+				area.classList.add(effect);
 			}
 
-			xhr.open(opt.type, opt.url);
-			xhr.setRequestHeader(opt.mimeType, opt.contType);
+			xhr.open(type, url);
+			xhr.setRequestHeader(mimeType, contType);
 			xhr.send();
 			xhr.onreadystatechange = function () {
 				if (xhr.readyState !== XMLHttpRequest.DONE) {
@@ -486,69 +482,30 @@ if (!Object.keys){
 				}
 
 				if (xhr.status === 200) {
-					if (loading) {
-						Global.loading.hide();
-					}
-	
-					if (opt.page) {
-						console.log($area);
-						if (opt.add){
-							opt.prepend ? 
-								$area.insertAdjacentHTML('afterbegin', xhr.responseText) : 
-								$area.insertAdjacentHTML('beforeend', xhr.responseText);
+					loading && Global.loading.hide();
+
+					if (page) {
+						if (add){
+							prepend ? 
+								area.insertAdjacentHTML('afterbegin', xhr.responseText) : 
+								area.insertAdjacentHTML('beforeend', xhr.responseText);
 						} else {
-							$area.html(xhr.responseText);
+							console.log(area);
+							
+							area.innerHTML = xhr.responseText;
 						}
 
 						callback && callback();
-						effect && $area.addClass('action');
+						effect && area.classList.add('action');
 					} else {
 						callback && callback(xhr.responseText);
 					}
 
 				} else {
-					if (loading) {
-						Global.loading.hide();
-					}
+					loading && Global.loading.hide();
 					errorCallback ? errorCallback() : '';
 				}
 			};
-	
-			// $.ajax({
-			// 	type: opt.type,
-			// 	url: opt.url,
-			// 	cache: opt.cache,
-			// 	async: opt.async,  
-			// 	headers: {
-			// 		"cache-control": "no-cache",
-			// 		"pragma": "no-cache"
-			// 	},
-			// 	error: function (request, status, err) {
-			// 		if (loading) {
-			// 			Global.uiLoading({
-			// 				visible: false
-			// 			});
-			// 		}
-			// 		errorCallback ? errorCallback() : '';
-			// 	},
-			// 	success: function (v) {
-			// 		if (loading) {
-			// 			Global.uiLoading({
-			// 				visible: false
-			// 			});
-			// 		}
-	
-			// 		if (opt.page) {
-			// 			opt.add ? opt.prepend ? $id.prepend(v) : $id.append(v) : $id.html(v);
-			// 			callback && callback();
-			// 			effect && $id.addClass('action');
-			// 		} else {
-			// 			callback && callback(v);
-			// 		}
-			// 	},
-			// 	complete: function(){
-			// 	}
-			// });
 		}
 	}
 
@@ -3570,7 +3527,7 @@ if (!Object.keys){
 			const offset = option.offset;
 			const openback = option.openback;
 			const closeback = option.closeback;
-			
+
 			//ajax 
 			if (!!src && !$('[data-id="' + id + '"]').length) {
 				Global.ajax.init({
@@ -3706,7 +3663,7 @@ if (!Object.keys){
 				}
 				
 				Global.focus.loop({
-					selector: $('.ui-drop-pnl[data-id="'+ id +'"]'),
+					selector: doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]'),
 					callback:pnlHide
 				});
 				//focus hold or sense
