@@ -356,6 +356,12 @@
 
 
 /* ui-loading */
+.ui-loading.type-area{
+    position: absolute;
+}
+.ui-loading.type-area::after{
+    position: absolute !important;
+}
 .ui-loading {
     display: none;
     position: fixed;
