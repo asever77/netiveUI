@@ -3943,20 +3943,16 @@ if (!Object.keys){
 
 	Global.modal = {
 		options : {
-			/* type : normal, system */
-			type: 'normal',
-			// wrap: false,
+			type: 'normal', /* type : normal, system */
 			full: false,
 			ps: 'center',
 			src: false,
 			remove: 'false',
 			width: false,
 			height: false,
-			innerScroll: false,
 			mg: 20,
-
-			
 			callback:false,
+
 			closeCallback:false,
 			endfocus:false,
 
@@ -3970,41 +3966,20 @@ if (!Object.keys){
 		},
 		optionsClose : {
 			remove: 'false',
+			callback: false,
 			endfocus: false
 		},
 		show: function(option){
 			const opt = Object.assign({}, Global.modal.options, option);
-
 			const elBody = doc.querySelector('body');
-			
-			const type = opt.type;
-			const src = opt.src;
-			const full = opt.full;
-			const ps = opt.ps;
-			
-			const w = opt.width;
-			const h = opt.height;
-			const innerScroll = opt.innerScroll;
-
-			const scr_t = doc.documentElement.scrollTop;
-
-			let mg = opt.mg;
-			let id = opt.id;
-			let remove = opt.remove;
+			const {type, src, full, ps, width, height, callback, callbackClose} = opt;
+			let {mg, id, remove} = opt;
 			let endfocus = opt.endfocus === false ? document.activeElement : opt.endfocus;
-
-			const callback = opt.callback;
-			const closeCallback = opt.closeCallback;
+			const scr_t = doc.documentElement.scrollTop;
 			let timer;
 			
-			const sMessage = opt.sMessage;
-			const sBtnConfirmTxt = opt.sBtnConfirmTxt;
-			const sBtnCancelTxt = opt.sBtnCancelTxt;
-			const sZindex = opt.sZindex;
-			const sClass = opt.sClass;
-
-			const sConfirmCallback = opt.sConfirmCallback;
-			const sCancelCallback = opt.sCancelCallback;
+			//system
+			const {sMessage, sBtnConfirmTxt, sBtnCancelTxt, sZindex, sClass, sConfirmCallback, sCancelCallback} = opt;
 
 			//setting
 			if (type === 'normal') {
@@ -4029,12 +4004,6 @@ if (!Object.keys){
 				id = 'uiSystemModal';
 				makeSystemModal();
 			}
-
-			
-
-			// if (endfocus === 'body') {
-			// 	endfocus = elBody.dataset.active;
-			// }
 
 			function makeSystemModal(){
 				let htmlSystem = '';
@@ -4064,44 +4033,49 @@ if (!Object.keys){
 			}
 
 			function act(){
-				const elModals = doc.querySelectorAll('.ui-modal');
 				const elModal = doc.querySelector('#' + id);
-				const elModalWrap = elModal.querySelector('.ui-modal-wrap');
-				const elModalBody = elModalWrap.querySelector('.ui-modal-body');
-				const elModalHeader = elModalWrap.querySelector('.ui-modal-header');
-				const elModalFooter = elModalWrap.querySelector('.ui-modal-footer');
-				const elModalTit = elModal.querySelector('.ui-modal-tit');
+				const elModals = doc.querySelectorAll('.ui-modal');
 
 				for (let md of elModals) {
 					md.classList.remove('current');
 					elBody.classList.add('scroll-no');
 				}
 				
-				if (!elModal.querySelector('.ui-modal-dim')) {
-					elModal.insertAdjacentHTML('beforeend','<div class="ui-modal-dim"></div>');
-				}
-				
+				(!elModal.querySelector('.ui-modal-dim')) && elModal.insertAdjacentHTML('beforeend','<div class="ui-modal-dim"></div>');
+
+				const elModalWrap = elModal.querySelector('.ui-modal-wrap');
+				const elModalBody = elModalWrap.querySelector('.ui-modal-body');
+				const elModalHeader = elModalWrap.querySelector('.ui-modal-header');
+				const elModalFooter = elModalWrap.querySelector('.ui-modal-footer');
+				const elModalTit = elModal.querySelector('.ui-modal-tit');
+				const elModalDim = elModal.querySelector('.ui-modal-dim');
+				const elModalCancel = elModal.querySelector('.ui-modal-cancel');
+				const elModalConfirm = elModal.querySelector('.ui-modal-confirm');
+				const elModalClose = elModal.querySelector('.ui-modal-close');
 				const elModalOpen = doc.querySelectorAll('.ui-modal.open');
 				const openLen = !!elModalOpen ? elModalOpen.length : 0;
 
-				elModal.setAttribute('role', 'dialog');
+				doc.querySelector('html').classList.add('is-modal');
 				elModal.classList.add('n' + openLen);
 				elModal.classList.remove('close');
+				elModal.classList.remove('type-full');
+				elModal.classList.remove('ps-center');
+				elModal.classList.remove('ps-top');
+				elModal.classList.remove('ps-bottom');
 				elModal.classList.add('current');
+				elModal.classList.add('ready');
 				elModal.dataset.remove = remove;
 				elModal.dataset.n = openLen;
 				elModal.dataset.scrolltop = scr_t;
+				elModal.setAttribute('role', 'dialog');
 				!!elModalTit && elModalTit.setAttribute('tabindex', 0);
-				
-				//elModal.dataset.closecallback = closeCallback;
-
-				doc.querySelector('html').classList.add('is-modal');
-				elModal.classList.add('ready');
 				elModalBody.style.overflowY = 'auto';
 
 				const headerH = !!elModalHeader ? elModalHeader.offsetHeight : 0;
 				const footerH = !!elModalFooter ? elModalFooter.offsetHeight : 0;
+				const space = !!full ? 0 : mg;
 
+				//[set] position
 				switch (ps) {
 					case 'center' :
 						elModal.classList.add('ps-center');
@@ -4114,22 +4088,12 @@ if (!Object.keys){
 						break;
 				}
 				
-				if (!full) {
-					//lyaer modal
-					elModalBody.classList.add('is-scrollable');
-				} else {
-					//full modal
-					elModal.classList.add('type-full');
-					mg = 0;
-					!!w ? elModalWrap.style.width = w : '';
-				}
-
-				if (!h) {
-					elModalBody.style.height = '100%';
-					elModalBody.style.maxHeight = win.innerHeight - (headerH + footerH + (mg * 2))  + 'px';
-				} else {
-					elModalBody.style.height = h + 'px';
-				}
+				//[set] full type / width & height
+				(!!full) && elModal.classList.add('type-full');
+				(!!width) ? elModalWrap.style.width = width : '';
+				elModalBody.style.height = (!height) ? '100%' : height + 'px';
+				elModalBody.style.maxHeight = win.innerHeight - (headerH + footerH + (space * 2))  + 'px';
+				elModalBody.style.maxWidth = win.innerWidth - (space * 2) + 'px';
 				
 				clearTimeout(timer);
 				timer = setTimeout(function(){
@@ -4138,96 +4102,58 @@ if (!Object.keys){
 					});
 
 					elModal.classList.add('open');
-
-					//z-index 지정 시
-					!!sZindex ? elModal.style.zIndex = sZindex : '';
-
-					!!elModalTit && elModalTit.focus();
-					elModal.querySelector('.ui-modal-dim').addEventListener('click', Global.modal.dimAct);
-
-					win.innerHeight < elModal.querySelector('.ui-modal-wrap').offsetHeight ? 
+					(!!sZindex) ? elModal.style.zIndex = sZindex : '';
+					(win.innerHeight < elModalWrap.offsetHeight) ? 
 						elModal.classList.add('is-over'):
 						elModal.classList.remove('is-over');
+
+					!!elModalTit && elModalTit.focus();
+					!!callback && callback(id);
+
+					//dim event
+					elModalDim.addEventListener('click', Global.modal.dimAct);
 				},150);
 
-				// close button
-				const elCloses = doc.querySelectorAll('.ui-modal-close');
- 
-				for (let elClose of elCloses) {
-					elClose.addEventListener('click', closeAct);
+				//close button event
+				if (!!elModalClose) {
+					elModalClose.addEventListener('click', closeAct);
 				}
-
 				function closeAct(e){
 					const elThis = e.currentTarget;
 					const elThisModal = elThis.closest('.ui-modal');
+
 					netive.modal.hide({ 
 						id: elThisModal.id, 
 						remove: remove,
-						closeCallback: closeCallback
+						callbackClose: callbackClose
 					});
 				}
 
-				const elCofirms = doc.querySelectorAll('.ui-modal-confirm');
-				const elCancels = doc.querySelectorAll('.ui-modal-cancel');
-				/*
-				for (let el of elCofirms) {
-					el.addEventListener('click', sConfirmCallback);
-				}
-
-				for (let el of elCancels) {
-					el.addEventListener('click', sCancelCallback);
-				}
-
-	
-				for (let el of elModals) {
-					const elModalBtns = el.querySelectorAll('button');
-					const elModalAs = el.querySelectorAll('a');
-
-					console.log(elModalBtns);
-
-					for (let el2 of elModalBtns) {
-						el2.addEventListener('click', sCancelCallback);
-					}
-					for (let el3 of elModalAs) {
-						el3.addEventListener('click', sCancelCallback);
-					}
-				}
-				*/
-				
-
-				function active(e){
-					const elThis = e.currentTarget;
-					const elModal = elThis.closest('.ui-modal');
-					elModal.dataset.active = elThis;
-				}
-
+				//systyem modal confirm & cancel callback
+				elModalConfirm && elModalConfirm.addEventListener('click', sConfirmCallback);
+				elModalCancel && elModalCancel.addEventListener('click', sCancelCallback);
+			
+				//transition end event
 				elModalWrap.addEventListener('transitionend', modalTrEnd);
- 				
 				function modalTrEnd(){
-					console.log('modalTrEnd');
 					if (!!full) {
 						elModal.classList.add('fix-header');
 						elModalBody.style.paddingTop = (headerH + 10)  + 'px';
 					}
 				}
 
-
+				//resize event
 				let timerResize;
-
 				win.addEventListener('resize', winResize);
-
 				function winResize() {
 					clearTimeout(timerResize);
 					timerResize = setTimeout(function(){
 						Global.modal.reset();
 					}, 200);
 				}
-
 			}
 		},
 		dimAct: function(e){
-			console.log('dimAct----------------');
-			const elTarget = e.target;
 			const elOpens = doc.querySelectorAll('.ui-modal.open');
 			let openN = [];
 
@@ -4238,67 +4164,54 @@ if (!Object.keys){
 			const elCurrent = doc.querySelector('.ui-modal.open[data-n="'+ Math.max.apply(null, openN) +'"]');
 			const currentID = elCurrent.id;
 
-			console.log(elCurrent);
-
+			//system modal 제외
 			if (currentID !== 'uiSystemModal') {
 				netive.modal.hide({ 
 					id: currentID, 
 					remove: elCurrent.dataset.remove
 				});
 			}
-			console.log('-----------------dimAct');
 		},
-		reset: function(opt) {
-			var $modal = $('.ui-modal.open.ps-center');
+		reset: function() {
+			const elModals = doc.querySelectorALl('.ui-modal.open.ps-center');
 
-			for (var i = 0, len = $modal.length; i < len; i++) {
-				var $this = $modal.eq(i);
-				var $head = $this.find('.ui-modal-header');
-				var $body = $this.find('.ui-modal-body');
-				var $foot = $this.find('.ui-modal-footer');
-				var h_win = $(win).outerHeight();
-				var h_head = $head.outerHeight();
-				var h_foot = $foot.outerHeight();
+			for (let elModal of elModals) {
+				const elModalHead = elModal.querySelector('.ui-modal-header');
+				const elModalBody = elModal.querySelector('.ui-modal-body');
+				const elModalFoot = elModal.querySelector('.ui-modal-footer');
+				const h_win = win.innerHeight;
+				const h_head = elModalHead.outerHeight();
+				const h_foot = elModalFoot.outerHeight();
+				const h = h_win - (h_head + h_foot);
 
 				if (Global.browser.size !== 'desktop') {
-					$body.css({
-						'min-height': h_win - (h_head + h_foot) + 'px',
-						'max-height': h_win - (h_head + h_foot) + 'px'
-					});
+					elModalBody.style.minHeight = h + 'px';
+					elModalBody.style.maxHeight = h + 'px';
 				} else {
-					$body.css({
-						'min-height': '',
-						'max-height': ''
-					});
+					elModalBody.style.minHeight = '';
+					elModalBody.style.maxHeight = '';
 				}
 			}
 		},
 		hide: function(option){
+			const opt = Object.assign({}, Global.modal.optionsClose, option);
+			const {id, type, remove, callback} = opt;
+			const elModal = doc.querySelector('#' + id);
 			const elBody = doc.querySelector('body');
 			const elHtml = doc.querySelector('html');
-			const opt = Object.assign({}, Global.modal.optionsClose, option);
-			const id = opt.id;
-			const type = opt.type;
-			const remove = opt.remove;
-			const elModal = doc.querySelector('#' + id);
+			const elModals = doc.querySelectorAll('.ui-modal');
 
-			let endfocus = opt.endfocus ;
-
-			var closeCallback = opt.closeCallback === undefined ? elModal.dataset.closecallback === undefined ? false : elModal.dataset.closecallback : opt.closeCallback;
-			var elModalWrap = elModal.querySelector('.ui-modal-wrap');
-
-			//elModalWrap.off('transitionend.modal');
 			elModal.classList.add('close');
 			elModal.classList.remove('open')
 			elModal.classList.remove('fix-header');
-			//$(win).off('resize.modal');
 			
 			const elOpen = doc.querySelectorAll('.ui-modal.open');
-			const len = elOpen.length > 0 ? elOpen.length : false;
-			let timer;
-			let elModalPrev = false;
+			const len = (elOpen.length > 0) ? elOpen.length : false;
 
-			const elModals = doc.querySelectorAll('.ui-modal');
+			let timer;
+			let endfocus = opt.endfocus ;
+			let elModalPrev = false;
+			
 			for (let md of elModals) {
 				md.classList.remove('current');
 			}
@@ -4312,7 +4225,6 @@ if (!Object.keys){
 			if (type !== 'system') {
 				if (!len) {
 					//단일
-					console.log(111);
 					endfocus = endfocus === false ? 
 						doc.querySelector('[data-focus="'+id+'"]') : 
 						opt.endfocus;
@@ -4321,13 +4233,12 @@ if (!Object.keys){
 					elHtml.classList.remove('is-modal');
 				} else {
 					//여러개
-					console.log(222);
 					endfocus = endfocus === false ? 
 						doc.querySelector('[data-focus="'+id+'"]') : 
 						opt.endfocus;
 				}
 			}
-			
+
 			Global.scroll.move({
 				value: Number(elModal.dataset.scrolltop)
 			});
@@ -4338,30 +4249,25 @@ if (!Object.keys){
 				const elOpen = doc.querySelectorAll('.ui-modal.open');
 				const len = !!elOpen ? elOpen.length : false;
 	
-
-				
 				elWrap.removeAttribute('style');
 				elBody.removeAttribute('style');
-				
-		
-				//elModal.removeClass('ready is-over current close ps-bottom ps-top ps-center type-normal type-full n0 n1 n2 n3 n4 n5 n6 n7');
 				elModal.dataset.n = null;
 				
 				if (!len) {
 					elHtml.classList.remove('scroll-no');
 					elBody.classList.remove('scroll-no');
 				}
-				//closeCallback ? closeCallback(opt) : '';
-				console.log('remove:', remove);
-				remove === 'true' && elModal.remove();
+
+				(remove === 'true') && elModal.remove();
+				!!callback && callback(id);
 				!!endfocus && endfocus.focus();
 			},210);
 		}, 
-		hideSystem: function(opt){
+		hideSystem: () => {
 			netive.modal.hide({ 
 				id: 'uiSystemModal', 
-				remove: 'true',
-				type: 'system'
+				type: 'system', 
+				remove: 'true'
 			});
 		}
 	}
