@@ -512,7 +512,7 @@
             ps:'BL',
             src:'/netiveUI/html/components/dropdown_ajax.html',
             dropExpanded: true,
-            openback: function(){
+            callback: function(){
                 netive.tab.init({ 
                     id: 'exeTab1', 
                     current:0 
