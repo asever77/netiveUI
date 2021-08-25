@@ -1638,6 +1638,7 @@ a.btn-base-l {
 	width: 3rem;
 	height: 3rem;
 	line-height: 1;
+	font-family: 'Material Icons';
 }
 
 .btn-clear {
