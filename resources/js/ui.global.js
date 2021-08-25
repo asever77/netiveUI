@@ -3035,32 +3035,27 @@ if (!Object.keys){
 			effect: Global.state.effect.easeInOut,
 			effTime: '.2'
 		},
-		init: function(opt){
-			if (opt === undefined) {
-				return false;
-			}
-	
-			var opt = $.extend(true, {}, Global.accordion.options, opt);
-			var id = opt.id;
-			var current = opt.current;
-			var callback = opt.callback;
-			var autoclose = opt.autoclose;
-			var level = opt.level;
-			var add = opt.add;
+		init: function(option){
+			const opt = Object.assign({}, Global.accordion.options, option);
+			const id = opt.id;
+			
+			const callback = opt.callback;
+			let current = opt.current;
+			let autoclose = opt.autoclose;
+			const level = opt.level;
+			const add = opt.add;
 
-			var	$acco = $('#' + id);
-			var	$wrap = $acco.children('.ui-acco-wrap');
-			var	$pnl = $wrap.children('.ui-acco-pnl');
-			var	$tit = $wrap.children('.ui-acco-tit');
-			var	$btn = $tit.find('.ui-acco-btn');
+			const el_acco = doc.querySelector('#' + id);
+			const el_wrap = el_acco.querySelectorAll(':scope > .ui-acco-wrap');
+
+			
+			const len = el_wrap.length; 
+			const keys = Global.state.keys;
+			let optAcco;
 	
-			var	len = $wrap.length; 
-			var	keys = Global.state.keys;
-			var	optAcco;
-	
-			var para = Global.para.get('acco');
-			var	paras;
-			var	paraname;
+			const para = Global.para.get('acco');
+			let paras;
+			let paraname;
 			
 			//set up
 			if (!!para && !add) {
@@ -3082,66 +3077,107 @@ if (!Object.keys){
 					}
 				}
 			}
-	
+
+			let n = 0;
+			for (let that of el_wrap) {
+				
+				that.dataset.n = n;
+				n = n + 1;
+			}
+
+			const el_btnselected = el_acco.querySelector('.ui-acco-btn.selected');
+
 			if (add) {
 				current = [];
 				var ss = JSON.parse(sessionStorage.getItem(id));
 	
 				autoclose = autoclose || ss.close;
+
+				for (let bs of el_btnselected) {
+					bs.push(bs.closest('.ui-acco-wrap').index());
+				}
 	
-				$acco.find('.ui-acco-btn.selected').each(function(){
+				el_acco.querySelector('.ui-acco-btn.selected').each(function(){
 					current.push($(this).closest('.ui-acco-wrap').index());
 				});
-				$btn.removeAttr('acco-last').removeAttr('acco-first');
+				el_btn.removeAttr('acco-last').removeAttr('acco-first');
 	
-				autoclose = $acco.data('opt').close;
-				callback = $acco.data('opt').callback;
+				autoclose = el_acco.data('opt').close;
+				callback = el_acco.data('opt').callback;
 			}
 	
 			sessionStorage.setItem(id, JSON.stringify({ 'close': autoclose, 'current': current }) );
 			Global.accordion[id] = callback;
+
+			// const el_pnl = el_wrap.querySelector('.ui-acco-pnl');
+			// const el_tit = el_wrap.querySelector('.ui-acco-tit');
+			// const el_btn = el_tit.find('.ui-acco-btn');
+			/*
+			const el_btnselected = el_acco.querySelector('.ui-acco-btn.selected');
+
+			if (add) {
+				current = [];
+				var ss = JSON.parse(sessionStorage.getItem(id));
 	
+				autoclose = autoclose || ss.close;
+
+				for (let bs of el_btnselected) {
+					bs.push(bs.closest('.ui-acco-wrap').index());
+				}
+	
+				el_acco.querySelector('.ui-acco-btn.selected').each(function(){
+					current.push($(this).closest('.ui-acco-wrap').index());
+				});
+				el_btn.removeAttr('acco-last').removeAttr('acco-first');
+	
+				autoclose = el_acco.data('opt').close;
+				callback = el_acco.data('opt').callback;
+			}
+	
+			sessionStorage.setItem(id, JSON.stringify({ 'close': autoclose, 'current': current }) );
+			Global.accordion[id] = callback;
+			
 			//set up
-			!$pnl ? $pnl = $tit.children('.ui-acco-pnl') : '';
-			$acco.data('opt', { 
+			!el_pnl ? el_pnl = el_tit.children('.ui-acco-pnl') : '';
+			el_acco.data('opt', { 
 				id: id, 
 				close: autoclose, 
 				callback: callback
 			});
 	
 			for (var i = 0; i < len; i++) {
-				var $wrap_i = $wrap.eq(i),
-					$accotit = $wrap_i.find('> .ui-acco-tit'),
-					$accopln = $wrap_i.find('> .ui-acco-pnl'),
-					$accobtn = $accotit.find('.ui-acco-btn');
+				var el_wrap_i = el_wrap.eq(i),
+					el_accotit = el_wrap_i.find('> .ui-acco-tit'),
+					el_accopln = el_wrap_i.find('> .ui-acco-pnl'),
+					el_accobtn = el_accotit.find('.ui-acco-btn');
 	
-				if ($accotit.prop('tagName') !== 'DT') {
-					$accotit.attr('role','heading');
-					$accotit.attr('aria-level', level);
+				if (el_accotit.prop('tagName') !== 'DT') {
+					el_accotit.attr('role','heading');
+					el_accotit.attr('aria-level', level);
 				}
 				
-				if (!$accopln) {
-					$accopln = $accotit.children('.ui-acco-pnl');
+				if (!el_accopln) {
+					el_accopln = el_accotit.children('.ui-acco-pnl');
 				}
 	
-				($accotit.attr('id') === undefined) && $accobtn.attr('id', id + '-btn' + i);
-				($accopln.attr('id') === undefined) && $accopln.attr('id', id + '-pnl' + i);
+				(el_accotit.attr('id') === undefined) && el_accobtn.attr('id', id + '-btn' + i);
+				(el_accopln.attr('id') === undefined) && el_accopln.attr('id', id + '-pnl' + i);
 				
-				$accobtn
+				el_accobtn
 					.data('selected', false)
 					.attr('data-n', i)
 					.attr('data-len', len)
 					.attr('aria-expanded', false)
-					.attr('aria-controls', $accopln.attr('id'))
+					.attr('aria-controls', el_accopln.attr('id'))
 					.removeClass('selected');
-				$accopln
+				el_accopln
 					.attr('data-n', i)
 					.attr('data-len', len)
-					.attr('aria-labelledby', $accobtn.attr('id'))
+					.attr('aria-labelledby', el_accobtn.attr('id'))
 					.attr('aria-hidden', true).hide();
 	
-				(i === 0) && $accobtn.attr('acco-first', true);
-				(i === len - 1) && $accobtn.attr('acco-last', true);
+				(i === 0) && el_accobtn.attr('acco-first', true);
+				(i === len - 1) && el_accobtn.attr('acco-last', true);
 			}
 			
 			if (current !== null) {
@@ -3153,7 +3189,7 @@ if (!Object.keys){
 			}
 	
 			//event
-			$btn.off('click.uiaccotab keydown.uiaccotab')
+			el_btn.off('click.uiaccotab keydown.uiaccotab')
 				.on({
 					'click.uiaccotab': evtClick,
 					'keydown.uiaccotab': evtKeys
@@ -3223,6 +3259,8 @@ if (!Object.keys){
 					$('#' + id + '-btn0').focus();
 				}
 			}
+
+			*/
 		},
 		toggle: function(opt){
 			if (opt === undefined) {
@@ -3503,23 +3541,22 @@ if (!Object.keys){
 		}
 	}
 
+	/**
+	 * dropdown
+	 * modify: 2021-08-25
+	 */
 	Global.dropdown = {
 		options: {
 			ps: 'BL',
-			hold: true,
 			area: doc.querySelector('body'),
 			src: false,
 			offset: true,
-			openback:false,
-			closeback:false
+			callback:false
 		},
-		init: function(opt){
-			if (opt === undefined || !$('#' + opt.id).length) {
-				return false;
-			}
-	
-			const option = Object.assign({}, Global.dropdown.options, opt);
-			const {id, ps, hold, area, src, offset, openback, closeback} = option;
+		init: function(option){
+			const opt = Object.assign({}, Global.dropdown.options, option);
+			const {id, ps, hold, area, src, offset} = opt;
+			const callback = opt.callback !== undefined ? opt.callback : false;
 
 			//ajax 
 			if (!!src && !doc.querySelector('[data-id="' + id + '"]')) {
@@ -3539,108 +3576,61 @@ if (!Object.keys){
 			function setDropdown(){
 				const el_btn = doc.querySelector('#' + id);
 				const el_pnl = doc.querySelector('[data-id="'+ id +'"]'); 
-	
+				const el_close = el_pnl.querySelector('.ui-drop-close');
+
 				//set up
 				el_btn.setAttribute('aria-expanded', false);
 				el_btn.dataset.ps = ps;
-				el_btn.dataset.hold = hold;
-				el_btn.dataset.offset = offset;
-
 				el_pnl.setAttribute('aria-hidden', true);
 				el_pnl.setAttribute('aria-labelledby', id);
 				el_pnl.dataset.id = id;
 				el_pnl.dataset.ps = ps;
-				el_pnl.dataset.hold = hold;
-				el_pnl.dataset.offset = offset;
 
-				
-				// el_btn.attr('aria-expanded', false)
-				// 	.data('opt', { 
-				// 		id: id, 
-				// 		ps: ps,
-				// 		hold: hold, 
-				// 		openback: openback,
-				// 		closeback: closeback,
-				// 		offset: offset
-				// 	});
-
-				
-				// el_pnl.attr('aria-hidden', true).attr('aria-labelledby', id)
-				// 	.data('opt', { 
-				// 		id: id, 
-				// 		ps: ps,
-				// 		hold: hold, 
-				// 		openback: openback,
-				// 		closeback: closeback,
-				// 		offset: offset
-				// 	});
-				
 				//event
 				el_btn.addEventListener('click', action);
+				el_close.addEventListener('click', actionClose);
 
+				function actionClose(){
+					const id = this.closest('.ui-drop-pnl').dataset.id;
 
-				$(doc).find('.ui-drop-close').off('click.dp').on('click.dp', function(e){
-					var pnl_opt = $('#' + $(this).closest('.ui-drop-pnl').data('id')).data('opt');
 					Global.dropdown.toggle({ 
-						id: pnl_opt.id 
+						id: id 
 					});
-					$('#' + pnl_opt.id).focus();
-				});
-				//dropdown 영역 외에 클릭 시 
-				$(doc).off('click.dpb').on('click.dpb', function(e){
-					e.preventDefault();
-					if (!!$('body').data('dropdownOpened')){
-						if ($(doc).find('.ui-drop-pnl').has(e.target).length < 1) {
-							Global.dropdown.hide();
-						}
-					}
-				});
-
-				
+					doc.querySelector('#' + id).focus();
+				}
 				function action(e) {
 					e.preventDefault();
 					const that = e.currentTarget;
 	
 					that.dataset.sct = doc.documentElement.scrollTop;
 					Global.dropdown.toggle({ 
-						id: that.id 
+						id: that.id,
 					});
 				}
+
+				!!callback && callback();
 			}
 		},
-		toggle: function(opt) {
-			if (opt === undefined) {
-				return false;
+		back: function(e){
+			e.preventDefault();
+
+			let isTure = '';
+
+			for (let path of e.path) {
+				isTure = isTure + path.classList;
 			}
-			
+
+			(isTure.indexOf('ui-drop-pnl') < 0) && Global.dropdown.hide();
+		},
+		toggle: function(opt) {
 			const id = opt.id;
 			const el_btn = doc.querySelector('#' + id);
 			const el_pnl = doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]');
-			let ps = el_btn.dataset.ps;
-			const hold = el_btn.dataset.hold;
 			const state = opt.state !== undefined ? opt.state : 'toggle';
-			const offset = el_btn.dataset.offset;
 			const btnExpanded =  el_btn.getAttribute('aria-expanded');
-			const is_modal = !!el_btn.closest('.ui-modal');
-	
-			const btn_w = Math.ceil(el_btn.offsetWidth);
-			const btn_h = Math.ceil(el_btn.offsetHeight);
 
-			const btn_t = Math.ceil(el_btn.getBoundingClientRect().top);
-			const btn_l = Math.ceil(el_btn.getBoundingClientRect().left);
-
-			const pnl_w = Math.ceil(el_pnl.offsetWidth);
-			const pnl_h = Math.ceil(el_pnl.offsetHeight);
+			let ps = el_btn.dataset.ps;
 	
-			//offset: ture 이거나 modal안의 dropdown 일때 position -> offset 으로 위치 값 변경
-			// if (offset || is_modal) {
-			// 	btn_t = Math.ceil(el_btn.offset().top);
-			// 	btn_l = Math.ceil(el_btn.offset().left);
-			// 	is_modal ? btn_t = btn_t - $(win).scrollTop(): '';
-			// }
-			
-			//test 
-			
 			if (!!el_btn.dataset.ps) {
 				ps = el_btn.dataset.ps;
 			}
@@ -3654,79 +3644,75 @@ if (!Object.keys){
 			btnExpanded === 'false' ? pnlShow(): pnlHide();
 
 			function pnlShow(){
-				const in_pnl = el_btn.closest('.ui-drop-pnl');
-				if (!!in_pnl) {
-					//dropdown in dropdown 인 경우
-					const pnlID = in_pnl.dataset.id;
+				const elBody = doc.querySelector('body');
 
-					$('.ui-drop').not('#' + pnlID).attr('aria-expanded', false);
-					$('.ui-drop-pnl').not('[data-id="' + pnlID +'"]')
-							.attr('aria-hidden', true)
-							.attr('tabindex', -1)
-							.removeAttr('style');
-				} else {
-					Global.dropdown.hide();
-				}
-
+				(!el_btn.closest('.ui-drop-pnl')) && Global.dropdown.hide();
 
 				Global.focus.loop({
 					selector: doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]'),
 					callback:pnlHide
 				});
-				//focus hold or sense
-				// hold ?	
-				// 	Global.focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'hold' }):
-				// 	Global.focus.loop({ selector:'.ui-drop-pnl[data-id="'+ id +'"]', type:'sense', callback:pnlHide });
-				el_btn.setAttribute('aria-expanded', true);				
-				
+
+				el_btn.setAttribute('aria-expanded', true);	
+				el_pnl.setAttribute('aria-hidden', false)
+				el_pnl.classList.add('on');
+
+				const sT = Math.floor(doc.documentElement.scrollTop);
+				const btn_w = Math.ceil(el_btn.offsetWidth);
+				const btn_h = Math.ceil(el_btn.offsetHeight);
+				const btn_t = Math.ceil(el_btn.getBoundingClientRect().top);
+				const btn_l = Math.ceil(el_btn.getBoundingClientRect().left);
+				const pnl_w = Math.ceil(el_pnl.offsetWidth);
+				const pnl_h = Math.ceil(el_pnl.offsetHeight);
+
 				switch (ps) {
 					case 'BL': 
-						console.log(btn_t + btn_h);
-						el_pnl.style.top = btn_t + btn_h + 'px';
+						el_pnl.style.top = btn_t + sT + btn_h + 'px';
 						el_pnl.style.left = btn_l + 'px';
 						break;
 					case 'BC': 
-						el_pnl.style.top = btn_t + btn_h + 'px';
+						el_pnl.style.top = btn_t + sT + btn_h + 'px';
 						el_pnl.style.left = btn_l - ((pnl_w - btn_w) / 2) + 'px';
 						break;
 					case 'BR': 
-						el_pnl.style.top = btn_t + btn_h + 'px';
+						el_pnl.style.top = btn_t + sT + btn_h + 'px';
 						el_pnl.style.left = btn_l - (pnl_w - btn_w) + 'px';
 						break;
 					case 'TL': 
-						el_pnl.style.top = btn_t - pnl_h + 'px';
+						el_pnl.style.top = btn_t + sT - pnl_h + 'px';
 						el_pnl.style.left = btn_l + 'px';
 						break;
 					case 'TC': 
-						el_pnl.style.top = btn_t - pnl_h + 'px';
+						el_pnl.style.top = btn_t + sT - pnl_h + 'px';
 						el_pnl.style.left = btn_l + 'px';
 						break;
 					case 'TR': 
-						el_pnl.style.top = btn_t - pnl_h + 'px';
+						el_pnl.style.top = btn_t + sT - pnl_h + 'px';
 						el_pnl.style.left =  btn_l - (pnl_w - btn_w) + 'px';
 						break;
 					case 'RT': 
-						el_pnl.style.top = btn_t + 'px';
+						el_pnl.style.top = btn_t + sT + 'px';
 						el_pnl.style.left = btn_l + btn_w + 'px';
 						break;
 					case 'RM': 
-						el_pnl.style.top = btn_t - ((pnl_h - btn_h) / 2) + 'px';
+					
+						el_pnl.style.top = btn_t + sT - ((pnl_h - btn_h) / 2) + 'px';
 						el_pnl.style.left = btn_l + btn_w + 'px';
 						break;
 					case 'RB': 
-						el_pnl.style.top = btn_t - (pnl_h - btn_h) + 'px';
+						el_pnl.style.top = btn_t + sT - (pnl_h - btn_h) + 'px';
 						el_pnl.style.left = btn_l + btn_w + 'px';
 						break;
 					case 'LT': 
-						el_pnl.style.top = btn_t + 'px';
+						el_pnl.style.top = btn_t + sT + 'px';
 						el_pnl.style.left = btn_l - pnl_w + 'px';
 						break;
 					case 'LM': 
-						el_pnl.style.top = btn_t - ((pnl_h - btn_h) / 2) + 'px';
+						el_pnl.style.top = btn_t + sT - ((pnl_h - btn_h) / 2) + 'px';
 						el_pnl.style.left = btn_l - pnl_w + 'px';
 						break;
 					case 'LB': 
-					el_pnl.style.top = btn_t - (pnl_h - btn_h) + 'px';
+					el_pnl.style.top = btn_t + sT - (pnl_h - btn_h) + 'px';
 						el_pnl.style.left = btn_l - pnl_w + 'px';
 						break; 
 					case 'CM': 
@@ -3737,26 +3723,23 @@ if (!Object.keys){
 						break;
 				}
 				
-				el_pnl.setAttribute('aria-hidden', false)
-				el_pnl.classList.add('on');
-
-				const elBody = doc.querySelector('body');
 				setTimeout(function(){
-					elBody.dataset.dropdownOpened = 'true'
 					elBody.classList.add('dropdownOpened');
 					setTimeout(function(){
 						el_pnl.focus();
 					},0);
 				},0);
-	
-				//!!openback ? openback() : '';							
+
+				doc.removeEventListener('click', Global.dropdown.back);
+				setTimeout(function(){
+					doc.addEventListener('click', Global.dropdown.back);
+				},0);
 			}
 			function pnlHide(){
 				const in_pnl = el_btn.closest('.ui-drop-pnl');
 				const elBody = doc.querySelector('body');
 
 				if (!in_pnl) {
-					elBody.dataset.dropdownOpened = 'false'
 					elBody.classList.remove('dropdownOpened');
 				}
 	
@@ -3766,23 +3749,27 @@ if (!Object.keys){
 				el_pnl.setAttribute('tabindex', -1)
 				el_pnl.classList.remove('on');
 				
-				//!!closeback ? closeback() : '';
+				doc.removeEventListener('click', Global.dropdown.back);
+			}
+		}, 
+		hide: () => {
+			const elBody = doc.querySelector('body')
+			const elDrops = doc.querySelectorAll('.ui-drop');
+			const elDropPnls = doc.querySelectorAll('.ui-drop-pnl[aria-hidden="false"]');
+
+			elBody.classList.remove('dropdownOpened');
+
+			for (let that of elDrops) {
+				that.setAttribute('aria-expanded', false);
 			}
 
-			
-		}, 
-		hide: function(opt) {
-			$('body').data('dropdownOpened',false).removeClass('dropdownOpened');
-			$('.ui-drop').attr('aria-expanded', false);
-			$('.ui-drop-pnl[aria-hidden="false"]').each(function(){
-				var $pnl = $(this),
-					defaults = $pnl.data('opt'),
-					opt = $.extend(true, {}, defaults),
-					closeback = opt.closeback;
-				
-				$pnl.attr('aria-hidden', true).attr('tabindex', -1).removeClass('on');
-				!!closeback ? closeback() : '';
-			});	
+			for (let that of elDropPnls) {
+				that.setAttribute('hidden', true);
+				that.setAttribute('tabindex', -1);
+				that.classList.remove('on');
+			}
+
+			doc.removeEventListener('click', Global.dropdown.back);
 		}
 	}	
 	
