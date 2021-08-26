@@ -587,16 +587,18 @@
 
     netive.page.pageAccordion = function(){
         console.log('page.js-acco');
+
+
         netive.accordion.init({ 
             id:'exeAcco1', 
-            current:[0,2], 
+            current:[0], 
             callback:function(v){
                 console.log(v);
             } 
         });
         netive.accordion.init({ 
             id:'exeAcco3', 
-            current:null, 
+            current:[0], 
             autoclose:false 
         });
 
