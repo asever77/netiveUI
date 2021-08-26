@@ -853,6 +853,10 @@ a.ui-acco-btn:after {
     padding: 20px;
 }
 
+.ui-acco-pnl[aria-hidden="true"] {
+    display:none;
+}
+
 .ui-acco-tit-wrap {
     padding: 10px;
     text-decoration: none;
