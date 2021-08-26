@@ -3025,31 +3025,29 @@ if (!Object.keys){
 		}
 	}
 
+
 	Global.accordion = {
 		options: {
 			current: null,
 			autoclose: false,
 			callback: false,
 			add: false,
-			level: 3,
 			effect: Global.state.effect.easeInOut,
 			effTime: '.2'
 		},
 		init: function(option){
 			const opt = Object.assign({}, Global.accordion.options, option);
-			const id = opt.id;
+			const accoId = opt.id;
 			
 			const callback = opt.callback;
 			let current = opt.current;
 			let autoclose = opt.autoclose;
-			const level = opt.level;
 			const add = opt.add;
 
-			const el_acco = doc.querySelector('#' + id);
+			const el_acco = doc.querySelector('#' + accoId);
 			const el_wrap = el_acco.querySelectorAll(':scope > .ui-acco-wrap');
-
 			
-			const len = el_wrap.length; 
+			const len = el_wrap.length;
 			const keys = Global.state.keys;
 			let optAcco;
 	
@@ -3057,7 +3055,7 @@ if (!Object.keys){
 			let paras;
 			let paraname;
 			
-			//set up
+			//set up : parameter > current
 			if (!!para && !add) {
 				if (para.split('+').length > 1) {
 					//2 or more : acco=exeAcco1*2+exeAcco2*3
@@ -3078,23 +3076,79 @@ if (!Object.keys){
 				}
 			}
 
-			let n = 0;
-			for (let that of el_wrap) {
-				
-				that.dataset.n = n;
-				n = n + 1;
+			for (let i = 0; i < len; i++) {
+				const this_wrap = el_wrap[i];
+				const el_tit = this_wrap.querySelector(':scope > .ui-acco-tit');
+				const el_pnl = this_wrap.querySelector(':scope > .ui-acco-pnl');
+				const el_btn = el_tit.querySelector('.ui-acco-btn');
+
+				this_wrap.dataset.n = i;
+				(el_tit.tagName !== 'DT') && el_tit.setAttribute('role','heading');
+
+				if (!!el_pnl) {
+					el_btn.id = accoId + 'Btn' + i;
+					el_pnl.id = accoId + 'Pnl' + i;
+					
+					el_btn.dataset.selected = false;
+					el_btn.setAttribute('aria-expanded', false);
+					el_btn.setAttribute('aria-controls', el_pnl.id);
+					el_pnl.setAttribute('aria-labelledby', el_btn.id);
+					el_pnl.setAttribute('aria-hidden', true);
+					el_pnl.dataset.n = i;
+					el_btn.dataset.n = i;
+				}
+
+				el_btn.dataset.order = (i === 0) ? 'first' : (i === len - 1) ? 'last' : '';
+
+				el_btn.addEventListener('click', evtClick);
+			//	el_btn.addEventListener('keydown', evtKeys);
+
 			}
+			
 
-			const el_btnselected = el_acco.querySelector('.ui-acco-btn.selected');
+			const currentLen = current === null ? 0 : current.length;
+			
+			if (current === 'all') {
+				
+			} else {
+				console.log('current',currentLen);
 
+				for (let i = 0; i < currentLen; i++) {
+					const this_wrap = el_acco.querySelector('.ui-acco-wrap[data-n="'+ current[i] +'"]');
+	
+					console.log(this_wrap);
+					const el_tit = this_wrap.querySelector(':scope > .ui-acco-tit');
+					const el_pnl = this_wrap.querySelector(':scope > .ui-acco-pnl');
+					const el_btn = el_tit.querySelector('.ui-acco-btn');
+	
+					if (!!el_pnl) {
+						el_btn.dataset.selected = true;
+						el_btn.setAttribute('aria-expanded', true);
+						el_pnl.setAttribute('aria-hidden', false);
+					}
+				}
+			}
+			
+
+			sessionStorage.setItem(
+				accoId, 
+				JSON.stringify({ 
+					'close': autoclose, 
+					'current': current 
+				})
+			);
+
+			
+			//추가시
 			if (add) {
 				current = [];
-				var ss = JSON.parse(sessionStorage.getItem(id));
+				var ss = JSON.parse(sessionStorage.getItem(accoId));
 	
 				autoclose = autoclose || ss.close;
 
 				for (let bs of el_btnselected) {
-					bs.push(bs.closest('.ui-acco-wrap').index());
+					console.log(bs.closest('.ui-acco-wrap').dataset.n);
+					bs.push(bs.closest('.ui-acco-wrap').dataset.n);
 				}
 	
 				el_acco.querySelector('.ui-acco-btn.selected').each(function(){
@@ -3106,106 +3160,28 @@ if (!Object.keys){
 				callback = el_acco.data('opt').callback;
 			}
 	
-			sessionStorage.setItem(id, JSON.stringify({ 'close': autoclose, 'current': current }) );
-			Global.accordion[id] = callback;
-
-			// const el_pnl = el_wrap.querySelector('.ui-acco-pnl');
-			// const el_tit = el_wrap.querySelector('.ui-acco-tit');
-			// const el_btn = el_tit.find('.ui-acco-btn');
-			/*
-			const el_btnselected = el_acco.querySelector('.ui-acco-btn.selected');
-
-			if (add) {
-				current = [];
-				var ss = JSON.parse(sessionStorage.getItem(id));
-	
-				autoclose = autoclose || ss.close;
-
-				for (let bs of el_btnselected) {
-					bs.push(bs.closest('.ui-acco-wrap').index());
-				}
-	
-				el_acco.querySelector('.ui-acco-btn.selected').each(function(){
-					current.push($(this).closest('.ui-acco-wrap').index());
-				});
-				el_btn.removeAttr('acco-last').removeAttr('acco-first');
-	
-				autoclose = el_acco.data('opt').close;
-				callback = el_acco.data('opt').callback;
-			}
-	
-			sessionStorage.setItem(id, JSON.stringify({ 'close': autoclose, 'current': current }) );
-			Global.accordion[id] = callback;
 			
-			//set up
-			!el_pnl ? el_pnl = el_tit.children('.ui-acco-pnl') : '';
-			el_acco.data('opt', { 
-				id: id, 
-				close: autoclose, 
-				callback: callback
-			});
-	
-			for (var i = 0; i < len; i++) {
-				var el_wrap_i = el_wrap.eq(i),
-					el_accotit = el_wrap_i.find('> .ui-acco-tit'),
-					el_accopln = el_wrap_i.find('> .ui-acco-pnl'),
-					el_accobtn = el_accotit.find('.ui-acco-btn');
-	
-				if (el_accotit.prop('tagName') !== 'DT') {
-					el_accotit.attr('role','heading');
-					el_accotit.attr('aria-level', level);
-				}
-				
-				if (!el_accopln) {
-					el_accopln = el_accotit.children('.ui-acco-pnl');
-				}
-	
-				(el_accotit.attr('id') === undefined) && el_accobtn.attr('id', id + '-btn' + i);
-				(el_accopln.attr('id') === undefined) && el_accopln.attr('id', id + '-pnl' + i);
-				
-				el_accobtn
-					.data('selected', false)
-					.attr('data-n', i)
-					.attr('data-len', len)
-					.attr('aria-expanded', false)
-					.attr('aria-controls', el_accopln.attr('id'))
-					.removeClass('selected');
-				el_accopln
-					.attr('data-n', i)
-					.attr('data-len', len)
-					.attr('aria-labelledby', el_accobtn.attr('id'))
-					.attr('aria-hidden', true).hide();
-	
-				(i === 0) && el_accobtn.attr('acco-first', true);
-				(i === len - 1) && el_accobtn.attr('acco-last', true);
-			}
-			
-			if (current !== null) {
-				Global.accordion.toggle({ 
-					id: id, 
-					current: current, 
-					motion: false 
-				});
-			}
+			Global.accordion[accoId] = {
+				callback: callback,
+				autoclose: autoclose,
+				current: current
+			};
 	
 			//event
-			el_btn.off('click.uiaccotab keydown.uiaccotab')
-				.on({
-					'click.uiaccotab': evtClick,
-					'keydown.uiaccotab': evtKeys
-				});
-	
 			function evtClick(e) {
-				if (!!$(this).closest('.ui-acco-wrap').find('.ui-acco-pnl').length) {
+				const that = e.currentTarget;
+				const btnId = that.id;
+				const n = that.dataset.n;
+				
+				let accoId = btnId.split('Btn');
+				accoId = accoId[0];
+
+				if (!!btnId) {
 					e.preventDefault();
-					var $this = $(this);
 	
-					optAcco = $this.closest('.ui-acco').data('opt');
 					Global.accordion.toggle({ 
-						id: optAcco.id, 
-						current: [$this.data('n')], 
-						close: optAcco.close, 
-						callback: optAcco.callback
+						id: accoId, 
+						current: [n]
 					});
 				}
 			}
@@ -3259,8 +3235,6 @@ if (!Object.keys){
 					$('#' + id + '-btn0').focus();
 				}
 			}
-
-			*/
 		},
 		toggle: function(opt){
 			if (opt === undefined) {
@@ -3365,6 +3339,7 @@ if (!Object.keys){
 			}
 		}
 	}
+	
 
 	Global.masonry = {
 		options: {
