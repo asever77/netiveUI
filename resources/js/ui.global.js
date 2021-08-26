@@ -3096,6 +3096,12 @@ if (!Object.keys){
 					el_pnl.setAttribute('aria-hidden', true);
 					el_pnl.dataset.n = i;
 					el_btn.dataset.n = i;
+
+					if (current === 'all') {
+						el_btn.dataset.selected = true;
+						el_btn.setAttribute('aria-expanded', true);
+						el_pnl.setAttribute('aria-hidden', false);
+					}
 				}
 
 				el_btn.dataset.order = (i === 0) ? 'first' : (i === len - 1) ? 'last' : '';
