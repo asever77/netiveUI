@@ -592,15 +592,16 @@
         netive.accordion.init({ 
             id:'exeAcco1', 
             current:[0], 
+            autoclose:false,
             callback:function(v){
                 console.log(v);
             } 
         });
-        netive.accordion.init({ 
-            id:'exeAcco3', 
-            current:[0], 
-            autoclose:false 
-        });
+        // netive.accordion.init({ 
+        //     id:'exeAcco3', 
+        //     current:[0], 
+        //     autoclose:false 
+        // });
 
         var add_html = '';
         add_html += '<div class="ui-acco-wrap">';
@@ -620,7 +621,7 @@
             netive.accordion.init({ 
                 id: 'exeAcco1', 
                 add: true,
-                callback: function(v){console.log(v)} 
+                callback: function(){console.log('callback')} 
             });
         });
     }
