@@ -46,34 +46,7 @@
 						...
 					</div>
 
-					<!-- accordion in accordion -->
-					<dl class="ui-acco mgt-m" id="exeAcco3">
-						<div class="ui-acco-wrap">
-							<dt class="ui-acco-tit">
-								<button type="button" class="ui-acco-btn">
-									<span>acco3-1</span> 
-								</button>
-							</dt>
-							<dd class="ui-acco-pnl">
-								<div class="ui-acco-pnl-wrap">
-									...
-								</div>
-							</dd>
-						</div>
-						<div class="ui-acco-wrap">
-							<dt class="ui-acco-tit">
-								<button type="button" class="ui-acco-btn">
-									<span>acco3-2</span> 
-								</button>
-							</dt>
-							<dd class="ui-acco-pnl">
-								<div class="ui-acco-pnl-wrap">
-									...
-								</div>
-							</dd>
-						</div>
-					</dl>
-					<!-- //accordion in accordion -->
+					
 				</div>
 			</div>
 
@@ -123,21 +96,170 @@
 	<h2 class="h-2">Source Code</h2>
 	<h3 class="h-3">HTML</h3>
 <pre class="box-code"><code class="html">
-
+&lt;div class="ui-acco" id="idName"&gt;
+	&lt;div class="ui-acco-wrap"&gt;
+		&lt;div class="ui-acco-tit"&gt;
+			&lt;button type="button" class="ui-acco-btn"&gt;
+				&lt;span&gt;acco1&lt;/span&gt; 
+			&lt;/button&gt;
+		&lt;/div&gt;
+		&lt;div class="ui-acco-pnl"&gt;
+			&lt;div class="ui-acco-pnl-wrap"&gt;
+				&lt;p&gt;...&lt;/p&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	...
+&lt;/div&gt;
 </code>
 </pre>
 
 	<h3 class="h-3">CSS</h3>
 <pre class="box-code"><code class="CSS">
+.ui-acco {
+	position: relative;
+}
 
+.ui-acco-wrap {
+	position: relative;
+}
+
+.ui-acco-tit {
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.ui-acco-btn {
+	cursor: pointer;
+	position: relative;
+	z-index: 1;
+}
+
+a.ui-acco-btn {
+	display: inline-block;
+	text-decoration: none;
+}
+
+.ui-acco-pnl {
+	position: relative;
+}
+
+.ui-acco-pnl[aria-hidden="true"] {
+	display: none;
+}
+
+.ui-acco-tit-wrap {
+	position: relative;
+	display: inline-block;
+	z-index: 2;
+}
+
+.ui-acco-tit-wrap+.ui-acco-btn {
+	position: absolute;
+	color: transparent;
+	overflow: hidden;
+	font-size: xx-small;
+	line-height: 0;
+}
+
+.ui-acco {
+	margin: 0;
+}
+
+.ui-acco-wrap {
+	width: 100%;
+	padding: 0;
+	margin: 0;
+}
+
+.ui-acco-tit {
+	width: 100%;
+	height: 100%;
+	margin: -1px 0 0;
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	padding: 0;
+	background: #fff;
+	min-height: 4.2rem;
+}
+
+.ui-acco-tit-wrap {
+	width: auto;
+	text-decoration: none;
+	color: #000;
+}
+
+.ui-acco-btn {
+	top: 0;
+	right: 0;
+	width: 100%;
+	height: 100%;
+	padding: 10px 40px 10px 10px;
+	letter-spacing: 0;
+	text-align: left;
+	color: #000;
+	font-size: 14px;
+}
+
+.ui-acco-btn:after {
+	content: "keyboard_arrow_down";
+	font-family: 'Material Icons';
+	display: block;
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	margin-top: -10px;
+	width: 18px;
+	height: 20px;
+	float: right;
+	overflow: hidden;
+	color: #000;
+	font-size: 20px;
+	line-height: 1;
+}
+
+.ui-acco-btn[aria-expanded="true"]:after {
+	content: "keyboard_arrow_up";
+}
+
+a.ui-acco-btn {
+	text-decoration: underline;
+	color: blue
+}
+
+a.ui-acco-btn .ui-acco-arrow {
+	transform: rotate(-90deg);
+}
+
+a.ui-acco-btn:after {
+	content: "keyboard_arrow_right";
+}
+
+.ui-acco-pnl {
+	background: #f9f9f9;
+}
+
+.ui-acco-tit-wrap {
+	padding: 10px;
+	text-decoration: none;
+	color: #000;
+}
 </code></pre>
 
 	<h3 class="h-3">Javascript</h3>
 <pre class="box-code"><code class="javascript">
-
+netive.accordion.init({ 
+	id:'exeAcco1', 
+	current:[0,2], 
+	callback:function(v){
+		console.log(v);
+	} 
+});
 </code></pre>
 
-	<div class="tbl-base type-option">
+	<div class="tbl-base type-option mgt-s">
 		<table>
 			<caption>
 				<strong>netive.uiAccordion 옵션 설명</strong>
@@ -199,26 +321,15 @@
 
 	<h3 class="h-3">netive.uiAccordionToggle</h3>
 <pre class="box-code"><code class="javascript">
-<span class="nt">&lt;script <span class="na">src=</span><span class="s">"/netiveUI/resources/js/ui.global.js"</span>&gt;&lt;/script&gt;</span>
-<span class="nt">&lt;script&gt;</span>
-;(function($, win, doc, undefined) {
-	$(doc).ready(function(){
+netive.accordion.toggle({ 
+	id:'exeAcco1', 
+	current:[0,2], 
+	callback:function(v){
+		console.log(v);
+	} 
+});
+</code></pre>
 		
-		<span class="c">//특정 아코디언 열거나 닫기</span>
-		netive<span class="na">.uiAccordionToggle</span>({ 
-			<span class="s">id: 'exeAcco1', 
-			current: [0,2], 
-			state: 'open', 
-			callback: function(v){console.log(v)}</span> 
-		});
-
-	});
-})(jQuery, window, document);
-
-
-</code>
-</pre>
-
 	<div class="tbl-base type-option">
 		<table>
 			<caption>
