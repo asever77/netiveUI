@@ -168,8 +168,8 @@ if (!Object.keys){
 			direction: 'down'
 		},
 		pageName: function() {
-			var page = document.URL.substring(document.URL.lastIndexOf("/") + 1),
-				pagename = page.split('?');
+			const page = document.URL.substring(document.URL.lastIndexOf("/") + 1);
+			const pagename = page.split('?');
 
 			return pagename[0]
 		},
@@ -518,12 +518,14 @@ if (!Object.keys){
 			delay: 'short',
 			classname : ''
 		},
-		show : function(opt) {
-			var opt = $.extend(true, {}, this.options, opt);
-			var delay = opt.delay;
-			var toast = '<div class="ui-toast toast '+ opt.classname +'">'+ opt.conts +'</div>';
-			var $body = $('body');
-			var time = delay === 'short' ? 2000 : 3500;
+		show : function(option) {
+			const opt = Object.assign({}, this.options, option);
+
+			const delay = opt.delay;
+			let toast = '<div class="ui-toast toast '+ opt.classname +'">'+ opt.conts +'</div>';
+
+			const el_body = document.querySelector('body');
+			let time = (delay === 'short') ? 2000 : 3500;
 
 			if (delay === 'short') {
 				time = 2000;
@@ -533,38 +535,53 @@ if (!Object.keys){
 				time = delay;
 			}
 
-			if (!!$('.ui-toast-ready').length) {
+			console.log(delay, time);
+
+			if (!!doc.querySelector('.ui-toast-ready')) {
 				clearTimeout(Global.toast.timer);
-				$body.removeClass('ui-toast-show').removeClass('ui-toast-ready');
-				$('.ui-toast').off('transitionend.toastshow').remove();
+				el_body.classList.remove('ui-toast-show');
+				el_body.classList.remove('ui-toast-ready');
+				doc.querySelector('.ui-toast').removeEventListener('transitionend', act);
+				doc.querySelector('.ui-toast').remove();
 			} 
 
-			$body.append(toast);
+			el_body.insertAdjacentHTML('beforeend', toast);
 			toast = null;
 			
-			var $shanckbar = $('.ui-toast');
+			const el_toast = doc.querySelector('.ui-toast');
 			
-			$body.addClass('ui-toast-ready');
+			el_body.classList.add('ui-toast-ready');
 
 			setTimeout(function(){
-				$body.addClass('ui-toast-show');
-
-				$shanckbar.off('transitionend.toasthide').on('transitionend.toastshow', function(){
-					$(this).off('transitionend.toastshow').addClass('on');
-					Global.toast.timer = setTimeout(Global.toast.hide, time);
-				});
+				el_body.classList.add('ui-toast-show');
+				el_toast.addEventListener('transitionend', act);
 			},0);
+
+			function act(e){
+				const that = e.currentTarget;
+				console.log(that);
+				that.removeEventListener('transitionend', act);
+				that.classList.add('on');
+				Global.toast.timer = setTimeout(Global.toast.hide, time);
+			}
 		},
 		hide : function(){
-			var $body = $('body');
-			
-			clearTimeout(Global.toast.timer);
-			$body.removeClass('ui-toast-show');
+			const el_body = doc.querySelector('body');
+			const el_toast = doc.querySelector('.ui-toast');
 
-			$('.ui-toast').off('transitionend.toastshow').on('transitionend.toasthide', function(){
-				$(this).off('transitionend.toasthide').remove();
-				$body.removeClass('ui-toast-ready');
-			});
+			clearTimeout(Global.toast.timer);
+			el_body.classList.remove('ui-toast-show');
+
+			el_toast.removeEventListener('transitionend', act);
+			el_toast.addEventListener('transitionend', act);
+
+			function act(e){
+				const that = e.currentTarget;
+
+				that.removeEventListener('transitionend', act);
+				that.remove();
+				el_body.classList.remove('ui-toast-ready');
+			}
 		}
 	}
 
