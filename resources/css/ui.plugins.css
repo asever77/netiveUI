@@ -3347,3 +3347,27 @@ td button.today {
     text-align: center;
     opacity: 0.4;
 }
+
+.toast {
+    width:calc(100% - 2rem);
+    padding:1rem;
+    color:#fff;
+    background:rgba(0,0,0,0.9);
+    position:fixed;
+    left:0;
+    margin:1rem;
+    font-size:1.2rem;
+    transition: all .3s;
+}
+
+.ui-toast-ready .toast{
+    display:block;
+    opacity: 0;
+    bottom:-10rem;
+}
+
+.ui-toast-show .toast{
+    opacity: 1;
+    bottom: 0;
+}
+
