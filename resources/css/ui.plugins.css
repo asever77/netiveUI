@@ -759,6 +759,10 @@ a.ui-acco-btn {
     position: relative;
 }
 
+.ui-acco-pnl[aria-hidden="true"] {
+    display: none;
+}
+
 .ui-acco-tit-wrap {
     position: relative;
     display: inline-block;
@@ -773,7 +777,6 @@ a.ui-acco-btn {
     line-height: 0;
 }
 
-/* ui-acco : netvie UI style */
 .ui-acco {
     margin: 0;
 }
@@ -830,7 +833,7 @@ a.ui-acco-btn {
     line-height: 1;
 }
 
-.ui-acco-btn.selected:after {
+.ui-acco-btn[aria-expanded="true"]:after {
     content: "keyboard_arrow_up";
 }
 
@@ -849,12 +852,6 @@ a.ui-acco-btn:after {
 
 .ui-acco-pnl {
     background: #f9f9f9;
-    margin: 0;
-    padding: 20px;
-}
-
-.ui-acco-pnl[aria-hidden="true"] {
-    display:none;
 }
 
 .ui-acco-tit-wrap {
