@@ -3025,38 +3025,33 @@ if (!Object.keys){
 		}
 	}
 
-
+	/**
+	 * accordion
+	 * modify: 2021-08-07
+	 */
 	Global.accordion = {
 		options: {
 			current: null,
 			autoclose: false,
 			callback: false,
-			add: false,
 			effect: Global.state.effect.easeInOut,
 			effTime: '.2'
 		},
 		init: function(option){
 			const opt = Object.assign({}, Global.accordion.options, option);
 			const accoId = opt.id;
-			
 			const callback = opt.callback;
 			let current = opt.current;
 			let autoclose = opt.autoclose;
-			const add = opt.add;
-
 			const el_acco = doc.querySelector('#' + accoId);
 			const el_wrap = el_acco.querySelectorAll(':scope > .ui-acco-wrap');
-			
 			const len = el_wrap.length;
-			const keys = Global.state.keys;
-			let optAcco;
-	
 			const para = Global.para.get('acco');
 			let paras;
 			let paraname;
 			
 			//set up : parameter > current
-			if (!!para && !add) {
+			if (!!para) {
 				if (para.split('+').length > 1) {
 					//2 or more : acco=exeAcco1*2+exeAcco2*3
 					paras = para.split('+');
@@ -3067,7 +3062,7 @@ if (!Object.keys){
 					}
 				} else {
 					//only one : tab=1
-					 if (para.split('*').length > 1) {
+					if (para.split('*').length > 1) {
 						paraname = para.split('*');
 						opt.id === paraname[0] ? current = [Number(paraname[1])] : '';
 					} else {
@@ -3076,6 +3071,9 @@ if (!Object.keys){
 				}
 			}
 
+			el_acco.dataset.n = len;
+
+			//set up : parameter > current
 			for (let i = 0; i < len; i++) {
 				const this_wrap = el_wrap[i];
 				const el_tit = this_wrap.querySelector(':scope > .ui-acco-tit');
@@ -3085,17 +3083,19 @@ if (!Object.keys){
 				this_wrap.dataset.n = i;
 				(el_tit.tagName !== 'DT') && el_tit.setAttribute('role','heading');
 
+				el_btn.id = accoId + 'Btn' + i;
+				el_btn.dataset.selected = false;
+				el_btn.setAttribute('aria-expanded', false);
+				el_btn.removeAttribute('data-order');
+				el_btn.dataset.n = i;
+
 				if (!!el_pnl) {
-					el_btn.id = accoId + 'Btn' + i;
 					el_pnl.id = accoId + 'Pnl' + i;
-					
-					el_btn.dataset.selected = false;
-					el_btn.setAttribute('aria-expanded', false);
 					el_btn.setAttribute('aria-controls', el_pnl.id);
 					el_pnl.setAttribute('aria-labelledby', el_btn.id);
+					el_pnl.dataset.height = el_pnl.offsetHeight;
 					el_pnl.setAttribute('aria-hidden', true);
 					el_pnl.dataset.n = i;
-					el_btn.dataset.n = i;
 
 					if (current === 'all') {
 						el_btn.dataset.selected = true;
@@ -3104,243 +3104,215 @@ if (!Object.keys){
 					}
 				}
 
-				el_btn.dataset.order = (i === 0) ? 'first' : (i === len - 1) ? 'last' : '';
+				if (i === 0) {
+					el_btn.dataset.order = 'first';
+				}
 
-				el_btn.addEventListener('click', evtClick);
-			//	el_btn.addEventListener('keydown', evtKeys);
+				if (i === len - 1) {
+					el_btn.dataset.order = 'last';
+				}
 
+				el_btn.removeEventListener('click', Global.accordion.evtClick);
+				el_btn.removeEventListener('keydown', Global.accordion.evtKeys);
+				el_btn.addEventListener('click', Global.accordion.evtClick);
+				el_btn.addEventListener('keydown', Global.accordion.evtKeys);
 			}
-			
 
 			const currentLen = current === null ? 0 : current.length;
 			
-			if (current === 'all') {
-				
-			} else {
-				console.log('current',currentLen);
-
+			if (current !== 'all') {
 				for (let i = 0; i < currentLen; i++) {
 					const this_wrap = el_acco.querySelector('.ui-acco-wrap[data-n="'+ current[i] +'"]');
 	
-					console.log(this_wrap);
-					const el_tit = this_wrap.querySelector(':scope > .ui-acco-tit');
-					const el_pnl = this_wrap.querySelector(':scope > .ui-acco-pnl');
-					const el_btn = el_tit.querySelector('.ui-acco-btn');
+					const _tit = this_wrap.querySelector(':scope > .ui-acco-tit');
+					const _btn = _tit.querySelector('.ui-acco-btn');
+					const _pnl = this_wrap.querySelector(':scope > .ui-acco-pnl');
 	
-					if (!!el_pnl) {
-						el_btn.dataset.selected = true;
-						el_btn.setAttribute('aria-expanded', true);
-						el_pnl.setAttribute('aria-hidden', false);
+					if (!!_pnl) {
+						_btn.dataset.selected = true;
+						_btn.setAttribute('aria-expanded', true);
+						_pnl.setAttribute('aria-hidden', false);
 					}
 				}
 			}
 			
+			!!callback && callback();
 
-			sessionStorage.setItem(
-				accoId, 
-				JSON.stringify({ 
-					'close': autoclose, 
-					'current': current 
-				})
-			);
-
-			
-			//추가시
-			if (add) {
-				current = [];
-				var ss = JSON.parse(sessionStorage.getItem(accoId));
-	
-				autoclose = autoclose || ss.close;
-
-				for (let bs of el_btnselected) {
-					console.log(bs.closest('.ui-acco-wrap').dataset.n);
-					bs.push(bs.closest('.ui-acco-wrap').dataset.n);
-				}
-	
-				el_acco.querySelector('.ui-acco-btn.selected').each(function(){
-					current.push($(this).closest('.ui-acco-wrap').index());
-				});
-				el_btn.removeAttr('acco-last').removeAttr('acco-first');
-	
-				autoclose = el_acco.data('opt').close;
-				callback = el_acco.data('opt').callback;
-			}
-	
-			
 			Global.accordion[accoId] = {
 				callback: callback,
 				autoclose: autoclose,
 				current: current
 			};
-	
-			//event
-			function evtClick(e) {
-				const that = e.currentTarget;
-				const btnId = that.id;
-				const n = that.dataset.n;
-				
-				let accoId = btnId.split('Btn');
-				accoId = accoId[0];
+		},
+		evtClick: function(e){
+			const that = e.currentTarget;
+			const btnId = that.id;
+			const n = that.dataset.n;
+			
+			let accoId = btnId.split('Btn');
+			accoId = accoId[0];
 
-				if (!!btnId) {
-					e.preventDefault();
-	
-					Global.accordion.toggle({ 
-						id: accoId, 
-						current: [n]
-					});
-				}
+			if (!!btnId) {
+				e.preventDefault();
+
+				Global.accordion.toggle({ 
+					id: accoId, 
+					current: [n]
+				});
 			}
-			function evtKeys(e) {
-				var $this = $(this),
-					n = Number($this.data('n')),
-					m = Number($this.data('len')),
-					id = $this.closest('.ui-acco').attr('id');
-	
-				switch(e.keyCode){
-					case keys.up: upLeftKey(e);
+		},
+		evtKeys: function(e){
+			const that = e.currentTarget;
+			const btnId = that.id;
+			const n = Number(that.dataset.n);
+			const keys = Global.state.keys;
+
+			let accoId = btnId.split('Btn');
+			accoId = accoId[0];
+
+			const acco = doc.querySelector('#' + accoId);
+			const len = Number(acco.dataset.n);
+
+			switch(e.keyCode){
+				case keys.up:	
+				case keys.left: upLeftKey(e);
 					break;
-	
-					case keys.left: upLeftKey(e);
+
+				case keys.down:
+				case keys.right: downRightKey(e);
 					break;
-	
-					case keys.down: downRightKey(e);
+
+				case keys.end: endKey(e);
 					break;
-	
-					case keys.right: downRightKey(e);
+
+				case keys.home: homeKey(e);
 					break;
-	
-					case keys.end: endKey(e);
-					break;
-	
-					case keys.home: homeKey(e);
-					break;
-				}
-	
-				function upLeftKey(e) {
-					e.preventDefault();
-					
-					!$this.attr('acco-first') ?
-					$('#' + id + '-btn' + (n - 1)).focus():
-					$('#' + id + '-btn' + (m - 1)).focus();
-				}
-				function downRightKey(e) {
-					e.preventDefault();
-	
-					!$this.attr('acco-last') ? 
-					$('#' + id + '-btn' + (n + 1)).focus():
-					$('#' + id + '-btn0').focus();
-				}
-				function endKey(e) {
-					e.preventDefault();
-	
-					$('#' + id + '-btn' + (m - 1)).focus();
-				}
-				function homeKey(e) {
-					e.preventDefault();
-					$('#' + id + '-btn0').focus();
-				}
+			}
+			
+			function upLeftKey(e) {
+				e.preventDefault();
+
+				that.dataset.order !== 'first' ?
+				acco.querySelector('#' + accoId + 'Btn' + (n - 1)).focus():
+				acco.querySelector('#' + accoId + 'Btn' + (len - 1)).focus();
+			}
+			function downRightKey(e) {
+				e.preventDefault();
+
+				that.dataset.order !== 'last' ?
+				acco.querySelector('#' + accoId + 'Btn' + (n + 1)).focus():
+				acco.querySelector('#' + accoId + 'Btn0').focus();
+			}
+			function endKey(e) {
+				e.preventDefault();
+				
+				acco.querySelector('#' + accoId + 'Btn' + (len - 1)).focus();
+			}
+			function homeKey(e) {
+				e.preventDefault();
+
+				acco.querySelector('#' + accoId + 'Btn0').focus();
 			}
 		},
 		toggle: function(opt){
-			if (opt === undefined) {
-				return false;
-			}
+			const id = opt.id;
+			const el_acco = doc.querySelector('#' + id);
+			const current = opt.current === undefined ? null : opt.current;
+			const callback = opt.callback === undefined ? opt.callback : Global.accordion[id].callback;
+			const state = opt.state === undefined ? 'toggle' : opt.state;
+			const autoclose = opt.autoclose === undefined ? Global.accordion[id].autoclose : opt.autoclose;
+
+			console.log(current,  state, autoclose);
+
+			let el_wraps = el_acco.querySelectorAll(':scope > .ui-acco-wrap');
+			let el_pnl;
+			let el_tit;
+			let el_btn;
+			let len = el_wraps.length;
+			let check = 0;
 			
-			var id = opt.id,
-				$acco = $('#' + id),
-				dataOpt = $acco.data('opt'),
-				current = opt.current === undefined ? null : opt.current;
-	
-			console.log(dataOpt);
-	
-			var	callback = opt.callback === undefined ? dataOpt.callback : opt.callback,
-				state = opt.state === undefined ? 'toggle' : opt.state,
-				motion = opt.motion === undefined ? true : opt.motion,
-				autoclose = dataOpt.close,
-				open = null,
-				$wrap = $acco.children('.ui-acco-wrap'),
-				$pnl,
-				$tit,
-				$btn,
-				len = $wrap.length,
-				speed = 200,
-				i, c = 0;
-			
-			(motion === false) ? speed = 0 : speed = 200;
-	
+			const currentLen = current === null ? 0 : current.length;
+
 			if (current !== 'all') {
-				for (i = 0 ; i < current.length; i++) {
-					$pnl = $wrap.eq(current[i]).children('.ui-acco-pnl');
-					$tit = $wrap.eq(current[i]).children('.ui-acco-tit');
-					$btn = $tit.find('.ui-acco-btn');
-					
-					if (state === 'toggle') {
-						(!$btn.data('selected')) ? act('down') : act('up');
-					} else {
-						(state === 'open') ? act('down') : (state === 'close') ? act('up') : '';
+				for (let i = 0; i < currentLen; i++) {
+					const this_wrap = el_acco.querySelector('.ui-acco-wrap[data-n="'+ current[i] +'"]');
+
+					el_tit = this_wrap.querySelector(':scope > .ui-acco-tit');
+					el_pnl = this_wrap.querySelector(':scope > .ui-acco-pnl');
+					el_btn = el_tit.querySelector('.ui-acco-btn');
+	
+					if (!!el_pnl) {
+						if (state === 'toggle') {
+							(el_btn.dataset.selected === 'true') ? act('down') : act('up');
+						} else {
+							(state === 'open') && act('up');
+							(state === 'close') && act('down');
+						}
 					}
 				}
-				!callback ? '' :
-					callback({ 
-						id:id, 
-						open:open, 
-						current:current
-					});
+				!!callback && callback({ 
+					id:id, 
+					current:current
+				});
 			} else if (current === 'all') {
 				checking();
 			}
 	
 			function checking() {
-				//열린상태 체크하여 전체 열지 닫을지 결정
-				c = 0;
-				$wrap.each(function(i){
-					c = ($wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').attr('aria-expanded') === 'true') ? c + 1 : c + 0;
-				});
 				//state option 
 				if (state === 'open') {
-					c = 0;
-					$acco.data('allopen', false);
+					check = 0;
+					el_acco.dataset.allopen = false;
 				} else if (state === 'close') {
-					c = len;
-					$acco.data('allopen', true);
+					check = len;
+					el_acco.dataset.allopen = true;
 				}
 				//all check action
-				if (c === 0 || !$acco.data('allopen')) {
-					$acco.data('allopen', true);
+				if (el_acco.dataset.allopen !== 'true') {
+					el_acco.dataset.allopen = true;
 					act('down');
-				} else if (c === len || !!$acco.data('allopen')) {
-					$acco.data('allopen', false);
+				} else {
+					el_acco.dataset.allopen = false;
 					act('up');
 				}
 			}
 			function act(v) {
-				var isDown = v === 'down',
-					a = isDown ? true : false, 
-					cls = isDown ? 'addClass' : 'removeClass', 
-					updown = isDown ? 'slideDown' : 'slideUp';
-				
-				open = isDown ? true : false;
-	
-				if (autoclose === true && isDown) {
-					$wrap.each(function(i){
-						$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', false).removeClass('selected').attr('aria-expanded', false);
-						$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden',true).stop().slideUp(speed);
-					});
+				const isDown = !(v === 'down');
+								
+				//set up close
+				if (!!autoclose) {
+					for (let wrap of el_wraps) {
+						const _tit = wrap.querySelector(':scope > .ui-acco-tit');
+						const _btn = _tit.querySelector('.ui-acco-btn');
+						const _pnl = wrap.querySelector(':scope > .ui-acco-pnl');
+						
+						if (!!_pnl) {
+							_btn.dataset.selected = false;
+							_btn.setAttribute('aria-expanded', false);
+							_pnl.setAttribute('aria-hidden', true);
+						}
+					}
 				}
 	
 				if (current === 'all') {
-					$wrap.each(function(i){
-						$wrap.eq(i).find('> .ui-acco-tit .ui-acco-btn').data('selected', a)[cls]('selected').attr('aria-expanded', a);
-						$wrap.eq(i).find('> .ui-acco-pnl').attr('aria-hidden', !a).stop()[updown](speed, function(){
-							$(this).css({ height: '', padding: '', margin: '' }); 
-						});
-					});
+					for (let wrap of el_wraps) {
+						const _tit = wrap.querySelector(':scope > .ui-acco-tit');
+						const _btn = _tit.querySelector('.ui-acco-btn');
+						const _pnl = wrap.querySelector(':scope > .ui-acco-pnl');
+						
+						if (!!_pnl) {
+							_btn.dataset.selected = isDown;
+							_btn.setAttribute('aria-expanded', isDown);
+							_pnl.setAttribute('aria-hidden', !isDown);
+						}
+					}
 				} else {
-					$btn.data('selected', a).attr('aria-expanded', a)[cls]('selected');
-					$pnl.attr('aria-hidden', !a).stop()[updown](speed, function(){
-						$(this).css({ height: '', padding: '', margin: '' }); 
-					});
+					el_btn.dataset.selected = isDown;
+					el_btn.setAttribute('aria-expanded', isDown);
+
+					if (!!el_pnl) {
+						el_pnl.setAttribute('aria-hidden', !isDown);
+					}
 				}
 			}
 		}
