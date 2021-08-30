@@ -118,6 +118,8 @@ if (!Object.keys){
 	})();
 
 	//components state 
+	Global.callback = {};
+
 	Global.state = {
 		device: {
 			info: (function() {
@@ -516,15 +518,15 @@ if (!Object.keys){
 		timer : null,
 		options : {
 			delay: 'short',
-			classname : ''
+			classname : '',
+			conts: ''
 		},
 		show : function(option) {
 			const opt = Object.assign({}, this.options, option);
-
-			const delay = opt.delay;
-			let toast = '<div class="ui-toast toast '+ opt.classname +'">'+ opt.conts +'</div>';
-
+			const {delay, classname, conts} = opt;
 			const el_body = document.querySelector('body');
+
+			let toast = '<div class="ui-toast toast '+ classname +'">'+ conts +'</div>';
 			let time = (delay === 'short') ? 2000 : 3500;
 
 			if (delay === 'short') {
@@ -534,8 +536,6 @@ if (!Object.keys){
 			} else {
 				time = delay;
 			}
-
-			console.log(delay, time);
 
 			if (!!doc.querySelector('.ui-toast-ready')) {
 				clearTimeout(Global.toast.timer);
@@ -559,7 +559,7 @@ if (!Object.keys){
 
 			function act(e){
 				const that = e.currentTarget;
-				console.log(that);
+
 				that.removeEventListener('transitionend', act);
 				that.classList.add('on');
 				Global.toast.timer = setTimeout(Global.toast.hide, time);
@@ -606,115 +606,125 @@ if (!Object.keys){
 	*/
 	Global.scroll = {
 		options : {
-			value: 0,
-			effect:'smooth', //'auto'
-			callback: false,
-			ps: 'top',
-			add: 0,
+			selector: document.querySelector('html, body'),
 			focus: false,
-			selector: document.querySelector('html, body')
+
+			top: 0,
+			left:0,
+			add: 0,
+			align: 'default',
+
+			effect:'smooth', //'auto'
+			callback: false,	
 		},
-		move : function(opt){
-			if (opt === undefined) {
-				return false;
+		init: function(){
+			const el_areas = document.querySelectorAll('.ui-scrollmove-btn[data-area]');
+
+			for (let el_this of el_areas) {
+				el_this.removeEventListener('click', this.act);
+				el_this.addEventListener('click', this.act);
+			}
+		},
+		act: function(e){
+			const that = e.currentTarget;
+			const area = that.dataset.area;
+			const name = that.dataset.name;
+			const add = that.dataset.add === undefined ? 0 : that.dataset.add;
+			const align = that.dataset.align === undefined ? 'default' : that.dataset.align;
+			const callback = that.dataset.callback === undefined ? false : that.dataset.callback;
+
+			const el_area = doc.querySelector('.ui-scrollmove[data-area="'+ area +'"]');
+			const el_item = el_area.querySelector('.ui-scrollmove-item[data-name="'+ name +'"]');
+			
+			let top = (el_area.getBoundingClientRect().top - el_item.getBoundingClientRect().top) - el_area.scrollTop;
+			let left = (el_area.getBoundingClientRect().left - el_item.getBoundingClientRect().left) - el_area.scrollLeft;
+
+			if (align === 'center') {
+				top = top - (el_item.offsetHeight / 2);
+				left = left - (el_item.offsetWidth / 2);
 			}
 
-			var opt = $.extend(true, {}, this.options, opt);
+			Global.scroll.move({
+				top: top,
+				left: left,
+				add: add,
+				selector: el_area,
+				align: align,
+				focus: el_item,
+				callback: callback
+			});
+		},
+		move : function(option){
+			const opt = Object.assign({}, this.options, option);
+			const {top, left, callback, align, add, focus, selector, effect} = opt;
 
-			var { value, callback, ps, add, focus, selector, effect } = opt;
-
-			// var value = opt.value;
-			// var callback = opt.callback;
-			// var ps = opt.ps;
-			// var add = opt.add;
-			// var focus = opt.focus;
-			// var selector = opt.selector;
-			// var effect = opt.effect;
-			
 			//jquery selector인 경우 변환
 			if (!!selector[0]) {
 				selector = selector[0];
 			}
-
-			switch (ps) {
-				case 'top':
+			switch (align) {
+				case 'default':
 					selector.scrollTo({
-						top: value + add,
+						top: Math.abs(top) + add,
+						left: Math.abs(left) + add,
 						behavior: effect
-					});
-	
-					this.checkEnd({
-						selector : selector,
-						now : selector.scrollTop,
-						ps : 'top',
-						callback : callback,
-						focus : focus
 					});
 					break;
 
-				case 'left':
+				case 'center':				
 					selector.scrollTo({
-						left: value + add,
+						top: Math.abs(top) - (selector.offsetHeight / 2) + add,
+						left: Math.abs(left) - (selector.offsetWidth / 2) + add,
 						behavior: effect
-					});
-	
-					this.checkEnd({
-						selector : selector,
-						now : selector.scrollTop,
-						ps : 'left',
-						callback : callback,
-						focus : focus
-					});
-					break;
-
-				case 'center':
-					var w = selector.offsetWidth ;
-				
-					selector.scrollTo({
-						left: value - (w / 2) + add,
-						behavior: effect
-					});
-
-					
-					this.checkEnd({
-						selector : selector,
-						now : selector.scrollLeft,
-						ps : 'left',
-						callback : callback,
-						focus : focus
 					});
 					break;
 			}
+
+			this.checkEnd({
+				selector : selector,
+				nowTop : selector.scrollTop, 
+				nowLeft : selector.scrollLeft,
+				align : align,
+				callback : callback,
+				focus : focus
+			});
 		},
 		checkEndTimer : {},
 		checkEnd: function(opt){
-			var $selector = opt.selector;
-			var now = opt.now;
-			var ps = opt.ps === undefined ? 'top' : opt.ps; //top,left
-			var scrollPs = ps === 'top' ? 'scrollTop' : 'scrollLeft';
-			var focus = opt.focus;
-			var callback = opt.callback;
+			const el_selector = opt.selector;
+			const {align, focus, callback} = opt;
+			
+			let nowTop = opt.nowTop;
+			let nowLeft = opt.nowLeft;
 
 			Global.scroll.checkEndTimer = setTimeout(function(){
 				//스크롤 현재 진행 여부 판단
-				if (now === $selector[scrollPs]) {
+				if (nowTop === el_selector.scrollTop && nowLeft === el_selector.scrollLeft) {
 					clearTimeout(Global.scroll.checkEndTimer);
 					//포커스가 위치할 엘리먼트를 지정하였다면 실행
 					if (!!focus ) {
-						focus.attr('tabindex', 0).focus();
+						focus.setAttribute('tabindex', 0);
+						focus.focus();
 					}
 					//스크롤 이동후 콜백함수 실행
-					if (!!callback ) {
-						callback();
+					if (!!callback) {
+						if (typeof callback === 'string') {
+							Global.callback[callback]();
+						} else {
+							callback();
+						}
 					}
 				} else {
-					now = $selector[scrollPs];
+					nowTop = el_selector.scrollTop;
+					nowLeft = el_selector.scrollLeft;
+
 					Global.scroll.checkEnd({
-						selector : opt.selector,
-						now : $selector[scrollPs],
-						ps : opt.ps,
-						callback : opt.callback,
-						focus : opt.focus
+						selector: el_selector,
+						nowTop: nowTop,
+						nowLeft: nowLeft,
+						align: align,
+						callback: callback,
+						focus: focus
 					});
 				}
 			},100);
@@ -4129,7 +4139,7 @@ if (!Object.keys){
 			}
 		},
 		reset: () => {
-			const elModals = doc.querySelectorALl('.ui-modal.open.ps-center');
+			const elModals = doc.querySelectorAll('.ui-modal.open.ps-center');
 
 			for (let elModal of elModals) {
 				const elModalHead = elModal.querySelector('.ui-modal-header');
