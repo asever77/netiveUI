@@ -939,9 +939,7 @@ html.col-12 .coln12 {
 .test-scrollmove-hor .test.tada{
 	opacity: 1;
 }
-.test-scrollmove-hor .test+.test{
-	/* margin-left:1rem; */
-}
+
 .test-scrollmove-hor .btn-wrap {
 	flex-wrap: wrap;
 }
@@ -1093,6 +1091,6 @@ pre {
 
 @media all and (min-width:905px) {
 	.h-1{
-		font-size:9rem;
+		font-size:6rem;
 	}
 }
