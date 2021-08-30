@@ -208,7 +208,7 @@ if (!Object.keys){
 			easeInOutBack: '0.680, -0.550, 0.265, 1.550'
 		}
 	}
-	Global.uiParts = {
+	Global.parts = {
 		//resize state
 		resizeState: function() {
 			let timerWin;
@@ -361,7 +361,7 @@ if (!Object.keys){
 			let passed = now - startTime;
 
 			if (now <= endTime) {
-				Global.uiParts.RAF.time = _start + (unit * passed);
+				Global.parts.RAF.time = _start + (unit * passed);
 				requestAnimationFrame(scrollTo);
 			} else {
 				!!callback && callback();
@@ -369,7 +369,7 @@ if (!Object.keys){
 			}
 		}
 	}
-	Global.uiParts.resizeState();
+	Global.parts.resizeState();
 
 	/**
 	 * loading show/hide
@@ -608,12 +608,10 @@ if (!Object.keys){
 		options : {
 			selector: document.querySelector('html, body'),
 			focus: false,
-
 			top: 0,
 			left:0,
 			add: 0,
 			align: 'default',
-
 			effect:'smooth', //'auto'
 			callback: false,	
 		},
@@ -734,48 +732,46 @@ if (!Object.keys){
 			selector : null,
 			area : null
 		},
-		parallax: function(opt) {
-			var opt = $.extend(true, {}, Global.scroll.optionsParllax, opt);
-			var $area = opt.area ?? $(win);
-			var $parallax = opt.selector ?? $('.ui-parallax');
-			var $wrap = $parallax.find('> .ui-parallax-wrap');
+		parallax: function(option) {
+			const opt = Object.assign({}, this.optionsParllax, option);
+			const el_area = opt.area ?? window;
+			const el_parallax = opt.selector ?? doc.querySelector('.ui-parallax');
+			const el_wraps = el_parallax.querySelectorAll(':scope > .ui-parallax-wrap');
 
 			act();
-			$area.off('scroll.win').on('scroll.win', act);
+			el_area.addEventListener('scroll', act);
 
 			function act() {
-				var areaH = $area.outerHeight();
-				var areaT = Math.floor($area.scrollTop());
-				var baseT = Math.floor($wrap.eq(0).offset().top);
+				const isWin = el_area === window;
+				const areaH = isWin ? window.innerHeight : el_area.offsetHeight;
+				const areaT = isWin ? Math.floor(window.scrollY) : Math.floor(el_area.scrollTop);
+				const baseT = Math.floor(el_wraps[0].getBoundingClientRect().top);
 
-				for (var i = 0, len = $wrap.length; i < len; i++) {
-					var $current = $wrap.eq(i);
-					var $item = $current.find('.ui-parallax-item');
-					var item_len = $item.length;
-
-					var attrStart = $current.attr('data-start');
-					var attrEnd = $current.attr('data-end');
-
-					attrStart === undefined ? attrStart = 0 : '';
-					attrEnd === undefined ? attrEnd = 0 : '';
-
-					var h = Math.floor($current.outerHeight());
-					var start = Math.floor($current.offset().top);
-					var end = h + start;
-					var s = areaH * Number(attrStart) / 100;
-					var e = areaH * Number(attrEnd) / 100;
+				for (let el_wrap of el_wraps) {
+					const el_items = el_wrap.querySelectorAll('.ui-parallax-item');
+					const attrStart = el_wrap.dataset.start === undefined ? 0 : el_wrap.dataset.start;
+					const attrEnd = el_wrap.dataset.end === undefined ? 0 : el_wrap.dataset.end;
+					const h = Math.floor(el_wrap.offsetHeight);
+					let start = Math.floor(el_wrap.getBoundingClientRect().top);
+					let end = h + start;
+					const s = areaH * Number(attrStart) / 100;
+					const e = areaH * Number(attrEnd) / 100;
 					
 					if (opt.area !== 'window') {
 						start = (start + areaT) - (baseT + areaT);
 						end = (end + areaT) - (baseT + areaT);
 					}
 					
-					(areaT >= start - s) ? $current.addClass('parallax-s') : $current.removeClass('parallax-s');
-					(areaT >= end - e) ? $current.addClass('parallax-e') : $current.removeClass('parallax-e');
+					(areaT >= start - s) ? 
+						el_wrap.classList.add('parallax-s') : 
+						el_wrap.classList.remove('parallax-s');
+					(areaT >= end - e) ? 
+						el_wrap.classList.add('parallax-e') : 
+						el_wrap.classList.remove('parallax-e');
 
-					for (var j = 0; j < item_len; j++) {
-						var n = ((areaT - (start-s)) * 0.003).toFixed(2);
-						var styleData = $item.eq(j).data('css');
+					for (let el_item of el_items) {
+						let n = ((areaT - (start - s)) * 0.003).toFixed(2);
+						let styleData = el_item.dataset.css;
 
 						n = n < 0 ? 0 : n > 1 ? 1 : n;
 
@@ -785,8 +781,9 @@ if (!Object.keys){
 						styleData = styleData.replace(/{-n}/gi, (1 - n).toFixed(2));
 						styleData = styleData.replace(/{-nn}/gi, (10 - n * 10).toFixed(2));
 						styleData = styleData.replace(/{-nnn}/gi, (100 - n * 100).toFixed(2));
-						
-						$item.eq(j).attr('style', styleData).attr('data-parallax', n);
+
+						el_item.setAttribute('style', styleData);
+						el_item.setAttribute('data-parallax', n);
 					}
 				}
 			}
@@ -799,12 +796,11 @@ if (!Object.keys){
 	 */
 	Global.para = {
 		get: function(paraname){
-			var _tempUrl = win.location.search.substring(1),
-			_tempArray = _tempUrl.split('&'),
-			_tempArray_len = _tempArray.length,
-			_keyValue;
+			const _tempUrl = win.location.search.substring(1);
+			const _tempArray = _tempUrl.split('&');
+			let _keyValue;
 
-			for (var i = 0, len = _tempArray_len; i < len; i++) {
+			for (let i = 0, len = _tempArray.length; i < len; i++) {
 				_keyValue = _tempArray[i].split('=');
 
 				if (_keyValue[0] === paraname) {
@@ -852,7 +848,6 @@ if (!Object.keys){
 			}
 
 			function keyEnd(e) {
-				console.log('keyEnd');
 				if (!e.shiftKey && e.keyCode == 9) {
 					e.preventDefault();
 					el_start.focus();
@@ -1171,25 +1166,24 @@ if (!Object.keys){
 			left: 0,
 			toolbar: 'no',
 			location: 'no',
-			memubar: 'no',
+			menubar: 'no',
 			status: 'no',
 			resizable: 'no',
-			scrolbars: 'yes'
+			scrollbars: 'yes'
 		},
-		open: function(opt){
-			var opt = opt === undefined ? {} : opt;
-			var opt = $.extend(true, {}, this.options, opt);
-			var specs;
+		open: function(option){
+			const opt = $.extend(true, {}, this.options, option);
+			const {name,width,height,align,toolbar,location,menubar,status,resizable,scrollbars,link} = opt;
+			let {top,left} = opt;
 
-			if (opt.align === 'center') {
-				opt.left = ($(win).outerWidth() / 2) - (opt.width / 2);
-				opt.top = ($(win).outerHeight() / 2) - (opt.height / 2);
+			if (align === 'center') {
+				left = ($(win).outerWidth() / 2) - (width / 2);
+				top = ($(win).outerHeight() / 2) - (height / 2);
 			}
 
-			specs = 'width=' + opt.width + ', height='+ opt.height + ', left=' + opt.left + ', top=' + opt.top;
-			specs += ', toolbar=' + opt.toolbar + ', location=' + opt.location + ', resizable=' + opt.resizable + ', status=' + opt.status + ', menubar=' + opt.menubar + ', scrollbars=' + opt.scrollbars;
+			const specs = 'width=' + width + ', height='+ height + ', left=' + left + ', top=' + top + ', toolbar=' + toolbar + ', location=' + location + ', resizable=' + resizable + ', status=' + status + ', menubar=' + menubar + ', scrollbars=' + scrollbars;
 			
-			win.open(opt.link, opt.name , specs);
+			win.open(link, name , specs);
 		}
 	}
 
@@ -1197,29 +1191,34 @@ if (!Object.keys){
 	 * cookie set/get/del
 	 */
 	Global.cookie = {
-		set: function(){
-			var cookieset = opt.name + '=' + opt.value + ';';
-			var expdate;
+		set: function(opt){
+			const {name, value, term, path, domain} = opt;
+			let cookieset = name + '=' + value + ';';
+			let expdate;
 
-			if (opt.term) {
+			if (term) {
 				expdate = new Date();
-				expdate.setTime( expdate.getTime() + opt.term * 1000 * 60 * 60 * 24 ); // term 1 is a day
+				expdate.setTime( expdate.getTime() + term * 1000 * 60 * 60 * 24 ); // term 1 is a day
 				cookieset += 'expires=' + expdate.toGMTString() + ';';
 			}
-			(opt.path) ? cookieset += 'path=' + opt.path + ';' : '';
-			(opt.domain) ? cookieset += 'domain=' + opt.domain + ';' : '';
+			(path) ? cookieset += 'path=' + path + ';' : '';
+			(domain) ? cookieset += 'domain=' + domain + ';' : '';
+
 			document.cookie = cookieset;
 		},
-		get: function(opt){
-			var match = ( document.cookie || ' ' ).match( new RegExp(opt.name + ' *= *([^;]+)') );
+		get: function(name){
+			const match = ( document.cookie || ' ' ).match( new RegExp(name + ' *= *([^;]+)') );
 
 			return (match) ? match[1] : null;
 		},
-		del: function(opt){
-			var expireDate = new Date();
+		del: function(name){
+			const expireDate = new Date();
 
 			expireDate.setDate(expireDate.getDate() + -1);
-			this.set({ name:opt.name, term:'-1' });
+			this.set({ 
+				name: name, 
+				term: '-1' 
+			});
 		}
 	}
 
@@ -1228,56 +1227,59 @@ if (!Object.keys){
 	 */
 	Global.table = {
 		caption: function(){
-			var $cp = $('.ui-caption');
+			const el_captions = doc.querySelectorAll('.ui-caption');
 
-			$cp.text('');
-			$cp.each(function(){
-				var $caption = $(this);
-				var $table = $caption.closest('table');
-				var th = $table.find('th');
-				var cp_txt = '';
+			for (let el_caption of el_captions) {
+				el_caption.textContent = '';
+			
+				const el_table = el_caption.closest('table');
+				const ths = el_table.querySelectorAll('th');
+				let captionTxt = '';
 
-				for (var i = 0; i < th.length; i++) {
-					var a = th.eq(i).text();
+				for (let th of ths) {
+					const txt = th.textContent;
 					
-					if (a !== '') {
-						cp_txt += a;
-					}
-					if (i < th.length - 1) {
-						cp_txt += ', ';
-					}
+					(captionTxt !== '') ?
+						captionTxt += ', ' + txt:
+						captionTxt += txt;
 				}
 
-				$caption.text(cp_txt + ' 정보입니다.');
-			});
+				el_caption.textContent = captionTxt + ' 정보입니다.';
+			}
 		},
 		scrollOption: {
 			callback:false
 		},
-		scroll: function(opt){
-			var opt = $.extend(true, {}, this.scrollOption, opt);
-			var callback = opt.callback;
-			var $tblWrap = $('.ui-tablescroll');
+		scroll: function(option){
+			const opt = Object.assign({}, this.scrollOption, option);
+			const callback = opt.callback;
+			const el_wraps = doc.querySelectorAll('.ui-tablescroll');
 
-			for (var i = 0, len = $tblWrap.length; i < len; i++) {
-				var $tbl = $tblWrap.eq(i),
-					_$tblWrap = $tbl.find('.ui-tablescroll-wrap'),
-					_$tbl = _$tblWrap.find('table'),
-					cloneTable = _$tbl.clone();
-				
-				if (!$tbl.find('.ui-tablescroll-clone').length) {
-					$tbl.prepend(cloneTable);
+			for (let el_wrap of el_wraps) {
+				const el_tblWrap = el_wrap.querySelector('.ui-tablescroll-wrap');
+				const el_tbl = el_tblWrap.querySelector('table');
+				const cloneTable = el_tbl.cloneNode(true);
 
-					var $cloneTable = $tbl.find('> table:first-child'),
-						$cloneTableTh = $cloneTable.find('th');
+				if (!el_tbl.querySelector('.ui-tablescroll-clone')) {
+					el_wrap.prepend(cloneTable);
 
-					$cloneTable.find('caption').remove();
-					$cloneTable.find('tbody').remove();
-					$cloneTable.addClass('ui-tablescroll-clone');
-					$cloneTable.attr('aria-hidden', true);
-					$cloneTableTh.each(function(){
-						$(this).attr('aria-hidden', true);
-					});
+					const clone_tbl = el_wrap.querySelector(':scope > table:first-child');
+					const clone_ths = clone_tbl.querySelectorAll('th');
+					const clone_caption = clone_tbl.querySelector('caption');
+					const clone_tbodys = clone_tbl.querySelectorAll('tbody');
+
+					clone_caption.remove();
+
+					for (let clone_tbody of clone_tbodys) {
+						clone_tbody.remove();
+					}
+
+					clone_tbl.classList.add('ui-tablescroll-clone');
+					clone_tbl.setAttribute('aria-hidden', true);
+
+					for (let clone_th of clone_ths) {
+						clone_th.setAttribute('aria-hidden', true);
+					}
 				}
 			}
 
@@ -1322,50 +1324,68 @@ if (!Object.keys){
 			// 	}
 
 			// }
-			var $tbl = $('.ui-fixtd');
+			const el_tbls = doc.querySelectorAll('.ui-fixtd');
 			
-			$tbl.each(function(i){
-				var $tbl = $(this);
-				var $tbl_col = $tbl.find('col');
-				var $tbl_tr = $tbl.find('tr');
+			for (let el_tbl of el_tbls) {
+				const el_tblCols = el_tbl.querySelectorAll('col');
+				const el_tblTrs = el_tbl.querySelectorAll('tr');
 
-				var fix_n = Number($tbl.data('fix'));
-				var view_n = Number($tbl.data('view'));
-				var col_len = $tbl_col.length;
-				var fix_sum = col_len - fix_n;
-				var len = $tbl_tr.length;
-				var tit = [];
+				const fix_n = Number(el_tbl.dataset.fix);
+				const view_n = Number(el_tbl.dataset.view);
+				const col_len = el_tblCols.length;
+				const fix_sum = col_len - fix_n;
+				const len = el_tblTrs.length;
+				let tit = [];
 	
-				$tbl.attr('data-current', 1).attr('data-total', col_len);
+				el_tbl.setAttribute('data-current', 1)
+				el_tbl.setAttribute('data-total', col_len);
 	
-				for (var i = 0; i < len; i++) {
-					for (var j = 0; j < fix_sum; j++) {
-						var $tr_this = $tbl_tr.eq(i);
-						var $td_this = $tr_this.find('> *').eq(j - fix_sum);
-						var jj = (j + 1);
-	
-						$td_this.addClass('ui-fixtd-n' + jj).data('n', j);
-						if ($tr_this.closest('thead').length) {
-							tit.push($td_this.text());
-							$td_this.prepend('<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="a11y-hidden">previous</span></button>');
-							$td_this.append('<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="a11y-hidden">next</span></button>');
+				for (let i = 0; i < len; i++) {
+					for (let j = 0; j < fix_sum; j++) {
+						const tr = el_tblTrs[i];
+						const thead = tr.closest('thead');
+						const tds = tr.querySelectorAll(':scope > *');
+						const tdLen = tds.length;
+						const td = tds[j + fix_sum - 1];
+						const jj = (j + 1);
+						
+						console.log(j, fix_sum - 1);
+						el_tblCols[j + fix_sum - 1].classList.add('ui-fixtd-n' + jj);
+						
+						td.classList.add('ui-fixtd-n' + jj);
+						td.dataset.n = j;
+
+						if (!!thead) {
+							tit.push(td.textContent);
+							td.insertAdjacentHTML('beforeend', '<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="a11y-hidden">previous</span></button>');
+							td.insertAdjacentHTML('afterbegin', '<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="a11y-hidden">next</span></button>');
 						}
-						$tbl_col.eq(j - fix_sum).addClass('ui-fixtd-n' + jj);
+						
 					}
 				}
-			});
-	
-			$tbl.find('.ui-fixtd-btn').off('click.uifixtd').on('click.uifixtd', function(){
-				var $tbl_this = $(this).closest('.ui-fixtd');
-				var this_sum =  Number($tbl_this.data('total') - $tbl_this.data('fix'));
-				var n = Number($tbl_this.attr('data-current'));
-				console.log(n);
-				if ($(this).data('btn') === 'next') {
-					$tbl_this.attr('data-current', n + 1 > this_sum ? n = 1 : n + 1);
-				} else {
-					$tbl_this.attr('data-current', n - 1 <= 0 ? n = this_sum : n - 1);
+
+				const el_btns = el_tbl.querySelectorAll('.ui-fixtd-btn');
+				for (let el_btn of el_btns) {
+					el_btn.addEventListener('click', act);
 				}
-			});
+			}
+			//작업중
+			function act(e){
+				console.log('clock');
+
+				const that = e.currentTarget;
+				const el_table = that.closest('.ui-fixtd');
+				const this_sum = Number(el_table.dataset.total - el_table.dataset.fix);
+				const n = Number(el_table.dataset.current);
+				
+				console.log(n, this_sum, that.dataset.btn);
+
+				(that.dataset.btn === 'next') ? 
+					el_table.dataset.current = (n + 1 >= this_sum) ? n = 1 : n + 1:
+					el_table.dataset.current = (n - 1 <= 0) ? n = this_sum : n - 1;
+
+				
+			}
 		},
 		sort: function(opt){
 			
@@ -1797,7 +1817,7 @@ if (!Object.keys){
 			var _viewYear = date.getFullYear();
 			var _viewMonth = date.getMonth();
 			var el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
-			var yyyymm = _viewYear + '-' + Global.uiParts.add0(_viewMonth + 1);
+			var yyyymm = _viewYear + '-' + Global.parts.add0(_viewMonth + 1);
 			var _dpHtml = '';
 			var callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
 			
@@ -2129,9 +2149,9 @@ if (!Object.keys){
 					//빈곳
 				} else {
 					if (!_disabled) {
-						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.uiParts.add0(viewMonth + 1)+'-'+ Global.uiParts.add0(date)+ '">';
+						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.parts.add0(viewMonth + 1)+'-'+ Global.parts.add0(date)+ '">';
 					} else {
-						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.uiParts.add0(viewMonth + 1)+'-'+ Global.uiParts.add0(date)+ '" disabled>';
+						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.parts.add0(viewMonth + 1)+'-'+ Global.parts.add0(date)+ '" disabled>';
 					}
 				}
 				
@@ -2338,7 +2358,7 @@ if (!Object.keys){
 			
 			date.setFullYear(year + 1);
 
-			el_dp.dataset.date = (year + 1) +'-'+ Global.uiParts.add0(month); 
+			el_dp.dataset.date = (year + 1) +'-'+ Global.parts.add0(month); 
 			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
@@ -2388,7 +2408,7 @@ if (!Object.keys){
 			
 			date.setFullYear(year - 1);
 
-			el_dp.dataset.date = (year - 1) +'-'+ Global.uiParts.add0(month); 
+			el_dp.dataset.date = (year - 1) +'-'+ Global.parts.add0(month); 
 			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
@@ -2409,7 +2429,7 @@ if (!Object.keys){
 
 			date.setMonth(month);
 
-			el_dp.dataset.date = year +'-'+ Global.uiParts.add0(month + 1); 
+			el_dp.dataset.date = year +'-'+ Global.parts.add0(month + 1); 
 			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
@@ -2430,7 +2450,7 @@ if (!Object.keys){
 
 			date.setMonth(month - 1);
 
-			el_dp.dataset.date = year +'-'+ Global.uiParts.add0(month); 
+			el_dp.dataset.date = year +'-'+ Global.parts.add0(month); 
 			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
@@ -2445,7 +2465,7 @@ if (!Object.keys){
 			
 			console.log('goToday', dpId, date);
 
-			el_dp.dataset.date = year +'-'+ Global.uiParts.add0(month); 
+			el_dp.dataset.date = year +'-'+ Global.parts.add0(month); 
 			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
@@ -5060,7 +5080,7 @@ if (!Object.keys){
 				r;
 				
 			if ($base.data('ing') !== true) {
-				textNum = Global.uiParts.comma(countNum);
+				textNum = Global.parts.comma(countNum);
 				base_h === 0 ? base_h = $base.text('0').outerHeight() : '';
 				$base.data('ing',true).empty().css('height', base_h);
 				len = textNum.length;
@@ -5130,7 +5150,7 @@ if (!Object.keys){
 					diff = countNum - count;
 					(diff > 0) ? count += add + j : '';
 
-					var n = Global.uiParts.comma(count);
+					var n = Global.parts.comma(count);
 					$base.text(n);
 					v = v + 1;
 
@@ -5139,7 +5159,7 @@ if (!Object.keys){
 							counter(); 
 						}, s);
 					} else {
-						$base.text(Global.uiParts.comma(countNum));
+						$base.text(Global.parts.comma(countNum));
 						clearTimeout(timer);
 					}
 				}
