@@ -397,14 +397,22 @@
 
     netive.page.pageScrollMove = function(){
 
-         
-        function callback(n){            
-            console.log(n);
+        netive.scroll.init();
+        netive.scroll.init();
+        
+        netive.callback.testscroll = function(){
+            console.log('callback - test scroll');
+        };
+        
+        if (!netive.callback.testscroll) {
+            netive.callback.testscroll = function(){
+                console.log('callback - test scroll2');
+            };
+        } else {
+            console.log('중복 callback');
         }
     }
-    
-    
-   
+
     netive.page.pageParallax = function(){
         netive.scroll.parallax({
             callback:function(v) {
