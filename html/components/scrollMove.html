@@ -8,115 +8,87 @@
 <section class="sec-wrap">
 	<h2 class="h-2">Examples</h2>
 	<div class="box-guide">
-		<div class="ui-scrollbar test-scrollmove-hor">
+		<div class="ui-scrollbar ui-scrollmove test-scrollmove-hor" data-area="test1">
 			<div class="test-scrollmove-hor-wrap">
-				<div class="test test-scrollmove-hor-item" tabindex="0"><span>1</span></div>
-				<div class="test test-scrollmove-hor-item" tabindex="0"><span>2</span></div>
-				<div class="test test-scrollmove-hor-item" tabindex="0"><span>3</span></div>
-				<div class="test test-scrollmove-hor-item" tabindex="0"><span>4</span></div>
-				<div class="test test-scrollmove-hor-item" tabindex="0"><span>5</span></div>
-				<div class="test test-scrollmove-hor-item" tabindex="0"><span>6</span></div>
-				<div class="test test-scrollmove-hor-item" tabindex="0"><span>7</span></div>
-				<div class="test test-scrollmove-hor-item" tabindex="0"><span>8</span></div>
+				<div class="test ui-scrollmove-item" data-name="0"><span>1</span></div>
+				<div class="test ui-scrollmove-item" data-name="1"><span>2</span></div>
+				<div class="test ui-scrollmove-item" data-name="2"><span>3</span></div>
+				<div class="test ui-scrollmove-item" data-name="3"><span>4</span></div>
+				<div class="test ui-scrollmove-item" data-name="4"><span>5</span></div>
+				<div class="test ui-scrollmove-item" data-name="5"><span>6</span></div>
+				<div class="test ui-scrollmove-item" data-name="6"><span>7</span></div>
+				<div class="test ui-scrollmove-item" data-name="7"><span>8</span></div>
 			</div>
 		</div>
 		<div class="btn-wrap type-many">
-			<button type="button" class="btn-base test-scrollmove-left" data-n="0"><span>01</span></button>
-			<button type="button" class="btn-base test-scrollmove-left" data-n="1"><span>02</span></button>
-			<button type="button" class="btn-base test-scrollmove-left" data-n="2"><span>03</span></button>
-			<button type="button" class="btn-base test-scrollmove-left" data-n="3"><span>04</span></button>
-			<button type="button" class="btn-base test-scrollmove-left" data-n="4"><span>05</span></button>
-			<button type="button" class="btn-base test-scrollmove-left" data-n="5"><span>06</span></button>
-			<button type="button" class="btn-base test-scrollmove-left" data-n="6"><span>07</span></button>
-			<button type="button" class="btn-base test-scrollmove-left" data-n="7"><span>08</span></button>
+			<button type="button" class="btn-base ui-scrollmove-btn" data-align="center" data-name="0" data-area="test1"><span>01</span></button>
+			<button type="button" class="btn-base ui-scrollmove-btn" data-align="center" data-name="1" data-area="test1"><span>02</span></button>
+			<button type="button" class="btn-base ui-scrollmove-btn" data-align="center" data-name="2" data-area="test1"><span>03</span></button>
+			<button type="button" class="btn-base ui-scrollmove-btn" data-align="center" data-name="3" data-area="test1"><span>04</span></button>
+			<button type="button" class="btn-base ui-scrollmove-btn" data-align="center" data-name="4" data-area="test1"><span>05</span></button>
+			<button type="button" class="btn-base ui-scrollmove-btn" data-align="center" data-name="5" data-area="test1"><span>06</span></button>
+			<button type="button" class="btn-base ui-scrollmove-btn" data-align="center" data-name="6" data-area="test1"><span>07</span></button>
+			<button type="button" class="btn-base ui-scrollmove-btn" data-align="center" data-name="7" data-area="test1"><span>08</span></button>
 		</div>
-		<div class="test-scrollmove-ver">
-			<div class="test" tabindex="0"><span>A</span></div>
-			<div class="test" tabindex="0"><span>B</span></div>
-			<div class="test" tabindex="0"><span>C</span></div>
+
+		<div class="ui-scrollmove test-scrollmove-ver fx-wrap" data-area="test2">
+			<div class="fx-item" style="min-width:100%">
+				<div class="test ui-scrollmove-item" data-name="top"><span>A</span></div>
+				<div class="test ui-scrollmove-item" data-name="1"><span>B</span></div>
+				<div class="test ui-scrollmove-item" data-name="bottom"><span>C</span></div>
+			</div>
+			<div class="fx-item" style="min-width:100%">
+				<div class="test ui-scrollmove-item" data-name="top2"><span>A2</span></div>
+				<div class="test ui-scrollmove-item" data-name="2"><span>B2</span></div>
+				<div class="test ui-scrollmove-item" data-name="bottom2"><span>C2</span></div>
+			</div>
 		</div>
 		<div class="btn-wrap">
-			<button type="button" class="btn-base test-scrollmove-top"><span>top</span></button>
-			<button type="button" class="btn-base test-scrollmove-bottom" ><span>bottom</span></button>
+			<button type="button" data-area="test2" class="ui-scrollmove-btn btn-base" data-name="top"><span>a</span></button>
+			<button type="button" data-area="test2" class="ui-scrollmove-btn btn-base" data-align="center" data-callback="testscroll" data-name="1" ><span>b</span></button>
+			<button type="button" data-area="test2" class="ui-scrollmove-btn btn-base" data-name="bottom"><span>c</span></button>
+			<button type="button" data-area="test2" class="ui-scrollmove-btn btn-base" data-name="top2" ><span>a2</span></button>
+			<button type="button" data-area="test2" class="ui-scrollmove-btn btn-base" data-name="2" ><span>b2</span></button>
+			<button type="button" data-area="test2" class="ui-scrollmove-btn btn-base" data-name="bottom2"><span>c2</span></button>
 		</div>
 	</div>
-
-	<script>
-		;(function($, win, doc, undefined) {
-
-			'use strict';
-
-			$(doc).ready(function() {
-				$('.test-scrollmove-left').on('click', function(){
-					var n = $(this).attr('data-n');
-
-					console.log('-------------', $('.test-scrollmove-hor-wrap').scrollLeft());
-
-					netive.scroll.move({ 
-						value: $('.test-scrollmove-hor .test').eq(n).position().left + $('.test-scrollmove-hor').scrollLeft() + 10, 
-						selector: document.querySelector('.test-scrollmove-hor'), 
-						speed:  300, 
-						ps:'center',
-						add: $('.test-scrollmove-hor .test').eq(n).outerWidth() / 2,
-						focus: $('.test-scrollmove-hor .test').eq(n), 
-						callback: function(v) {
-							console.log('callback-center', v);
-						}
-					});
-					
-				});
-
-				$('.test-scrollmove-top').on('click', function(){
-					netive.scroll.move({ 
-						selector: document.querySelector('.test-scrollmove-ver'),
-						value: 0, 
-						speed: 300, 
-						focus: $('.h-1'),
-						callback: function(v) {
-							console.log('callback-top', v);
-						}
-					});
-				});
-				
-				$('.test-scrollmove-bottom').on('click', function(){
-					netive.scroll.move({ 
-						selector: $('.test-scrollmove-ver'),
-						value: $('.test-scrollmove-ver').prop('scrollHeight'), 
-						speed:300,
-						callback: function(v) {
-							console.log('callback-bottom', v);
-						}
-					});
-				});
-
-			
-				// document.querySelectorAll('.test-scrollmove-hor-item').forEach(function (v) {
-				// 	netive.io.observe(v);
-				// });
-			});
-		})(jQuery, window, document);
-	</script>
-
 </section>
 
 <section class="sec-wrap">
     <h2 class="h-2">Source Code</h2>
+	<h3 class="h-3">HTML</h3>
+
+<pre class="box-code"><code class="html">
+&lt;div class="ui-scrollmove" data-area="name"&gt;
+	&lt;div class="ui-scrollmove-item" data-name="name1"&gt;...&lt;/div&gt;
+	...
+&lt;/div&gt;
+
+&lt;button type="button" class="ui-scrollmove-btn" data-area="name" data-name="name1" data-align="center" data-callback="testscroll"&gt;...&lt;/button&gt;
+
+//callback
+netive.callback.testscroll = function(){
+	console.log('callback');
+};
+</code></pre>
+
 	<h3 class="h-3">Javascript</h3>
 
 <pre class="box-code"><code class="script">
+netive.scroll.init();
+
 netive.scroll.move({ 
-	selector: $('name'), 
-	value: 0,
-	speed: 0,
-	callback: false,
-	ps: 'top', //'top | center | left'
+	selector: document.querySelector('.ui-scrollmove[data-area="test1"]'),
+	focus: document.querySelector('.ui-scrollmove-item[data-area="3"]'),
+	top: 0,
+	left: -300,
 	add: 0,
-	focus: false,
-	
+	align: 'default',
+	callback: function(){ console.log('test'); }
 });
 </code></pre>
 
-	<div class="tbl-base type-option">
+	<div class="tbl-base type-option mgt-s">
 		<table>
 			<caption>옵션 설명</caption>
 			<colgroup>
@@ -137,37 +109,36 @@ netive.scroll.move({
 				<tr>
 					<th scope="row">selector:</th>
 					<td>[object]</td>
-					<td>$('html, body')</td>
+					<td>document.querySelector('html, body')</td>
 					<td>스크롤 영역 지정</td>
 				</tr>
 				<tr>
-					<th scope="row">value:</th>
+					<th scope="row">top:</th>
 					<td>[number]</td>
 					<td>0</td>
-					<td>이동할 위치값</td>
+					<td>세로 이동할 위치값</td>
 				</tr>
 				<tr>
-					<th scope="row">speed:</th>
-					<td>[number]</td>
-					<td>300</td>
-					<td>이동속도</td>
-				</tr>
-				<tr>
-					<th scope="row">addLeft:</th>
+					<th scope="row">left:</th>
 					<td>[number]</td>
 					<td>0</td>
-					<td>가로 이동 시 이동값 추가</td>
+					<td>가로 이동할 위치값</td>
+				</tr>
+				<tr>
+					<th scope="row">add:</th>
+					<td>[number]</td>
+					<td>0</td>
+					<td>이동 시 이동값 추가</td>
 				</tr>
 				
 				<tr>
-					<th scope="row">ps:</th>
+					<th scope="row">align:</th>
 					<td>[string]</td>
-					<td>'top'</td>
-					<td>스크롤 방향
+					<td>'default'</td>
+					<td>스크롤 아이템 기준위치
 						<ul>
-						<li>'top' : 상하 이동 </li>
-						<li>'left' : 좌우 이동 </li>
-						<li>'center' : 좌우 중앙 이동 </li>
+						<li>'default' : top,left </li>
+						<li>'center' : center,middle </li>
 						</ul>
 					</td>
 				</tr>
@@ -179,7 +150,7 @@ netive.scroll.move({
 				</tr>
 				<tr>
 					<th scope="row">callback:</th>
-					<td>[function]</td>
+					<td>[function/string]</td>
 					<td></td>
 					<td>
 						<ul>
