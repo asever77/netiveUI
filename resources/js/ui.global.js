@@ -654,8 +654,8 @@ if (!Object.keys){
 		},
 		move : function(option){
 			const opt = Object.assign({}, this.options, option);
-			const {top, left, callback, align, add, focus, selector, effect} = opt;
-
+			const {top, left, callback, align, add, focus, effect} = opt;
+			let selector = opt.selector;
 			//jquery selector인 경우 변환
 			if (!!selector[0]) {
 				selector = selector[0];
@@ -789,7 +789,6 @@ if (!Object.keys){
 			}
 		}
 	}
-
 
 	/**
 	 * parameter get
@@ -1224,6 +1223,7 @@ if (!Object.keys){
 
 	/**
 	 * table caption/scroll(vertical)
+	 * modify: 2021-08-31
 	 */
 	Global.table = {
 		caption: function(){
@@ -1286,44 +1286,6 @@ if (!Object.keys){
 			!!callback && callback();
 		},
 		fixTd : function() {
-			// var el_tbl = document.querySelectorAll('.ui-fixtd');
-			
-			// for (var el_tbls of el_tbl) {
-				
-			// 	var tbl_col = el_tbls.querySelectorAll('col');
-			// 	var tbl_tr = el_tbls.querySelectorAll('tr');
-			// 	var fix_n = Number(el_tbls.dataset.fix);
-			// 	var view_n = Number(el_tbls.dataset.view);
-			// 	var col_len = tbl_col.length;
-			// 	var tr_len = tbl_tr.length;
-			// 	var fix_sum = col_len - fix_n;
-			// 	var tit = [];
-
-			// 	console.log(fix_sum);
-			// 	el_tbls.setAttribute('data-current', 1);
-			// 	el_tbls.setAttribute('data-total', col_len);
-
-			// 	for (var i = 0; i < tr_len; i++) {
-			// 		for (var j = 0; j < fix_sum; j++) {
-			// 			console.log(j , fix_sum);
-			// 			var tr_this = tbl_tr[i];
-			// 			var td_this = tr_this.querySelector('td')[j - fix_sum];
-			// 			var jj = (j + 1);
-	
-			// 			td_this.classList.add('ui-fixtd-n' + jj);
-			// 			td_this.dataset.n = j;
-
-			// 			if (tr_this.closest('thead').length) {
-			// 				tit.push(td_this.textContent);
-			// 				td_this.prepend('<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="a11y-hidden">previous</span></button>');
-			// 				td_this.append('<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="a11y-hidden">next</span></button>');
-			// 			}
-
-			// 			$tbl_col[j - fix_sum].classList.add('ui-fixtd-n' + jj);
-			// 		}
-			// 	}
-
-			// }
 			const el_tbls = doc.querySelectorAll('.ui-fixtd');
 			
 			for (let el_tbl of el_tbls) {
@@ -1345,13 +1307,10 @@ if (!Object.keys){
 						const tr = el_tblTrs[i];
 						const thead = tr.closest('thead');
 						const tds = tr.querySelectorAll(':scope > *');
-						const tdLen = tds.length;
 						const td = tds[j + fix_sum - 1];
 						const jj = (j + 1);
 						
-						console.log(j, fix_sum - 1);
 						el_tblCols[j + fix_sum - 1].classList.add('ui-fixtd-n' + jj);
-						
 						td.classList.add('ui-fixtd-n' + jj);
 						td.dataset.n = j;
 
@@ -1360,172 +1319,203 @@ if (!Object.keys){
 							td.insertAdjacentHTML('beforeend', '<button type="button" class="ui-fixtd-btn prev" data-btn="prev" data-idx="'+ jj +'"><span class="a11y-hidden">previous</span></button>');
 							td.insertAdjacentHTML('afterbegin', '<button type="button" class="ui-fixtd-btn next" data-btn="next" data-idx="'+ jj +'"><span class="a11y-hidden">next</span></button>');
 						}
-						
 					}
 				}
 
 				const el_btns = el_tbl.querySelectorAll('.ui-fixtd-btn');
+
 				for (let el_btn of el_btns) {
 					el_btn.addEventListener('click', act);
 				}
 			}
-			//작업중
-			function act(e){
-				console.log('clock');
 
+			function act(e){
 				const that = e.currentTarget;
 				const el_table = that.closest('.ui-fixtd');
 				const this_sum = Number(el_table.dataset.total - el_table.dataset.fix);
-				const n = Number(el_table.dataset.current);
+				let n = Number(el_table.dataset.current);
 				
-				console.log(n, this_sum, that.dataset.btn);
-
 				(that.dataset.btn === 'next') ? 
-					el_table.dataset.current = (n + 1 >= this_sum) ? n = 1 : n + 1:
+					el_table.dataset.current = (n + 1 > this_sum) ? n = 1 : n + 1:
 					el_table.dataset.current = (n - 1 <= 0) ? n = this_sum : n - 1;
-
-				
 			}
-		},
-		sort: function(opt){
-			
 		}
 	}
 
+	/**
+	 * form
+	 * modify: 2021-08-31
+	 */
 	Global.form = {
 		init: function(opt){
-			var $inp = $('.inp-base');
-			var len = $inp.length;
+			const el_inps = doc.querySelectorAll('.inp-base');
 
-			for (var i = 0; i < len; i++) {
-				var $that = $inp.eq(i);
-				var $wrap = $that.parent();
-				var $item = $that.closest('[class*="ui-form"]');
-				var unit = $that.data('unit');
-				var prefix = $that.data('prefix');
-				var $label =  $item.find('.form-item-label');
-				var space = 0;
+			for (let el_inp of el_inps) {
+				const el_wrap = el_inp.parentNode;
+				const el_form = el_inp.closest('[class*="ui-form"]');
+				const unit = el_inp.dataset.unit;
+				const prefix = el_inp.dataset.prefix;
+				const el_label = el_form.querySelector('.form-item-label');
+				let el_unit = el_wrap.querySelector('.unit');
+				let el_prefix = el_wrap.querySelector('.prefix');
+				let space = 0;
 
-				$that.removeAttr('style');
-				$wrap.find('.unit').remove();
-				$wrap.find('.prefix').remove();
+				el_inp.removeAttribute('style');
+				el_unit && el_unit.remove();
+				el_prefix && el_prefix.remove();
 
-				var pdr = parseFloat($that.css('padding-right'));
-				var pdl = parseFloat($that.css('padding-left'));
+				const pdr = parseFloat(doc.defaultView.getComputedStyle(el_inp).getPropertyValue('padding-right'));
+				const pdl = parseFloat(doc.defaultView.getComputedStyle(el_inp).getPropertyValue('padding-left'));
 
 				if (unit !== undefined) {
-					$wrap.append('<div class="unit">'+unit+'</div>');
-					space = Math.floor($wrap.find('.unit').outerWidth()) + (pdr / 2) ;
+					el_wrap.insertAdjacentHTML('beforeend', '<div class="unit">'+unit+'</div>');
+					el_unit = el_wrap.querySelector('.unit');
+					space = Math.floor(el_unit.offsetWidth) + (pdr / 2) ;
 				}
 
-				$that.css('padding-right', Number(space + pdr)).data('pdr', space + pdr).attr('pdr', space + pdr);
+				el_inp.style.paddingRight = Number(space + pdr);;
+				el_inp.dataset.pdr = space + pdr;
+				el_inp.setAttribute('pdr', space + pdr);
 				space = 0;
 				
 				if (prefix !== undefined) {					
-					$wrap.prepend('<div class="prefix">'+prefix+'</div>');
-					space = Math.floor($wrap.find('.prefix').outerWidth()) + pdl;
-					$that.css('padding-left', (space + pdl) + 'px').data('pdl', space + pdl);
-					$label.css('margin-left',  space + 'px');
+					el_wrap.insertAdjacentHTML('afterbegin', '<div class="prefix">'+prefix+'</div>');
+					el_prefix = el_wrap.querySelector('.prefix');
+					space = Math.floor(el_prefix.offsetWidth) + pdl;
+					el_inp.style.paddingLeft = (space + pdl) + 'px';
+					el_inp.dataset.pdl = space + pdl;
+					el_label.style.marginLeft = space + 'px';
 				}
 
-				isValue($that,false);
-				$that.css('padding-left', space + pdl).data('pdl', space + pdl);
+				this.isValue(el_inp,false);
+				el_inp.style.paddingLeft = space + pdl;
+				el_inp.dataset.pdl = space + pdl;
+
+				const select_btns = doc.querySelectorAll('.ui-select-btn');
+				const datepicker_btns = doc.querySelectorAll('.ui-datepicker-btn');
+
+				for (let btn of select_btns) {
+					btn.removeEventListener('click', this.actValue);
+					btn.addEventListener('click', this.actValue);
+				}
+
+				for (let btn of datepicker_btns) {
+					btn.removeEventListener('click', this.actValue);
+					btn.addEventListener('click', this.actValue);
+
+					btn.addEventListener('click', this.actDaterpicker);
+				}
+
+				el_inp.removeEventListener('keyup', this.actValue);
+				el_inp.removeEventListener('focus', this.actValue);
+				el_inp.removeEventListener('blur', this.actUnValue);
+
+				el_inp.addEventListener('keyup', this.actValue);
+				el_inp.addEventListener('focus', this.actValue);
+				el_inp.addEventListener('blur', this.actUnValue);
 			}
-
-			$('.ui-select-btn, ui-datepicker-btn').off('click.label').on('click.label', function(){
-				isValue($(this),true);
-			});
-	
-			$inp.off('keyup.clear focus.clear').on('keyup.clear focus.clear', function(){
-				isValue($(this),true);
-			}).off('blur.clear').on('blur.clear', function(){
-				var $this = $(this);
-				var $clear = $this.parent().find('.ui-clear');
-				var pdr = Number($this.data('pdr'));
-				
-				isValue($this,false);
-				setTimeout(function(){
-					$this.css('padding-right', pdr + 'px'); 
-					$clear.remove();
-				},100);
-			});
-			
-			function isValue(t,v){
-				var $this = t;
-				var $wrap = $this.parent();
-				var $inner = $this.closest('.ui-form-inner');
-				var $inp = $wrap.find('.inp-base');
-				var pdr = Number($inp.data('pdr'));
-				
-				if (!!$inner) {
-					if (v) {
-						$inner.addClass('is-value');
-					} else {
-						if (!!$inp.val()) {
-							$inner.addClass('is-value');
-						} else {
-							$inner.removeClass('is-value');
-						}
-					}
-				}
-				
-				if ($this.prop('readonly') || $this.prop('disabled') || $this.attr('type') === 'date') {
-					return false;
-				}
-
-				if ($this.val() === '') {
-					$inp.css('padding-right', pdr + 'px'); 
-					$wrap.find('.ui-clear').remove();
-				} else {
-					if (!$wrap.find('.ui-clear').length) {
-						if ($inp.prop('tagName') === 'INPUT') { 
-							$wrap.append('<button type="button" class="ui-clear btn-clear" style="margin-right:'+pdr+'px"><span class="a11y-hidden">내용지우기</span></button>');
-							$inp.css('padding-right', pdr + $wrap.find('.ui-clear').outerWidth() + 'px'); 
-						} else {
-							$inp.css('padding-right', pdr + 'px'); 
-						}
-					} 
-				}
-			}
-
-			//event
-			$(doc).off('click.clear').on('click.clear', '.ui-clear', function(){
-				var $this = $(this);
-				var $wrap = $this.parent();
-				var $inp = $wrap.find('.inp-base');
-				var pdr = Number($inp.data('pdr'));
-
-				$inp.css('padding-right', pdr + 'px').val('').focus();
-				$this.remove();
-			});
-
-			//datepicker event
-			$(doc).off('click.dp').on('click.dp', '.ui-datepicker-btn', function(e){
-				//e.preventDefault();
-				
-				var $this = $(this).closest('.ui-datepicker').find('.inp-base');
-				//<input type="date" id="uiDate_1" class="inp-base" value="" min="2020-12-05" max="2022-05-20" title="시작일" required="">
-				Global.sheets.bottom({
-					id: $this.attr('id'),
-					callback: function(){
-						Global.datepicker.init({
-							id: $this.attr('id'),
-							date: $this.val(),
-							min: $this.attr('min'),
-							max: $this.attr('max'),
-							title: $this.attr('title'),
-							period: $this.data('period'),
-							callback: function(){
-								console.log('callback init')
-							}
-						});
-					}
-				});
-			});
 		},
-		fileUpload: function(opt){
-			var el_file = document.querySelectorAll('.ui-file-inp');
-			var fileTypes = [
+		actDaterpicker: function(e){
+			e.preventDefault();
+
+			const that = e.currentTarget;
+			const el_datepicker = that.closest('.ui-datepicker');
+			const el_inp = el_datepicker.querySelector('.inp-base');
+
+			Global.sheets.bottom({
+				id: el_inp.id,
+				callback: function(){
+					Global.datepicker.init({
+						id: el_inp.id,
+						date: el_inp.value,
+						min: el_inp.min,
+						max: el_inp.max,
+						title: el_inp.title,
+						period: el_inp.dataset.period,
+						callback: function(){
+							console.log('callback init')
+						}
+					});
+				}
+			});
+
+		},
+		actValue: function (e){
+			const that = e.currentTarget;
+			
+			Global.form.isValue(that, true);
+		},
+		actUnValue: function (e){
+			const that = e.currentTarget;
+			const wrap = that.parentNode;
+			const el_clear = wrap.querySelector('.ui-clear');
+			const pdr = Number(that.dataset.pdr);
+
+			Global.form.isValue(that, false);
+
+			setTimeout(function(){
+				that.style.paddingRight = pdr + 'px'; 
+				el_clear && el_clear.remove();
+			},100);
+		},
+		isValue: function (that, value){
+			const el_that = that;
+			const el_wrap = el_that.parentNode;
+			const el_inner = el_that.closest('.ui-form-inner');
+			const el_inp = el_wrap.querySelector('.inp-base');
+
+			let el_clear = el_wrap.querySelector('.ui-clear');
+			let pdr = Number(el_inp.dataset.pdr);
+			
+			if (!!el_inner) {
+				if (value) {
+					el_inner.classList.add('is-value');
+				} else {
+					(!!el_inp.value) ? 
+						el_inner.classList.add('is-value'):
+						el_inner.classList.remove('is-value');
+				}
+			}
+			
+			if (el_that.readonly || el_that.disabled || el_that.type === 'date') {
+				return false;
+			}
+
+			if (el_that.value === undefined || el_that.value === '') {
+				el_inp.style.paddingRight = pdr + 'px'; 
+				el_clear = el_wrap.querySelector('.ui-clear');
+				
+				!!el_clear && el_clear.removeEventListener('click', this.actClear);
+				!!el_clear && el_clear.remove();
+			} else {
+				if (!el_clear) {
+					if (el_inp.tagName === 'INPUT') { 
+						el_wrap.insertAdjacentHTML('beforeend', '<button type="button" class="ui-clear btn-clear" tabindex="-1" aria-hidden="true"  style="margin-right:'+ pdr +'px"><span class="a11y-hidden">내용지우기</span></button>');
+
+						el_clear = el_wrap.querySelector('.ui-clear');
+						el_clear.addEventListener('click', this.actClear);
+
+						el_inp.style.paddingRight = pdr + el_clear.offsetWidth + 'px'; 
+					} else {
+						el_inp.style.paddingRight = pdr + 'px'; 
+					}
+				} 
+			}
+		},
+		actClear: function(e){
+			const that = e.currentTarget;
+			const el_wrap = that.parentNode;
+			const el_inp = el_wrap.querySelector('.inp-base');
+			const pdr = Number(el_inp.dataset.pdr);
+
+			el_inp.style.paddingRight = pdr + 'px'
+			el_inp.value = '';
+			el_inp.focus();
+			that.remove();
+		},
+		fileUpload: function() {
+			const el_files = document.querySelectorAll('.ui-file-inp');
+			const fileTypes = [
 				"image/apng",
 				"image/bmp",
 				"image/gif",
@@ -1538,32 +1528,32 @@ if (!Object.keys){
 				"image/x-icon"
 			];
 
-			for (var i = 0; i < el_file.length; i++) {
-				if (!el_file[i].dataset.ready) {
-					el_file[i].addEventListener('change', updateImageDisplay);
-					el_file[i].dataset.ready = true;
+			for (let el_file of el_files) {
+				if (!el_file.dataset.ready) {
+					el_file.addEventListener('change', updateImageDisplay);
+					el_file.dataset.ready = true;
 				}
 			}
 			
-			function updateImageDisplay(event) {
-				var el_file = event.currentTarget;
-				var id = el_file.id;
-				var preview = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
+			function updateImageDisplay(e) {
+				const el_file = e.currentTarget;
+				const id = el_file.id;
+				const preview = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
 
 				while(preview.firstChild) {
 					preview.removeChild(preview.firstChild);
 				}
 
-				var curFiles = el_file.files;
+				const curFiles = el_file.files;
 
 				if(curFiles.length === 0) {
-					var para = document.createElement('p');
+					const para = document.createElement('p');
 					para.textContent = 'No files currently selected for upload';
 					preview.appendChild(para);
 				} else {
-					var list = document.createElement('ul');
-					var title = document.createElement('h4');
-					var delbutton = document.createElement('button');
+					const list = document.createElement('ul');
+					const title = document.createElement('h4');
+					const delbutton = document.createElement('button');
 
 					delbutton.type = 'button';
 					delbutton.classList.add('ui-file-del');
@@ -1576,19 +1566,20 @@ if (!Object.keys){
 					preview.appendChild(list);
 					preview.appendChild(delbutton);
 
-					var delbuttonSpan = document.createElement('span'); 
+					const delbuttonSpan = document.createElement('span'); 
+
 					delbuttonSpan.textContent = 'Delete attachment';
 					delbuttonSpan.classList.add('a11y-hidden');
 					delbutton.appendChild(delbuttonSpan);
 				
-					for(var file of curFiles) {
-						var listItem = document.createElement('li');
-						var para = document.createElement('p');
+					for(let file of curFiles) {
+						const listItem = document.createElement('li');
+						const para = document.createElement('p');
 
 						if(validFileType(file)) {
 							para.textContent = `${file.name}, ${returnFileSize(file.size)}.`;
 							
-							var image = document.createElement('img');
+							const image = document.createElement('img');
 							image.src = URL.createObjectURL(file);
 							
 							listItem.appendChild(image);
@@ -1603,15 +1594,13 @@ if (!Object.keys){
 					}
 
 					delbutton.addEventListener('click', fileDelete);
-
-					
 				}
 			}
 
-			function fileDelete(event){
-				var id = event.currentTarget.dataset.id;
-				var list = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
-				var inp = document.querySelector('#'+ id);
+			function fileDelete(e){
+				const id = e.currentTarget.dataset.id;
+				const list = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
+				const inp = document.querySelector('#'+ id);
 
 				list.classList.remove('on');
 				while(list.firstChild) {
@@ -2473,37 +2462,41 @@ if (!Object.keys){
 		}
 	}
 
+	/**
+	 * sheets
+	 * modify: 2021-08-31
+	 */
 	Global.sheets = {
 		dim: function(opt){
-			var callback = opt.callback;
+			const {show, callback} = opt;
+			let dim;
 
- 			if (opt.show) {
-				$('.sheet-bottom[data-id="'+opt.id+'"]').append('<div class="sheet-dim"></div>');
+ 			if (show) {
+				const sheet = doc.querySelector('.sheet-bottom[data-id="'+opt.id+'"]');
+				sheet.insertAdjacentHTML('beforeend', '<div class="sheet-dim"></div>');
 
-				$('.sheet-dim').addClass('on');
+				dim = doc.querySelector('.sheet-dim');
+				dim.classList.add('on');
+
 				!!callback && callback();
 			} else {
+				dim = doc.querySelector('.sheet-dim');
 				$('.sheet-dim').removeClass('on');
 			}
 		},
 		bottom: function(opt){
-			var id = opt.id;
-			var state = opt.state; // true, false
-			var callback = opt.callback;
-
-			var $base = $('#'+id);
-			var $sheet = $('[data-id*="'+id+'"]');
-			
-			var scr_t = $(doc).scrollTop();
-			var win_w = $(win).outerWidth();
-			var win_h = $(win).outerHeight();
-			var off_t = $base.offset().top;
-			var off_l = $base.offset().left;
-			var base_w = $base.outerWidth();
-			var base_h = $base.outerHeight();
-
-			var is_expanded = !!$sheet.length;
-			var show = !is_expanded || is_expanded === 'false';
+			const {id, state, callback} = opt;
+			const el_base = doc.querySelector('#'+ id);
+			let el_sheet = doc.querySelector('[data-id*="'+id+'"]');
+			const scr_t = doc.documentElement.scrollTop;
+			const win_w = win.innerWidth;
+			const win_h = win.innerHeight;
+			const off_t = el_base.getBoundingClientRect().top;
+			const off_l = el_base.getBoundingClientRect().left;
+			const base_w = el_base.offsetWidth;
+			const base_h = el_base.offsetHeight;
+			const is_expanded = !!el_sheet;
+			let show = !is_expanded || is_expanded === 'false';
 
 			if (state !== undefined) {
 				show = state;
@@ -2512,41 +2505,46 @@ if (!Object.keys){
 			if (show) {
 				!!callback && callback(); 
 				
-				$sheet = $('[data-id*="'+id+'"]');
-				$sheet.addClass('sheet-bottom');
+				el_sheet = doc.querySelector('[data-id*="'+ id +'"]');
+				el_sheet.classList.add('sheet-bottom');
 
-				var wrap_w = Number($sheet.outerWidth().toFixed(2));
-				var wrap_h = Number($sheet.height().toFixed(2));
+				const wrap_w = Number(el_sheet.offsetWidth.toFixed(2));
+				const wrap_h = Number(el_sheet.offsetHeight.toFixed(2));
 
 				Global.sheets.dim({
 					id: id,
 					show: true,
 					callback: function(){
-						$('.sheet-dim').on('click', function(){
+						const dim = doc.querySelector('.sheet-dim');
+
+						dim.addEventListener('click', dimAct);
+
+						function dimAct(){
 							Global.sheets.bottom({
-								id:id,
+								id: id,
 								state: false
-							})
-						});
+							});
+						}
 					}
 				});
 
-				$sheet.addClass('on').css({
-					left: ((wrap_w + off_l) > win_w) ? (off_l - (wrap_w - base_w))+ 'px' : off_l + 'px',
-					top: (win_h - ((off_t - scr_t) + base_h) > wrap_h) ? (off_t + base_h) + 'px' : (off_t - wrap_h) + 'px'
-				});
+				el_sheet.classList.add('on');
+				el_sheet.style.left = ((wrap_w + off_l) > win_w) ? (off_l - (wrap_w - base_w))+ 'px' : off_l + 'px';
+				el_sheet.style.top = (win_h - ((off_t - scr_t) + base_h) > wrap_h) ? (off_t + base_h) + 'px' : (off_t - wrap_h) + 'px';
 
 				Global.focus.loop({
-					selector: $sheet
+					selector: el_sheet
 				});
 			} else {
 				//hide
-				$sheet.removeClass('on').addClass('off');
+				el_sheet.classList.remove('on');
+				el_sheet.classList.add('off');
 				
 				setTimeout(function(){
 					!!callback && callback();
-					$sheet.remove();
-					$('#'+id).focus();
+					el_sheet.remove();
+
+					doc.querySelector('#'+id).focus();
 				},300);
 			}
 		}
@@ -2559,70 +2557,80 @@ if (!Object.keys){
 			customscroll: true,
 			callback: false
 		},
-		init: function(opt){
-			var opt = opt === undefined ? {} : opt;
-			var opt = $.extend(true, {}, Global.select.options, opt);
-			var current = opt.current;
-			var callback = opt.callback;
-			var customscroll = opt.customscroll;
-			var id = opt.id;
-			var is_id = id === false ? false : true;
-			var $ui_select = is_id ? typeof id === 'string' ? $('#' + opt.id).closest('.ui-select') : id.find('.ui-select') : $('.ui-select');
-			var keys = Global.state.keys;
+		init: function(option){
+			const opt = Object.assign({}, this.options, option);
+			const current = opt.current;
+			const callback = opt.callback;
+			let customscroll = opt.customscroll;
+			const id = opt.id;
+			const isId = !!id ? doc.querySelector('#' + opt.id) : false;
+			const el_selects = doc.querySelectorAll('.ui-select');
+			const keys = Global.state.keys;
 
-			var $sel;
-			var $selectCurrent;
-			var selectID;
-			var listID;
-			var optionSelectedID;
-			var selectN;
-			var selectTitle;
-			var selectDisabled;
-
-			var btnTxt = '';
-			var hiddenClass = '';
-			var htmlOption = '';
-			var htmlButton = '' ;
+			let el_sel;
+			let $selectCurrent;
+			let selectID;
+			let listID;
+			let optionSelectedID;
+			let selectN;
+			let selectTitle;
+			let selectDisabled;
+			let btnTxt = '';
+			let hiddenClass = '';
+			let htmlOption = '';
+			let htmlButton = '' ;
 
 			//init
 			Global.state.device.mobile ? customscroll = false : '';
 
 			//reset
-			$ui_select.find('.ui-select-btn').remove();
-			$ui_select.find('.ui-select-wrap').remove();
-			$ui_select.find('.dim').remove();
-
-			var idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
+			let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
 
 			//select set
-			for (var i = 0, len = $ui_select.length; i < len; i++) {
-				$selectCurrent = $ui_select.eq(i);
-				$sel = $selectCurrent.find('select');
+			for (let el_select of el_selects) {
+				let el_btn = el_select.querySelector('.ui-select-btn');
+				let el_wrap = el_select.querySelector('.ui-select-wrap');
+				let el_dim = el_select.querySelector('.dim');
 
-				selectID = $sel.attr('id');
-				(selectID === undefined) && $sel.attr('id', 'uiSelect_' + idN);
+				el_btn && el_btn.remove();
+				el_wrap && el_wrap.remove();
+				el_dim && el_dim.remove();
+
+				el_sel = el_select.querySelector('select');
+
+				selectID = el_sel.id;
+
+				if (!!id && selectID === id) {
+					act(el_select, el_sel, el_btn, el_wrap, el_dim, selectID);
+				} else {
+					act(el_select, el_sel, el_btn, el_wrap, el_dim, selectID);
+				}
+			}
+
+			function act(el_select, el_sel, el_btn, el_wrap, el_dim, selectID){
+				(selectID === undefined) ? el_sel.id = 'uiSelect_' + idN : '';
 				listID = selectID + '_list';
 
-				selectDisabled = $sel.prop('disabled');
-				selectTitle = $sel.attr('title');
+				selectDisabled = el_sel.disabled;
+				selectTitle = el_sel.title;
 				hiddenClass = '';
 
-				//$selectCurrent.css('max-width', $selectCurrent.outerWidth());
-
-				(!$sel.data('callback') || !!callback) && $sel.data('callback', callback);
+				//el_select.css('max-width', el_select.outerWidth());
+				//callback 나중에 작업필요
+				//(!el_sel.data('callback') || !!callback) && el_sel.data('callback', callback);
 
 				if (customscroll) {
 					htmlOption += '<div class="ui-select-wrap ui-scrollbar" scroll-id="uiSelectScrollBar_'+ idN +'">';
 					idN = idN + 1;
 					sessionStorage.setItem('scrollbarID', idN);
 				} else {
-					htmlOption += '<div class="ui-select-wrap" style="min-width:' + $selectCurrent.outerWidth() + 'px">';
+					htmlOption += '<div class="ui-select-wrap" style="min-width:' + el_select.outerWidth() + 'px">';
 				}
 
 				htmlOption += '<strong class="ui-select-title">'+ selectTitle +'</strong>';
 				htmlOption += '<div class="ui-select-opts" role="listbox" id="' + listID + '" aria-hidden="false">';
 
-				setOption();
+				setOption(el_select);
 
 				htmlOption += '</div>';
 				htmlOption += '<button type="button" class="ui-select-cancel"><span>취소</span></strong>';
@@ -2633,26 +2641,34 @@ if (!Object.keys){
 
 				
 
-				$selectCurrent.append(htmlButton);
-				$sel.addClass('off');
+				el_select.insertAdjacentHTML('beforeend', htmlButton);
+				el_sel.classList.add('off');
 				//$sel.attr('aria-hidden', true).attr('tabindex', -1);
-				$selectCurrent.append(htmlOption);
+				el_select.insertAdjacentHTML('beforeend', htmlOption);
 
-				selectDisabled ? $selectCurrent.find('.ui-select-btn').prop('disabled', true).addClass('disabled') : '';
+				if (selectDisabled) {
+					const _btn = el_select.querySelector('.ui-select-btn');
 
+					_btn.disabled = true;
+					_btn.classList.add('disabled')
+				}  
+
+				
 				htmlOption = '';
 				htmlButton = '';
 			}
 			
-			function setOption(t, v){
-				var _$sel = (t !== undefined) ? $(t).closest('.ui-select').find('select') : $sel;
-				var _$option = _$sel.find('option');
-				var _$optionCurrent = _$option.eq(0);
+			function setOption(uiSelect, v){
+				console.log(uiSelect, v);
 
-				selectID = _$sel.attr('id');
+				var _select = (uiSelect !== undefined) ? uiSelect.querySelector('select') : uiSelect;
+				var _options = _select.querySelectorAll('option');
+				var _optionCurrent = _options[0];
+
+				selectID = _select.id;
 
 				var _optionID = selectID + '_opt';
-				var _optLen = _$option.length;
+				var _optLen = _options.length;
 				var _current = current;
 				var _selected = false;
 				var _disabled = false;
@@ -2666,29 +2682,27 @@ if (!Object.keys){
 				}
 
 				for (var j = 0; j < _optLen; j++) {
-					_$optionCurrent = _$option.eq(j);
-					_hidden = _$optionCurrent.prop('hidden');
+					_optionCurrent = _options[j];
+					_hidden = _optionCurrent.hidden;
 
 					if (_current !== null) {
-						
 						if (_current === j) {
 							_selected = true;
-							_$optionCurrent.prop('selected', true);
+							_optionCurrent.selected = true;
 						} else {
 							_selected = false;
-							_$optionCurrent.prop('selected', false);
+							_optionCurrent.selected = false;
 						}
-
 					} else {
-						_selected = _$optionCurrent.prop('selected');
+						_selected = _optionCurrent.selected;
 					}
 
-					_disabled = _$optionCurrent.prop('disabled');
+					_disabled = _optionCurrent.disabled;
 					_hiddenCls =  _hidden ? 'hidden' : '';
 
 					if (_selected) {
-						_val = _$optionCurrent.val();
-						btnTxt = _$optionCurrent.text();
+						_val = _optionCurrent.value;
+						btnTxt = _optionCurrent.textContent;
 						optionSelectedID = _optionID + '_' + j;
 						selectN = j;
 					}
@@ -2699,31 +2713,44 @@ if (!Object.keys){
 					if (Global.state.device.mobile) {
 						_disabled ?
 							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _optionCurrent.value + '" disabled tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _optionCurrent.value + '" disabled tabindex="-1">' :
 							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">';
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _optionCurrent.value + '" tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _optionCurrent.value + '" tabindex="-1">';
 					} else {
 						_disabled ?
 							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" disabled tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _optionCurrent.value + '" disabled tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _optionCurrent.value + '" disabled tabindex="-1">' :
 							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _$optionCurrent.val() + '" tabindex="-1">';
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _optionCurrent.value + '" tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _optionCurrent.value + '" tabindex="-1">';
 					}
 
-					htmlOption += '<span class="ui-select-txt">' + _$optionCurrent.text() + '</span>';
+					htmlOption += '<span class="ui-select-txt">' + _optionCurrent.textContent + '</span>';
 					htmlOption += '</button>';
 				}
 
-				if (t !== undefined) {
-					_$sel.closest('.ui-select').find('.ui-select-opts button').remove();
-					_$sel.closest('.ui-select').find('.ui-select-opts').append(htmlOption);
+
+				//여기작업중
+				if (el_select !== undefined) {
+					//const _uiSelect = _select.closest('.ui-select');
+					const _optwrap = el_select.querySelector('.ui-select-opts');
+
+					console.log(_optwrap);
+
+					const _btns = _optwrap.querySelectorAll('button');
+
+					for (let _btn of _btns) {
+						_btn.remove();
+					}
+
+					_optwrap.insertAdjacentHTML('beforeend', htmlOption);
 					htmlOption = '';
 					eventFn();
 				}
+
 			}
 
 			//event
@@ -2920,19 +2947,19 @@ if (!Object.keys){
 					Global.scrollBar.init({
 						selector: _$wrap
 					});
-					Global.scroll.move({ 
-						value: Number(opt_h * _$uisel.find(':checked').index()), 
-						selector: _$wrap.find('> .ui-scrollbar-item'), 
-						effect: 'auto', 
-						ps: 'top' 
-					});
+					// Global.scroll.move({ 
+					// 	value: Number(opt_h * _$uisel.find(':checked').index()), 
+					// 	selector: _$wrap.find('> .ui-scrollbar-item'), 
+					// 	effect: 'auto', 
+					// 	ps: 'top' 
+					// });
 				} else {
-					Global.scroll.move({ 
-						value: Number(opt_h * _$uisel.find(':checked').index()), 
-						selector: _$wrap, 
-						effect: 'auto', 
-						ps: 'top' 
-					});
+					// Global.scroll.move({ 
+					// 	value: Number(opt_h * _$uisel.find(':checked').index()), 
+					// 	selector: _$wrap, 
+					// 	effect: 'auto', 
+					// 	ps: 'top' 
+					// });
 				}
 
 				openScrollMove(_$uisel);
