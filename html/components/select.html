@@ -37,22 +37,22 @@
 			<div class="fx-wrap" data-align="justify">
 				<div class="fx-item ui-form" data-flex="1-1-1">
 					<div class="form-label">
-						<label class="form-item-label" for="uiSel1">Label Text</label>
+						<label class="form-item-label ui-select-label" for="uiSel1">Label Text</label>
 					</div>
 
 					<div class="form-item">
 						<div class="ui-select">
-							<select title="Palette 앨범" id="uiSel1" onchange="console.log(this.value);">
+							<select title="Palette 앨범" id="uiSel1" onchange="console.log(this.selectedIndex);">
 								<option value="1">이 지금</option>
 								<option value="2">팔레트(Feat. G-DRAGON)</option>
-								<option value="3">이런 엔딩</option>
+								<option value="3" >이런 엔딩</option>
 								<option value="4">사랑이 잘(with 오혁)</option>
 								<option value="5">잼잼</option>
 								<option value="6">Black Out</option>
 								<option value="7">마침표</option>
 								<option value="8">밤편지(Through the Night)</option>
 								<option value="9">그렇게 사랑은</option>
-								<option value="10">이름에게</option>
+								<option value="10" selected>이름에게</option>
 							</select>
 						</div>
 					</div>
@@ -62,7 +62,7 @@
 			<div class="fx-wrap" data-align="justify">
 				<div class="fx-item ui-form" data-flex="1-1-1">
 					<div class="form-label">
-						<label class="form-item-label" for="uiSel2">Label Text</label>
+						<label class="form-item-label ui-select-label" for="uiSel2">Label Text</label>
 						<div class="form-label-util">
 							<button type="button" class="btn-base-s" id="changeOption">동적 셀렉트 옵션 추가</button>
 						</div>
@@ -73,14 +73,10 @@
 							<select title="구 선택" id="uiSel2" onchange="alert(this.value)">
 								<option value="1">1</option>
 								<option value="2">2</option>
-								<option value="3">3</option>
+								<option value="3" selected="selected">3</option>
 								<option value="4">4</option>
 							</select>
 						</div>
-					</div>
-
-					<div class="form-item">
-
 					</div>
 				</div>
 			</div>
