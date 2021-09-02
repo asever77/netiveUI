@@ -399,19 +399,19 @@
             callback: function (v) {}
         });
 
-        netive.select.init({
-            id: 'uiSel1',
-            current: 1,
-            callback: function (v) {
-                $('#baseWrap').css('display', 'block');
-            }
-        });
+        // netive.select.init({
+        //     id: 'uiSel1',
+        //     current: 1,
+        //     callback: function (v) {
+        //         $('#baseWrap').css('display', 'block');
+        //     }
+        // });
 
-        var opttxt = 5;
-        $('#changeOption').on('click', function () {
-            $('#uiSel2').append('<option value="' + opttxt + '">' + opttxt + '</option>');
-            opttxt = opttxt + 1;
-        });
+        // var opttxt = 5;
+        // $('#changeOption').on('click', function () {
+        //     $('#uiSel2').append('<option value="' + opttxt + '">' + opttxt + '</option>');
+        //     opttxt = opttxt + 1;
+        // });
 
     }
 
