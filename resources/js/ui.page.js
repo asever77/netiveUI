@@ -288,6 +288,22 @@
         netive.tooltip.init();
     }
     netive.page.pageRange = function(){
+        netive.rangeSlider.init({
+            id : 'range1'
+        });
+    
+        netive.rangeSlider.init({
+            id : 'range2'
+        });
+    
+        netive.rangeSlider.init({
+            id : 'range3'
+        });
+    
+        netive.rangeSlider.init({
+            id : 'range4'
+        });
+        
         //range slider
         // netive.range.init({ 
         //     id:"uiSlider", 
