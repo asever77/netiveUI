@@ -1639,10 +1639,10 @@ if (!Object.keys){
 
 	Global.rangeSlider = {
 		init: function(opt){
-			var id = opt.id;
-			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
-			var el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
-			var el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
+			const id = opt.id;
+			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
+			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
+			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
 
 			if (el_from && el_to) {
 				//range
@@ -1678,27 +1678,23 @@ if (!Object.keys){
 			}
 		},
 		rangeFrom: function(opt){
-			var id = opt.id;
-			var v = opt.value;
-			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
-			var el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
-			var el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
-			var el_left = el_range.querySelector(".ui-range-btn.left");
-			var el_right = el_range.querySelector(".ui-range-btn.right");
-			var el_bar = el_range.querySelector(".ui-range-bar");
-			var inp_from = document.querySelectorAll('[data-'+ id +'="from"]');
-			var percent;
-			var {
-				value,
-				min,
-				max
-			} = el_from;
+			const id = opt.id;
+			const v = opt.value;
+			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
+			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
+			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
+			const el_left = el_range.querySelector(".ui-range-btn.left");
+			const el_right = el_range.querySelector(".ui-range-btn.right");
+			const el_bar = el_range.querySelector(".ui-range-bar");
+			const inp_froms = document.querySelectorAll('[data-'+ id +'="from"]');
+			let percent;
+			let {value, min, max} = el_from;
 
 			if (v) {
 				el_from.value = v;
 			}
 
-			var from_value = +el_from.value;
+			let from_value = +el_from.value;
 			
 			if (opt.type !== 'single') {
 				if (+el_to.value - from_value < 0) {
@@ -1724,42 +1720,38 @@ if (!Object.keys){
 			el_left.classList.add('on');
 			el_from.classList.add('on');
 			
-			for (var i = 0; i < inp_from.length; i++) {
-				if (inp_from[i].tagName === 'INPUT') {
-					inp_from[i].value = from_value;
+			for (let inp_from of inp_froms) {
+				if (inp_from.tagName === 'INPUT') {
+					inp_from.value = from_value;
 				} else {
-					inp_from[i].textContent = from_value;
+					inp_from.textContent = from_value;
 				}
 			}
 		},
 		rangeTo: function(opt){
-			var id = opt.id;
-			var v = opt.value;
-			var el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
-			var el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
-			var el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
-			var el_left = el_range.querySelector(".ui-range-btn.left");
-			var el_right = el_range.querySelector(".ui-range-btn.right");
-			var el_bar = el_range.querySelector(".ui-range-bar");
-			var inp_to = document.querySelectorAll('[data-'+ id +'="to"]');
-			var {
-				value,
-				min,
-				max
-			} = el_to;
+			const id = opt.id;
+			const v = opt.value;
+			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
+			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
+			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
+			const el_left = el_range.querySelector(".ui-range-btn.left");
+			const el_right = el_range.querySelector(".ui-range-btn.right");
+			const el_bar = el_range.querySelector(".ui-range-bar");
+			const inp_tos = document.querySelectorAll('[data-'+ id +'="to"]');
+			let {value,min,max} = el_to;
 
 			if (v) {
 				el_to.value = v;
 			}
 
-			var to_value = +el_to.value;
+			let to_value = +el_to.value;
 
 			if (+value - +el_from.value < 0) {
 				to_value = +el_from.value + 0;
 				el_to.value = to_value;
 			}
 
-			var percent = ((to_value - +min) / (+max - +min)) * 100;
+			let percent = ((to_value - +min) / (+max - +min)) * 100;
 
 			el_right.classList.add('on');
 			el_left.classList.remove('on');
@@ -1768,11 +1760,11 @@ if (!Object.keys){
 			el_right.style.right = `${100 - percent}%`;
 			el_bar.style.right = `${100 - percent}%`;
 
-			for (var i = 0; i < inp_to.length; i++) {
-				if (inp_to[i].tagName === 'INPUT') {
-					inp_to[i].value = el_to.value;
+			for (let inp_to of inp_tos) {
+				if (inp_to.tagName === 'INPUT') {
+					inp_to.value = el_to.value;
 				} else {
-					inp_to[i].textContent = el_to.value;
+					inp_to.textContent = el_to.value;
 				}
 			}
 		}
