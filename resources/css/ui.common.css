@@ -1,5 +1,5 @@
 @charset "utf-8";
-
+:focus{outline:1px solid red !important;}
 button:focus *,
 a:focus *,
 button:focus,
@@ -533,7 +533,7 @@ select,
 }
 
 select.inp-base {
-	padding: 0 4rem 0 1rem;
+	padding: 0 1rem;
 }
 
 .inp-base:focus {
@@ -574,13 +574,13 @@ select.off:focus+.ui-select-btn:after {
 }
 
 .ui-select-btn {
-	padding: 0 3.5rem 0 1rem;
-	text-overflow: ellipsis;
+	padding: 0 0 0 1rem;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
 	height: auto;
 	min-height: 4rem;
+	width: 100%;
 	/* display: inline-block;
     position: relative;
     text-align: left;
@@ -616,7 +616,7 @@ select.off:focus+.ui-select-btn:after {
 
 .ui-select-btn span {
 	display: inline-block;
-	width: 100%;
+	width: calc(100% - 4.5rem);
 	text-align: left;
 	word-break: nowrap;
 	text-overflow: ellipsis;
