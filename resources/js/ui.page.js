@@ -392,6 +392,8 @@
 
     netive.page.pageSelect = function(){
         netive.select.init();
+        netive.select.init();
+        netive.select.init();
 
         netive.select.init({
             id: 'forSelLocal',
@@ -655,25 +657,8 @@
     }
     
     netive.page.pageDatePicker = function(){
-        //netive.datepicker.init();
-
         
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
 
     netive.page.capture = function(){
         $('#uiCaptureBtn').on('click',function(){
