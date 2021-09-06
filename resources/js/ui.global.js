@@ -1414,7 +1414,6 @@ if (!Object.keys){
 				for (let btn of datepicker_btns) {
 					btn.removeEventListener('click', this.actValue);
 					btn.addEventListener('click', this.actValue);
-
 					btn.addEventListener('click', this.actDaterpicker);
 				}
 
@@ -1801,6 +1800,26 @@ if (!Object.keys){
 			}
 
 			!!callback && callback();
+		},
+		open: function(id) {
+			const base = doc.querySelector('#' + id);
+
+			Global.sheets.bottom({
+				id: base.id,
+				callback: function(){
+					Global.datepicker.init({
+						id: base.id,
+						date: base.value,
+						min: base.min,
+						max: base.max,
+						title: base.title,
+						period: base.dataset.period,
+						callback: function(){
+							console.log('callback init')
+						}
+					});
+				}
+			});
 		},
 		init: function(opt) {
 			var setId = opt.id;
