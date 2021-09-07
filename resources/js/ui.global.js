@@ -208,6 +208,7 @@ if (!Object.keys){
 			easeInOutBack: '0.680, -0.550, 0.265, 1.550'
 		}
 	}
+	
 	Global.parts = {
 		//resize state
 		resizeState: function() {
@@ -512,96 +513,19 @@ if (!Object.keys){
 		}
 	}
 
-	Global.toast = {
-		timer : null,
-		options : {
-			delay: 'short',
-			classname : '',
-			conts: ''
-		},
-		show : function(option) {
-			const opt = Object.assign({}, this.options, option);
-			const {delay, classname, conts} = opt;
-			const el_body = document.querySelector('body');
-
-			let toast = '<div class="ui-toast toast '+ classname +'">'+ conts +'</div>';
-			let time = (delay === 'short') ? 2000 : 3500;
-
-			if (delay === 'short') {
-				time = 2000;
-			} else if(delay === 'long') {
-				time = 3500;
-			} else {
-				time = delay;
-			}
-
-			if (!!doc.querySelector('.ui-toast-ready')) {
-				clearTimeout(Global.toast.timer);
-				el_body.classList.remove('ui-toast-show');
-				el_body.classList.remove('ui-toast-ready');
-				doc.querySelector('.ui-toast').removeEventListener('transitionend', act);
-				doc.querySelector('.ui-toast').remove();
-			} 
-
-			el_body.insertAdjacentHTML('beforeend', toast);
-			toast = null;
-			
-			const el_toast = doc.querySelector('.ui-toast');
-			
-			el_body.classList.add('ui-toast-ready');
-
-			setTimeout(function(){
-				el_body.classList.add('ui-toast-show');
-				el_toast.addEventListener('transitionend', act);
-			},0);
-
-			function act(e){
-				const that = e.currentTarget;
-
-				that.removeEventListener('transitionend', act);
-				that.classList.add('on');
-				Global.toast.timer = setTimeout(Global.toast.hide, time);
-			}
-		},
-		hide : function(){
-			const el_body = doc.querySelector('body');
-			const el_toast = doc.querySelector('.ui-toast');
-
-			clearTimeout(Global.toast.timer);
-			el_body.classList.remove('ui-toast-show');
-
-			el_toast.removeEventListener('transitionend', act);
-			el_toast.addEventListener('transitionend', act);
-
-			function act(e){
-				const that = e.currentTarget;
-
-				that.removeEventListener('transitionend', act);
-				that.remove();
-				el_body.classList.remove('ui-toast-ready');
-			}
-		}
-	}
-
 	/**
 	 * intersection observer
 	 */
-	// Global.io = new IntersectionObserver(function (entries) {
-	// 	entries.forEach(function (entry) {
-	// 		if (entry.intersectionRatio > 0) {
-	// 			entry.target.classList.add('tada');
-	// 		} else {
-	// 			entry.target.classList.remove('tada');
-	// 		}
-	// 	});
-	// });
+	Global.io = new IntersectionObserver(function (entries) {
+		entries.forEach(function (entry) {
+			if (entry.intersectionRatio > 0) {
+				entry.target.classList.add('tada');
+			} else {
+				entry.target.classList.remove('tada');
+			}
+		});
+	});
 
-
-	/**
-	* scroll
-	* move: 특정 위치로 스크롤 이동
-	* checkEnd: 스크롤 이동 완료 체크 후 포커스 및 콜백 실행
-	*/
 	Global.scroll = {
 		options : {
 			selector: document.querySelector('html, body'),
@@ -4078,6 +4002,77 @@ if (!Object.keys){
 				type: 'system', 
 				remove: 'true'
 			});
+		}
+	}
+
+	Global.toast = {
+		timer : null,
+		options : {
+			delay: 'short',
+			classname : '',
+			conts: ''
+		},
+		show : function(option) {
+			const opt = Object.assign({}, this.options, option);
+			const {delay, classname, conts} = opt;
+			const el_body = document.querySelector('body');
+
+			let toast = '<div class="ui-toast toast '+ classname +'">'+ conts +'</div>';
+			let time = (delay === 'short') ? 2000 : 3500;
+
+			if (delay === 'short') {
+				time = 2000;
+			} else if(delay === 'long') {
+				time = 3500;
+			} else {
+				time = delay;
+			}
+
+			if (!!doc.querySelector('.ui-toast-ready')) {
+				clearTimeout(Global.toast.timer);
+				el_body.classList.remove('ui-toast-show');
+				el_body.classList.remove('ui-toast-ready');
+				doc.querySelector('.ui-toast').removeEventListener('transitionend', act);
+				doc.querySelector('.ui-toast').remove();
+			} 
+
+			el_body.insertAdjacentHTML('beforeend', toast);
+			toast = null;
+			
+			const el_toast = doc.querySelector('.ui-toast');
+			
+			el_body.classList.add('ui-toast-ready');
+
+			setTimeout(function(){
+				el_body.classList.add('ui-toast-show');
+				el_toast.addEventListener('transitionend', act);
+			},0);
+
+			function act(e){
+				const that = e.currentTarget;
+
+				that.removeEventListener('transitionend', act);
+				that.classList.add('on');
+				Global.toast.timer = setTimeout(Global.toast.hide, time);
+			}
+		},
+		hide : function(){
+			const el_body = doc.querySelector('body');
+			const el_toast = doc.querySelector('.ui-toast');
+
+			clearTimeout(Global.toast.timer);
+			el_body.classList.remove('ui-toast-show');
+
+			el_toast.removeEventListener('transitionend', act);
+			el_toast.addEventListener('transitionend', act);
+
+			function act(e){
+				const that = e.currentTarget;
+
+				that.removeEventListener('transitionend', act);
+				that.remove();
+				el_body.classList.remove('ui-toast-ready');
+			}
 		}
 	}
 
