@@ -3348,6 +3348,7 @@ td button.today {
     opacity: 0.4;
 }
 
+/* */
 .toast {
     width:calc(100% - 2rem);
     padding:1rem;
@@ -3371,3 +3372,15 @@ td button.today {
     bottom: 0;
 }
 
+.ui-toast-ready .toast.top{
+    display:block;
+    opacity: 0;
+    bottom:auto;
+    top:-10rem;
+}
+
+.ui-toast-show .toast.top{
+    opacity: 1;
+    bottom:auto;
+    top: 0;
+}
