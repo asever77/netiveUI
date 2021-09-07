@@ -4,7 +4,7 @@
 	
 	netive.common = {
 		init: function(){
-			var fristHref = '/netiveUI/html/start/introduction.html';
+			let fristHref = '/netiveUI/html/start/introduction.html';
 
 			if (!!netive.para.get('page')) {
 				switch(netive.para.get('page')) {
@@ -168,7 +168,7 @@
 				page: true, 
 				effect: true,
 				callback: function(){
-					$(win).off('scroll.win');
+					//$(win).off('scroll.win');
 					netive.common.pageInit(fristHref);
 					netive.common.settingAside();
  					
@@ -180,22 +180,13 @@
 				}
 			});
 
-			
-			
-			// netive.ajax.init({ 
-			//	 id:'baseFooter', 
-			//	 url:'/netiveUI/html/inc/footer.html', 
-			//	 page:true, 
-			//	 callback:netive.common.footer 
-			// });
-			
 			console.log('------------------------------------------------------')
 
 			netive.table.caption();
 			netive.form.init();
 		},
 		gridSwitch: function(){
-			var $grid = $('.base-grid');
+			const $grid = $('.base-grid');
 
 			(!$grid.hasClass('on')) ? $grid.addClass('on') : $grid.removeClass('on');
 
@@ -209,43 +200,42 @@
 			});
 			netive.common.menuAjax();
 
-			$('.ui-nav').on('click', netive.common.navOpen);
-			document.querySelector('.btn-mode').addEventListener('click', function() {
-				document.querySelector('html').classList.toggle('dark-mode');
-			});
+			doc.querySelector('.ui-nav').addEventListener('click', netive.common.toggleNav);
+			document.querySelector('.btn-mode').addEventListener('click', netive.common.toggleMode);
 		},
-		navOpen: function(){
-			var $body = $('body');
-
-			if (!$body.hasClass('nav-open')) {
-				$body.addClass('nav-open')
-			} else {
-				$body.removeClass('nav-open')
-			}
-			
+		toggleMode: function(){
+			document.querySelector('html').classList.toggle('dark-mode');
+		},
+		toggleNav: function(){
+			doc.querySelector('body').classList.toggle('nav-open');
 		},
 		settingAside: function(){
-			var $aside = $('.base-aside'),
-				$main = $('.base-main'),
-				$h2 = $main.find('.h-2');
+			const el_aside = doc.querySelector('.base-aside');
+			const el_main = doc.querySelector('.base-main');
+			const el_h2s = el_main.querySelectorAll('.h-2');
 
-			var asideUl = '<ul>';
+			let asideUl = '<ul>';
 			
-			if (!!$aside.find('ul')){
-				var delAside = $aside.find('ul');
-				delAside.remove();
+			if (!!el_aside.querySelector('ul')){
+				el_aside.querySelector('ul').remove();
 			}
 
 			asideUl += '<li><a href="#">Top</a></li>'; 
-			$h2.each(function(i){
-				$(this).attr('id', 'pageTit' + i);
-				asideUl += '<li><a href="#pageTit'+ i +'">'+ $(this).text() +'</a></li>';				
-			});
+			let i = 0;
+
+			for (let el_h2 of el_h2s) {
+				el_h2.setAttribute('id', 'pageTit' + i);
+				asideUl += '<li><a href="#pageTit'+ i +'">'+ el_h2.textContent +'</a></li>';	
+
+				i = i + 1;
+			}
+
 			asideUl += '</ul>';
-			$aside.append(asideUl);
+			el_aside.insertAdjacentHTML('beforeend', asideUl);
+			//el_aside.style.display = 'block';
 		},
 		pageInit: function(v){
-			var jsName = null;
+			let jsName = null;
 
 			if (!!doc.querySelector('#uiJsName')) {
 				jsName = doc.querySelector('#uiJsName').value;
@@ -253,21 +243,19 @@
 			}
 
 			if(typeof(history.pushState) == 'function') {
-				var renewURL = location.href;
-				
+				let renewURL = location.href;
 				renewURL = renewURL.replace(/\&page=([0-9]+)/ig,'');
 				renewURL = renewURL.split('/netiveUI/');
 				renewURL = renewURL[0];
 				renewURL = renewURL + v;
 
-				var paraUrl = v.split('.'),
-					paraUrl = paraUrl[0].split('/'),
-					paraUrl = paraUrl[paraUrl.length - 1];
+				let paraUrl = v.split('.');
+				paraUrl = paraUrl[0].split('/');
+				paraUrl = paraUrl[paraUrl.length - 1];
 
-				var indexUrl = '/netiveUI/html/index.html?page=' + paraUrl;
+				const indexUrl = '/netiveUI/html/index.html?page=' + paraUrl;
    
 				history.pushState(false, 'loading', indexUrl);
-				
 			}
 			if(document.currentScript === undefined){
 				// IE 에서만 돌아갈 내용
@@ -305,7 +293,7 @@
 		menuAjax: function(){
 			$('.dep-2-btn').off('click.ajax').on('click.ajax', function(){
 				var href = this.getAttribute('data-href');
-				!!$('body').hasClass('nav-open') && netive.common.navOpen();
+				!!$('body').hasClass('nav-open') && netive.common.toggleNav();
 
 				netive.ajax.init({ 
 					area: document.querySelector('.base-main'), 
@@ -316,10 +304,9 @@
 						netive.scroll.move({ 
 							value:0, 
 							speed:0, 
-							focus:  $('.base-main h1').eq(0)
+							focus:  doc.querySelector('.base-main h1')
 						});
 						
-						$(win).off('scroll.win');
 						netive.common.pageInit(href);
 						netive.common.settingAside();
 						
@@ -329,9 +316,6 @@
 						// 	  hljs.highlightElement(el);
 						// 	});
 						//   });
-
-						
-						
 					}
 				});
 			});
