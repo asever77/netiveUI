@@ -287,6 +287,9 @@
     netive.page.pageTooltip = function(){
         netive.tooltip.init();
     }
+    netive.page.pageToast = function(){
+        
+    }
     netive.page.pageRange = function(){
         netive.rangeSlider.init({
             id : 'range1'
