@@ -712,7 +712,7 @@ if (!Object.keys){
 				if (nowTop === el_selector.scrollTop && nowLeft === el_selector.scrollLeft) {
 					clearTimeout(Global.scroll.checkEndTimer);
 					//포커스가 위치할 엘리먼트를 지정하였다면 실행
-					if (!!focus ) {
+ 					if (!!focus ) {
 						focus.setAttribute('tabindex', 0);
 						focus.focus();
 					}
@@ -2673,7 +2673,7 @@ if (!Object.keys){
 					_btn.disabled = true;
 					_btn.classList.add('disabled')
 				}  
-
+				
 				// const _optwrap = el_uiSelect.querySelector('.ui-select-opts');
 				// console.log(_optwrap);
 				// const _btns = _optwrap.querySelectorAll('button');
@@ -2687,8 +2687,6 @@ if (!Object.keys){
 			}
 			
 			function setOption(uiSelect, v){
-				console.log('setOption', v);
-
 				let _select = (uiSelect !== undefined) ? uiSelect.closest('.ui-select') : uiSelect;
 
 				if (uiSelect !== undefined) {
@@ -2798,7 +2796,7 @@ if (!Object.keys){
 				}
 
 				for (let el_cancel of el_cancels) {
-					el_cancel.addEventListener('click', optClose);
+					el_cancel.addEventListener('click', Global.select.hide);
 				}
 
 				for (let el_btn of el_btns) {
@@ -2845,12 +2843,7 @@ if (!Object.keys){
 				body.dataset.selectopen = true;
 			}
 			
-			function optBlur(e) {
-				console.log(222222);
-				console.log(e.currentTarget);
-				//if (doc.querySelector('body').dataset.selectopen) { .. }); dim
-				optClose();
-			}
+			
 			function selectClick(e) {
 				const that = e.currentTarget;
 				const el_uiselect = that.closest('.ui-select');
@@ -2864,13 +2857,19 @@ if (!Object.keys){
 				// }
 
 				that.dataset.sct = doc.documentElement.scrollTop;
-				console.log('selectClick', n);
+
+				doc.removeEventListener('click', Global.select.back);
+				setTimeout(function(){
+					doc.addEventListener('click', Global.select.back);
+				},0);
+
 				setOption(that, n);
 				optExpanded(that, n);
 			}
 			function optClick() {
 				const _uiSelect = this.closest('.ui-select');
 				const _btn = _uiSelect.querySelector('.ui-select-btn');
+				const el_select = _uiSelect.querySelector('select');
 				const _wrap = _uiSelect.querySelector('.ui-select-wrap');
 				const idx = Global.parts.getIndex(this);
 
@@ -2881,7 +2880,8 @@ if (!Object.keys){
 					});
 
 					_btn.focus();
-					optClose();
+					Global.select.hide();
+					el_select.onchange();
 				} else {
 					Global.select.scrollSelect(idx, _wrap);
 				}
@@ -2914,7 +2914,7 @@ if (!Object.keys){
 						optOpen(el_btn);
 					}
 
-					e.keyCode === keys.down && optClose();
+					e.keyCode === keys.down && Global.select.hide();
 					return;
 				}
 
@@ -2940,16 +2940,20 @@ if (!Object.keys){
 						break;
 				}
 			}
+			function optBlur(e) {
+				//if (doc.querySelector('body').dataset.selectopen) { .. }); dim
+				//optClose();
+			}
 
 			function optExpanded(btn) {
 				if (Global.state.device.mobile) {
 					optOpen(btn);
 				} else {
 					if (btn.getAttribute('aria-expanded') === 'false') {
-						optClose();
+						Global.select.hide();
 						optOpen(btn);
 					} else {
-						optClose();
+						Global.select.hide();
 					}
 				}
 			}
@@ -3083,22 +3087,22 @@ if (!Object.keys){
 				el_wrap.classList.remove('bottom');
 				el_wrap.setAttribute('aria-hidden', true);
 
+				el_select.onchange();
+
 				//$('html, body').scrollTop(orgTop);
 			}
 
-			function optClose() {
-				var el_body = $('body');
-				var $btn = $('.ui-select-btn[aria-expanded="true"]');
-				var $select = $btn.closest('.ui-select');
-				var $wrap = $select.find('.ui-select-wrap');
-				var orgTop = $select.data('orgtop');
+		},
+		back: function(e){
+			e.preventDefault();
 
-				el_body.removeClass('dim-select');
-				$btn.data('expanded', false).attr('aria-expanded', false).focus();
-				$select.removeClass('on');
-				$wrap.removeClass('on top bottom').attr('aria-hidden', true);
-				$('html, body').scrollTop(orgTop);
+			let isTure = '';
+
+			for (let path of e.path) {
+				isTure = isTure + path.classList;
 			}
+
+			(isTure.indexOf('ui-select-wrap') < 0) && Global.select.hide();
 		},
 		scrollSelect: function(v, el){
 			const _opts = el.querySelectorAll('.ui-select-opt');
@@ -3179,7 +3183,40 @@ if (!Object.keys){
 				original:true
 			});
 		},
+		hide: function(){
+			const el_body = doc.querySelector('body');
+			const el_selects = doc.querySelectorAll('.ui-select');
+			const el_selectWraps = doc.querySelectorAll('.ui-select-wrap[aria-hidden="false"]');
+			const el_btns = doc.querySelectorAll('.ui-select-btn[aria-expanded="true"]');
+			let el_select, el_wrap, orgTop;
 
+			el_body.classList.remove('dim-select');
+			console.log(el_btns);
+
+			for (let that of el_btns) {
+				el_select = that.closest('.ui-select');
+				el_wrap = el_select.querySelector('.ui-select-wrap');
+				orgTop = el_select.dataset.orgtop;
+
+				that.dataset.expanded = false;
+				that.setAttribute('aria-expanded', false);
+				that.focus();
+				el_select.classList.remove('on');
+
+				el_wrap.classList.remove('on');
+				el_wrap.classList.remove('top');
+				el_wrap.classList.remove('bottom');
+				el_wrap.setAttribute('aria-hidden', true);
+
+				doc.querySelector('html, body').scrollTo({
+					top: orgTop,
+					behavior: 'smooth'
+				});
+			}
+
+
+			doc.removeEventListener('click', Global.select.back);
+		},
 		act: function(opt){
 			const id = opt.id;
 			const el_select = doc.querySelector('#' + id);
@@ -3222,7 +3259,6 @@ if (!Object.keys){
 			}
 
 			el_btnopts[current].classList.add('selected');
-
 
 			Global.state.device.mobile && el_btnopts[current].focus();
 
