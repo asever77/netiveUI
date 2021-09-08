@@ -942,14 +942,14 @@ a.ui-acco-btn:after {
     position: relative;
 }
 
-.ui-fixed-bottom .ui-floating-wrap {
+.ui-floating[data-ps="bottom"][data-state="fix"] .ui-floating-wrap {
     position: fixed;
     bottom: 0;
     left: 0;
     z-index: 999;
 }
 
-.ui-fixed-top .ui-floating-wrap {
+.ui-floating[data-ps="top"][data-state="fix"] .ui-floating-wrap {
     position: fixed;
     top: 0;
     left: 0;
