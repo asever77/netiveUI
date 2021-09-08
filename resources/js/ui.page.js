@@ -428,11 +428,16 @@
         //     }
         // });
 
-        // var opttxt = 5;
-        // $('#changeOption').on('click', function () {
-        //     $('#uiSel2').append('<option value="' + opttxt + '">' + opttxt + '</option>');
-        //     opttxt = opttxt + 1;
-        // });
+        var opttxt = 5;
+        doc.querySelector('#changeOption').addEventListener('click', function () {
+            $('#uiSel2').append('<option value="' + opttxt + '">' + opttxt + '</option>');
+            opttxt = opttxt + 1;
+
+            netive.select.init({
+                id: 'uiSel2'
+            });
+    
+        });
 
     }
 
@@ -518,31 +523,28 @@
     }
 
     netive.page.pageFloating = function(){
-        
-        
-        netive.floating.base({ id:'exeFix12', ps:'top', fix:true });
-        netive.floating.base({ id:'exeFix11', ps:'top', fix:true, add:'exeFix12' });
-        netive.floating.base({ id:'exeFix10', ps:'top', fix:true, add:'exeFix11' });
+        // netive.floating.base({ id:'exeFix12', ps:'top', fix:true });
+        // netive.floating.base({ id:'exeFix11', ps:'top', fix:true, add:'exeFix12' });
+        netive.floating.init();
+
         
        
-
-        netive.floating.base({ id:'exeFix1', ps:'top', fix:false, 
-            callback:function(v){
-                console.log(v);
-            } 
-        });
-        netive.floating.base({ id:'exeFix2', ps:'top', add:'exeFix1', fix:false });
-        netive.floating.base({ id:'exeFix3', ps:'top', add:'exeFix2', fix:false });
+        // netive.floating.base({ id:'exeFix1', ps:'top', fix:false, 
+        //     callback:function(v){
+        //         console.log(v);
+        //     } 
+        // });
+        // netive.floating.base({ id:'exeFix2', ps:'top', add:'exeFix1', fix:false });
+        // netive.floating.base({ id:'exeFix3', ps:'top', add:'exeFix2', fix:false });
         
         
-        netive.floating.base({ id:'exeFix6', ps:'bottom', fix:true});
-        netive.floating.base({ id:'exeFix5', ps:'bottom', add:'exeFix6', fix:true});
-        netive.floating.base({ id:'exeFix4', ps:'bottom', add:'exeFix5', fix:true });
+        // netive.floating.base({ id:'exeFix6', ps:'bottom', fix:true});
+        // netive.floating.base({ id:'exeFix5', ps:'bottom', add:'exeFix6', fix:true});
+        // netive.floating.base({ id:'exeFix4', ps:'bottom', add:'exeFix5', fix:true });
 
-        netive.floating.base({ id:'exeFix7', ps:'bottom', fix:false});
-        netive.floating.base({ id:'exeFix8', ps:'bottom', add:'exeFix7', fix:false});
-        netive.floating.base({ id:'exeFix9', ps:'bottom', add:'exeFix8', fix:false });
-
+        // netive.floating.base({ id:'exeFix7', ps:'bottom', fix:false});
+        // netive.floating.base({ id:'exeFix8', ps:'bottom', add:'exeFix7', fix:false});
+        // netive.floating.base({ id:'exeFix9', ps:'bottom', add:'exeFix8', fix:false });
 
     }
 
