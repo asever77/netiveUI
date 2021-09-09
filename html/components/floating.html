@@ -10,13 +10,13 @@
 	<h3 class="h-3">상단고정 → 원위치</h3>
 	<p>상단에 fixed로 고정에서 원위치로 들어가는 방식</p>
 	<div class="box-guide">
-		<div class="ui-floating" data-fix="true" data-ps="top" data-margin="100">
+		<div class="ui-floating" data-fix="true" data-ps="top" data-mg="100">
 			<div class="ui-floating-wrap">
 				<div class="tst-obj">상단고정 → 원위치1</div>
 			</div>
 		</div>
 		<br>
-		<div class="ui-floating" data-fix="true" data-ps="top" data-margin="50">
+		<div class="ui-floating" data-fix="true" data-ps="top" data-mg="50">
 			<div class="ui-floating-wrap">
 				<div class="tst-obj">상단고정 → 원위치2</div>
 			</div>
@@ -37,13 +37,13 @@
 			</div>
 		</div>
 		<br>
-		<div class="ui-floating" data-fix="false" data-ps="top">
+		<div class="ui-floating" data-fix="false" data-ps="top" data-mg="50">
 			<div class="ui-floating-wrap">
 				<div class="tst-obj">원위치 → 상단고정2</div>
 			</div>
 		</div>
 		<br>
-		<div class="ui-floating" data-fix="false" data-ps="top">
+		<div class="ui-floating" data-fix="false" data-ps="top" data-mg="100">
 			<div class="ui-floating-wrap">
 				<div class="tst-obj">원위치 → 상단고정3</div>
 			</div>
@@ -52,19 +52,19 @@
 	<h3 class="h-3">하단고정 → 원위치</h3>
 	<p>하단에 fixed로 고정에서 원위치로 들어가는 방식</p>
 	<div class="box-guide">
-		<div class="ui-floating" id="exeFix4">
+		<div class="ui-floating" data-fix="true" data-ps="bottom" data-mg="100">
 			<div class="ui-floating-wrap">
 				<div class="tst-obj">하단고정 → 원위치1</div>
 			</div>
 		</div>
 		<br>
-		<div class="ui-floating" id="exeFix5">
+		<div class="ui-floating" data-fix="true" data-ps="bottom" data-mg="50">
 			<div class="ui-floating-wrap">
 				<div class="tst-obj">하단고정 → 원위치2</div>
 			</div>
 		</div>
 		<br>
-		<div class="ui-floating" id="exeFix6">
+		<div class="ui-floating" data-fix="true" data-ps="bottom">
 			<div class="ui-floating-wrap">
 				<div class="tst-obj">하단고정 → 원위치3</div>
 			</div>
@@ -74,19 +74,19 @@
 	<h3 class="h-3">원위치 → 하단고정</h3>
 	<p>특정위치에 도달하면 원위치에서 벗어나 하단에 fixed로 고정되는 방식</p>
 	<div class="box-guide">
-		<div class="ui-floating" id="exeFix7">
+		<div class="ui-floating"  data-fix="false" data-ps="bottom">
 			<div class="ui-floating-wrap">
 				<div class="tst-obj">원위치 → 하단고정1</div>
 			</div>
 		</div>
 		<br>
-		<div class="ui-floating" id="exeFix8">
+		<div class="ui-floating"  data-fix="false" data-ps="bottom" data-mg="50">
 			<div class="ui-floating-wrap">
 				<div class="tst-obj">원위치 → 하단고정2</div>
 			</div>
 		</div>
 		<br>
-		<div class="ui-floating" id="exeFix9">
+		<div class="ui-floating"  data-fix="false" data-ps="bottom" data-mg="100">
 			<div class="ui-floating-wrap">
 				<div class="tst-obj">원위치 → 하단고정3</div>
 			</div>
@@ -98,13 +98,58 @@
 	<h2 class="h-2">Source Code</h2>
 	<h3 class="h-3">HTML</h3>
 <pre class="box-code"><code class="html">
-&lt;div <span class="na">class=</span><span class="s">"ui-floating"</span> <span class="na">id=</span><span class="s">"exeFix1"</span>&gt;
-	&lt;div <span class="na">class=</span><span class="s">"ui-floating-wrap"</span>&gt;
+&lt;div class="ui-floating" data-fix="true" data-ps="top" data-mg="100"&gt;
+	&lt;div class="ui-floating-wrap"&gt;
 		...
 	&lt;/div&gt;
 &lt;/div&gt;
 </code>
 </pre>
+<div class="tbl-base type-option mgt-s" style="margin-bottom:100px">
+	<table>
+	<caption>옵션 설명</caption>
+	<colgroup>
+		<col class="n1">
+		<col class="n2">
+		<col class="n4">
+	</colgroup>
+	<thead>
+		<tr>
+			<th scope="col">Options</th>
+			<th scope="col">Type</th>
+			<th scope="col">Explanation</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<th scope="row">data-ps</th>
+			<td>'top' / 'bottom'</td>
+			<td>고정될 위치 설정
+				<ul>
+				<li>'top' : 상단</li>
+				<li>'bottom' : 하단</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">data-fix</th>
+			<td>'true' / 'false'</td>
+			<td>고정되어 시작할지 여부
+				<ul>
+				<li>true : 고정에서 기본</li>
+				<li>false : 기본에서 고정</li>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<th scope="row">data-mg</th>
+			<td>[number]</td>
+			<td>고정될 위치 margin값</td>
+		</tr>
+		
+	</tbody>
+	</table>
+</div>
 
 	<h3 class="h-3">CSS</h3>
 <pre class="box-code"><code class="css">
@@ -120,148 +165,7 @@
 	<h3 class="h-3">Javascript</h3>
 	
 <pre class="box-code"><code class="javascript">
-//상단고정 → 원위치
-// add 로 불러올 요소는 미리 실행이 되야한다.(실행 순서가 중요.)
-[[[[ name3 ]]]] ---> [[[[ name1 ]]]] 
-[[[[ name2 ]]]] ---> [[[[ name2 ]]]] 
-[[[[ name1 ]]]] ---> [[[[ name3 ]]]] 
-
-netive.floating.base({
-	id: 'name3',
-	ps: 'top',
-	fix: true,
-});
-netive.floating.base({
-	id: 'name2',
-	ps: 'top',
-	fix: true,
-	add: 'name3'
-});
-netive.floating.base({
-	id: 'name1',
-	ps: 'top',
-	fix: true,
-	add: 'name2'
-});
-
-//원위치 → 상단고정
-[[[[ name4 ]]]] ---> [[[[ name4 ]]]] 
-[[[[ name5 ]]]] ---> [[[[ name5 ]]]] 
-
-netive.floating.base({
-	id: 'name4',
-	ps: 'top',
-	fix: false
-});
-netive.floating.base({
-	id: 'name5',
-	ps: 'top',
-	fix: false,
-	add: 'name4'
-});
-
-//하단고정 → 원위치
-[[[[ name6 ]]]] ---> [[[[ name6 ]]]] 
-[[[[ name7 ]]]] ---> [[[[ name7 ]]]] 
-[[[[ name8 ]]]] ---> [[[[ name8 ]]]] 
-
-netive.floating.base({
-	id: 'name8',
-	ps: 'bottom',
-	fix: false
-});
-netive.floating.base({
-	id: 'name7',
-	ps: 'bottom',
-	fix: false,
-	add: 'name8'
-});
-netive.floating.base({
-	id: 'name6',
-	ps: 'bottom',
-	fix: false,
-	add: 'name7'
-});
-
-
-//원위치 → 하단고정
-[[[[ name09 ]]]] ---> [[[[ name10 ]]]] 
-[[[[ name10 ]]]] ---> [[[[ name09 ]]]] 
-
-netive.floating.base({
-	id: 'name09',
-	ps: 'bottom',
-	fix: false
-});
-netive.floating.base({
-	id: 'name10',
-	ps: 'bottom',
-	fix: false,
-	add: 'name09'
-});
-
+netive.floating.init();
 </code>
 </pre>
-
-<div class="tbl-base type-option mgt-s" style="margin-bottom:100px">
-	<table>
-	<caption>옵션 설명</caption>
-	<colgroup>
-		<col class="n1">
-		<col class="n2">
-		<col class="n3">
-		<col class="n4">
-	</colgroup>
-	<thead>
-		<tr>
-			<th scope="col">Options</th>
-			<th scope="col">Type</th>
-			<th scope="col">Default</th>
-			<th scope="col">Explanation</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr class="nec">
-			<th scope="row">id:</th>
-			<td>[string]</td>
-			<td></td>
-			<td>(필수) fix follow를 적용 시킬 영역(ui-floating)의 id 명</td>
-		</tr>
-		<tr>
-			<th scope="row">ps:</th>
-			<td>[string]</td>
-			<td>'top'</td>
-			<td>고정될 위치 설정
-				<ul>
-				<li>'top' : 상단</li>
-				<li>'bottom' : 하단</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">fix:</th>
-			<td>[boolean]</td>
-			<td>true</td>
-			<td>고정되어 시작할지 여부
-				<ul>
-				<li>true : 고정에서 기본</li>
-				<li>false : 기본에서 고정</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">add:</th>
-			<td>[string]</td>
-			<td></td>
-			<td>고정되어 있는 오브젝트가 이미 있다면 그위치 다음으로 위치하기 위해 해당 영역의 아이디명 </td>
-		</tr>
-		<tr>
-			<th scope="row">callback:</th>
-			<td>[function]</td>
-			<td>function</td>
-			<td>콜백값으로 아이디와 현재스크롤위치값, 상태변경 위치값</td>
-		</tr>
-	</tbody>
-	</table>
-</div>
 </section>
