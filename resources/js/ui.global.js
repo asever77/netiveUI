@@ -4233,66 +4233,47 @@ if (!Object.keys){
 
 	/* 작업필요 */
 	Global.floating = {
-		options: {
-			ps: 'bottom',
-			add: false,
-			fix: 'false',
-			callback: false
-		}, 
 		init: function(option) {
-			const elBody = document.body;
-			const opt = Object.assign({}, this.options, option);
+			const el_body = document.body;
 			const el_items = doc.querySelectorAll('.ui-floating');
-			elBody.dataset.fixheight = 0;
-			let n = 0;
+
+			el_body.dataset.fixheight = 0;
 
 			//setting
-			for (let i = 0, len = el_items.length; i < len; i++) {
-				const that = el_items[i];
+			for (let that of el_items) {
 				const fix = that.dataset.fix;
-				const ps = that.dataset.ps ?? opt.ps;
-				const add = that.dataset.add ?? opt.add;
-
+				const ps = that.dataset.ps;
 				const el_wrap = that.querySelector('.ui-floating-wrap');
+				const mg = Number(that.dataset.mg ?? 0);
 				const elH = el_wrap.offsetHeight;
-
-				let el_prev;
-				let el_prevWrap;
+				const elT = that.getBoundingClientRect().top;
+				const wH = win.innerHeight;
 
 				that.style.height = elH + 'px';
-				that.dataset.n = n;
 
 				if (fix === 'true') {
 					//고정으로 시작
 					that.dataset.state = 'fix';
-					
-					// for (let i = 0; i < n; i++) {
-					// 	console.log(i,n);
-					// 	el_prev = doc.querySelector('.ui-floating[data-n="'+ i +'"]');
-					// 	el_prevWrap = el_prev.querySelector('.ui-floating-wrap');
-
-					// 	el_prevWrap.style.marginTop = elBody.dataset.fixheight + 'px';
-					// }
-
-					// if (n > 0) {
-					// 	el_prev = doc.querySelector('.ui-floating[data-n="'+ (n - 1) +'"]');
-					// 	el_prevWrap = el_prev.querySelector('.ui-floating-wrap');
-
-					// 	el_prevWrap.style.marginTop = elBody.dataset.fixheight + 'px';
-					// }
-
-					elBody.dataset.fixheight = Number(elBody.dataset.fixheight) + elH;
-					el_wrap.style.marginTop = that.dataset.margin + 'px';
-					
+					if (ps === 'top') {
+						if (elT >= 0 + mg && fix === 'true') {
+							el_wrap.style.marginTop = mg + 'px';
+						} else {
+							that.dataset.state = 'normal';
+						}
+					} else {
+						if ((elT - wH) + elH + mg >= 0 && fix === 'true') {
+							el_wrap.style.transform = 'translateY(-' + mg + 'px)';
+						} else {
+							that.dataset.state = 'normal';
+						}
+					}
 				} else {
 					that.dataset.state = 'normal';
 				}
-
-				n = n + 1;
 			}
 
-			// window.removeEventListener('scroll', this.scrollAct);
-			// window.addEventListener('scroll', this.scrollAct);
+			window.removeEventListener('scroll', this.scrollAct);
+			window.addEventListener('scroll', this.scrollAct);
 		},
 		scrollAct: function(){
 			const elBody = document.body;
@@ -4301,130 +4282,67 @@ if (!Object.keys){
 			for (let that of el_items) {
 				const fix = that.dataset.fix;
 				const ps = that.dataset.ps;
-				const add = that.dataset.add;
 				const state = that.dataset.state;
 				const el_wrap = that.querySelector('.ui-floating-wrap');
+				const mg = Number(that.dataset.mg ?? 0);
 				const elH = el_wrap.offsetHeight;
+				const elT = that.getBoundingClientRect().top;
+				const wH = win.innerHeight;
 
-				//console.log('item:', that.getBoundingClientRect().top)
 				if (state === 'fix') {
 					if (ps === 'top') {
 						//현재 상단고정상태
-						console.log(that.getBoundingClientRect().top, Number(elBody.dataset.fixheight), doc.documentElement.scrollTop);
-
-						if (that.getBoundingClientRect().top + Number(elBody.dataset.fixheight) <= 0) {
+						if (elT <= 0 + mg && fix === 'true') {
 							that.dataset.state = 'normal';
 							el_wrap.style.marginTop = 0;
-							elBody.dataset.fixheight = Number(elBody.dataset.fixheight) - elH;
 						}
 
+						if (elT >= 0 + mg && fix === 'false') {
+							that.dataset.state = 'normal';
+							el_wrap.style.marginTop = 0;
+						}
 
 					} else {
 						//현재 하단고정상태
-					
+						if ((elT - wH) + elH + mg <= 0 && fix === 'true') {
+							that.dataset.state = 'normal';
+							el_wrap.style.transform = 'translateY(0)';
+						}
+
+						if ((elT - wH) + elH + mg >= 0 && fix === 'false') {
+							that.dataset.state = 'normal';
+							el_wrap.style.transform = 'translateY(0)';
+						}
 					}
 
 				} else {
+
 					if (ps === 'top') {
 						//현재 상단고정상태
-						if (that.getBoundingClientRect().top >= 0) {
+						if (elT >= 0 + mg && fix === 'true') {
 							that.dataset.state = 'fix';
-							el_wrap.style.marginTop = elBody.dataset.fixheight;
-							elBody.dataset.fixheight = Number(elBody.dataset.fixheight) + elH;
+							el_wrap.style.marginTop = mg + 'px';
 						}
 
-
+						if (elT <= 0 + mg && fix === 'false') {
+							that.dataset.state = 'fix';
+							el_wrap.style.marginTop = mg + 'px';
+						}
+						
 					} else {
 						//현재 하단고정상태
-						
+						if ((elT - wH) + elH + mg >= 0 && fix === 'true') {
+							that.dataset.state = 'fix';
+							el_wrap.style.transform = 'translateY(-' + mg + 'px)';
+						}
+
+						if ((elT - wH) + elH + mg <= 0 && fix === 'false') {
+							that.dataset.state = 'fix';
+							el_wrap.style.transform = 'translateY(-' + mg + 'px)';
+						}
 					}
 				}
 			}
-
-
-			// const el_body = doc.body;
-			// const tt = Math.ceil(el_floating.getBoundingClientRect().top);
-			// const th = Math.ceil(el_floatingwrap.offsetHeight);
-			// const st = doc.documentElement.scrollTop;
-			// const wh = Math.ceil(win.innerHeight);
-			// const dh = Math.ceil(el_body.scrollHeight);
-
-			// let lh = (!!add) ? el_add.offsetHeight : 0 ;
-			// let lt = (!!add) ? dh - (el_add.getBoundingClientRect().top).toFixed(0) : 0;
-			// let lb = 0; 
-			// let _lb;
-
-			// console.log('act');
-			
-			// el_floatingwrap.removeAttribute('style');
-			// el_floating.dataset.fixbottom = th;
-
-
-			// if (!!add) {
-			// 	if (el_add.dataset.fixbottom === undefined) {
-			// 		el_add.dataset.fixbottom = th + el_addwrap.offsetHeight;
-			// 	}
-			// }
-
-			// !!add ? lh = lh + Number(el_add.dataset.fixtop) === undefined ? 0 : el_add.dataset.fixtop : '';
-			// !!callback ? callback({ id:id, scrolltop:st, boundaryline: tt - lh }) : '';
-			// el_floating.classList.add('height', th);
-
-			// 상단으로 고정
-			// if (ps === 'top') {
-			// 	// 고정 > 흐름
-			// 	if (fix === true) {
-			// 		if (tt - lh <= st) { 
-			// 			el_floating.classList.remove(c);
-			// 			el_floating.dataset.fixtop = false;
-			// 			el_floatingwrap.removeAttribute('style');
-			// 		} else { 
-			// 			el_floating.classList.add(c);
-			// 			el_floating.dataset.fixtop = lh;
-			// 			el_floatingwrap.style.top = lh;
-			// 		}
-			// 	} 
-			// 	// 흐름 > 고정	
-			// 	else {
-			// 		if (tt - lh <= st) { 
-			// 			el_floating.classList.add(c)
-			// 			el_floating.dataset.fixtop = lh;
-			// 			el_floatingwrap.style.top = lh;
-			// 		} else { 
-			// 			el_floating.classList.remove(c)
-			// 			el_floating.dataset.fixtop = false;
-			// 			el_floatingwrap.removeAttribute('style');
-			// 		}
-			// 	}
-			// } 
-			// 하단으로 고정
-			// else if (ps === 'bottom') {
-			// 	if (!!add) { 
-			// 		lb = th + Number(el_add.dataset.fixbottom);
-			// 		el_floating.dataset.fixbottom = lb;
-			// 	}
-			// 	_lb = (lb - th < 0) ? 0 : lb - th;
-			// 	// 고정 > 흐름
-			// 	if (fix === true) {
-			// 		if (tt + th + _lb - wh <= st) { 
-			// 			el_floating.classList.remove(c);
-			// 			el_floatingwrap.removeAttribute('style');
-			// 		} else {
-			// 			el_floating.classList.add(c)
-			// 			el_floatingwrap.style.bottom = lb;
-			// 		}
-						
-			// 	// 흐름 > 고정		
-			// 	} else {
-			// 		if (tt + th + _lb - wh <= st) {
-			// 			el_floating.classList.add(c);
-			// 			el_floatingwrap.style.bottom = lb;
-			// 		} else {
-			// 			el_floating.classList.remove(c);
-			// 			el_floatingwrap.removeAttribute('style');
-			// 		}
-			// 	}
-			// }
 		},
 		range: function(opt) {
 			var opt = opt === undefined ? {} : opt,
