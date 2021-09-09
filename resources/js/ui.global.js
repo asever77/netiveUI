@@ -4233,7 +4233,7 @@ if (!Object.keys){
 
 	/* 작업필요 */
 	Global.floating = {
-		init: function(option) {
+		init: function() {
 			const el_body = document.body;
 			const el_items = doc.querySelectorAll('.ui-floating');
 
@@ -4344,36 +4344,43 @@ if (!Object.keys){
 				}
 			}
 		},
-		range: function(opt) {
-			var opt = opt === undefined ? {} : opt,
-				id = opt.id,
-				mg = opt.margin ?? 0,
-				$range = $('#' + id),
-				$item = $range.find('.ui-floating-range-item'),
-				item_h = $item.outerHeight(),
-				range_t = $range.offset().top,
-				range_h = $range.outerHeight(),
-				win_scrt = $(win).scrollTop(),
-				itemTop = $item.position().top;
-							
-			$(win).on('scroll.win', function(){
-				act();
-			});
+		range: function() {
+			const el_ranges = doc.querySelectorAll('.ui-floating-range');
+
 			
+			window.removeEventListener('scroll', act);
+			window.addEventListener('scroll', act);
+			
+							
 			function act(){
-				range_t = $range.offset().top;
-				range_h = $range.outerHeight();
-				win_scrt = $(win).scrollTop();
-				
-				if (range_t <= (win_scrt - itemTop + mg)) {
-					if ((range_t + range_h) - item_h < (win_scrt + mg)) {
-						$item.css('top', range_h - item_h - itemTop);
+				for (let el_range of el_ranges) {
+					
+					const el_item = el_range.querySelector('.ui-floating-range-item');
+					const mg = el_item.dataset.mg ?? 0;
+					const item_h = el_item.offsetHeight;
+					const range_t = el_range.getBoundingClientRect().top;
+					const range_h = el_range.offsetHeight;
+					const dT = doc.documentElement.scrollTop;
+					const itemTop = el_item.getBoundingClientRect().top;
+					const wH = win.innerHeight;
+
+					//console.log(range_t + dT, dT, itemTop + dT);
+					console.log(range_t + dT , (dT - (itemTop + dT + mg)));
+					
+					if (dT - (itemTop + dT + mg) > 0) {
+						el_item.style.top = dT - (itemTop + dT + mg) + 'px';
+						//console.log(range_t, (range_t + range_h ) - item_h, (dT + mg));
+						// if ((range_t + range_h) - item_h < (dT + mg)) {
+						// 	el_item.style.top = (range_h - item_h - itemTop - dT) + 'px';
+						// } else {
+						// 	el_item.style.top = (dT - itemTop + mg) - range_t + 'px';
+						// }
 					} else {
-						$item.css('top', (win_scrt - itemTop + mg) - range_t );
+						//el_item.style.top = 0;
 					}
-				} else {
-					$item.css('top', 0);
 				}
+
+				
 			}
 		}
 	}
