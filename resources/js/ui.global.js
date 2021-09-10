@@ -4672,7 +4672,7 @@ if (!Object.keys){
 			//el_btn.dataset.len = len;
 			
 			// Global.scroll.move({ 
-			// 	top: ps_l[current], 
+			// 	top: 100, 
 			// 	target: el_btnwrap,
 			// 	effect: 'auto', 
 			// 	align: align
@@ -4756,6 +4756,7 @@ if (!Object.keys){
 			const el_current = el_btnwrap.querySelector('.ui-tab-btn[data-n="'+ current +'"]');
 			const el_pnlcurrent = el_pnlwrap.querySelector('.ui-tab-pnl[data-tab="'+ current +'"]');
 			const btnId = el_current.id;
+			const el_scroll = el_btnwrap.querySelector(':scope > .ui-scrollbar-item');
 
 			for(let that of el_btn) {
 				that.classList.remove('selected');
@@ -4763,17 +4764,15 @@ if (!Object.keys){
 			
 			el_current.classList.add('selected')
 			el_current.focus();
-	
-			// if (el_btnwrap.hasClass('ui-scrollbar')) {
-			// 	$target = el_btnwrap.find('> .ui-scrollbar-item');
+		
+			
+			// Global.scroll.move({ 
+			// 	left: el_current.getBoundingClientRect().left, 
+			// 	add : el_current.offsetWidth,
+			// 	selector: el_scroll, 
+			// 	align: align 
+			// });
 
-			// 	// Global.scroll.move({ 
-			// 	// 	top: ps_l[current], 
-			// 	// 	add : el_btn.outerWidth(),
-			// 	// 	selector: $target, 
-			// 	// 	align: align 
-			// 	// });
-			// }
 			if (!onePanel) {
 				for (let that of el_pnls) {
 					that.setAttribute('aria-hidden', true);
