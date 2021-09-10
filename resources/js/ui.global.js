@@ -1011,7 +1011,7 @@ if (!Object.keys){
 					opt = $wrap.data('opt');
 
 				var yRPer, xRPer;
-				var $btn = e.target;
+				var el_btn = e.target;
 				var isXY = $btn.getAttribute('data-scrollxy');
 				
 				$('body').addClass('scrollbar-move');
@@ -4346,41 +4346,27 @@ if (!Object.keys){
 		},
 		range: function() {
 			const el_ranges = doc.querySelectorAll('.ui-floating-range');
-
 			
 			window.removeEventListener('scroll', act);
 			window.addEventListener('scroll', act);
-			
 							
 			function act(){
 				for (let el_range of el_ranges) {
-					
 					const el_item = el_range.querySelector('.ui-floating-range-item');
-					const mg = el_item.dataset.mg ?? 0;
-					const item_h = el_item.offsetHeight;
-					const range_t = el_range.getBoundingClientRect().top;
-					const range_h = el_range.offsetHeight;
-					const dT = doc.documentElement.scrollTop;
-					const itemTop = el_item.getBoundingClientRect().top;
-					const wH = win.innerHeight;
+					const mg = el_range.dataset.mg ?? 0;
+					const itemH = el_item.offsetHeight;
+					const wrapT = el_range.getBoundingClientRect().top;
+					const wrapH = el_range.offsetHeight;
+					const wT = win.pageYOffset;
 
-					//console.log(range_t + dT, dT, itemTop + dT);
-					console.log(range_t + dT , (dT - (itemTop + dT + mg)));
-					
-					if (dT - (itemTop + dT + mg) > 0) {
-						el_item.style.top = dT - (itemTop + dT + mg) + 'px';
-						//console.log(range_t, (range_t + range_h ) - item_h, (dT + mg));
-						// if ((range_t + range_h) - item_h < (dT + mg)) {
-						// 	el_item.style.top = (range_h - item_h - itemTop - dT) + 'px';
-						// } else {
-						// 	el_item.style.top = (dT - itemTop + mg) - range_t + 'px';
-						// }
+					if (wT > (wrapT + wT - mg)) {
+						if (wrapH - itemH >= wT - (wrapT + wT - mg)) {
+							el_item.style.top = (wT - (wrapT + wT - mg)) + 'px';
+						}
 					} else {
-						//el_item.style.top = 0;
+						el_item.style.top = 0;
 					}
 				}
-
-				
 			}
 		}
 	}
@@ -4570,29 +4556,25 @@ if (!Object.keys){
 			effect: false,
 			align : 'center'
 		},
-		init: function(opt) {
-			var opt = opt === undefined ? {} : opt;
-			var opt = $.extend(true, {}, Global.tab.options, opt);
-			var id = opt.id;
-			var effect = opt.effect;
-			var current = isNaN(opt.current) ? 0 : opt.current;
-			var onePanel = opt.onePanel;
-			var callback = opt.callback;
-			var align = opt.align;
-				
-			var $tab = $('#' + id);
-			var $btns = $tab.find('> .ui-tab-btns');
-			var $wrap = $btns.find('> .btn-wrap');
-			var $btn = $btns.find('.ui-tab-btn');
-			var $pnls = $tab.find('> .ui-tab-pnls');
-			var $pnl = $pnls.find('> .ui-tab-pnl');
+		init: function(option) {
+			const opt = Object.assign({}, this.options, option);
+			const id = opt.id;
+			const effect = opt.effect;
+			let current = isNaN(opt.current) ? 0 : opt.current;
+			const onePanel = opt.onePanel;
+			const callback = opt.callback;
+			const align = opt.align;
+			const el_tab = doc.querySelector('#' + id);
+			const el_btnwrap = el_tab.querySelector(':scope > .ui-tab-btns');
+			const $wrap = el_btnwrap.querySelector(':scope > .btn-wrap');
+			const el_btns = el_btnwrap.querySelectorAll('.ui-tab-btn');
+			const el_pnlwrap = el_tab.querySelector(':scope > .ui-tab-pnls');
+			const el_pnls = el_pnlwrap.querySelectorAll(':scope > .ui-tab-pnl');
+			const keys = Global.state.keys;
+			const para = Global.para.get('tab');
 
-			var	len = $btn.length;
-			var keys = Global.state.keys;
-				
-			var	para = Global.para.get('tab');
-			var paras;
-			var paraname;
+			let paras;
+			let paraname;
 
 			//set up
 			if (!!para) {
@@ -4616,78 +4598,94 @@ if (!Object.keys){
 			}
 
 			//set up
-			!!effect && $tab.addClass(effect);
-			$tab.data('opt', opt);
-			$btns.attr('role','tablist');
-			$btn.attr('role','tab');
-			$pnl.attr('role','tabpanel');
-			
-			var ps_l = [];
+			!!effect && el_tab.classList.add(effect);
+			el_btnwrap.setAttribute('role','tablist');
+
+			//el_tab.data('opt', opt);
+			//el_pnls.setAttribute('role','tabpanel');
+			//var ps_l = [];
 
 			//setting
-			for (var i = 0; i < len; i++) {
-				var $btnN = $btn.eq(i);
+			for (let i = 0, len = el_btns.length; i < len; i++) {
+				const el_btn = el_btns[i];
+				const el_pnl = el_pnls[i];
 				
-				$btnN.data('tab') ?? $btnN.attr('data-tab', i);
-				$btnN.attr('data-n', i);
+				el_btn.setAttribute('role','tab');
 
-				var n =  Number($btnN.data('tab'));
-				var isCurrent = current === i;
-				var cls = isCurrent ? 'addClass' : 'removeClass';
-	
-				//make ID
-				$btnN.attr('id') ?? $btnN.attr('id', id + 'Btn' + n);
-				
-				var btnID = $btnN.attr('id');
-				var $pnlN = $pnl.eq(i);
-
-				$pnlN.data('tab') ?? $pnlN.attr('data-tab', i);
-				$pnlN = $pnls.find('> .ui-tab-pnl[data-tab="'+ n +'"]');
-				$pnlN.attr('id') ?? $pnlN.attr('id', id + 'pnl' + n);
-
-				var pnlID = $pnlN.attr('id');
-
-				if (!onePanel) {
-					$btnN.attr('aria-controls', pnlID)[cls]('selected');
-					$pnlN.attr('aria-labelledby', btnID).attr('aria-hidden', (isCurrent) ? false : true)[cls]('selected');
-				} else {
-					$btnN.attr('aria-controls', $pnl.eq(0).attr('id')).addClass('selected');
-					isCurrent && $pnl.attr('aria-labelledby', btnID).addClass('selected');
+				if (el_btn.dataset.tab) {
+					el_btn.dataset.tab = i;
 				}
 
-				(isCurrent) ?
-					$btnN.attr('aria-selected', true).addClass('selected'):
-					$btnN.attr('aria-selected', false).removeClass('selected');
-					
-				ps_l.push(Math.ceil($btnN.position().left));
+				el_btn.dataset.n = i;
 
-				i === 0 && $btnN.attr('tab-first', true);
-				i === len - 1 && $btnN.attr('tab-last', true);
+				const n =  Number(el_btn.dataset.tab);
+				const isCurrent = current === i;
+				const cls = isCurrent ? 'add' : 'remove';
+
+				if (!el_btn.id) {
+					el_btn.id = id + 'Btn' + n;
+				} 
+
+				if (!onePanel) {
+					el_pnl.setAttribute('role','tabpanel');
+
+					if (el_pnl.dataset.tab) {
+						el_pnl.dataset.tab = i;
+					}
+
+					if (!el_pnl.id) {
+						el_pnl.id = id + 'pnl' + n;
+					} 
+				} else {
+					el_pnls[0].setAttribute('role','tabpanel');
+					el_pnls[0].dataset.tab = current;
+					el_pnls[0].id = id + 'pnl' + current;
+				}
+  
+				const btnID = el_btn.id;
+				const pnlID = !onePanel ? el_pnl.id : el_pnls[0].id;
+
+				el_btn.setAttribute('aria-controls', pnlID);
+				el_btn.classList[cls]('selected');
+
+				if (!onePanel) {
+					el_pnl.setAttribute('aria-labelledby', btnID);
+					el_pnl.setAttribute('aria-hidden', (isCurrent) ? false : true);el_pnl.classList[cls]('selected');
+				} else {
+					el_pnls[0].setAttribute('aria-labelledby', btnID);
+					el_pnls[0].setAttribute('aria-hidden', false);
+					el_pnls[0].classList[cls]('selected');
+					
+				}
+
+				i === 0 && el_btn.setAttribute('tab-first', true);
+				i === len - 1 && el_btn.setAttribute('tab-last', true);
+
+				el_btn.addEventListener('click',evtClick);
+				el_btn.addEventListener('keydown',evtKeys);
+
 			}
 
-			callback ? callback(opt) : '';
-			$btn.data('psl', ps_l).data('len', len);
-
+			callback && callback(opt);
+			//console.log(ps_l);
+			//el_btn.dataset.psl = ps_l;
+			//el_btn.dataset.len = len;
 			
-			Global.scroll.move({ 
-				top: ps_l[current], 
-				target: $btns,
-				effect: 'auto', 
-				align: align
-			});
+			// Global.scroll.move({ 
+			// 	top: ps_l[current], 
+			// 	target: el_btnwrap,
+			// 	effect: 'auto', 
+			// 	align: align
+			// });
 
 			//event
-			$btn.off('click.tab.init keydown.tab.init')
-				.on({
-					'click.tab.init': evtClick,
-					'keydown.tab.init': evtKeys
-				});
-
-			function evtClick() {
+			function evtClick(e) {
 				Global.tab.toggle({ 
 					id: id, 
-					current: $(this).index(), 
-					align:align 
+					current: Number(e.currentTarget.dataset.n), 
+					align:align,
+					onePanel:onePanel,
+					callback:callback
 				}); 
 			}
 			function evtKeys(e) {
@@ -4717,13 +4715,13 @@ if (!Object.keys){
 
 				function upLeftKey(e) {
 					e.preventDefault();
-					!$this.attr('tab-first') ? 
+					!$this.getAttribute('tab-first') ? 
 					Global.tab.toggle({ id: id, current: n - 1, align:align }): 
 					Global.tab.toggle({ id: id, current: m - 1, align:align});
 				}
 				function downRightKey(e) {
 					e.preventDefault();
-					!$this.attr('tab-last') ? 
+					!$this.getAttribute('tab-last') ? 
 					Global.tab.toggle({ id: id, current: n + 1, align:align }): 
 					Global.tab.toggle({ id: id, current: 0, align:align });
 				}
@@ -4737,48 +4735,59 @@ if (!Object.keys){
 				}
 			}
 		},
-		toggle: function(opt) {
-			var id = opt.id;
-			var $tab = $('#' + id);
-			var $btns = $tab.children('.ui-tab-btns');
-			var $btn = $btns.find('.ui-tab-btn');
-			var $pnls = $tab.children('.ui-tab-pnls');
-			var $pnl = $pnls.children('.ui-tab-pnl');
-			var $target = $btns;
+		toggle: function(option) {
+			const opt = Object.assign({}, this.options, option);
+
+			const id = opt.id;
+			const callback = opt.callback;
+			const el_tab = doc.querySelector('#' + id);
+			const el_btnwrap = el_tab.querySelector(':scope > .ui-tab-btns');
+			const el_btn = el_btnwrap.querySelectorAll('.ui-tab-btn');
+			const el_pnlwrap = el_tab.querySelector(':scope > .ui-tab-pnls');
+			const el_pnls = el_pnlwrap.querySelectorAll(':scope > .ui-tab-pnl');
+			var $target = el_btnwrap;
 			
-			var ps_l = $btn.data('psl');
-			var opt = $.extend(true, {}, $tab.data('opt'), opt);
-			var current = isNaN(opt.current) ? 0 : opt.current;
-			var onePanel = opt.onePanel;
-			var align = opt.align;
-			var callback = opt.callback;
-			var n = $btn.eq(current).data('tab');
+			// var ps_l = el_btn.data('psl');
 
-			$btn.removeClass('selected').eq(current).addClass('selected').focus();
-			
+			const current = isNaN(opt.current) ? 0 : opt.current;
+			const onePanel = opt.onePanel;
+			const align = opt.align;
 
-			var $btnN = $btns.find('.ui-tab-btn[data-tab="'+ n +'"]');
-			var btnId = $btnN.attr('id');
+			const el_current = el_btnwrap.querySelector('.ui-tab-btn[data-n="'+ current +'"]');
+			const el_pnlcurrent = el_pnlwrap.querySelector('.ui-tab-pnl[data-tab="'+ current +'"]');
+			const btnId = el_current.id;
 
-			if ($btns.hasClass('ui-scrollbar')) {
-				$target = $btns.find('> .ui-scrollbar-item');
-
-				Global.scroll.move({ 
-					top: ps_l[current], 
-					add : $btn.outerWidth(),
-					selector: $target, 
-					align: align 
-				});
+			for(let that of el_btn) {
+				that.classList.remove('selected');
 			}
+			
+			el_current.classList.add('selected')
+			el_current.focus();
+	
+			// if (el_btnwrap.hasClass('ui-scrollbar')) {
+			// 	$target = el_btnwrap.find('> .ui-scrollbar-item');
 
-			if (onePanel === false) {
-				$pnl.attr('aria-hidden', true).removeClass('selected');
-				$pnls.children('.ui-tab-pnl[data-tab="'+ n +'"]').addClass('selected').attr('aria-hidden', false);
+			// 	// Global.scroll.move({ 
+			// 	// 	top: ps_l[current], 
+			// 	// 	add : el_btn.outerWidth(),
+			// 	// 	selector: $target, 
+			// 	// 	align: align 
+			// 	// });
+			// }
+			if (!onePanel) {
+				for (let that of el_pnls) {
+					that.setAttribute('aria-hidden', true);
+					that.classList.remove('selected');
+				}
+				
+				el_pnlcurrent.classList.add('selected');
+				el_pnlcurrent.setAttribute('aria-hidden', false);
 			} else {
-				$pnl.attr('aria-labelledby', btnId);
+				el_pnls[0].setAttribute('aria-hidden', false);
+				el_pnls[0].setAttribute('aria-labelledby', btnId);
 			}
 
-			!!callback ? callback(opt) : '';
+			callback && callback(opt);
 		}
 	}
 
