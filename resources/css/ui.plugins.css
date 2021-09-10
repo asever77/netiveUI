@@ -938,6 +938,10 @@ a.ui-acco-btn:after {
 
 
 /* ui position : base */
+.ui-floating {
+    border: 1px dashed rgb(230, 230, 230);
+}
+
 .ui-floating-wrap {
     width: 100%;
     position: relative;
@@ -957,21 +961,6 @@ a.ui-acco-btn:after {
     z-index: 999;
 }
 
-.ui-floating {
-    border: 1px dashed rgb(230, 230, 230);
-}
-
-
-.ui-floating-range {
-    position: relative;
-}
-
-.ui-floating-range-item {
-    position: relative;
-    top: 0;
-    left: 0;
-}
-
 .ui-floating-range {
     display: inline-block;
     vertical-align: middle;
@@ -981,8 +970,12 @@ a.ui-acco-btn:after {
 }
 
 .ui-floating-range-item {
+    position: relative;
+    top: 0;
+    left: 0;
     width: 100%;
 }
+
 
 
 
