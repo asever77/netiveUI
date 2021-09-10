@@ -507,19 +507,10 @@
 
     netive.page.pageInputClear = function(){
         netive.form.init();
-        
-  
     }
 
     netive.page.pageFloatingRange = function(){
-        netive.floating.range({ 
-            id:'uiflRange01', 
-            margin: 0
-        });
-        netive.floating.range({ 
-            id:'uiflRange02', 
-            margin: 0
-        });
+        netive.floating.range();
     }
 
     netive.page.pageFloating = function(){
@@ -584,18 +575,18 @@
             effect: 'eff-fade',
             callback:tabCallback 
         });
-        netive.tab.init({ 
-            id:'exeTab12', 
-            current:0, 
-            callback:tabCallback 
-        });
+        // netive.tab.init({ 
+        //     id:'exeTab12', 
+        //     current:0, 
+        //     callback:tabCallback 
+        // });
 
 
         netive.tab.init({ 
             id:'exeTab4', 
             current:0, 
-            onePanel:true, 
-            callback: tabCallback2 
+            onePanel:true,
+            callback:tabCallback2 
         });
         
         function tabCallback(v){
@@ -603,12 +594,12 @@
         }
         function tabCallback2(v){
             $('#'+ v.id).find('.ui-tab-tit').text($('#'+ v.id).find('.ui-tab-btn').eq(v.current).text());
-            //console.log(v);
+            console.log(v);
         }
-        netive.scrollBar.init();
-        $('.ui-tab-btns').on('scroll', function(){
-            //console.log($(this).scrollLeft());
-        });
+        // netive.scrollBar.init();
+        // $('.ui-tab-btns').on('scroll', function(){
+        //     //console.log($(this).scrollLeft());
+        // });
     }
 
     netive.page.pageTable = function(){
