@@ -2,115 +2,71 @@
 
 /* root */
 :root {
+	/* color system */
+	--grey10:rgba(0,0,0,1);
+	--grey09:rgba(59, 59, 70, 1);		/*헤드라인 텍스트*/
+	--grey08:rgba(88, 88, 101, 1);		/*본문 텍스트, button-text*/
+	--grey07:rgba(116, 116, 129, 1);	/*서브 텍스트, label, button-line*/
+	--grey06:rgba(147, 147, 159, 1);	/*disabled 텍스트, input-placeholder, table-line[dark]*/
+	--grey05:rgba(182, 182, 192, 1);	/*input-bg-acitve*/
+	--grey04:rgba(214, 214, 221, 1);	/*box-line[dark]*/
+	--grey03:rgba(233, 233, 238, 1);	/*box-line, input-line, table-line*/
+	--grey02:rgba(242, 242, 245, 1);	/*table-thead-th-bg*/
+	--grey01:rgba(250, 250, 252, 1);	/*box-bg[dark], table-tbody-th-bg, button-text-primary*/
+	--grey00:rgba(255, 255, 255, 1);	/*input-bg, box-bg, table-td-bg, button-bg*/
+	
+	--primary: rgba(49, 130, 246, 1); 	/*button-bg-primary, button-line-primary*/
+	--secondary: rgba(0, 166, 97, 1);
+	--error: rgb(244, 67, 54, 1);
+	--success: rgba(49, 130, 246, 1);
+	--link: rgb(98, 150, 223, 1);
 
-	/* layout background */
-	--bg-base: #fff;
-
-	/* text */
-	--text-700: #212121; /* headline text */
-	--text-400: #424242; /* default text*/
-	--text-200: #616161; /* sub text */
-
-	/* line */
-	--line-b: #BDBDBD; 
-	--line: #EEEEEE;
-
-	/* content background */
-	--bg-b: #FAFAFA;	
-	--bg: #FFFFFF;	
-
-	/* button */
-	--btn-bg-primary: #424242;
-	--btn-text-primary: #FAFAFA;
-	--btn-line-primary: #424242;
-	--btn-bg: #FFF;
-	--btn-text: #424242;
-	--btn-line: #616161;
-
-	/* table */
-	--tbl-td: #FFF;
-	--tbl-tbody-th: #FAFAFA;
-	--tbl-thead-th: #EEEEEE;
-	--tbl-line: #BDBDBD;
-	--tbl-line-b: #616161;
-
-	/* input */
-	--inp-bg:#FFF;
-	--inp-line:#EEEEEE;
-	--inp-placeholder:#BDBDBD;
-	--inp-bg-active:#FAFAFA;
-	--inp-line-active:#616161;
-	--inp-label:#828282;
-
-	/* box */
-	--box-bg:#FFF;
-	--box-line:#BDBDBD;
+	/* text size */
+	--text-xxl: 6rem;
+	--text-xl: 3rem;
+	--text-l: 2rem;
+	--text-m: 1.6rem;
+	--text-s: 1.4rem;
+	--text-xs: 1.2rem;
+	--text-xxs: 1.1rem;
 
 	/* etc */
 	--shadow: rgba(0,0,0,0.1);
 
-	/* color */
-	--primary: #121212;
-	--secondary: rgb(255, 95, 21);
+	
 
-	--error:rgb(255, 21, 21);
-
-	--link: blue;
 	
 }
 
 :root.dark-mode {
-
-	/* layout background */
-	--bg-base: #212121;
+	/* color system */
+	--grey10:rgba(255, 255, 255, 0.8);
+	--grey09:rgba(250, 250, 252, 0.95);	/*헤드라인 텍스트*/
+	--grey08:rgba(242, 242, 245, 0.7);	/*본문 텍스트, button-text*/
+	--grey07:rgba(233, 233, 238, 0.7);	/*서브 텍스트, label, button-line*/
+	--grey06:rgba(214, 214, 221, 0.5);	/*disabled 텍스트, input-placeholder, table-line[dark]*/
+	--grey05:rgba(182, 182, 192, 0.8);	/*input-bg-acitve*/
+	--grey04:rgba(147, 147, 159, 0.8);	/*box-line[dark]*/
+	--grey03:rgba(116, 116, 129, 0.8);	/*box-line, input-line, table-line*/
+	--grey02:rgba(88, 88, 101, 0.8);	/*table-thead-th-bg*/
+	--grey01:rgba(59, 59, 70, 0.8);	/*box-bg[dark], table-tbody-th-bg, button-text-primary*/
+	--grey00:rgba(0,0,0, 0.7);		/*input-bg, box-bg, table-td-bg, button-bg*/
 	
-	/* text */
-	--text-700: #E0E0E0; /* headline text */
-	--text-400: #9E9E9E; /* default text*/
-	--text-200: #616161; /* sub text */
+	--primary: rgba(49, 130, 246, 1); 	/*button-bg-primary, button-line-primary*/
+	--secondary: rgba(0, 166, 97, 1);
+	--error: rgb(244, 67, 54, 1);
+	--success: rgba(49, 130, 246, 1);
+	--link: rgb(98, 150, 223, 1);
 
-	/* line */
-	--line-b: #616161; 
-	--line: #424242;
-
-	/* bg */
-	--bg-b: #121212;	
-	--bg: #212121;	
-
-	/* button */
-	--btn-bg-primary: #E0E0E0;
-	--btn-text-primary: #212121;
-	--btn-line-primary: #FAFAFA;
-	--btn-bg: #424242;
-	--btn-text: #E0E0E0;
-	--btn-line: #616161;
-
-	/* table */
-	--tbl-td: #212121;
-	--tbl-tbody-th: #424242;
-	--tbl-thead-th: #616161;
-	--tbl-line: #121212;
-	--tbl-line-b: #9E9E9E;
-
-	/* input */
-	--inp-bg:#212121;
-	--inp-line:#424242;
-	--inp-placeholder:#BDBDBD;
-	--inp-bg-active:#FAFAFA;
-	--inp-line-active:#616161;
-	
-	/* box */
-	--box-bg:#212121;
-	--box-line:#424242;
+	/* text size */
+	--text-xxl: 6rem;
+	--text-xl: 3rem;
+	--text-l: 2rem;
+	--text-m: 1.6rem;
+	--text-s: 1.4rem;
+	--text-xs: 1.2rem;
+	--text-xxs: 1.1rem;
 
 	/* etc */
-	--shadow: rgba(0,0,0,0.5);
-	
-	/* color */
-	--primary: #121212;
-	--secondary: rgb(255, 95, 21);
-
-	--error:rgb(255, 21, 21);
-
-	--link: hotpink;
+	--shadow: rgba(0,0,0,0.1);
 }

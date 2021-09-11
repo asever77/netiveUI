@@ -1415,7 +1415,7 @@ a.ui-acco-btn:after {
     width: .6rem;
     margin: 0;
     height: 2rem;
-    background: var(--bg);
+    background: var(--grey00);
     opacity: 0.5;
     border-radius: .2rem;
 }
@@ -1427,7 +1427,7 @@ a.ui-acco-btn:after {
     width: 2rem;
     margin: 0;
     height: 6px;
-    background: var(--text-400);
+    background: var(--grey08);
     opacity: 1;
     border-radius: .2rem;
     opacity: 0.5;
