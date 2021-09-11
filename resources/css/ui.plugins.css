@@ -544,7 +544,7 @@
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    background: rgba(0, 0, 0, 1);
+    background: var(--grey02);
 }
 
 .ui-loading.orbit .ui-loading-wrap:before {
@@ -556,7 +556,7 @@
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    background: rgba(255, 255, 255, 1)
+    background: var(--grey09);
 }
 
 .ui-loading.orbit .ui-loading-wrap:after {

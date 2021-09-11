@@ -1,5 +1,5 @@
 @charset "utf-8";
-:focus{outline:1px solid red !important;}
+/* :focus{outline:1px solid red !important;} */
 button:focus *,
 a:focus *,
 button:focus,
@@ -21,7 +21,7 @@ html {
 body {
 	font-family: 'Noto Sans KR', sans-serif;
 	color: var(--grey08);
-	font-size: 1.6rem;
+	font-size: var(--text-m);
 	line-height: 1.6;
 	word-break: keep-all;
 	-webkit-font-smoothing: antialiased;
@@ -358,7 +358,7 @@ h6 {
 	font-family: 'Material Icons';
 	font-weight: normal;
 	font-style: normal;
-	font-size: 2.4rem;
+	font-size: var(--text-l);
 	display: block;
 	line-height: 1;
 	text-transform: none;
@@ -423,7 +423,7 @@ input[type="checkbox"] {
 	vertical-align: top;
 	align-items: center;
 	min-height: 4rem;
-	font-size: 1.3rem;
+	font-size: var(--text-s);
 	padding: 0;
 	margin: 0;
 	cursor: pointer;
@@ -497,7 +497,7 @@ input[type="checkbox"] {
 }
 
 .lb-check.all {
-	font-size: 1.6rem;
+	font-size: var(--text-m);
 	color: var(--grey07);
 }
 
@@ -529,7 +529,8 @@ select,
 	padding: 0 1rem;
 	outline: 0;
 	margin: 0;
-	font-size: 1.6rem;
+	color:var(--grey080);
+	font-size: var(--text-m);
 }
 
 select.inp-base {
@@ -609,7 +610,7 @@ select.off:focus+.ui-select-btn:after {
 	height: 2rem;
 	float: right;
 	overflow: hidden;
-	font-size: 2rem;
+	font-size: var(--text-l);
 	line-height: 1;
 	color: var(--grey08);
 }
@@ -645,11 +646,11 @@ select.off:focus+.ui-select-btn:after {
 }
 
 .ui-select-wrap.top {
-	bottom: 39px
+	bottom: 3.9rem
 }
 
 .ui-select-wrap.bottom {
-	top: 39px
+	top: 3.9rem
 }
 
 .ui-select-wrap {
@@ -667,7 +668,7 @@ select.off:focus+.ui-select-btn:after {
 
 .ui-select-wrap.ui-scrollbar {
 	position: absolute;
-	min-height: 162px
+	min-height: 16.2rem
 }
 
 .ui-select-opts {
@@ -679,9 +680,9 @@ select.off:focus+.ui-select-btn:after {
 	display: block;
 	float: left;
 	width: 100%;
-	padding: 5px 20px 5px 10px;
-	font-size: 14px;
-	height: 40px;
+	padding: .5rem 2rem .5rem 1rem;
+	font-size: var(--text-s);
+	height: 4rem;
 	text-align: left;
 	background: var(--grey00);
 	white-space: nowrap
@@ -713,15 +714,15 @@ select.off:focus+.ui-select-btn:after {
 }
 
 .ui-select.type-tel {
-	width: 150px
+	width: 15rem
 }
 
 .ui-select.type-bank {
-	width: 200px
+	width: 20rem
 }
 
 .ui-select.type-card {
-	width: 200px
+	width: 20rem
 }
 
 .ui-select-cancel,
@@ -739,7 +740,7 @@ select.off:focus+.ui-select-btn:after {
 .size-mobile .ui-select-title,
 .size-mobile .ui-select-wrap.top,
 .size-mobile .ui-select-wrap.bottom {
-	bottom: -300px;
+	bottom: -30rem;
 	top: auto;
 	animation-name: slideUpIn;
 	animation-duration: .2s;
@@ -753,40 +754,40 @@ select.off:focus+.ui-select-btn:after {
 	position: fixed;
 	z-index: 100;
 	left: 0;
-	bottom: -300px;
+	bottom: -30rem;
 	width: 100%;
 	border: 0;
-	border-top: 1px solid var(--grey00);
-	background: var(--grey04);
+	border-top: 1px solid var(--grey01);
+	background: var(--grey01);
 	overflow-y: auto;
-	max-height: 240px;
+	max-height: 24rem;
 }
 
 .size-mobile .ui-select-title {
 	position: fixed;
-	margin-bottom: 200px;
+	margin-bottom: 20rem;
 	left: 0;
 	top: auto;
 	display: block;
 	width: 100%;
-	height: 40px;
-	background: var(--grey09);
-	color: var(--grey02);
-	padding: 9px 10px 4px;
+	height: 4rem;
+	background: var(--grey02);
+	color: var(--grey09);
+	padding: .9rem 1rem .4rem;
 	text-align: center;
 	z-index: 10;
 }
 
 .size-mobile .ui-select-opts {
-	padding: 120px 0 80px;
+	padding: 12rem 0 8rem;
 }
 
 .size-mobile .ui-select-opts:after {
 	content: "";
 	display: block;
 	position: fixed;
-	bottom: 118px;
-	border-top: 1px solid #555;
+	bottom: 11.8rem;
+	border-top: 1px solid var(--grey02);
 	width: 100%;
 	height: 1px;
 	z-index: 0;
@@ -796,8 +797,8 @@ select.off:focus+.ui-select-btn:after {
 	content: "";
 	display: block;
 	position: fixed;
-	bottom: 78px;
-	border-top: 1px solid #555;
+	bottom: 7.8rem;
+	border-top: 1px solid var(--grey02);
 	width: 100%;
 	height: 1px;
 	z-index: 0;
@@ -808,26 +809,26 @@ select.off:focus+.ui-select-btn:after {
 	z-index: 1;
 	position: relative;
 	background: transparent;
-	color: var(--grey08);
+	color: var(--grey07);
 }
 
 .size-mobile .ui-select-opt.selected {
-	color: rgba(255, 255, 255, 1);
-	background-color: var(--grey10)
+	color: var(--grey09);
+	background-color: var(--grey00)
 }
 
 .size-mobile .ui-select-cancel,
 .size-mobile .ui-select-confirm {
 	position: fixed;
-	margin-bottom: 200px;
+	margin-bottom: 20rem;
 	right: 0;
 	display: block;
-	width: 50px;
-	height: 40px;
+	width: 5rem;
+	height: 4rem;
 	color: #fff;
-	padding: 7px 10px 6px;
+	padding: .7rem 1rem .6rem;
 	text-align: center;
-	font-size: 14px;
+	font-size: var(--text-s);
 	z-index: 11;
 }
 
@@ -873,7 +874,7 @@ select.off:focus+.ui-select-btn:after {
 	top: 0;
 	left: 0;
 	transform: translate(0, 0);
-	font-size: 1.3rem;
+	font-size: var(--text-s);
 	color: var(--grey07);
 	cursor: text;
 }
@@ -890,12 +891,12 @@ select.off:focus+.ui-select-btn:after {
 	top: 0;
 	left: 0.6rem;
 	transform: translate(0, 1.2rem);
-	font-size: 1.6rem;
+	font-size: var(--text-m);
 }
 
 .ui-form-inner.is-value .form-item-label {
 	transform: translate(0, -0.6rem);
-	font-size: 1.2rem;
+	font-size: var(--text-xs);
 	background-color: var(--grey00);
 	margin-left: 0 !important;
 }
@@ -950,7 +951,7 @@ select.off:focus+.ui-select-btn:after {
 }
 
 .form-item .info {
-	font-size: 1.2rem;
+	font-size: var(--text-xs);
 }
 
 .form-sc {
@@ -989,7 +990,7 @@ select.off:focus+.ui-select-btn:after {
 	content: 'date_range';
 	font-family: 'Material Icons';
 	font-feature-settings: 'liga';
-	font-size: 22px;
+	font-size: var(--text-l);
 	word-break: keep-all;
 	line-height: 1.6;
 }
@@ -1028,13 +1029,13 @@ select.off:focus+.ui-select-btn:after {
 	width: 3rem;
 	height: 3rem;
 	font-family: 'Material Icons';
-	font-size: 2rem;
+	font-size: var(--text-l);
 	position: relative;
 }
 
 .datepicker-title {
 	width: 100%;
-	font-size: 1.4rem;
+	font-size: var(--text-s);
 	text-align: center;
 }
 
@@ -1043,7 +1044,7 @@ select.off:focus+.ui-select-btn:after {
 }
 
 .datepicker-body th {
-	font-size: 1.2rem;
+	font-size: var(--text-xs);
 }
 
 .datepicker-date td {
@@ -1058,7 +1059,7 @@ select.off:focus+.ui-select-btn:after {
 	width: 2.4rem;
 	height: 2.4rem;
 	border-radius: 50%;
-	font-size: 1.2rem;
+	font-size: var(--text-xs);
 	margin: 0.3rem 0;
 	line-height: 1;
 }
@@ -1376,7 +1377,7 @@ select.off:focus+.ui-select-btn:after {
 .ui-range-btn.right::after {
 	content: 'arrow_right';
 	font-family: 'Material Icons';
-	font-size: 1.2;
+	font-size: var(--text-xs);
 	color: #fff;
 	line-height: 2rem;
 
@@ -1389,7 +1390,7 @@ select.off:focus+.ui-select-btn:after {
 .ui-range-btn.left::after {
 	content: 'arrow_left';
 	font-family: 'Material Icons';
-	font-size: 1.2rem;
+	font-size: var(--text-xs);
 	color: #fff;
 	line-height: 2rem;
 
@@ -1398,7 +1399,7 @@ select.off:focus+.ui-select-btn:after {
 .ui-range-btn .n {
 	position: absolute;
 	top: -1.8rem;
-	font-size: 1.2rem;
+	font-size: var(--text-xs);
 	text-align: center;
 }
 
@@ -1489,7 +1490,7 @@ select.off:focus+.ui-select-btn:after {
 	padding: 0 1rem;
 	min-height: 4rem;
 	border: 1px solid var(--grey07-button);
-	font-size: 1.4rem;
+	font-size: var(--text-s);
 	font-weight: 400;
 	background: var(--grey00-button);
 	color: var(--grey08-button);
@@ -1536,7 +1537,7 @@ a[class*="btn-base"] {
 /* base size */
 .btn-base-s {
 	min-height: 2.6rem;
-	font-size: 1.2rem;
+	font-size: var(--text-xs);
 }
 
 a.btn-base-s {
@@ -1553,7 +1554,7 @@ a.btn-base-m {
 
 .btn-base-l {
 	min-height: 5rem;
-	font-size: 1.6rem;
+	font-size: var(--text-m);
 }
 
 a.btn-base-l {
@@ -1734,7 +1735,7 @@ a.btn-base-l {
 	position: relative;
 	border-top: 1px solid var(--grey06-table);
 	border-bottom: 1px solid var(--grey03-table);
-	font-size: 1.1rem;
+	font-size: var(--text-xxs);
 }
 
 .tbl-base table {
@@ -1795,7 +1796,7 @@ a.btn-base-l {
 	position: relative;
 	border-top: 1px solid var(--grey03-table);
 	border-bottom: 1px solid var(--grey03-table);
-	font-size: 1.1rem;
+	font-size: var(--text-xxs);
 }
 
 .tbl-list>table {
@@ -2141,7 +2142,7 @@ a.btn-base-l {
 }
 
 dl.bul-num dt {
-	font-size: 1.6rem;
+	font-size: var(--text-m);
 	font-weight: 700;
 }
 
@@ -2307,7 +2308,7 @@ dl.bul-num dd+dd {
 .bul-star,
 .bul-care,
 .bul-info {
-	font-size: 1.3rem;
+	font-size: var(--text-xs);
 }
 
 .bul-star::before {
@@ -2405,7 +2406,7 @@ dl[class*="bul-"]>dt {
 
 .in-wrap>*,
 .in-item {
-	font-size: 1.4rem;
+	font-size: var(--text-s);
 	display: inline-block;
 	vertical-align: top;
 }

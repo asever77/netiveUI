@@ -4,7 +4,7 @@
 :root {
 	/* color system */
 	--grey10:#000000;
-	--grey09:#444444;		/*헤드라인 텍스트*/
+	--grey09:#2e2e2e;		/*헤드라인 텍스트*/
 	--grey08:#666666;		/*본문 텍스트, button-text*/
 	--grey07:#808080;	/*서브 텍스트, label, button-line*/
 	--grey06:#a1a1a1;	/*disabled 텍스트, input-placeholder, table-line[dark]*/
@@ -36,9 +36,9 @@
 	--grey00-button:#ffffff;
 
 	/* text size */
-	--text-xxl: 6rem;
-	--text-xl: 3rem;
-	--text-l: 2rem;
+	--text-xxl: 6.4rem;
+	--text-xl: 3.2rem;
+	--text-l: 2.4rem;
 	--text-m: 1.6rem;
 	--text-s: 1.4rem;
 	--text-xs: 1.2rem;
@@ -46,10 +46,6 @@
 
 	/* etc */
 	--shadow: rgba(0,0,0,0.1);
-
-	
-
-	
 }
 
 :root.dark-mode {
