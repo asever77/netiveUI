@@ -1067,7 +1067,7 @@ a.ui-acco-btn:after {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 1;
-    background: #fff;
+    background: var(--grey00);
     margin: 2rem;
 }
 
@@ -1210,16 +1210,16 @@ a.ui-acco-btn:after {
     left: 0;
     width: 100%;
     min-height: 4rem;
-    background: var(--primary);
+    background: var(--grey09);
 
     padding: .8rem 3.5rem 1.2rem 1.6rem;
-    border-bottom: 1px solid #ccc;
+    border-bottom: 1px solid var(--grey03);
 }
 
 .ui-modal-header h1 {
     font-size: 1.6rem;
     font-weight: 500;
-    color: #fff;
+    color: var(--grey00);
 }
 
 .ui-modal-header .btn-close {
@@ -1247,29 +1247,29 @@ a.ui-acco-btn:after {
     margin: 0;
 }
 
-.device-mobile .scroll-no {
+.ui-m .scroll-no {
     overflow: hidden;
     padding-right: 0;
 }
 
-.device-mobile .ui-modal-wrap {
+.ui-m .ui-modal-wrap {
     margin: 2rem;
 }
 
-.device-mobile .ui-modal.ps-top .ui-modal-wrap {
+.ui-m .ui-modal.ps-top .ui-modal-wrap {
     margin-top: 0;
 }
 
-.device-mobile .ui-modal.ps-bottom .ui-modal-wrap {
+.ui-m .ui-modal.ps-bottom .ui-modal-wrap {
     margin-bottom: 0;
 }
 
-.device-mobile .ui-modal.type-full.ps-center {
+.ui-m .ui-modal.type-full.ps-center {
     justify-content: center;
     align-items: flex-start;
 }
 
-.device-mobile .ui-modal.type-full .ui-modal-wrap {
+.ui-m .ui-modal.type-full .ui-modal-wrap {
     margin: 0;
     width: 100%;
     height: auto;
@@ -1284,30 +1284,30 @@ a.ui-acco-btn:after {
     opacity: 0;
 }
 
-.device-mobile .ui-modal.open.type-full .ui-modal-wrap {
+.ui-m .ui-modal.open.type-full .ui-modal-wrap {
     bottom: 0;
     opacity: 1;
     top: auto;
 }
 
-.device-mobile .ui-modal-footer {
+.ui-m .ui-modal-footer {
     padding: 10px 15px;
 }
 
-.device-mobile .ui-modal.ps-top .ui-modal-wrap,
-.device-mobile .ui-modal.ps-bottom .ui-modal-wrap {
+.ui-m .ui-modal.ps-top .ui-modal-wrap,
+.ui-m .ui-modal.ps-bottom .ui-modal-wrap {
     margin: 0;
 }
 
-.device-mobile .ui-modal.open.ps-top .ui-modal-wrap {
+.ui-m .ui-modal.open.ps-top .ui-modal-wrap {
     top: 0;
 }
 
-.device-mobile .ui-modal.open.ps-bottom .ui-modal-wrap {
+.ui-m .ui-modal.open.ps-bottom .ui-modal-wrap {
     bottom: 0;
 }
 
-.device-mobile .ui-modal.ps-center.is-over .ui-modal-wrap {
+.ui-m .ui-modal.ps-center.is-over .ui-modal-wrap {
     margin: 0;
 }
 

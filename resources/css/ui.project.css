@@ -521,12 +521,12 @@ p {
 	width: auto
 }
 
-.type-option .nec,
+/* .type-option .nec,
 .type-option .nec th,
 .type-option .nec td {
 	color: #000;
 	font-weight: 400
-}
+} */
 
 .type-option .bou th,
 .type-option .bou td {
