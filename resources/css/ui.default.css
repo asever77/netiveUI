@@ -21,6 +21,13 @@
 	--success: rgba(49, 130, 246, 1);
 	--link: rgb(98, 150, 223, 1);
 
+	/*table*/
+	--grey06-table:rgba(147, 147, 159, 1);	/*table-line[dark]*/
+	--grey03-table:rgba(233, 233, 238, 1);	/*table-line*/
+	--grey02-table:rgba(242, 242, 245, 1);	/*table-thead-th-bg*/
+	--grey01-table:rgba(250, 250, 252, 1);	/*table-tbody-th-bg*/
+	--grey00-table:rgba(255, 255, 255, 1);	/*table-td-bg*/
+
 	/* text size */
 	--text-xxl: 6rem;
 	--text-xl: 3rem;
@@ -49,14 +56,21 @@
 	--grey04:rgba(147, 147, 159, 0.8);	/*box-line[dark]*/
 	--grey03:rgba(116, 116, 129, 0.8);	/*box-line, input-line, table-line*/
 	--grey02:rgba(88, 88, 101, 0.8);	/*table-thead-th-bg*/
-	--grey01:rgba(59, 59, 70, 0.8);	/*box-bg[dark], table-tbody-th-bg, button-text-primary*/
-	--grey00:rgba(0,0,0, 0.7);		/*input-bg, box-bg, table-td-bg, button-bg*/
+	--grey01:rgba(59, 59, 70, 0.8);		/*box-bg[dark], table-tbody-th-bg, button-text-primary*/
+	--grey00:rgba(0,0,0, 0.7);			/*input-bg, box-bg, table-td-bg, button-bg*/
 	
 	--primary: rgba(49, 130, 246, 1); 	/*button-bg-primary, button-line-primary*/
 	--secondary: rgba(0, 166, 97, 1);
 	--error: rgb(244, 67, 54, 1);
 	--success: rgba(49, 130, 246, 1);
 	--link: rgb(98, 150, 223, 1);
+
+	/*table*/
+	--grey06-table:rgba(214, 214, 221, 0.4);
+	--grey03-table:rgba(116, 116, 129, 0.2);/*table-line*/
+	--grey02-table:rgba(88, 88, 101, 0.2);	/*table-thead-th-bg*/
+	--grey01-table:rgba(59, 59, 70, 0.2);	/*table-tbody-th-bg*/
+	--grey00-table:rgba(0,0,0, 0.2);		/*table-td-bg, button-bg*/
 
 	/* text size */
 	--text-xxl: 6rem;

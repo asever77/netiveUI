@@ -264,6 +264,9 @@ p {
 }
 
 /* tbl */
+.tbl-base{
+	margin-top:0.8rem;
+}
 .tbl-base.type-device table{
 	display: block;
 	font-size:1.4rem;

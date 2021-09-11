@@ -1732,8 +1732,8 @@ a.btn-base-l {
 	margin: 0;
 	width: 100%;
 	position: relative;
-	border-top: 1px solid var(--grey06);
-	border-bottom: 1px solid var(--grey06);
+	border-top: 1px solid var(--grey06-table);
+	border-bottom: 1px solid var(--grey03-table);
 	font-size: 1.1rem;
 }
 
@@ -1742,9 +1742,9 @@ a.btn-base-l {
 }
 
 .tbl-base table>thead th {
-	background: var(--grey02);
-	border-bottom: 1px solid var(--grey03);
-	border-left: 1px solid var(--grey03);
+	background: var(--grey02-table);
+	border-bottom: 1px solid var(--grey03-table);
+	border-left: 1px solid var(--grey03-table);
 	padding: 0.5rem 0.5rem 0.7rem;
 	font-weight: 500;
 	color: var(--grey09);
@@ -1752,12 +1752,12 @@ a.btn-base-l {
 
 .tbl-base table>tbody>tr>th,
 .tbl-base table>tbody>tr>td {
-	border-top: 1px solid var(--grey03);
-	border-left: 1px solid var(--grey03);
+	border-top: 1px solid var(--grey03-table);
+	border-left: 1px solid var(--grey03-table);
 	padding: 0.5rem 0.5rem 0.7rem;
 	font-weight: 300;
 	word-break: break-all;
-	background: var(--grey00);
+	background: var(--grey00-table);
 	text-align: center;
 }
 
@@ -1774,18 +1774,18 @@ a.btn-base-l {
 
 .tbl-base table>thead>tr>*[rowspan],
 .tbl-base table>tbody>tr>*[rowspan] {
-	border-right: 1px solid var(--grey03);
+	border-right: 1px solid var(--grey03-table);
 }
 
 .tbl-base table>tbody>tr>th {
-	background: var(--grey01);
+	background: var(--grey01-table);
 	font-weight: 500;
-	color: var(--grey09);
+	color: var(--grey08);
 }
 
 .tbl-base tbody+tbody,
 .tbl-base tbody.line-t {
-	border-top: 1px solid var(--grey06);
+	border-top: 1px solid var(--grey03-table);
 }
 
 
@@ -1793,8 +1793,8 @@ a.btn-base-l {
 	margin: 0.5rem 0 0;
 	width: 100%;
 	position: relative;
-	border-top: 1px solid var(--grey03);
-	border-bottom: 1px solid var(--grey03);
+	border-top: 1px solid var(--grey03-table);
+	border-bottom: 1px solid var(--grey03-table);
 	font-size: 1.1rem;
 }
 
@@ -1803,8 +1803,8 @@ a.btn-base-l {
 }
 
 .tbl-list>table>thead th {
-	background: var(--grey02);
-	border-bottom: 1px solid var(--grey03);
+	background: var(--grey02-table);
+	border-bottom: 1px solid var(--grey03-table);
 	padding: 0.5rem 0.5rem 0.7rem;
 	font-weight: 500;
 	color: var(--grey09);
@@ -1812,11 +1812,11 @@ a.btn-base-l {
 
 .tbl-list>table>tbody>tr>th,
 .tbl-list>table>tbody>tr>td {
-	border-top: 1px solid var(--grey03);
+	border-top: 1px solid var(--grey03-table);
 	padding: 0.5rem 0.5rem 0.7rem;
 	font-weight: 300;
 	word-break: break-all;
-	background: var(--grey00);
+	background: var(--grey00-table);
 	text-align: center;
 }
 
@@ -1832,14 +1832,14 @@ a.btn-base-l {
 }
 
 .tbl-list>table>tbody>tr>th {
-	background: var(--grey01);
+	background: var(--grey01-table);
 	font-weight: 500;
-	color: var(--grey09);
+	color: var(--grey08);
 }
 
 .tbl-list tbody+tbody,
 .tbl-list tbody.line-t {
-	border-top: 1px solid var(--grey06);
+	border-top: 1px solid var(--grey03-table);
 }
 
 /* ui-tblscroll */
@@ -1872,6 +1872,7 @@ a.btn-base-l {
 .size-mobile .tbl-base .ui-tablescroll-clone {
 	width: 100%;
 }
+
 
 /* ui-drop : base */
 .ui-drop {
