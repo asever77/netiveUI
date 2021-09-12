@@ -813,7 +813,7 @@ a.ui-acco-btn {
     letter-spacing: 0;
     text-align: left;
     color: #000;
-    font-size: 14px;
+    font-size: var(--text-s);
 }
 
 .ui-acco-btn:after {
@@ -1197,7 +1197,7 @@ a.ui-acco-btn:after {
 .ui-modal.type-system .ui-modal-wrap {
     width: auto;
     text-align: center;
-    font-size: 1.4rem;
+    font-size: var(--text-s);
 }
 
 .ui-modal.type-system .ui-modal-wrap strong {
@@ -1217,7 +1217,7 @@ a.ui-acco-btn:after {
 }
 
 .ui-modal-header h1 {
-    font-size: 1.6rem;
+    font-size: var(--text-m);
     font-weight: 500;
     color: var(--grey00);
 }
@@ -1502,7 +1502,7 @@ body.ui-print-ing .ui-print {
     visibility: hidden;
     position: absolute;
     z-index: 200;
-    font-size: 11px;
+    font-size: var(--text-xxs);
     border: 1px solid #555;
     padding: 10px;
     background: #fff;
@@ -1751,7 +1751,7 @@ button.ui-tooltip-btn:after {
 
 .datepicker-head-date {
     text-align: center;
-    font-size: 18px;
+    font-size: var(--text-m);
     padding: 5px 10px;
 }
 
@@ -1772,17 +1772,17 @@ button.ui-tooltip-btn:after {
 }
 
 .datepicker-head-today .btn-today {
-    width: 20px;
-    height: 20px;
+    width: 2rem;
+    height: 2rem;
     position: absolute;
-    top: 6px;
-    left: 6px;
+    top: .6rem;
+    left: .6rem;
 }
 
 .datepicker-head-y,
 .datepicker-head-m {
     display: inline-block;
-    margin: 0 10px;
+    margin: 0 1rem;
     font-size: 0;
 }
 
@@ -1791,32 +1791,32 @@ button.ui-tooltip-btn:after {
     display: inline-block;
     padding: 0;
     vertical-align: middle;
-    font-size: 14px;
-    height: 23px;
+    font-size: var(--text-xs);
+    height: 2.3rem;
 }
 
 .datepicker-head-btn button {
     display: inline-block;
-    width: 23px;
-    height: 23px;
+    width: 2.3rem;
+    height: 2.3rem;
     top: 0;
     vertical-align: middle;
 }
 
 .datepicker-head-btn .ui-datepicker-prev {
-    left: 35px
+    left: 3.5rem
 }
 
 .datepicker-head-btn .ui-datepicker-next {
-    right: 35px;
+    right: 3.5rem;
 }
 
 .datepicker-head-btn .ui-datepicker-prev-y {
-    left: 10px
+    left: 1rem
 }
 
 .datepicker-head-btn .ui-datepicker-next-y {
-    right: 10px
+    right: 1rem
 }
 
 .datepicker-head-btn .btn-arrow:after {
@@ -1824,7 +1824,7 @@ button.ui-tooltip-btn:after {
     display: block;
     width: 100%;
     height: 100%;
-    font-size: 22px;
+    font-size: 2.2rem;
     color: #000;
     font-family: "Material Icons";
 }
@@ -1848,12 +1848,12 @@ button.ui-tooltip-btn:after {
 .datepicker-head-week {
     width: 100%;
     font-size: 0;
-    padding: 0 10px;
+    padding: 0 1rem;
 }
 
 .datepicker-head-week span {
     display: inline-block;
-    font-size: 13px;
+    font-size: var(--text-xs);
     font-weight: 500;
     width: 30px;
     height: 20px;
@@ -1861,7 +1861,7 @@ button.ui-tooltip-btn:after {
 }
 
 .datepicker-core {
-    padding: 10px;
+    padding: 1rem;
 }
 
 .datepicker-core:after {
@@ -1872,7 +1872,7 @@ button.ui-tooltip-btn:after {
 
 .datepicker-foot {
     text-align: center;
-    padding: 10px 0;
+    padding: 1rem 0;
 }
 
 /* datepicker table style  */
@@ -1897,7 +1897,7 @@ button.ui-tooltip-btn:after {
     text-align: center !important;
     font-weight: 600;
     background: #fff;
-    font-size: 12px;
+    font-size: var(--text-xs);
 }
 
 .tbl-datepicker th abbr {
@@ -1910,8 +1910,8 @@ button.ui-tooltip-btn:after {
     padding: 0;
     text-align: center;
     border: 0;
-    height: 40px;
-    max-height: 40px;
+    height: 4rem;
+    max-height: 4rem;
     border-top: 2px solid #fff
 }
 
@@ -1919,16 +1919,16 @@ button.ui-tooltip-btn:after {
 .tbl-datepicker td button {
     position: relative;
     display: block;
-    width: 30px;
-    height: 30px;
+    width: 3rem;
+    height: 3rem;
     line-height: 1;
     margin: 0 auto;
-    color: #444;
+    color: var(--grey08);
     text-align: center;
 }
 
 .tbl-datepicker td span {
-    color: #666;
+    color: var(--grey06);
     cursor: default;
     opacity: 0.5
 }
@@ -2036,7 +2036,7 @@ button.ui-tooltip-btn:after {
 .tbl-datepicker-head {
     width: 100%;
     text-align: center;
-    font-size: 18px;
+    font-size: var(--text-m);
     font-weight: 500;
     padding: 5px 10px 10px;
 }
@@ -2070,16 +2070,16 @@ td.on-end {
 }
 
 td button.today {
-    color: #000;
+    color: var(--grey09);
 }
 
 .datepicker-foot {
-    height: 60px;
+    height: 6rem;
     border-top: 1px solid #999;
     display: none;
 }
 
-/* mobile */
+/* mobile
 .device-mobile .type-dual .ui-datepicker-wrap {
     height: 100vh
 }
@@ -2235,7 +2235,7 @@ td button.today {
 .device-mobile .tbl-datepicker-head {
     width: 100%;
     text-align: left;
-    font-size: 14px;
+    font-size: var(--grey08);
     font-weight: 500;
     padding: 5px 13px 3px;
 }
@@ -2256,7 +2256,7 @@ td button.today {
     flex: 1;
     text-align: center;
 }
-
+ */
 
 /* ui inputclear */
 .ui-inpcancel-btn {

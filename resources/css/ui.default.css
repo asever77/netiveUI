@@ -4,8 +4,8 @@
 :root {
 	/* color system */
 	--grey10:#000000;
-	--grey09:#2e2e2e;		/*헤드라인 텍스트*/
-	--grey08:#666666;		/*본문 텍스트, button-text*/
+	--grey09:#2e2e2e;	/*헤드라인 텍스트*/
+	--grey08:#666666;	/*본문 텍스트, button-text*/
 	--grey07:#808080;	/*서브 텍스트, label, button-line*/
 	--grey06:#a1a1a1;	/*disabled 텍스트, input-placeholder, table-line[dark]*/
 	--grey05:#bebebe;	/*input-bg-acitve*/
@@ -27,6 +27,17 @@
 	--grey02-table:#f6f6f6;	/*table-thead-th-bg*/
 	--grey01-table:#fafafc;	/*table-tbody-th-bg*/
 	--grey00-table:#ffffff;	/*table-td-bg*/
+
+	/*selectbox*/
+	--select-line:#2e2e2e;
+	--select-bg:#fff;
+	--select-opt:#2e2e2e;
+	--select-opt-bg:#fff;
+	--select-opt-line:#f6f6f6;
+	--select-current-bg:#eeeeee;
+	--select-current:#000;
+	--select-tit:#fff;	
+	--select-tit-bg:#2e2e2e;
 
 	/*button*/
 	--primary-button: #3182f6; /*button-bg-primary, button-line-primary*/
@@ -75,6 +86,17 @@
 	--grey01-table:#272727;	/*table-tbody-th-bg*/
 	--grey00-table:#161616;	/*table-td-bg, button-bg*/
 
+	/*selectbox*/
+	--select-line:#fff;
+	--select-bg:#2e2e2e;
+	--select-opt:#d4d4d4;
+	--select-opt-bg:#2e2e2e;
+	--select-opt-line:#757575;
+	--select-current-bg:#000;
+	--select-current:#fff;
+	--select-tit:#fff;	
+	--select-tit-bg:#000;
+
 	/*button*/
 	--primary-button: #3182f6; 	/*button-bg-primary, button-line-primary*/
 	--grey08-button: #ffffff;	/*button-text*/
@@ -82,15 +104,31 @@
 	--grey01-button:#d8d8d8;
 	--grey00-button:#161616;
 
+	/* etc */
+	--shadow: rgba(0,0,0,0.1);
+}
+
+:root.size-mobile {
 	/* text size */
-	--text-xxl: 6rem;
-	--text-xl: 3rem;
-	--text-l: 2rem;
+	--text-xxl: 4rem;
+	--text-xl: 3.2rem;
+	--text-l: 2.4rem;
 	--text-m: 1.6rem;
 	--text-s: 1.4rem;
 	--text-xs: 1.2rem;
 	--text-xxs: 1.1rem;
 
-	/* etc */
-	--shadow: rgba(0,0,0,0.1);
+	
+}
+:root.ui-m {
+	/* text size */
+	--text-xxl: 4rem;
+	--text-xl: 3.2rem;
+	--text-l: 2.4rem;
+	--text-m: 1.6rem;
+	--text-s: 1.4rem;
+	--text-xs: 1.2rem;
+	--text-xxs: 1.1rem;
+
+
 }
