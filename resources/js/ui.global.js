@@ -378,6 +378,30 @@ if (!Object.keys){
 			}
 
 			return _i;
+		},
+		toggleSlide: function(opt) {
+			const el = opt.el;
+			const state = opt.state;
+			let n;
+
+			if (state === 'toggle') {
+				(0 === el.offsetHeight) ? show() : hide();
+			} else {
+				(state === 'show') ? show() : hide();
+			}
+
+			function show(){
+				el.setAttribute('aria-hidden', false);
+				el.style.height = "auto";
+				n = el.offsetHeight;
+				el.style.height = 0;
+				void el.offsetHeight;
+				el.style.height = `${n}px`;
+			}
+			function hide(){
+				el.setAttribute('aria-hidden', true);
+				el.style.height = 0;
+			}
 		}
 	}
 	Global.parts.resizeState();
@@ -3224,11 +3248,20 @@ if (!Object.keys){
 					el_pnl.dataset.height = el_pnl.offsetHeight;
 					el_pnl.setAttribute('aria-hidden', true);
 					el_pnl.dataset.n = i;
+					Global.parts.toggleSlide({
+						el: el_pnl, 
+						state: 'hide'
+					});
 
 					if (current === 'all') {
 						el_btn.dataset.selected = true;
 						el_btn.setAttribute('aria-expanded', true);
 						el_pnl.setAttribute('aria-hidden', false);
+						Global.parts.toggleSlide({
+							el: el_pnl, 
+							state: 'show'
+						});
+						
 					}
 				}
 
@@ -3260,6 +3293,10 @@ if (!Object.keys){
 						_btn.dataset.selected = true;
 						_btn.setAttribute('aria-expanded', true);
 						_pnl.setAttribute('aria-hidden', false);
+						Global.parts.toggleSlide({
+							el: _pnl, 
+							state: 'show'
+						});
 					}
 				}
 			}
@@ -3406,7 +3443,9 @@ if (!Object.keys){
 			}
 			function act(v) {
 				const isDown = !(v === 'down');
-								
+
+				
+
 				//set up close
 				if (!!autoclose) {
 					for (let wrap of el_wraps) {
@@ -3414,6 +3453,8 @@ if (!Object.keys){
 						const _btn = _tit.querySelector('.ui-acco-btn');
 						const _pnl = wrap.querySelector(':scope > .ui-acco-pnl');
 						
+						console.log(_pnl.offsetHeight);
+
 						if (!!_pnl) {
 							_btn.dataset.selected = false;
 							_btn.setAttribute('aria-expanded', false);
@@ -3439,10 +3480,17 @@ if (!Object.keys){
 					el_btn.setAttribute('aria-expanded', isDown);
 
 					if (!!el_pnl) {
-						el_pnl.setAttribute('aria-hidden', !isDown);
+						console.log(!isDown);
+						el_pnl.setAttribute('aria-hidden', isDown);
+						Global.parts.toggleSlide({
+							el: el_pnl, 
+							state: 'toggle'
+						});
 					}
 				}
 			}
+
+			
 		}
 	}
 	

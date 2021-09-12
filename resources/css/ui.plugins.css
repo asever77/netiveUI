@@ -757,10 +757,15 @@ a.ui-acco-btn {
 
 .ui-acco-pnl {
     position: relative;
+    visibility: visible;
+    transition: height .3s ease;
+    height:auto;
+    overflow: hidden;
 }
-
 .ui-acco-pnl[aria-hidden="true"] {
-    display: none;
+    visibility: visible;
+    height: 0;
+    transition: height .3s ease;
 }
 
 .ui-acco-tit-wrap {
