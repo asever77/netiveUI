@@ -40,11 +40,11 @@
 	--select-tit-bg:#2e2e2e;
 
 	/*button*/
-	--primary-button: #3182f6; /*button-bg-primary, button-line-primary*/
-	--grey08-button: #666666;/*button-text*/
-	--grey07-button:#808080;
-	--grey01-button:#fafafc;
-	--grey00-button:#ffffff;
+	--button-primary: #3182f6; /*button-bg-primary, button-line-primary*/
+	--button-txt: #666666;/*button-text*/
+	--button-line:#808080;
+	--button-active:#fafafc;
+	--button-bg:#ffffff;
 
 	/* text size */
 	--text-xxl: 6.4rem;
@@ -98,11 +98,11 @@
 	--select-tit-bg:#000;
 
 	/*button*/
-	--primary-button: #3182f6; 	/*button-bg-primary, button-line-primary*/
-	--grey08-button: #ffffff;	/*button-text*/
-	--grey07-button:#313131;
-	--grey01-button:#d8d8d8;
-	--grey00-button:#161616;
+	--button-primary: #3182f6; 	/*button-bg-primary, button-line-primary*/
+	--button-txt: #ffffff;	/*button-text*/
+	--button-line:#757575;
+	--button-active:#000;
+	--button-bg:#161616;
 
 	/* etc */
 	--shadow: rgba(0,0,0,0.1);

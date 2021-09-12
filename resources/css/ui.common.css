@@ -1497,11 +1497,11 @@ select.off:focus+.ui-select-btn:after {
 	justify-content: center;
 	padding: 0 1rem;
 	min-height: 4rem;
-	border: 1px solid var(--grey07-button);
+	border: 1px solid var(--button-line);
 	font-size: var(--text-s);
 	font-weight: 400;
-	background: var(--grey00-button);
-	color: var(--grey08-button);
+	background: var(--button-bg);
+	color: var(--button-txt);
 	text-decoration: none;
 	line-height: 1;
 	vertical-align: top;
@@ -1523,14 +1523,13 @@ a[class*="btn-base"] {
 
 [class*="btn-base"]:hover,
 [class*="btn-base"]:focus {
-	border: 1px solid var(--grey07-button);
-	background: var(--grey01-button);
+	border: 1px solid var(--button-txt);
+	background: var(--button-active);
 }
 
 [class*="btn-base"].disabled,
 [class*="btn-base"]:disabled {
-	opacity: 0.7;
-	border: 1px solid var(--grey04-button);
+	opacity: 0.5;
 	box-shadow: none;
 	cursor: default;
 }
@@ -1538,8 +1537,7 @@ a[class*="btn-base"] {
 [class*="btn-base"].disabled:hover,
 [class*="btn-base"].disabled:focus [class*="btn-base"]:disabled:hover,
 [class*="btn-base"]:disabled:focus {
-	border-color: var(--grey04-button);
-	background: inherit;
+	background: var(--button-bg);
 }
 
 /* base size */
@@ -1592,8 +1590,8 @@ a.btn-base-l {
 
 [class*="btn-base"].primary {
 	border: 0;
-	background-color: var(--primary-button);
-	color: var(--grey01-button);
+	background-color: var(--button-primary);
+	color: var(--button-active);
 }
 
 [class*="btn-base"].text.primary {
@@ -1642,7 +1640,7 @@ a.btn-base-l {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: var(--primary);
+	color: var(--grey09);
 	font-size: 3rem;
 	width: 3rem;
 	height: 3rem;
@@ -1654,7 +1652,7 @@ a.btn-base-l {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: var(--primary);
+	color: var(--grey09);
 	font-size: 3rem;
 	width: 2rem;
 	height: 3rem;
