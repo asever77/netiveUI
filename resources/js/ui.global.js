@@ -3444,8 +3444,6 @@ if (!Object.keys){
 			function act(v) {
 				const isDown = !(v === 'down');
 
-				
-
 				//set up close
 				if (!!autoclose) {
 					for (let wrap of el_wraps) {
@@ -3473,6 +3471,10 @@ if (!Object.keys){
 							_btn.dataset.selected = isDown;
 							_btn.setAttribute('aria-expanded', isDown);
 							_pnl.setAttribute('aria-hidden', !isDown);
+							Global.parts.toggleSlide({
+								el: _pnl, 
+								state: !isDown ? 'show' : 'hide'
+							});
 						}
 					}
 				} else {
