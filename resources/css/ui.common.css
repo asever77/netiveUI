@@ -2128,7 +2128,7 @@ a.btn-base-l {
 [class*="bul-"]>dd,
 [class*="bul-"]:not(ul):not(ol):not(dl):not(.bul-wrap) {
 	position: relative;
-	margin-top: .5rem;
+	margin-top: .2rem;
 	padding-left: 0;
 	display: flex;
 	line-height: 1.6;
@@ -2247,7 +2247,7 @@ dl.bul-num dd::before,
 }
 
 dl.bul-num dd {
-	padding: 1rem 0 .5rem;
+	padding: 1.2rem 0 .4rem;
 }
 
 dl.bul-num dd+dd {
