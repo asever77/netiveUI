@@ -4616,7 +4616,7 @@ if (!Object.keys){
 			const align = opt.align;
 			const el_tab = doc.querySelector('#' + id);
 			const el_btnwrap = el_tab.querySelector(':scope > .ui-tab-btns');
-			const $wrap = el_btnwrap.querySelector(':scope > .btn-wrap');
+			const el_wrap = el_btnwrap.querySelector(':scope > .btn-wrap');
 			const el_btns = el_btnwrap.querySelectorAll('.ui-tab-btn');
 			const el_pnlwrap = el_tab.querySelector(':scope > .ui-tab-pnls');
 			const el_pnls = el_pnlwrap.querySelectorAll(':scope > .ui-tab-pnl');
@@ -4650,10 +4650,6 @@ if (!Object.keys){
 			//set up
 			!!effect && el_tab.classList.add(effect);
 			el_btnwrap.setAttribute('role','tablist');
-
-			//el_tab.data('opt', opt);
-			//el_pnls.setAttribute('role','tabpanel');
-			//var ps_l = [];
 
 			//setting
 			for (let i = 0, len = el_btns.length; i < len; i++) {
@@ -4711,23 +4707,23 @@ if (!Object.keys){
 				i === 0 && el_btn.setAttribute('tab-first', true);
 				i === len - 1 && el_btn.setAttribute('tab-last', true);
 
+				if (isCurrent) {
+					Global.scroll.move({ 
+						selector: el_btnwrap, 
+						left: el_btn.getBoundingClientRect().left + el_btnwrap.scrollLeft, 
+						add : 0,
+						align: align 
+					});
+				}
+
+
 				el_btn.addEventListener('click',evtClick);
 				el_btn.addEventListener('keydown',evtKeys);
 
 			}
 
 			callback && callback(opt);
-			//console.log(ps_l);
-			//el_btn.dataset.psl = ps_l;
-			//el_btn.dataset.len = len;
 			
-			// Global.scroll.move({ 
-			// 	top: 100, 
-			// 	target: el_btnwrap,
-			// 	effect: 'auto', 
-			// 	align: align
-			// });
-
 			//event
 			function evtClick(e) {
 				Global.tab.toggle({ 
@@ -4795,18 +4791,13 @@ if (!Object.keys){
 			const el_btn = el_btnwrap.querySelectorAll('.ui-tab-btn');
 			const el_pnlwrap = el_tab.querySelector(':scope > .ui-tab-pnls');
 			const el_pnls = el_pnlwrap.querySelectorAll(':scope > .ui-tab-pnl');
-			var $target = el_btnwrap;
-			
-			// var ps_l = el_btn.data('psl');
-
 			const current = isNaN(opt.current) ? 0 : opt.current;
 			const onePanel = opt.onePanel;
 			const align = opt.align;
-
 			const el_current = el_btnwrap.querySelector('.ui-tab-btn[data-n="'+ current +'"]');
 			const el_pnlcurrent = el_pnlwrap.querySelector('.ui-tab-pnl[data-tab="'+ current +'"]');
 			const btnId = el_current.id;
-			const el_scroll = el_btnwrap.querySelector(':scope > .ui-scrollbar-item');
+			let el_scroll = el_btnwrap.querySelector(':scope > .ui-scrollbar-item');
 
 			for(let that of el_btn) {
 				that.classList.remove('selected');
@@ -4814,14 +4805,17 @@ if (!Object.keys){
 			
 			el_current.classList.add('selected')
 			el_current.focus();
-		
-			
-			// Global.scroll.move({ 
-			// 	left: el_current.getBoundingClientRect().left, 
-			// 	add : el_current.offsetWidth,
-			// 	selector: el_scroll, 
-			// 	align: align 
-			// });
+
+			if (!el_scroll) {
+				el_scroll = el_btnwrap;
+			}
+
+			Global.scroll.move({ 
+				selector: el_btnwrap, 
+				left: el_current.getBoundingClientRect().left + el_scroll.scrollLeft, 
+				add : 0,
+				align: align 
+			});
 
 			if (!onePanel) {
 				for (let that of el_pnls) {
@@ -4846,6 +4840,7 @@ if (!Object.keys){
 			
 
 			Global.ajax.init({
+				area: document.querySelector('#projectList'),
 				url: opt.url, 
 				page: false, 
 				callback: callback 
@@ -5251,93 +5246,25 @@ if (!Object.keys){
 	/* 작업필요 */
 	Global.count = {
 		step: function(opt) {
-			var $base = $('#' + opt.id),
-				countNum = !!opt.value === true ? opt.value : $base.text(),
-				base_h = $base.outerHeight(),
-				textNum = 0,
-				len = countNum.toString().length,
-				speed = !!opt.speed === true ? opt.speed + 's' : '1.0s',
-				eff  = !!opt.eff === true ? opt.eff : 'easeOutQuart',
-				transitionEnd = 'transitionend webkitTransitionEnd oTransitionEnd otransitionend',
-				i = 0,
-				step, 
-				// re, 
-				timer, 
-				r;
-				
-			if ($base.data('ing') !== true) {
-				textNum = Global.parts.comma(countNum);
-				base_h === 0 ? base_h = $base.text('0').outerHeight() : '';
-				$base.data('ing',true).empty().css('height', base_h);
-				len = textNum.length;
-				step = len;
-				// re = Math.ceil(len / 9); 
-				(step < 9) ? step = 9 - len : step = 1;	
+			const el = doc.querySelector('#' + opt.id);
+			const countNum = !!opt.value === true ? opt.value : el.textContent;
 
-				// 숫자 단위만큼 
-				for (i; i < len; i++) {
-					var n = Number(textNum.substr(i, 1)),
-						$thisNum, $base_div;
-					
-					if (isNaN(n)) {
-						// 숫자가 아닐때 ', . ' 
-						$base.append('<div class="n' + i + '"><div class="ui-count-og" style="top:' + base_h + 'px">' + textNum.substr(i, 1) + '</div></div>');
-						$base.find('.n' + i).append('<span>' + textNum.substr(i, 1) + '</span>');
-					}
-					else {
-						// 숫자일때
-						$base.append('<div class="n' + i + '"><div class="ui-count-og" style="top:' + base_h + 'px">' + n + '</div></div>');
-						$base.find('.n' + i).append('<span>9<br>8<br>7<br>6<br>5<br>4<br>3<br>2<br>1<br>0<br>' + n + '</span>');
-						step = step + 1;
-					}
-					
-					$base_div = $base.children('.n' + i);
-					$base_div.find('span').wrapAll('<div class="ui-count-num" style="top:' + base_h + 'px; transition:top '+ speed +' cubic-bezier(' + Global.state.effect[eff] + ');"></div>');
-					$thisNum = $base_div.find('.ui-count-num');
-					$thisNum.data('height', $thisNum.height()); 
-				}
-
-				r = len;
-				timer = setInterval(function() {
-					count(r)
-					r = r - 1; 
-					(r < 0) ? clearInterval(timer) : '';
-				},150);
-				
-				
-			}
-			function count(r){
-				var $current_num = $base.children('.n' + r).find('.ui-count-num'),
-					num_h = Number($current_num.data('height'));
-				$current_num.css('top', (num_h - base_h) * -1); 
-				
-				if (r === 0) {
-					$current_num.one(transitionEnd, function(){
-						$base.text(textNum).data('ing', false);
-					});
-				}
-			}
-		},
-		slot: function(opt) {
-			var $base = $('#' + opt.id);
-			var countNum = !!opt.value === true ? opt.value : $base.text();
-
-			var count = 0,
-				timer, diff, counter,
-				add = Math.ceil((countNum - count) / (countNum - count), -2),
-				j = 1,
-				v = 0,
-				s = 100;
+			let count = 0;
+			let timer, diff, counter;
+			let add = Math.ceil((countNum - count) / (countNum - count), -2);
+			let j = 1;
+			let v = 0;
+			let s = 100;
 			
-			if ($base.data('ing') !== true) {
+			if (el.dataset.ing !== 'true') {
 				counter = function(){
-					j = v < 10? j = 0 : v < 10 ? j + 11 : v < 40 ? j +111 : v < 70 ? j + 1111 : j + 11111;
+					j = v < 10 ? j = 0 : v < 10 ? j + 11 : v < 40 ? j + 111 : v < 70 ? j + 1111 : j + 11111;
 					s = s < 0 ? s = 0 : s - 10;
 					diff = countNum - count;
 					(diff > 0) ? count += add + j : '';
 
-					var n = Global.parts.comma(count);
-					$base.text(n);
+					const n = Global.parts.comma(count);
+					el.textContent = n;
 					v = v + 1;
 
 					if(count < countNum) {
@@ -5345,7 +5272,7 @@ if (!Object.keys){
 							counter(); 
 						}, s);
 					} else {
-						$base.text(Global.parts.comma(countNum));
+						el.textContent = Global.parts.comma(countNum);
 						clearTimeout(timer);
 					}
 				}
