@@ -581,16 +581,15 @@
         //     callback:tabCallback 
         // });
 
-
-        netive.tab.init({ 
-            id:'exeTab4', 
-            current:0, 
-            onePanel:true,
-            callback:tabCallback2 
-        });
-        
         function tabCallback(v){
-            //console.log(v);
+            if (v.current === 1) {
+                netive.tab.init({ 
+                    id:'exeTab4', 
+                    current:5, 
+                    onePanel:true,
+                    callback:tabCallback2 
+                });
+            }
         }
         function tabCallback2(v){
             $('#'+ v.id).find('.ui-tab-tit').text($('#'+ v.id).find('.ui-tab-btn').eq(v.current).text());
