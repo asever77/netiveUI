@@ -19,9 +19,11 @@
 	<div>
 		<dt>if, for 구문등 {...}안에 함수작성 시 오류 발생</dt>
 		<dd>
-			<p>자바스크립트에서 'use strict' 모드일때 if, for 구문안에 함수를 작성하면 ie에서 오류 체크 됨. 함수는 구문 안에 작성안함.</p>
-			<div class="list-memory-tag">
-				<em>#자바스크립트</em> <em>#구문 오류</em>
+			<div>
+				<p>자바스크립트에서 'use strict' 모드일때 if, for 구문안에 함수를 작성하면 ie에서 오류 체크 됨. 함수는 구문 안에 작성안함.</p>
+				<div class="list-memory-tag">
+					<em>#자바스크립트</em> <em>#구문 오류</em>
+				</div>
 			</div>
 		</dd>
 	</div>
@@ -29,9 +31,11 @@
 	<div>
 		<dt>ie8에서 aria로 선택한 스크립트 변경사항을 바로 체크 못함</dt>
 		<dd>
-			<p>class로 같이 설정하여 변경해줘서 해결</p>
-			<div class="list-memory-tag">
-				<em>#ie8</em> <em>#aria</em> <em>#자바스크립트</em>
+			<div>
+				<p>class로 같이 설정하여 변경해줘서 해결</p>
+				<div class="list-memory-tag">
+					<em>#ie8</em> <em>#aria</em> <em>#자바스크립트</em>
+				</div>
 			</div>
 		</dd>
 	</div>
@@ -39,10 +43,16 @@
 	<div>
 		<dt>아이프레임 안에 있는 전화번호 터치 시 IOS에서는 동작안하는 증상</dt>
 		<dd>
-			<p>아이프레임으로 인한 문제 발생으로 터치 시 부모창의 로케이션 링크값으로 해결<br>
-			예) window.parent.loacation.href='tel:021234567';</p>
-			<div class="list-memory-tag">
-				<em>#ios</em> <em>#tel</em> <em>#iframe</em>
+			<div>
+				<p>아이프레임으로 인한 문제 발생으로 터치 시 부모창의 로케이션 링크값으로 해결</p>
+				<div class="bul-etc" data-bullet="예)">
+					<div>
+						window.parent.loacation.href='tel:021234567';
+					</div>
+				</div>
+				<div class="list-memory-tag">
+					<em>#ios</em> <em>#tel</em> <em>#iframe</em>
+				</div>
 			</div>
 		</dd>
 	</div>
@@ -50,9 +60,11 @@
 	<div>
 		<dt>z-index 값을 명확히 기입하자.</dt>
 		<dd>
-			<p>모바일환경에서 동작 시 값이 없는 경우 잔상이 생기는 경우가 있다.</p>
-			<div class="list-memory-tag">
-				<em>#모바일</em> <em>#z-index</em> <em>#잔상</em>
+			<div>
+				<p>모바일환경에서 동작 시 값이 없는 경우 잔상이 생기는 경우가 있다.</p>
+				<div class="list-memory-tag">
+					<em>#모바일</em> <em>#z-index</em> <em>#잔상</em>
+				</div>
 			</div>
 		</dd>
 	</div>
@@ -60,9 +72,11 @@
 	<div>
 		<dt>파이어폭스 버튼 여백 생기는 문제발생 시</dt>
 		<dd>
-			<p>button::-moz-focus-inner{padding:0l birder:0}</p>
-			<div class="list-memory-tag">
-				<em>#파이어폭스</em> <em>#버튼</em> <em>#여백</em>
+			<div>
+				<p>button::-moz-focus-inner{padding:0; border:0}</p>
+				<div class="list-memory-tag">
+					<em>#파이어폭스</em> <em>#버튼</em> <em>#여백</em>
+				</div>
 			</div>
 		</dd>
 	</div>
@@ -70,10 +84,12 @@
 	<div>
 		<dt>[class^="name"].classname</dt>
 		<dd>
-			<p>html에서 정의된 class의 순서와 다르면 적용이 안되는 문제가 있다.<br>
-			[class^="name"] 대신 [class*="name"] 로 하면 해결이 된다.</p>
-			<div class="list-memory-tag">
-				<em>#class</em> <em>#^=</em> <em>#순서</em>
+			<div>
+				<p>html에서 정의된 class의 순서와 다르면 적용이 안되는 문제가 있다.<br>
+				[class^="name"] 대신 [class*="name"] 로 하면 해결이 된다.</p>
+				<div class="list-memory-tag">
+					<em>#class</em> <em>#^=</em> <em>#순서</em>
+				</div>
 			</div>
 		</dd>
 	</div>
@@ -81,9 +97,11 @@
 	<div>
 		<dt>IE에서 개발자모드 오류날때</dt>
 		<dd>
-			<p>IE11-Windows6.1-KB2987107-x64 를 설치하면 된다.</p>
-			<div class="list-memory-tag">
-				<em>#ie</em> <em>#개발자모드</em>
+			<div>
+				<p>IE11-Windows6.1-KB2987107-x64 를 설치하면 된다.</p>
+				<div class="list-memory-tag">
+					<em>#ie</em> <em>#개발자모드</em>
+				</div>
 			</div>
 		</dd>
 	</div>
@@ -91,12 +109,14 @@
 	<div>
 		<dt>IOS voiceOver 사용시 포커스 이동</dt>
 		<dd>
-			<p>
-				voiceover 사용 시 강제로 이동시키는 포커스 이동이 안되는 경우가 생기는 현상.<br>
-				<strong>기본적인 a, button, input, h1.. 태그같은 포커스를 받는 요소로 이동 시켜야하며 자식이 없는 위치여야한다. 예를 들어 div에 tabindex를 줘서 하는 이동은 ios에서 제대로 이동하지 않는다.</strong><br>
-				<a href="https://github.com/humaan/Modaal/issues/99" target="_blank">https://github.com/humaan/Modaal/issues/99</a></p>
-			<div class="list-memory-tag">
-				<em>#ios</em> <em>#focus</em> <em>#포커스</em> <em>#voice over</em>
+			<div>
+				<p>
+					voiceover 사용 시 강제로 이동시키는 포커스 이동이 안되는 경우가 생기는 현상.<br>
+					<strong>기본적인 a, button, input, h1.. 태그같은 포커스를 받는 요소로 이동 시켜야하며 자식이 없는 위치여야한다. 예를 들어 div에 tabindex를 줘서 하는 이동은 ios에서 제대로 이동하지 않는다.</strong><br>
+					<a href="https://github.com/humaan/Modaal/issues/99" target="_blank">https://github.com/humaan/Modaal/issues/99</a></p>
+				<div class="list-memory-tag">
+					<em>#ios</em> <em>#focus</em> <em>#포커스</em> <em>#voice over</em>
+				</div>
 			</div>
 		</dd>
 	</div>
@@ -104,11 +124,13 @@
 	<div>
 		<dt>Mac Safari document.activeElement 오류</dt>
 		<dd>
-			<p>
-				Safari를 사용하는 Mac에서는 확인을 클릭해도 아무 효과가 없습니다. Safari에서 'body' 값으로 들어옴
-				<a href="https://stackoverflow.com/questions/46036196/document-activeelement-not-returning-the-active-element-in-safari" target="_blank">https://stackoverflow.com/questions/46036196/document-activeelement-not-returning-the-active-element-in-safari</a></p>
-			<div class="list-memory-tag">
-				<em>#ios</em> <em>#focus</em> <em>#포커스</em> <em>#activeElement</em> <em>#safari</em> <em>#mac</em>
+			<div>
+				<p>
+					Safari를 사용하는 Mac에서는 확인을 클릭해도 아무 효과가 없습니다. Safari에서 'body' 값으로 들어옴
+					<a href="https://stackoverflow.com/questions/46036196/document-activeelement-not-returning-the-active-element-in-safari" target="_blank">https://stackoverflow.com/questions/46036196/document-activeelement-not-returning-the-active-element-in-safari</a></p>
+				<div class="list-memory-tag">
+					<em>#ios</em> <em>#focus</em> <em>#포커스</em> <em>#activeElement</em> <em>#safari</em> <em>#mac</em>
+				</div>
 			</div>
 		</dd>
 	</div>
@@ -116,10 +138,12 @@
 	<div>
 		<dt>mouseleave와 mouseout의 차이</dt>
 		<dd>
-			<p>
-				두개의 차이를 알고 있으면 좋을거 같다. 자식 요소들까지 포함하느냐의 차이인데 mouseover/mouseout은 자식요소까지 포함한다. 반면에 moustenter/mouseleave는 자식요소를 제외한 자신의 영역만 해당한다.
-			<div class="list-memory-tag">
-				<em>#event</em> <em>#mouseleave</em> <em>#mouseout</em> <em>#mouseover</em> <em>#mouseenter</em> 
+			<div>
+				<p>
+					두개의 차이를 알고 있으면 좋을거 같다. 자식 요소들까지 포함하느냐의 차이인데 mouseover/mouseout은 자식요소까지 포함한다. 반면에 moustenter/mouseleave는 자식요소를 제외한 자신의 영역만 해당한다.
+				<div class="list-memory-tag">
+					<em>#event</em> <em>#mouseleave</em> <em>#mouseout</em> <em>#mouseover</em> <em>#mouseenter</em> 
+				</div>
 			</div>
 		</dd>
 	</div>
