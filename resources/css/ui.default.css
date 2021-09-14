@@ -3,17 +3,20 @@
 /* root */
 :root {
 	/* color system */
-	--gray10:#000000;
-	--gray09:#2e2e2e;	/*헤드라인 텍스트*/
-	--gray08:#666666;	/*본문 텍스트, button-text*/
-	--gray07:#808080;	/*서브 텍스트, label, button-line*/
-	--gray06:#a1a1a1;	/*disabled 텍스트, input-placeholder, table-line[dark]*/
-	--gray05:#bebebe;	/*input-bg-acitve*/
-	--gray04:#e0e0e0;	/*box-line[dark]*/
-	--gray03:#eeeeee;	/*box-line, input-line, table-line*/
-	--gray02:#f6f6f6;	/*table-thead-th-bg*/
-	--gray01:#fafafa;	/*box-bg[dark], table-tbody-th-bg, button-text-primary*/
-	--gray00:#ffffff;	/*input-bg, box-bg, table-td-bg, button-bg*/
+	--black:#000000;
+
+	--gray900:#212121;	/*헤드라인 텍스트*/
+	--gray800:#424242;	/*본문 텍스트, button-text*/
+	--gray700:#616161;	/*서브 텍스트, label, button-line*/
+	--gray600:#757575;	/*disabled 텍스트, input-placeholder, table-line[dark]*/
+	--gray500:#9E9E9E;	/*input-bg-acitve*/
+	--gray400:#BDBDBD;	
+	--gray300:#E0E0E0;	/*box-line[dark]*/
+	--gray200:#EEEEEE;	/*box-line, input-line, table-line*/
+	--gray100:#F5F5F5;	/*table-thead-th-bg*/
+	--gray50:#FAFAFA;	/*box-bg[dark], table-tbody-th-bg, button-text-primary*/
+
+	--white:#ffffff;	/*input-bg, box-bg, table-td-bg, button-bg*/
 	
 	--primary: #6200ee; 	/*button-bg-primary, button-line-primary*/
 	--secondary: #03dac6;
@@ -22,28 +25,28 @@
 	--link: #6296df;
 
 	/*table*/
-	--gray06-table:#a1a1a1;	/*table-line[dark]*/
-	--gray03-table:#eeeeee;	/*table-line*/
-	--gray02-table:#f6f6f6;	/*table-thead-th-bg*/
-	--gray01-table:#fafafa;	/*table-tbody-th-bg*/
-	--gray00-table:#ffffff;	/*table-td-bg*/
+	--gray600-table:#757575;	/*table-line[dark]*/
+	--gray200-table:#EEEEEE;	/*table-line*/
+	--gray100-table:#F5F5F5;	/*table-thead-th-bg*/
+	--gray50-table:#FAFAFA;	/*table-tbody-th-bg*/
+	--white-table:#ffffff;	/*table-td-bg*/
 
 	/*selectbox*/
-	--select-line:#2e2e2e;
+	--select-line:#212121;
 	--select-bg:#fff;
-	--select-opt:#2e2e2e;
+	--select-opt:#212121;
 	--select-opt-bg:#fff;
-	--select-opt-line:#f6f6f6;
-	--select-current-bg:#eeeeee;
+	--select-opt-line:#F5F5F5;
+	--select-current-bg:#EEEEEE;
 	--select-current:#000;
 	--select-tit:#fff;	
-	--select-tit-bg:#2e2e2e;
+	--select-tit-bg:#212121;
 
 	/*button*/
 	--button-primary: #3182f6; /*button-bg-primary, button-line-primary*/
-	--button-txt: #666666;/*button-text*/
-	--button-line:#808080;
-	--button-active:#fafafa;
+	--button-txt: #424242;/*button-text*/
+	--button-line:#616161;
+	--button-active:#FAFAFA;
 	--button-bg:#ffffff;
 
 	/* text size */
@@ -61,17 +64,17 @@
 
 :root.dark-mode {
 	/* color system */
-	--gray10:#ffffff;
-	--gray09:#fafafa;	/*헤드라인 텍스트*/
-	--gray08:#f6f6f6;	/*본문 텍스트, button-text*/
-	--gray07:#eeeeee;	/*서브 텍스트, label, button-line*/
-	--gray06:#e0e0e0;	/*disabled 텍스트, input-placeholder, table-line[dark]*/
-	--gray05:#bebebe;	/*input-bg-acitve*/
-	--gray04:#a1a1a1;	/*box-line[dark]*/
-	--gray03:#808080;	/*box-line, input-line, table-line*/
-	--gray02:#666666;	/*table-thead-th-bg*/
-	--gray01:#2e2e2e;	/*box-bg[dark], table-tbody-th-bg, button-text-primary*/
-	--gray00:#161616;	/*input-bg, box-bg, table-td-bg, button-bg*/
+	--black:#ffffff;
+	--gray900:#FAFAFA;	/*헤드라인 텍스트*/
+	--gray800:#F5F5F5;	/*본문 텍스트, button-text*/
+	--gray700:#EEEEEE;	/*서브 텍스트, label, button-line*/
+	--gray600:#E0E0E0;	/*disabled 텍스트, input-placeholder, table-line[dark]*/
+	--gray500:#9E9E9E;	/*input-bg-acitve*/
+	--gray300:#757575;	/*box-line[dark]*/
+	--gray200:#616161;	/*box-line, input-line, table-line*/
+	--gray100:#424242;	/*table-thead-th-bg*/
+	--gray50:#212121;	/*box-bg[dark], table-tbody-th-bg, button-text-primary*/
+	--white:#161616;	/*input-bg, box-bg, table-td-bg, button-bg*/
 	
 	--primary: #3182f6; /*button-bg-primary, button-line-primary*/
 	--secondary: #00a661;
@@ -80,17 +83,17 @@
 	--link: #6296df;
 
 	/*table*/
-	--gray06-table:#dadada;
-	--gray03-table:#535353;	/*table-line*/
-	--gray02-table:#242424;	/*table-thead-th-bg*/
-	--gray01-table:#272727;	/*table-tbody-th-bg*/
-	--gray00-table:#161616;	/*table-td-bg, button-bg*/
+	--gray600-table:#dadada;
+	--gray200-table:#535353;	/*table-line*/
+	--gray100-table:#242424;	/*table-thead-th-bg*/
+	--gray50-table:#272727;	/*table-tbody-th-bg*/
+	--white-table:#161616;	/*table-td-bg, button-bg*/
 
 	/*selectbox*/
 	--select-line:#fff;
-	--select-bg:#2e2e2e;
-	--select-opt:#f6f6f6;
-	--select-opt-bg:#2e2e2e;
+	--select-bg:#212121;
+	--select-opt:#F5F5F5;
+	--select-opt-bg:#212121;
 	--select-opt-line:#757575;
 	--select-current-bg:#000;
 	--select-current:#fff;
