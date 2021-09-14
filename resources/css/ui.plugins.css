@@ -544,7 +544,7 @@
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    background: var(--grey02);
+    background: var(--gray02);
 }
 
 .ui-loading.orbit .ui-loading-wrap:before {
@@ -556,7 +556,7 @@
     border-radius: 50%;
     width: 20px;
     height: 20px;
-    background: var(--grey09);
+    background: var(--gray09);
 }
 
 .ui-loading.orbit .ui-loading-wrap:after {
@@ -1072,7 +1072,7 @@ a.ui-acco-btn:after {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 1;
-    background: var(--grey00);
+    background: var(--gray00);
     margin: 2rem;
 }
 
@@ -1215,16 +1215,16 @@ a.ui-acco-btn:after {
     left: 0;
     width: 100%;
     min-height: 4rem;
-    background: var(--grey09);
+    background: var(--gray09);
 
     padding: .8rem 3.5rem 1.2rem 1.6rem;
-    border-bottom: 1px solid var(--grey03);
+    border-bottom: 1px solid var(--gray03);
 }
 
 .ui-modal-header h1 {
     font-size: var(--text-m);
     font-weight: 500;
-    color: var(--grey00);
+    color: var(--gray00);
 }
 
 .ui-modal-header .btn-close {
@@ -1420,7 +1420,7 @@ a.ui-acco-btn:after {
     width: .6rem;
     margin: 0;
     height: 2rem;
-    background: var(--grey00);
+    background: var(--gray00);
     opacity: 0.5;
     border-radius: .2rem;
 }
@@ -1432,7 +1432,7 @@ a.ui-acco-btn:after {
     width: 2rem;
     margin: 0;
     height: 6px;
-    background: var(--grey08);
+    background: var(--gray08);
     opacity: 1;
     border-radius: .2rem;
     opacity: 0.5;
@@ -1928,12 +1928,12 @@ button.ui-tooltip-btn:after {
     height: 3rem;
     line-height: 1;
     margin: 0 auto;
-    color: var(--grey08);
+    color: var(--gray08);
     text-align: center;
 }
 
 .tbl-datepicker td span {
-    color: var(--grey06);
+    color: var(--gray06);
     cursor: default;
     opacity: 0.5
 }
@@ -2075,7 +2075,7 @@ td.on-end {
 }
 
 td button.today {
-    color: var(--grey09);
+    color: var(--gray09);
 }
 
 .datepicker-foot {
@@ -2240,7 +2240,7 @@ td button.today {
 .device-mobile .tbl-datepicker-head {
     width: 100%;
     text-align: left;
-    font-size: var(--grey08);
+    font-size: var(--gray08);
     font-weight: 500;
     padding: 5px 13px 3px;
 }
