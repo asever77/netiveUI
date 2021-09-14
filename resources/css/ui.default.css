@@ -69,12 +69,13 @@
 	--gray800:#F5F5F5;	/*본문 텍스트, button-text*/
 	--gray700:#EEEEEE;	/*서브 텍스트, label, button-line*/
 	--gray600:#E0E0E0;	/*disabled 텍스트, input-placeholder, table-line[dark]*/
-	--gray500:#9E9E9E;	/*input-bg-acitve*/
+	--gray500:#BDBDBD;	/*input-bg-acitve*/
+	--gray400:#9E9E9E;	
 	--gray300:#757575;	/*box-line[dark]*/
 	--gray200:#616161;	/*box-line, input-line, table-line*/
 	--gray100:#424242;	/*table-thead-th-bg*/
 	--gray50:#212121;	/*box-bg[dark], table-tbody-th-bg, button-text-primary*/
-	--white:#161616;	/*input-bg, box-bg, table-td-bg, button-bg*/
+	--white:#000;	/*input-bg, box-bg, table-td-bg, button-bg*/
 	
 	--primary: #3182f6; /*button-bg-primary, button-line-primary*/
 	--secondary: #00a661;
