@@ -126,11 +126,11 @@
 }
 :root.ui-m {
 	/* text size */
-	--text-xxl: 4rem;
-	--text-xl: 3.2rem;
-	--text-l: 2.4rem;
-	--text-m: 1.6rem;
-	--text-s: 1.4rem;
+	--text-xxl: 3.2rem;
+	--text-xl: 2.2rem;
+	--text-l: 1.8rem;
+	--text-m: 1.4rem;
+	--text-s: 1.3rem;
 	--text-xs: 1.2rem;
 	--text-xxs: 1.1rem;
 
