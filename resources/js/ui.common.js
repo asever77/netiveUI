@@ -152,6 +152,11 @@
 			} 
 
 			netive.ajax.init({ 
+				area: document.querySelector('.base-skip'), 
+				url:'/netiveUI/html/inc/skip.html', 
+				page:true
+			});
+			netive.ajax.init({ 
 				area: document.querySelector('.base-header'), 
 				url:'/netiveUI/html/inc/header.html', 
 				page:true, 
