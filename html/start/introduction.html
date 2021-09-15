@@ -30,26 +30,20 @@
 	&lt;body&gt;
 		&lt;div class="base-skip"&gt;&lt;/div&gt;
 		&lt;div class="base-wrap"&gt;
-			&lt;header class="base-header"&gt;
-				// 
-			&lt;/header&gt;
+			&lt;header class="base-header"&gt;&lt;/header&gt;
 			&lt;div class="base-body"&gt;
-				&lt;aside class="base-aside"&gt;
-					// 사이드 영역 
-				&lt;/aside&gt;
-				&lt;main class="base-main"&gt;
-					// 콘텐츠 영역
-				&lt;/main&gt;
+				&lt;aside class="base-aside"&gt;&lt;/aside&gt;
+				&lt;main class="base-main"&gt;&lt;/main&gt;
 			&lt;/div&gt;
 			&lt;footer class="base-footer"&gt;&lt;/footer&gt;
 		&lt;/div&gt;
 		
 		&lt;script&gt;
-		;(function($, win, doc, undefined) {
-			$(doc).ready(function(){
-				// 스크립트영역  
+		;(function(win, doc, undefined) {
+			document.addEventListener("DOMContentLoaded", function(){
+				여기에 실행할 내용 입력
 			});
-		})(jQuery, window, document);
+		})(window, document);
 		&lt;/script&gt;
 	&lt;/body&gt;
 &lt;/html&gt;
@@ -58,15 +52,15 @@
 
 <section class="sec-wrap">
 	<h2 class="h-2">Z-index</h2>
-	<p>z-index를 3가지 Level로 나눈다.</p>
+	<p>체계적인 z-index를 구성하기 위해 크게 3가지 Level로 나눈다.</p>
 
 	<div class="tbl-base type-zindex">
 		<table>
 			<caption>옵션 설명</caption>
 			<colgroup>
-				<col>
-				<col>
-				<col>
+				<col style="width: 5rem;">
+				<col style="width: 8rem;">
+				<col style="width: 6rem;">
 				<col>
 			</colgroup>
 			<thead>
@@ -80,17 +74,17 @@
 			<tbody>
 				<tr>
 					<th scope="rowgroup" rowspan="3">A</th>
-					<th scope="row">.base-skip</th>
+					<th scope="row" class="ta-l">.base-skip</th>
 					<td>2</td>
 					<td>skip navigation</td>
 				</tr>
 				<tr>
-					<th scope="row">.base-wrap</th>
+					<th scope="row" class="ta-l">.base-wrap</th>
 					<td>0</td>
 					<td>base content</td>
 				</tr>
 				<tr>
-					<th scope="row">.ui-modal</th>
+					<th scope="row" class="ta-l">.ui-modal</th>
 					<td>300 ~ </td>
 					<td>modal content</td>
 				</tr>
@@ -99,7 +93,7 @@
 			<tbody>
 				<tr>
 					<th scope="rowgroup">B</th>
-					<th scope="row">.ui-drop-pnl</th>
+					<th scope="row" class="ta-l">.ui-drop-pnl</th>
 					<td>200</td>
 					<td>dropdown content</td>
 				</tr>
@@ -108,7 +102,7 @@
 			<tbody>
 				<tr>
 					<th scope="rowgroup">C</th>
-					<th scope="row">.ui-tooltip</th>
+					<th scope="row" class="ta-l">.ui-tooltip</th>
 					<td>100</td>
 					<td>tooltip content</td>
 				</tr>
