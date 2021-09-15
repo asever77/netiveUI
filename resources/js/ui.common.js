@@ -1,4 +1,4 @@
-;(function($, win, doc, undefined) {
+;(function(win, doc, undefined) {
 
 	'use strict';
 	
@@ -168,15 +168,8 @@
 				page: true, 
 				effect: true,
 				callback: function(){
-					//$(win).off('scroll.win');
 					netive.common.pageInit(fristHref);
 					netive.common.settingAside();
- 					
-					// $(doc).find('.base-wrap').find('button, a').on('click', function(){
-					// 	var $this = $(this); 
-					// 	(!$this.closest('.ui-modal').length || $this.hasClass('.ui-modal')) && $('body').data('active', $this);
-					// });
-					
 				}
 			});
 
@@ -186,10 +179,9 @@
 			netive.form.init();
 		},
 		gridSwitch: function(){
-			const $grid = $('.base-grid');
+			const el_grid = document.querySelector('.base-grid');
 
-			(!$grid.hasClass('on')) ? $grid.addClass('on') : $grid.removeClass('on');
-
+			el_grid.classList.toggle('on');
 		},
 		header: function(){
 			console.log('header load');
@@ -291,23 +283,32 @@
 		},
 
 		menuAjax: function(){
-			$('.dep-2-btn').off('click.ajax').on('click.ajax', function(){
-				var href = this.getAttribute('data-href');
-				!!$('body').hasClass('nav-open') && netive.common.toggleNav();
+			const dep2btns = doc.querySelectorAll('.dep-2-btn');
+
+			for (let that of dep2btns) {
+				that.addEventListener('click', act);
+			}
+
+			function act(e){
+				const el = this;
+				const elHref = el.getAttribute('data-href');
+				const el_body = doc.querySelector('body');
+
+				!!el_body.classList.contains('nav-open') && netive.common.toggleNav();
 
 				netive.ajax.init({ 
 					area: document.querySelector('.base-main'), 
-					url: href, 
+					url: elHref, 
 					page: true, 
 					effect: 'page-change',
-					callback: function(v){
+					callback: function(){
 						netive.scroll.move({ 
 							value:0, 
 							speed:0, 
-							focus:  doc.querySelector('.base-main h1')
+							focus: doc.querySelector('.base-main h1')
 						});
 						
-						netive.common.pageInit(href);
+						netive.common.pageInit(elHref);
 						netive.common.settingAside();
 						
 						// document.addEventListener('DOMContentLoaded', (event) => {
@@ -318,7 +319,9 @@
 						//   });
 					}
 				});
-			});
+			}
+
+
 
 			
 		},
@@ -339,38 +342,7 @@
 			switch(modalId) {
 				case 'modalID':
 					break;  
-
-					
 			}
 		}
 	}
-   
-	// $(doc).ready(function() {
-	//	 var timer,
-	//		 n = 0;
-
-	//	 pageCodeIs();
-		
-	//	 function pageCodeIs(){
-	//		 console.log('common.js ready?')
-	//		 if (netive.common.pageid === undefined && n < 10) {
-	//			 n = n + 1;
-	//			 delayExe();
-	//		 } else {
-	//			 console.log('common.js ok')
-	//			 clearTimeout(timer);
-	//			 netive.common.init();
-	//			 $('body').stop().animate({
-	//				 opacity:1
-	//			 }, 150);
-	//		 }
-	//	 }
-	//	 function delayExe(){
-	//		 clearTimeout(timer);
-	//		 timer = setTimeout(function() {
-	//			 console.log('common.js no')
-	//			 pageCodeIs();
-	//		 }, 0);
-	//	 }
-	// });
-})(jQuery, window, document);
+})(window, document);
