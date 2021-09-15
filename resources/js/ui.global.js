@@ -88,7 +88,7 @@ if (!Object.keys){
 }
 
 //utils module
-;(function ($, win, doc, undefined) {
+;(function (win, doc, undefined) {
 
 	'use strict';
 
@@ -2970,8 +2970,6 @@ if (!Object.keys){
 			}
 
 			function optConfirm(e) {
-				var $this = $(this);
-
 				const el_confirm = e.currentTarget;
 				const el_uiSelect = el_confirm.closest('.ui-select');
 				const el_body = doc.querySelector('body');
@@ -5653,4 +5651,4 @@ if (!Object.keys){
 	}
 	
 
-})(jQuery, window, document);
+})(window, document);
