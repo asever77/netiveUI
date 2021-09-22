@@ -235,6 +235,23 @@ select::-ms-expand {
 	z-index: 0;
 }
 
+.skip {
+	width:100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 5rem;
+	background-color: var(--gray700);
+	color:var(--gray50);
+	width:100%;
+	position: fixed;
+	left:0;
+	top:-5rem;
+}
+.skip:focus {
+	top:0;
+}
+
 
 /* gap */
 .pdt-n {
