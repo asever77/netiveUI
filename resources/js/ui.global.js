@@ -696,7 +696,7 @@ if (!Object.keys){
 				const areaH = isWin ? window.innerHeight : el_area.offsetHeight;
 				const areaT = isWin ? Math.floor(window.scrollY) : Math.floor(el_area.scrollTop);
 				const baseT = Math.floor(el_wraps[0].getBoundingClientRect().top);
-
+				
 				for (let el_wrap of el_wraps) {
 					const el_items = el_wrap.querySelectorAll('.ui-parallax-item');
 					const attrStart = el_wrap.dataset.start === undefined ? 0 : el_wrap.dataset.start;
@@ -711,7 +711,7 @@ if (!Object.keys){
 						start = (start + areaT) - (baseT + areaT);
 						end = (end + areaT) - (baseT + areaT);
 					}
-					
+
 					(areaT >= start - s) ? 
 						el_wrap.classList.add('parallax-s') : 
 						el_wrap.classList.remove('parallax-s');
