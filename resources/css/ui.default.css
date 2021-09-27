@@ -24,6 +24,9 @@
 	--success: #3182f6;
 	--link: #6296df;
 
+	/* modal */
+	--system-txt:#fff;
+
 	/*table*/
 	--gray600-table:#757575;	/*table-line[dark]*/
 	--gray200-table:#EEEEEE;	/*table-line*/
@@ -77,11 +80,14 @@
 	--gray50:#212121;	/*box-bg[dark], table-tbody-th-bg, button-text-primary*/
 	--white:#000;	/*input-bg, box-bg, table-td-bg, button-bg*/
 	
-	--primary: #3182f6; /*button-bg-primary, button-line-primary*/
+	--primary: #6200ee; /*button-bg-primary, button-line-primary*/
 	--secondary: #00a661;
 	--error: #f44336;
 	--success: #3182f6;
 	--link: #6296df;
+
+	/* modal */
+	--system-txt:#fff;
 
 	/*table*/
 	--gray600-table:#dadada;
