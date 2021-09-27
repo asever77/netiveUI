@@ -1210,6 +1210,8 @@ a.ui-acco-btn:after {
 .ui-modal.type-system .ui-modal-body,
 .ui-modal.type-system .ui-modal-footer {
     background: var(--primary);
+    color:var(--system-txt);
+    max-width:100% !important;
 }
 
 .ui-modal.type-system .ui-modal-wrap strong {
