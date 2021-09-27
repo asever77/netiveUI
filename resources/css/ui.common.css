@@ -2809,7 +2809,7 @@ dl[class*="bul-"]>dt {
 	}
 
 	.base-grid {
-		max-width: 1024px;
+		max-width: 119rem;
 		left: 50%;
 		transform: translate(-50%, 0);
 	}
@@ -2869,7 +2869,7 @@ dl[class*="bul-"]>dt {
 
 	.base-main {
 		margin: 0 auto;
-		max-width: 102.4rem;
+		max-width: 119rem;
 	}
 
 	/* .header-nav{
