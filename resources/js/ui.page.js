@@ -50,9 +50,13 @@
     netive.page.pageTableScroll = function(){
         netive.table.scroll({
             callback:function(){
-                netive.scrollBar.init({
-                    selector: 'tblScrollTest1'
+                netive.scrollBar();
+                netive.scrollBar({
+                    selector: doc.querySelector('.ui-scrollbar[data-scroll-id="tblScrollTest1"]')
                 });
+
+                const wrap = doc.querySelector('.ui-scrollbar[data-scroll-id="tblScrollTest1"]').closest('.ui-tablescroll');
+                wrap.querySelector('.ui-tablescroll-clone').classList.add('aa')
             }
         });
     };
@@ -84,9 +88,13 @@
                     console.log('close callback', v); 
                 },
                 callback: function(v) { 
-                    netive.scrollBar.init({
-                        selector: doc.querySelector('#' + btn.getAttribute('modal-id') + ' .ui-scrollbar')
-                    })
+                    // netive.scrollBar({
+                    //     selector: doc.querySelector('#' + btn.getAttribute('modal-id') + ' .ui-scrollbar')
+                    // });
+                    
+                    // netive.scrollBar.init({
+                    //     selector: doc.querySelector('#' + btn.getAttribute('modal-id') + ' .ui-scrollbar')
+                    // })
                     console.log('callback', v); 
                 }
             });
@@ -180,11 +188,8 @@
 
         let opttxt = 5;
         doc.querySelector('#changeOption').addEventListener('click', function () {
-
             doc.querySelector('#uiSel2').insertAdjacentHTML('beforeend', '<option value="' + opttxt + '">' + opttxt + '</option>');
-
             opttxt = opttxt + 1;
-
             netive.select.init({
                 id: 'uiSel2'
             });
@@ -223,11 +228,13 @@
     }
 
     netive.page.pageScrollBar = function(){
-        netive.scrollBar.init({
-            infiniteCallback: function(){
-                console.log('infiniteCallback')
-            }
-        });
+        // netive.scrollBar.init({
+        //     infiniteCallback: function(){
+        //         console.log('infiniteCallback')
+        //     }
+        // });
+
+        netive.scrollBar();
     }
 
     netive.page.pageJsonCodingList = function(){
