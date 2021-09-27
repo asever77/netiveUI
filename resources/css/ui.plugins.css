@@ -1075,7 +1075,9 @@ a.ui-acco-btn:after {
     background: var(--white);
     margin: 2rem;
 }
-
+.ui-modal.open .ui-modal-wrap{
+    opacity: 1;
+}
 .type-full .ui-modal-wrap,
 .size-mobile .ui-modal.ps-top .ui-modal-wrap,
 .size-mobile .ui-modal.ps-bottom .ui-modal-wrap {
