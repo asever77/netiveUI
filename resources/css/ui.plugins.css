@@ -796,17 +796,17 @@ a.ui-acco-btn {
     width: 100%;
     height: 100%;
     margin: -1px 0 0;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+    border-bottom: 1px solid var(--gray300);
+    border-top: 1px solid var(--gray300);
     padding: 0;
-    background: #fff;
+    background: var(--white);
     min-height: 4.2rem;
 }
 
 .ui-acco-tit-wrap {
     width: auto;
     text-decoration: none;
-    color: #000;
+    color: var(--gray200);
 }
 
 .ui-acco-btn {
@@ -817,7 +817,7 @@ a.ui-acco-btn {
     padding: 10px 40px 10px 10px;
     letter-spacing: 0;
     text-align: left;
-    color: #000;
+    color: var(--gray800);
     font-size: var(--text-s);
 }
 
@@ -833,7 +833,7 @@ a.ui-acco-btn {
     height: 20px;
     float: right;
     overflow: hidden;
-    color: #000;
+    color: var(--gray800);
     font-size: 20px;
     line-height: 1;
 }
@@ -856,7 +856,7 @@ a.ui-acco-btn:after {
 }
 
 .ui-acco-pnl {
-    background: #f9f9f9;
+    background: var(--gray50);
 }
 
 .ui-acco-tit-wrap {
@@ -1205,6 +1205,11 @@ a.ui-acco-btn:after {
     width: auto;
     text-align: center;
     font-size: var(--text-s);
+    
+}
+.ui-modal.type-system .ui-modal-body,
+.ui-modal.type-system .ui-modal-footer {
+    background: var(--primary);
 }
 
 .ui-modal.type-system .ui-modal-wrap strong {
@@ -1235,19 +1240,21 @@ a.ui-acco-btn:after {
     top: .8rem;
     border: 0;
     font-family: 'Material Icons';
-    color: #fff;
+    color: var(--white);
 }
 
 .ui-modal-body {
     position: relative;
     margin-top: 0;
-    padding: 15px;
+    padding: 1.5rem;
+    background: var(--gray50);
 }
 
 .ui-modal-footer {
     position: relative;
     margin-top: 0;
-    padding: 10px 15px
+    padding: 1rem 1.5rem;
+    background: var(--gray50);
 }
 
 .ui-modal-footer .btn-wrap {
@@ -3351,7 +3358,7 @@ td button.today {
     width:calc(100% - 2rem);
     padding:1rem;
     color:#fff;
-    background:rgba(0,0,0,0.9);
+    background:var(--primary);
     position:fixed;
     left:0;
     margin:1rem;
