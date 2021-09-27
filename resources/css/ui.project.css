@@ -1044,3 +1044,4 @@ pre {
 .test-primary{background:var(--primary); color:var(--white); border:0;}
 .test-secondary{background:var(--secondary); color:var(--white); border:0;}
 
+.ui-tablescroll-clone.aa{width: 100%;}
