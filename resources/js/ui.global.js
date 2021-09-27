@@ -1193,8 +1193,6 @@ if (!Object.keys){
 		// }
 	}
 
-
-
 	Global.popup = {
 		options: {
 			name: 'new popup',
@@ -1211,13 +1209,13 @@ if (!Object.keys){
 			scrollbars: 'yes'
 		},
 		open: function(option){
-			const opt = $.extend(true, {}, this.options, option);
+			const opt = Object.assign({}, this.options, option);
 			const {name,width,height,align,toolbar,location,menubar,status,resizable,scrollbars,link} = opt;
 			let {top,left} = opt;
 
 			if (align === 'center') {
-				left = ($(win).outerWidth() / 2) - (width / 2);
-				top = ($(win).outerHeight() / 2) - (height / 2);
+				left = (win.innerWidth / 2) - (width / 2);
+				top = (win.innerHeight / 2) - (height / 2);
 			}
 
 			const specs = 'width=' + width + ', height='+ height + ', left=' + left + ', top=' + top + ', toolbar=' + toolbar + ', location=' + location + ', resizable=' + resizable + ', status=' + status + ', menubar=' + menubar + ', scrollbars=' + scrollbars;
@@ -1262,22 +1260,22 @@ if (!Object.keys){
 		caption: function(){
 			const el_captions = doc.querySelectorAll('.ui-caption');
 
-			for (let el_caption of el_captions) {
-				el_caption.textContent = '';
+			for (let that of el_captions) {
+				that.textContent = '';
 			
-				const el_table = el_caption.closest('table');
+				const el_table = that.closest('table');
 				const ths = el_table.querySelectorAll('th');
 				let captionTxt = '';
 
-				for (let th of ths) {
-					const txt = th.textContent;
+				for (let that of ths) {
+					const txt = that.textContent;
 					
 					(captionTxt !== '') ?
 						captionTxt += ', ' + txt:
 						captionTxt += txt;
 				}
 
-				el_caption.textContent = captionTxt + ' 정보입니다.';
+				that.textContent = captionTxt + ' 정보입니다.';
 			}
 		},
 		scrollOption: {
@@ -1288,30 +1286,30 @@ if (!Object.keys){
 			const callback = opt.callback;
 			const el_wraps = doc.querySelectorAll('.ui-tablescroll');
 
-			for (let el_wrap of el_wraps) {
-				const el_tblWrap = el_wrap.querySelector('.ui-tablescroll-wrap');
+			for (let that of el_wraps) {
+				const el_tblWrap = that.querySelector('.ui-tablescroll-wrap');
 				const el_tbl = el_tblWrap.querySelector('table');
 				const cloneTable = el_tbl.cloneNode(true);
 
 				if (!el_tbl.querySelector('.ui-tablescroll-clone')) {
-					el_wrap.prepend(cloneTable);
+					that.prepend(cloneTable);
 
-					const clone_tbl = el_wrap.querySelector(':scope > table:first-child');
+					const clone_tbl = that.querySelector(':scope > table:first-child');
 					const clone_ths = clone_tbl.querySelectorAll('th');
 					const clone_caption = clone_tbl.querySelector('caption');
 					const clone_tbodys = clone_tbl.querySelectorAll('tbody');
 
 					clone_caption.remove();
 
-					for (let clone_tbody of clone_tbodys) {
-						clone_tbody.remove();
+					for (let that of clone_tbodys) {
+						that.remove();
 					}
 
 					clone_tbl.classList.add('ui-tablescroll-clone');
 					clone_tbl.setAttribute('aria-hidden', true);
 
-					for (let clone_th of clone_ths) {
-						clone_th.setAttribute('aria-hidden', true);
+					for (let that of clone_ths) {
+						that.setAttribute('aria-hidden', true);
 					}
 				}
 			}
@@ -1321,19 +1319,19 @@ if (!Object.keys){
 		fixTd : function() {
 			const el_tbls = doc.querySelectorAll('.ui-fixtd');
 			
-			for (let el_tbl of el_tbls) {
-				const el_tblCols = el_tbl.querySelectorAll('col');
-				const el_tblTrs = el_tbl.querySelectorAll('tr');
+			for (let that of el_tbls) {
+				const el_tblCols = that.querySelectorAll('col');
+				const el_tblTrs = that.querySelectorAll('tr');
 
-				const fix_n = Number(el_tbl.dataset.fix);
-				const view_n = Number(el_tbl.dataset.view);
+				const fix_n = Number(that.dataset.fix);
+				const view_n = Number(that.dataset.view);
 				const col_len = el_tblCols.length;
 				const fix_sum = col_len - fix_n;
 				const len = el_tblTrs.length;
 				let tit = [];
 	
-				el_tbl.setAttribute('data-current', 1)
-				el_tbl.setAttribute('data-total', col_len);
+				that.setAttribute('data-current', 1)
+				that.setAttribute('data-total', col_len);
 	
 				for (let i = 0; i < len; i++) {
 					for (let j = 0; j < fix_sum; j++) {
@@ -1355,20 +1353,20 @@ if (!Object.keys){
 					}
 				}
 
-				const el_btns = el_tbl.querySelectorAll('.ui-fixtd-btn');
+				const el_btns = that.querySelectorAll('.ui-fixtd-btn');
 
-				for (let el_btn of el_btns) {
-					el_btn.addEventListener('click', act);
+				for (let that of el_btns) {
+					that.addEventListener('click', act);
 				}
 			}
 
 			function act(e){
-				const that = e.currentTarget;
-				const el_table = that.closest('.ui-fixtd');
+				const btn = e.currentTarget;
+				const el_table = btn.closest('.ui-fixtd');
 				const this_sum = Number(el_table.dataset.total - el_table.dataset.fix);
 				let n = Number(el_table.dataset.current);
 				
-				(that.dataset.btn === 'next') ? 
+				(btn.dataset.btn === 'next') ? 
 					el_table.dataset.current = (n + 1 > this_sum) ? n = 1 : n + 1:
 					el_table.dataset.current = (n - 1 <= 0) ? n = this_sum : n - 1;
 			}
@@ -1379,22 +1377,22 @@ if (!Object.keys){
 		init: function(opt){
 			const el_inps = doc.querySelectorAll('.inp-base');
 
-			for (let el_inp of el_inps) {
-				const el_wrap = el_inp.parentNode;
-				const el_form = el_inp.closest('[class*="ui-form"]');
-				const unit = el_inp.dataset.unit;
-				const prefix = el_inp.dataset.prefix;
+			for (let that of el_inps) {
+				const el_wrap = that.parentNode;
+				const el_form = that.closest('[class*="ui-form"]');
+				const unit = that.dataset.unit;
+				const prefix = that.dataset.prefix;
 				const el_label = el_form.querySelector('.form-item-label');
 				let el_unit = el_wrap.querySelector('.unit');
 				let el_prefix = el_wrap.querySelector('.prefix');
 				let space = 0;
 
-				el_inp.removeAttribute('style');
+				that.removeAttribute('style');
 				el_unit && el_unit.remove();
 				el_prefix && el_prefix.remove();
 
-				const pdr = parseFloat(doc.defaultView.getComputedStyle(el_inp).getPropertyValue('padding-right'));
-				const pdl = parseFloat(doc.defaultView.getComputedStyle(el_inp).getPropertyValue('padding-left'));
+				const pdr = parseFloat(doc.defaultView.getComputedStyle(that).getPropertyValue('padding-right'));
+				const pdl = parseFloat(doc.defaultView.getComputedStyle(that).getPropertyValue('padding-left'));
 
 				if (unit !== undefined) {
 					el_wrap.insertAdjacentHTML('beforeend', '<div class="unit">'+unit+'</div>');
@@ -1402,23 +1400,23 @@ if (!Object.keys){
 					space = Math.floor(el_unit.offsetWidth) + (pdr / 2) ;
 				}
 
-				el_inp.style.paddingRight = Number(space + pdr);;
-				el_inp.dataset.pdr = space + pdr;
-				el_inp.setAttribute('pdr', space + pdr);
+				that.style.paddingRight = Number(space + pdr);;
+				that.dataset.pdr = space + pdr;
+				that.setAttribute('pdr', space + pdr);
 				space = 0;
 				
 				if (prefix !== undefined) {					
 					el_wrap.insertAdjacentHTML('afterbegin', '<div class="prefix">'+prefix+'</div>');
 					el_prefix = el_wrap.querySelector('.prefix');
 					space = Math.floor(el_prefix.offsetWidth) + pdl;
-					el_inp.style.paddingLeft = (space + pdl) + 'px';
-					el_inp.dataset.pdl = space + pdl;
+					that.style.paddingLeft = (space + pdl) + 'px';
+					that.dataset.pdl = space + pdl;
 					el_label.style.marginLeft = space + 'px';
 				}
 
-				this.isValue(el_inp,false);
-				el_inp.style.paddingLeft = space + pdl;
-				el_inp.dataset.pdl = space + pdl;
+				this.isValue(that, false);
+				that.style.paddingLeft = space + pdl;
+				that.dataset.pdl = space + pdl;
 
 				const select_btns = doc.querySelectorAll('.ui-select-btn');
 				const datepicker_btns = doc.querySelectorAll('.ui-datepicker-btn');
@@ -1434,13 +1432,13 @@ if (!Object.keys){
 					btn.addEventListener('click', this.actDaterpicker);
 				}
 
-				el_inp.removeEventListener('keyup', this.actValue);
-				el_inp.removeEventListener('focus', this.actValue);
-				el_inp.removeEventListener('blur', this.actUnValue);
+				that.removeEventListener('keyup', this.actValue);
+				that.removeEventListener('focus', this.actValue);
+				that.removeEventListener('blur', this.actUnValue);
 
-				el_inp.addEventListener('keyup', this.actValue);
-				el_inp.addEventListener('focus', this.actValue);
-				el_inp.addEventListener('blur', this.actUnValue);
+				that.addEventListener('keyup', this.actValue);
+				that.addEventListener('focus', this.actValue);
+				that.addEventListener('blur', this.actUnValue);
 			}
 		},
 		actDaterpicker: function(e){
@@ -1474,23 +1472,23 @@ if (!Object.keys){
 			Global.form.isValue(that, true);
 		},
 		actUnValue: function (e){
-			const that = e.currentTarget;
-			const wrap = that.parentNode;
+			const inp = e.currentTarget;
+			const wrap = inp.parentNode;
 			const el_clear = wrap.querySelector('.ui-clear');
-			const pdr = Number(that.dataset.pdr);
+			const pdr = Number(inp.dataset.pdr);
 
-			Global.form.isValue(that, false);
+			Global.form.isValue(inp, false);
 
 			setTimeout(function(){
-				that.style.paddingRight = pdr + 'px'; 
+				inp.style.paddingRight = pdr + 'px'; 
 				el_clear && el_clear.remove();
 			},100);
 		},
-		isValue: function (that, value){
-			const el_that = that;
-			const el_wrap = el_that.parentNode;
-			const el_inner = el_that.closest('.ui-form-inner');
-			const el_inp = el_wrap.querySelector('.inp-base');
+		isValue: function (inp, value){
+			const el_inp = inp;
+			const el_wrap = el_inp.parentNode;
+			const el_inner = el_inp.closest('.ui-form-inner');
+			//const el_inp = el_wrap.querySelector('.inp-base');
 
 			let el_clear = el_wrap.querySelector('.ui-clear');
 			let pdr = Number(el_inp.dataset.pdr);
@@ -1505,11 +1503,11 @@ if (!Object.keys){
 				}
 			}
 			
-			if (el_that.readonly || el_that.disabled || el_that.type === 'date') {
+			if (el_inp.readonly || el_inp.disabled || el_inp.type === 'date') {
 				return false;
 			}
 
-			if (el_that.value === undefined || el_that.value === '') {
+			if (el_inp.value === undefined || el_inp.value === '') {
 				el_inp.style.paddingRight = pdr + 'px'; 
 				el_clear = el_wrap.querySelector('.ui-clear');
 				
@@ -1789,21 +1787,22 @@ if (!Object.keys){
 
 	Global.datepicker = {
 		destroy: function(opt){
-			var is_dim = !!$('.sheet-dim').length;
-			var callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
+			const is_dim = !!doc.querySelector('.sheet-dim');
+			const callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
+			let el_dp;
 
 			if (is_dim) {
 				Global.sheets.dim(false);
 			}
 			
 			if (!opt) {
-				var el_dp = document.querySelectorAll('.datepicker');
+				el_dp = document.querySelectorAll('.datepicker');
 
-				for (var el_dps of el_dp) {
-					el_dps.remove();
+				for (var that of el_dp) {
+					that.remove();
 				}
 			} else {
-				var el_dp = document.querySelector('.datepicker[data-id="'+ opt.id +'"]');
+				el_dp = document.querySelector('.datepicker[data-id="'+ opt.id +'"]');
 
 				el_dp.remove();
 			}
@@ -1831,24 +1830,24 @@ if (!Object.keys){
 			});
 		},
 		init: function(opt) {
-			var setId = opt.id;
-			var currentDate = opt.date;
-			var endDate = opt.date;
-			var title = opt.title;
-			var el_inp = document.querySelector('#' + setId);
-			var el_uidp = el_inp.closest('.ui-datepicker');
-			var el_start = el_uidp.querySelector('[data-period="start"]');
-			var el_end = el_uidp.querySelector('[data-period="end"]');
-			var setDate = (opt.date === '' || opt.date === undefined) ? new Date(): opt.date;
-			var period = (opt.period === '' || opt.period === undefined) ? false : opt.period;
-			var area = (opt.area === '' || opt.area === undefined) ? document.querySelector('body') : opt.area;
-			var date = new Date(setDate);
-			var _viewYear = date.getFullYear();
-			var _viewMonth = date.getMonth();
-			var el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
-			var yyyymm = _viewYear + '-' + Global.parts.add0(_viewMonth + 1);
-			var _dpHtml = '';
-			var callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
+			const setId = opt.id;
+			const currentDate = opt.date;
+			let endDate = opt.date;
+			const title = opt.title;
+			const el_inp = document.querySelector('#' + setId);
+			const el_uidp = el_inp.closest('.ui-datepicker');
+			const el_start = el_uidp.querySelector('[data-period="start"]');
+			const el_end = el_uidp.querySelector('[data-period="end"]');
+			const setDate = (opt.date === '' || opt.date === undefined) ? new Date(): opt.date;
+			let period = (opt.period === '' || opt.period === undefined) ? false : opt.period;
+			const area = (opt.area === '' || opt.area === undefined) ? document.querySelector('body') : opt.area;
+			const date = new Date(setDate);
+			const _viewYear = date.getFullYear();
+			const _viewMonth = date.getMonth();
+			let el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
+			const yyyymm = _viewYear + '-' + Global.parts.add0(_viewMonth + 1);
+			const callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
+			let _dpHtml = '';
 			
 			Global.datepicker.destroy();
 
@@ -1857,7 +1856,6 @@ if (!Object.keys){
 				endDate = el_end.value;
 			}
 			if (!el_dp) {
-				console.log(!!currentDate);
 				if (period) {
 					_dpHtml += '<section class="datepicker" data-id="'+setId+'" data-date="'+yyyymm+'" data-start="'+currentDate+'" data-end="'+endDate+'" data-period="start">';
 				} else {
@@ -1923,12 +1921,12 @@ if (!Object.keys){
 				!!callback && callback();
 				
 				//event
-				var nextY = el_dp.querySelector('.ui-next-y');
-				var prevY = el_dp.querySelector('.ui-prev-y');
-				var nextM = el_dp.querySelector('.ui-next-m');
-				var prevM = el_dp.querySelector('.ui-prev-m');
-				var today = el_dp.querySelector('.ui-today');
-				var confirm = el_dp.querySelector('.ui-confirm');
+				const nextY = el_dp.querySelector('.ui-next-y');
+				const prevY = el_dp.querySelector('.ui-prev-y');
+				const nextM = el_dp.querySelector('.ui-next-m');
+				const prevM = el_dp.querySelector('.ui-prev-m');
+				const today = el_dp.querySelector('.ui-today');
+				const confirm = el_dp.querySelector('.ui-confirm');
 
 				nextY.addEventListener('click', Global.datepicker.nextYear);
 				prevY.addEventListener('click', Global.datepicker.prevYear);
@@ -2019,29 +2017,29 @@ if (!Object.keys){
 			}
 
 			//설정된 날
-			var viewYear = date.getFullYear();
-			var viewMonth = date.getMonth();
-			var viewDay = date.getDate();
+			let viewYear = date.getFullYear();
+			let viewMonth = date.getMonth();
+			let viewDay = date.getDate();
 			//오늘
-			var _viewYear = today.getFullYear();
-			var _viewMonth = today.getMonth();
-			var _viewDay = today.getDate();
+			const _viewYear = today.getFullYear();
+			const _viewMonth = today.getMonth();
+			const _viewDay = today.getDate();
 			//선택한 날
-			var start_viewYear = null;
-			var start_viewMonth = null;
-			var start_viewDay = null;
+			let start_viewYear = null;
+			let start_viewMonth = null;
+			let start_viewDay = null;
 			//선택한 날
-			var end_viewYear = null;
-			var end_viewMonth = null;
-			var end_viewDay = null;
+			let end_viewYear = null;
+			let end_viewMonth = null;
+			let end_viewDay = null;
 			//최소
-			var min_viewYear = min_day.getFullYear();
-			var min_viewMonth = min_day.getMonth();
-			var min_viewDay = min_day.getDate();
+			const min_viewYear = min_day.getFullYear();
+			const min_viewMonth = min_day.getMonth();
+			const min_viewDay = min_day.getDate();
 			//최대
-			var max_viewYear = max_day.getFullYear();
-			var max_viewMonth = max_day.getMonth();
-			var max_viewDay = max_day.getDate();
+			const max_viewYear = max_day.getFullYear();
+			const max_viewMonth = max_day.getMonth();
+			const max_viewDay = max_day.getDate();
 			
 			//설정일자가 있는 경우
 			if (!!setDate) {
@@ -2067,36 +2065,36 @@ if (!Object.keys){
 			}
 
 			//지난달 마지막 date, 이번달 마지막 date
-			var prevLast = new Date(viewYear, viewMonth, 0);
-			var thisLast = new Date(viewYear, viewMonth + 1, 0);
-			var PLDate = prevLast.getDate();
-			var PLDay = prevLast.getDay();
-			var TLDate = thisLast.getDate();
-			var TLDay = thisLast.getDay();
-			var prevDates = [];
-			var thisDates = [...Array(TLDate + 1).keys()].slice(1);
-			var nextDates = [];
+			const prevLast = new Date(viewYear, viewMonth, 0);
+			const thisLast = new Date(viewYear, viewMonth + 1, 0);
+			const PLDate = prevLast.getDate();
+			const PLDay = prevLast.getDay();
+			const TLDate = thisLast.getDate();
+			const TLDay = thisLast.getDay();
+			let prevDates = [];
+			let thisDates = [...Array(TLDate + 1).keys()].slice(1);
+			let nextDates = [];
 
 			//prevDates 계산
 			if (PLDay !== 6) {
-				for(var i = 0; i < PLDay + 1; i++) {
+				for(let i = 0; i < PLDay + 1; i++) {
 					prevDates.unshift('');
 				}
 			}
 
 			//nextDates 계산
-			for(var i = 1; i < 7 - TLDay; i++) {
+			for(let i = 1; i < 7 - TLDay; i++) {
 				nextDates.unshift('');
 			}
 
 			//dates 합치기
-			var dates = prevDates.concat(thisDates, nextDates);
-			var _dpHtml = '';
+			const dates = prevDates.concat(thisDates, nextDates);
+			let _dpHtml = '';
 
 			//dates 정리
 			dates.forEach((date,i) => {
-				var _class = '';
-				var _disabled = false;
+				let _class = '';
+				let _disabled = false;
 
 				// _class = (i % 7 === 0) ? 'hday' : '';
 				// _class = (i % 7 === 0) ? 'hday' : _class;
@@ -2136,7 +2134,7 @@ if (!Object.keys){
 				}
 
 				//selected date
-				var _day = (date === start_viewDay && viewYear === start_viewYear && viewMonth === start_viewMonth) ? 
+				const _day = (date === start_viewDay && viewYear === start_viewYear && viewMonth === start_viewMonth) ? 
 					_class + ' selected-start' : 
 					(date === end_viewDay && viewYear === end_viewYear && viewMonth === end_viewMonth) ? _class + ' selected-end' : _class;
 				
@@ -2189,19 +2187,18 @@ if (!Object.keys){
 				_dpHtml += '</td>';
 			});
 
-			var dp_tbody = el_dp.querySelector('.datepicker-date');
-			var dp_y = el_dp.querySelector('.datepicker-yy');
-			var dp_m = el_dp.querySelector('.datepicker-mm');
-			var getData = el_dp.dataset.date.split('-');
+			const dp_tbody = el_dp.querySelector('.datepicker-date');
+			const dp_y = el_dp.querySelector('.datepicker-yy');
+			const dp_m = el_dp.querySelector('.datepicker-mm');
+			const getData = el_dp.dataset.date.split('-');
 			
 			dp_y.innerHTML = getData[0];
 			dp_m.innerHTML = getData[1];
 			dp_tbody.innerHTML = _dpHtml;
 
-			var dayBtn = dp_tbody.querySelectorAll('.datepicker-day');
-			var len = dayBtn.length;
+			const dayBtn = dp_tbody.querySelectorAll('.datepicker-day');
 
-			for (var i = 0; i < len; i++) {
+			for (let i = 0, len = dayBtn.length; i < len; i++) {
 				dayBtn[i].addEventListener('click', Global.datepicker.daySelect);
 				dayBtn[i].dataset.n = i;
 				dayBtn[i].addEventListener('keydown', keyMove);
@@ -2216,11 +2213,12 @@ if (!Object.keys){
 			function keyMove(e) {
 				e.preventDefault();
 
-				var isShift = !!window.event.shiftKey;
-				var n = Number(e.currentTarget.dataset.n);
-				var current = n;
-				var keycode = e.keyCode;
-				var keys = Global.state.keys;
+				const isShift = !!window.event.shiftKey;
+				const n = Number(e.currentTarget.dataset.n);
+				const keycode = e.keyCode;
+				const keys = Global.state.keys;
+
+				let current = n;
 
 				switch (keycode) {
 					case keys.up:
@@ -2251,19 +2249,19 @@ if (!Object.keys){
 			}
 		},
 		daySelect: (event) => {
-			var el_btn = event.currentTarget;
-			var el_dp = el_btn.closest('.datepicker');
-			var dayBtn = el_dp.querySelectorAll('.datepicker-day');
-			var selectDay = el_btn.dataset.date;
-			var period = el_dp.dataset.period;
-			var n = 0;
-			var id = el_dp.dataset.id;
-			var date = new Date(el_dp.dataset.date);
+			const el_btn = event.currentTarget;
+			const el_dp = el_btn.closest('.datepicker');
+			const dayBtn = el_dp.querySelectorAll('.datepicker-day');
+			const selectDay = el_btn.dataset.date;
+			let period = el_dp.dataset.period;
+			const n = 0;
+			const id = el_dp.dataset.id;
+			const date = new Date(el_dp.dataset.date);
 
-			var el_inp = document.querySelector('#' + id);
-			var el_uidp = el_inp.closest('.ui-datepicker');
-			var el_start = el_uidp.querySelector('[data-period="start"]');
-			var el_end = el_uidp.querySelector('[data-period="end"]');
+			const el_inp = document.querySelector('#' + id);
+			const el_uidp = el_inp.closest('.ui-datepicker');
+			const el_start = el_uidp.querySelector('[data-period="start"]');
+			const el_end = el_uidp.querySelector('[data-period="end"]');
 
 			period = (!!el_dp.dataset.end) ? 'end' : period;
 
@@ -2271,8 +2269,8 @@ if (!Object.keys){
 				//single mode
 				el_dp.dataset.start = selectDay;
 
-				for (var dayBtns of dayBtn) {
-					dayBtns.classList.remove('selected-start');
+				for (let that of dayBtn) {
+					that.classList.remove('selected-start');
 				}
 				el_btn.classList.add('selected-start');
 			} else {
@@ -2333,39 +2331,32 @@ if (!Object.keys){
 					setId: id
 				});
 			}
-			
-			// end date 값 넘기기
-			
-
-			
-
-			
 		},
 		nextYear: (event) => {
-			var dpId = event.target.dataset.dpid;
-			var el_inp = document.querySelector('#' + dpId);
-			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
-			var el_next = el_dp.querySelector('.ui-next-y');
-			var el_prev = el_dp.querySelector('.ui-prev-y');
-			var el_next_m = el_dp.querySelector('.ui-next-m');
-			var el_prev_m = el_dp.querySelector('.ui-prev-m');
+			const dpId = event.target.dataset.dpid;
+			const el_inp = document.querySelector('#' + dpId);
+			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_next = el_dp.querySelector('.ui-next-y');
+			const el_prev = el_dp.querySelector('.ui-prev-y');
+			const el_next_m = el_dp.querySelector('.ui-next-m');
+			const el_prev_m = el_dp.querySelector('.ui-prev-m');
 
-			var date = new Date(el_dp.dataset.date);
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1;
-			var day = date.getDay();
+			const date = new Date(el_dp.dataset.date);
+			const year = date.getFullYear();
+			const month = date.getMonth() + 1;
+			const day = date.getDay();
 
-			var max = el_inp.getAttribute('max');
-			var max_date = new Date(max);
-			var max_year = max_date.getFullYear();
-			var max_month = max_date.getMonth() + 1;
-			var max_day = max_date.getDay();
+			const max = el_inp.getAttribute('max');
+			const max_date = new Date(max);
+			const max_year = max_date.getFullYear();
+			const max_month = max_date.getMonth() + 1;
+			const max_day = max_date.getDay();
 
-			var min = el_inp.getAttribute('min');
-			var min_date = new Date(min);
-			var min_year = min_date.getFullYear();
-			var min_month = min_date.getMonth() + 1;
-			var min_day = min_date.getDay();
+			const min = el_inp.getAttribute('min');
+			const min_date = new Date(min);
+			const min_year = min_date.getFullYear();
+			const min_month = min_date.getMonth() + 1;
+			const min_day = min_date.getDay();
 
 			// if (year + 1 <= min_year) {
 			// 	//el_prev.disabled = true;
@@ -2394,28 +2385,28 @@ if (!Object.keys){
 			});
 		},
 		prevYear: (event) => {
-			var dpId = event.target.dataset.dpid;
-			var el_inp = document.querySelector('#' + dpId);
-			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
-			var el_next = el_dp.querySelector('.ui-next-y');
-			var el_prev = el_dp.querySelector('.ui-prev-y');
-			var el_next_m = el_dp.querySelector('.ui-next-m');
-			var el_prev_m = el_dp.querySelector('.ui-prev-m');
+			const dpId = event.target.dataset.dpid;
+			const el_inp = document.querySelector('#' + dpId);
+			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_next = el_dp.querySelector('.ui-next-y');
+			const el_prev = el_dp.querySelector('.ui-prev-y');
+			const el_next_m = el_dp.querySelector('.ui-next-m');
+			const el_prev_m = el_dp.querySelector('.ui-prev-m');
 
-			var date = new Date(el_dp.dataset.date);
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1;
-			var day = date.getDay();
+			const date = new Date(el_dp.dataset.date);
+			const year = date.getFullYear();
+			const month = date.getMonth() + 1;
+			const day = date.getDay();
 
-			var max = el_inp.getAttribute('max');
-			var max_date = new Date(max);
-			var max_year = max_date.getFullYear();
-			var max_month = max_date.getMonth() + 1;
+			const max = el_inp.getAttribute('max');
+			const max_date = new Date(max);
+			const max_year = max_date.getFullYear();
+			const max_month = max_date.getMonth() + 1;
 
-			var min = el_inp.getAttribute('min');
-			var min_date = new Date(min);
-			var min_year = min_date.getFullYear();
-			var min_month = min_date.getMonth() + 1;
+			const min = el_inp.getAttribute('min');
+			const min_date = new Date(min);
+			const min_year = min_date.getFullYear();
+			const min_month = min_date.getMonth() + 1;
 
 			// if (year - 1 >= max_year) {
 			// 	el_next.disabled = true;
@@ -2438,17 +2429,18 @@ if (!Object.keys){
 			date.setFullYear(year - 1);
 
 			el_dp.dataset.date = (year - 1) +'-'+ Global.parts.add0(month); 
+
 			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
 			});
 		},
 		nextMonth: (event) => {
-			var dpId = event.target.dataset.dpid;
-			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
-			var date = new Date(el_dp.dataset.date);
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1;
+			const dpId = event.target.dataset.dpid;
+			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			let date = new Date(el_dp.dataset.date);
+			let year = date.getFullYear();
+			let month = date.getMonth() + 1;
 			
 			if (month > 11) {
 				month = 0;
@@ -2459,17 +2451,18 @@ if (!Object.keys){
 			date.setMonth(month);
 
 			el_dp.dataset.date = year +'-'+ Global.parts.add0(month + 1); 
+
 			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
 			});
 		},
 		prevMonth: (event) => {
-			var dpId = event.target.dataset.dpid;
-			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
-			var date = new Date(el_dp.dataset.date);
-			var year = date.getFullYear();
-			var month = date.getMonth();
+			const dpId = event.target.dataset.dpid;
+			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			let date = new Date(el_dp.dataset.date);
+			let year = date.getFullYear();
+			let month = date.getMonth();
 			
 			if (month < 1) {
 				month = 12;
@@ -2480,21 +2473,21 @@ if (!Object.keys){
 			date.setMonth(month - 1);
 
 			el_dp.dataset.date = year +'-'+ Global.parts.add0(month); 
+
 			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
 			});
 		},
 		goToday: (event) => {
-			var dpId = event.target.dataset.dpid;
-			var el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
-			var date = new Date();
-			var year = date.getFullYear();
-			var month = date.getMonth() + 1;
+			const dpId = event.target.dataset.dpid;
+			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const date = new Date();
+			const year = date.getFullYear();
+			const month = date.getMonth() + 1;
 			
-			console.log('goToday', dpId, date);
-
 			el_dp.dataset.date = year +'-'+ Global.parts.add0(month); 
+
 			Global.datepicker.dateMake({
 				setDate: date,
 				setId: dpId
@@ -2517,7 +2510,7 @@ if (!Object.keys){
 				!!callback && callback();
 			} else {
 				dim = doc.querySelector('.sheet-dim');
-				$('.sheet-dim').removeClass('on');
+				dim.classList.remove('on');
 			}
 		},
 		bottom: function(opt){
@@ -2826,7 +2819,7 @@ if (!Object.keys){
 				}
 
 				for (let el_select of el_selects) {
-					el_select.removeEventListener('change', Global.select.selectChange);
+
 					el_select.addEventListener('change', Global.select.selectChange);
 				}
 			}
@@ -3071,7 +3064,8 @@ if (!Object.keys){
 				el_wrap.classList.remove('bottom');
 				el_wrap.setAttribute('aria-hidden', true);
 
-				el_select.onchange();
+				console.log(el_select);
+				//el_select.onchange();
 
 				//$('html, body').scrollTop(orgTop);
 			}
