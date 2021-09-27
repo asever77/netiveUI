@@ -337,7 +337,9 @@
         }
     }
 
-    netive.page.pageTable = function(){}
+    netive.page.pageTable = function(){
+        netive.table.caption();
+    }
 
     netive.page.pageDraggable = function(){
         netive.draggable.init({
