@@ -352,7 +352,7 @@ p {
 	margin: 0 auto;
 	height: 50px;
 	font-size: var(--text-m);
-	color: #000;
+	color: var(--gray800);
 	text-align: center;
 	padding-top: 10px;
 	border: 1px dashed var(--gray300);
