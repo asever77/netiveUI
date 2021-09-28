@@ -312,13 +312,13 @@
     netive.page.pageTab = function(){
         netive.tab.init({ 
             id:'exeTab1', 
-            current:0, 
+            current: 0, 
             effect: 'eff-fade',
             callback:tabCallback 
         });
 
         function tabCallback(v){
-            if (v.current === 1) {
+            if (v.current === 0) {
                 netive.tab.init({ 
                     id:'exeTab4', 
                     current:5, 
