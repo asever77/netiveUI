@@ -1641,7 +1641,7 @@ a.ui-acco-btn:after {
 	transform: translate(0, -50%);
 	vertical-align: middle;
 	display: inline-block;
-	background: #fff;
+	background: var(--white);
 	width: 1.8rem;
 	height: 1.8rem;
 	line-height: 1;
