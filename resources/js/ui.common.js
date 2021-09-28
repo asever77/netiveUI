@@ -318,7 +318,7 @@
 							speed:0, 
 							focus: doc.querySelector('.base-main h1')
 						});
-						
+						//delete netive.scrollbar;
 						netive.common.pageInit(elHref);
 						netive.common.settingAside();
 						
