@@ -1107,7 +1107,8 @@ if (!Object.keys){
 			el_scrollbar.classList.remove('view-y');
 			el_scrollbar.classList.remove('view-x');
 			el_scrollbar.classList.remove('view-scrollbar');
-			el_scrollbar.removeAttribute('style');
+			el_scrollbar.style.overflow = 'auto';
+			//el_scrollbar.removeAttribute('style');
 			el_barwrap.forEach((userItem) => {
 				el_scrollbar.removeChild(userItem);
 			});
@@ -4194,18 +4195,20 @@ if (!Object.keys){
 			const el_body = doc.querySelector('body');
 			const el_toast = doc.querySelector('.ui-toast');
 
-			clearTimeout(Global.toast.timer);
-			el_body.classList.remove('ui-toast-show');
+			if (!!el_toast) {
+				clearTimeout(Global.toast.timer);
+				el_body.classList.remove('ui-toast-show');
 
-			el_toast.removeEventListener('transitionend', act);
-			el_toast.addEventListener('transitionend', act);
+				el_toast.removeEventListener('transitionend', act);
+				el_toast.addEventListener('transitionend', act);
 
-			function act(e){
-				const that = e.currentTarget;
+				function act(e){
+					const that = e.currentTarget;
 
-				that.removeEventListener('transitionend', act);
-				that.remove();
-				el_body.classList.remove('ui-toast-ready');
+					that.removeEventListener('transitionend', act);
+					that.remove();
+					el_body.classList.remove('ui-toast-ready');
+				}
 			}
 		}
 	}
@@ -4740,19 +4743,20 @@ if (!Object.keys){
 			for (let i = 0, len = el_btns.length; i < len; i++) {
 				const el_btn = el_btns[i];
 				const el_pnl = el_pnls[i];
-				
+
 				el_btn.setAttribute('role','tab');
 
 				if (!el_btn.dataset.tab) {
 					el_btn.dataset.tab = i;
 				}
+				el_btn.dataset.len = len;
+				el_btn.dataset.n = i;
 
-				//el_btn.dataset.n = i;
-
-				const n =  Number(el_btn.dataset.tab);
-				const isCurrent = current === i;
+				const n = Number(el_btn.dataset.tab);
+				const isCurrent = Number(current) === n;
 				const cls = isCurrent ? 'add' : 'remove';
 
+				
 				if (!el_btn.id) {
 					el_btn.id = id + 'Btn' + n;
 				} 
@@ -4781,12 +4785,18 @@ if (!Object.keys){
 
 				if (!onePanel) {
 					el_pnl.setAttribute('aria-labelledby', btnID);
-					el_pnl.setAttribute('aria-hidden', (isCurrent) ? false : true);el_pnl.classList[cls]('selected');
+
+					if ((Number(current) === Number(el_pnl.dataset.tab))) {
+						el_pnl.setAttribute('aria-hidden', false);
+						el_pnl.classList.add('selected');
+					} else {
+						el_pnl.setAttribute('aria-hidden', true);
+						el_pnl.classList.remove('selected');
+					}
 				} else {
 					el_pnls[0].setAttribute('aria-labelledby', btnID);
 					el_pnls[0].setAttribute('aria-hidden', false);
 					el_pnls[0].classList[cls]('selected');
-					
 				}
 
 				i === 0 && el_btn.setAttribute('tab-first', true);
@@ -4801,10 +4811,8 @@ if (!Object.keys){
 					});
 				}
 
-
-				el_btn.addEventListener('click',evtClick);
-				el_btn.addEventListener('keydown',evtKeys);
-
+				el_btn.addEventListener('click', evtClick);
+				el_btn.addEventListener('keydown', evtKeys);
 			}
 
 			callback && callback(opt);
@@ -4820,9 +4828,9 @@ if (!Object.keys){
 				}); 
 			}
 			function evtKeys(e) {
-				var $this = $(this),
-					n = $this.index(),
-					m = Number($this.data('len'));
+				const that = this;
+				const n = Number(that.dataset.n);
+				const m = Number(that.dataset.len);
 
 				switch(e.keyCode){
 					case keys.up: upLeftKey(e);
@@ -4846,13 +4854,13 @@ if (!Object.keys){
 
 				function upLeftKey(e) {
 					e.preventDefault();
-					!$this.getAttribute('tab-first') ? 
+					!that.getAttribute('tab-first') ? 
 					Global.tab.toggle({ id: id, current: n - 1, align:align }): 
 					Global.tab.toggle({ id: id, current: m - 1, align:align});
 				}
 				function downRightKey(e) {
 					e.preventDefault();
-					!$this.getAttribute('tab-last') ? 
+					!that.getAttribute('tab-last') ? 
 					Global.tab.toggle({ id: id, current: n + 1, align:align }): 
 					Global.tab.toggle({ id: id, current: 0, align:align });
 				}
@@ -4887,6 +4895,7 @@ if (!Object.keys){
 			for(let that of el_btn) {
 				that.classList.remove('selected');
 			}
+			console.log(id);
 			
 			el_current.classList.add('selected')
 			el_current.focus();
