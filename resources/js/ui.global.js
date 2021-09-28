@@ -304,6 +304,7 @@ if (!Object.keys){
 		wrapTag: function(front, selector, back) {
 			const org_html = selector.innerHTML;
 			const new_html = front + org_html + back;
+
 			selector.innerHTML = '';
  			selector.insertAdjacentHTML('beforeend', new_html) ;
 		},
@@ -824,6 +825,7 @@ if (!Object.keys){
 
 			//+reset
 			if (el_scrollbar.dataset.ready === 'yes') {
+				console.log(111111111);
 				return false;
 			}
 
@@ -848,6 +850,7 @@ if (!Object.keys){
 			if (_display === 'inline-block') {
 				el_itemWrap.style.display = 'block';
 			}
+
 			el_itemWrap.style.width = '100%';
 			el_item.style.width = '100%';
 
@@ -1153,44 +1156,25 @@ if (!Object.keys){
 		} else {
 			for (let that of scrollBar) {
 				let scrollId = that.getAttribute('data-scroll-id');
-	
-				if (!scrollId) {
-					let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
-						
-					idN = idN + 1;
-					sessionStorage.setItem('scrollbarID', idN);
-					scrollId = 'item' + idN;
-					that.dataset.scrollId = scrollId;
-				} 
-	
-				Global.scrollBar[scrollId] = new ScrollBar(scrollId);
-	
-				setTimeout(function(){
-					Global.scrollBar[scrollId].init();
-				},0);
+
+				if (that.dataset.ready !== 'yes') {
+					if (!scrollId) {
+						let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
+							
+						idN = idN + 1;
+						sessionStorage.setItem('scrollbarID', idN);
+						scrollId = 'item' + idN;
+						that.dataset.scrollId = scrollId;
+					} 
+		
+					Global.scrollBar[scrollId] = new ScrollBar(scrollId);
+		
+					setTimeout(function(){
+						Global.scrollBar[scrollId].init();
+					},0);
+				}
 			}
 		}
-
-		
-
-		// for (let i = 0, len = scrollBar.length; i < len; i++) {
-		// 	let scrollId = scrollBar[i].getAttribute('data-scroll-id');
-
-		// 	if (!scrollId) {
-		// 		let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
-					
-		// 		idN = idN + 1;
-		// 		sessionStorage.setItem('scrollbarID', idN);
-		// 		scrollId = 'item' + i;
-		// 		scrollBar[i].dataset.scrollId = scrollId;
-		// 	} 
-
-		// 	Global.scrollBar[scrollId] = new ScrollBar(scrollId);
-
-		// 	setTimeout(function(){
-		// 		Global.scrollBar[scrollId].init();
-		// 	},0);
-		// }
 	}
 
 	Global.popup = {
