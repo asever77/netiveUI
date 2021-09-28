@@ -182,6 +182,7 @@
 
 			netive.table.caption();
 			netive.form.init();
+			
 		},
 		gridSwitch: function(){
 			const el_grid = document.querySelector('.base-grid');
@@ -190,15 +191,20 @@
 		},
 		header: function(){
 			console.log('header load');
-			netive.accordion.init({ 
-				id: 'exeLNB', 
-				current: 'all', 
-				autoclose: false
-			});
-			netive.common.menuAjax();
+			netive.scrollBar();
 
-			doc.querySelector('.ui-nav').addEventListener('click', netive.common.toggleNav);
-			document.querySelector('.btn-mode').addEventListener('click', netive.common.toggleMode);
+			setTimeout(function(){
+				netive.accordion.init({ 
+					id: 'exeLNB', 
+					current: 'all', 
+					autoclose: false
+				});
+				netive.common.menuAjax();
+				
+				doc.querySelector('.ui-nav').addEventListener('click', netive.common.toggleNav);
+				document.querySelector('.btn-mode').addEventListener('click', netive.common.toggleMode);
+			},0);
+			
 		},
 		toggleMode: function(){
 			document.querySelector('html').classList.toggle('dark-mode');
