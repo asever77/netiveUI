@@ -2758,69 +2758,208 @@ td button.today {
 /* ui codinglist */
 .ui-codinglist {
     width: 100%;
-    margin: 30px 0 0;
-    min-width: 1240px;
+    margin: 3rem 0 0;
 }
-
+.ui-codinglist .tbl-base td {
+    border-left:0;
+}
 .ui-codinglist-state dt {
-    font-size: 20px;
-    font-weight: 600
+    font-size: var(--text-s);
+    font-weight: 600;
+    color: var(--secondary);
 }
 
+.ui-codinglist-state {
+    padding:.8rem 1.6rem;
+    background:var(--gray800);
+    color:var(--gray50);
+    position: relative;;
+    border-radius:.4rem;
+    font-size:var(--text-xs);
+    overflow: hidden;
+    border:1px solid var(--secondary);
+}
+.ui-codinglist-state .bar{
+    display: block;
+    position: absolute;
+    top:0;
+    left:0;
+    width:0;
+    z-index: 1;
+    height:100%;
+    background-color:var(--primary) ;
+    box-shadow: 0 0 3rem rgba(74,238,0,0.5);
+}
+
+.ui-codinglist-state dl{
+    width:100%;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+    z-index: 2;
+}
+.ui-codinglist-state ul{
+    display: flex;
+}
+.ui-codinglist-state li {
+    flex: 1 auto;
+    margin-left:1.6rem;
+}
+
+.ui-codinglist .tbl-base tbody td {
+    border-left:0;
+}
+
+.ui-codinglist .tbl-base .col-1 {
+    width:6rem;
+}
+.ui-codinglist .tbl-base .col-2 {
+    width:5rem;
+}
+.ui-codinglist .tbl-base .col-3 {
+    width:6rem;
+}
+.ui-codinglist .tbl-base .col-4 {
+    width:auto;
+}
+.ui-codinglist .tbl-base .col-5 {
+    width:auto;
+}
+.ui-codinglist .tbl-base .col-6 {
+    width:auto;
+}
+
+.ui-codinglist .tbl-base .d1,
+.ui-codinglist .tbl-base .d2,
+.ui-codinglist .tbl-base .d3,
+.ui-codinglist .tbl-base .d4,
+.ui-codinglist .tbl-base .d5,
+.ui-codinglist .tbl-base .d6,
+.ui-codinglist .tbl-base .d7,
+.ui-codinglist .tbl-base .d8 {
+    color: var(--gray300);
+}
+
+.ui-codinglist .tbl-base .c1 .d1,
+.ui-codinglist .tbl-base .c2 .d2,
+.ui-codinglist .tbl-base .c3 .d3,
+.ui-codinglist .tbl-base .c4 .d4,
+.ui-codinglist .tbl-base .c5 .d5,
+.ui-codinglist .tbl-base .c6 .d6,
+.ui-codinglist .tbl-base .c7 .d7,
+.ui-codinglist .tbl-base .c8 .d8 {
+    color: var(--gray900);
+}
+.ui-codinglist tbody td {
+    transition: padding .2s ease-in;
+}
+.ui-codinglist tbody tr:hover {
+    outline: 2px solid #3a3a3a;
+}
+
+.end .state span{
+    display:inline-block;
+    color: var(--primary);
+    vertical-align: middle;
+    font-weight:600;
+}
+.end .state::before {
+    content:'check_circle_outline';
+    font-family: 'Material Icons';
+    font-size: var(--text-m);
+    display:inline-block;
+    vertical-align: middle;
+    margin-right:.3rem;
+    font-weight:900;
+    color: var(--primary);
+}
+
+.tst .state span{
+    display:inline-block;
+    color: var(--success);
+    vertical-align: middle;
+    font-weight:600;
+}
+.tst .state::before {
+    content:'remove_circle_outline';
+    font-family: 'Material Icons';
+    font-size: var(--text-m);
+    display:inline-block;
+    vertical-align: middle;
+    margin-right:.3rem;
+    font-weight:900;
+    color: var(--success);
+}
+
+.state span{
+    display:inline-block;
+    vertical-align: middle;
+    color: var(--gray500);
+}
+.state::before {
+    content:'panorama_fish_eye';
+    font-family: 'Material Icons';
+    font-size: var(--text-m);
+    display:inline-block;
+    vertical-align: middle;
+    margin-right:.3rem;
+    font-weight:600;
+    color: var(--gray500);
+}
+
+/* 
 .ui-codinglist table {
     width: 100%;
 }
 
 .ui-codinglist table a,
 .ui-codinglist table button {
-    font-size: 12px;
-    letter-spacing: -0.07em;
-    color: #5a5a5a;
-    text-decoration: none
+    font-size: var(--text-xs);
+    color: var(--gray800);
+    text-decoration: none;
 }
 
 .ui-codinglist thead th {
-    background: #3a3a3a;
-    color: rgb(241, 241, 241);
-    border: 1px solid #222;
-    padding: 4px 10px;
-    font-size: 10px;
-    letter-spacing: 1px;
+    background: var(--gray800);
+    color: var(--gray50);
+    border: 1px solid var(--gray400);
+    padding: .4rem 1rem;
+    font-size: 1rem;
 }
 
 .ui-codinglist th,
 .ui-codinglist td {
-    border: 1px solid #e4e4e4;
+    border: 1px solid var(--gray400);
     padding: 3px 10px;
     text-align: left;
     font-weight: 400;
-    font-size: 12px;
+    font-size: var(--text-xs);
 }
 
 .ui-codinglist col {
     width: auto;
-}
-
+} */
+/* 
 .ui-codinglist col.col-1 {
     width: 55px;
-}
+} */
 
-.ui-codinglist col.col-2,
+/* .ui-codinglist col.col-2,
 .ui-codinglist col.col-3,
 .ui-codinglist col.col-4 {
     width: 65px;
-}
+} */
 
-.ui-codinglist col.col-5 {
+/* .ui-codinglist col.col-5 {
     width: 40px;
-}
+} */
 
-.ui-codinglist col.col-8 {
+/* .ui-codinglist col.col-8 {
     width: 100px;
     background: #f2f2f2;
-}
+} */
 
-.ui-codinglist thead th:nth-child(1),
+/* .ui-codinglist thead th:nth-child(1),
 .ui-codinglist thead th:nth-child(2),
 .ui-codinglist thead th:nth-child(3),
 .ui-codinglist thead th:nth-child(4),
@@ -2832,9 +2971,9 @@ td button.today {
 .ui-codinglist .img {
     text-align: center;
     word-break: keep-all;
-}
+} */
 
-.ui-codinglist .d {
+/* .ui-codinglist .d {
     color: #ccc;
 }
 
@@ -2913,8 +3052,8 @@ td button.today {
 
 .ui-codinglist .overlap {
     color: #ccc !important;
-}
-
+} */
+/* 
 .ui-codinglist .overlap span {
     font-size: 12px;
     opacity: 0.5;
@@ -2941,9 +3080,8 @@ td button.today {
     margin: 0 5px 5px 0
 }
 
-.ui-codinglist tr:hover {
-    outline: 2px solid #3a3a3a;
-}
+
+
 
 .device-mobile .ui-codinglist thead {
     display: none;
@@ -3023,7 +3161,7 @@ td button.today {
 .device-mobile .ui-codinglist .enddate:before {
     content: 'ⓔ';
     display: inline-block;
-}
+} */
 
 
 
