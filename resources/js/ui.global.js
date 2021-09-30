@@ -1242,6 +1242,53 @@ if (!Object.keys){
 	}
 
 	Global.table = {
+		sort: function(opt){
+			let table = doc.querySelector('#' + opt.id);
+			let switchcount = 0;
+			let switching = true;
+			let dir = "asc";
+			let rows, o, x, y, shouldSwitch;
+
+			
+
+			while (switching) {
+				switching = false;
+				rows = table.getElementsByTagName('TR');
+			}
+
+			console.log(rows.length);
+
+			for (o = 1; o < rows.length - 1; o++) {
+				shouldSwitch = false;
+				x = rows[o].getElementsByTagName('TD')[opt.n];
+				y = rows[o + 1].getElementsByTagName('TD')[opt.n];
+
+				console.log(opt.n);
+
+				if (dir === 'asc') {
+					if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+						shouldSwitch = true;
+						break;
+					}
+				} else if(dir === 'desc') {
+					if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
+						shouldSwitch = true;
+						break;
+					}
+				}
+			}
+
+			if (shouldSwitch) {
+				rows[o].parentNode.insertBefore(rows[o + 1], rows[o]);
+				switching = true;
+				switchcount ++;
+			} else {
+				if (switchcount === 0 && dir === 'asc') {
+					dir = 'desc';
+					switching = true;
+				}
+			}
+		},
 		caption: function(){
 			const el_captions = doc.querySelectorAll('.ui-caption');
 
@@ -4753,7 +4800,7 @@ if (!Object.keys){
 	Global.project = {
 		list: function(opt){
 			Global.ajax.init({
-				area: document.querySelector('#projectList'),
+				area: document.querySelector('#' + opt.id),
 				url: opt.url, 
 				page: false, 
 				callback: callback 
@@ -5018,13 +5065,11 @@ if (!Object.keys){
 				codinglist.innerHTML = table;
 				table = '';
 
-				let info = '';
+				let info = '<div class="ui-codinglist-header">';
 				info += '<div class="ui-codinglist-state"><dl><dt>'+ today +'</dt><dd>'
 				info += '<ul class="ui-codinglist-info">';
-				info += '<li>진행율(완료+검수) : <span class="n_all">0</span> / <span class="total">0</span> (<span class="per0">0</span>%)</li>';
-				info += '<li>완료 : <span class="n_end">0</span> (<span class="per1">0</span>%)</li>';
-				info += '<li>검수 : <span class="n_tst">0</span> (<span class="per2">0</span>%)</li>';
-				info += '<li>대기 : <span class="n_wat">0</span> (<span class="per4">0</span>%)</li>';
+				info += '<li>진행율(완료:<span class="n_end">0</span>+검수:<span class="n_tst">0</span>) : <span class="n_all">0</span> / <span class="total">0</span> (<span class="per0">0</span>%)</li>';
+				
 				info += '</ul></dd></dl><span class="bar"><span></div>';
 
 				let sel = '';
@@ -5050,7 +5095,7 @@ if (!Object.keys){
 				sel += '<div class="srch-area">';
 				sel += '<input type="search" id="projectListSrchCode" class="inp-base ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
 				sel += '</div>';
-				sel += '</div>';
+				sel += '</div></div>';
 				
 				//codinglist.insertAdjacentHTML('afterbegin', sel);
 				codinglist.insertAdjacentHTML('afterbegin', info);
@@ -5058,30 +5103,17 @@ if (!Object.keys){
 				const el_info = doc.querySelector('.ui-codinglist-info');
 				const el_total = el_info.querySelector('.total');
 				const el_all = el_info.querySelector('.n_all');
+				const el_end = el_info.querySelector('.n_end');
+				const el_tst = el_info.querySelector('.n_tst');
 				const el_per0 = el_info.querySelector('.per0');
 				const el_bar = doc.querySelector('.ui-codinglist-state .bar');
 
+				el_end.textContent = endsum;
+				el_tst.textContent = tstsum;
 				el_total.textContent = (len - delsum - 1);
 				el_all.textContent = (endsum + tstsum);
 				el_per0.textContent = ((endsum + tstsum) / (len - delsum - 1) * 100).toFixed(0);
-
 				el_bar.style.width = ((endsum + tstsum) / (len - delsum - 1) * 100).toFixed(0) + '%';
-
-	
-
-				console.log()
-
-				if (!$('.ui-codinglist-info .total').data('data')) {
-					$('.ui-codinglist-info .total').data('data', true).text(len - delsum - 1);
-					$('.ui-codinglist-info .n_all').text(endsum + tstsum);
-					$('.ui-codinglist-info .per0').text(((endsum + tstsum) / (len - delsum - 1) * 100).toFixed(0));
-					$('.ui-codinglist-info .n_end').text(endsum);
-					$('.ui-codinglist-info .per1').text((endsum / (len - delsum - 1) * 100).toFixed(0));
-					$('.ui-codinglist-info .n_tst').text(tstsum);
-					$('.ui-codinglist-info .per2').text((tstsum / (len - delsum - 1) * 100).toFixed(0));
-					$('.ui-codinglist-info .n_wat').text(watsum);
-					$('.ui-codinglist-info .per4').text((watsum / (len - delsum - 1) * 100).toFixed(0));
-				}
 
 				/*
 				selectoption('uiCLstate', ctg_state);
@@ -5176,9 +5208,24 @@ if (!Object.keys){
 				});
 				*/
 				Global.form.init();
+
+				const pjl = document.querySelector('#projectList');
+				const pjl_thead = pjl.querySelector('table thead');
+				const pjl_th = pjl_thead.querySelectorAll('th');
+
+				for (let i = 0; i < pjl_th.length; i++) {
+					pjl_th[i].addEventListener('click', function(){
+						Global.table.sort({
+							id: opt.id,
+							n: i
+						});
+					});
+				}
 			}
 		}
 	}
+
+	
 
 	/* 작업필요 */
 	Global.count = {
