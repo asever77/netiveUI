@@ -2768,16 +2768,23 @@ td button.today {
     font-weight: 600;
     color: var(--secondary);
 }
-
+.ui-codinglist-header {
+    position: sticky;
+    z-index: 3;
+    top:0;
+}
 .ui-codinglist-state {
+    position: relative;
+    top:0;
     padding:.8rem 1.6rem;
     background:var(--gray800);
     color:var(--gray50);
-    position: relative;;
     border-radius:.4rem;
     font-size:var(--text-xs);
     overflow: hidden;
     border:1px solid var(--secondary);
+    z-index: 3;
+
 }
 .ui-codinglist-state .bar{
     display: block;
