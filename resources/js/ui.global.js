@@ -4368,7 +4368,6 @@ if (!Object.keys){
 		}
 	}
 
-	/* 작업필요 */
 	Global.floating = {
 		init: function() {
 			const el_body = document.body;
@@ -4508,183 +4507,6 @@ if (!Object.keys){
 		}
 	}
 
-	/* 작업필요 */
-	Global.masonry = {
-		options: {
-			fixCol: {
-				1500:4,
-				1200:3,
-				800:2,
-				400:1,
-			},
-			response: true
-		},
-		init: function(opt){
-			if (opt === undefined) { return false; }
-		
-			var opt = opt === undefined ? {} : opt,
-				opt = $.extend(true, {}, Global.masonry.options, opt),
-				$base = $('#' + opt.id), 
-				$item = $base.find('.ui-bricklist-item').not('.disabled'),
-				fixCol = opt.fixCol,
-				re = opt.response,
-				wrapW = $base.outerWidth(),
-				itemW = $item.outerWidth(),
-				itemSum = $item.length,
-				itemCol = Math.floor(wrapW / itemW),
-				itemRow = (itemSum / itemCol) + (itemSum % itemCol) ? 1 : 0,
-				itemTopArray = [],
-				timer;
-
-			if (!!fixCol) {
-				var key = Object.keys(fixCol);
-				key.sort(function(a,b){
-					return a - b;
-				});
-				var fixCol__;
-				for (var i = 0; i < key.length; i++) {
-					if (Number(key[i]) > $(win).outerWidth()) {
-						fixCol__ = fixCol[key[i]];
-						break;
-					} else {
-						fixCol__ = fixCol[key[key.length - 1]];
-					}
-				}
-
-				itemCol = fixCol__;
-				if (!!re) {
-					itemW = wrapW / fixCol__;
-				}
-			} 
-			$base.data('orgcol', itemCol);
-
-			//the number of columns 
-			for (var i = 0; i < itemCol; i++) {		
-				var $itemN = $item.eq(i);
-
-				$itemN.attr('role','listitem').css({
-					position: 'absolute',
-					left : itemW * i,
-					top : 0
-				});
-
-				if (!!fixCol && !!re) {
-					$itemN.css('width', itemW + 'px');
-				} 
-				itemTopArray[i] = 0;
-			}
-			//save option information
-			$base.data('opt', { 
-				'wrap': wrapW, 
-				'width': itemW, 
-				'itemTopArray': itemTopArray, 
-				'row': itemRow, 
-				'col': itemCol, 
-				'response': re,
-				'fixCol': fixCol,
-				'start': 0
-			});
-
-			Global.masonry.act({ id: opt.id });
-			var winW = $(win).outerWidth();
-			if (re) {
-				$(win).off('resize.win').on('resize.win', function(){
-					var $uiBricklist = $('.ui-bricklist');
-
-					clearTimeout(timer);
-					timer = setTimeout(function(){
-						if (winW !== $(win).outerWidth()) {
-							console.log('re');
-							$uiBricklist.each(function(){
-								var $this = $(this);
-								var dataOpt = $this.data('opt');
-								var reColN = Math.floor($this.outerWidth() / $this.find('.ui-bricklist-item').outerWidth());
-
-								if ($this.data('orgcol') !== reColN || !!dataOpt.fixCol) {
-									Global.masonry.init({ 
-										id : $this.attr('id'),
-										fixCol: dataOpt.fixCol,
-										response: dataOpt.response
-									});
-									
-									$this.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
-								}
-							});
-						}
-					},300);
-				});
-			}	
-		},
-		act: function(opt){
-			if (opt === undefined) { return false; }
-		
-			var $base = $('#' + opt.id), 
-				$item = $base.find('.ui-bricklist-item').not('.disabled'),
-				dataOpt = $base.data('opt'),
-				fixCol = dataOpt.fixCol,
-				re = dataOpt.response,
-				wrapW = dataOpt.wrap,
-				itemW = dataOpt.width,
-				itemRow = dataOpt.row,
-				itemTopArray = dataOpt.itemTopArray,
-				itemSum = $item.length;
-			
-			//netive.uiLoading({ id: opt.id, visible:true });
-
-			var n = dataOpt.start;
-			var timer;
-			var setItem = function(){
-				var $itemN = $item.eq(n);
-				var $itemImg = $itemN.find('img');
-				
-				$itemImg.attr('src', $itemImg.attr('data-src'));
-				$itemImg.load(function(){
-					if (!!fixCol && !!re) {
-						$itemN.css('width', itemW + 'px');
-					} 
-					
-					var minH = Math.min.apply(null, itemTopArray);
-					var nextN = itemTopArray.indexOf(minH);
-					var itemH = Number($itemN.outerHeight());
-
-					$itemN.attr('data-left', itemW * nextN).attr('data-top', itemTopArray[nextN]);
-					itemTopArray[nextN] = Number(minH + itemH);
-					n = n + 1;
-
-					clearTimeout(timer);
-					if (n < itemSum) {
-						setItem();
-					} else {
-						Global.loading.hide();
-					}
-
-					timer = setTimeout(function(){
-						$item.each(function(){
-							$(this).css({
-								position: 'absolute',
-								top : $(this).attr('data-top') + 'px',
-								left:  $(this).attr('data-left') + 'px'
-							}).addClass('on');
-						});
-						$base.data('opt', { 
-							'wrap': wrapW, 
-							'width':itemW, 
-							'itemTopArray':itemTopArray, 
-							'row':itemRow, 
-							'col':n, 
-							'response': re,
-							'fixCol': fixCol,
-							'start': itemSum 
-						});
-						$base.find('.ui-bricklist-wrap').css('height', Math.max.apply(null, itemTopArray));
-					},100);
-				});
-			} 
-			setItem();
-		}
-	}
-
-	/* 작업필요 */
 	Global.tab = {
 		options: {
 			current: 0,
@@ -4739,7 +4561,6 @@ if (!Object.keys){
 			el_btnwrap.setAttribute('role','tablist');
 
 			//setting
-			
 			for (let i = 0, len = el_btns.length; i < len; i++) {
 				const el_btn = el_btns[i];
 				const el_pnl = el_pnls[i];
@@ -4931,63 +4752,63 @@ if (!Object.keys){
 	/* 작업필요 */
 	Global.project = {
 		list: function(opt){
-			
-
 			Global.ajax.init({
 				area: document.querySelector('#projectList'),
 				url: opt.url, 
 				page: false, 
 				callback: callback 
 			});
-
 			
 			function callback(v) {
-				var dataExecel = JSON.parse(v); 
-
-				var today = new Date();
+				const dataExecel = JSON.parse(v); 
+				let today = new Date();
+				
 				today = getFormatDate(today); 
 
 				function getFormatDate(date){
-					var year = date.getFullYear();
-					var month = (1 + date.getMonth());
+					const year = date.getFullYear();
+					let month = (1 + date.getMonth());
+					let day = date.getDate();
+
 					month = month >= 10 ? month : '0' + month;
-					var day = date.getDate();
 					day = day >= 10 ? day : '0' + day;
+
 					return  year + '-' + month + '-' + day;
 				}
+
 				function changeFormatDate(date){
-					var year = date.substring(0,4);
-					var month = date.substring(5,6); 
+					const year = date.substring(0,4);
+					let month = date.substring(5,6); 
+					let day = date.substring(6,8);
+
 					month = month >= 10 ? month : '0' + month;
-					var day = date.substring(6,8);
 					day = day >= 10 ? day : '0' + day; 
+
 					return year + '-' + month + '-' + day; 
 				}
 
 				function dateDiff(_date1, _date2) {
-					var diffDate_1 = _date1 instanceof Date ? _date1 :new Date(_date1);
-					var diffDate_2 = _date2 instanceof Date ? _date2 :new Date(_date2);
-					diffDate_1 =new Date(diffDate_1.getFullYear(), diffDate_1.getMonth()+1, diffDate_1.getDate());
-					diffDate_2 =new Date(diffDate_2.getFullYear(), diffDate_2.getMonth()+1, diffDate_2.getDate());
-					var isAbs = diffDate_2.getTime() - diffDate_1.getTime() < 0 ? '' : '-';
-					var diff = Math.abs(diffDate_2.getTime() - diffDate_1.getTime());
+					let diffDate_1 = _date1 instanceof Date ? _date1 :new Date(_date1);
+					let diffDate_2 = _date2 instanceof Date ? _date2 :new Date(_date2);
+
+					diffDate_1 = new Date(diffDate_1.getFullYear(), diffDate_1.getMonth()+1, diffDate_1.getDate());
+					diffDate_2 = new Date(diffDate_2.getFullYear(), diffDate_2.getMonth()+1, diffDate_2.getDate());
+
+					const isAbs = diffDate_2.getTime() - diffDate_1.getTime() < 0 ? '' : '-';
+					let diff = Math.abs(diffDate_2.getTime() - diffDate_1.getTime());
 
 					diff = isAbs + Math.ceil(diff / (1000 * 3600 * 24));
 				
 					return diff;
 				}
 
+				let state, date, enddate, moddate, pub, dev, id, idm, memo, overl;
+				let d1, d2, d3, d4, d5, d6, d7, d8;
+				let r1, r2, r3, r4;
+				let d1_, d2_, d3_, d4_, d5_, d6_, d7_, d8_;
+				let c1, c2, c3, c4, c5, c6, c7, c8;
 
-				var len = dataExecel.list.length;
-				
-				var i = 0;
-				var state, date, enddate, moddate, pub, dev, id, idm, memo, overl;
-				var d1, d2, d3, d4, d5, d6, d7, d8;
-				var r1, r2, r3, r4;
-				var d1_, d2_, d3_, d4_, d5_, d6_, d7_, d8_;
-				var c1, c2, c3, c4, c5, c6, c7, c8;
-
-				var	endsum = 0, delsum = 0, tstsum = 0, ingsum = 0, watsum = 0, chksum = 0, num = -1,
+				let	endsum = 0, delsum = 0, tstsum = 0, ingsum = 0, watsum = 0, chksum = 0, num = -1,
 					ctg_state = [],
 					ctg_pub = [],
 					ctg_dev = [],
@@ -4995,14 +4816,15 @@ if (!Object.keys){
 					ctg_enddate = [],
 					ctg_mdate = [],
 					ctg_menu = [],
-					ctg_dev = [],
 					cls2 = '',
 					cls = '',
 					root = '',
 					depth = '',
 					table = '';
 
-				for (i = 0; i < len; i++) {
+				const len = dataExecel.list.length
+
+				for (let i = 0; i < len; i++) {
 					state = dataExecel.list[i].state || '';
 					date = dataExecel.list[i].date || '';
 					enddate = dataExecel.list[i].enddate || '';
@@ -5011,7 +4833,6 @@ if (!Object.keys){
 					dev = dataExecel.list[i].dev || '';
 					id = dataExecel.list[i].id || '';
 					idm = dataExecel.list[i].idm || '';
-
 					memo = dataExecel.list[i].memo || '';
 					d1 = dataExecel.list[i].d1 || '';
 					d2 = dataExecel.list[i].d2 || '';
@@ -5068,7 +4889,7 @@ if (!Object.keys){
 					delsum = (state === "제외") ? delsum + 1 : delsum;
 					watsum = (state === "대기") ? watsum + 1 : watsum;
 
-					var x = (i === 0) ? 0 : i - 1;
+					const x = (i === 0) ? 0 : i - 1;
 
 					c1 = (dataExecel.list[i].d1 !== dataExecel.list[x].d1) ? ' c1' : '';
 					c2 = (dataExecel.list[i].d2 !== dataExecel.list[x].d2) ? ' c2' : '';
@@ -5095,32 +4916,34 @@ if (!Object.keys){
 					ctg_menu.push(dataExecel.list[i].d2);
 
 					if (state !== '제외' && i === 0) {
+						table += '<div class="tbl-base">';
 						table += '<table>';
 						table += '<caption>코딩리스트</caption>';
 
 						table += '<colgroup>';
 						table += '<col class="col-1">';//상태
 						table += '<col class="col-2">';//일정
-						table += '<col class="col-3">';//완료일
-						table += '<col class="col-3">';//수정일
-						table += '<col class="col-4">';//퍼블담당자
-						table += '<col class="col-4">';//개발담당자
+						table += '<col class="col-2">';//완료일
+						table += '<col class="col-2">';//수정일
 
-						table += '<col class="col-8">';//화면아이디
+						table += '<col class="col-3">';//퍼블담당자
+						table += '<col class="col-3">';//개발담당자
+
+						table += '<col class="col-4">';//화면아이디
 						table += '</colgroup>';
 
 						table += '<colgroup>';
-						(dataExecel.list[i].d1 !== undefined) ? table += '<col class="col-9">' : '';
-						(dataExecel.list[i].d2 !== undefined) ? table += '<col class="col-9">' : '';
-						(dataExecel.list[i].d3 !== undefined) ? table += '<col class="col-9">' : '';
-						(dataExecel.list[i].d4 !== undefined) ? table += '<col class="col-9">' : '';
-						(dataExecel.list[i].d5 !== undefined) ? table += '<col class="col-9">' : '';
-						(dataExecel.list[i].d6 !== undefined) ? table += '<col class="col-9">' : '';
-						(dataExecel.list[i].d7 !== undefined) ? table += '<col class="col-9">' : '';
-						(dataExecel.list[i].d8 !== undefined) ? table += '<col class="col-9">' : '';
+						(dataExecel.list[i].d1 !== undefined) ? table += '<col class="col-5">' : '';
+						(dataExecel.list[i].d2 !== undefined) ? table += '<col class="col-5">' : '';
+						(dataExecel.list[i].d3 !== undefined) ? table += '<col class="col-5">' : '';
+						(dataExecel.list[i].d4 !== undefined) ? table += '<col class="col-5">' : '';
+						(dataExecel.list[i].d5 !== undefined) ? table += '<col class="col-5">' : '';
+						(dataExecel.list[i].d6 !== undefined) ? table += '<col class="col-5">' : '';
+						(dataExecel.list[i].d7 !== undefined) ? table += '<col class="col-5">' : '';
+						(dataExecel.list[i].d8 !== undefined) ? table += '<col class="col-5">' : '';
 						table += '</colgroup>';
 
-						table += '<col class="col-10">';//메모
+						table += '<col class="col-6">';//메모
 
 						table += '<thead>';
 						table += '<th scope="col">' + state + '</th>';
@@ -5142,38 +4965,35 @@ if (!Object.keys){
 						table += '<th scope="col">' + memo + '</th>';
 						table += '</thead>';
 						table += '</tbody>';
-					}
-					else if (state !== '제외') {
+					} else if (state !== '제외') {
 						num = num + 1;
 
 						if (!(date === '미정' || date === '일정' || date === undefined) && state !== '완료' && state !== '검수' && state !== '체크') {
-							var dateStart = date;
+							let dateStart = date;
+
 							dateStart = changeFormatDate(dateStart)
 
-							var care = dateDiff(dateStart, new Date());
+							const care = dateDiff(dateStart, new Date());
 		
 							if (care < 3 && care >= 0) {
 								cls = cls + ' sch_care';
 							} else if (care < 0) {
 								cls = cls + ' sch_warn';
 							}
-		
 						}
-
 
 						Global.state.device.mobile ?
 							table += '<tr class="' + cls + '" >' :
 							table += '<tr class="' + cls + '">';
 						table += '<td class="state"><span>' + state + '</span></td>';
-						table += '<td class="date"><span>' + date + '</span></td>';
-						table += '<td class="enddate"><span>' + enddate + '</span></td>';
-						table += '<td class="enddate"><span>' + moddate + '</span></td>';
+						table += '<td class="date"><span>' + date.substring(4,10) + '</span></td>';
+						table += '<td class="enddate"><span>' + enddate.substring(4,10) + '</span></td>';
+						table += '<td class="enddate"><span>' + moddate.substring(4,10) + '</span></td>';
 						table += '<td class="name pub"><span>' + pub + '</span></td>';
 						table += '<td class="name dev"><span>' + dev + '</span></td>';
 						table += id !== '' ?
 							'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
 							'<td class="id "><span></span></td>';	
-						
 						(dataExecel.list[i].d1 !== '') ? table += '<td class="d d1"><span>' + d1 + '</span></td>' : table += '<td class="d"></td>';
 						(dataExecel.list[i].d2 !== '') ? table += '<td class="d d2"><span>' + d2 + '</span></td>' : table += '<td class="d"></td>';
 						(dataExecel.list[i].d3 !== '') ? table += '<td class="d d3"><span>' + d3 + '</span></td>' : table += '<td class="d"></td>';
@@ -5187,21 +5007,27 @@ if (!Object.keys){
 						(i === len - 1) ? table += '</tbody>' : '';
 						(i === len - 1) ? table += '</table>' : '';
 					}
+					table += '</div>';
 					root = '';
 				}
-				$('#' + opt.id).html(table);
+
+				console.log(opt.id, table);
+
+				const codinglist = doc.querySelector('#' + opt.id);
+
+				codinglist.innerHTML = table;
 				table = '';
 
-				var info = '';
-				info += '<dl class="ui-codinglist-state"><dt>'+ today +'</dt><dd>'
+				let info = '';
+				info += '<div class="ui-codinglist-state"><dl><dt>'+ today +'</dt><dd>'
 				info += '<ul class="ui-codinglist-info">';
 				info += '<li>진행율(완료+검수) : <span class="n_all">0</span> / <span class="total">0</span> (<span class="per0">0</span>%)</li>';
 				info += '<li>완료 : <span class="n_end">0</span> (<span class="per1">0</span>%)</li>';
 				info += '<li>검수 : <span class="n_tst">0</span> (<span class="per2">0</span>%)</li>';
 				info += '<li>대기 : <span class="n_wat">0</span> (<span class="per4">0</span>%)</li>';
-				info += '</ul></dd></dl>';
+				info += '</ul></dd></dl><span class="bar"><span></div>';
 
-				var sel = '';
+				let sel = '';
 				sel += '<div class="ui-codinglist-sel mgb-xxxs">';
 				sel += '<button type="button" class="btn-base"><span>전체</span></button>';
 				sel += '<select id="uiCLstate" data-ctg="state">';
@@ -5226,8 +5052,24 @@ if (!Object.keys){
 				sel += '</div>';
 				sel += '</div>';
 				
-				$('#' + opt.id).prepend(sel);
-				$('#' + opt.id).prepend(info);
+				//codinglist.insertAdjacentHTML('afterbegin', sel);
+				codinglist.insertAdjacentHTML('afterbegin', info);
+
+				const el_info = doc.querySelector('.ui-codinglist-info');
+				const el_total = el_info.querySelector('.total');
+				const el_all = el_info.querySelector('.n_all');
+				const el_per0 = el_info.querySelector('.per0');
+				const el_bar = doc.querySelector('.ui-codinglist-state .bar');
+
+				el_total.textContent = (len - delsum - 1);
+				el_all.textContent = (endsum + tstsum);
+				el_per0.textContent = ((endsum + tstsum) / (len - delsum - 1) * 100).toFixed(0);
+
+				el_bar.style.width = ((endsum + tstsum) / (len - delsum - 1) * 100).toFixed(0) + '%';
+
+	
+
+				console.log()
 
 				if (!$('.ui-codinglist-info .total').data('data')) {
 					$('.ui-codinglist-info .total').data('data', true).text(len - delsum - 1);
@@ -5241,6 +5083,7 @@ if (!Object.keys){
 					$('.ui-codinglist-info .per4').text((watsum / (len - delsum - 1) * 100).toFixed(0));
 				}
 
+				/*
 				selectoption('uiCLstate', ctg_state);
 				selectoption('uiCLpub', ctg_pub);
 				selectoption('uiCLDate', ctg_date, true);
@@ -5331,7 +5174,7 @@ if (!Object.keys){
 					$('.ui-codinglist tbody tr').hide();
 					$(temp).closest('tr').show();
 				});
-
+				*/
 				Global.form.init();
 			}
 		}
