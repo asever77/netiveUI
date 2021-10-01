@@ -5135,7 +5135,7 @@ if (!Object.keys){
 
 						console.log(text.indexOf(k), text, k);
 
-						if (text.indexOf(k) === 0) {
+						if (text.indexOf(k) >= 0) {
 							console.log(1111);
 							
 							el_tr2.classList.remove('srch-hidden');
