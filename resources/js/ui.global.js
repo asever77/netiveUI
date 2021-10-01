@@ -5035,7 +5035,7 @@ if (!Object.keys){
 						table += '<td class="state"><span>' + state + '</span></td>';
 						table += '<td class="date"><span>' + date.substring(4,10) + '</span></td>';
 						table += '<td class="enddate"><span>' + enddate.substring(4,10) + '</span></td>';
-						table += '<td class="enddate"><span>' + moddate.substring(4,10) + '</span></td>';
+						table += '<td class="moddate"><span>' + moddate.substring(4,10) + '</span></td>';
 						table += '<td class="name pub"><span>' + pub + '</span></td>';
 						table += '<td class="name dev"><span>' + dev + '</span></td>';
 						table += id !== '' ?
@@ -5058,8 +5058,6 @@ if (!Object.keys){
 					root = '';
 				}
 
-				console.log(opt.id, table);
-
 				const codinglist = doc.querySelector('#' + opt.id);
 
 				codinglist.innerHTML = table;
@@ -5069,35 +5067,15 @@ if (!Object.keys){
 				info += '<div class="ui-codinglist-state"><dl><dt>'+ today +'</dt><dd>'
 				info += '<ul class="ui-codinglist-info">';
 				info += '<li>진행율(완료:<span class="n_end">0</span>+검수:<span class="n_tst">0</span>) : <span class="n_all">0</span> / <span class="total">0</span> (<span class="per0">0</span>%)</li>';
-				
 				info += '</ul></dd></dl><span class="bar"><span></div>';
-
-				let sel = '';
-				sel += '<div class="ui-codinglist-sel mgb-xxxs">';
-				sel += '<button type="button" class="btn-base"><span>전체</span></button>';
-				sel += '<select id="uiCLstate" data-ctg="state">';
-				sel += '<option value="0">상태선택</option>';
-				sel += '</select>';
-				sel += '<select id="uiCLpub" data-ctg="pub">';
-				sel += '<option value="0">퍼블선택</option>';
-				sel += '</select>';
-				sel += '<select id="uiCLdev" data-ctg="dev">';
-				sel += '<option value="0">개발선택</option>';
-				sel += '</select>';
-				sel += '<select id="uiCLDate" data-ctg="date">';
-				sel += '<option value="0">일정선택</option>';
-				sel += '</select>';
-				// sel += '<select id="uiCLdepth" data-ctg="d2">';
-				// sel += '<option value="0">메뉴선택</option>';
-				// sel += '</select>';
-				sel += '</div>';
-				sel += '<div class="box-srch mgb-xxxs">';
-				sel += '<div class="srch-area">';
-				sel += '<input type="search" id="projectListSrchCode" class="inp-base ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
-				sel += '</div>';
-				sel += '</div></div>';
+				info += '<div class="box-srch mgt-xs">';
+				info += '<div class="srch-area">';
+				info += '<input type="search" id="projectListSrchCode" class="inp-base ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
+				info += '<button type="button" id="projectListSrchBtn" class="btn-base"><span>검색</span></button>';
+				info += '<button type="button" id="projectListSrchRe" class="btn-base"><span>초기화</span></button>';
+				info += '</div>';
+				info += '</div>';
 				
-				//codinglist.insertAdjacentHTML('afterbegin', sel);
 				codinglist.insertAdjacentHTML('afterbegin', info);
 
 				const el_info = doc.querySelector('.ui-codinglist-info');
@@ -5107,6 +5085,9 @@ if (!Object.keys){
 				const el_tst = el_info.querySelector('.n_tst');
 				const el_per0 = el_info.querySelector('.per0');
 				const el_bar = doc.querySelector('.ui-codinglist-state .bar');
+				const srchCode = doc.querySelector('#projectListSrchCode');
+				const srchBtn = doc.querySelector('#projectListSrchBtn');
+				const srchBtnRe = doc.querySelector('#projectListSrchRe');
 
 				el_end.textContent = endsum;
 				el_tst.textContent = tstsum;
@@ -5115,99 +5096,52 @@ if (!Object.keys){
 				el_per0.textContent = ((endsum + tstsum) / (len - delsum - 1) * 100).toFixed(0);
 				el_bar.style.width = ((endsum + tstsum) / (len - delsum - 1) * 100).toFixed(0) + '%';
 
-				/*
-				selectoption('uiCLstate', ctg_state);
-				selectoption('uiCLpub', ctg_pub);
-				selectoption('uiCLDate', ctg_date, true);
-				selectoption('uiCLdepth', ctg_menu);
-				selectoption('uiCLdev', ctg_dev);
-				selectAct();
-
-				function selectoption(id, optarray, v) {
-					var $sel = $('#' + id);
-					var nn = 1,
-						nnn = 1;
-					if (!$sel.data('data')) {
-						var optionArray = [],
-							optionSum = [],
-							j = 0,
-							optionHtml = '';
-						v ? optarray.push('일정') : '';
-						optarray.splice(0, 1);
-
-						// 숫자 .sort(function(a,b){return a-b}) , 문자 sort()
-						optionArray = optarray.slice().sort().reduce(function (a, b) {
-							if (a.slice(-1)[0] !== b && b !== '') {
-								a.push(b);
-								v ? optionSum.push(nn) : '';
-								nn = 1;
-							} else {
-								nn = nn + 1;
-							}
-							return a;
-						}, []);
-
-						var alen = optionArray.length;
-						for (j; j < alen; j++) {
-							if (v) {
-								if (j < alen - 1) {
-									optionHtml += '<option value="' + optionArray[j] + '">' + optionArray[j] + ' [' + optionSum[j + 1] + ']건</option>';
-								}
-							} else {
-								optionHtml += '<option value="' + optionArray[j] + '">' + optionArray[j] + '</option>';
-							}
-						}
-						$sel.data('data', true).append(optionHtml);
-					}
-				}
-
-				function selectAct() {
-					$('.ui-codinglist-sel select').on('change', function () {
-						var $this = $(this),
-							v = $this.val(),
-							c = $this.data('ctg'),
-							$sel = $('#' + opt.id + ' .' + c);
-
-						if (v === '0') {
-							$sel.closest('tr').removeClass('hidden');
-						} else {
-							$this.siblings().find('option:eq(0)').prop('selected', true);
-							$sel.each(function (i) {
-								v === 'all' ? $sel.closest('tr').removeClass('hidden') :
-									v !== $sel.find('span').eq(i).text() ?
-										$(this).closest('tr').addClass('hidden') : $(this).closest('tr').removeClass('hidden');
-							});
-						}
-					});
-				}
-
-				$('.ui-codinglist-sel button').on('click', function (e) {
-					$('#' + opt.id + ' tr').removeClass('hidden');
-					$('.ui-codinglist-sel select').find('option:eq(0)').prop('selected', true);
-				});
-				$('.ui-codinglist table a, .ui-codinglist table button').off('click.uicoding').on('click.uicoding', function () {
-					$(this).closest('tr').addClass('selected').siblings().removeClass('selected');
-				});
-
-				if ($('#projectListSrchCode').val() !== '') {
+				if (srchCode.value !== '') {
 					var temp = $('.ui-codinglist tbody tr td *:contains('+ $('#projectListSrchCode').val() +')');
 
 					$('.ui-codinglist tbody tr').hide();
 					$(temp).closest('tr').show();
 				}
-				$.expr[":"].contains = $.expr.createPseudo(function(arg){
-					return function(elem) {
-						return $(elem).text().toUpperCase().indexOf(arg.toUpperCase()) >= 0;
+
+				srchBtnRe.addEventListener('click', function(){
+					const el = doc.querySelector('.ui-codinglist tbody');
+					const el_tr = el.querySelectorAll('tr');
+
+					srchCode.value = '';
+					for (let that of el_tr) {
+						that.classList.remove('srch-hidden');
 					}
 				});
-				$('#projectListSrchCode').on('keyup', function(){
-					var k = $(this).val(),
-						temp = $('.ui-codinglist tbody tr td *:contains('+ k +')');
-					$('.ui-codinglist tbody tr').hide();
-					$(temp).closest('tr').show();
+				srchBtn.addEventListener('click', srchAct);
+				srchCode.addEventListener('keyup', function(){
+					if (win.event.keyCode === 13) {
+						srchAct();
+					}
 				});
-				*/
-				Global.form.init();
+
+				function srchAct(){
+					const k = srchCode.value;
+					const el = doc.querySelector('.ui-codinglist tbody');
+					const el_td = el.querySelectorAll('td');
+					const el_tr = el.querySelectorAll('tr');
+
+					for (let that of el_tr) {
+						that.classList.add('srch-hidden');
+					}
+
+					for (let that of el_td) {
+						const text = that.textContent;
+						const el_tr2 = that.closest('tr');
+
+						console.log(text.indexOf(k), text, k);
+
+						if (text.indexOf(k) === 0) {
+							console.log(1111);
+							
+							el_tr2.classList.remove('srch-hidden');
+						} 
+					}
+				}
 
 				const pjl = document.querySelector('#projectList');
 				const pjl_thead = pjl.querySelector('table thead');
