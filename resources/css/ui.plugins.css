@@ -2760,6 +2760,15 @@ td button.today {
     width: 100%;
     margin: 3rem 0 0;
 }
+.ui-codinglist .srch-area{
+    display: flex;
+}
+.ui-codinglist .btn-base{
+    margin-left:.4rem;
+}
+.ui-codinglist .srch-hidden {
+    display:none;
+}
 .ui-codinglist .tbl-base td {
     border-left:0;
 }
@@ -2857,20 +2866,42 @@ td button.today {
 .ui-codinglist .tbl-base .c8 .d8 {
     color: var(--gray900);
 }
+
 .ui-codinglist tbody td {
     transition: padding .2s ease-in;
 }
 .ui-codinglist tbody tr:hover {
     outline: 2px solid #3a3a3a;
 }
-
-.end .state span{
+.ui-codinglist .sch_warn .state span{
+    color: var(--error) !important;
+}
+.ui-codinglist .sch_warn .state:before{
+    color: var(--error) !important;
+}
+.ui-codinglist .sch_warn .enddate span{
+    position: relative;
+    display: block;
+}
+.ui-codinglist .sch_warn .enddate span::before{
+    content: '-.- 일정 확인!!';
+    background: var(--error);
+    position: absolute;
+    padding:.2rem .6rem;
+    color:var(--white);
+    display: block;
+    top:-1rem;
+    left:.2rem;
+    white-space: nowrap;
+    border-radius: .4rem;
+}
+.ui-codinglist .end .state span{
     display:inline-block;
     color: var(--primary);
     vertical-align: middle;
     font-weight:600;
 }
-.end .state::before {
+.ui-codinglist .end .state::before {
     content:'check_circle_outline';
     font-family: 'Material Icons';
     font-size: var(--text-m);
@@ -2881,13 +2912,13 @@ td button.today {
     color: var(--primary);
 }
 
-.tst .state span{
+.ui-codinglist .tst .state span{
     display:inline-block;
     color: var(--success);
     vertical-align: middle;
     font-weight:600;
 }
-.tst .state::before {
+.ui-codinglist .tst .state::before {
     content:'remove_circle_outline';
     font-family: 'Material Icons';
     font-size: var(--text-m);
@@ -2898,12 +2929,12 @@ td button.today {
     color: var(--success);
 }
 
-.state span{
+.ui-codinglist .state span{
     display:inline-block;
     vertical-align: middle;
     color: var(--gray500);
 }
-.state::before {
+.ui-codinglist .state::before {
     content:'panorama_fish_eye';
     font-family: 'Material Icons';
     font-size: var(--text-m);
