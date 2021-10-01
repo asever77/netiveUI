@@ -2591,7 +2591,7 @@ if (!Object.keys){
 
 				el_sheet.classList.add('on');
 				el_sheet.style.left = ((wrap_w + off_l) > win_w) ? (off_l - (wrap_w - base_w))+ 'px' : off_l + 'px';
-				el_sheet.style.top = (win_h - ((off_t - scr_t) + base_h) > wrap_h) ? (off_t + base_h) + 'px' : (off_t - wrap_h) + 'px';
+				el_sheet.style.top = (win_h - ((off_t - scr_t) + base_h) > wrap_h) ? (off_t + base_h) + scr_t + 'px' : (off_t - wrap_h) + scr_t + 'px';
 
 				Global.focus.loop({
 					selector: el_sheet
