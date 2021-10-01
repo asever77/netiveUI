@@ -1045,3 +1045,14 @@ pre {
 .test-secondary{background:var(--secondary); color:var(--white); border:0;}
 
 .ui-tablescroll-clone.aa{width: 100%;}
+.type-issue .srch-area{
+	display: flex;
+	width: 100%;
+}
+.type-issue .btn-base{
+	margin-left:.4rem;
+}
+.type-issue > div + div{
+	margin-top:3.2rem
+}
+.srch-hidden{display:none;}
