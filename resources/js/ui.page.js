@@ -109,6 +109,40 @@
     }
 
     netive.page.pageIssue = function(){
+        const srchCode = doc.querySelector('#uiIssueSearch');
+        const srchBtn = doc.querySelector('#uiIssueSearchBtn');
+        
+        srchBtn.addEventListener('click', srchAct);
+        srchCode.addEventListener('keyup', function(){
+            if (win.event.keyCode === 13) {
+                srchAct();
+            }
+        });
+
+        function srchAct(){
+            const k = srchCode.value;
+            const el = doc.querySelector('.bul-hyphen');
+            const el_tag = el.querySelectorAll('.list-memory-tag');
+            const el_tr = el.querySelectorAll(':scope > div');
+
+            for (let that of el_tr) {
+                that.classList.add('srch-hidden');
+            }
+
+            for (let that of el_tag) {
+                const text = that.textContent;
+                const el_tr2 = that.closest('.srch-hidden');
+
+                console.log(text.indexOf(k), text, k);
+
+                if (text.indexOf(k) >= 0) {
+                    console.log(1111);
+                    
+                    el_tr2.classList.remove('srch-hidden');
+                } 
+            }
+        }
+
         // if ($('#uiIssueSearch').val() !== '') {
         //     var temp = $('.bul-hyphen > div *:contains('+ $('#uiIssueSearch').val() +')');
 
