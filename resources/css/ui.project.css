@@ -27,7 +27,7 @@
 
 /* layout */
 .base-header {
-	position: relative;
+	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 2;
@@ -196,11 +196,18 @@ p {
 }
 
 .tit-wrap {
-	margin: 5rem 0;
+	margin: 15rem 0 10rem;
+}
+.tit-wrap > div {
+	border-left:2px solid var(--gray700);
+	margin-left:1.3rem;
+	padding-left:2.4rem;
+
 }
 .tit-wrap p {
-	margin: 1rem 0 0;
-	font-size:1.2rem;
+	margin: 1.6rem 0 0;
+	padding: .8rem;	
+	font-size:var(--text-s);
 }
 
 .sec-wrap {
@@ -216,7 +223,7 @@ p {
 .h-1 {
 	font-family: 'Roboto', sans-serif;
 	font-size: var(--text-xxl);
-	font-weight: 700;
+	font-weight: 200;
 	line-height: 1.2;
 	margin: 0;
 }
