@@ -75,7 +75,7 @@
 	height: 100%;
 	z-index: 1;
 	background: linear-gradient(rgba(255, 255, 255, 1), rgba(255, 255, 255, 0.0)); 
-	backdrop-filter: blur(.1rem);
+	backdrop-filter: blur(.06rem);
 	position: absolute;
 }
 .dark-mode .base-header::after{
@@ -212,7 +212,7 @@ p {
 }
 
 .tit-wrap {
-	margin: 15rem 0 10rem;
+	margin: 16rem 0 8rem;
 }
 .tit-wrap > div {
 	border-left:2px solid var(--gray700);
