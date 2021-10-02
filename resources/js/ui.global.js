@@ -3828,8 +3828,6 @@ if (!Object.keys){
 				el_pnl.setAttribute('aria-hidden', true)
 				el_pnl.setAttribute('tabindex', -1)
 				el_pnl.classList.remove('on');
-				
-				doc.removeEventListener('click', Global.dropdown.back);
 			}
 		}, 
 		hide: () => {
