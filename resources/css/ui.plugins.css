@@ -2945,6 +2945,89 @@ td button.today {
     color: var(--gray500);
 }
 
+.size-mobile .ui-codinglist thead,
+.size-tablet .ui-codinglist thead{
+    display: none;
+}
+.size-mobile .ui-codinglist table,
+.size-mobile .ui-codinglist tbody,
+.size-tablet .ui-codinglist table,
+.size-tablet .ui-codinglist tbody{
+    display:block;
+}
+.size-mobile .ui-codinglist tr,
+.size-tablet .ui-codinglist tr{
+    display:block;
+    padding:0.4rem 0 0.6rem;
+    border-bottom:1px solid var(--gray200);
+}
+.size-mobile .ui-codinglist th,
+.size-mobile .ui-codinglist td,
+.size-tablet .ui-codinglist th,
+.size-tablet .ui-codinglist td{
+    display:inline-block;
+    border:0;
+    padding:0 0 0 1rem;
+}
+.size-tablet .ui-codinglist .memo,
+.size-tablet .ui-codinglist .state,
+.size-tablet .ui-codinglist .name,
+.size-tablet .ui-codinglist .id,
+.size-mobile .ui-codinglist .memo,
+.size-mobile .ui-codinglist .state,
+.size-mobile .ui-codinglist .name,
+.size-mobile .ui-codinglist .id{
+    display: block;
+    text-align: left;
+    width:100%;
+}
+.size-tablet .ui-codinglist .d[class*="d"],
+.size-mobile .ui-codinglist .d[class*="d"]{
+    padding:0 1rem;
+}
+.size-tablet .ui-codinglist .d,
+.size-mobile .ui-codinglist .d{
+    background:var(--gray50);
+    padding:0;
+}
+.size-tablet .date span::before{
+    content:'일정: '; 
+}
+.size-tablet .enddate span::before{
+    content:'완료: '; 
+}
+.size-tablet .moddate span::before{
+    content:'수정: '; 
+}
+.size-tablet .pub span::before{
+    content:'퍼블: '; 
+}
+.size-tablet .dev span::before{
+    content:'개발: '; 
+}
+.size-mobile .date span::before{
+    content:'일정: '; 
+}
+.size-mobile .enddate span::before{
+    content:'완료: '; 
+}
+.size-mobile .moddate span::before{
+    content:'수정: '; 
+}
+.size-mobile .pub span::before{
+    content:'퍼블: '; 
+}
+.size-mobile .dev span::before{
+    content:'개발: '; 
+}
+.size-mobile .ui-codinglist .sch_warn .enddate span::before,
+.size-tablet .ui-codinglist .sch_warn .enddate span::before{
+    position:relative;
+    top:0;
+    left:0;
+}
+
+
 /* 
 .ui-codinglist table {
     width: 100%;
