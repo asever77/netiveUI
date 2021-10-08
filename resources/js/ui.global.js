@@ -707,7 +707,7 @@ if (!Object.keys){
 					let end = h + start;
 					const s = areaH * Number(attrStart) / 100;
 					const e = areaH * Number(attrEnd) / 100;
-					
+
 					if (opt.area !== 'window') {
 						start = (start + areaT) - (baseT + areaT);
 						end = (end + areaT) - (baseT + areaT);
@@ -721,19 +721,18 @@ if (!Object.keys){
 						el_wrap.classList.remove('parallax-e');
 
 					for (let el_item of el_items) {
-						let n = ((areaT - (start - s)) * 0.003).toFixed(2);
-						let styleData = el_item.dataset.css;
+						const n = ((areaT - (start - s)) * 0.003).toFixed(2);
+						const callbackname = el_item.dataset.act;
 
-						n = n < 0 ? 0 : n > 1 ? 1 : n;
+						//n = n < 0 ? 0 : n > 1 ? 1 : n;
 
-						styleData = styleData.replace(/{n}/gi, n);
-						styleData = styleData.replace(/{nn}/gi, n * 10);
-						styleData = styleData.replace(/{nnn}/gi, n * 100);
-						styleData = styleData.replace(/{-n}/gi, (1 - n).toFixed(2));
-						styleData = styleData.replace(/{-nn}/gi, (10 - n * 10).toFixed(2));
-						styleData = styleData.replace(/{-nnn}/gi, (100 - n * 100).toFixed(2));
+						if (!!Global.callback[callbackname]) {
+							Global.callback[callbackname]({
+								el: el_item, 
+								n: n
+							});
+						}
 
-						el_item.setAttribute('style', styleData);
 						el_item.setAttribute('data-parallax', n);
 					}
 				}
