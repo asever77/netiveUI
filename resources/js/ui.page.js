@@ -255,6 +255,46 @@
                console.log(v);
             }
         });
+
+        netive.callback.parallax01 = function(opt){
+            const el = opt.el;
+            const n = opt.n;
+            
+            el.style.opacity = n;
+            el.style.transform = 'translate('+ ((100 - n * 100).toFixed(2)) +'% ,0)'
+        }
+        netive.callback.parallax02 = function(opt){
+            const el = opt.el;
+            const n = opt.n;
+            
+            el.style.opacity = n;
+            el.style.transform = 'translate('+ ((100 - n * 100).toFixed(2) * -1) +'% ,0)'
+        }
+        netive.callback.parallax03 = function(opt){
+            const el = opt.el;
+            const n = opt.n;
+            
+            el.style.opacity = n;
+        }
+        netive.callback.parallax04 = function(opt){
+            const el = opt.el;
+            const n = opt.n;
+            
+            el.style.opacity = n;
+            el.style.transform = 'translate('+ ((100 - n * 100).toFixed(2)) +'% ,0)'
+        }
+        netive.callback.parallax05 = function(opt){
+            const el = opt.el;
+            const n = opt.n;
+            
+            el.style.opacity = n;
+        }
+        netive.callback.parallax06 = function(opt){
+            const el = opt.el;
+            const n = opt.n;
+            
+            el.style.opacity = n;
+        }
     }
 
     netive.page.pagePopupBook = function(){
