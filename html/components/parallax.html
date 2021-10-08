@@ -7,34 +7,35 @@
 <div class="ui-parallax">
 	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="0" data-end="20">
 		<h2 class="h-2">Examples</h2>
-		<div class="parallax-cont">
+		<div class="parallax-cont" style="overflow: hidden;">
 			<b class="ui-parallax-item" 
-			data-css="opacity:{n};transform:scale({n});transform:translate({-nnn}%,0);">A</b>
+			data-act="parallax01" style="opacity: 0; transform:translate(100%, 0);">A</b>
 		</div>
 	</section>
 
 	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="0" data-end="0">
 		<div class="parallax-cont" style="overflow: hidden;">
 			<b class="ui-parallax-item" 
-			data-css="opacity:{n};transform:scale({n});transform:translate({-nnn}%,0);">B</b>
+			data-act="parallax02" style="opacity:0;transform:translate(-100%,0);">B</b>
 		</div>
 	</section>
 
 	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="0" data-end="20">
-		<div class="parallax-cont">
+		<div class="parallax-cont" style="overflow: hidden;">
 			<b class="ui-parallax-item" 
-			data-css="opacity:{-n};transform:scale({-n});">C</b>
+			data-act="parallax03" style="opacity:0;">C</b>
 		</div>
 	</section>
 
 	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="0" data-end="20">
-		<div class="parallax-cont">
-			<b>D</b>
+		<div class="parallax-cont" style="overflow: hidden;">
+			<b class="ui-parallax-item" 
+			data-act="parallax04" style="opacity:0; transform:translate(100%, 0);">D</b>
 		</div>
 	</section>
 
 	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="60" data-end="20">
-		<div class="ui-parallax-item" data-css="opacity:{n};">
+		<div class="ui-parallax-item" data-act="parallax05" style="opacity:0;">
 			<h2 class="h-2">Source Code</h2>
 			<h3 class="h-3">HTML</h3>
 
@@ -44,11 +45,7 @@
 		...
 	&lt;/section&gt;
 	&lt;section class="ui-parallax-wrap" data-start="70" data-end="20"&gt;
-		//한자리수 0~1{n}, 
-		//두자리수 0~10{nn}
-		//세자리수 0~100{nnn}
-		//{n}양수, {-n}음수
-		&lt;div class="ui-parallax-item" data-css="opacity:{n};transform:scale({n});"&gt;
+		&lt;div class="ui-parallax-item" data-act="실행함수명"&gt;
 			...
 		&lt;/div&gt;
 	&lt;/section&gt;
@@ -60,7 +57,7 @@
 
 
 	<section class="ui-parallax-wrap parallax-test" data-start="118" data-end="20">
-		<div class="ui-parallax-item" data-css="opacity:{n};">
+		<div class="ui-parallax-item" data-act="parallax06" style="opacity:0;">
 			<h3 class="h-3">Javascript</h3>
 
 <pre class="box-code"><code class="javascript">
@@ -69,11 +66,18 @@ netive.scroll.parallax({
 		console.log(v);
 	}
 });
+
+netive.callback.실행함수명 = function(opt){
+	const el = opt.el;
+	const n = opt.n;
+	
+	//스타일 적용
+	el.style.opacity = n;
+	el.style.transform = 'translate('+ ((100 - n * 100).toFixed(2)) +'% ,0)';
+}
 </code>
 </pre>
 		</div>
 	</section>
 </div>
-
-
 
