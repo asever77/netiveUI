@@ -2129,7 +2129,7 @@ dl[class*="bul-"]>dt {
 	align-items: flex-end;
 }
 
-.fx-wrap[data-valign="middle"] {
+.fx-wrap[data-valign="center"] {
 	-webkit-box-align: center;
 	-ms-flex-align: center;
 	align-items: center;
