@@ -12,89 +12,44 @@
 
 	<style>
 		* {padding:0; margin:0; box-sizing: border-box; }
-        
-        .card-list{display:inline-block; border:10px solid lightseagreen}
-		.card-list-item{width:200px; height:130px; padding:0; border:0; cursor:pointer; opacity:0.5;}
-        .card-list-item.selected{opacity:1}
-        .card-list-item img{width:100%; display:block;}
+        html,body{width:100%; height:100%;}
+        .test{width:100%; height:100%; background:blue; display: flex; justify-content: center; align-items: center;}
+		.test-wrap{text-align: center; font-size:0;}
+		.test-item{height:calc(100vmin - 2vmin); width:calc(100vmin - 2vmin); margin:1vmin; background:chartreuse; display: inline-block;}
 
-        .card-body{display:inline-block;}
-        .card-body img{display:block;}
+		
+		[data-col="4"][data-row="2"] .test-wrap{max-width:calc(100vmin / 2 * 4)}
+		[data-col="4"][data-row="2"] .test-item{height:calc(100vmin / 2 - 2vmin); width:calc(100vmin / 2 - 2vmin);}
+		[data-col="4"][data-row="2"] .test-item{max-height:calc(100vw / 4 - 2vw); max-width:calc(100vw / 4 - 2vw)}
+		
+		[data-col="4"][data-row="3"] .test-wrap{max-width:calc(100vmin / 3 * 4)}
+		[data-col="4"][data-row="3"] .test-item{height:calc(100vmin / 3 - 2vmin); width:calc(100vmin / 3 - 2vmin);}
+		[data-col="4"][data-row="3"] .test-item{max-height:calc(100vw / 4 - 2vw); max-width:calc(100vw / 4 - 2vw)}
 
-        .card-body[data-line="1"]{border:10px solid lightblue}
-        .card-body[data-line="2"]{border:10px solid lightgreen}
-        .card-body[data-line="3"]{border:10px solid lightsalmon}
-        .card-body[data-line="4"]{border:10px solid lightslategrey}
-.fix{position:fixed; bottom:0; width:100%; background:gold}
-		.in body{background:#ccc;}
-		select{font-size:20px;}
 	</style>
 </head>
 
 <body>
 	
-	<select>
-		<option value="1">aaaaa</option>
-		<option value="2">bbbbb</option>
-		<option value="3">bbbbb</option>
-	</select>
-    <div id="test" style="position:fixed; top:0">
+	<div class="test col4" data-col="4" data-row="3"> 
+		<div class="test-wrap">
+			<div class="test-item"></div>
+			<div class="test-item"></div>
+			<div class="test-item"></div>
+			<div class="test-item"></div>
 
-    </div>
-    <div style="margin:500px 0 1000px;">
-        <input type="text">
-	<select class="aa">
-	<option value="1">rrrrr</option>
-	<option value="2">hhhhhh</option>
-	<option value="3">uuuuu</option>
-	</select>
-	<select class="bb">
-	<option value="1">33333333333</option>
-	<option value="2">22222222222</option>
-	<option value="3">11111111111</option>
-	</select>
-    </div>
-    <div id="test2">
-        <button type="button">버튼</button>
-    </div>
+			<div class="test-item"></div>
+			<div class="test-item"></div>
+			<div class="test-item"></div>
+			<div class="test-item"></div>
 
-	<!-- script -->
-	<script src="/netiveUI/resources/js/lib/jquery-1.12.4.min.js"></script>
+			<div class="test-item"></div>
+			<div class="test-item"></div>
+			<div class="test-item"></div>
+			<div class="test-item"></div>
+		</div>
 
-	<script>
-		;(function($, win, doc, undefined) {
-			$(doc).ready(function(){
-				
-				$('select.aa').off('focusin.aa','focusout.aa').on('focusin.aa', function(){
-					$('html').addClass('in');	
-				}).on('focusout.aa', function(){
-					$('html').removeClass('in');	
-				});
-				$('select.bb').off('focus.aa','blur.aa').on('focus.aa', function(){
-					$('html').addClass('in');	
-				}).on('blur.aa', function(){
-					$('html').removeClass('in');	
-				});
-				
-				$('#test').text('1: ' + $(win).outerHeight())
-				$('input').on('focus', function(){
-					var $inp = $(this);
-					setTimeout(function(){
-						$inp.val($(win).outerHeight(true) +', '+ $(doc).outerHeight(true));
-						$('#test2').addClass('fix');
-					},1000);
-				}).on('blur', function(){
-					var $inp = $(this);
-					$inp.val('');
-					$('#test2').removeClass('fix');
-				});
-				// $(win).on('resize', function(){
-				// alert($(win).outerHeight());
-				//         $('#test').text('2: ' + $(win).outerHeight())
-				//     });
+	</div>
 
-			});
-		})(jQuery, window, document);
-	</script>
 </body>
 </html>
