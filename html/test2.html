@@ -13,15 +13,31 @@
 	<style>
 		* {padding:0; margin:0; box-sizing: border-box; }
         html,body{width:100%; height:100%;}
-        .test{width:100%; height:100%; background:blue; display: flex; justify-content: center; align-items: center;}
-		.test-wrap{text-align: center; font-size:0;}
-		.test-item{height:calc(100vmin - 2vmin); width:calc(100vmin - 2vmin); margin:1vmin; background:chartreuse; display: inline-block;}
+        .test{width:100%; height:100%; background:blue; display: flex; justify-content: center; align-items: center; }
+		.test-wrap{display: flex; font-size:0; width: 100%; justify-content: center; align-items: center; flex-wrap: wrap;}
+		.test-item{margin:1vmin; background:chartreuse;}
 
+		/* 1 */
+		[data-col="1"][data-row="1"] .test-wrap{max-width:calc(100vmin / 1 * 1)}
+		[data-col="1"][data-row="1"] .test-item{height:calc(100vmin / 1 - 2vmin); width:calc(100vmin / 1 - 2vmin);}
+		[data-col="1"][data-row="1"] .test-item{max-height:calc(100vw / 1 - 2vw); max-width:calc(100vw / 1 - 2vw)}
+
+		/* 2~4 */
+		[data-col="2"][data-row="2"] .test-wrap{max-width:calc(100vw / 2 * 2)}
+		[data-col="2"][data-row="2"] .test-item{height:calc(100vmin / 2 - 2vmin); width:calc(100vmin / 2 - 2vmin);}
+		[data-col="2"][data-row="2"] .test-item{max-height:calc(100vw / 2 - 2vw); max-width:calc(100vw / 2 - 2vw)}
+
+		/* 3~6 */
+		[data-col="3"][data-row="2"] .test-wrap{max-width:calc(100vmin / 2 * 3);}
+		[data-col="3"][data-row="2"] .test-item{height:calc(100vmin / 2 - 2vmin); width:calc(100vmin / 2 - 2vmin);}
+		[data-col="3"][data-row="2"] .test-item{max-height:calc(100vw / 3 - 2vmin); max-width:calc(100vw / 3 - 2vmin);}
 		
+		/* 7~8 */
 		[data-col="4"][data-row="2"] .test-wrap{max-width:calc(100vmin / 2 * 4)}
 		[data-col="4"][data-row="2"] .test-item{height:calc(100vmin / 2 - 2vmin); width:calc(100vmin / 2 - 2vmin);}
 		[data-col="4"][data-row="2"] .test-item{max-height:calc(100vw / 4 - 2vw); max-width:calc(100vw / 4 - 2vw)}
 		
+		/* 9~16 */
 		[data-col="4"][data-row="3"] .test-wrap{max-width:calc(100vmin / 3 * 4)}
 		[data-col="4"][data-row="3"] .test-item{height:calc(100vmin / 3 - 2vmin); width:calc(100vmin / 3 - 2vmin);}
 		[data-col="4"][data-row="3"] .test-item{max-height:calc(100vw / 4 - 2vw); max-width:calc(100vw / 4 - 2vw)}
@@ -31,7 +47,7 @@
 
 <body>
 	
-	<div class="test col4" data-col="4" data-row="3"> 
+	<div class="test" data-col="3" data-row="2"> 
 		<div class="test-wrap">
 			<div class="test-item"></div>
 			<div class="test-item"></div>
@@ -40,13 +56,13 @@
 
 			<div class="test-item"></div>
 			<div class="test-item"></div>
-			<div class="test-item"></div>
+			<!-- <div class="test-item"></div>
 			<div class="test-item"></div>
 
 			<div class="test-item"></div>
 			<div class="test-item"></div>
 			<div class="test-item"></div>
-			<div class="test-item"></div>
+			<div class="test-item"></div> -->
 		</div>
 
 	</div>
