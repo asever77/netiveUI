@@ -5036,7 +5036,8 @@ if (!Object.keys){
 						table += '<td class="name pub"><span>' + pub + '</span></td>';
 						table += '<td class="name dev"><span>' + dev + '</span></td>';
 						table += id !== '' ?
-							'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
+							'<td class="id ico_pg"><span><a href="/netiveUI/html/index.html?page=' + id + '" target="coding">' + id + '</a></span></td>' :
+							//'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
 							'<td class="id "><span></span></td>';	
 						(dataExecel.list[i].d1 !== '') ? table += '<td class="d d1"><span>' + d1 + '</span></td>' : table += '<td class="d"></td>';
 						(dataExecel.list[i].d2 !== '') ? table += '<td class="d d2"><span>' + d2 + '</span></td>' : table += '<td class="d"></td>';
@@ -5070,8 +5071,11 @@ if (!Object.keys){
 				info += '<input type="search" id="projectListSrchCode" class="inp-base ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
 				info += '<button type="button" id="projectListSrchBtn" class="btn-base"><span>검색</span></button>';
 				info += '<button type="button" id="projectListSrchRe" class="btn-base"><span>초기화</span></button>';
+				info += '<button type="button" id="mobilePreview" class="btn-base"><span>모바일</span></button>';
 				info += '</div>';
 				info += '</div>';
+
+				
 				
 				codinglist.insertAdjacentHTML('afterbegin', info);
 
