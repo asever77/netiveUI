@@ -824,7 +824,6 @@ if (!Object.keys){
 
 			//+reset
 			if (el_scrollbar.dataset.ready === 'yes') {
-				console.log(111111111);
 				return false;
 			}
 
@@ -924,7 +923,7 @@ if (!Object.keys){
 
 			function scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW){
 				const _el_scrollbar = el_scrollbar;
-				const	el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
+				const el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
 				
 				if (!el_item) {
 					return false;
@@ -5036,7 +5035,7 @@ if (!Object.keys){
 						table += '<td class="name pub"><span>' + pub + '</span></td>';
 						table += '<td class="name dev"><span>' + dev + '</span></td>';
 						table += id !== '' ?
-							'<td class="id ico_pg"><span><a href="/netiveUI/html/index.html?page=' + id + '" target="coding">' + id + '</a></span></td>' :
+							'<td class="id ico_pg"><span><a class="ui-coding-link" href="/netiveUI/html/index.html?page=' + id + '" target="coding">' + id + '</a></span></td>' :
 							//'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
 							'<td class="id "><span></span></td>';	
 						(dataExecel.list[i].d1 !== '') ? table += '<td class="d d1"><span>' + d1 + '</span></td>' : table += '<td class="d"></td>';
@@ -5075,9 +5074,50 @@ if (!Object.keys){
 				info += '</div>';
 				info += '</div>';
 
-				
+				const ifr = '<div class="ui-codinglist-mobile"><button type="button" id="mobilePreviewClose" class="btn-close icon-material" data-icon="close"><span class="a11y-hidden">닫기</span></button><iframe id="codingListIframe" title="mobile preview" class="ui-codinglist-iframe type-ipx" src=""></iframe></div>';
 				
 				codinglist.insertAdjacentHTML('afterbegin', info);
+				document.querySelector('body').insertAdjacentHTML('beforeend', ifr);
+
+				const links = doc.querySelectorAll('.ui-coding-link');
+				const previewBtn = doc.querySelector('#mobilePreview');
+				const previewClose = doc.querySelector('#mobilePreviewClose');
+				const uiCodingIframeWrap = doc.querySelector('.ui-codinglist-mobile');
+				const uiCodingIframe = doc.querySelector('.ui-codinglist-iframe');
+
+				previewBtn.addEventListener('click', pagePreviewOn);
+				previewClose.addEventListener('click', pagePreviewOn);
+				
+				for (let that of links) {
+					that.addEventListener('mouseover', pagePreview);
+				}
+
+				function pagePreviewOn() {
+					uiCodingIframeWrap.classList.toggle('on');
+				}
+				function pagePreview() {
+					const pageSrc = this.href;
+
+					if (uiCodingIframe.src === pageSrc) {
+						return false;
+					}
+					uiCodingIframe.src = pageSrc;
+
+					uiCodingIframe.addEventListener('load', previewAct);
+				}
+
+				function previewAct(){
+					const iframeDoc = uiCodingIframe.contentDocument;
+					const iframeHtml = iframeDoc.querySelector('html');
+
+					iframeHtml.classList.remove('etc');
+					iframeHtml.classList.remove('ui-d');
+					iframeHtml.classList.remove('chrome');
+
+					iframeHtml.classList.add('ios');
+					iframeHtml.classList.add('ui-m');
+					iframeHtml.classList.add('safari');
+				}
 
 				const el_info = doc.querySelector('.ui-codinglist-info');
 				const el_total = el_info.querySelector('.total');
@@ -5159,6 +5199,7 @@ if (!Object.keys){
 			}
 		}
 	}
+
 
 	
 
