@@ -1020,11 +1020,12 @@ a.ui-acco-btn:after {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 .ui-modal.ready {
     display: flex;
+    overflow-y: hidden;
 }
 
 .ui-modal.ready .ui-modal-dim {

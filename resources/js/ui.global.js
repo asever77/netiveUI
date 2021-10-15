@@ -407,6 +407,18 @@ if (!Object.keys){
 	}
 	Global.parts.resizeState();
 
+	Global.option = {
+		join : function(org, add){
+			console.log(org, add);
+
+			const object1 = {};
+
+			Object.defineProperties(object1, org, add);
+
+			console.log(object1);
+		}
+	}
+
 	Global.loading = {
 		timerShow : {},
 		timerHide : {},
@@ -417,7 +429,10 @@ if (!Object.keys){
 		},
 		show : function(option){
 			const opt = Object.assign({}, this.options, option);
+			//Global.option.join(this.options, option);
+
 			const {selector, styleClass, message} = opt;
+			console.log(selector, styleClass, message);
 			const el = (selector !== null) ? selector : doc.querySelector('body');
 			const el_loadingHides = doc.querySelectorAll('.ui-loading:not(.visible)');
 
@@ -541,15 +556,15 @@ if (!Object.keys){
 	/**
 	 * intersection observer
 	 */
-	Global.io = new IntersectionObserver(function (entries) {
-		entries.forEach(function (entry) {
-			if (entry.intersectionRatio > 0) {
-				entry.target.classList.add('tada');
-			} else {
-				entry.target.classList.remove('tada');
-			}
-		});
-	});
+	// Global.io = new IntersectionObserver(function (entries) {
+	// 	entries.forEach(function (entry) {
+	// 		if (entry.intersectionRatio > 0) {
+	// 			entry.target.classList.add('tada');
+	// 		} else {
+	// 			entry.target.classList.remove('tada');
+	// 		}
+	// 	});
+	// });
 
 	Global.scroll = {
 		options : {
@@ -908,6 +923,8 @@ if (!Object.keys){
 				const el_barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
 				const el_barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 				
+				console.log(el_scrollbar);
+
 				el_barY.style.height = barH + '%';
 				el_barX.style.height = barW + '%';
 				el_barY.dataset.height = barH;
