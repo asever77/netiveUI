@@ -316,7 +316,7 @@ p {
 	padding: 1rem 3rem 3rem;
 	line-height: 0;
 	overflow:auto;
-	background-color: var(--gray900);
+	background-color: var(--code-bg);
 }
 
 
@@ -325,7 +325,7 @@ p {
 	width:100%;
 	line-height: 1.4;
 	font-size: var(--text-xs);
-	color: var(--gray50);
+	color: var(--code-text);
 }
 
 .box-code .hljs {

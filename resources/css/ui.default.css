@@ -63,6 +63,10 @@
 
 	/* etc */
 	--shadow: rgba(0,0,0,0.1);
+
+	/* code */
+	--code-bg: #212121;
+	--code-text: #FAFAFA;
 }
 
 :root.dark-mode {
@@ -116,6 +120,10 @@
 
 	/* etc */
 	--shadow: rgba(0,0,0,0.1);
+	
+	/* code */
+	--code-bg: #212121;
+	--code-text: #FAFAFA;
 }
 
 :root.size-mobile {
