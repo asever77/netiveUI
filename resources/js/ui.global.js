@@ -428,7 +428,8 @@ if (!Object.keys){
 			styleClass : 'orbit' //time
 		},
 		show : function(option){
-			const opt = Object.assign({}, this.options, option);
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, this.options, option);
 			//Global.option.join(this.options, option);
 
 			const {selector, styleClass, message} = opt;
@@ -506,8 +507,9 @@ if (!Object.keys){
 				return false;
 			}
 
-			const xhr = new XMLHttpRequest();	
-			const opt = Object.assign({}, this.options, option);
+			const xhr = new XMLHttpRequest();
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, this.options, option);
 			const {area, loading, effect, type, url, page, add, prepend, mimeType, contType} = opt;
 			const callback = opt.callback || false;
 			const errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
@@ -615,7 +617,8 @@ if (!Object.keys){
 			});
 		},
 		move : function(option){
-			const opt = Object.assign({}, this.options, option);
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, this.options, option);
 			const {top, left, callback, align, add, focus, effect} = opt;
 			let selector = opt.selector;
 
@@ -623,8 +626,6 @@ if (!Object.keys){
 			// if (!!selector[0]) {
 			// 	selector = selector[0];
 			// }
-
-			console.log(selector);
 
 			switch (align) {
 				case 'default':
@@ -699,7 +700,8 @@ if (!Object.keys){
 			area : null
 		},
 		parallax: function(option) {
-			const opt = Object.assign({}, this.optionsParllax, option);
+			const opt = {...this.optionsParllax, ...option};
+			//const opt = Object.assign({}, this.optionsParllax, option);
 			const el_area = opt.area ?? window;
 			const el_parallax = opt.selector ?? doc.querySelector('.ui-parallax');
 			const el_wraps = el_parallax.querySelectorAll(':scope > .ui-parallax-wrap');
@@ -779,7 +781,8 @@ if (!Object.keys){
 			if (option === undefined) {
 				return false;
 			}
-			const opt = Object.assign({}, Global.focus.options, option);
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, Global.focus.options, option);
 			const el = opt.selector;
 			const callback = opt.callback;
 			// var $focusItem = $base.find('input, h1, h2, h3, a, button, label, textarea, select').eq(0);
@@ -827,7 +830,8 @@ if (!Object.keys){
 
 		//메서드 사이엔 쉼표가 없습니다.
 		init(option) {
-			const opt = Object.assign({}, this, option);
+			const opt = {...this, ...option};
+			//const opt = Object.assign({}, this, option);
 			const id = opt.id;
 			const callback = opt.callback;
 			const infiniteCallback = opt.infiniteCallback;
@@ -923,8 +927,6 @@ if (!Object.keys){
 				const el_barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
 				const el_barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 				
-				console.log(el_scrollbar);
-
 				el_barY.style.height = barH + '%';
 				el_barX.style.height = barW + '%';
 				el_barY.dataset.height = barH;
@@ -1209,7 +1211,8 @@ if (!Object.keys){
 			scrollbars: 'yes'
 		},
 		open: function(option){
-			const opt = Object.assign({}, this.options, option);
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, this.options, option);
 			const {name,width,height,align,toolbar,location,menubar,status,resizable,scrollbars,link} = opt;
 			let {top,left} = opt;
 
@@ -1264,21 +1267,15 @@ if (!Object.keys){
 			let dir = "asc";
 			let rows, o, x, y, shouldSwitch;
 
-			
-
 			while (switching) {
 				switching = false;
 				rows = table.getElementsByTagName('TR');
 			}
 
-			console.log(rows.length);
-
 			for (o = 1; o < rows.length - 1; o++) {
 				shouldSwitch = false;
 				x = rows[o].getElementsByTagName('TD')[opt.n];
 				y = rows[o + 1].getElementsByTagName('TD')[opt.n];
-
-				console.log(opt.n);
 
 				if (dir === 'asc') {
 					if (x.innerHTML.toLowerCase() > y.innerHTML.toLowerCase()) {
@@ -1329,7 +1326,8 @@ if (!Object.keys){
 			callback:false
 		},
 		scroll: function(option){
-			const opt = Object.assign({}, this.scrollOption, option);
+			const opt = {...this.scrollOption, ...option};
+			//const opt = Object.assign({}, this.scrollOption, option);
 			const callback = opt.callback;
 			const el_wraps = doc.querySelectorAll('.ui-tablescroll');
 
@@ -2634,7 +2632,8 @@ if (!Object.keys){
 			callback: false
 		},
 		init: function(option){
-			const opt = Object.assign({}, this.options, option);
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, this.options, option);
 			const current = opt.current;
 			const callback = opt.callback;
 			let customscroll = opt.customscroll;
@@ -3334,7 +3333,8 @@ if (!Object.keys){
 			effTime: '.2'
 		},
 		init: function(option){
-			const opt = Object.assign({}, Global.accordion.options, option);
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, Global.accordion.options, option);
 			const accoId = opt.id;
 			const callback = opt.callback;
 			let current = opt.current;
@@ -3649,7 +3649,8 @@ if (!Object.keys){
 			callback:false
 		},
 		init: function(option){
-			const opt = Object.assign({}, Global.dropdown.options, option);
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, Global.dropdown.options, option);
 			const {id, ps, hold, area, src, offset} = opt;
 			const callback = opt.callback !== undefined ? opt.callback : false;
 
@@ -3867,35 +3868,40 @@ if (!Object.keys){
 	}	
 
 	Global.modal = {
+		/**
+		 * options
+		 * type: normal | system
+		 * ps: center | top | bottom
+		 */
 		options : {
-			type: 'normal', /* type : normal, system */
-			full: false,
+			type: 'normal', 
 			ps: 'center',
+			full: false,
 			src: false,
-			remove: 'false',
+			remove: false,
 			width: false,
 			height: false,
-			mg: 20,
 			callback:false,
-
 			closeCallback:false,
 			endfocus:false,
+			mg: 20,
 
 			sMessage: '',
 			sBtnConfirmTxt: 'Ok',
 			sBtnCancelTxt: 'Cancel',
-			sZindex: false,
 			sClass: 'type-system',
+			sZindex: false,
 			sConfirmCallback: false,
 			sCancelCallback: false
 		},
 		optionsClose : {
-			remove: 'false',
+			remove: false,
 			callback: false,
 			endfocus: false
 		},
 		show: function(option){
-			const opt = Object.assign({}, Global.modal.options, option);
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, Global.modal.options, option);
 			const elBody = doc.querySelector('body');
 			const {type, src, full, ps, width, height, callback, callbackClose} = opt;
 			let {mg, id, remove} = opt;
@@ -3925,7 +3931,7 @@ if (!Object.keys){
 			} else {
 				//system modal
 				endfocus = null;
-				remove = 'true';
+				remove = true;
 				id = 'uiSystemModal';
 				makeSystemModal();
 			}
@@ -3933,7 +3939,7 @@ if (!Object.keys){
 			function makeSystemModal(){
 				let htmlSystem = '';
 				
-				htmlSystem += '<div class="ui-modal type-system '+ sClass +'" id="uiSystemModal">';
+				htmlSystem += '<div class="ui-modal type-system '+ sClass +'" id="uiSystemModal" role="dialog" aria-modal="true" aria-live="polite">';
 				htmlSystem += '<div class="ui-modal-wrap">';
 				htmlSystem += '<div class="ui-modal-body">';
 				htmlSystem += sMessage;
@@ -4122,7 +4128,8 @@ if (!Object.keys){
 			}
 		},
 		hide: function(option){
-			const opt = Object.assign({}, Global.modal.optionsClose, option);
+			const opt = {...this.optionsClose, ...option};
+			//const opt = Object.assign({}, Global.modal.optionsClose, option);
 			const {id, type, remove, callback} = opt;
 			const elModal = doc.querySelector('#' + id);
 			const elBody = doc.querySelector('body');
@@ -4202,17 +4209,24 @@ if (!Object.keys){
 
 	Global.toast = {
 		timer : null,
+		/**
+		 * options 
+		 * delay: short[2s] | long[3.5s]
+		 * status: assertive[중요도 높은 경우] | polite[중요도가 낮은 경우] | off[default]
+		 */
 		options : {
 			delay: 'short',
 			classname : '',
-			conts: ''
+			conts: '',
+			status: 'assertive' 
 		},
 		show : function(option) {
-			const opt = Object.assign({}, this.options, option);
-			const {delay, classname, conts} = opt;
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, this.options, option);
+			const {delay, classname, conts, status} = opt;
 			const el_body = document.querySelector('body');
 
-			let toast = '<div class="ui-toast toast '+ classname +'">'+ conts +'</div>';
+			let toast = '<div class="ui-toast toast '+ classname +'" aria-live="'+ status +'">'+ conts +'</div>';
 			let time = (delay === 'short') ? 2000 : 3500;
 
 			if (delay === 'short') {
@@ -4274,11 +4288,11 @@ if (!Object.keys){
 	}
 
 	Global.tooltip = {
-		options: {
-			visible: null,
-			id: false,
-			ps: false
-		},
+		// options: {
+		// 	visible: null,
+		// 	id: false,
+		// 	ps: false
+		// },
 		timerShow: null,
 		timerHide: null,
 		show: function(e){
@@ -4415,8 +4429,9 @@ if (!Object.keys){
 			el.removeEventListener('blur', Global.tooltip.hide);
 			el.removeEventListener('mouseleave', Global.tooltip.hide);
 		},
-		init: function(opt) {
-			const option = Object.assign({}, Global.tooltip.options, opt);
+		init: function() {
+			//const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, Global.tooltip.options, option);
 			const el_btn = doc.querySelectorAll('.ui-tooltip-btn');
 
 			for (let btn of el_btn) {
@@ -4576,7 +4591,8 @@ if (!Object.keys){
 			align : 'center'
 		},
 		init: function(option) {
-			const opt = Object.assign({}, this.options, option);
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, this.options, option);
 			const id = opt.id;
 			const effect = opt.effect;
 			let current = isNaN(opt.current) ? 0 : opt.current;
@@ -4756,8 +4772,8 @@ if (!Object.keys){
 			}
 		},
 		toggle: function(option) {
-			const opt = Object.assign({}, this.options, option);
-
+			const opt = {...this.options, ...option};
+			//const opt = Object.assign({}, this.options, option);
 			const id = opt.id;
 			const callback = opt.callback;
 			const el_tab = doc.querySelector('#' + id);
@@ -5103,6 +5119,7 @@ if (!Object.keys){
 				const uiCodingIframe = doc.querySelector('.ui-codinglist-iframe');
 
 				previewBtn.addEventListener('click', pagePreviewOn);
+				previewClose.removeEventListener('click', pagePreviewOn);
 				previewClose.addEventListener('click', pagePreviewOn);
 				
 				for (let that of links) {
@@ -5110,6 +5127,7 @@ if (!Object.keys){
 				}
 
 				function pagePreviewOn() {
+					console.log(1111);
 					uiCodingIframeWrap.classList.toggle('on');
 				}
 				function pagePreview() {

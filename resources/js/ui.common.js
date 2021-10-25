@@ -264,8 +264,8 @@
 				// IE 에서만 돌아갈 내용
 			} else {
 				// IE 가 아닐 때 돌아갈 내용
-				hljs.configure({tabReplace: " "});
-				hljs.initHighlighting();
+				//hljs.configure({tabReplace: " "});
+				//hljs.initHighlighting();
 			}
 			
 

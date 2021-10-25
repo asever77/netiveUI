@@ -291,6 +291,7 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 
       if (!!doc.querySelector('#uiJsName')) {
         jsName = doc.querySelector('#uiJsName').value;
+        console.log(netive.page,jsName);
         netive.page[jsName]();
       }
 
@@ -308,13 +309,10 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
       }
 
       if (document.currentScript === undefined) {// IE 에서만 돌아갈 내용
-      } else {
-        // IE 가 아닐 때 돌아갈 내용
-        hljs.configure({
-          tabReplace: " "
-        });
-        hljs.initHighlighting();
-      } //hljs.initHighlighting();
+      } else {// IE 가 아닐 때 돌아갈 내용
+          //hljs.configure({tabReplace: " "});
+          //hljs.initHighlighting();
+        } //hljs.initHighlighting();
       //hljs.highlightAll();
       // console.log(v.split('.html'), !!doc.querySelector('#uiPageJS'));
       // if (!doc.querySelector('#uiPageJS')) {
