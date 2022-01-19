@@ -4,148 +4,148 @@
 	
 	netive.common = {
 		init: function(){
-			let fristHref = '/netiveUI/html/start/introduction.html';
+			let fristHref = '../html/start/introduction.html';
 
 			if (!!netive.para.get('page')) {
 				switch(netive.para.get('page')) {
 					case 'introduction' :
-						fristHref = '/netiveUI/html/start/introduction.html';
+						fristHref = '../html/start/introduction.html';
 						break;
 					case 'typography' :
-						fristHref = '/netiveUI/html/start/typography.html';
+						fristHref = '../html/start/typography.html';
 						break;
 					case 'color' :
-						fristHref = '/netiveUI/html/start/color.html';
+						fristHref = '../html/start/color.html';
 						break;
 					case 'device' :
-						fristHref = '/netiveUI/html/start/device.html';
+						fristHref = '../html/start/device.html';
 						break;
 					case 'margin' :
-						fristHref = '/netiveUI/html/start/margin.html';
+						fristHref = '../html/start/margin.html';
 						break;
 					case 'naming' :
-						fristHref = '/netiveUI/html/start/naming.html';
+						fristHref = '../html/start/naming.html';
 						break;
 					case 'placeholder' :
-						fristHref = '/netiveUI/html/start/placeholder.html';
+						fristHref = '../html/start/placeholder.html';
 						break;
 					case 'units' :
-						fristHref = '/netiveUI/html/start/units.html';
+						fristHref = '../html/start/units.html';
 						break;
 
 					case 'bulletList' :
-						fristHref = '/netiveUI/html/contents/bulletList.html';
+						fristHref = '../html/contents/bulletList.html';
 						break;
 					case 'table' :
-						fristHref = '/netiveUI/html/contents/table.html';
+						fristHref = '../html/contents/table.html';
 						break;
 					case 'inputFormat' :
-						fristHref = '/netiveUI/html/contents/inputFormat.html';
+						fristHref = '../html/contents/inputFormat.html';
 						break;
 					case 'inputPlaceholder' :
-						fristHref = '/netiveUI/html/components/inputPlaceholder.html';
+						fristHref = '../html/components/inputPlaceholder.html';
 						break;
 
 					case 'accordion' :
-						fristHref = '/netiveUI/html/components/accordion.html';
+						fristHref = '../html/components/accordion.html';
 						break;
 					case 'brickList' :
-						fristHref = '/netiveUI/html/components/brickList.html';
+						fristHref = '../html/components/brickList.html';
 						break;
 					case 'draggable' :
 						console.log('draggable');
-						fristHref = '/netiveUI/html/components/draggable.html';
+						fristHref = '../html/components/draggable.html';
 						break;
 					case 'dropdown' :
-						fristHref = '/netiveUI/html/components/dropdown.html';
+						fristHref = '../html/components/dropdown.html';
 						break;
 					case 'floating' :
-						fristHref = '/netiveUI/html/components/floating.html';
+						fristHref = '../html/components/floating.html';
 						break;
 					case 'floatingRange' :
-						fristHref = '/netiveUI/html/components/floatingRange.html';
+						fristHref = '../html/components/floatingRange.html';
 						break;
 					case 'modal' :
-						fristHref = '/netiveUI/html/components/modal.html';
+						fristHref = '../html/components/modal.html';
 						break;
 					case 'scrollBar' :
-						fristHref = '/netiveUI/html/components/scrollBar.html';
+						fristHref = '../html/components/scrollBar.html';
 						break;
 					case 'parallax' :
-						fristHref = '/netiveUI/html/components/parallax.html';
+						fristHref = '../html/components/parallax.html';
 						break;
 					case 'popupBook' :
-						fristHref = '/netiveUI/html/components/popupBook.html';
+						fristHref = '../html/components/popupBook.html';
 						break;
 					case 'loading' :
-						fristHref = '/netiveUI/html/components/loading.html';
+						fristHref = '../html/components/loading.html';
 						break;
 					case 'tab' :
-						fristHref = '/netiveUI/html/components/tab.html';
+						fristHref = '../html/components/tab.html';
 						break;
 					case 'tableCaption' :
-						fristHref = '/netiveUI/html/components/tableCaption.html';
+						fristHref = '../html/components/tableCaption.html';
 						break;
 					case 'tableCellFix' :
-						fristHref = '/netiveUI/html/components/tableCellFix.html';
+						fristHref = '../html/components/tableCellFix.html';
 						break;
 					case 'tableScroll' :
-						fristHref = '/netiveUI/html/components/tableScroll.html';
+						fristHref = '../html/components/tableScroll.html';
 						break;
 					case 'print' :
-						fristHref = '/netiveUI/html/components/print.html';
+						fristHref = '../html/components/print.html';
 						break;
 					case 'popup' :
-						fristHref = '/netiveUI/html/components/popup.html';
+						fristHref = '../html/components/popup.html';
 						break;
 					case 'tooltip' :
-						fristHref = '/netiveUI/html/components/tooltip.html';
+						fristHref = '../html/components/tooltip.html';
 						break;
 					case 'datePicker' :
-						fristHref = '/netiveUI/html/components/datePicker.html';
+						fristHref = '../html/components/datePicker.html';
 						break;
 					case 'inputClear' :
-						fristHref = '/netiveUI/html/components/inputClear.html';
+						fristHref = '../html/components/inputClear.html';
 						break;
 					case 'select' :
-						fristHref = '/netiveUI/html/components/select.html';
+						fristHref = '../html/components/select.html';
 						break;
 					case 'toast' :
-						fristHref = '/netiveUI/html/components/toast.html';
+						fristHref = '../html/components/toast.html';
 						break;
 					case 'innerLabel' :
-						fristHref = '/netiveUI/html/components/innerLabel.html';
+						fristHref = '../html/components/innerLabel.html';
 						break;
 					case 'scrollMove' :
-						fristHref = '/netiveUI/html/components/scrollMove.html';
+						fristHref = '../html/components/scrollMove.html';
 						break;
 					case 'countNumber' :
-						fristHref = '/netiveUI/html/components/countNumber.html';
+						fristHref = '../html/components/countNumber.html';
 						break;
 
 					case 'layout' :
-						fristHref = '/netiveUI/html/contents/layout.html';
+						fristHref = '../html/contents/layout.html';
 						break;
 					case 'button' :
-						fristHref = '/netiveUI/html/contents/button.html';
+						fristHref = '../html/contents/button.html';
 						break;
 					case 'jsonCodingList' :
-						fristHref = '/netiveUI/html/components/jsonCodingList.html';
+						fristHref = '../html/components/jsonCodingList.html';
 						break;
 					case 'fileUpload' :
-						fristHref = '/netiveUI/html/components/fileUpload.html';
+						fristHref = '../html/components/fileUpload.html';
 						break;
 					case 'range' :
-						fristHref = '/netiveUI/html/components/range.html';
+						fristHref = '../html/components/range.html';
 						break;
 					case 'slide' :
-						fristHref = '/netiveUI/html/components/slide.html';
+						fristHref = '../html/components/slide.html';
 						break;
 					case 'slot' :
-						fristHref = '/netiveUI/html/components/slot.html';
+						fristHref = '../html/components/slot.html';
 						break;
 					case 'issue' :
-						fristHref = '/netiveUI/html/memory/issue.html';
+						fristHref = '../html/memory/issue.html';
 						break;
 				   
 				}
@@ -153,18 +153,18 @@
 
 			netive.ajax.init({ 
 				area: document.querySelector('.base-skip'), 
-				url:'/netiveUI/html/inc/skip.html', 
+				url:'../html/inc/skip.html', 
 				page:true
 			});
 			netive.ajax.init({ 
 				area: document.querySelector('.base-header'), 
-				url:'/netiveUI/html/inc/header.html', 
+				url:'../html/inc/header.html', 
 				page:true, 
 				callback:netive.common.header 
 			});
 			netive.ajax.init({ 
 				area: document.querySelector('.base-footer'), 
-				url:'/netiveUI/html/inc/footer.html', 
+				url:'../html/inc/footer.html', 
 				page:true
 			});
 			netive.ajax.init({ 
@@ -191,7 +191,7 @@
 		},
 		header: function(){
 			console.log('header load');
-			netive.scrollBar();
+			netive.scrollBar.init();
 
 			setTimeout(function(){
 				netive.accordion.init({ 
@@ -203,7 +203,7 @@
 				
 				doc.querySelector('.ui-nav').addEventListener('click', netive.common.toggleNav);
 				document.querySelector('.btn-mode').addEventListener('click', netive.common.toggleMode);
-			},0);
+			},1);
 			
 		},
 		toggleMode: function(){
@@ -226,9 +226,11 @@
 			asideUl += '<li><a href="#">Top</a></li>'; 
 			let i = 0;
 
-			for (let el_h2 of el_h2s) {
-				el_h2.setAttribute('id', 'pageTit' + i);
-				asideUl += '<li><a href="#pageTit'+ i +'">'+ el_h2.textContent +'</a></li>';	
+			for (let i = 0, len = el_h2s.length; i < len; i++) {
+				const that = el_h2s[i];
+
+				that.setAttribute('id', 'pageTit' + i);
+				asideUl += '<li><a href="#pageTit'+ i +'">'+ that.textContent +'</a></li>';	
 
 				i = i + 1;
 			}
@@ -247,16 +249,26 @@
 
 			if(typeof(history.pushState) == 'function') {
 				let renewURL = location.href;
+
+				
+
 				renewURL = renewURL.replace(/\&page=([0-9]+)/ig,'');
-				renewURL = renewURL.split('/netiveUI/');
+				renewURL = renewURL.split('../');
 				renewURL = renewURL[0];
 				renewURL = renewURL + v;
 
-				let paraUrl = v.split('.');
-				paraUrl = paraUrl[0].split('/');
-				paraUrl = paraUrl[paraUrl.length - 1];
+				let paraUrl = v.split('.html');
+				console.log(paraUrl);
 
-				const indexUrl = '/netiveUI/html/index.html?page=' + paraUrl;
+				paraUrl = paraUrl[0].split('/');
+				console.log(paraUrl);
+
+				paraUrl = paraUrl[paraUrl.length - 1];
+				console.log(paraUrl);
+
+				
+
+				const indexUrl = '../html/index.html?page=' + paraUrl;
    
 				history.pushState(false, 'loading', indexUrl);
 			}
@@ -275,14 +287,14 @@
 
 			// console.log(v.split('.html'), !!doc.querySelector('#uiPageJS'));
 			// if (!doc.querySelector('#uiPageJS')) {
-			//	  var del = doc.querySelector('#uiPageJS');
-			//	 del.parentNode.removeChild(del);
+			// 	  var del = doc.querySelector('#uiPageJS');
+			// 	 del.parentNode.removeChild(del);
 			// }
 
 			// var jsSrc = v.split('.html'),
-			//	 jsSrc = jsSrc[0] + '.js',
-			//	 script = document.createElement('script'),
-			//	 element = document.getElementsByTagName('body')[0]; 
+			// 	 jsSrc = jsSrc[0] + '.js',
+			// 	 script = document.createElement('script'),
+			// 	 element = document.getElementsByTagName('body')[0]; 
 
 			// script.src = jsSrc; 
 			// script.id = 'uiPageJS'
@@ -296,7 +308,8 @@
 		menuAjax: function(){
 			const dep2btns = doc.querySelectorAll('.dep-2-btn');
 
-			for (let that of dep2btns) {
+			for (let i = 0, len = dep2btns.length; i < len; i++) {
+				const that = dep2btns[i];
 				that.addEventListener('click', act);
 			}
 

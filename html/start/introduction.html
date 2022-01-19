@@ -1,21 +1,11 @@
 <input type="hidden" id="uiJsName" value="pageIntroduction">
 
 <div class="tit-wrap">
-	<h1 class="h-1">Introduction</h1><!--
-	<p>나는 웹사이트가 건물을 세우는 일과 같다고 생각한다.</p>
-	<p class="mgt-xxs">첫 번째로 그중에 웹 퍼블리싱은 건물의 철골구조와 콘크리트와 같은 기초공사 부분이라 생각한다. <br>
-		기초공사가 견고하지 못하면 부실 공사가 될 수밖에 없듯 웹사이트도 똑같은 문제가 발생한다.<br> 기초 구조물이 견고해야 다양한 환경변화, 구조 변경에도 최적화를 유지할 수 있으며 유지보수 비용도 절감이 된다.<br>
-		견고한 기초공사를 위해서는 Semantic HTML5로 태그 하나하나에 의미가 있는 코드와 웹접근성을 고려하며 구성해야 한다.</p>
-	<p class="mgt-xxs">두 번째로 건물의 전기공사는 Javascript라 생각한다. <br>건물 곳곳에 필요한 조명, 스위치등 사용자의 선택에 따른 결과를 정확하게 전달해야한다. <br>난잡한 전기공사는 합선로 인한 화재나 의도하지 않은 곳에서의 결과물이 나올수가 있다. <br>그런일이 생기지 않기 위해서는 체계적이며 어디서든 재사용이 용이할 수 있는 자바스크립트 코드를 만든다.</p>
-	<p class="mgt-xxs">마지막으로 세 번쨰는 건물의 마감공사는 CSS가 하는 일이라 생각한다.<br>
-		CSS로 디자인을 표현할때는 'id'사용은 최대한 지양하며 'class'로만 스타일을 표현한다.<br>
-		CSS 작명은 1차원적인(에러인 경우 붉인색 텍스트를 .red) 네이밍이 아니라 목적에 맞는(에러인 경우 붉은색 텍스트를 .error) 네이밍으로 사용한다.</p>-->
+	<h1 class="h-1">Introduction</h1>
 </div>
 
 <section class="sec-wrap">
-	
-		<h2 class="h-2">HTML</h3>
-
+	<h2 class="h-2">HTML</h3>
 
 <pre class="box-code"><code class="html">
 &lt;!doctype html&gt;
@@ -23,28 +13,31 @@
 	&lt;head&gt;
 		&lt;meta charset="utf-8"&gt;
 		&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
-		&lt;meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=yes"&gt;
-		&lt;title&gt;page title&lt;/title&gt;
-		&lt;link rel="stylesheet" href="/projectname/resources/css/ui.base.css"&gt;
+		&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;
+		
 		&lt;link rel="canonical" href="https://asever77.github.io/netiveUI/html/"&gt;
-		&lt;script src="/projectname/resources/js/lib/jquery-1.12.4.min.js"&gt;&lt;/script&gt;
-		&lt;script src="/projectname/resources/js/ui.global.js"&gt;&lt;/script&gt;
-		&lt;script src="/projectname/resources/js/ui.common.js"&gt;&lt;/script&gt;
+		&lt;link rel="stylesheet" href="../resources/css/ui.base.css"&gt;
+
+		&lt;script src="../resources/js/ui.global.js"&gt;&lt;/script&gt;
+		&lt;script src="../resources/js/ui.common.js"&gt;&lt;/script&gt;
+
+		&lt;title&gt;page title&lt;/title&gt;
 	&lt;/head&gt;
+
 	&lt;body&gt;
 		&lt;div class="base-skip"&gt;&lt;/div&gt;
 		&lt;div class="base-wrap"&gt;
 			&lt;header class="base-header"&gt;&lt;/header&gt;
 			&lt;div class="base-body"&gt;
-				&lt;main class="base-main"&gt;&lt;/main&gt;
 				&lt;aside class="base-aside"&gt;&lt;/aside&gt;
+				&lt;main class="base-main"&gt;&lt;/main&gt;
 			&lt;/div&gt;
 			&lt;footer class="base-footer"&gt;&lt;/footer&gt;
 		&lt;/div&gt;
 		
 		&lt;script&gt;
 		;(function(win, doc, undefined) {
-			document.addEventListener("DOMContentLoaded", function(){
+			doc.addEventListener("DOMContentLoaded", function(){
 				여기에 실행할 내용 입력
 			});
 		})(window, document);
@@ -56,60 +49,79 @@
 
 <section class="sec-wrap">
 	<h2 class="h-2">Z-index</h2>
-	<p>체계적인 z-index를 구성하기 위해 크게 3가지 Level로 나눈다.</p>
+	<p>체계적인 z-index를 구성하기 위해 크게 A, B Level로 나눈다.</p>
 
-	<div class="tbl-base type-zindex">
+	<div class="tbl-base type-zindex tbody-stripes">
 		<table>
-			<caption>옵션 설명</caption>
+			<caption>
+				옵션 설명
+				<span class="ui-caption"></span>
+			</caption>
 			<colgroup>
-				<col style="width: 5rem;">
-				<col style="width: 8rem;">
-				<col style="width: 6rem;">
-				<col>
+				<col class="col-level">
+				<col class="col-name">
+				<col class="col-default">
+				<col class="col-desc">
 			</colgroup>
 			<thead>
 				<tr>
 					<th scope="col">Level</th>
-					<th scope="col">class명</th>
+					<th scope="col">Name</th>
 					<th scope="col">Default</th>
-					<th scope="col">Explanation</th>
+					<th scope="col">Description</th>
 				</tr>
 			</thead>
 			<tbody>
 				<tr>
-					<th scope="rowgroup" rowspan="3">A</th>
-					<th scope="row" class="ta-l">.base-skip</th>
-					<td>2</td>
-					<td>skip navigation</td>
-				</tr>
-				<tr>
+					<th scope="rowgroup" rowspan="5">A</th>
 					<th scope="row" class="ta-l">.base-wrap</th>
 					<td>0</td>
-					<td>base content</td>
+					<td>base content (Level B group)</td>
 				</tr>
 				<tr>
 					<th scope="row" class="ta-l">.ui-modal</th>
-					<td>300 ~ </td>
+					<td>100 ~ 199</td>
 					<td>modal content</td>
 				</tr>
-			</tbody>
-
-			<tbody>
 				<tr>
-					<th scope="rowgroup">B</th>
 					<th scope="row" class="ta-l">.ui-drop-pnl</th>
-					<td>200</td>
+					<td>200~299</td>
 					<td>dropdown content</td>
 				</tr>
+				<tr>
+					<th scope="row" class="ta-l">.ui-tooltip</th>
+					<td>300~399</td>
+					<td>tooltip content</td>
+				</tr>
+				<tr>
+					
+					<th scope="row" class="ta-l">.base-skip</th>
+					<td>500</td>
+					<td>skip navigation</td>
+				</tr>
 			</tbody>
 
 			<tbody>
 				<tr>
-					<th scope="rowgroup">C</th>
-					<th scope="row" class="ta-l">.ui-tooltip</th>
-					<td>100</td>
-					<td>tooltip content</td>
+					<th scope="rowgroup" rowspan="3">B</th>
+					<th scope="row" class="ta-l">.base-wrap > .base-header</th>
+					<td>20</td>
+					<td>header contents</td>
 				</tr>
+				<tr>
+					<th scope="row" class="ta-l">.base-wrap > .base-body</th>
+					<td>10</td>
+					<td>main contents</td>
+				</tr>
+				<tr>
+					<th scope="row" class="ta-l">.base-wrap > .base-footer</th>
+					<td>0</td>
+					<td>footer content</td>
+				</tr>
+			</tbody>
+
+			<tbody>
+				
 			</tbody>
 		</table>
 	</div>

@@ -14,16 +14,16 @@
 		<div class="test-modal fx-wrap" data-wrap="wrap">
 			<button type="button" class="btn-base" 
 				modal-id="modal_sample1" 
-				modal-src="/netiveUI/html/modal/modalSample1.html" 
+				modal-src="./modal/modalSample1.html" 
 				modal-mobilefull="true"
 			>
 				<span>Ajax / center</span>
 			</button>
-			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-mobilefull="true" modal-scroll="true"><span>Ajax / center / scroll</span></button>
-			<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="/netiveUI/html/modal/modalSample2.html" modal-ps="top"><span>Ajax / top</span></button>
-			<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="/netiveUI/html/modal/modalSample2.html" modal-ps="bottom"><span>Ajax / bottom</span></button>
-			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-height="500"><span>Ajax / center / scroll / height</span></button>
-			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="/netiveUI/html/modal/modalSample1.html" modal-width="400"><span>Ajax / center / scroll / width</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-mobilefull="true" modal-scroll="true"><span>Ajax / center / scroll</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="./modal/modalSample2.html" modal-ps="top"><span>Ajax / top</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="./modal/modalSample2.html" modal-ps="bottom"><span>Ajax / bottom</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-height="500"><span>Ajax / center / scroll / height</span></button>
+			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-width="400"><span>Ajax / center / scroll / width</span></button>
 		</div>
 	</div>
 
@@ -40,7 +40,7 @@
 					sConfirmCallback: function(){
 						console.log('alert ok');
 						netive.modal.hideSystem();
-						$('#testEndFocus').focus();
+						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>alert system</span></button>
 			<button type="button" class="btn-base" onclick="
@@ -53,7 +53,7 @@
 					sConfirmCallback: function(){
 						console.log('alert ok');
 						netive.modal.hideSystem();
-						$('#testEndFocus').focus();
+						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>alert system / top</span></button>
 			<button type="button" class="btn-base" onclick="
@@ -66,7 +66,7 @@
 					sConfirmCallback: function(){
 						console.log('alert ok');
 						netive.modal.hideSystem();
-						$('#testEndFocus').focus();
+						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>alert system / bottom</span></button>
 		</div>
@@ -86,7 +86,7 @@
 					sCancelCallback: function(){
 						console.log('confirm cancel');
 						netive.modal.hideSystem();
-						$('#testEndFocus').focus();
+						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>confirm system</span></button>
 			<button type="button" class="btn-base" onclick="
@@ -104,7 +104,7 @@
 					sCancelCallback: function(){
 						console.log('confirm cancel');
 						netive.modal.hideSystem();
-						$('#testEndFocus').focus();
+						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>confirm system / top</span></button>
 			<button type="button" class="btn-base" onclick="
@@ -122,7 +122,7 @@
 					sCancelCallback: function(){
 						console.log('confirm cancel');
 						netive.modal.hideSystem();
-						$('#testEndFocus').focus();
+						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>confirm system / bottom</span></button>
 		</div>
@@ -220,7 +220,7 @@ netiv.modal.show({
 					<th scope="col">Options</th>
 					<th scope="col">Type</th>
 					<th scope="col">Default</th>
-					<th scope="col">Explanation</th>
+					<th scope="col">Description</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -347,7 +347,7 @@ netive.modal.hide({
 					<th scope="col">Options</th>
 					<th scope="col">Type</th>
 					<th scope="col">Default</th>
-					<th scope="col">Explanation</th>
+					<th scope="col">Description</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -419,7 +419,7 @@ netive.modal.show({
 					<th scope="col">Options</th>
 					<th scope="col">Type</th>
 					<th scope="col">Default</th>
-					<th scope="col">Explanation</th>
+					<th scope="col">Description</th>
 				</tr>
 			</thead>
 			<tbody>

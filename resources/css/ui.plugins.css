@@ -339,20 +339,6 @@
     }
 }
 
-/* ui-ajax */
-.page-change {
-    position: relative;
-    bottom: -40px;
-    opacity: 0;
-}
-
-.page-change.action {
-    animation-name: fadeInTop;
-    animation-duration: .3s;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-out;
-    animation-fill-mode: forwards;
-}
 
 
 /* ui-loading */
@@ -544,6 +530,8 @@
     border-radius: 50%;
     width: 20px;
     height: 20px;
+
+    background: #F5F5F5/*var*/;
     background: var(--gray100);
 }
 
@@ -556,6 +544,8 @@
     border-radius: 50%;
     width: 20px;
     height: 20px;
+
+    background: #212121/*var*/;
     background: var(--gray900);
 }
 
@@ -576,159 +566,8 @@
 }
 
 
-/* pure orbit */
-.ui-loading .orbit:after {
-    content: "";
-    display: block;
-    position: absolute;
-    ;
-    z-index: 0;
-    width: 0;
-    height: 0;
-    top: 50%;
-    left: 50%;
-    background: rgba(0, 0, 0, 0.5);
-    transform: translate(-50%, -50%);
-    border-radius: 50%;
-}
 
-.ui-loading .orbit:after {
-    animation-name: orbitScaleShowAni;
-    animation-duration: 0.5s;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in-out;
-    animation-fill-mode: forwards;
-}
-
-.ui-loading.close .orbit:after {
-    animation-name: orbitScaleHideAni;
-    animation-duration: 0.25s;
-    animation-iteration-count: 1;
-    animation-timing-function: ease-in;
-    animation-fill-mode: forwards;
-}
-
-.ui-loading .orbit .orbit-wrap {
-    position: absolute;
-    width: 80px;
-    height: 80px;
-    top: 50%;
-    left: 50%;
-    margin: -40px 0 0 -40px;
-}
-
-.ui-loading .orbit .orbit-wrap:after {
-    content: "";
-    display: block;
-    position: absolute;
-    left: 0;
-    top: calc(50% - 10px);
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background: rgba(0, 0, 0, 1);
-}
-
-.ui-loading .orbit .orbit-wrap:before {
-    content: "";
-    display: block;
-    position: absolute;
-    right: 0;
-    top: calc(50% - 10px);
-    border-radius: 50%;
-    width: 20px;
-    height: 20px;
-    background: rgba(255, 255, 255, 1)
-}
-
-.ui-loading .orbit .orbit-wrap:after {
-    animation-name: orbitLeftAni;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    animation-direction: reverse;
-}
-
-.ui-loading .orbit .orbit-wrap:before {
-    animation-name: orbitRightAni;
-    animation-duration: 1.5s;
-    animation-iteration-count: infinite;
-    animation-timing-function: ease-in-out;
-    animation-direction: reverse;
-}
-
-/* pure clock */
-.ui-loading .clock:after {
-    content: "";
-    display: block;
-    position: fixed;
-    z-index: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 1;
-    top: 0;
-    left: 0;
-    background: rgba(0, 0, 0, 0.5);
-}
-
-.ui-loading .clock .ui-loading-wrap {
-    position: absolute;
-    z-index: 1;
-    width: 80px;
-    height: 80px;
-    top: 50%;
-    left: 50%;
-    margin: -40px 0 0 -40px;
-    border-radius: 50%;
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    background: rgba(0, 0, 0, 0.1);
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
-}
-
-.ui-loading .time .ui-loading-wrap:after {
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: 1;
-    left: 50%;
-    top: 40px;
-    margin-left: -20px;
-    border-radius: 1px;
-    width: 40px;
-    height: 1px;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 1) 100%);
-}
-
-.ui-loading .time .ui-loading-wrap:before {
-    content: "";
-    display: block;
-    position: absolute;
-    z-index: 1;
-    left: 50%;
-    top: 40px;
-    margin-left: -30px;
-    border-radius: 1px;
-    width: 60px;
-    height: 1px;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0) 50%, rgba(255, 255, 255, 1) 100%);
-}
-
-.ui-loading .time .ui-loading-wrap:after {
-    animation-name: timeAni;
-    animation-duration: 12s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear
-}
-
-.ui-loading .time .ui-loading-wrap:before {
-    animation-name: timeAni;
-    animation-duration: 1.2s;
-    animation-iteration-count: infinite;
-    animation-timing-function: linear
-}
-
-
-/* ui-acco : base */
+/* ui-acco */
 .ui-acco {
     position: relative;
 }
@@ -796,16 +635,22 @@ a.ui-acco-btn {
     width: 100%;
     height: 100%;
     margin: -1px 0 0;
-    border-bottom: 1px solid var(--gray300);
-    border-top: 1px solid var(--gray300);
     padding: 0;
-    background: var(--white);
     min-height: 4.2rem;
+
+    border-bottom: 1px solid #E0E0E0/*var*/;
+    border-bottom: 1px solid var(--gray300);
+    border-top: 1px solid #E0E0E0/*var*/;
+    border-top: 1px solid var(--gray300);
+    background: #fff/*var*/;
+    background: var(--white);
 }
 
 .ui-acco-tit-wrap {
     width: auto;
     text-decoration: none;
+
+    color: #EEEEEE/*var*/;
     color: var(--gray200);
 }
 
@@ -817,8 +662,11 @@ a.ui-acco-btn {
     padding: 10px 40px 10px 10px;
     letter-spacing: 0;
     text-align: left;
+
+    color: #424242/*var*/;
     color: var(--gray800);
-    font-size: var(--text-s);
+    font-size: 1.4rem/*var*/;
+    font-size: var(--fs-body-m);
 }
 
 .ui-acco-btn:after {
@@ -833,9 +681,11 @@ a.ui-acco-btn {
     height: 20px;
     float: right;
     overflow: hidden;
-    color: var(--gray800);
     font-size: 20px;
     line-height: 1;
+
+    color: #424242/*var*/;
+    color: var(--gray800);
 }
 
 .ui-acco-btn[aria-expanded="true"]:after {
@@ -844,7 +694,8 @@ a.ui-acco-btn {
 
 a.ui-acco-btn {
     text-decoration: underline;
-    color: blue
+    color: #6296df/*var*/;
+    color: var(--link);
 }
 
 a.ui-acco-btn .ui-acco-arrow {
@@ -856,6 +707,7 @@ a.ui-acco-btn:after {
 }
 
 .ui-acco-pnl {
+    background: #FAFAFA/*var*/;
     background: var(--gray50);
 }
 
@@ -865,7 +717,7 @@ a.ui-acco-btn:after {
     color: #000;
 }
 
-/**/
+/* ui-draggable */
 .ui-draggable {
     position: relative;
     width: 100%;
@@ -890,59 +742,11 @@ a.ui-acco-btn:after {
     position: absolute;
 }
 
-/* ui-bricklist : base */
-.ui-bricklist {
-    position: relative;
-    width: 100%;
-}
-
-.ui-bricklist-wrap {
-    margin: 0;
-    padding: 0;
-}
-
-.ui-bricklist-item.disabled {
-    display: none;
-}
-
-.ui-bricklist-item {
-    width: 150px;
-    display: block;
-    box-sizing: border-box;
-    overflow: hidden;
-}
-
-.ui-bricklist-item img {
-    width: 100%;
-    display: block
-}
-
-/* ui-bricklist : netvie UI style */
-.ui-bricklist .ui-bricklist-wrap {
-    background: #ececec;
-}
-
-.ui-bricklist .ui-bricklist-item {
-    opacity: 0;
-    transform: scale(0.8);
-    transition: transform 0.15s ease-in, opacity 0.3s ease-in, top 0.3s ease-in-out, left 0.3s ease-in-out;
-}
-
-.ui-bricklist .ui-bricklist-item.on {
-    transform: scale(1);
-    opacity: 1;
-}
-
-.ui-bricklist .ui-bricklist-item {
-    width: 150px;
-    color: #444;
-    text-align: center;
-}
 
 
 
 
-/* ui position : base */
+/* ui-floating : base */
 .ui-floating {
     border: 1px dashed rgb(230, 230, 230);
 }
@@ -979,9 +783,193 @@ a.ui-acco-btn:after {
     top: 0;
     left: 0;
     width: 100%;
+    transform: translate(0,0);
+    transition:transform .2s;
 }
 
 
+
+/* ui-datepicker */
+.ui-datepicker {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.datepicker {
+    width: 100%;
+    max-width: 23rem;
+}
+
+.ui-datepicker-btn {
+    border: 0;
+    padding: 0;
+    text-align: right;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    background-color: transparent;
+}
+
+/* .ui-datepicker:after {
+	position: absolute;
+	top:0;
+	right:0;
+	content: 'date_range';
+	font-family: 'Material Icons';
+	font-feature-settings: 'liga';
+	font-size: var(--fs-headline-s);
+	word-break: keep-all;
+	line-height: 1.6;
+} */
+
+.ui-datepicker-btn:focus~.inp-base,
+.ui-datepicker-btn:hover~.inp-base {
+    border: 1px solid #1f1f1f;
+    background: transparent;
+}
+
+.ui-datepicker-btn:disabled {
+    opacity: 0.5
+}
+
+.ui-datepicker-btn:disabled:focus,
+.ui-datepicker-btn:disabled:hover {
+    border: 0;
+    background: transparent;
+    color: #666;
+}
+
+.datepicker .btn-wrap {
+    margin: 0;
+}
+
+.datepicker-header {
+    position: relative;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.datepicker-header>button {
+    width: 2.4rem;
+    height: 2.4rem;
+    font-family: 'Material Icons';
+    position: relative;
+
+    font-size: 2.2rem/*var*/;
+    font-size: var(--fs-headline-s);
+}
+
+.datepicker-title {
+    width: 100%;
+    text-align: center;
+
+    font-size: 1.4rem/*var*/;
+    font-size: var(--fs-body-m);
+}
+
+.datepicker-body {
+    margin: 1rem 0;
+}
+
+.datepicker-body th {
+    font-size: 1.2rem/*var*/;
+    font-size: var(--fs-body-s);
+}
+
+.datepicker-date td {
+    text-align: center
+}
+
+.datepicker :disabled {
+    opacity: .5;
+}
+
+.datepicker-day {
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: 50%;
+    margin: 0.3rem 0;
+    line-height: 1;
+
+    font-size: 1.2rem;
+    font-size: var(--fs-body-s);
+}
+
+.datepicker-day.selected-end,
+.datepicker-day.selected-start,
+.datepicker-day.selected {
+    background: #6200ee/*var*/;
+    background: var(--primary);
+    color: #fff/*var*/;
+    color: var(--white);
+}
+
+.datepicker-day.today.selected-end,
+.datepicker-day.today.selected-start {
+    background: #6200ee/*var*/;
+    background: var(--primary);
+    color: #fff/*var*/;
+    color: var(--white);
+}
+
+.during .datepicker-day {
+    background: #EEEEEE/*var*/ !important;
+    background: var(--gray200) !important;
+}
+
+.datepicker-day.today {
+    background: #fff/*var*/;
+    background: var(--white);
+    border: 1px solid #6200ee/*var*/;
+    border: 1px solid var(--primary);
+    color: #6200ee/*var*/;
+    color: var(--primary);
+}
+
+.ui-prev-y::before {
+    content: "chevron_left";
+    display: block;
+    line-height: 2.6rem;
+
+}
+
+.ui-next-y::before {
+    content: "chevron_right";
+    display: block;
+    line-height: 2.6rem;
+}
+
+.ui-prev-m::before {
+    content: "chevron_left";
+    display: block;
+    line-height: 2.6rem;
+}
+
+.ui-next-m::before {
+    content: "chevron_right";
+    display: block;
+    line-height: 2.6rem;
+}
+
+.datepicker-header .ui-today {
+    width: 2.5rem;
+    height: 2.5rem;
+    line-height: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.ui-today::before {
+    content: "today";
+}
 
 
 
@@ -1073,8 +1061,10 @@ a.ui-acco-btn:after {
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.5);
     position: relative;
     z-index: 1;
-    background: var(--white);
     margin: 2rem;
+
+    background: #fff/*var*/;
+    background: var(--white);
 }
 .ui-modal.open .ui-modal-wrap{
     opacity: 1;
@@ -1205,14 +1195,19 @@ a.ui-acco-btn:after {
 .ui-modal.type-system .ui-modal-wrap {
     width: auto;
     text-align: center;
-    font-size: var(--text-s);
+
+    font-size: 1.4rem/*var*/;
+    font-size: var(--fs-body-m);
     
 }
 .ui-modal.type-system .ui-modal-body,
 .ui-modal.type-system .ui-modal-footer {
-    background: var(--primary);
-    color:var(--system-txt);
     max-width:100% !important;
+
+    background: #6200ee/*var*/;
+    background: var(--primary);
+    color: #fff/*var*/;
+    color: var(--white);
 }
 
 .ui-modal.type-system .ui-modal-wrap strong {
@@ -1225,15 +1220,21 @@ a.ui-acco-btn:after {
     left: 0;
     width: 100%;
     min-height: 4rem;
-    background: var(--gray900);
-
     padding: .8rem 3.5rem 1.2rem 1.6rem;
+
+    background: #212121/*var*/;
+    background: var(--gray900);
+    border-bottom: #EEEEEE/*var*/;
     border-bottom: 1px solid var(--gray200);
 }
 
 .ui-modal-header h1 {
-    font-size: var(--text-m);
+    
     font-weight: 500;
+
+    font-size: 1.6rem/*var*/;
+    font-size: var(--fs-body-l);
+    color: #fff/*var*/;
     color: var(--white);
 }
 
@@ -1243,6 +1244,8 @@ a.ui-acco-btn:after {
     top: .8rem;
     border: 0;
     font-family: 'Material Icons';
+
+    color: #fff/*var*/;
     color: var(--white);
 }
 
@@ -1250,6 +1253,8 @@ a.ui-acco-btn:after {
     position: relative;
     margin-top: 0;
     padding: 1.5rem;
+
+    background: #FAFAFA/*var*/;
     background: var(--gray50);
 }
 
@@ -1257,6 +1262,8 @@ a.ui-acco-btn:after {
     position: relative;
     margin-top: 0;
     padding: 1rem 1.5rem;
+
+    background: #FAFAFA/*var*/;
     background: var(--gray50);
 }
 
@@ -1365,7 +1372,7 @@ a.ui-acco-btn:after {
 
 .ui-scrollbar.ready {
     overflow: hidden !important;
-    padding: 0 !important;
+    /* padding: 0 !important; */
 }
 
 .ui-scrollbar.ready>.ui-scrollbar-item {
@@ -1432,9 +1439,11 @@ a.ui-acco-btn:after {
     width: .6rem;
     margin: 0;
     height: 2rem;
-    background: var(--gray300);
     opacity: 0.5;
     border-radius: .2rem;
+
+    background: #E0E0E0/*var*/;
+    background: var(--gray300);
 }
 
 .type-x .ui-scrollbar-bar {
@@ -1444,15 +1453,18 @@ a.ui-acco-btn:after {
     width: 2rem;
     margin: 0;
     height: 6px;
-    background: var(--gray300);
     opacity: 1;
     border-radius: .2rem;
     opacity: 0.5;
+
+    background: #E0E0E0/*var*/;
+    background: var(--gray300);
 }
 
 .ui-scrollbar:hover .ui-scrollbar-bar {
     opacity: 1;
-    box-shadow: 0 0 .5rem rgba(--shadow);
+    box-shadow: 0 0 .5rem rgba(0,0,0,0.1)/*var*/;
+    box-shadow: 0 0 .5rem var(--shadow);
 }
 
 .view-scrollbar>.ui-scrollbar-barwrap {
@@ -1495,13 +1507,17 @@ a.ui-acco-btn:after {
 }
 
 .ui-drop-box {
+
+    background: #fff;
 	background: var(--white);
 }
 
 /* ui-drop : netvie UI style */
 .ui-drop-box {
-	border: 1px solid var(--gray200);
 	padding: 10px;
+
+    border: 1px solid #EEEEEE/*var*/;
+    border: 1px solid var(--gray200);
 }
 
 .ui-drop-pnl .btn-close {
@@ -1512,7 +1528,8 @@ a.ui-acco-btn:after {
 
 .ui-drop-pnl .btn-close:before,
 .ui-drop-pnl .btn-close:after {
-	background: #222;
+	background: #212121/*var*/;
+    background: var(--gray900);
 }
 
 /* tab */
@@ -1548,6 +1565,8 @@ a.ui-acco-btn:after {
 	clear: both;
 	width: 100%;
 	height: 1px;
+
+    background: #EEEEEE/*var*/;
 	background: var(--gray200);
 }
 
@@ -1597,24 +1616,33 @@ a.ui-acco-btn:after {
 .ui-tab-btn {
 	padding: 0 1rem;
 	min-height: 4rem;
-	background: var(--gray50);
-	border: 1px solid var(--gray200);
 	border-left: 0;
+
+    background: #FAFAFA/*var*/;
+    background: var(--gray50);
+    border: 1px solid #EEEEEE/*var*/;
+	border: 1px solid var(--gray200);
 }
 
 .ui-tab-btn:first-child {
+    border-left: 1px solid #EEEEEE/*var*/;
 	border-left: 1px solid var(--gray200);
 }
 
 .ui-tab-btn.selected {
-	background: var(--white);
-	color: var(--gray900);
+	background: #fff/*var*/;
+    background: var(--white);
+	color: #212121/*var*/;
+    color: var(--gray900);
+	border-bottom: 1px solid #fff/*var*/;
 	border-bottom: 1px solid var(--white);
 }
 
 .ui-tab-pnl {
 	width: 100%;
 	padding: 1rem;
+
+    background: #fff/*var*/;
 	background: var(--white);
 }
 
@@ -1642,11 +1670,14 @@ a.ui-acco-btn:after {
 	transform: translate(0, -50%);
 	vertical-align: middle;
 	display: inline-block;
+    background: #FFFFFF/*var*/;
 	background: var(--white);
 	width: 1.8rem;
 	height: 1.8rem;
 	line-height: 1;
-	border: 1px solid var(--gray300);
+
+	border: 1px solid #E0E0E0/*var*/;
+    border: 1px solid var(--gray300);
 }
 
 .ui-fixtd-btn.prev {
@@ -1730,16 +1761,21 @@ body.ui-print-ing .ui-print {
 }
 
 
-/* ui tooltip:z-index 200 ~ 299 */
+/* ui tooltip:z-index 300 ~ 399 */
 .ui-tooltip {
     visibility: hidden;
     position: absolute;
-    z-index: 200;
-    font-size: var(--text-xxs);
-    border: 1px solid var(--gray300);
+    z-index: 300;
     padding: 1rem;
+
+    font-size: 1.2rem/*var*/;
+    font-size: var(--fs-body-s);
+    border: 1px solid #E0E0E0/*var*/;
+    border: 1px solid var(--gray300);
+    background: #FAFAFA/*var*/;
     background: var(--gray50);
-    box-shadow: 0 .2rem 1rem var(--shadow)
+    box-shadow: 0 .2rem 1rem rgba(0,0,0,0.1)/*var*/;
+    box-shadow: 0 .2rem 1rem var(--shadow);
 }
 
 .ui-tooltip[aria-hidden="false"]{
@@ -1760,7 +1796,7 @@ body.ui-print-ing .ui-print {
 }
 
 .ui-tooltip.hover {
-    z-index: 299;
+    z-index: 301;
 }
 
 .ui-tooltip.fix {
@@ -1776,11 +1812,14 @@ button.ui-tooltip-btn {
     width: 1.4rem;
     height: 1.4rem;
     border-radius: .7rem;
-    border: 1px solid var(--gray800);
-    background: var(--white);
     color: transparent;
     overflow: hidden;
     font-size: xx-small;
+
+    border: 1px solid #424242/*var*/;
+    border: 1px solid var(--gray800);
+    background: #fff/*var*/;
+    background: var(--white);
 }
 
 button.ui-tooltip-btn:after {
@@ -1792,8 +1831,10 @@ button.ui-tooltip-btn:after {
     width: 100%;
     height: 100%;
     font-size: 1rem;
+    font-weight: 700;
+
+    color: #424242;
     color: var(--gray800);
-    font-weight: 700
 }
 
 .ui-tooltip .ui-tooltip-arrow {
@@ -1802,9 +1843,13 @@ button.ui-tooltip-btn:after {
     display: block;
     width: 1rem;
     height: 1rem;
+
+    background: #FAFAFA/*var*/;
     background: var(--gray50);
+    border-top: 1px solid  #E0E0E0/*var*/;
     border-top: 1px solid  var(--gray300);
-    border-right: 1px solid  var(--gray300)
+    border-right: 1px solid  #E0E0E0/*var*/;
+    border-right: 1px solid  var(--gray300);
 }
 
 .ui-tooltip[data-ps="top"] .ui-tooltip-arrow {
@@ -1822,28 +1867,28 @@ button.ui-tooltip-btn:after {
 
 .ui-tooltip.ps-lt .ui-tooltip-arrow {
     left: 0;
-    bottom: -6px;
+    bottom: -.6rem;
     transform: rotate(135deg);
     margin-left: 1rem
 }
 
 .ui-tooltip.ps-rt .ui-tooltip-arrow {
     right: 0;
-    bottom: -6px;
+    bottom: -.6rem;
     transform: rotate(135deg);
     margin-right: 1rem
 }
 
 .ui-tooltip.ps-lb .ui-tooltip-arrow {
     left: 0;
-    top: -6px;
+    top: -.6rem;
     transform: rotate(-45deg);
     margin-left: 1rem
 }
 
 .ui-tooltip.ps-rb .ui-tooltip-arrow {
     right: 0;
-    top: -6px;
+    top: -.6rem;
     transform: rotate(-45deg);
     margin-right: 1rem
 }
@@ -1859,15 +1904,18 @@ button.ui-tooltip-btn:after {
 }
 
 .ui-datepicker-inp {
-    height: 40px;
-    padding: 0 40px 0 10px;
-    border: 1px solid #ccc;
+    height: 4rem;
+    padding: 0 4rem 0 1rem;
     width: 100%;
     text-align: left;
+
+    border: 1px solid #EEEEEE/*var*/;
+    border: 1px solid var(--gray200);
 }
 
 .ui-datepicker-inp:disabled {
-    background: #fff;
+    background: #fff/*var*/;
+    background: var(--white);
 }
 
 .ui-datepicker-wrap {
@@ -1875,24 +1923,24 @@ button.ui-tooltip-btn:after {
     width: 232px;
     margin-top: 0 !important;
     z-index: 10;
-    top: 45px;
+    top: 4.5rem;
     left: 0;
     transform: translate(0, 0);
     opacity: 0;
-    transition: top 0.1s ease-out, opacity 0.1s ease-out
+    transition: top 0.1s ease-out, opacity 0.1s ease-out;
 }
 
 .ui-datepicker.type-dual .ui-datepicker-wrap {
-    width: 460px
+    width: 460px;
 }
 
 .ui-datepicker.type-dual .ui-datepicker-wrap .tbl-datepicker {
     width: 210px;
-    float: left
+    float: left;
 }
 
 .ui-datepicker.type-dual .ui-datepicker-wrap .tbl-datepicker+.tbl-datepicker {
-    float: right
+    float: right;
 }
 
 .ui-datepicker.type-month .ui-datepicker-wrap {
@@ -1901,7 +1949,7 @@ button.ui-tooltip-btn:after {
 
 .ui-datepicker.type-month .datepicker-head-month {
     width: 460px;
-    padding: 10px 0;
+    padding: 1rem 0;
     margin: 1px 0 0 1px;
 }
 
@@ -1911,35 +1959,39 @@ button.ui-tooltip-btn:after {
 
 .ui-datepicker.visible .ui-datepicker-wrap {
     opacity: 1;
-    top: 40px;
+    top: 4rem;
 }
 
 .ui-datepicker .btn-close {
     position: absolute;
-    top: 6px;
-    right: 6px;
+    top: .6rem;
+    right: .6rem;
     z-index: 1;
 }
 
 .ui-datepicker .btn-close:after {
-    color: #222;
+    color: #212121/*var*/;
+    color: var(--gray900);
 }
 
 .datepicker-sec {
     width: 100%;
     height: 100%;
-    border: solid 1px #63686d;
-    background: #fff;
+
+    border: solid 1px #616161/*var*/;
+    border: solid 1px var(--gray700);
+    background: #fff/*var*/;
+    background: var(--white);
 }
 
 .datepicker-sec select {
     border: 0;
     width: auto;
-    padding-right: 30px;
+    padding-right: 3rem;
 }
 
 .datepicker-sec .cal-wrapper {
-    padding: 10px;
+    padding: 1rem;
     min-width: 450px;
     width: auto !important;
     width: 450px;
@@ -1948,7 +2000,8 @@ button.ui-tooltip-btn:after {
 
 .datepicker-head {
     position: relative;
-    background: #fff;
+    background: #fff/*var*/;
+    background: var(--white);
 }
 
 .datepicker-period-head {
@@ -1962,21 +2015,26 @@ button.ui-tooltip-btn:after {
 }
 
 .datepicker-head-tit {
-    border-bottom: 1px solid #ccc;
-    padding: 5px;
+    
+    padding: .5rem;
     text-align: center;
     font-weight: 600;
-    height: 32px;
+    height: 3.2rem;
+
+    border-bottom: 1px solid #EEEEEE/*var*/;
+    border-bottom: 1px solid var(--gray200);
 }
 
 .datepicker-head-select {
-    padding: 0 10px;
+    padding: 0 1rem;
 }
 
 .datepicker-head-date {
     text-align: center;
-    font-size: var(--text-m);
-    padding: 5px 10px;
+    padding: .5rem 1rem;
+
+    font-size: 1.6rem/*var*/;
+    font-size: var(--fs-body-l);
 }
 
 .datepicker-head-btn {
@@ -1984,7 +2042,7 @@ button.ui-tooltip-btn:after {
     width: 100%;
     z-index: 1;
     text-align: center;
-    padding: 4px 0 6px;
+    padding: .4rem 0 .6rem;
 }
 
 .datepicker-head-today {
@@ -2015,8 +2073,10 @@ button.ui-tooltip-btn:after {
     display: inline-block;
     padding: 0;
     vertical-align: middle;
-    font-size: var(--text-xs);
     height: 2.3rem;
+
+    font-size: 1.2rem/*var*/;
+    font-size: var(--fs-body-s);
 }
 
 .datepicker-head-btn button {
@@ -2049,8 +2109,10 @@ button.ui-tooltip-btn:after {
     width: 100%;
     height: 100%;
     font-size: 2.2rem;
-    color: #000;
     font-family: "Material Icons";
+
+    color: #000/*var*/;
+    color: var(--black);
 }
 
 .datepicker-head-btn .ui-datepicker-prev:after {
@@ -2077,10 +2139,11 @@ button.ui-tooltip-btn:after {
 
 .datepicker-head-week span {
     display: inline-block;
-    font-size: var(--text-xs);
+    font-size: 1.2rem/*var*/;
+    font-size: var(--fs-body-s);
     font-weight: 500;
-    width: 30px;
-    height: 20px;
+    width: 3rem;
+    height: 2rem;
     text-align: center;
 }
 
@@ -2105,23 +2168,25 @@ button.ui-tooltip-btn:after {
 }
 
 .tbl-datepicker thead th {
-    color: #555
+    color: #555;
 }
 
 .tbl-datepicker thead tr {
-    border-bottom: 1px solid #c9c9c9
+    border-bottom: 1px solid #c9c9c9;
 }
 
 .tbl-datepicker col.n1 {
-    width: 14.28%
+    width: 14.28%;
 }
 
 .tbl-datepicker th {
-    padding: 5px 0;
+    padding: .5rem 0;
     text-align: center !important;
     font-weight: 600;
     background: #fff;
-    font-size: var(--text-xs);
+
+    font-size: 1.2rem/*var*/;
+    font-size: var(--fs-body-s);
 }
 
 .tbl-datepicker th abbr {
@@ -2136,7 +2201,7 @@ button.ui-tooltip-btn:after {
     border: 0;
     height: 4rem;
     max-height: 4rem;
-    border-top: 2px solid #fff
+    border-top: .2rem solid #fff;
 }
 
 .tbl-datepicker td span,
@@ -2147,14 +2212,18 @@ button.ui-tooltip-btn:after {
     height: 3rem;
     line-height: 1;
     margin: 0 auto;
-    color: var(--gray800);
     text-align: center;
+
+    color: #424242/*var*/;
+    color: var(--gray800);
 }
 
 .tbl-datepicker td span {
-    color: var(--gray600);
     cursor: default;
-    opacity: 0.5
+    opacity: 0.5;
+
+    color: #757575/*var*/;
+    color: var(--gray600);
 }
 
 /* .tbl-datepicker th.day-sun,
@@ -2175,39 +2244,53 @@ button.ui-tooltip-btn:after {
 }
 
 .tbl-datepicker td:not(.empty) button:not(.disabled):hover {
-    color: #fff;
-    background: #000 !important;
+    color: #fff/*var*/;
+    color: var(--white);
+    background: #000/*var*/ !important;
+    background: var(--black) !important;
+
     border-radius: 50%;
 }
 
 .tbl-datepicker td button.selected {
-    color: #fff;
-    background: #444 !important;
+    color: #fff/*var*/;
+    color: var(--white);
+    background: #444/*var*/ !important;
+    background: var(--gray800) !important;
+
     border-radius: 50%;
 }
 
 .tbl-datepicker td button.selected-end {
-    color: #fff !important;
+    color: #fff/*var*/ !important;
+    color: var(--white) !important;
+    background: #444/*var*/ !important;
+    background: var(--gray800) !important;
+
     font-weight: 400;
-    background: #444 !important;
     border-radius: 50%;
 }
 
 .tbl-datepicker td button.selected-start {
-    color: #fff !important;
+    color: #fff/*var*/ !important;
+    color: var(--white) !important;
+    background: #444/*var*/ !important;
+    background: var(--gray800) !important;
+
     font-weight: 400;
-    background: #444 !important;
     border-radius: 50%;
 }
 
 .tbl-datepicker td button.selected-ing {
-    background: rgb(247, 247, 247);
+    background: #FAFAFA/*var*/;
+    background: var(--gray50);
 }
 
 .tbl-datepicker td button:disabled {
     cursor: default;
     opacity: 1;
-    color: rgb(170, 170, 170)
+    color: #757575/*var*/;
+    color: var(--gray600);
 }
 
 .tbl-datepicker td button:disabled:hover {
@@ -2215,12 +2298,15 @@ button.ui-tooltip-btn:after {
 }
 
 .tbl-datepicker td.hover:not(.disabled) button {
-    color: #000;
-    background: rgb(247, 247, 247);
+    color: #000/*var*/;
+    color: var(--black);
+    background: #FAFAFA/*var*/;
+    background: var(--gray50);
 }
 
 .tbl-datepicker td.hover-on:not(.disabled) button {
-    background: rgb(247, 247, 247);
+    background: #FAFAFA/*var*/;
+    background: var(--gray50);
 }
 
 .tbl-datepicker td.empty.hover-on:not(.disabled) button {
@@ -2228,61 +2314,79 @@ button.ui-tooltip-btn:after {
 }
 
 .tbl-datepicker td.hover:not(.disabled) span {
-    color: #000;
-    background: rgb(247, 247, 247);
+    color: #000/*var*/;
+    color: var(--black);
+    background: #FAFAFA/*var*/;
+    background: var(--gray50);
 }
 
 .tbl-datepicker td.hover-on:not(.disabled) span {
-    color: #000;
-    background: rgb(247, 247, 247);
+    color: #000/*var*/;
+    color: var(--black);
+    background: var(--gray50);
 }
 
 .tbl-datepicker.off-tbl td.hover:not(.disabled) button {
-    color: #444;
+    color: #424242/*var*/;
+    color: var(--gray800);
+
     background: transparent;
 }
 
 .tbl-datepicker.off-tbl td.hover-on:not(.disabled) button {
-    color: #444;
+    color: #424242/*var*/;
+    color: var(--gray800);
+
     background: transparent;
 }
 
 .tbl-datepicker.off-tbl td.hover:not(.disabled) button:hover {
-    color: #fff;
-    background: #444;
+    color: #fff/*var*/;
+    color: var(--white);
+    background: #424242/*var*/;
+    background: var(--gray800);
 }
 
 .tbl-datepicker.off-tbl td.hover-on:not(.disabled) button:hover {
-    color: #fff;
-    background: #444;
+    color: #fff/*var*/;
+    color: var(--white);
+    background: #424242/*var*/;
+    background: var(--gray800);
 }
 
 .tbl-datepicker-head {
     width: 100%;
     text-align: center;
-    font-size: var(--text-m);
     font-weight: 500;
-    padding: 5px 10px 10px;
+    padding: .5rem 1rem 1rem;
+
+    font-size: 1.6rem/*var*/;
+    font-size: var(--fs-body-l);
 }
 
 .on-ing-tbl td.empty.last.hover-on {
-    background: linear-gradient(to right, transparent 50%, rgb(247, 247, 247));
+    background: linear-gradient(to right, transparent 50%, #FAFAFA/*var*/);
+    background: linear-gradient(to right, transparent 50%, var(--gray50));
 }
 
 .on-ing-tbl td.empty.first.hover-on {
-    background: linear-gradient(to left, transparent 50%, rgb(247, 247, 247));
+    background: linear-gradient(to left, transparent 50%, #FAFAFA/*var*/);
+    background: linear-gradient(to left, transparent 50%, var(--gray50));
 }
 
 .on-end-tbl td.empty.last.hover-on {
-    background: linear-gradient(to right, transparent 50%, rgb(247, 247, 247));
+    background: linear-gradient(to right, transparent 50%, #FAFAFA/*var*/);
+    background: linear-gradient(to right, transparent 50%, var(--gray50));
 }
 
 .on-start-tbl td.empty.first.hover-on {
-    background: linear-gradient(to left, transparent 50%, rgb(247, 247, 247));
+    background: linear-gradient(to left, transparent 50%, #FAFAFA/*var*/);
+    background: linear-gradient(to left, transparent 50%, var(--gray50));
 }
 
 td.on-start {
-    background: linear-gradient(to right, transparent 50%, rgb(247, 247, 247));
+    background: linear-gradient(to right, transparent 50%, #FAFAFA/*var*/);
+    background: linear-gradient(to right, transparent 50%, var(--gray50));
 }
 
 .state-ready td.on-start {
@@ -2290,17 +2394,21 @@ td.on-start {
 }
 
 td.on-end {
-    background: linear-gradient(to left, transparent 50%, rgb(247, 247, 247));
+    background: linear-gradient(to left, transparent 50%, #FAFAFA/*var*/);
+    background: linear-gradient(to left, transparent 50%, var(--gray50));
 }
 
 td button.today {
+    color: #212121/*var*/;
     color: var(--gray900);
 }
 
 .datepicker-foot {
     height: 6rem;
-    border-top: 1px solid #999;
     display: none;
+
+    border-top: 1px solid #757575/*var*/;
+    border-top: 1px solid var(--gray600);
 }
 
 /* mobile
@@ -2503,7 +2611,8 @@ td button.today {
     overflow: hidden;
     font-weight: 600;
     font-size: 20px;
-    color: #000;
+    color: #000/*var*/;
+    color: var(--black);
     line-height: 1;
 }
 
@@ -2568,7 +2677,9 @@ td button.today {
 .ui-file input:active+.btn-base,
 .ui-file input:hover+.btn-base,
 .ui-file input:focus+.btn-base {
-	border: 1px solid var(--gray700);
+	border: 1px solid #616161/*var*/;
+    border: 1px solid var(--gray700);
+    background: #FAFAFA/*var*/;
 	background: var(--gray50);
 }
 
@@ -2579,10 +2690,12 @@ td button.today {
 .ui-file-list {
 	position: relative;
 	padding: 1rem 3rem 1rem 1rem;
-	border: 1px solid var(--gray200);
 	min-height: 4rem;
 	margin-top: 0.8rem;
 	display: none;
+
+    border: 1px solid #EEEEEE/*var*/;
+    border: 1px solid var(--gray200);
 }
 
 .ui-file-list li {
@@ -2594,6 +2707,7 @@ td button.today {
 }
 
 .ui-file-list li+li {
+    border-top: 1px solid #EEEEEE/*var*/;
 	border-top: 1px solid var(--gray200);
 }
 
@@ -2618,6 +2732,8 @@ td button.today {
 	font-feature-settings: 'liga';
 	font-weight: 600;
 	font-size: 2rem;
+
+    color: #6200ee/*var*/;
 	color: var(--primary);
 }
 
@@ -2683,8 +2799,10 @@ td button.today {
 	position: relative;
 	width: 100%;
 	height: 0.6rem;
-	background-color: #bdc3c7;
 	border-radius: 0.3rem;
+
+    background-color: #BDBDBD/*var*/;
+    background-color: var(--gray400);
 }
 
 [data-type="single"] .ui-range-bar {
@@ -2697,8 +2815,10 @@ td button.today {
 	bottom: 0;
 	left: 0;
 	right: 0;
-	background-color: var(--primary);
 	border-radius: 0.5rem;
+
+    background-color: #6200ee/*var*/;
+    background-color: var(--primary);
 }
 
 .ui-range-btn.on {
@@ -2713,8 +2833,10 @@ td button.today {
 	align-self: center;
 	width: 2rem;
 	height: 2rem;
-	background-color: black;
 	border-radius: 50%;
+
+    background-color: #000/*var*/;
+    background-color: var(--black);
 }
 
 .ui-range-btn.left {
@@ -2730,10 +2852,12 @@ td button.today {
 .ui-range-btn.right::after {
 	content: 'arrow_right';
 	font-family: 'Material Icons';
-	font-size: var(--text-xs);
-	color: #fff;
 	line-height: 2rem;
 
+    color: #fff/*var*/;
+    color: var(--white);
+    font-size: 1.2rem/*var*/;
+    font-size: var(--fs-body-s);
 }
 
 [data-type="single"] .ui-range-btn.left::after {
@@ -2743,23 +2867,29 @@ td button.today {
 .ui-range-btn.left::after {
 	content: 'arrow_left';
 	font-family: 'Material Icons';
-	font-size: var(--text-xs);
-	color: #fff;
 	line-height: 2rem;
+
+    color: #fff/*var*/;
+    color: var(--white);
+    font-size: 1.2rem/*var*/;
+    font-size: var(--fs-body-s);
 
 }
 
 .ui-range-btn .n {
 	position: absolute;
 	top: -1.8rem;
-	font-size: var(--text-xs);
 	text-align: center;
+
+    font-size: 1.2rem/*var*/;
+    font-size: var(--fs-body-s);
 }
 
 /* ui codinglist */
 .ui-codinglist {
     width: 100%;
-    margin: 3rem 0 0;
+    padding-bottom:80vh;
+    padding:2rem;
 }
 .ui-codinglist .srch-area{
     display: flex;
@@ -2770,12 +2900,17 @@ td button.today {
 .ui-codinglist .srch-hidden {
     display:none;
 }
+.ui-codinglist .tbl-base th,
 .ui-codinglist .tbl-base td {
     border-left:0;
+    font-size: 1.1rem;
+    font-weight: 500;
 }
 .ui-codinglist-state dt {
-    font-size: var(--text-s);
     font-weight: 600;
+
+    font-size: 1.2rem;
+    color: #03dac6/*var*/;
     color: var(--secondary);
 }
 .ui-codinglist-header {
@@ -2787,13 +2922,19 @@ td button.today {
     position: relative;
     top:0;
     padding:.8rem 1.6rem;
-    background:var(--gray800);
-    color:var(--gray50);
-    border-radius:.4rem;
-    font-size:var(--text-xs);
     overflow: hidden;
-    border:1px solid var(--secondary);
+    border-radius:.4rem;
     z-index: 3;
+
+    background: #424242/*var*/;
+    background: var(--gray800);
+    color: #FAFAFA/*var*/;
+    color: var(--gray50);
+    font-size: 1.2rem/*var*/;
+    font-size: var(--fs-body-s);
+    border: 1px solid #03dac6/*var*/;
+    border: 1px solid var(--secondary);
+    
 
 }
 .ui-codinglist-state .bar{
@@ -2804,7 +2945,9 @@ td button.today {
     width:0;
     z-index: 1;
     height:100%;
-    background-color:var(--primary) ;
+
+    background-color:#6200ee/*var*/;
+    background-color:var(--primary);
     box-shadow: 0 0 3rem rgba(74,238,0,0.5);
 }
 
@@ -2825,10 +2968,11 @@ td button.today {
 
 .ui-codinglist .tbl-base tbody td {
     border-left:0;
+    line-height: 1.1;
 }
 
 .ui-codinglist .tbl-base .col-1 {
-    width:6rem;
+    width:7rem;
 }
 .ui-codinglist .tbl-base .col-2 {
     width:5rem;
@@ -2854,6 +2998,7 @@ td button.today {
 .ui-codinglist .tbl-base .d6,
 .ui-codinglist .tbl-base .d7,
 .ui-codinglist .tbl-base .d8 {
+    color: #E0E0E0/*var*/;
     color: var(--gray300);
 }
 
@@ -2865,6 +3010,7 @@ td button.today {
 .ui-codinglist .tbl-base .c6 .d6,
 .ui-codinglist .tbl-base .c7 .d7,
 .ui-codinglist .tbl-base .c8 .d8 {
+    color: #212121/*var*/;
     color: var(--gray900);
 }
 
@@ -2875,9 +3021,11 @@ td button.today {
     outline: 2px solid #3a3a3a;
 }
 .ui-codinglist .sch_warn .state span{
+    color: #f44336/*var*/ !important;
     color: var(--error) !important;
 }
 .ui-codinglist .sch_warn .state:before{
+    color: #f44336/*var*/ !important;
     color: var(--error) !important;
 }
 .ui-codinglist .sch_warn .enddate span{
@@ -2886,90 +3034,154 @@ td button.today {
 }
 .ui-codinglist .sch_warn .enddate span::before{
     content: '-.- 일정 확인!!';
-    background: var(--error);
     position: absolute;
     padding:.2rem .6rem;
-    color:var(--white);
     display: block;
     top:-1rem;
     left:.2rem;
     white-space: nowrap;
     border-radius: .4rem;
+
+    color:#fff/*var*/;
+    color:var(--white);
+    background: #f44336/*var*/ !important;
+    background: var(--error);
 }
 .ui-codinglist .end .state span{
     display:inline-block;
-    color: var(--primary);
     vertical-align: middle;
     font-weight:600;
+
+    color: #6200ee/*var*/;
+    color: var(--primary);
 }
 .ui-codinglist .end .state::before {
     content:'check_circle_outline';
     font-family: 'Material Icons';
-    font-size: var(--text-m);
     display:inline-block;
     vertical-align: middle;
     margin-right:.3rem;
     font-weight:900;
+
+    font-size: 1.6rem/*var*/;
+    font-size: var(--fs-body-l);
+    color: #6200ee/*var*/;
     color: var(--primary);
 }
 
 .ui-codinglist .tst .state span{
     display:inline-block;
-    color: var(--success);
     vertical-align: middle;
     font-weight:600;
+
+    color: #3182f6/*var*/;
+    color: var(--success);
 }
 .ui-codinglist .tst .state::before {
     content:'remove_circle_outline';
     font-family: 'Material Icons';
-    font-size: var(--text-m);
     display:inline-block;
     vertical-align: middle;
     margin-right:.3rem;
     font-weight:900;
+
+    font-size: 1.6rem/*var*/;
+    font-size: var(--fs-body-l);
+    color: #3182f6/*var*/;
     color: var(--success);
 }
 
 .ui-codinglist .state span{
     display:inline-block;
     vertical-align: middle;
+
+    color: #9E9E9E/*var*/;
     color: var(--gray500);
 }
 .ui-codinglist .state::before {
     content:'panorama_fish_eye';
     font-family: 'Material Icons';
-    font-size: var(--text-m);
     display:inline-block;
     vertical-align: middle;
     margin-right:.3rem;
     font-weight:600;
+
+    font-size: 1.6rem/*var*/;
+    font-size: var(--fs-body-l);
+    color: #9E9E9E/*var*/;
     color: var(--gray500);
 }
-.ui-codinglist-mobile.on{
-    right:0;
+.ui-codinglist-preview .bar{
+    width:100%;
+    height: 3rem;
+    background-color: #222;
+    width:100%;
+    cursor: move;
 }
-.ui-codinglist-mobile{
+.ui-codinglist-preview{
     position: fixed;
     top:0;
-    right:-100vw;
-    padding:5rem 2rem;
+    right:0;
+    padding:1rem;
     height: 100%;
-    background-color: var(--gray900);
-    display: flex;
     z-index: 999000;
-    transition:right .3s ease-in-out;
+    background-color: #212121/*var*/;
+    background-color: var(--gray900);
 
 }
-.ui-codinglist-mobile .btn-close{
+.ui-codinglist-preview .btn-close{
+    color:#fff/*var*/;
     color:var(--white);
+
     right:2rem;
     top:1rem;
     position:absolute;
 }
-.ui-codinglist-iframe{
-    width:37.5rem;
+.ui-codinglist-preview .ui-codinglist-view {
+    left:0;
+    color:#fff/*var*/;
+    color:var(--white);
+    background-color: #000;/*--black*/
+    background-color: var(--black);
+    border:0;
+}
+
+.ui-codinglist-preview[data-device="mobile"] iframe{
+    width:calc(39rem + 1.7rem);
+    height:84.4rem;
+}
+.ui-codinglist-preview[data-device="desktop"] iframe{
+    width:calc(192rem + 1.7rem);
+    height:108rem;
+}
+.ui-codinglist-preview[data-device="mobile"]{
+    width:calc(39rem + 3.7rem);
+    height:calc(84.4rem + 9.2rem);
+    transform: scale(0.8) translate(0, 0);
+    right:-40px;
+    bottom:-93px;
+    top:auto;
+}
+.ui-codinglist-preview[data-device="desktop"]{
+    width:calc(192rem + 3.7rem);
+    height:calc(108rem + 9.2rem);
+    top:auto;
+    bottom:-270px;
+    transform: scale(0.5) translate(0, 0);
+    right:-484px
+}
+.ui-codinglist-preview iframe{
+    width: 100%; 
+    height: 100%;
+    border:0;
+    background-color: var(--gray600);
+}
+.ui-codinglist-preview{
+    width: calc(39rem + 1.7rem);
     height:81.2rem;
-    background:var(--white);
+    transform: scale(0.8);
+    background:#000/*var*/;
+    background:var(--black);
 }
 
 .size-mobile .ui-codinglist thead,
@@ -2986,6 +3198,8 @@ td button.today {
 .size-tablet .ui-codinglist tr{
     display:block;
     padding:0.4rem 0 0.6rem;
+
+    border-bottom:1px solid #EEEEEE/*var*/;
     border-bottom:1px solid var(--gray200);
 }
 .size-mobile .ui-codinglist th,
@@ -3014,8 +3228,10 @@ td button.today {
 }
 .size-tablet .ui-codinglist .d,
 .size-mobile .ui-codinglist .d{
-    background:var(--gray50);
     padding:0;
+
+    background:#FAFAFA/*var*/;
+    background:var(--gray50);
 }
 .size-tablet .date span::before{
     content:'일정: '; 
@@ -3062,7 +3278,7 @@ td button.today {
 
 .ui-codinglist table a,
 .ui-codinglist table button {
-    font-size: var(--text-xs);
+    font-size: var(--fs-body-s);
     color: var(--gray800);
     text-decoration: none;
 }
@@ -3081,7 +3297,7 @@ td button.today {
     padding: 3px 10px;
     text-align: left;
     font-weight: 400;
-    font-size: var(--text-xs);
+    font-size: var(--fs-body-s);
 }
 
 .ui-codinglist col {
@@ -4063,13 +4279,17 @@ td button.today {
 .toast {
     width:calc(100% - 2rem);
     padding:1rem;
-    color:#fff;
-    background:var(--primary);
     position:fixed;
     left:0;
     margin:1rem;
-    font-size:1.2rem;
     transition: all .3s;
+
+    font-size:1.2rem/*var*/;
+    font-size:var(--fs-body-s);
+    color:#FFFFFF/*var*/;
+    color:var(--white);
+    background:#6200ee/*var*/;
+    background:var(--primary);
 }
 
 .ui-toast-ready .toast{
@@ -4094,4 +4314,299 @@ td button.today {
     opacity: 1;
     bottom:auto;
     top: 0;
+}
+
+/* ui select */
+
+.ui-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.ui-select select {
+    width: 100%;
+}
+
+.ui-select select.off {
+    position: absolute;
+    z-index: -1;
+}
+
+.ui-select select.off:focus+.ui-select-btn {
+    border-color: #000000/*var*/;
+    border-color: var(--black);
+}
+
+.ui-select select.off:focus+.ui-select-btn:after {
+    content: "keyboard_arrow_up";
+}
+
+.ui-select-btn {
+    padding: 0 0 0 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: auto;
+    min-height: 4rem;
+    width: 100%;
+}
+
+.ui-select-btn:after {
+    content: "keyboard_arrow_down";
+    font-family: 'Material Icons';
+    display: block;
+    position: absolute;
+    right: 0.6rem;
+    top: 50%;
+    margin-top: -1.2rem;
+    width: 2.4rem;
+    height: 2.4rem;
+    float: right;
+    overflow: hidden;
+    line-height: 1;
+
+    font-size: 2.2rem/*var*/;
+    font-size: var(--fs-headline-s);
+    color: #424242/*var*/;
+    color: var(--gray800);
+}
+
+.ui-select-btn span {
+    display: inline-block;
+    width: calc(100% - 4.5rem);
+    text-align: left;
+    word-break: nowrap;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    text-align: left;
+    line-height: 1.2;
+    margin: .8rem 0;
+}
+
+.ui-select-btn[aria-expanded="true"],
+.ui-select-btn:focus,
+.ui-select-btn:active {
+    border-color: #E0E0E0/*var*/;
+    border-color: var(--gray300);
+}
+
+.ui-select-btn[aria-expanded="true"]:after,
+.ui-select-btn:focus:after,
+.ui-select-btn:active:after {
+    content: "keyboard_arrow_up";
+}
+
+.ui-select-wrap.on {
+    display: block
+}
+
+.ui-select-wrap.top {
+    bottom: 3.9rem
+}
+
+.ui-select-wrap.bottom {
+    top: 3.9rem
+}
+
+.ui-select-wrap {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    left: 0;
+    width: auto;
+    overflow-y: auto;
+    max-height: 16.2rem;
+    -webkit-overflow-scrolling: touch;
+
+    border: 1px solid #212121/*var*/;
+    border: 1px solid var(--gray900);
+    background: #FFFFFF/*var*/;
+    background: var(--white);
+}
+
+.ui-select-wrap.ui-scrollbar {
+    position: absolute;
+    min-height: 16.2rem;
+}
+
+.ui-select-opts {
+    overflow: hidden;
+    width: 100%;
+}
+
+.ui-select-opt {
+    display: block;
+    float: left;
+    width: 100%;
+    padding: .5rem 2rem .5rem 1rem;
+    height: 4rem;
+    text-align: left;
+    white-space: nowrap;
+
+    background: #FFFFFF/*var*/;
+    background: var(--white);
+    font-size: 1.4rem/*var*/;
+    font-size: var(--fs-body-m);
+}
+
+.ui-select-opt.selected {
+    font-weight: 700;
+    text-decoration: underline;
+
+    background: #EEEEEE/*var*/;
+    background: var(--gray200);
+    color: #000000/*var*/;
+    color: var(--black);
+}
+
+.ui-select-opt.disabled {
+    opacity: 0.5;
+}
+
+.ui-select-title {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.ui-select.type-tel {
+    width: 15rem
+}
+
+.ui-select.type-bank {
+    width: 20rem
+}
+
+.ui-select.type-card {
+    width: 20rem
+}
+
+.ui-select-cancel,
+.ui-select-confirm {
+    display: none;
+}
+
+.ui-m .ui-select-wrap.on {
+    display: block;
+}
+
+.ui-m .ui-select-cancel,
+.ui-m .ui-select-confirm,
+.ui-m .ui-select-title,
+.ui-m .ui-select-wrap.top,
+.ui-m .ui-select-wrap.bottom {
+    bottom: -30rem;
+    top: auto;
+    animation-name: slideUpIn;
+    animation-duration: .2s;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.ui-m .ui-select-wrap {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    bottom: -30rem;
+    width: 100%;
+    border: 0;
+    overflow-y: auto;
+    max-height: 24rem;
+
+    background: #FFFFFF/*var*/;
+    background: var(--white);
+}
+
+.ui-m .ui-select-title {
+    position: fixed;
+    margin-bottom: 20rem;
+    left: 0;
+    top: auto;
+    display: block;
+    width: 100%;
+    height: 4rem;
+    padding: .9rem 1rem .4rem;
+    text-align: center;
+    z-index: 10;
+
+    background: #212121/*var*/;
+    background: var(--gray900);
+    color: #FFFFFF/*var*/;
+    color: var(--white);
+}
+
+.ui-m .ui-select-opts {
+    padding: 12rem 0 8rem;
+}
+
+.ui-m .ui-select-opts:after {
+    content: "";
+    display: block;
+    position: fixed;
+    bottom: 11.8rem;
+    width: 100%;
+    height: 1px;
+    z-index: 0;
+
+    border-top: 1px solid #F5F5F5/*var*/;
+    border-top: 1px solid var(--gray100);
+}
+
+.ui-m .ui-select-opts:before {
+    content: "";
+    display: block;
+    position: fixed;
+    bottom: 7.8rem;
+    width: 100%;
+    height: 1px;
+    z-index: 0;
+
+    border-top: 1px solid #F5F5F5/*var*/;
+    border-top: 1px solid var(--gray100);
+}
+
+.ui-m .ui-select-opt {
+    text-align: center;
+    z-index: 1;
+    position: relative;
+    background: transparent;
+
+    color: #212121/*var*/;
+    color: var(--gray900);
+}
+
+.ui-m .ui-select-opt.selected {
+    color: #000000/*var*/;
+    color: var(--black);
+    background-color: #EEEEEE/*var*/;
+    background-color: var(--gray200);
+}
+
+.ui-m .ui-select-cancel,
+.ui-m .ui-select-confirm {
+    position: fixed;
+    margin-bottom: 20rem;
+    right: 0;
+    display: block;
+    width: 5rem;
+    height: 4rem;
+    padding: .7rem 1rem .6rem;
+    text-align: center;
+    z-index: 11;
+
+    color: #FFFFFF/*var*/;
+    color: var(--white);
+    font-size: 1.4rem/*var*/;
+    font-size: var(--fs-body-m);
+    
+}
+
+.ui-m .ui-select-cancel {
+    left: 0;
+    right: auto;
 }

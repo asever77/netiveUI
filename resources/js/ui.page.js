@@ -19,7 +19,9 @@
     netive.page.pagePlaceholder = function(){};
     netive.page.pageNaming = function(){};
     netive.page.pageMargin = function(){};
-    netive.page.pageIntroduction = function(){};
+    netive.page.pageIntroduction = function(){
+        netive.table.caption();
+    };
     netive.page.pageDevice = function(){};
     netive.page.pageTypography = function(){};
     netive.page.pageLayout = function(){};
@@ -69,7 +71,8 @@
         const test = doc.querySelector('.test-modal');
         const btns = test.querySelectorAll('.btn-base');
 
-        for (let that of btns) {
+        for (let i = 0, len = btns.length; i < len; i++) {
+            const that = btns[i];
             that.addEventListener('click', modalShow);
         }
 
@@ -125,19 +128,17 @@
             const el_tag = el.querySelectorAll('.list-memory-tag');
             const el_tr = el.querySelectorAll(':scope > div');
 
-            for (let that of el_tr) {
+            for (let i = 0, len = el_tr.length; i < len; i++) {
+                const that = el_tr[i];
                 that.classList.add('srch-hidden');
             }
 
-            for (let that of el_tag) {
+            for (let i = 0, len = el_tag.length; i < len; i++) {
+                const that = el_tag[i];
                 const text = that.textContent;
                 const el_tr2 = that.closest('.srch-hidden');
 
-                console.log(text.indexOf(k), text, k);
-
                 if (text.indexOf(k) >= 0) {
-                    console.log(1111);
-                    
                     el_tr2.classList.remove('srch-hidden');
                 } 
             }
@@ -308,13 +309,13 @@
         //     }
         // });
 
-        netive.scrollBar();
+        netive.scrollBar.init();
     }
 
     netive.page.pageJsonCodingList = function(){
         netive.project.list({
             id: 'projectList',
-            url: '/netiveUI/resources/data/codinglist.json',
+            url: '../resources/data/codinglist.json',
             type: 'text'
         });
     }
@@ -367,7 +368,7 @@
         netive.dropdown.init({ 
             id:'uiDrop1', 
             ps:'BL',
-            src:'/netiveUI/html/components/dropdown_ajax.html',
+            src:'../html/components/dropdown_ajax.html',
             dropExpanded: true,
             callback: function(){
                 netive.tab.init({ 
@@ -377,7 +378,7 @@
                 netive.dropdown.init({ 
                     id:'uiDrop5', 
                     ps:'RB',
-                    src:'/netiveUI/html/components/dropdown_ajax2.html',
+                    src:'../html/components/dropdown_ajax2.html',
                 });
             }
         });
@@ -445,6 +446,16 @@
                 console.log(v);
             } 
         });
+
+        netive.accordion.init({ 
+            id:'exeAcco2', 
+            current:[0], 
+            autoclose:false,
+            callback:function(v){
+                console.log(v);
+            } 
+        });
+
 
         let add_html = '';
 

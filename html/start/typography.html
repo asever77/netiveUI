@@ -5,86 +5,169 @@
 </div>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Font</h2>
-	<p>기본 서체로 Noto입니다.</p>
-	<div class="box-guide">
-		<dl class="list-define font">
-			<div>
-				<dt>Thin 100 </dt>
-				<dd style="font-weight:100">가나다라마바사아자차카타파하<br> ABCDEFGHIJKLNMOPQRSTUVWXYZ<br> abcdefghijklnmopqrstuvwxyz<br> 0123456789</dd>
+	<h2 class="h-2">Typography tokens</h2>
+	<p>국문: Noto Sans Kr, 영문: Mulish, 숫자: RobotoMono</p>
+	<div class="tbl-base type-discription tbody-stripes">
+		<table>
+			<caption></caption>
+			<colgroup>
+				<col style="width:50%">
+				<col class="col-th">
+				<col class="col-auto">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col" colspan="2">Role</th>
+					<th scope="col">Class</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="colgroup" rowspan="3">
+						<b class="fs-l">Display</b><br>
+						<span class="fs-s">화면에서 가장 큰 텍스트로 스타일적인 요소가 필요한 배경위에 사용하는 제목 텍스트나 페이지에서 가장 중요한 메세지 전달이 필요한 경우 사용하는 텍스트 분류이다.</span>
+					</th>
+					<th scope="row">Display large</th>
+					<td>.typo-display-l</td>
+				</tr>
+				<tr>
+					<th scope="row">Display medium</th>
+					<td>.typo-display-m</td>
+				</tr>
+				<tr>
+					<th scope="row">Display small</th>
+					<td>.typo-display-s</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<th scope="colgroup" rowspan="3">
+						<b class="fs-l">Headline</b><br>
+						<span class="fs-s">콘텐츠의 목차에 들어갈 수 있는 제목에 해당하는 텍스트에 사용하며 주로 heading tag(h1,h2,h3,h4)와 같이 사용한다.</span>
+					</th>
+					<th scope="row">Headline large</th>
+					<td>.typo-headline-l</td>
+				</tr>
+				<tr>
+					<th scope="row">headline medium</th>
+					<td>.typo-headline-m</td>
+				</tr>
+				<tr>
+					<th scope="row">headline small</th>
+					<td>.typo-headline-s</td>
+				</tr>
+			</tbody>
+			<tbody>
+				</tr>
+				<tr>
+					<th scope="colgroup" rowspan="3">
+						<b class="fs-l">Title</b><br>
+						<span class="fs-s">Headline은 페이지 콘텐츠의 전체적인 제목에 해당한 곳에 사용하였다면 Title은 그보다 더 작은 그룹의 제목으로 사용한다. heading tag와 같이 사용한다면 주로 h3,h4,h5,h6 정도로 사용하며 strong, em 으로도 사용 가능하다.</span>
+					</th>
+					<th scope="row">Title large</th>
+					<td>.typo-title-l</td>
+				</tr>
+				<tr>
+					<th scope="row">Title medium</th>
+					<td>.typo-title-m</td>
+				</tr>
+				<tr>
+					<th scope="row">Title small</th>
+					<td>.typo-title-s</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<th scope="colgroup" rowspan="3">
+						<b class="fs-l">Label</b><br>
+						<span class="fs-s">UI와 관련되 요소(button, label), 콘텐츠의 지원 텍스트, 스타일적인 요소에 사용한다.</span>
+					</th>
+					<th scope="row">Label large</th>
+					<td>.typo-label-l</td>
+				</tr>
+				<tr>
+					<th scope="row">Label medium</th>
+					<td>.typo-label-m</td>
+				</tr>
+				<tr>
+					<th scope="row">Label small</th>
+					<td>.typo-label-s</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<th scope="colgroup" rowspan="3">
+						<b class="fs-l">Body</b><br>
+						<span class="fs-s">콘텐츠의 기본적인 본문 내용 텍스트 구절에 사용한다.</span>
+					</th>
+					<th scope="row">Body large</th>
+					<td>.typo-body-l</td>
+				</tr>
+				<tr>
+					<th scope="row">Body medium</th>
+					<td>.typo-body-m</td>
+				</tr>
+				<tr>
+					<th scope="row">Body small</th>
+					<td>.typo-body-s</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<div class="box-guide" style="word-break: break-all;">
+		<div class="fx-wrap">
+			<div class="fx-item" data-flex="2-5-7">
+				<div class="ui-select">
+					<select onchange="document.querySelector('#prview').classList.replace(document.querySelector('#prview').className, this.value);">
+						<option value="typo-display-l">display large</option>
+						<option value="typo-display-m">display medium</option>
+						<option value="typo-display-s">display small</option>
+		
+						<option value="typo-headline-l">headline large</option>
+						<option value="typo-headline-m">headline medium</option>
+						<option value="typo-headline-s">headline small</option>
+		
+						<option value="typo-title-l">title large</option>
+						<option value="typo-title-m">title medium</option>
+						<option value="typo-title-s">title small</option>
+		
+						<option value="typo-label-l">label large</option>
+						<option value="typo-label-m">label medium</option>
+						<option value="typo-label-s">label small</option>
+		
+						<option value="typo-body-l">body large</option>
+						<option value="typo-body-m">body medium</option>
+						<option value="typo-body-s">body small</option>
+					</select>
+				</div>
 			</div>
-			<div>
-				<dt>Light 200</dt>
-				<dd style="font-weight:200">가나다라마바사아자차카타파하<br> ABCDEFGHIJKLNMOPQRSTUVWXYZ<br> abcdefghijklnmopqrstuvwxyz<br> 0123456789</dd>
+			<div class="fx-item" data-flex="2-3-5">
+				<div class="ui-select">
+					<select onchange="document.querySelector('#prview').style.fontWeight = this.value;">
+						<option value="100">Thin </option>
+						<option value="200">Light </option>
+						<option value="300">Demilight</option>
+						<option value="400">Regular</option>
+						<option value="500">Medium</option>
+						<option value="600">SemiBold </option>
+						<option value="700">Bold </option>
+						<option value="800">ExtraBold </option>
+						<option value="900">Black </option>
+					</select>
+				</div>
 			</div>
-			<div>
-				<dt>Regular 400</dt>
-				<dd style="font-weight:400">가나다라마바사아자차카타파하<br> ABCDEFGHIJKLNMOPQRSTUVWXYZ<br> abcdefghijklnmopqrstuvwxyz<br> 0123456789</dd>
-			</div>
-			<div>
-				<dt>Medium 500</dt>
-				<dd style="font-weight:500">가나다라마바사아자차카타파하<br> ABCDEFGHIJKLNMOPQRSTUVWXYZ<br> abcdefghijklnmopqrstuvwxyz<br> 0123456789</dd>
-			</div>
-			<div>
-				<dt>Bold 700</dt>
-				<dd style="font-weight:700">가나다라마바사아자차카타파하<br> ABCDEFGHIJKLNMOPQRSTUVWXYZ<br> abcdefghijklnmopqrstuvwxyz<br> 0123456789</dd>
-			</div>
-			<div>
-				<dt>Black 900</dt>
-				<dd style="font-weight:900">가나다라마바사아자차카타파하<br> ABCDEFGHIJKLNMOPQRSTUVWXYZ<br> abcdefghijklnmopqrstuvwxyz<br> 0123456789</dd>
-			</div>
-		</dl>
+		</div>
+		<div style="margin-bottom: 2rem;">
+			<input type="text" value="가나다  ABC def 012" class="inp-base" onkeyup="document.querySelector('#prview').textContent = this.value;">
+		</div>
+
+		<div class="typo-display-l" id="prview" style="font-weight: 100;">
+			가나다  ABC def 012
+		</div>
 	</div>
 </section>
 
-<section class="sec-wrap">
-	<h2 class="h-2">Heading Style</h2>
-	<p>너무 다양한 크기와 스타일은 사용자와 레이아웃을 혼란스럽게 하는 요소입니다. 지정된 크기와 스타일로 제한을 줘서 균형과 사용성을 높이도록 합니다.</p>
-	<div class="box-guide">
-		<span class="guide-line"></span>
-		<h1 class="h-1">.h-1 : 가Aa0</h1>
-		<span class="guide-line"></span>
-		<h2 class="h-2">.h-2 : 가Aa0</h2>
-		<span class="guide-line"></span>
-		<h3 class="h-3">.h-3 : 가Aa0</h3>
-		<span class="guide-line"></span>
-		<h4 class="h-4">.h-4 : 가Aa0</h4>
-		<span class="guide-line"></span>
-		<h5 class="h-5">.h-5 : 가Aa0</h5>
-		<span class="guide-line"></span>
-		<h6 class="h-6">.h-6 : 가Aa0</h6>
-		<span class="guide-line"></span>
-	</div>
-</section>
-
-<section class="sec-wrap">
-	<h2 class="h-2">Paragraph Style</h2>
-	<p>문단에서 쓰이는 폰트의 크기는 기본적으로 3가지로 구성한다.</p>
-	<div class="box-guide">
-		<dl class="list-define font">
-			<div>
-				<dt>본문 .fs-s</dt>
-				<dd>
-					<p class="fs-s">가나다라마바사아자차카타파하 ABCDEFGHIJKLNMOPQRSTUVWXYZ abcdefghijklnmopqrstuvwxyz 0123456789</p>
-				</dd>
-				<dd>
-					<p class="fs-s"><b>가나다라마바사아자차카타파하 ABCDEFGHIJKLNMOPQRSTUVWXYZ abcdefghijklnmopqrstuvwxyz 0123456789</b></p>
-				</dd>
-			</div>
-			<div>
-				<dt>본문 .fs-m</dt>
-				<dd><p class="fs-m">가나다라마바사아자차카타파하 ABCDEFGHIJKLNMOPQRSTUVWXYZ abcdefghijklnmopqrstuvwxyz 0123456789</p></dd>
-				<dd><p class="fs-m">가나다라마바사아자차카타파하 ABCDEFGHIJKLNMOPQRSTUVWXYZ abcdefghijklnmopqrstuvwxyz 0123456789</p></dd>
-			</div>
-
-			<div>
-				<dt>본문 .fs-l</dt>
-				<dd><p class="fs-l">가나다라마바사아자차카타파하 ABCDEFGHIJKLNMOPQRSTUVWXYZ abcdefghijklnmopqrstuvwxyz 0123456789</p></dd>
-				<dd><p class="fs-l">가나다라마바사아자차카타파하 ABCDEFGHIJKLNMOPQRSTUVWXYZ abcdefghijklnmopqrstuvwxyz 0123456789</p></dd>
-			</div>
-		</dl>
-	</div>
-</section>
 
 
 

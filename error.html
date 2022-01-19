@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="./resources/css/ui.base.css">
+
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .page-win10 {
+            width: 100%;
+            height: 100%;
+            background-color: #0075c8;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .wrap {
+
+            padding: 0 15vmin;
+            font-weight: 200;
+            letter-spacing: 1px;
+
+        }
+
+        .page-win10 strong {
+            display: block;
+            font-size: 15vmin;
+            margin-bottom: 5vmin;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 4vmin;
+            font-weight: 200;
+        }
+
+        .num {
+            font-size: 4vmin;
+            margin-top: 3vmin
+        }
+
+        .group {
+            width: 100%;
+            margin-top: 4vmin;
+            font-size: 2vmin;
+            line-height: 1.7;
+            display: flex;
+        }
+
+        .group img {
+            width: 116px;
+            float: left;
+            margin-right: 5vmin
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page-win10">
+        <div class="wrap">
+            <strong class="face">:(</strong>
+            <h1>PC에 문제가 발생하여 다시 시작해야 합니다. 일부 오류 정보를 수집하고 있습니다. 그런 다음 자동으로 다시 시작합니다.</h1>
+
+            <div class="num"><span>0</span>% 완료</div>
+
+            <div class="group">
+                <a href="https://asever77.github.io/netiveUI/html/index.html?page=introduction" target="_blank">
+                    <img src="./resources/img/qrcode.png"
+                        alt="Netive UI: https://asever77.github.io/netiveUI/html/index.html?page=introduction" >
+                </a>
+                <div>
+                    이 문제와 가능한 수정 사항에 대한 자세한 내용은 <a
+                        href="https://asever77.github.io/netiveUI/html/index.html?page=introduction"
+                        target="_blank">https://asever77.github.io/netiveUI/html/</a>를 참조하세요.<br>
+                    지원 담당자에게 연락하는 경우 다음 정보를 제공하세요.<br>
+                    중지 코드: NETIVE_UI_DEVELOPMENT_GROUP
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var timer = function () {
+            var num = document.querySelector('.num span');
+            var face = document.querySelector('.face');
+            var num_text = num.innerText;
+
+            var randomNum = function () {
+                return Math.floor(Math.random() * 100) + 1;
+            }
+
+            var timer_num = randomNum() * 10;
+
+            function numIncrement() {
+                setTimeout(function () {
+                    num_text = Number(num_text) + 1;
+                    if (num_text < 101) {
+                        console.log(num_text);
+                        num.innerHTML = num_text;
+                        
+                        timer_num = randomNum() * ( num_text > 65 ? 100 : 10);
+                        
+                        
+                        numIncrement();
+                    } else {
+                        num_text = 0;
+                        numIncrement();
+                    }
+                }, timer_num);
+            }
+            numIncrement();
+        }
+        timer();
+    </script>
+
+</body>
+
+</html>

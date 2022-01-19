@@ -1,91 +1,7 @@
 'use strict';
 
-//Polyfill
-if (!Object.create) {
-	Object.create = function (o) {
-		if (arguments.length > 1) {
-			throw new Error('Sorry the polyfill Object.create only accepts the first parameter.');
-		}
-		function F() {}
-		F.prototype = o;
-		return new F();
-	};
-}
-if (!Array.indexOf){ 
-	Array.prototype.indexOf = function(obj){ 
-		for(var i=0; i<this.length; i++){ 
-			if(this[i]==obj){ return i; } 
-		} 
-		return -1; 
-	};
-}
-if (!Array.prototype.forEach) {
-	Array.prototype.forEach = function(callback,thisArg) {
-		var T,k;
-		if(this === null) {
-			throw new TypeError('error');
-		}
-		var O = Object(this);
-		var len = O.length >>> 0;
-		if(typeof callback !== "function"){
-			throw new TypeError('error');
-		}
-		if(arguments.length > 1){
-			T = thisArg;
-		}
-		k = 0;
-		while(k < len){
-			var kValue;
-			if(k in O) {
-				kValue = O[k];
-				callback.call(T, kValue, k, O);
-			}
-			k++;
-		}
-	};
-}
-if (!Array.isArray) {
-	Array.isArray = function(arg){
-		return Object.prototype.toString.call(arg) === '[object Array]';
-	};
-}
-if (!Object.keys){
-	Object.keys = (function() {
-		'use strict';
-		var hasOwnProperty = Object.prototype.hasOwnProperty,
-			hasDontEnumBug = !({ toDtring : null }).propertyIsEnumerable('toString'),
-			dontEnums = [
-				'toString',
-				'toLocaleString',
-				'valueOf',
-				'hasOwnProperty',
-				'isPrototypeOf',
-				'propertyIsEnumerable',
-				'varructor'
-			],
-			dontEnumsLength = dontEnums.length;
-		
-		return function(obj) {
-			if (typeof obj !== 'object' && (typeof obj !== 'function' || obj === null)) {
-				throw new TypeError('Object.keys called on non=object');
-			}
-			var result = [], prop, i;
-			for (prop in obj) {
-				if (hasOwnProperty.call(obj, prop)) {
-					result.push(prop);
-				}
-			}
-			if (hasDontEnumBug) {
-				for (i=0; i < dontEnumsLength; i++) {
-					if (hasOwnProperty.call(obj, dontEnums[i])) {
-						result.push(dontEnums[i]);
-					}
-				}
-			}
-			return result;
-		};
-	}()); 
-}
+
+
 
 //utils module
 ;(function (win, doc, undefined) {
@@ -397,11 +313,20 @@ if (!Object.keys){
 				n = el.offsetHeight;
 				el.style.height = 0;
 				void el.offsetHeight;
-				el.style.height = `${n}px`;
+				el.style.height = n + 'px';
+				
+				setTimeout(function(){
+					el.style.height = 'auto';
+				},300);
 			}
 			function hide(){
-				el.setAttribute('aria-hidden', true);
-				el.style.height = 0;
+				el.style.height = el.offsetHeight + 'px';
+
+				setTimeout(function(){
+					el.setAttribute('aria-hidden', true);
+					el.style.height = 0;
+				},0);
+				
 			}
 		}
 	}
@@ -428,18 +353,23 @@ if (!Object.keys){
 			styleClass : 'orbit' //time
 		},
 		show : function(option){
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, this.options, option);
+			const opt = Object.assign({}, this.options, option);
+			//const opt = {...this.options, ...option};
 			//Global.option.join(this.options, option);
-
-			const {selector, styleClass, message} = opt;
-			console.log(selector, styleClass, message);
+			const selector = opt.selector; 
+			const styleClass = opt.styleClass; 
+			const message = opt.message;
 			const el = (selector !== null) ? selector : doc.querySelector('body');
 			const el_loadingHides = doc.querySelectorAll('.ui-loading:not(.visible)');
 
-			for (let that of el_loadingHides) {
+			for (let i = 0, len = el_loadingHides.length; i < len; i++) {
+				const that = el_loadingHides[i];
+
 				that.remove();
 			}
+			// for (let that of el_loadingHides) {
+			// 	that.remove();
+			// }
 
 			let htmlLoading = '';
 
@@ -465,10 +395,16 @@ if (!Object.keys){
 
 				const el_loadings = doc.querySelectorAll('.ui-loading');
 
-				for (let that of el_loadings) {
+				for (let i = 0, len = el_loadings.length; i < len; i++) {
+					const that = el_loadings[i];
+
 					that.classList.add('visible');
 					that.classList.remove('close');
 				}
+				// for (let that of el_loadings) {
+				// 	that.classList.add('visible');
+				// 	that.classList.remove('close');
+				// }
 			}
 		},
 		hide: function(){
@@ -476,13 +412,22 @@ if (!Object.keys){
 			this.timerHide = setTimeout(function(){
 				const el_loadings = doc.querySelectorAll('.ui-loading');
 
-				for (let that of el_loadings) {
+				for (let i = 0, len = el_loadings.length; i < len; i++) {
+					const that = el_loadings[i];
+
 					that.classList.add('close');
 					setTimeout(function(){
 						that.classList.remove('visible')
 						that.remove();
 					},300);
 				}
+				// for (let that of el_loadings) {
+				// 	that.classList.add('close');
+				// 	setTimeout(function(){
+				// 		that.classList.remove('visible')
+				// 		that.remove();
+				// 	},300);
+				// }
 			},300);
 		}
 	}
@@ -507,10 +452,19 @@ if (!Object.keys){
 				return false;
 			}
 
+			const opt = Object.assign({}, this.options, option);
+			//const opt = {...this.options, ...option};
 			const xhr = new XMLHttpRequest();
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, this.options, option);
-			const {area, loading, effect, type, url, page, add, prepend, mimeType, contType} = opt;
+			const area = opt.area;
+			const loading = opt.loading;
+			const effect = opt.effect;
+			const type = opt.type;
+			const url = opt.url;
+			const page = opt.page;
+			const add = opt.add;
+			const prepend = opt.prepend;
+			const mimeType = opt.mimeType;
+			const contType = opt.contType;
 			const callback = opt.callback || false;
 			const errorCallback = opt.errorCallback === undefined ? false : opt.errorCallback;
 	
@@ -549,7 +503,7 @@ if (!Object.keys){
 
 				} else {
 					loading && Global.loading.hide();
-					errorCallback ? errorCallback() : '';
+					errorCallback && errorCallback();
 				}
 			};
 		}
@@ -582,19 +536,24 @@ if (!Object.keys){
 		init: function(){
 			const el_areas = document.querySelectorAll('.ui-scrollmove-btn[data-area]');
 
-			for (let el_this of el_areas) {
-				el_this.removeEventListener('click', this.act);
-				el_this.addEventListener('click', this.act);
+			for (let i = 0, len = el_areas.length; i < len; i++) {
+				const that = el_areas[i];
+
+				that.removeEventListener('click', this.act);
+				that.addEventListener('click', this.act);
 			}
+			// for (let that of el_areas) {
+			// 	that.removeEventListener('click', this.act);
+			// 	that.addEventListener('click', this.act);
+			// }
 		},
 		act: function(e){
-			const that = e.currentTarget;
-			const area = that.dataset.area;
-			const name = that.dataset.name;
-			const add = that.dataset.add === undefined ? 0 : that.dataset.add;
-			const align = that.dataset.align === undefined ? 'default' : that.dataset.align;
-			const callback = that.dataset.callback === undefined ? false : that.dataset.callback;
-
+			const el = e.currentTarget;
+			const area = el.dataset.area;
+			const name = el.dataset.name;
+			const add = el.dataset.add === undefined ? 0 : el.dataset.add;
+			const align = el.dataset.align === undefined ? 'default' : el.dataset.align;
+			const callback = el.dataset.callback === undefined ? false : el.dataset.callback;
 			const el_area = doc.querySelector('.ui-scrollmove[data-area="'+ area +'"]');
 			const el_item = el_area.querySelector('.ui-scrollmove-item[data-name="'+ name +'"]');
 			
@@ -617,9 +576,15 @@ if (!Object.keys){
 			});
 		},
 		move : function(option){
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, this.options, option);
-			const {top, left, callback, align, add, focus, effect} = opt;
+			const opt = Object.assign({}, this.options, option);
+			//const opt = {...this.options, ...option};
+			const top = opt.top;
+			const left = opt.left;
+			const callback = opt.callback;
+			const align = opt.align;
+			const add = opt.add;
+			const focus = opt.focus;
+			const effect = opt.effect;
 			let selector = opt.selector;
 
 			//jquery selector인 경우 변환
@@ -632,7 +597,7 @@ if (!Object.keys){
 					selector.scrollTo({
 						top: Math.abs(top) + add,
 						left: Math.abs(left) + add,
-						behavior: effect
+						//behavior: effect
 					});
 					break;
 
@@ -657,7 +622,9 @@ if (!Object.keys){
 		checkEndTimer : {},
 		checkEnd: function(opt){
 			const el_selector = opt.selector;
-			const {align, focus, callback} = opt;
+			const align = opt.align
+			const focus = opt.focus
+			const callback = opt.callback
 			
 			let nowTop = opt.nowTop;
 			let nowLeft = opt.nowLeft;
@@ -700,11 +667,17 @@ if (!Object.keys){
 			area : null
 		},
 		parallax: function(option) {
-			const opt = {...this.optionsParllax, ...option};
-			//const opt = Object.assign({}, this.optionsParllax, option);
-			const el_area = opt.area ?? window;
-			const el_parallax = opt.selector ?? doc.querySelector('.ui-parallax');
-			const el_wraps = el_parallax.querySelectorAll(':scope > .ui-parallax-wrap');
+			
+			const opt = Object.assign({}, this.optionsParllax, option);
+			//const opt = {...this.optionsParllax, ...option};
+			const el_area = (opt.area === undefined || opt.area === null) ? window : opt.area;
+			//Nullish coalescing operator
+			//const el_area = opt.area ?? window;
+			const el_parallax = (opt.selector === undefined || opt.selector === null) ? doc.querySelector('.ui-parallax') : opt.selector;
+			//const el_parallax = opt.selector ?? doc.querySelector('.ui-parallax');
+
+			//:scope >
+			const el_wraps = el_parallax.querySelectorAll('.ui-parallax-wrap');
 
 			act();
 			el_area.addEventListener('scroll', act);
@@ -715,12 +688,13 @@ if (!Object.keys){
 				const areaT = isWin ? Math.floor(window.scrollY) : Math.floor(el_area.scrollTop);
 				const baseT = Math.floor(el_wraps[0].getBoundingClientRect().top);
 				
-				for (let el_wrap of el_wraps) {
-					const el_items = el_wrap.querySelectorAll('.ui-parallax-item');
-					const attrStart = el_wrap.dataset.start === undefined ? 0 : el_wrap.dataset.start;
-					const attrEnd = el_wrap.dataset.end === undefined ? 0 : el_wrap.dataset.end;
-					const h = Math.floor(el_wrap.offsetHeight);
-					let start = Math.floor(el_wrap.getBoundingClientRect().top);
+				for (let i = 0, len = el_wraps.length; i < len; i++) {
+					const that = el_wraps[i];
+					const el_items = that.querySelectorAll('.ui-parallax-item');
+					const attrStart = that.dataset.start === undefined ? 0 : that.dataset.start;
+					const attrEnd = that.dataset.end === undefined ? 0 : that.dataset.end;
+					const h = Math.floor(that.offsetHeight);
+					let start = Math.floor(that.getBoundingClientRect().top);
 					let end = h + start;
 					const s = areaH * Number(attrStart) / 100;
 					const e = areaH * Number(attrEnd) / 100;
@@ -731,28 +705,30 @@ if (!Object.keys){
 					}
 
 					(areaT >= start - s) ? 
-						el_wrap.classList.add('parallax-s') : 
-						el_wrap.classList.remove('parallax-s');
+						that.classList.add('parallax-s') : 
+						that.classList.remove('parallax-s');
 					(areaT >= end - e) ? 
-						el_wrap.classList.add('parallax-e') : 
-						el_wrap.classList.remove('parallax-e');
+						that.classList.add('parallax-e') : 
+						that.classList.remove('parallax-e');
 
-					for (let el_item of el_items) {
+					for (let i = 0, len = el_items.length; i < len; i++) {
+						const that = el_items[i];
 						const n = ((areaT - (start - s)) * 0.003).toFixed(2);
-						const callbackname = el_item.dataset.act;
+						const callbackname = that.dataset.act;
 
 						//n = n < 0 ? 0 : n > 1 ? 1 : n;
 
 						if (!!Global.callback[callbackname]) {
 							Global.callback[callbackname]({
-								el: el_item, 
+								el: that, 
 								n: n
 							});
 						}
 
-						el_item.setAttribute('data-parallax', n);
+						that.setAttribute('data-parallax', n);
 					}
-				}
+					
+				} 
 			}
 		}
 	}
@@ -761,13 +737,12 @@ if (!Object.keys){
 		get: function(paraname){
 			const _tempUrl = win.location.search.substring(1);
 			const _tempArray = _tempUrl.split('&');
-			let _keyValue;
 
 			for (let i = 0, len = _tempArray.length; i < len; i++) {
-				_keyValue = _tempArray[i].split('=');
+				const that = _tempArray[i].split('=');
 
-				if (_keyValue[0] === paraname) {
-					return _keyValue[1];
+				if (that[0] === paraname) {
+					return that[1];
 				}
 			}
 		}
@@ -781,12 +756,12 @@ if (!Object.keys){
 			if (option === undefined) {
 				return false;
 			}
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, Global.focus.options, option);
+			
+			const opt = Object.assign({}, Global.focus.options, option);
+			//const opt = {...this.options, ...option};
 			const el = opt.selector;
 			const callback = opt.callback;
 			// var $focusItem = $base.find('input, h1, h2, h3, a, button, label, textarea, select').eq(0);
-
 			// $focusItem.attr('tabindex', 0).focus();
 
 			if(!el.querySelector('[class*="ui-focusloop-"]')) {
@@ -818,302 +793,357 @@ if (!Object.keys){
 		}
 	}
 
-	class ScrollBar {
-		//객체의 기본 상태를 설정해주는 생성자 메서드 constructor()는 new에 의해 자동으로 호출되므로, 특별한 절차 없이 객체를 초기화
-		constructor(idName) {
-			this.id = idName;
-			this.callback = function(){
-				console.log(`${idName} 커스텀 스크롤 준비완료`);
-			};
-			this.infiniteCallback = false;
-		}
+	Global.scrollBar = {
+		options : {
+			selector: false,
+			callback:false,
+			infiniteCallback:false,
+			space: false,
+			remove: false
+		},
+		init: function(option){
+			const opt = Object.assign({}, Global.scrollBar.options, option);
+			let scrollBars = doc.querySelectorAll('.ui-scrollbar');
 
-		//메서드 사이엔 쉼표가 없습니다.
-		init(option) {
-			const opt = {...this, ...option};
-			//const opt = Object.assign({}, this, option);
-			const id = opt.id;
-			const callback = opt.callback;
-			const infiniteCallback = opt.infiniteCallback;
-			const el_scrollbar = doc.querySelector('[data-scroll-id="' + id +'"]');
-
-			let timer;
-			let prevHeightPercent = 0;
-			let scrollDirection = 'keep';
-
-			//+reset
-			if (el_scrollbar.dataset.ready === 'yes') {
-				return false;
-			}
-
-			el_scrollbar.classList.remove('ready');
-			el_scrollbar.dataset.ready = 'no';
-			el_scrollbar.dataset.direction = scrollDirection;
+			(sessionStorage.getItem('scrollbarID') === null) && sessionStorage.setItem('scrollbarID', 0);
 			
-			const wrapW = el_scrollbar.offsetWidth;
-			const wrapH = el_scrollbar.offsetHeight;
+			if (!!option && !!option.selector) {
+				scrollBars = option.selector;
 
-			Global.parts.wrapTag('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap">', el_scrollbar ,'</div></div>');
+				const that = scrollBars;
+				let scrollId = that.getAttribute('data-scroll-id');
 
-			//++make
-			const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
-			const el_itemWrap = el_item.querySelector('.ui-scrollbar-wrap');
-			const _display = window.getComputedStyle(el_scrollbar).display;
-			const _padding = window.getComputedStyle(el_scrollbar).padding;
-
-			el_itemWrap.style.display = _display;
-			el_itemWrap.style.padding = _padding;
-
-			if (_display === 'inline-block') {
-				el_itemWrap.style.display = 'block';
-			}
-
-			el_itemWrap.style.width = '100%';
-			el_item.style.width = '100%';
-
-			el_scrollbar.style.overflow = 'hidden';
-
-			const itemW = el_item.scrollWidth;
-			const itemH = el_item.scrollHeight;
-
-			el_scrollbar.dataset.itemH = itemH;
-			el_scrollbar.dataset.itemW = itemW;
-			el_scrollbar.dataset.wrapH = wrapH;
-			el_scrollbar.dataset.wrapW = wrapW;
-			
-			if (el_scrollbar.dataset.ready === 'no') {
-				el_scrollbar.dataset.ready = 'yes';
-				el_scrollbar.classList.add('ready');
-				el_item.setAttribute('tabindex', 0);
-				el_scrollbar.style.height = wrapH + 'px';
-
-				const html_barwrap = doc.createElement('div');
-				const html_barwrapX = doc.createElement('div');
-				const html_button = doc.createElement('button');
-				const html_buttonX = doc.createElement('button');
-
-				html_barwrap.classList.add('ui-scrollbar-barwrap');
-				html_barwrap.classList.add('type-y');
-				html_barwrapX.classList.add('ui-scrollbar-barwrap');
-				html_barwrapX.classList.add('type-x');
-				html_button.classList.add('ui-scrollbar-bar');
-				html_button.setAttribute('type', 'button');
-				html_button.setAttribute('aria-hidden', true);
-				html_button.setAttribute('aria-label', 'vertical scroll button');
-				html_button.setAttribute('tabindex', '-1');
-				html_button.dataset.scrollxy = 'y';
-				html_buttonX.classList.add('ui-scrollbar-bar');
-				html_buttonX.setAttribute('type', 'button');
-				html_buttonX.setAttribute('aria-hidden', true);
-				html_buttonX.setAttribute('aria-label', 'vertical scroll button');
-				html_buttonX.setAttribute('tabindex', '-1');
-				html_buttonX.dataset.scrollxy = 'x';
-				
-				html_barwrap.append(html_button);
-				html_barwrapX.append(html_buttonX);
-				el_scrollbar.prepend(html_barwrap);
-				el_scrollbar.prepend(html_barwrapX);
-
-				(wrapH < itemH) ? 
-					el_scrollbar.classList.add('view-y') : 
-					el_scrollbar.classList.remove('view-y');
-
-				(wrapW < itemW) ? 
-					el_scrollbar.classList.add('view-x') : 
-					el_scrollbar.classList.remove('view-x');
-
-				const barH = Math.floor(wrapH / (itemH / 100));
-				const barW = Math.floor(wrapW / (itemW / 100));
-				const el_barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
-				const el_barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
-				
-				el_barY.style.height = barH + '%';
-				el_barX.style.height = barW + '%';
-				el_barY.dataset.height = barH;
-				el_barX.dataset.height = barW;
-
-				el_scrollbar.classList.add('view-scrollbar');
-				!!callback && callback(); 
-
-				scrollEvent(false, el_item);
-				scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW);
-				eventFn(el_scrollbar);
-			}
-
-			function scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW){
-				const _el_scrollbar = el_scrollbar;
-				const el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
-				
-				if (!el_item) {
-					return false;
-				}
-
-				const nWrapH = _el_scrollbar.offsetHeight;
-				const nWrapW = _el_scrollbar.offsetWidth;
-				const nItemH = el_item.scrollHeight;
-				const nItemW = el_item.scrollWidth;
-				const changeH = (itemH !== nItemH || wrapH !== nWrapH);
-				const changeW = (itemW !== nItemW || wrapW !== nWrapW);
-
-				//resizing
-				if (changeH || changeW) {
-					const barH = Math.floor(nWrapH / (nItemH / 100));
-					const barW = Math.floor(nWrapW / (nItemW / 100));
-					const el_barY = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
-					const el_barX = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
-
-					if (changeH) {
-						el_barY.style.height = barH + '%';
-						el_barY.dataset.height = barH;
+				if (that.dataset.ready !== 'yes') {
+					//selector로 개별 실행
+					if (!scrollId) {
+						const idN = Number(JSON.parse(sessionStorage.getItem('scrollbarID'))) + 1;
+							
+						sessionStorage.setItem('scrollbarID', idN);
+						scrollId = 'item' + idN;
+						that.dataset.scrollId = scrollId;
 					} 
-					if (changeW) {
-						el_barX.style.width = barW + '%';
-						el_barX.dataset.width = barW;
-					}
 					
-					(nWrapH < nItemH) ? _el_scrollbar.classList.add('view-y') : _el_scrollbar.classList.remove('view-y');
-					(nWrapW < nItemW) ? _el_scrollbar.classList.add('view-x') : _el_scrollbar.classList.remove('view-x');
+					scrollId = opt.id !== undefined ? opt.id : scrollId
 
-					el_scrollbar.dataset.itemH = nItemH;
-					el_scrollbar.dataset.itemW = nItemW;
-					el_scrollbar.dataset.wrapH = nWrapH;
-					el_scrollbar.dataset.wrapW = nWrapW;
+					setTimeout(function(){
+						create(scrollId);
+					},0);
 				}
-
-				setTimeout(function(){
-					scrollbarUpdate(el_scrollbar, nWrapH, nWrapW, nItemH, nItemW);
-				}, 300);
+			} else {
+				//기본 selector 없이 실행
+				for (let i = 0, len = scrollBars.length; i < len; i++) {
+					const that = scrollBars[i];
+					let scrollId = that.getAttribute('data-scroll-id');
+	
+					if (that.dataset.ready !== 'yes') {
+						//data-scroll-id가 없다면 섹션스토리지에서 생성한 아이디를 가져와 +1 하여 넣어준다.
+						if (!scrollId) {
+							const idN = Number(JSON.parse(sessionStorage.getItem('scrollbarID'))) + 1;
+								
+							sessionStorage.setItem('scrollbarID', idN);
+							scrollId = 'item' + idN;
+							that.dataset.scrollId = scrollId;
+						} 
+						
+						scrollId = opt.id !== undefined ? opt.id : scrollId
+	
+						setTimeout(function(){
+							create(scrollId);
+						},0);
+					}
+				}
 			}
 
-			function eventFn(v){
-				const _el_scrollbar = el_scrollbar;
-				const el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
-				const el_bar = _el_scrollbar.querySelectorAll('.ui-scrollbar-bar');
+			function create(scrollId){
+				const callback = opt.callback;
+				const infiniteCallback = opt.infiniteCallback;
+				const el_scrollbar = doc.querySelector('[data-scroll-id="' + scrollId +'"]');
 
-				el_item.addEventListener('scroll', scrollEvent);
+				let timer;
+				let prevHeightPercent = 0;
+				let scrollDirection = 'keep';
 
-				for (let bar of el_bar) {
-					bar.addEventListener('mousedown', dragMoveAct);
-				}
-			}	
-			
-			function scrollEvent(event, el_item){
-				const _el_item = !!event ? event.target : el_item;
-				const el_scrollbar = _el_item.closest('.ui-scrollbar');
-				const itemH = Number(el_scrollbar.dataset.itemH);
-				const itemW = Number(el_scrollbar.dataset.itemW);
-				const wrapH = Number(el_scrollbar.dataset.wrapH);
-				const wrapW = Number(el_scrollbar.dataset.wrapW);
-
-				//el_scrollbar.dataset 값이 없을 경우 4개의 값중 하나라도 없으면 중단
-				if (wrapW === undefined) {
+				//+reset
+				if (el_scrollbar.dataset.ready === 'yes') {
 					return false;
 				}
 
-				const el_barY = el_scrollbar.querySelector('.type-y .ui-scrollbar-bar');
-				const el_barX = el_scrollbar.querySelector('.type-x .ui-scrollbar-bar');
-				const scrT = _el_item.scrollTop;
-				const scrL = _el_item.scrollLeft;
-				const barH = Number(el_barY.dataset.height);
-				const barW = Number(el_barX.dataset.width);
-				const hPer = Math.round(scrT / (itemH - wrapH) * 100);
-				const wPer = Math.round(scrL / (itemW - wrapW) * 100);
-				const _hPer = (barH / 100) * hPer;
-				const _wPer = (barW / 100) * wPer;
-				
-				el_barY.style.top = hPer - _hPer + '%';
-				el_barX.style.left = wPer - _wPer + '%';
-				
-				if (prevHeightPercent < scrT) {
-					scrollDirection = 'down';
-				} else if (prevHeightPercent > scrT) {
-					scrollDirection = 'up';
-				} else {
-					scrollDirection = 'keep';
-				}
-
+				el_scrollbar.classList.remove('ready');
+				el_scrollbar.dataset.ready = 'no';
 				el_scrollbar.dataset.direction = scrollDirection;
-				prevHeightPercent = scrT;
+				
+				const wrapW = el_scrollbar.offsetWidth;
+				const wrapH = el_scrollbar.offsetHeight;
 
-				if (hPer === 100 && scrollDirection === 'down') {
-					clearTimeout(timer);
-					timer = setTimeout(() => {
-						!!infiniteCallback && infiniteCallback();
-					},200);
-				}
-			}
-			
-			function dragMoveAct(event) {
-				const body = doc.querySelector('body');
-				const el_bar = event.target;
-				const el_scrollbar = el_bar.closest('.ui-scrollbar');
-				const el_barWrap = el_bar.closest('.ui-scrollbar-barwrap');
+				Global.parts.wrapTag('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap">', el_scrollbar ,'</div></div>');
+
+				//++make
 				const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
-				const itemH = Number(el_scrollbar.dataset.itemH);
-				const itemW = Number(el_scrollbar.dataset.itemW);
-				const el_barWrapRect = el_barWrap.getBoundingClientRect();
-				const off_t = el_barWrapRect.top + doc.documentElement.scrollTop;
-				const off_l = el_barWrapRect.left + doc.documentElement.scrollLeft;
-				const w_h = el_barWrapRect.height;
-				const w_w = el_barWrapRect.width;
-				const barH = el_bar.getAttribute('data-height');
-				const barW = el_bar.getAttribute('data-width');
-				const isXY = el_bar.getAttribute('data-scrollxy');
+				const el_itemWrap = el_item.querySelector('.ui-scrollbar-wrap');
+				const _display = window.getComputedStyle(el_scrollbar).display;
+				const _padding = window.getComputedStyle(el_scrollbar).padding;
 
-				body.classList.add('scrollbar-move');
 
-				doc.addEventListener('mousemove', mousemoveAct);
-				doc.addEventListener('mouseup', mouseupAct);
+				el_itemWrap.style.display = 'block';
 
-				function mousemoveAct(event){
-					let y_m; 
-					let x_m;
+				// el_itemWrap.style.display = _display;
+				// el_itemWrap.style.padding = _padding;
+				// if (_display === 'inline-block') {
+				// 	el_itemWrap.style.display = 'block';
+				// }
+
+				el_itemWrap.style.width = '100%';
+				el_item.style.width = '100%';
+				el_scrollbar.style.overflow = 'hidden';
+
+				const itemW = el_item.scrollWidth;
+				const itemH = el_item.scrollHeight;
+
+				el_scrollbar.dataset.itemH = itemH;
+				el_scrollbar.dataset.itemW = itemW;
+				el_scrollbar.dataset.wrapH = wrapH;
+				el_scrollbar.dataset.wrapW = wrapW;
+				
+				if (el_scrollbar.dataset.ready === 'no') {
+					el_scrollbar.dataset.ready = 'yes';
+					el_scrollbar.classList.add('ready');
+					el_item.setAttribute('tabindex', 0);
+					el_scrollbar.style.height = wrapH + 'px';
+
+					const html_barwrap = doc.createElement('div');
+					const html_barwrapX = doc.createElement('div');
+					const html_button = doc.createElement('button');
+					const html_buttonX = doc.createElement('button');
+
+					html_barwrap.classList.add('ui-scrollbar-barwrap');
+					html_barwrap.classList.add('type-y');
+					html_button.classList.add('ui-scrollbar-bar');
+					html_button.setAttribute('type', 'button');
+					html_button.setAttribute('aria-hidden', true);
+					html_button.setAttribute('aria-label', 'vertical scroll button');
+					html_button.setAttribute('tabindex', '-1');
+					html_button.dataset.scrollxy = 'y';
+
+					html_barwrapX.classList.add('ui-scrollbar-barwrap');
+					html_barwrapX.classList.add('type-x');
+					html_buttonX.classList.add('ui-scrollbar-bar');
+					html_buttonX.setAttribute('type', 'button');
+					html_buttonX.setAttribute('aria-hidden', true);
+					html_buttonX.setAttribute('aria-label', 'vertical scroll button');
+					html_buttonX.setAttribute('tabindex', '-1');
+					html_buttonX.dataset.scrollxy = 'x';
 					
-					if (event.touches === undefined) {
-						if (event.pageY !== undefined) {
-							y_m = event.pageY;
-						} else if (event.pageY === undefined) {
-							y_m = event.clientY;
-						}
+					html_barwrap.append(html_button);
+					html_barwrapX.append(html_buttonX);
+					el_scrollbar.prepend(html_barwrap);
+					el_scrollbar.prepend(html_barwrapX);
 
-						if (event.pageX !== undefined) {
-							x_m = event.pageX;
-						} else if (event.pageX === undefined) {
-							x_m = event.clientX;
-						}
+					(wrapH < itemH) ? 
+						el_scrollbar.classList.add('view-y') : 
+						el_scrollbar.classList.remove('view-y');
+
+					(wrapW < itemW) ? 
+						el_scrollbar.classList.add('view-x') : 
+						el_scrollbar.classList.remove('view-x');
+
+					const barH = Math.floor(wrapH / (itemH / 100));
+					const barW = Math.floor(wrapW / (itemW / 100));
+					const el_barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+					const el_barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+
+					!!el_barY ? el_barY.style.height = barH + '%' : '';
+					!!el_barX ? el_barX.style.width = barW + '%' : '';
+					!!el_barY ? el_barY.dataset.height = barH : '';
+					!!el_barX ? el_barX.dataset.width = barW : '';
+
+					el_scrollbar.classList.add('view-scrollbar');
+					!!callback && callback(); 
+
+					scrollEvent(false, el_item);
+					scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW);
+					eventFn(el_scrollbar);
+				}
+
+				function scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW){
+					const _el_scrollbar = el_scrollbar;
+					const el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
+					
+					if (!el_item) {
+						return false;
 					}
 
-					let yR = y_m - off_t;
-					let xR = x_m - off_l;
+					const nWrapH = _el_scrollbar.offsetHeight;
+					const nWrapW = _el_scrollbar.offsetWidth;
+					const nItemH = el_item.scrollHeight;
+					const nItemW = el_item.scrollWidth;
+					const changeH = (itemH !== nItemH || wrapH !== nWrapH);
+					const changeW = (itemW !== nItemW || wrapW !== nWrapW);
 
-					yR = yR < 0 ? 0 : yR;
-					yR = yR > w_h ? w_h : yR;
-					xR = xR < 0 ? 0 : xR;
-					xR = xR > w_w ? w_w : xR;
+					//resizing
+					if (changeH || changeW) {
+						const barH = Math.floor(nWrapH / (nItemH / 100));
+						const barW = Math.floor(nWrapW / (nItemW / 100));
+						const el_barY = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+						const el_barX = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 
-					const yRPer = yR / w_h * 100;
-					const xRPer = xR / w_w * 100;
-					const nPerY = (yRPer - (barH / 100 * yRPer)).toFixed(2);
-					const nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
+						if (changeH) {
+							el_barY.style.height = barH + '%';
+							el_barY.dataset.height = barH;
+						} 
+						if (changeW) {
+							el_barX.style.width = barW + '%';
+							el_barX.dataset.width = barW;
+						}
+						
+						(nWrapH < nItemH) ? 
+							_el_scrollbar.classList.add('view-y') : 
+							_el_scrollbar.classList.remove('view-y');
+						(nWrapW < nItemW) ? 
+							_el_scrollbar.classList.add('view-x') : 
+							_el_scrollbar.classList.remove('view-x');
 
-					if (isXY === 'y') {
-						el_bar.style.top = nPerY + '%';
-						el_item.scrollTop = itemH * nPerY / 100;
+						el_scrollbar.dataset.itemH = nItemH;
+						el_scrollbar.dataset.itemW = nItemW;
+						el_scrollbar.dataset.wrapH = nWrapH;
+						el_scrollbar.dataset.wrapW = nWrapW;
+					}
+
+					setTimeout(function(){
+						scrollbarUpdate(el_scrollbar, nWrapH, nWrapW, nItemH, nItemW);
+					}, 300);
+				}
+
+				function eventFn(v){
+					const _el_scrollbar = el_scrollbar;
+					const el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
+					const el_bar = _el_scrollbar.querySelectorAll('.ui-scrollbar-bar');
+	
+					el_item.addEventListener('scroll', scrollEvent);
+					
+					for (let i = 0, len = el_bar.length; i < len; i++) {
+						const that = el_bar[i];
+
+						that.addEventListener('mousedown', dragMoveAct);
+					}
+				}	
+				
+				function scrollEvent(event, el_item){
+					const _el_item = !!event ? event.target : el_item;
+					const el_scrollbar = _el_item.closest('.ui-scrollbar');
+					const itemH = Number(el_scrollbar.dataset.itemH);
+					const itemW = Number(el_scrollbar.dataset.itemW);
+					const wrapH = Number(el_scrollbar.dataset.wrapH);
+					const wrapW = Number(el_scrollbar.dataset.wrapW);
+	
+					//el_scrollbar.dataset 값이 없을 경우 4개의 값중 하나라도 없으면 중단
+					if (wrapW === undefined) {
+						return false;
+					}
+	
+					const el_barY = el_scrollbar.querySelector('.type-y .ui-scrollbar-bar');
+					const el_barX = el_scrollbar.querySelector('.type-x .ui-scrollbar-bar');
+					const scrT = _el_item.scrollTop;
+					const scrL = _el_item.scrollLeft;
+					const barH = Number(el_barY.dataset.height);
+					const barW = Number(el_barX.dataset.width);
+					const hPer = Math.round(scrT / (itemH - wrapH) * 100);
+					const wPer = Math.round(scrL / (itemW - wrapW) * 100);
+					const _hPer = (barH / 100) * hPer;
+					const _wPer = (barW / 100) * wPer;
+					
+					el_barY.style.top = hPer - _hPer + '%';
+					el_barX.style.left = wPer - _wPer + '%';
+					
+					if (prevHeightPercent < scrT) {
+						scrollDirection = 'down';
+					} else if (prevHeightPercent > scrT) {
+						scrollDirection = 'up';
 					} else {
-						el_bar.style.left = nPerX + '%';
-						el_item.scrollLeft = itemW * nPerX / 100;
+						scrollDirection = 'keep';
+					}
+	
+					el_scrollbar.dataset.direction = scrollDirection;
+					prevHeightPercent = scrT;
+	
+					if (hPer === 100 && scrollDirection === 'down') {
+						clearTimeout(timer);
+						timer = setTimeout(function() {
+							!!infiniteCallback && infiniteCallback();
+						},200);
 					}
 				}
-				function mouseupAct(){
-					body.classList.remove('scrollbar-move');
-					doc.removeEventListener('mousemove', mousemoveAct);
-					doc.removeEventListener('mouseup', mouseupAct);
+				
+				function dragMoveAct(event) {
+					const body = doc.querySelector('body');
+					const el_bar = event.target;
+					const el_scrollbar = el_bar.closest('.ui-scrollbar');
+					const el_barWrap = el_bar.closest('.ui-scrollbar-barwrap');
+					const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
+					const itemH = Number(el_scrollbar.dataset.itemH);
+					const itemW = Number(el_scrollbar.dataset.itemW);
+					const el_barWrapRect = el_barWrap.getBoundingClientRect();
+					const off_t = el_barWrapRect.top + doc.documentElement.scrollTop;
+					const off_l = el_barWrapRect.left + doc.documentElement.scrollLeft;
+					const w_h = el_barWrapRect.height;
+					const w_w = el_barWrapRect.width;
+					const barH = el_bar.getAttribute('data-height');
+					const barW = el_bar.getAttribute('data-width');
+					const isXY = el_bar.getAttribute('data-scrollxy');
+	
+					body.classList.add('scrollbar-move');
+	
+					doc.addEventListener('mousemove', mousemoveAct);
+					doc.addEventListener('mouseup', mouseupAct);
+	
+					function mousemoveAct(event){
+						let y_m; 
+						let x_m;
+						
+						if (event.touches === undefined) {
+							if (event.pageY !== undefined) {
+								y_m = event.pageY;
+							} else if (event.pageY === undefined) {
+								y_m = event.clientY;
+							}
+	
+							if (event.pageX !== undefined) {
+								x_m = event.pageX;
+							} else if (event.pageX === undefined) {
+								x_m = event.clientX;
+							}
+						}
+	
+						let yR = y_m - off_t;
+						let xR = x_m - off_l;
+	
+						yR = yR < 0 ? 0 : yR;
+						yR = yR > w_h ? w_h : yR;
+						xR = xR < 0 ? 0 : xR;
+						xR = xR > w_w ? w_w : xR;
+	
+						const yRPer = yR / w_h * 100;
+						const xRPer = xR / w_w * 100;
+						const nPerY = (yRPer - (barH / 100 * yRPer)).toFixed(2);
+						const nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
+	
+						if (isXY === 'y') {
+							el_bar.style.top = nPerY + '%';
+							el_item.scrollTop = itemH * nPerY / 100;
+						} else {
+							el_bar.style.left = nPerX + '%';
+							el_item.scrollLeft = itemW * nPerX / 100;
+						}
+					}
+					function mouseupAct(){
+						body.classList.remove('scrollbar-move');
+						doc.removeEventListener('mousemove', mousemoveAct);
+						doc.removeEventListener('mouseup', mouseupAct);
+					}
 				}
 			}
-		}
-
-		destroy() {
-			const el_scrollbar = doc.querySelector('[data-scroll-id="' + this.id +'"]');
+		},
+		destroy: function(v){
+			const el_scrollbar = doc.querySelector('[data-scroll-id="' + v +'"]');
 			const el_barwrap = el_scrollbar.querySelectorAll('.ui-scrollbar-barwrap');
 			const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
 			const el_wrap = el_item.querySelector('.ui-scrollbar-wrap');
@@ -1125,75 +1155,395 @@ if (!Object.keys){
 			el_scrollbar.classList.remove('view-x');
 			el_scrollbar.classList.remove('view-scrollbar');
 			el_scrollbar.style.overflow = 'auto';
-			//el_scrollbar.removeAttribute('style');
-			el_barwrap.forEach((userItem) => {
+
+			el_barwrap.forEach(function(userItem) {
 				el_scrollbar.removeChild(userItem);
 			});
 			el_scrollbar.removeChild(el_item);
 			el_scrollbar.innerHTML = wrapHtml;
-		}
-
-		reset(opt) {
-			console.log(this);
-			Global.uiScrollBar[this.id].destroy();
-			Global.uiScrollBar[this.id].init({
-				infiniteCallback: opt.infiniteCallback
-			});
-
+		},
+		reset: function(v){
+			Global.scrollBar.destroy(v);
+			Global.scrollBar.init(v);
 		}
 	}
-	//uiScrollBar 실행함수 생성
-	Global.scrollBar = (opt) => {
-		let scrollBar = doc.querySelectorAll('.ui-scrollbar');
 
-		if (opt !== undefined && opt.selector !== undefined){ 
-			scrollBar = opt.selector;
-		}
-		
-		if (sessionStorage.getItem('scrollbarID') === null) {
-			sessionStorage.setItem('scrollbarID', 0);
-		}
+	// class ScrollBar {
+	// 	//객체의 기본 상태를 설정해주는 생성자 메서드 constructor()는 new에 의해 자동으로 호출되므로, 특별한 절차 없이 객체를 초기화
+	// 	constructor(idName) {
+	// 		this.id = idName;
+	// 		this.callback = function(){
+	// 			console.log(idName + '커스텀 스크롤 준비완료');
+	// 		};
+	// 		this.infiniteCallback = false;
+	// 	}
 
-		if (scrollBar.length === undefined) {
-			let scrollId = scrollBar.getAttribute('data-scroll-id');
-	
-			if (!scrollId) {
-				let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
+	// 	//메서드 사이엔 쉼표가 없습니다.
+	// 	init(option) {
+	// 		const opt = {...this, ...option};
+	// 		//const opt = Object.assign({}, this, option);
+	// 		const id = opt.id;
+	// 		const callback = opt.callback;
+	// 		const infiniteCallback = opt.infiniteCallback;
+	// 		const el_scrollbar = doc.querySelector('[data-scroll-id="' + id +'"]');
+
+	// 		let timer;
+	// 		let prevHeightPercent = 0;
+	// 		let scrollDirection = 'keep';
+
+	// 		//+reset
+	// 		if (el_scrollbar.dataset.ready === 'yes') {
+	// 			return false;
+	// 		}
+
+	// 		el_scrollbar.classList.remove('ready');
+	// 		el_scrollbar.dataset.ready = 'no';
+	// 		el_scrollbar.dataset.direction = scrollDirection;
+			
+	// 		const wrapW = el_scrollbar.offsetWidth;
+	// 		const wrapH = el_scrollbar.offsetHeight;
+
+	// 		Global.parts.wrapTag('<div class="ui-scrollbar-item"><div class="ui-scrollbar-wrap">', el_scrollbar ,'</div></div>');
+
+	// 		//++make
+	// 		const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
+	// 		const el_itemWrap = el_item.querySelector('.ui-scrollbar-wrap');
+	// 		const _display = window.getComputedStyle(el_scrollbar).display;
+	// 		const _padding = window.getComputedStyle(el_scrollbar).padding;
+
+	// 		el_itemWrap.style.display = _display;
+	// 		el_itemWrap.style.padding = _padding;
+
+	// 		if (_display === 'inline-block') {
+	// 			el_itemWrap.style.display = 'block';
+	// 		}
+
+	// 		el_itemWrap.style.width = '100%';
+	// 		el_item.style.width = '100%';
+
+	// 		el_scrollbar.style.overflow = 'hidden';
+
+	// 		const itemW = el_item.scrollWidth;
+	// 		const itemH = el_item.scrollHeight;
+
+	// 		el_scrollbar.dataset.itemH = itemH;
+	// 		el_scrollbar.dataset.itemW = itemW;
+	// 		el_scrollbar.dataset.wrapH = wrapH;
+	// 		el_scrollbar.dataset.wrapW = wrapW;
+			
+	// 		if (el_scrollbar.dataset.ready === 'no') {
+	// 			el_scrollbar.dataset.ready = 'yes';
+	// 			el_scrollbar.classList.add('ready');
+	// 			el_item.setAttribute('tabindex', 0);
+	// 			el_scrollbar.style.height = wrapH + 'px';
+
+	// 			const html_barwrap = doc.createElement('div');
+	// 			const html_barwrapX = doc.createElement('div');
+	// 			const html_button = doc.createElement('button');
+	// 			const html_buttonX = doc.createElement('button');
+
+	// 			html_barwrap.classList.add('ui-scrollbar-barwrap');
+	// 			html_barwrap.classList.add('type-y');
+	// 			html_barwrapX.classList.add('ui-scrollbar-barwrap');
+	// 			html_barwrapX.classList.add('type-x');
+	// 			html_button.classList.add('ui-scrollbar-bar');
+	// 			html_button.setAttribute('type', 'button');
+	// 			html_button.setAttribute('aria-hidden', true);
+	// 			html_button.setAttribute('aria-label', 'vertical scroll button');
+	// 			html_button.setAttribute('tabindex', '-1');
+	// 			html_button.dataset.scrollxy = 'y';
+	// 			html_buttonX.classList.add('ui-scrollbar-bar');
+	// 			html_buttonX.setAttribute('type', 'button');
+	// 			html_buttonX.setAttribute('aria-hidden', true);
+	// 			html_buttonX.setAttribute('aria-label', 'vertical scroll button');
+	// 			html_buttonX.setAttribute('tabindex', '-1');
+	// 			html_buttonX.dataset.scrollxy = 'x';
+				
+	// 			html_barwrap.append(html_button);
+	// 			html_barwrapX.append(html_buttonX);
+	// 			el_scrollbar.prepend(html_barwrap);
+	// 			el_scrollbar.prepend(html_barwrapX);
+
+	// 			(wrapH < itemH) ? 
+	// 				el_scrollbar.classList.add('view-y') : 
+	// 				el_scrollbar.classList.remove('view-y');
+
+	// 			(wrapW < itemW) ? 
+	// 				el_scrollbar.classList.add('view-x') : 
+	// 				el_scrollbar.classList.remove('view-x');
+
+	// 			const barH = Math.floor(wrapH / (itemH / 100));
+	// 			const barW = Math.floor(wrapW / (itemW / 100));
+	// 			const el_barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+	// 			const el_barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+				
+	// 			el_barY.style.height = barH + '%';
+	// 			el_barX.style.height = barW + '%';
+	// 			el_barY.dataset.height = barH;
+	// 			el_barX.dataset.height = barW;
+
+	// 			el_scrollbar.classList.add('view-scrollbar');
+	// 			!!callback && callback(); 
+
+	// 			scrollEvent(false, el_item);
+	// 			scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW);
+	// 			eventFn(el_scrollbar);
+	// 		}
+
+	// 		function scrollbarUpdate(el_scrollbar, wrapH, wrapW, itemH, itemW){
+	// 			const _el_scrollbar = el_scrollbar;
+	// 			const el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
+				
+	// 			if (!el_item) {
+	// 				return false;
+	// 			}
+
+	// 			const nWrapH = _el_scrollbar.offsetHeight;
+	// 			const nWrapW = _el_scrollbar.offsetWidth;
+	// 			const nItemH = el_item.scrollHeight;
+	// 			const nItemW = el_item.scrollWidth;
+	// 			const changeH = (itemH !== nItemH || wrapH !== nWrapH);
+	// 			const changeW = (itemW !== nItemW || wrapW !== nWrapW);
+
+	// 			//resizing
+	// 			if (changeH || changeW) {
+	// 				const barH = Math.floor(nWrapH / (nItemH / 100));
+	// 				const barW = Math.floor(nWrapW / (nItemW / 100));
+	// 				const el_barY = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
+	// 				const el_barX = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
+
+	// 				if (changeH) {
+	// 					el_barY.style.height = barH + '%';
+	// 					el_barY.dataset.height = barH;
+	// 				} 
+	// 				if (changeW) {
+	// 					el_barX.style.width = barW + '%';
+	// 					el_barX.dataset.width = barW;
+	// 				}
 					
-				idN = idN + 1;
-				sessionStorage.setItem('scrollbarID', idN);
-				scrollId = 'item' + idN;
-				scrollBar.dataset.scrollId = scrollId;
-			} 
+	// 				(nWrapH < nItemH) ? _el_scrollbar.classList.add('view-y') : _el_scrollbar.classList.remove('view-y');
+	// 				(nWrapW < nItemW) ? _el_scrollbar.classList.add('view-x') : _el_scrollbar.classList.remove('view-x');
 
-			Global.scrollBar[scrollId] = new ScrollBar(scrollId);
+	// 				el_scrollbar.dataset.itemH = nItemH;
+	// 				el_scrollbar.dataset.itemW = nItemW;
+	// 				el_scrollbar.dataset.wrapH = nWrapH;
+	// 				el_scrollbar.dataset.wrapW = nWrapW;
+	// 			}
 
-			setTimeout(function(){
-				Global.scrollBar[scrollId].init();
-			},0);
-		} else {
-			for (let that of scrollBar) {
-				let scrollId = that.getAttribute('data-scroll-id');
+	// 			setTimeout(function(){
+	// 				scrollbarUpdate(el_scrollbar, nWrapH, nWrapW, nItemH, nItemW);
+	// 			}, 300);
+	// 		}
 
-				if (that.dataset.ready !== 'yes') {
-					if (!scrollId) {
-						let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
+	// 		function eventFn(v){
+	// 			const _el_scrollbar = el_scrollbar;
+	// 			const el_item = _el_scrollbar.querySelector('.ui-scrollbar-item');
+	// 			const el_bar = _el_scrollbar.querySelectorAll('.ui-scrollbar-bar');
+
+	// 			el_item.addEventListener('scroll', scrollEvent);
+
+	// 			for (let bar of el_bar) {
+	// 				bar.addEventListener('mousedown', dragMoveAct);
+	// 			}
+	// 		}	
+			
+	// 		function scrollEvent(event, el_item){
+	// 			const _el_item = !!event ? event.target : el_item;
+	// 			const el_scrollbar = _el_item.closest('.ui-scrollbar');
+	// 			const itemH = Number(el_scrollbar.dataset.itemH);
+	// 			const itemW = Number(el_scrollbar.dataset.itemW);
+	// 			const wrapH = Number(el_scrollbar.dataset.wrapH);
+	// 			const wrapW = Number(el_scrollbar.dataset.wrapW);
+
+	// 			//el_scrollbar.dataset 값이 없을 경우 4개의 값중 하나라도 없으면 중단
+	// 			if (wrapW === undefined) {
+	// 				return false;
+	// 			}
+
+	// 			const el_barY = el_scrollbar.querySelector('.type-y .ui-scrollbar-bar');
+	// 			const el_barX = el_scrollbar.querySelector('.type-x .ui-scrollbar-bar');
+	// 			const scrT = _el_item.scrollTop;
+	// 			const scrL = _el_item.scrollLeft;
+	// 			const barH = Number(el_barY.dataset.height);
+	// 			const barW = Number(el_barX.dataset.width);
+	// 			const hPer = Math.round(scrT / (itemH - wrapH) * 100);
+	// 			const wPer = Math.round(scrL / (itemW - wrapW) * 100);
+	// 			const _hPer = (barH / 100) * hPer;
+	// 			const _wPer = (barW / 100) * wPer;
+				
+	// 			el_barY.style.top = hPer - _hPer + '%';
+	// 			el_barX.style.left = wPer - _wPer + '%';
+				
+	// 			if (prevHeightPercent < scrT) {
+	// 				scrollDirection = 'down';
+	// 			} else if (prevHeightPercent > scrT) {
+	// 				scrollDirection = 'up';
+	// 			} else {
+	// 				scrollDirection = 'keep';
+	// 			}
+
+	// 			el_scrollbar.dataset.direction = scrollDirection;
+	// 			prevHeightPercent = scrT;
+
+	// 			if (hPer === 100 && scrollDirection === 'down') {
+	// 				clearTimeout(timer);
+	// 				timer = setTimeout(() => {
+	// 					!!infiniteCallback && infiniteCallback();
+	// 				},200);
+	// 			}
+	// 		}
+			
+	// 		function dragMoveAct(event) {
+	// 			const body = doc.querySelector('body');
+	// 			const el_bar = event.target;
+	// 			const el_scrollbar = el_bar.closest('.ui-scrollbar');
+	// 			const el_barWrap = el_bar.closest('.ui-scrollbar-barwrap');
+	// 			const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
+	// 			const itemH = Number(el_scrollbar.dataset.itemH);
+	// 			const itemW = Number(el_scrollbar.dataset.itemW);
+	// 			const el_barWrapRect = el_barWrap.getBoundingClientRect();
+	// 			const off_t = el_barWrapRect.top + doc.documentElement.scrollTop;
+	// 			const off_l = el_barWrapRect.left + doc.documentElement.scrollLeft;
+	// 			const w_h = el_barWrapRect.height;
+	// 			const w_w = el_barWrapRect.width;
+	// 			const barH = el_bar.getAttribute('data-height');
+	// 			const barW = el_bar.getAttribute('data-width');
+	// 			const isXY = el_bar.getAttribute('data-scrollxy');
+
+	// 			body.classList.add('scrollbar-move');
+
+	// 			doc.addEventListener('mousemove', mousemoveAct);
+	// 			doc.addEventListener('mouseup', mouseupAct);
+
+	// 			function mousemoveAct(event){
+	// 				let y_m; 
+	// 				let x_m;
+					
+	// 				if (event.touches === undefined) {
+	// 					if (event.pageY !== undefined) {
+	// 						y_m = event.pageY;
+	// 					} else if (event.pageY === undefined) {
+	// 						y_m = event.clientY;
+	// 					}
+
+	// 					if (event.pageX !== undefined) {
+	// 						x_m = event.pageX;
+	// 					} else if (event.pageX === undefined) {
+	// 						x_m = event.clientX;
+	// 					}
+	// 				}
+
+	// 				let yR = y_m - off_t;
+	// 				let xR = x_m - off_l;
+
+	// 				yR = yR < 0 ? 0 : yR;
+	// 				yR = yR > w_h ? w_h : yR;
+	// 				xR = xR < 0 ? 0 : xR;
+	// 				xR = xR > w_w ? w_w : xR;
+
+	// 				const yRPer = yR / w_h * 100;
+	// 				const xRPer = xR / w_w * 100;
+	// 				const nPerY = (yRPer - (barH / 100 * yRPer)).toFixed(2);
+	// 				const nPerX = (xRPer - (barW / 100 * xRPer)).toFixed(2);
+
+	// 				if (isXY === 'y') {
+	// 					el_bar.style.top = nPerY + '%';
+	// 					el_item.scrollTop = itemH * nPerY / 100;
+	// 				} else {
+	// 					el_bar.style.left = nPerX + '%';
+	// 					el_item.scrollLeft = itemW * nPerX / 100;
+	// 				}
+	// 			}
+	// 			function mouseupAct(){
+	// 				body.classList.remove('scrollbar-move');
+	// 				doc.removeEventListener('mousemove', mousemoveAct);
+	// 				doc.removeEventListener('mouseup', mouseupAct);
+	// 			}
+	// 		}
+	// 	}
+
+	// 	destroy() {
+	// 		const el_scrollbar = doc.querySelector('[data-scroll-id="' + this.id +'"]');
+	// 		const el_barwrap = el_scrollbar.querySelectorAll('.ui-scrollbar-barwrap');
+	// 		const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
+	// 		const el_wrap = el_item.querySelector('.ui-scrollbar-wrap');
+	// 		const wrapHtml = el_wrap.innerHTML;
+
+	// 		el_scrollbar.dataset.ready = 'no';
+	// 		el_scrollbar.classList.remove('ready');
+	// 		el_scrollbar.classList.remove('view-y');
+	// 		el_scrollbar.classList.remove('view-x');
+	// 		el_scrollbar.classList.remove('view-scrollbar');
+	// 		el_scrollbar.style.overflow = 'auto';
+	// 		//el_scrollbar.removeAttribute('style');
+	// 		el_barwrap.forEach((userItem) => {
+	// 			el_scrollbar.removeChild(userItem);
+	// 		});
+	// 		el_scrollbar.removeChild(el_item);
+	// 		el_scrollbar.innerHTML = wrapHtml;
+	// 	}
+
+	// 	reset(opt) {
+	// 		console.log(this);
+	// 		Global.uiScrollBar[this.id].destroy();
+	// 		Global.uiScrollBar[this.id].init({
+	// 			infiniteCallback: opt.infiniteCallback
+	// 		});
+
+	// 	}
+	// }
+	// //uiScrollBar 실행함수 생성
+	// Global.scrollBar = (opt) => {
+	// 	let scrollBar = doc.querySelectorAll('.ui-scrollbar');
+
+	// 	if (opt !== undefined && opt.selector !== undefined){ 
+	// 		scrollBar = opt.selector;
+	// 	}
+		
+	// 	if (sessionStorage.getItem('scrollbarID') === null) {
+	// 		sessionStorage.setItem('scrollbarID', 0);
+	// 	}
+
+	// 	if (scrollBar.length === undefined) {
+	// 		let scrollId = scrollBar.getAttribute('data-scroll-id');
+	
+	// 		if (!scrollId) {
+	// 			let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
+					
+	// 			idN = idN + 1;
+	// 			sessionStorage.setItem('scrollbarID', idN);
+	// 			scrollId = 'item' + idN;
+	// 			scrollBar.dataset.scrollId = scrollId;
+	// 		} 
+
+	// 		Global.scrollBar[scrollId] = new ScrollBar(scrollId);
+
+	// 		setTimeout(function(){
+	// 			Global.scrollBar[scrollId].init();
+	// 		},0);
+	// 	} else {
+	// 		for (let that of scrollBar) {
+	// 			let scrollId = that.getAttribute('data-scroll-id');
+
+	// 			if (that.dataset.ready !== 'yes') {
+	// 				if (!scrollId) {
+	// 					let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
 							
-						idN = idN + 1;
-						sessionStorage.setItem('scrollbarID', idN);
-						scrollId = 'item' + idN;
-						that.dataset.scrollId = scrollId;
-					} 
+	// 					idN = idN + 1;
+	// 					sessionStorage.setItem('scrollbarID', idN);
+	// 					scrollId = 'item' + idN;
+	// 					that.dataset.scrollId = scrollId;
+	// 				} 
 		
-					Global.scrollBar[scrollId] = new ScrollBar(scrollId);
+	// 				Global.scrollBar[scrollId] = new ScrollBar(scrollId);
 		
-					setTimeout(function(){
-						Global.scrollBar[scrollId].init();
-					},0);
-				}
-			}
-		}
-	}
+	// 				setTimeout(function(){
+	// 					Global.scrollBar[scrollId].init();
+	// 				},0);
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	Global.popup = {
 		options: {
@@ -1211,10 +1561,20 @@ if (!Object.keys){
 			scrollbars: 'yes'
 		},
 		open: function(option){
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, this.options, option);
-			const {name,width,height,align,toolbar,location,menubar,status,resizable,scrollbars,link} = opt;
-			let {top,left} = opt;
+			const opt = Object.assign({}, this.options, option);
+			const name = opt.name;
+			const width = opt.width;
+			const height = opt.height;
+			const align = opt.align;
+			const toolbar = opt.toolbar;
+			const location = opt.location;
+			const menubar = opt.menubar;
+			const status = opt.status;
+			const resizable = opt.resizable;
+			const scrollbars = opt.scrollbars;
+			const link = opt.link;
+			let top = opt.top;
+			let left = opt.left;
 
 			if (align === 'center') {
 				left = (win.innerWidth / 2) - (width / 2);
@@ -1229,7 +1589,11 @@ if (!Object.keys){
 
 	Global.cookie = {
 		set: function(opt){
-			const {name, value, term, path, domain} = opt;
+			const name = opt.name;
+			const value = opt.value;
+			const term = opt.term;
+			const path = opt.path;
+			const domain = opt.domain;
 			let cookieset = name + '=' + value + ';';
 			let expdate;
 
@@ -1304,14 +1668,16 @@ if (!Object.keys){
 		caption: function(){
 			const el_captions = doc.querySelectorAll('.ui-caption');
 
-			for (let that of el_captions) {
-				that.textContent = '';
-			
+			for (let i = 0, len = el_captions.length; i < len; i++) {
+				const that = el_captions[i];
 				const el_table = that.closest('table');
 				const ths = el_table.querySelectorAll('th');
 				let captionTxt = '';
 
-				for (let that of ths) {
+				that.textContent = '';
+
+				for (let i = 0, len = ths.length; i < len; i++) {
+					const that = ths[i];
 					const txt = that.textContent;
 					
 					(captionTxt !== '') ?
@@ -1326,12 +1692,12 @@ if (!Object.keys){
 			callback:false
 		},
 		scroll: function(option){
-			const opt = {...this.scrollOption, ...option};
-			//const opt = Object.assign({}, this.scrollOption, option);
+			const opt = Object.assign({}, this.scrollOption, option);
 			const callback = opt.callback;
 			const el_wraps = doc.querySelectorAll('.ui-tablescroll');
 
-			for (let that of el_wraps) {
+			for (let i = 0, len = el_wraps.length; i < len; i++) {
+				const that = el_wraps[i];
 				const el_tblWrap = that.querySelector('.ui-tablescroll-wrap');
 				const el_tbl = el_tblWrap.querySelector('table');
 				const cloneTable = el_tbl.cloneNode(true);
@@ -1339,21 +1705,27 @@ if (!Object.keys){
 				if (!el_tbl.querySelector('.ui-tablescroll-clone')) {
 					that.prepend(cloneTable);
 
-					const clone_tbl = that.querySelector(':scope > table:first-child');
+					//:scope >
+					const clone_tbl = that.querySelector('table:first-child');
+
 					const clone_ths = clone_tbl.querySelectorAll('th');
 					const clone_caption = clone_tbl.querySelector('caption');
 					const clone_tbodys = clone_tbl.querySelectorAll('tbody');
 
 					clone_caption.remove();
 
-					for (let that of clone_tbodys) {
+					for (let i = 0, len = clone_tbodys.length; i < len; i++) {
+						const that = clone_tbodys[i];
+
 						that.remove();
 					}
 
 					clone_tbl.classList.add('ui-tablescroll-clone');
 					clone_tbl.setAttribute('aria-hidden', true);
 
-					for (let that of clone_ths) {
+					for (let i = 0, len = clone_ths.length; i < len; i++) {
+						const that = clone_ths[i];
+
 						that.setAttribute('aria-hidden', true);
 					}
 				}
@@ -1364,7 +1736,8 @@ if (!Object.keys){
 		fixTd : function() {
 			const el_tbls = doc.querySelectorAll('.ui-fixtd');
 			
-			for (let that of el_tbls) {
+			for (let i = 0, len = el_tbls.length; i < len; i++) {
+				const that = el_tbls[i];
 				const el_tblCols = that.querySelectorAll('col');
 				const el_tblTrs = that.querySelectorAll('tr');
 
@@ -1382,7 +1755,10 @@ if (!Object.keys){
 					for (let j = 0; j < fix_sum; j++) {
 						const tr = el_tblTrs[i];
 						const thead = tr.closest('thead');
-						const tds = tr.querySelectorAll(':scope > *');
+
+						//:scope >
+						const tds = tr.querySelectorAll('*');
+
 						const td = tds[j + fix_sum - 1];
 						const jj = (j + 1);
 						
@@ -1400,7 +1776,9 @@ if (!Object.keys){
 
 				const el_btns = that.querySelectorAll('.ui-fixtd-btn');
 
-				for (let that of el_btns) {
+				for (let i = 0, len = el_btns.length; i < len; i++) {
+					const that = el_btns[i];
+
 					that.addEventListener('click', act);
 				}
 			}
@@ -1422,7 +1800,8 @@ if (!Object.keys){
 		init: function(opt){
 			const el_inps = doc.querySelectorAll('.inp-base');
 
-			for (let that of el_inps) {
+			for (let i = 0, len = el_inps.length; i < len; i++) {
+				const that = el_inps[i];
 				const el_wrap = that.parentNode;
 				const el_form = that.closest('[class*="ui-form"]');
 				const unit = that.dataset.unit;
@@ -1466,15 +1845,19 @@ if (!Object.keys){
 				const select_btns = doc.querySelectorAll('.ui-select-btn');
 				const datepicker_btns = doc.querySelectorAll('.ui-datepicker-btn');
 
-				for (let btn of select_btns) {
-					btn.removeEventListener('click', this.actValue);
-					btn.addEventListener('click', this.actValue);
+				for (let i = 0, len = select_btns.length; i < len; i++) {
+					const that = select_btns[i];
+
+					that.removeEventListener('click', this.actValue);
+					that.addEventListener('click', this.actValue);
 				}
 
-				for (let btn of datepicker_btns) {
-					btn.removeEventListener('click', this.actValue);
-					btn.addEventListener('click', this.actValue);
-					btn.addEventListener('click', this.actDaterpicker);
+				for (let i = 0, len = datepicker_btns.length; i < len; i++) {
+					const that = datepicker_btns[i];
+
+					that.removeEventListener('click', this.actValue);
+					that.addEventListener('click', this.actValue);
+					that.addEventListener('click', this.actDaterpicker);
 				}
 
 				that.removeEventListener('keyup', this.actValue);
@@ -1599,10 +1982,12 @@ if (!Object.keys){
 				"image/x-icon"
 			];
 
-			for (let el_file of el_files) {
-				if (!el_file.dataset.ready) {
-					el_file.addEventListener('change', updateImageDisplay);
-					el_file.dataset.ready = true;
+			for (let i = 0, len = el_files.length; i < len; i++) {
+				const that = el_files[i];
+
+				if (!that.dataset.ready) {
+					that.addEventListener('change', updateImageDisplay);
+					that.dataset.ready = true;
 				}
 			}
 			
@@ -1642,22 +2027,23 @@ if (!Object.keys){
 					delbuttonSpan.textContent = 'Delete attachment';
 					delbuttonSpan.classList.add('a11y-hidden');
 					delbutton.appendChild(delbuttonSpan);
-				
-					for(let file of curFiles) {
+					
+					for (let i = 0, len = curFiles.length; i < len; i++) {
+						const that = curFiles[i];
 						const listItem = document.createElement('li');
 						const para = document.createElement('p');
 
-						if(validFileType(file)) {
-							para.textContent = `${file.name}, ${returnFileSize(file.size)}.`;
+						if(validFileType(that)) {
+							para.textContent = that.name + ', ' + returnFileSize(that.size) + '.';
 							
 							const image = document.createElement('img');
-							image.src = URL.createObjectURL(file);
-							
+							image.src = URL.createObjectURL(that);
+
 							listItem.appendChild(image);
 							listItem.appendChild(para);
 							
 						} else {
-							para.textContent = `${file.name}`;
+							para.textContent = that.name;
 							listItem.appendChild(para);
 						}
 				
@@ -1748,7 +2134,9 @@ if (!Object.keys){
 			const el_bar = el_range.querySelector(".ui-range-bar");
 			const inp_froms = document.querySelectorAll('[data-'+ id +'="from"]');
 			let percent;
-			let {value, min, max} = el_from;
+			let value = el_from.value;
+			let min = el_from.min;
+			let max = el_from.max;
 
 			if (v) {
 				el_from.value = v;
@@ -1766,25 +2154,27 @@ if (!Object.keys){
 
 				el_right.classList.remove('on');
 				el_to.classList.remove('on');
-				el_left.style.left = `${percent}%`;
-				el_bar.style.left = `${percent}%`;
+				el_left.style.left = percent + '%';
+				el_bar.style.left = percent + '%';
 			} else {
 				if (from_value < 0) {
 					from_value = 0;
 				}
 				percent = ((from_value - +min) / (+max - +min)) * 100;
-				el_left.style.left = `${percent}%`;
-				el_bar.style.right = `${100 - percent}%`;
+				el_left.style.left = percent + '%';
+				el_bar.style.right = (100 - percent) + '%';
 			}
 
 			el_left.classList.add('on');
 			el_from.classList.add('on');
 			
-			for (let inp_from of inp_froms) {
-				if (inp_from.tagName === 'INPUT') {
-					inp_from.value = from_value;
+			for (let i = 0, len = inp_froms.length; i < len; i++) {
+				const that = inp_froms[i];
+
+				if (that.tagName === 'INPUT') {
+					that.value = from_value;
 				} else {
-					inp_from.textContent = from_value;
+					that.textContent = from_value;
 				}
 			}
 		},
@@ -1798,7 +2188,9 @@ if (!Object.keys){
 			const el_right = el_range.querySelector(".ui-range-btn.right");
 			const el_bar = el_range.querySelector(".ui-range-bar");
 			const inp_tos = document.querySelectorAll('[data-'+ id +'="to"]');
-			let {value,min,max} = el_to;
+			let value = el_to.value;
+			let min = el_to.min;
+			let max = el_to.max;
 
 			if (v) {
 				el_to.value = v;
@@ -1817,14 +2209,16 @@ if (!Object.keys){
 			el_left.classList.remove('on');
 			el_to.classList.add('on');
 			el_from.classList.remove('on');
-			el_right.style.right = `${100 - percent}%`;
-			el_bar.style.right = `${100 - percent}%`;
+			el_right.style.right = (100 - percent) + '%';
+			el_bar.style.right = (100 - percent) + '%';
 
-			for (let inp_to of inp_tos) {
-				if (inp_to.tagName === 'INPUT') {
-					inp_to.value = el_to.value;
+			for (let i = 0, len = inp_tos.length; i < len; i++) {
+				const that = inp_tos[i];
+
+				if (that.tagName === 'INPUT') {
+					that.value = el_to.value;
 				} else {
-					inp_to.textContent = el_to.value;
+					that.textContent = el_to.value;
 				}
 			}
 		}
@@ -1843,7 +2237,9 @@ if (!Object.keys){
 			if (!opt) {
 				el_dp = document.querySelectorAll('.datepicker');
 
-				for (var that of el_dp) {
+				for (let i = 0, len = el_dp.length; i < len; i++) {
+					const that = el_dp[i];
+
 					that.remove();
 				}
 			} else {
@@ -2117,8 +2513,13 @@ if (!Object.keys){
 			const TLDate = thisLast.getDate();
 			const TLDay = thisLast.getDay();
 			let prevDates = [];
-			let thisDates = [...Array(TLDate + 1).keys()].slice(1);
 			let nextDates = [];
+			let thisDates = [];
+			//let thisDates = [...Array(TLDate + 1).keys()].slice(1);
+			for (let i = 0, len = TLDate + 1; i < len; i++) {
+				console.log(i);
+				thisDates.push(i);
+			}
 
 			//prevDates 계산
 			if (PLDay !== 6) {
@@ -2137,7 +2538,7 @@ if (!Object.keys){
 			let _dpHtml = '';
 
 			//dates 정리
-			dates.forEach((date,i) => {
+			dates.forEach(function(date,i) {
 				let _class = '';
 				let _disabled = false;
 
@@ -2244,9 +2645,11 @@ if (!Object.keys){
 			const dayBtn = dp_tbody.querySelectorAll('.datepicker-day');
 
 			for (let i = 0, len = dayBtn.length; i < len; i++) {
-				dayBtn[i].addEventListener('click', Global.datepicker.daySelect);
-				dayBtn[i].dataset.n = i;
-				dayBtn[i].addEventListener('keydown', keyMove);
+				const that = dayBtn[i];
+
+				that.addEventListener('click', Global.datepicker.daySelect);
+				that.dataset.n = i;
+				that.addEventListener('keydown', keyMove);
 			}
 
 			// for (var dayBtns of dayBtn) {
@@ -2293,7 +2696,7 @@ if (!Object.keys){
 				}
 			}
 		},
-		daySelect: (event) => {
+		daySelect: function(event) {
 			const el_btn = event.currentTarget;
 			const el_dp = el_btn.closest('.datepicker');
 			const dayBtn = el_dp.querySelectorAll('.datepicker-day');
@@ -2302,7 +2705,6 @@ if (!Object.keys){
 			const n = 0;
 			const id = el_dp.dataset.id;
 			const date = new Date(el_dp.dataset.date);
-
 			const el_inp = document.querySelector('#' + id);
 			const el_uidp = el_inp.closest('.ui-datepicker');
 			const el_start = el_uidp.querySelector('[data-period="start"]');
@@ -2314,7 +2716,9 @@ if (!Object.keys){
 				//single mode
 				el_dp.dataset.start = selectDay;
 
-				for (let that of dayBtn) {
+				for (let i = 0, len = dayBtn.length; i < len; i++) {
+					const that = dayBtn[i];
+
 					that.classList.remove('selected-start');
 				}
 				el_btn.classList.add('selected-start');
@@ -2377,7 +2781,7 @@ if (!Object.keys){
 				});
 			}
 		},
-		nextYear: (event) => {
+		nextYear: function(event) {
 			const dpId = event.target.dataset.dpid;
 			const el_inp = document.querySelector('#' + dpId);
 			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
@@ -2429,7 +2833,7 @@ if (!Object.keys){
 				setId: dpId
 			});
 		},
-		prevYear: (event) => {
+		prevYear: function(event) {
 			const dpId = event.target.dataset.dpid;
 			const el_inp = document.querySelector('#' + dpId);
 			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
@@ -2480,7 +2884,7 @@ if (!Object.keys){
 				setId: dpId
 			});
 		},
-		nextMonth: (event) => {
+		nextMonth: function(event) {
 			const dpId = event.target.dataset.dpid;
 			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			let date = new Date(el_dp.dataset.date);
@@ -2502,7 +2906,7 @@ if (!Object.keys){
 				setId: dpId
 			});
 		},
-		prevMonth: (event) => {
+		prevMonth: function(event) {
 			const dpId = event.target.dataset.dpid;
 			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			let date = new Date(el_dp.dataset.date);
@@ -2524,7 +2928,7 @@ if (!Object.keys){
 				setId: dpId
 			});
 		},
-		goToday: (event) => {
+		goToday: function(event) {
 			const dpId = event.target.dataset.dpid;
 			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			const date = new Date();
@@ -2542,7 +2946,8 @@ if (!Object.keys){
 
 	Global.sheets = {
 		dim: function(opt){
-			const {show, callback} = opt;
+			const show = opt.show;
+			const callback = opt.callback;
 			let dim;
 
  			if (show) {
@@ -2559,7 +2964,9 @@ if (!Object.keys){
 			}
 		},
 		bottom: function(opt){
-			const {id, state, callback} = opt;
+			const id = opt.id;
+			const state = opt.state;
+			const callback = opt.callback;
 			const el_base = doc.querySelector('#'+ id);
 			let el_sheet = doc.querySelector('[data-id*="'+id+'"]');
 			const scr_t = doc.documentElement.scrollTop;
@@ -2632,8 +3039,7 @@ if (!Object.keys){
 			callback: false
 		},
 		init: function(option){
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, this.options, option);
+			const opt = Object.assign({}, this.options, option);
 			const current = opt.current;
 			const callback = opt.callback;
 			let customscroll = opt.customscroll;
@@ -2655,7 +3061,9 @@ if (!Object.keys){
 			let hiddenClass = '';
 			let htmlOption = '';
 			let htmlButton = '' ;
-
+			let el_btn;
+			let el_wrap;
+			let el_dim ;
 			//init
 			Global.state.device.mobile ? customscroll = false : '';
 
@@ -2663,30 +3071,31 @@ if (!Object.keys){
 			let idN = JSON.parse(sessionStorage.getItem('scrollbarID'));
 
 			//select set
-			for (let el_uiSelect of el_uiSelects) {
-				let el_btn = el_uiSelect.querySelector('.ui-select-btn');
-				let el_wrap = el_uiSelect.querySelector('.ui-select-wrap');
-				let el_dim = el_uiSelect.querySelector('.dim');
+			for (let i = 0, len = el_uiSelects.length; i < len; i++) {
+				const that = el_uiSelects[i];
+
+				el_btn = that.querySelector('.ui-select-btn');
+				el_wrap = that.querySelector('.ui-select-wrap');
+				el_dim = that.querySelector('.dim');
 
 				el_btn && el_btn.remove();
 				el_wrap && el_wrap.remove();
 				el_dim && el_dim.remove();
 
-				el_select = el_uiSelect.querySelector('select');
+				el_select = that.querySelector('select');
 
 				selectID = el_select.id;
 
 				if (!!id && selectID === id) {
-					act(el_uiSelect, el_select, selectID);
+					act(that, el_select, selectID);
 				} else {
-					act(el_uiSelect, el_select, selectID);
+					act(that, el_select, selectID);
 				}
 			}
 
 			function act(el_uiSelect, el_select, selectID){
 				(selectID === undefined) ? el_select.id = 'uiSelect_' + idN : '';
 				listID = selectID + '_list';
-
 				selectDisabled = el_select.disabled;
 				selectTitle = el_select.title;
 				hiddenClass = '';
@@ -2707,7 +3116,7 @@ if (!Object.keys){
 				htmlOption += '<div class="ui-select-opts" role="listbox" id="' + listID + '" aria-hidden="false">';
 
 				setOption(el_uiSelect, el_select.selectedIndex);
-
+				
 				htmlOption += '</div>';
 				htmlOption += '<button type="button" class="ui-select-cancel"><span>취소</span></strong>';
 				htmlOption += '<button type="button" class="ui-select-confirm"><span>확인</span></strong>';
@@ -2750,7 +3159,6 @@ if (!Object.keys){
 				const _optionID = _select.id + '_opt';
 				const _optLen = _options.length;
 
-				let _optionCurrent = _options[0];
 				let _current = current;
 				let _selected = false;
 				let _disabled = false;
@@ -2764,27 +3172,28 @@ if (!Object.keys){
 				}
 
 				for (let i = 0; i < _optLen; i++) {
-					_optionCurrent = _options[i];
-					_hidden = _optionCurrent.hidden;
+					const that = _options[i];
+
+					_hidden = that.hidden;
 
 					if (_current !== null) {
 						if (_current === i) {
 							_selected = true;
-							_optionCurrent.selected = true;
+							that.selected = true;
 						} else {
 							_selected = false;
-							_optionCurrent.selected = false;
+							that.selected = false;
 						}
 					} else {
-						_selected = _optionCurrent.selected;
+						_selected = that.selected;
 					}
 
-					_disabled = _optionCurrent.disabled;
+					_disabled = that.disabled;
 					_hiddenCls =  _hidden ? 'hidden' : '';
 
 					if (_selected) {
-						_val = _optionCurrent.value;
-						btnTxt = _optionCurrent.textContent;
+						_val = that.value;
+						btnTxt = that.textContent;
 						optionSelectedID = _optionID + '_' + i;
 						selectN = i;
 					}
@@ -2795,22 +3204,22 @@ if (!Object.keys){
 					if (Global.state.device.mobile) {
 						_disabled ?
 							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _optionCurrent.value + '" disabled tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _optionCurrent.value + '" disabled tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
 							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _optionCurrent.value + '" tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _optionCurrent.value + '" tabindex="-1">';
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">';
 					} else {
 						_disabled ?
 							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + _optionCurrent.value + '" disabled tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + _optionCurrent.value + '" disabled tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
 							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + _optionCurrent.value + '" tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + _optionCurrent.value + '" tabindex="-1">';
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">' :
+								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">';
 					}
 
-					htmlOption += '<span class="ui-select-txt">' + _optionCurrent.textContent + '</span>';
+					htmlOption += '<span class="ui-select-txt">' + that.textContent + '</span>';
 					htmlOption += '</button>';
 				}
 
@@ -2844,29 +3253,33 @@ if (!Object.keys){
 				// 	el_dim.addEventListener('click', selectClick);
 				// }
 
-				for (let el_confirm of el_confirms) {
-					el_confirm.addEventListener('click', optConfirm);
+				for (let i = 0, len = el_confirms.length; i < len; i++) {
+					const that = el_confirms[i];
+					that.addEventListener('click', optConfirm);
 				}
 
-				for (let el_cancel of el_cancels) {
-					el_cancel.addEventListener('click', Global.select.hide);
+				for (let i = 0, len = el_cancels.length; i < len; i++) {
+					const that = el_cancels[i];
+					that.addEventListener('click', Global.select.hide);
 				}
 
-				for (let el_btn of el_btns) {
-					el_btn.addEventListener('click', selectClick);
-					// el_btn.addEventListener('keydown', selectKey);
-					// el_btn.addEventListener('mouseover', selectOver);
-					// el_btn.addEventListener('focus', selectOver);
-					// el_btn.addEventListener('mouseleave', selectLeave);
+				for (let i = 0, len = el_btns.length; i < len; i++) {
+					const that = el_btns[i];
+					that.addEventListener('click', selectClick);
+					// that.addEventListener('keydown', selectKey);
+					// that.addEventListener('mouseover', selectOver);
+					// that.addEventListener('focus', selectOver);
+					// that.addEventListener('mouseleave', selectLeave);
 				}
 
-				for (let el_label of el_labels) {
-					el_label.addEventListener('click', labelClick);
+				for (let i = 0, len = el_labels.length; i < len; i++) {
+					const that = el_labels[i];
+					that.addEventListener('click', labelClick);
 				}
 
-				for (let el_select of el_selects) {
-
-					el_select.addEventListener('change', Global.select.selectChange);
+				for (let i = 0, len = el_selects.length; i < len; i++) {
+					const that = el_selects[i];
+					that.addEventListener('change', Global.select.selectChange);
 				}
 			}
 
@@ -2981,7 +3394,10 @@ if (!Object.keys){
 
 				Global.scroll.move({ 
 					top: Number(n_top), 
-					selector: customscroll ? el_wrap.querySelector(':scope > .ui-scrollbar-item') : el_wrap, 
+
+					//:scope >
+					selector: customscroll ? el_wrap.querySelector('.ui-scrollbar-item') : el_wrap, 
+
 					effect: 'auto', 
 					align: 'default' 
 				});
@@ -3019,7 +3435,6 @@ if (!Object.keys){
 				const n = el_select.selectedIndex;
 
 				el_body.classList.add('dim-select');
-
 				btn.dataset.expanded = true;
 				btn.setAttribute('aria-expanded', true);
 				el_uiselect.classList.add('on');
@@ -3029,28 +3444,32 @@ if (!Object.keys){
 				el_opts[n].classList.add('selected');
 				
 				if (customscroll) {
-					Global.scrollBar({
+
+					console.log(el_wrap);
+
+					Global.scrollBar.init({
 						selector: el_wrap
 					});
 				}
 					
 				setTimeout(function(){
-
 					el_optwrap = el_wrap.querySelector('.ui-select-opts');
 					el_opts = el_optwrap.querySelectorAll('.ui-select-opt');
-
 					Global.scroll.move({ 
 						top: Number(opt_h * n) , 
-						selector: customscroll ? el_wrap.querySelector(':scope > .ui-scrollbar-item') : el_wrap, 
+
+						//:scope >
+						selector: customscroll ? el_wrap.querySelector('.ui-scrollbar-item') : el_wrap, 
+
 						effect: 'auto', 
 						align: 'default' 
 					});
 
-					for (let el_opt of el_opts) {
-						console.log(el_opt);
+					for (let i = 0, len = el_opts.length; i < len; i++) {
+						const that = el_opts[i];
 			
-						el_opt.addEventListener('click', Global.select.optClick);
-						el_opt.addEventListener('mouseover',  Global.select.selectOver);
+						that.addEventListener('click', Global.select.optClick);
+						that.addEventListener('mouseover',  Global.select.selectOver);
 					}
 					
 					el_wrap.addEventListener('mouseleave', selectLeave);
@@ -3122,9 +3541,16 @@ if (!Object.keys){
 
 			let isTure = '';
 
-			for (let path of e.path) {
-				isTure = isTure + path.classList;
+			console.log(e.path);
+
+			for (let i = 0, len = e.path.length; i < len; i++) {
+				const that = e.path[i];
+
+				isTure = isTure + that.classList;
 			}
+			// for (let path of e.path) {
+			// 	isTure = isTure + path.classList;
+			// }
 
 			(isTure.indexOf('ui-select-wrap') < 0) && Global.select.hide();
 		},
@@ -3141,7 +3567,6 @@ if (!Object.keys){
 			for (let i = 0, len = _opts.length; i < len; i++) {
 				_opts[i].classList.remove('selected');
 
-				
 				if (v === i) {
 					_opts[i].classList.add('selected');
 					el_uiSelect.dataset.current = i;
@@ -3196,8 +3621,6 @@ if (!Object.keys){
 			}
 		},
 		optClick: function(e) {
-			console.log(e);
-
 			const _uiSelect = this.closest('.ui-select');
 			const _btn = _uiSelect.querySelector('.ui-select-btn');
 			const el_select = _uiSelect.querySelector('select');
@@ -3205,14 +3628,11 @@ if (!Object.keys){
 			const idx = Global.parts.getIndex(this);
 			const isMobile = Global.state.device.mobile;
 
-			
-
 			if (!isMobile) {
 				Global.select.act({ 
 					id: _btn.dataset.id, 
 					current: idx 
 				});
-
 				_btn.focus();
 				Global.select.hide();
 				el_select.onchange();
@@ -3242,12 +3662,15 @@ if (!Object.keys){
 			const el_selects = doc.querySelectorAll('.ui-select');
 			const el_selectWraps = doc.querySelectorAll('.ui-select-wrap[aria-hidden="false"]');
 			const el_btns = doc.querySelectorAll('.ui-select-btn[aria-expanded="true"]');
-			let el_select, el_wrap, orgTop;
+			let el_select;
+			let el_wrap;
+			let orgTop;
 
 			el_body.classList.remove('dim-select');
-			console.log(el_btns);
 
-			for (let that of el_btns) {
+			for (let i = 0, len = el_btns.length; i < len; i++) {
+				const that = el_btns[i];
+
 				el_select = that.closest('.ui-select');
 				el_wrap = el_select.querySelector('.ui-select-wrap');
 				orgTop = el_select.dataset.orgtop;
@@ -3267,7 +3690,6 @@ if (!Object.keys){
 					behavior: 'smooth'
 				});
 			}
-
 
 			doc.removeEventListener('click', Global.select.back);
 		},
@@ -3304,16 +3726,14 @@ if (!Object.keys){
 				el_btn.classList.remove('opt-hidden'):
 				el_btn.classList.add('opt-hidden');
 
-			console.log(current, optCurrent.textContent);
-
 			el_text.textContent = optCurrent.textContent;
 
-			for (let el_btnopt of el_btnopts) {
-				el_btnopt.classList.remove('selected');
+			for (let i = 0, len = el_btnopts.length; i < len; i++) {
+				const that = el_btnopts[i];
+				that.classList.remove('selected');
 			}
 
 			el_btnopts[current].classList.add('selected');
-
 			Global.state.device.mobile && el_btnopts[current].focus();
 
 			// callback && callback({ 
@@ -3333,14 +3753,16 @@ if (!Object.keys){
 			effTime: '.2'
 		},
 		init: function(option){
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, Global.accordion.options, option);
+			const opt = Object.assign({}, Global.accordion.options, option);
 			const accoId = opt.id;
 			const callback = opt.callback;
 			let current = opt.current;
 			let autoclose = opt.autoclose;
 			const el_acco = doc.querySelector('#' + accoId);
-			const el_wrap = el_acco.querySelectorAll(':scope > .ui-acco-wrap');
+
+			//:scope >
+			const el_wrap = el_acco.querySelectorAll('.ui-acco-wrap');
+
 			const len = el_wrap.length;
 			const para = Global.para.get('acco');
 			let paras;
@@ -3371,12 +3793,15 @@ if (!Object.keys){
 
 			//set up : parameter > current
 			for (let i = 0; i < len; i++) {
-				const this_wrap = el_wrap[i];
-				const el_tit = this_wrap.querySelector(':scope > .ui-acco-tit');
-				const el_pnl = this_wrap.querySelector(':scope > .ui-acco-pnl');
+				const that = el_wrap[i];
+
+				//:scope >
+				const el_tit = that.querySelector('.ui-acco-tit');
+				const el_pnl = that.querySelector('.ui-acco-pnl');
+
 				const el_btn = el_tit.querySelector('.ui-acco-btn');
 
-				this_wrap.dataset.n = i;
+				that.dataset.n = i;
 				(el_tit.tagName !== 'DT') && el_tit.setAttribute('role','heading');
 
 				el_btn.id = accoId + 'Btn' + i;
@@ -3428,10 +3853,14 @@ if (!Object.keys){
 			if (current !== 'all') {
 				for (let i = 0; i < currentLen; i++) {
 					const this_wrap = el_acco.querySelector('.ui-acco-wrap[data-n="'+ current[i] +'"]');
-	
-					const _tit = this_wrap.querySelector(':scope > .ui-acco-tit');
+					
+					//:scope >
+					const _tit = this_wrap.querySelector('.ui-acco-tit');
+
 					const _btn = _tit.querySelector('.ui-acco-btn');
-					const _pnl = this_wrap.querySelector(':scope > .ui-acco-pnl');
+
+					//:scope >
+					const _pnl = this_wrap.querySelector('.ui-acco-pnl');
 	
 					if (!!_pnl) {
 						_btn.dataset.selected = true;
@@ -3531,9 +3960,9 @@ if (!Object.keys){
 			const state = opt.state === undefined ? 'toggle' : opt.state;
 			const autoclose = opt.autoclose === undefined ? Global.accordion[id].autoclose : opt.autoclose;
 
-			console.log(current,  state, autoclose);
+			//:scope >
+			let el_wraps = el_acco.querySelectorAll('.ui-acco-wrap');
 
-			let el_wraps = el_acco.querySelectorAll(':scope > .ui-acco-wrap');
 			let el_pnl;
 			let el_tit;
 			let el_btn;
@@ -3546,8 +3975,10 @@ if (!Object.keys){
 				for (let i = 0; i < currentLen; i++) {
 					const this_wrap = el_acco.querySelector('.ui-acco-wrap[data-n="'+ current[i] +'"]');
 
-					el_tit = this_wrap.querySelector(':scope > .ui-acco-tit');
-					el_pnl = this_wrap.querySelector(':scope > .ui-acco-pnl');
+					//:scope >
+					el_tit = this_wrap.querySelector('.ui-acco-tit');
+					el_pnl = this_wrap.querySelector('.ui-acco-pnl');
+
 					el_btn = el_tit.querySelector('.ui-acco-btn');
 	
 					if (!!el_pnl) {
@@ -3588,15 +4019,21 @@ if (!Object.keys){
 			function act(v) {
 				const isDown = !(v === 'down');
 
+				console.log('isDown', isDown);
+
 				//set up close
 				if (!!autoclose) {
-					for (let wrap of el_wraps) {
-						const _tit = wrap.querySelector(':scope > .ui-acco-tit');
-						const _btn = _tit.querySelector('.ui-acco-btn');
-						const _pnl = wrap.querySelector(':scope > .ui-acco-pnl');
-						
-						console.log(_pnl.offsetHeight);
+					for (let i = 0, len = el_wraps.length; i < len; i++) {
+						const that = el_wraps[i];
 
+						//:scope >
+						const _tit = that.querySelector('.ui-acco-tit');
+
+						const _btn = _tit.querySelector('.ui-acco-btn');
+
+						//:scope >
+						const _pnl = that.querySelector('.ui-acco-pnl');
+						
 						if (!!_pnl) {
 							_btn.dataset.selected = false;
 							_btn.setAttribute('aria-expanded', false);
@@ -3606,10 +4043,13 @@ if (!Object.keys){
 				}
 	
 				if (current === 'all') {
-					for (let wrap of el_wraps) {
-						const _tit = wrap.querySelector(':scope > .ui-acco-tit');
+					for (let i = 0, len = el_wraps.length; i < len; i++) {
+						const that = el_wraps[i];
+
+						//:scope >
+						const _tit = that.querySelector('.ui-acco-tit');
+						const _pnl = that.querySelector('.ui-acco-pnl');
 						const _btn = _tit.querySelector('.ui-acco-btn');
-						const _pnl = wrap.querySelector(':scope > .ui-acco-pnl');
 						
 						if (!!_pnl) {
 							_btn.dataset.selected = isDown;
@@ -3626,7 +4066,6 @@ if (!Object.keys){
 					el_btn.setAttribute('aria-expanded', isDown);
 
 					if (!!el_pnl) {
-						console.log(!isDown);
 						el_pnl.setAttribute('aria-hidden', isDown);
 						Global.parts.toggleSlide({
 							el: el_pnl, 
@@ -3635,8 +4074,6 @@ if (!Object.keys){
 					}
 				}
 			}
-
-			
 		}
 	}
 	
@@ -3649,9 +4086,13 @@ if (!Object.keys){
 			callback:false
 		},
 		init: function(option){
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, Global.dropdown.options, option);
-			const {id, ps, hold, area, src, offset} = opt;
+			const opt = Object.assign({}, Global.dropdown.options, option);
+			const id = opt.id;
+			const ps = opt.ps;
+			const hold = opt.hold;
+			const area = opt.area;
+			const src = opt.src;
+			const offset = opt.offset;
 			const callback = opt.callback !== undefined ? opt.callback : false;
 
 			//ajax 
@@ -3712,9 +4153,13 @@ if (!Object.keys){
 
 			let isTure = '';
 
-			for (let path of e.path) {
-				isTure = isTure + path.classList;
+			for (let i = 0, len = e.path.length; i < len; i++) {
+				const that = e.path[i];
+				isTure = isTure + that.classList;
 			}
+			// for (let path of e.path) {
+			// 	isTure = isTure + path.classList;
+			// }
 
 			(isTure.indexOf('ui-drop-pnl') < 0) && Global.dropdown.hide();
 		},
@@ -3723,7 +4168,7 @@ if (!Object.keys){
 			const el_btn = doc.querySelector('#' + id);
 			const el_pnl = doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]');
 			const state = opt.state !== undefined ? opt.state : 'toggle';
-			const btnExpanded =  el_btn.getAttribute('aria-expanded');
+			let btnExpanded =  el_btn.getAttribute('aria-expanded');
 
 			let ps = el_btn.dataset.ps;
 	
@@ -3846,18 +4291,20 @@ if (!Object.keys){
 				el_pnl.classList.remove('on');
 			}
 		}, 
-		hide: () => {
+		hide: function() {
 			const elBody = doc.querySelector('body')
 			const elDrops = doc.querySelectorAll('.ui-drop');
 			const elDropPnls = doc.querySelectorAll('.ui-drop-pnl[aria-hidden="false"]');
 
 			elBody.classList.remove('dropdownOpened');
 
-			for (let that of elDrops) {
+			for (let i = 0, len = elDrops.length; i < len; i++) {
+				const that = elDrops[i];
 				that.setAttribute('aria-expanded', false);
 			}
 
-			for (let that of elDropPnls) {
+			for (let i = 0, len = elDropPnls.length; i < len; i++) {
+				const that = elDropPnls[i];
 				that.setAttribute('hidden', true);
 				that.setAttribute('tabindex', -1);
 				that.classList.remove('on');
@@ -3900,17 +4347,31 @@ if (!Object.keys){
 			endfocus: false
 		},
 		show: function(option){
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, Global.modal.options, option);
+			const opt = Object.assign({}, Global.modal.options, option);
 			const elBody = doc.querySelector('body');
-			const {type, src, full, ps, width, height, callback, callbackClose} = opt;
-			let {mg, id, remove} = opt;
+			const type = opt.type;
+			const src = opt.src;
+			const full = opt.full;
+			const ps = opt.ps;
+			const width = opt.width;
+			const height = opt.height;
+			const callback = opt.callback;
+			const callbackClose = opt.callbackClose;
+			let mg = opt.mg;
+			let id = opt.id;
+			let remove = opt.remove;
 			let endfocus = opt.endfocus === false ? document.activeElement : opt.endfocus;
 			const scr_t = doc.documentElement.scrollTop;
 			let timer;
 			
 			//system
-			const {sMessage, sBtnConfirmTxt, sBtnCancelTxt, sZindex, sClass, sConfirmCallback, sCancelCallback} = opt;
+			const sMessage = opt.sMessage;
+			const sBtnConfirmTxt = opt.sBtnConfirmTxt;
+			const sBtnCancelTxt = opt.sBtnCancelTxt;
+			const sZindex = opt.sZindex;
+			const sClass = opt.sClass;
+			const sConfirmCallback = opt.sConfirmCallback;
+			const sCancelCallback = opt.sCancelCallback;
 
 			//setting
 			if (type === 'normal') {
@@ -3967,8 +4428,9 @@ if (!Object.keys){
 				const elModal = doc.querySelector('#' + id);
 				const elModals = doc.querySelectorAll('.ui-modal');
 
-				for (let md of elModals) {
-					md.classList.remove('current');
+				for (let i = 0, len = elModals.length; i < len; i++) {
+					const that = elModals[i];
+					that.classList.remove('current');
 					elBody.classList.add('scroll-no');
 				}
 				
@@ -4087,12 +4549,13 @@ if (!Object.keys){
 				}
 			}
 		},
-		dimAct: () => {
+		dimAct: function() {
 			const elOpens = doc.querySelectorAll('.ui-modal.open');
 			let openN = [];
 
-			for (let elOpen of elOpens) {
-				elOpen.dataset.n && openN.push(elOpen.dataset.n);
+			for (let i = 0, len = elOpens.length; i < len; i++) {
+				const that = elOpens[i];
+				that.dataset.n && openN.push(that.dataset.n);
 			}
 
 			const elCurrent = doc.querySelector('.ui-modal.open[data-n="'+ Math.max.apply(null, openN) +'"]');
@@ -4106,13 +4569,14 @@ if (!Object.keys){
 				});
 			}
 		},
-		reset: () => {
+		reset: function() {
 			const elModals = doc.querySelectorAll('.ui-modal.open.ps-center');
 
-			for (let elModal of elModals) {
-				const elModalHead = elModal.querySelector('.ui-modal-header');
-				const elModalBody = elModal.querySelector('.ui-modal-body');
-				const elModalFoot = elModal.querySelector('.ui-modal-footer');
+			for (let i = 0, len = elModals.length; i < len; i++) {
+				const that = elModals[i];
+				const elModalHead = that.querySelector('.ui-modal-header');
+				const elModalBody = that.querySelector('.ui-modal-body');
+				const elModalFoot = that.querySelector('.ui-modal-footer');
 				const h_win = win.innerHeight;
 				const h_head = elModalHead.outerHeight();
 				const h_foot = elModalFoot.outerHeight();
@@ -4128,9 +4592,11 @@ if (!Object.keys){
 			}
 		},
 		hide: function(option){
-			const opt = {...this.optionsClose, ...option};
-			//const opt = Object.assign({}, Global.modal.optionsClose, option);
-			const {id, type, remove, callback} = opt;
+			const opt = Object.assign({}, Global.modal.optionsClose, option);
+			const id = opt.id;
+			const type = opt.type;
+			const remove = opt.remove;
+			const callback = opt.callback;
 			const elModal = doc.querySelector('#' + id);
 			const elBody = doc.querySelector('body');
 			const elHtml = doc.querySelector('html');
@@ -4147,8 +4613,9 @@ if (!Object.keys){
 			let endfocus = opt.endfocus ;
 			let elModalPrev = false;
 			
-			for (let md of elModals) {
-				md.classList.remove('current');
+			for (let i = 0, len = elModals.length; i < len; i++) {
+				const that = elModals[i];
+				that.classList.remove('current');
 			}
 
 			if (!!len) {
@@ -4198,7 +4665,7 @@ if (!Object.keys){
 				!!endfocus && endfocus.focus();
 			},210);
 		}, 
-		hideSystem: () => {
+		hideSystem: function() {
 			netive.modal.hide({ 
 				id: 'uiSystemModal', 
 				type: 'system', 
@@ -4221,11 +4688,12 @@ if (!Object.keys){
 			status: 'assertive' 
 		},
 		show : function(option) {
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, this.options, option);
-			const {delay, classname, conts, status} = opt;
+			const opt = Object.assign({}, this.options, option);
+			const delay = opt.delay;
+			const classname = opt.classname;
+			const conts = opt.conts;
+			const status = opt.status;
 			const el_body = document.querySelector('body');
-
 			let toast = '<div class="ui-toast toast '+ classname +'" aria-live="'+ status +'">'+ conts +'</div>';
 			let time = (delay === 'short') ? 2000 : 3500;
 
@@ -4338,15 +4806,19 @@ if (!Object.keys){
 				const classToggle = evType !== 'click' ? 'add' : 'remove';
 				
 				if (evType === 'click' && el.dataset.view !== 'fix') {
-					for (let tts of tooltips) {
-						if (tts.id !== elId) {
-							tts.removeAttribute('style');
-							tts.setAttribute('aria-hidden', true);
+					
+					for (let i = 0, len = tooltips.length; i < len; i++) {
+						const that = tooltips[i];
+
+						if (that.id !== elId) {
+							that.removeAttribute('style');
+							that.setAttribute('aria-hidden', true);
 						}
 					}
 
-					for (let bs of btns) {
-						bs.dataset.view = 'unfix';
+					for (let i = 0, len = btns.length; i < len; i++) {
+						const that = btns[i];
+						that.dataset.view = 'unfix';
 					}
 
 					el.dataset.view = 'fix';
@@ -4357,9 +4829,10 @@ if (!Object.keys){
 					},0);
 				}
 
-				for (let tts of tooltips) {
-					if (tts.id !== elId) {
-						tts.classList.remove('hover');
+				for (let i = 0, len = tooltips.length; i < len; i++) {
+					const that = tooltips[i];
+					if (that.id !== elId) {
+						that.classList.remove('hover');
 					}
 				}
 
@@ -4403,12 +4876,14 @@ if (!Object.keys){
 			const tooltips = doc.querySelectorAll('.ui-tooltip');
 			const btns = doc.querySelectorAll('.ui-tooltip-btn');
 
-			for (let tts of tooltips) {
-				tts.setAttribute('aria-hidden', true);
+			for (let i = 0, len = tooltips.length; i < len; i++) {
+				const that = tooltips[i];
+				that.setAttribute('aria-hidden', true);
 			}
 
-			for (let bs of btns) {
-				bs.dataset.view = 'unfix';
+			for (let i = 0, len = btns.length; i < len; i++) {
+				const that = btns[i];
+				that.dataset.view = 'unfix';
 			}
 
 			doc.removeEventListener('click', Global.tooltip.back);
@@ -4434,10 +4909,12 @@ if (!Object.keys){
 			//const opt = Object.assign({}, Global.tooltip.options, option);
 			const el_btn = doc.querySelectorAll('.ui-tooltip-btn');
 
-			for (let btn of el_btn) {
-				btn.addEventListener('mouseover', Global.tooltip.show);
-				btn.addEventListener('focus', Global.tooltip.show);
-				btn.addEventListener('click', Global.tooltip.show);
+			for (let i = 0, len = el_btn.length; i < len; i++) {
+				const that = el_btn[i];
+
+				that.addEventListener('mouseover', Global.tooltip.show);
+				that.addEventListener('focus', Global.tooltip.show);
+				that.addEventListener('click', Global.tooltip.show);
 				win.addEventListener('resize',  Global.tooltip.back);
 			}
 		}
@@ -4451,11 +4928,12 @@ if (!Object.keys){
 			el_body.dataset.fixheight = 0;
 
 			//setting
-			for (let that of el_items) {
+			for (let i = 0, len = el_items.length; i < len; i++) {
+				const that = el_items[i];
 				const fix = that.dataset.fix;
 				const ps = that.dataset.ps;
 				const el_wrap = that.querySelector('.ui-floating-wrap');
-				const mg = Number(that.dataset.mg ?? 0);
+				const mg = Number(that.dataset.mg === undefined || that.dataset.mg === null ? 0 : that.dataset.mg);
 				const elH = el_wrap.offsetHeight;
 				const elT = that.getBoundingClientRect().top;
 				const wH = win.innerHeight;
@@ -4489,13 +4967,14 @@ if (!Object.keys){
 		scrollAct: function(){
 			const elBody = document.body;
 			const el_items = doc.querySelectorAll('.ui-floating');
-
-			for (let that of el_items) {
+			
+			for (let i = 0, len = el_items.length; i < len; i++) {
+				const that = el_items[i];
 				const fix = that.dataset.fix;
 				const ps = that.dataset.ps;
 				const state = that.dataset.state;
 				const el_wrap = that.querySelector('.ui-floating-wrap');
-				const mg = Number(that.dataset.mg ?? 0);
+				const mg = Number(that.dataset.mg === undefined || that.dataset.mg === null ? 0 : that.dataset.mg);
 				const elH = el_wrap.offsetHeight;
 				const elT = that.getBoundingClientRect().top;
 				const wH = win.innerHeight;
@@ -4562,20 +5041,25 @@ if (!Object.keys){
 			window.addEventListener('scroll', act);
 							
 			function act(){
-				for (let el_range of el_ranges) {
-					const el_item = el_range.querySelector('.ui-floating-range-item');
-					const mg = el_range.dataset.mg ?? 0;
+				for (let i = 0, len = el_ranges.length; i < len; i++) {
+					const that = el_ranges[i];
+					const el_item = that.querySelector('.ui-floating-range-item');
+					const mg = Number(that.dataset.mg === undefined || that.dataset.mg === null ? 0 : that.dataset.mg);
 					const itemH = el_item.offsetHeight;
-					const wrapT = el_range.getBoundingClientRect().top;
-					const wrapH = el_range.offsetHeight;
+					const wrapT = that.getBoundingClientRect().top;
+					const wrapH = that.offsetHeight;
 					const wT = win.pageYOffset;
+					let top = mg;
 
 					if (wT > (wrapT + wT - mg)) {
 						if (wrapH - itemH >= wT - (wrapT + wT - mg)) {
-							el_item.style.top = (wT - (wrapT + wT - mg)) + 'px';
+							top = mg > (wT - (wrapT + wT - mg)).toFixed(0) ? mg : (wT - (wrapT + wT - mg)).toFixed(0);
+							el_item.style.transform = 'translate(0, '+ top +'px)';
 						}
 					} else {
-						el_item.style.top = 0;
+						top = mg;
+						el_item.style.transform = 'translate(0, '+ top +'px)';
+						//el_item.style.top = 0;
 					}
 				}
 			}
@@ -4591,8 +5075,7 @@ if (!Object.keys){
 			align : 'center'
 		},
 		init: function(option) {
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, this.options, option);
+			const opt = Object.assign({}, this.options, option);
 			const id = opt.id;
 			const effect = opt.effect;
 			let current = isNaN(opt.current) ? 0 : opt.current;
@@ -4600,11 +5083,17 @@ if (!Object.keys){
 			const callback = opt.callback;
 			const align = opt.align;
 			const el_tab = doc.querySelector('#' + id);
-			const el_btnwrap = el_tab.querySelector(':scope > .ui-tab-btns');
-			const el_wrap = el_btnwrap.querySelector(':scope > .btn-wrap');
+
+			//:scope >
+			const el_btnwrap = el_tab.querySelector('.ui-tab-btns');
+			const el_wrap = el_btnwrap.querySelector('.btn-wrap');
+
 			const el_btns = el_btnwrap.querySelectorAll('.ui-tab-btn');
-			const el_pnlwrap = el_tab.querySelector(':scope > .ui-tab-pnls');
-			const el_pnls = el_pnlwrap.querySelectorAll(':scope > .ui-tab-pnl');
+
+			//:scope >
+			const el_pnlwrap = el_tab.querySelector('.ui-tab-pnls');
+			const el_pnls = el_pnlwrap.querySelectorAll('.ui-tab-pnl');
+
 			const keys = Global.state.keys;
 			const para = Global.para.get('tab');
 
@@ -4772,24 +5261,32 @@ if (!Object.keys){
 			}
 		},
 		toggle: function(option) {
-			const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, this.options, option);
+			const opt = Object.assign({}, this.options, option);
 			const id = opt.id;
 			const callback = opt.callback;
 			const el_tab = doc.querySelector('#' + id);
-			const el_btnwrap = el_tab.querySelector(':scope > .ui-tab-btns');
+
+			//:scope >
+			const el_btnwrap = el_tab.querySelector('.ui-tab-btns');
+
 			const el_btn = el_btnwrap.querySelectorAll('.ui-tab-btn');
-			const el_pnlwrap = el_tab.querySelector(':scope > .ui-tab-pnls');
-			const el_pnls = el_pnlwrap.querySelectorAll(':scope > .ui-tab-pnl');
+
+			//:scope >
+			const el_pnlwrap = el_tab.querySelector('.ui-tab-pnls');
+			const el_pnls = el_pnlwrap.querySelectorAll('.ui-tab-pnl');
+
 			const current = isNaN(opt.current) ? 0 : opt.current;
 			const onePanel = opt.onePanel;
 			const align = opt.align;
 			const el_current = el_btnwrap.querySelector('.ui-tab-btn[data-tab="'+ current +'"]');
 			const el_pnlcurrent = el_pnlwrap.querySelector('.ui-tab-pnl[data-tab="'+ current +'"]');
 			const btnId = el_current.id;
-			let el_scroll = el_btnwrap.querySelector(':scope > .ui-scrollbar-item');
 
-			for(let that of el_btn) {
+			//:scope >
+			let el_scroll = el_btnwrap.querySelector('.ui-scrollbar-item');
+
+			for (let i = 0, len = el_btn.length; i < len; i++) {
+				const that = el_btn[i];
 				that.classList.remove('selected');
 			}
 			console.log(id);
@@ -4809,7 +5306,8 @@ if (!Object.keys){
 			});
 
 			if (!onePanel) {
-				for (let that of el_pnls) {
+				for (let i = 0, len = el_pnls.length; i < len; i++) {
+					const that = el_pnls[i];
 					that.setAttribute('aria-hidden', true);
 					that.classList.remove('selected');
 				}
@@ -5068,7 +5566,7 @@ if (!Object.keys){
 						table += '<td class="name pub"><span>' + pub + '</span></td>';
 						table += '<td class="name dev"><span>' + dev + '</span></td>';
 						table += id !== '' ?
-							'<td class="id ico_pg"><span><a class="ui-coding-link" href="/netiveUI/html/index.html?page=' + id + '" target="coding">' + id + '</a></span></td>' :
+							'<td class="id ico_pg"><span><a class="ui-coding-link" href="../html/index.html?page=' + id + '" target="coding">' + id + '</a></span></td>' :
 							//'<td class="id ico_pg"><span><a href="' + root + '/' + id + '.html" target="coding">' + id + '</a></span></td>' :
 							'<td class="id "><span></span></td>';	
 						(dataExecel.list[i].d1 !== '') ? table += '<td class="d d1"><span>' + d1 + '</span></td>' : table += '<td class="d"></td>';
@@ -5103,31 +5601,79 @@ if (!Object.keys){
 				info += '<input type="search" id="projectListSrchCode" class="inp-base ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
 				info += '<button type="button" id="projectListSrchBtn" class="btn-base"><span>검색</span></button>';
 				info += '<button type="button" id="projectListSrchRe" class="btn-base"><span>초기화</span></button>';
-				info += '<button type="button" id="mobilePreview" class="btn-base"><span>모바일</span></button>';
+				
 				info += '</div>';
 				info += '</div>';
 
-				const ifr = '<div class="ui-codinglist-mobile"><button type="button" id="mobilePreviewClose" class="btn-close icon-material" data-icon="close"><span class="a11y-hidden">닫기</span></button><iframe id="codingListIframe" title="mobile preview" class="ui-codinglist-iframe type-ipx" src=""></iframe></div>';
+				let ifr = '<div class="ui-codinglist-preview" data-device="mobile">';
+				ifr += '<div class="bar"></div>';
+				ifr += '<select class="ui-codinglist-view" id="previewSelect">';
+				ifr += '<option value="mobile">mobile</option>';
+				ifr += '<option value="desktop">desktop</option>';
+				ifr += '</select>';
+				ifr += '<iframe id="codingListIframe" title="preview" class="ui-codinglist-iframe type-ipx" src=""></iframe></div>';
 				
 				codinglist.insertAdjacentHTML('afterbegin', info);
 				document.querySelector('body').insertAdjacentHTML('beforeend', ifr);
 
 				const links = doc.querySelectorAll('.ui-coding-link');
-				const previewBtn = doc.querySelector('#mobilePreview');
-				const previewClose = doc.querySelector('#mobilePreviewClose');
-				const uiCodingIframeWrap = doc.querySelector('.ui-codinglist-mobile');
+				// const previewBtn = doc.querySelector('#mobilePreview');
+				const previewSelect = doc.querySelector('#previewSelect');
+				const uiCodingIframeWrap = doc.querySelector('.ui-codinglist-preview');
+				const bar = uiCodingIframeWrap.querySelector('.bar');
 				const uiCodingIframe = doc.querySelector('.ui-codinglist-iframe');
 
-				previewBtn.addEventListener('click', pagePreviewOn);
-				previewClose.removeEventListener('click', pagePreviewOn);
-				previewClose.addEventListener('click', pagePreviewOn);
-				
-				for (let that of links) {
+				// previewBtn.addEventListener('click', pagePreviewOn);
+				bar.addEventListener('mousedown', dragStart);
+
+				let cX;
+				let cY;
+				let cX_ = 0;
+				let cY_ = 0;
+				let dataDevice;
+
+				function dragStart(e) {
+					cX = e.clientX;
+					cY = e.clientY;
+					const device = uiCodingIframeWrap.dataset.device;
+					dataDevice = device === 'mobile' ? 0.8 : 0.5;
+					uiCodingIframe.style.display = 'none';
+					doc.addEventListener('mousemove', dragMove);
+				}
+				function dragMove(e) {
+					const x = (cX - cX_ - e.clientX) * -1;
+					const y = (cY - cY_ - e.clientY) * -1;
+					
+					
+					uiCodingIframeWrap.style.transform = 'scale('+ dataDevice +') translate('+ x +'px,'+ y +'px)';
+
+					doc.addEventListener('mouseup', function(e){
+						cX_ = x;
+						cY_ = y;
+						uiCodingIframe.style.display = 'block';
+						doc.removeEventListener('mousemove', dragMove);
+					});
+				}
+
+
+				previewSelect.addEventListener('change', previewChange);
+
+				for (let i = 0, len = links.length; i < len; i++) {
+					const that = links[i];
 					that.addEventListener('mouseover', pagePreview);
 				}
 
+				function previewChange() {
+					console.log(document.defaultView.getComputedStyle(uiCodingIframeWrap));
+
+					uiCodingIframeWrap.dataset.device = this.value;
+
+					const device = uiCodingIframeWrap.dataset.device;
+					dataDevice = device === 'mobile' ? 0.8 : 0.5;
+
+					uiCodingIframeWrap.style.transform = 'scale('+ dataDevice +') translate('+ cX_ +'px,'+ cY_ +'px)';
+				}
 				function pagePreviewOn() {
-					console.log(1111);
 					uiCodingIframeWrap.classList.toggle('on');
 				}
 				function pagePreview() {
@@ -5184,7 +5730,9 @@ if (!Object.keys){
 					const el_tr = el.querySelectorAll('tr');
 
 					srchCode.value = '';
-					for (let that of el_tr) {
+
+					for (let i = 0, len = el_tr.length; i < len; i++) {
+						const that = el_tr[i];
 						that.classList.remove('srch-hidden');
 					}
 				});
@@ -5201,19 +5749,17 @@ if (!Object.keys){
 					const el_td = el.querySelectorAll('td');
 					const el_tr = el.querySelectorAll('tr');
 
-					for (let that of el_tr) {
+					for (let i = 0, len = el_tr.length; i < len; i++) {
+						const that = el_tr[i];
 						that.classList.add('srch-hidden');
 					}
 
-					for (let that of el_td) {
+					for (let i = 0, len = el_td.length; i < len; i++) {
+						const that = el_td[i];
 						const text = that.textContent;
 						const el_tr2 = that.closest('tr');
 
-						console.log(text.indexOf(k), text, k);
-
-						if (text.indexOf(k) >= 0) {
-							console.log(1111);
-							
+						if (text.indexOf(k) >= 0) {							
 							el_tr2.classList.remove('srch-hidden');
 						} 
 					}
