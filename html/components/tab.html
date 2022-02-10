@@ -2,15 +2,15 @@
 <input type="hidden" id="uiJsName" value="pageTab">
 
 <div class="tit-wrap">
-	<h1 class="h-1">Tab</h1>
+	<h1 class="typo-headline-l">Tab</h1>
 </div>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Examples</h2>
+	<h2 class="typo-headline-m">Examples</h2>
 	<div class="box-guide">
-		<div class="ui-tab type-scroll" id="exeTab1">
+		<div class="ui-tab type-scroll" data-id="exeTab1">
 			<div class="ui-tab-btns">
-				<div class="btn-wrap">
+				<div class="wrap-btn">
 					<button type="button" data-tab="0" class="ui-tab-btn"><span>탭1</span></button>
 					<button type="button" data-tab="1" class="ui-tab-btn"><span>탭2</span></button>
 					<button type="button" data-tab="2" class="ui-tab-btn"><span>탭3</span></button>
@@ -18,19 +18,19 @@
 			</div>
 			<div class="ui-tab-pnls">
 				<section class="ui-tab-pnl" data-tab="1">
-					<h3 class="h-3 ui-tab-tit mgt-n">탭2 title</h3>
+					<h3 class="typo-title-m ui-tab-tit mgt-x0">탭2 title</h3>
 					<p>탭2 content</p>
 					<a href="#">더보기</a>
 				</section>
 				<section class="ui-tab-pnl" data-tab="0">
-					<h3 class="h-3 ui-tab-tit mgt-n">탭1 title</h3>
+					<h3 class="typo-title-m ui-tab-tit mgt-x0">탭1 title</h3>
 					<p>탭1 content</p>
 					<a href="#">더보기</a>
 					
 					<!-- tab in tab -->
-					<div class="ui-tab mgt-m" id="exeTab4">
+					<div class="ui-tab mgt-x3" data-id="exeTab4">
 						<div class="ui-tab-btns ui-scrollbar">
-							<div class="btn-wrap">
+							<div class="wrap-btn">
 								<button type="button" class="ui-tab-btn"><span>주유/정비</span></button>
 								<button type="button" class="ui-tab-btn"><span>외식</span></button>
 								<button type="button" class="ui-tab-btn"><span>편의/쇼핑</span></button>
@@ -43,7 +43,7 @@
 						</div>
 						<div class="ui-tab-pnls">
 							<section class="ui-tab-pnl">
-								<h3 class="h-3 mgt-n ui-tab-tit">주유/정비 내용</h3>
+								<h3 class="typo-title-m mgt-x0 ui-tab-tit">주유/정비 내용</h3>
 							</section>
 						</div>
 					</div>
@@ -51,7 +51,7 @@
 
 				</section>
 				<section class="ui-tab-pnl" data-tab="2">
-					<h3 class="h-3 ui-tab-tit mgt-n">탭3 title</h3>
+					<h3 class="typo-title-m ui-tab-tit mgt-x0">탭3 title</h3>
 					<p>탭3 content</p>
 					<a href="#">더보기</a>
 				</section>
@@ -61,13 +61,13 @@
 </section>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Source Code</h2>
-	<h3 class="h-3">HTML</h3>
+	<h2 class="typo-headline-m">Source Code</h2>
+	<h3 class="typo-title-m">HTML</h3>
 
 <pre class="box-code"><code class="html">
-&lt;div class="ui-tab" id="exeTab1"&gt;
+&lt;div class="ui-tab" data-id="exeTab1"&gt;
 	&lt;div class="ui-tab-btns"&gt;
-		&lt;div class="btn-wrap"&gt;
+		&lt;div class="wrap-btn"&gt;
 			&lt;button type="button" data-tab="0" class="ui-tab-btn"&gt;&lt;span&gt;탭1&lt;/span&gt;&lt;/button&gt;
 			...
 		&lt;/div&gt;
@@ -81,7 +81,7 @@
 &lt;/div&gt;
 </code></pre>
  
-	<h3 class="h-3">Javascript</h3>
+	<h3 class="typo-title-m">Javascript</h3>
 <pre class="box-code"><code class="javascript">
 netive.tab.init({
 	id:'exeTab1', 
@@ -103,7 +103,7 @@ netive.tab.toggle({
 });
 </code></pre>
 
-<div class="tbl-base type-option mgt-s">
+<div class="tbl-base type-option mgt-x2">
 	<table>
 		<caption>옵션 설명</caption>
 		<colgroup>
@@ -143,7 +143,7 @@ netive.tab.toggle({
 	</table>
 </div>
 				
-<h4 class="h-4">URl parameter</h4>
+<h4 class="typo-title-m">URl parameter</h4>
 <pre class="box-code"><code class="html">
 single 선택
 ?tab=1 

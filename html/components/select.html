@@ -1,12 +1,12 @@
 <input type="hidden" id="uiJsName" value="pageSelect">
 
 <div class="tit-wrap">
-	<h1 class="h-1">Select</h1>
+	<h1 class="typo-headline-l">Select</h1>
 </div>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Examples</h2>
-	<h3 class="h-3">CSS Design</h3>
+	<h2 class="typo-headline-m">Examples</h2>
+	<h3 class="typo-title-m">CSS Design</h3>
 	<p>CSS로 스타일 표현하나 IE등 일부 브라우저에서는 지원을 안함.</p>
 	<div class="box-guide">
 		<div class="form-wrap">
@@ -29,7 +29,7 @@
 		</div>
 	</div>
 
-	<h3 class="h-3">Custom Select</h3>
+	<h3 class="typo-title-m">Custom Select</h3>
 	<p>모든 브라우저에서 동일한 UI와 디자인으로 접근 가능. option도 디자인 표현이 가능 </p>
 	<div class="box-guide">
 		<div class="form-wrap">
@@ -64,7 +64,7 @@
 					<div class="form-label">
 						<label class="form-item-label ui-select-label" for="uiSel2">Label Text</label>
 						<div class="form-label-util">
-							<button type="button" class="btn-base-s" id="changeOption">동적 셀렉트 옵션 추가</button>
+							<button type="button" class="btn-mix-outlined-s" id="changeOption">동적 셀렉트 옵션 추가</button>
 						</div>
 					</div>
 
@@ -85,8 +85,8 @@
 </section>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Source Code</h2>
-	<h3 class="h-3">HTML</h3>
+	<h2 class="typo-headline-m">Source Code</h2>
+	<h3 class="typo-title-m">HTML</h3>
 <pre class="box-code"><code class="html">
 &lt;div class="ui-select"&gt;
 	&lt;select title="Palette 앨범" id="uiSel1"&gt;
@@ -122,9 +122,9 @@
 &lt;/div&gt;
 </code></pre>
 
-	<h3 class="h-3">Javascript</h3>
+	<h3 class="typo-title-m">Javascript</h3>
 
-	<h4 class="h-4">netive.select.init()</h4>
+	<h4 class="typo-title-m">netive.select.init()</h4>
 	<p>현재 select box기준으로 디자인 select 생성. 첫적용이나 동적인 변경이 있을때 사용한다. 특히 동적인 변경일 경우는 id로 개별 실행해주는게 좋다.</p>
 <pre class="box-code"><code class="javascript">
 //전체 실행
@@ -139,7 +139,7 @@ netive.select.init({
 });
 </code></pre>
 
-	<h4 class="h-4">netive.select.act()</h4>
+	<h4 class="typo-title-m">netive.select.act()</h4>
 	<p>마우스, 키보드 이벤트가 아닌 option값 선택을 할 때 사용. netive.uiSelect()을 사용해도 되나 불필요한 재구성을 하지 않아 값변경 시에는 netive.select.act를
 		사용한다. </p>
 <pre class="box-code"><code class="javascript">

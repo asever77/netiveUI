@@ -2,36 +2,36 @@
 <input type="hidden" id="uiJsName" value="pageModal">
 
 <div class="tit-wrap">
-	<h1 class="h-1">Modal</h1>
+	<h1 class="typo-headline-l">Modal</h1>
 	<p>시스템 알림창, 컨텐츠창 사용</p>
 </div>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Examples</h2>
-	<h3 class="h-3">Base Modal</h3>
+	<h2 class="typo-headline-m">Examples</h2>
+	<h3 class="typo-title-m">Base Modal</h3>
 	<p>기본적인 콘텐츠 모달</p>
 	<div class="box-guide">
 		<div class="test-modal fx-wrap" data-wrap="wrap">
-			<button type="button" class="btn-base" 
+			<button type="button" class="btn-mix-outlined" 
 				modal-id="modal_sample1" 
 				modal-src="./modal/modalSample1.html" 
 				modal-mobilefull="true"
 			>
 				<span>Ajax / center</span>
 			</button>
-			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-mobilefull="true" modal-scroll="true"><span>Ajax / center / scroll</span></button>
-			<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="./modal/modalSample2.html" modal-ps="top"><span>Ajax / top</span></button>
-			<button type="button" class="btn-base" modal-id="modal_sample2" modal-src="./modal/modalSample2.html" modal-ps="bottom"><span>Ajax / bottom</span></button>
-			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-height="500"><span>Ajax / center / scroll / height</span></button>
-			<button type="button" class="btn-base" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-width="400"><span>Ajax / center / scroll / width</span></button>
+			<button type="button" class="btn-mix-outlined" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-mobilefull="true" modal-scroll="true"><span>Ajax / center / scroll</span></button>
+			<button type="button" class="btn-mix-outlined" modal-id="modal_sample2" modal-src="./modal/modalSample2.html" modal-ps="top"><span>Ajax / top</span></button>
+			<button type="button" class="btn-mix-outlined" modal-id="modal_sample2" modal-src="./modal/modalSample2.html" modal-ps="bottom"><span>Ajax / bottom</span></button>
+			<button type="button" class="btn-mix-outlined" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-height="500"><span>Ajax / center / scroll / height</span></button>
+			<button type="button" class="btn-mix-outlined" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-width="400"><span>Ajax / center / scroll / width</span></button>
 		</div>
 	</div>
 
-	<h3 class="h-3">System Modal</h3>
+	<h3 class="typo-title-m">System Modal</h3>
 	<p>시스템 알림 모달</p>
 	<div class="box-guide">
-		<div class="btn-wrap mgt-s txta-l">
-			<button type="button" class="btn-base" onclick="
+		<div class="wrap-btn mgt-x2 txta-l">
+			<button type="button" class="btn-mix-outlined" onclick="
 				netive.modal.show({
 					type : 'alert',
 					sMessage: '<strong>Please</strong> <br>check the information you entered again.',
@@ -43,7 +43,7 @@
 						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>alert system</span></button>
-			<button type="button" class="btn-base" onclick="
+			<button type="button" class="btn-mix-outlined" onclick="
 				netive.modal.show({
 					type : 'alert',
 					ps: 'top',
@@ -56,7 +56,7 @@
 						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>alert system / top</span></button>
-			<button type="button" class="btn-base" onclick="
+			<button type="button" class="btn-mix-outlined" onclick="
 				netive.modal.show({
 					type : 'alert',
 					ps: 'bottom',
@@ -71,8 +71,8 @@
 			});"><span>alert system / bottom</span></button>
 		</div>
 		<input type="text" class="inp-base" placeholder="focus" id="testEndFocus">
-		<div class="btn-wrap mgt-s txta-l">
-			<button type="button" class="btn-base" onclick="
+		<div class="wrap-btn mgt-x2 txta-l">
+			<button type="button" class="btn-mix-outlined" onclick="
 				netive.modal.show({
 					type : 'confirm',
 					sMessage: 'Would you like to send <br>the information you entered?',
@@ -89,7 +89,7 @@
 						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>confirm system</span></button>
-			<button type="button" class="btn-base" onclick="
+			<button type="button" class="btn-mix-outlined" onclick="
 				netive.modal.show({
 					type : 'confirm',
 					ps: 'top',
@@ -107,7 +107,7 @@
 						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>confirm system / top</span></button>
-			<button type="button" class="btn-base" onclick="
+			<button type="button" class="btn-mix-outlined" onclick="
 				netive.modal.show({
 					type : 'confirm',
 					ps: 'bottom',
@@ -130,8 +130,8 @@
 </section>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Source Code</h2>
-	<h3 class="h-3">HTML</h3>
+	<h2 class="typo-headline-m">Source Code</h2>
+	<h3 class="typo-title-m">HTML</h3>
 <pre class="box-code"><code class="html">
 //컨텐츠 팝업
 &lt;section class="ui-modal" id="modalIdName"&gt;
@@ -139,24 +139,24 @@
         &lt;header class="ui-modal-header"&gt;
             &lt;h1 class="ui-modal-tit"&gt;modal title&lt;/h1&gt;
 			//onclick
-            &lt;button type="button" class="btn-close" aria-label="close" onclick="
+            &lt;button type="button" class="icon-close" aria-label="close" onclick="
 				netive.modal.hide({ 
 					id:'modalIdName', 
 					callback:function(v){ console.log('close callback', v); } 
 				});
             "&gt;&lt;span &gt;close&lt;/span&gt;&lt;/button&gt;
 			//close button
-			&lt;button type="button" class="btn-close ui-modal-close" aria-label="close"&gt;&lt;span &gt;close&lt;/span&gt;&lt;/button&gt;
+			&lt;button type="button" class="icon-close ui-modal-close" aria-label="close"&gt;&lt;span &gt;close&lt;/span&gt;&lt;/button&gt;
         &lt;/header&gt;
         &lt;div class="ui-modal-body"&gt;
             ...
         &lt;/div&gt;
         &lt;div class="ui-modal-footer"&gt;
-            &lt;div class="btn-wrap"&gt;
-                &lt;button type="button" class="btn-base"&gt;
+            &lt;div class="wrap-btn"&gt;
+                &lt;button type="button" class="btn-mix-outlined"&gt;
                     &lt;span&gt;취소&lt;/span&gt;
                 &lt;/button&gt;
-                &lt;button type="button" class="btn-base"&gt;
+                &lt;button type="button" class="btn-mix-outlined"&gt;
                     &lt;span&gt;확인&lt;/span&gt;
                 &lt;/button&gt;
             &lt;/div&gt;
@@ -171,11 +171,11 @@
 			...
 		&lt;/div&gt;
 		&lt;div class="ui-modal-footer"&gt;
-			&lt;div class="btn-wrap"&gt;
-				&lt;button type="button" class="btn-base-m text ui-modal-cancel"&gt;
+			&lt;div class="wrap-btn"&gt;
+				&lt;button type="button" class="btn-mix-outlined-m text ui-modal-cancel"&gt;
 					&lt;span&gt;Cancel&lt;/span&gt;
 				&lt;/button&gt;
-				&lt;button type="button" class="btn-base-m text primary ui-modal-confirm"&gt;
+				&lt;button type="button" class="btn-mix-outlined-m text primary ui-modal-confirm"&gt;
 					&lt;span&gt;Ok&lt;/span&gt;
 				&lt;/button&gt;
 			&lt;/div&gt;
@@ -185,8 +185,8 @@
 &lt;/div&gt;
 </code></pre>
 
-	<h3 class="h-3">Javascript</h3>
-	<h4 class="h-4">base show</h4>
+	<h3 class="typo-title-m">Javascript</h3>
+	<h4 class="typo-title-m">base show</h4>
 <pre class="box-code"><code class="javascript">
 //base modal
 netiv.modal.show({ 
@@ -203,7 +203,7 @@ netiv.modal.show({
 	endfocus: false //document.querySelector('...'),
 });
 </code></pre>
-	<div class="tbl-base type-option mgt-s">
+	<div class="tbl-base type-option mgt-x2">
 		<table>
 			<caption>
 				<strong>netive.uiModal 옵션 설명</strong>
@@ -320,7 +320,7 @@ netiv.modal.show({
 	</div>
 
 
-	<h4 class="h-4">base hide</h4>
+	<h4 class="typo-title-m">base hide</h4>
 	<p>모달 레이어 팝업 닫을 시 사용</p>
 <pre class="box-code"><code class="javascript">
 netive.modal.hide({ 
@@ -330,7 +330,7 @@ netive.modal.hide({
 	callback: function(v){ console.log(v) }
 });
 </code></pre>
-	<div class="tbl-base type-option mgt-s">
+	<div class="tbl-base type-option mgt-x2">
 		<table>
 			<caption>
 				<strong>netive.modal.hide 옵션 설명</strong>
@@ -387,7 +387,7 @@ netive.modal.hide({
 	</div>
 
 
-	<h4 class="h-4">system show</h4>
+	<h4 class="typo-title-m">system show</h4>
 <pre class="box-code"><code class="javascript">
 netive.modal.show({ 
 	type: 'alert', //'confirm'
@@ -402,7 +402,7 @@ netive.modal.show({
 	sCancelCallback: function() { console.log('callback'); }
 });
 </code></pre>
-	<div class="tbl-base type-option mgt-s">
+	<div class="tbl-base type-option mgt-x2">
 		<table>
 			<caption>
 				<strong>netive.uiModal - system modal option 설명</strong>
@@ -469,7 +469,7 @@ netive.modal.show({
 		</table>
 	</div>
 
-	<h4 class="h-4">system hide</h4>
+	<h4 class="typo-title-m">system hide</h4>
 	<p>모달 레이어 팝업 닫을 시 사용</p>
 <pre class="box-code"><code class="javascript">
 netive.modal.hideSystem();

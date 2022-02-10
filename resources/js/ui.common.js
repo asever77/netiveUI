@@ -3,8 +3,30 @@
 	'use strict';
 	
 	netive.common = {
+		antiCache: function(){
+			const cssLinks = document.querySelectorAll('link[rel="stylesheet"]');
+			const jsLinks = document.querySelectorAll('script');
+			const now = new Date();
+
+			let timestamp = now.getFullYear().toString();
+			timestamp += (now.getMonth < 9 ? '0' : '') + now.getMonth().toString(); 
+			timestamp += ((now.getDate < 10) ? '0' : '') + now.getDate().toString();
+			timestamp += now.getHours().toString();
+			timestamp += now.getMinutes().toString();
+			timestamp += now.getMilliseconds().toString();
+
+			for (const cssLink of cssLinks) {
+				cssLink.href = cssLink.getAttribute('href') + '?ver=' + timestamp;
+			}
+
+			for (const jsLink of jsLinks) {
+				jsLink.src = jsLink.getAttribute('src') + '?ver=' + timestamp;
+			}
+		},
 		init: function(){
 			let fristHref = '../html/start/introduction.html';
+
+			netive.common.antiCache();
 
 			if (!!netive.para.get('page')) {
 				switch(netive.para.get('page')) {
@@ -31,6 +53,9 @@
 						break;
 					case 'units' :
 						fristHref = '../html/start/units.html';
+						break;
+					case 'icon' :
+						fristHref = '../html/contents/icon.html';
 						break;
 
 					case 'bulletList' :
@@ -109,6 +134,9 @@
 						break;
 					case 'select' :
 						fristHref = '../html/components/select.html';
+						break;
+					case 'selection' :
+						fristHref = '../html/components/selection.html';
 						break;
 					case 'toast' :
 						fristHref = '../html/components/toast.html';
@@ -202,7 +230,7 @@
 				netive.common.menuAjax();
 				
 				doc.querySelector('.ui-nav').addEventListener('click', netive.common.toggleNav);
-				document.querySelector('.btn-mode').addEventListener('click', netive.common.toggleMode);
+				document.querySelector('.fab-mode').addEventListener('click', netive.common.toggleMode);
 			},1);
 			
 		},

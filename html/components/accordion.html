@@ -1,17 +1,17 @@
 <input type="hidden" id="uiJsName" value="pageAccordion">
 
 <div class="tit-wrap">
-	<h1 class="h-1">Accordion</h1>
+	<h1 class="typo-headline-l">Accordion</h1>
 	<p>Accordion UI는 한정된 영역에서 컨텐츠의 일부 영역만 노출시키고 다른 영역은 감춘다. <br>
 		Tab보다는 의미적으로 더 작은 컨텐츠에 주로 사용되며 목록, 메뉴로도 사용 된다. </p>
 </div>
  
 <section class="sec-wrap">
-	<h2 class="h-2">Examples</h2>
+	<h2 class="typo-headline-m">Examples</h2>
 
 	<div class="box-guide">
-		<div class="btn-wrap txta-l">
-			<button type="button" class="btn-base-s" onclick="netive.accordion.toggle({ id:'exeAcco1', current: 'all' })"><span>전체열고닫기</span></button>
+		<div class="wrap-btn txta-l">
+			<button type="button" class="btn-mix-outlined-s" onclick="netive.accordion.toggle({ id:'exeAcco1', current: 'all' })"><span>전체열고닫기</span></button>
 		</div>
 		<div class="ui-acco" id="exeAcco1">
 			<div class="ui-acco-wrap">
@@ -151,16 +151,16 @@
 				</div>
 			</div>
 		</div>
-		<div class="btn-wrap txta-l">
-			<button type="button" class="btn-base-s" id="uiAccoAdd"><span>추가</span></button>
+		<div class="wrap-btn txta-l">
+			<button type="button" class="btn-mix-outlined-s" id="uiAccoAdd"><span>추가</span></button>
 		</div>
 
 	</div>
 </section>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Source Code</h2>
-	<h3 class="h-3">HTML</h3>
+	<h2 class="typo-headline-m">Source Code</h2>
+	<h3 class="typo-title-m">HTML</h3>
 <pre class="box-code"><code class="html">
 &lt;div class="ui-acco" id="idName"&gt;
 	&lt;div class="ui-acco-wrap"&gt;
@@ -180,7 +180,7 @@
 </code>
 </pre>
 
-	<h3 class="h-3">Javascript</h3>
+	<h3 class="typo-title-m">Javascript</h3>
 <pre class="box-code"><code class="javascript">
 netive.accordion.init({ 
 	id:'exeAcco1', 
@@ -191,7 +191,7 @@ netive.accordion.init({
 });
 </code></pre>
 
-	<div class="tbl-base type-option mgt-s">
+	<div class="tbl-base type-option mgt-x2">
 		<table>
 			<caption>
 				<strong>netive.uiAccordion 옵션 설명</strong>
@@ -251,7 +251,7 @@ netive.accordion.init({
 		</table>
 	</div>
 
-	<h3 class="h-3">netive.uiAccordionToggle</h3>
+	<h3 class="typo-title-m">netive.uiAccordionToggle</h3>
 <pre class="box-code"><code class="javascript">
 netive.accordion.toggle({ 
 	id:'exeAcco1', 
@@ -345,7 +345,7 @@ netive.accordion.toggle({
 		</table>
 	</div>
 
-	<h3 class="h-3">parameter 값으로 아코디언탭 선택방법</h3>
+	<h3 class="typo-title-m">parameter 값으로 아코디언탭 선택방법</h3>
 <pre class="box-code"><code class="javascript">
 단일 선택
 /netiveUI/html/components/accordion.html<span class="s">?acco=1</span> 

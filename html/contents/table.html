@@ -1,12 +1,12 @@
 <input type="hidden" id="uiJsName" value="pageTable">
 
 <div class="tit-wrap">
-	<h1 class="h-1">Table</h1>
+	<h1 class="typo-headline-l">Table</h1>
 </div>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Table Description</h2>
-	<h3 class="h-3">caption</h3>
+	<h2 class="typo-headline-m">Table Description</h2>
+	<h3 class="typo-title-m">caption</h3>
 	<p>좀 더 자세하고 정확하게 표현하기 위해 strong 안에 테이블의 간략한 제목 기입과 '.ui-caption' 엘리먼트에 자동으로 테이블의 모든 th의 항목 텍스트를 기입하여 테이블을 설명한다.<br>
 	<div class="bul-etc" data-bullet="예)">
 		<div>
@@ -21,7 +21,7 @@
 &lt;/caption&gt;
 </code></pre>
 
-	<h3 class="h-3">col</h3>
+	<h3 class="typo-title-m">col</h3>
 	<p>col width 값은 css에서 정의하여 html 마크업과 css 스타일을 분리시킨다.</p>
 	<div class="bul-etc" data-bullet="예)">
 		<div>
@@ -49,7 +49,7 @@
 ...
 </code></pre>
 
-	<h3 class="h-3">scope="colgroup" &amp; &lt;colgroup&gt;</h3>
+	<h3 class="typo-title-m">scope="colgroup" &amp; &lt;colgroup&gt;</h3>
 	<p>scope="colgroup" 열그룹은 colgroup 범위안에서 그룹핑을 한다. 사용 시 colgroup으로 영역 구분.</p>
 <pre class="box-code"><code class="html">
 &lt;colgroup&gt;
@@ -60,139 +60,67 @@
 &lt;colgroup&gt;
 	&lt;col&gt;
 	&lt;col&gt;
-	&lt;col&gt;
 &lt;/colgroup&gt;
-&lt;tbody&gt;
+&lt;thead&gt;
 	&lt;tr&gt;
-		&lt;th scope="colgroup"&gt;열그룹 A&lt;/th&gt;
-		&lt;td&gt;열그룹 A-1&lt;/td&gt;
-		&lt;td&gt;열그룹 A-2&lt;/td&gt;
-
-		&lt;th scope="colgroup"&gt;열그룹 B&lt;/th&gt;
-		&lt;td&gt;열그룹 B-1&lt;/td&gt;
-		&lt;td&gt;열그룹 B-2&lt;/td&gt;
+		&lt;th scope="colgroup" colspan="3"&gt;A&lt;/th&gt;
+		&lt;th scope="colgroup" colspan="2"&gt;B&lt;/th&gt;
 	&lt;/tr&gt;
-	...
+	&lt;tr&gt;
+		&lt;th scope="col"&gt;A-1&lt;/th&gt;
+		&lt;th scope="col"&gt;A-2&lt;/th&gt;
+		&lt;th scope="col"&gt;A-3&lt;/th&gt;
+		&lt;th scope="col"&gt;B-1&lt;/th&gt;
+		&lt;th scope="col"&gt;B-2&lt;/th&gt;
+	&lt;/tr&gt;
+&lt;/thead&gt;	
 </code></pre>
 
-	<h3 class="h-3">scope="rowgroup" &amp; &lt;tbody&gt;</h3>
+	<h3 class="typo-title-m">scope="rowgroup" &amp; &lt;tbody&gt;</h3>
 	<p>scope="rowgroup" 행그룹은 tbody 범위안에서 그룹핑을 한다. 사용 시 tbody으로 영역 구분.</p>
 
 <pre class="box-code"><code class="html">
 &lt;tbody&gt;
 	&lt;tr&gt;
-		&lt;th scope="rowgroup" rowspan="2"&gt;행그룹 A&lt;/th&gt;
-		&lt;th scope="row"&gt;행그룹 A-a&lt;/th&gt;
-		&lt;td&gt;행그룹 A-a-1&lt;/td&gt;
+		&lt;th scope="rowgroup" rowspan="2"&gt;A&lt;/th&gt;
+		&lt;th scope="row"&gt;A-a&lt;/th&gt;
+		&lt;td&gt;A-a-1&lt;/td&gt;
 	&lt;/tr&gt;
 	&lt;tr&gt;
-		&lt;th scope="row"&gt;행그룹 A-b&lt;/th&gt;
-		&lt;td&gt;행그룹 A-b-2&lt;/td&gt;
+		&lt;th scope="row"&gt;A-b&lt;/th&gt;
+		&lt;td&gt;A-b-2&lt;/td&gt;
 	&lt;/tr&gt;
 &lt;/tbody&gt;
 
 &lt;tbody&gt;
 	&lt;tr&gt;
-		&lt;th scope="rowgroup" rowspan="2"&gt;행그룹 B&lt;/th&gt;
-		&lt;th scope="row"&gt;행그룹 B-a&lt;/th&gt;
-		&lt;td&gt;행그룹 B-a-1&lt;/td&gt;
+		&lt;th scope="rowgroup" rowspan="2"&gt;B&lt;/th&gt;
+		&lt;th scope="row"&gt;B-a&lt;/th&gt;
+		&lt;td&gt;B-a-1&lt;/td&gt;
 	&lt;/tr&gt;
 	&lt;tr&gt;
-		&lt;th scope="row"&gt;행그룹 B-b&lt;/th&gt;
-		&lt;td&gt;행그룹 B-b-2&lt;/td&gt;
+		&lt;th scope="row"&gt;B-b&lt;/th&gt;
+		&lt;td&gt;B-b-2&lt;/td&gt;
 	&lt;/tr&gt;
 &lt;/tbody&gt;
 </code></pre>
 </section>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Table Type</h2>
-	<h3 class="h-3">목록형</h3>
-	<p>일반적인 게시판 목록 유형의 테이블.</p>
-
-	<div class="tbl-list type-bbs1">
-		<table>
-			<caption>
-				<strong>목록형 기본 테이블</strong>
-				<span class="ui-caption"></span>
-			</caption>
-			<colgroup>
-				<col class="n1">
-				<col class="n2">
-				<col class="n3">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">번호</th>
-					<th scope="col">제목</th>
-					<th scope="col">날짜</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<td colspan="3">내용이 없습니다.</td>
-				</tr>
-				<tr>
-					<td>1</td>
-					<td class="">제목이 들어가는 공간입니다.</td>
-					<td>2018.03.20</td>
-				</tr>
-				<tr>
-					<td>2</td>
-					<td class="">제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다. 제목이 길게 들어가는 공간입니다.</td>
-					<td>2018.03.20</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-
-<pre class="box-code"><code class="html">
-&lt;div class="tbl-list"&gt;
-	&lt;table&gt;
-		&lt;caption&gt;
-			&lt;strong&gt;목록형 기본 테이블&lt;/strong&gt;
-			&lt;span class="ui-caption"&gt;&lt;/span&gt;
-		&lt;/caption&gt;
-
-		&lt;colgroup&gt;
-			&lt;col&gt;
-			&lt;col&gt;
-			&lt;col&gt;
-		&lt;/colgroup&gt;
-
-		&lt;thead&gt;
-			&lt;tr&gt;
-				&lt;th scope="col"&gt;번호&lt;/th&gt;
-				&lt;th scope="col"&gt;제목&lt;/th&gt;
-				&lt;th scope="col"&gt;날짜&lt;/th&gt;
-			&lt;/tr&gt;
-		&lt;/thead&gt;
-
-		&lt;tbody&gt;
-			&lt;tr&gt;
-				&lt;td colspan="3"&gt;내용이 없습니다.&lt;/td&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;td&gt;1&lt;/td&gt;
-				&lt;td class="txta-l"&gt;제목이 들어가는 공간입니다.&lt;/td&gt;
-				&lt;td&gt;2018.03.20&lt;/td&gt;
-			&lt;/tr&gt;
-		&lt;/tbody&gt;
-	&lt;/table&gt;
-&lt;/div&gt;
-</code></pre>
-
-	<h3 class="h-3">자료형</h3>
-	<p>일반적인 자료 유형의 테이블.</p>
+	<h2 class="typo-headline-m">Table Structure</h2>
 	<div class="tbl-base">
 		<table>
 			<caption>
 				<strong>특정 임플란트 치조골 이식술 정보</strong>
 				<span class="ui-caption"></span>
 			</caption>
+
 			<colgroup>
 				<col class="n1">
-				<col class="n2" span="2">
+			</colgroup>
+			<colgroup>
+				<col class="n2">
+				<col class="n2">
 			</colgroup>
 
 			<thead>
@@ -223,9 +151,26 @@
 					<td>가입금액의 100%</td>
 				</tr>
 			</tbody>
+			<tbody>
+				<tr>
+					<th scope="row">골이식술2(BBG)</th>
+					<td>가입금액의 15%</td>
+					<td>가입금액의 30%</td>
+				</tr>
+				<tr>
+					<th scope="row">골유도재생술2(GBR)</th>
+					<td>가입금액의 25%</td>
+					<td>가입금액의 50%</td>
+				</tr>
+				<tr>
+					<th scope="row">상악동거상술2(SL)</th>
+					<td>가입금액의 50%</td>
+					<td>가입금액의 100%</td>
+				</tr>
+			</tbody>
 		</table>
 	</div>
-	<div class="tbl-base mgt-s">
+	<div class="tbl-base mgt-x5">
 		<table>
 			<caption>
 				<strong>장기요양등급 정보</strong>
@@ -262,40 +207,5 @@
 			</tbody>
 		</table>
 	</div>
-
-<pre class="box-code"><code class="html">
-&lt;div class="tbl-base"&gt;
-	&lt;table&gt;
-		&lt;caption&gt;
-			&lt;strong&gt;특정 임플란트 치조골 이식술 정보&lt;/strong&gt;
-			&lt;span class="ui-caption"&gt;&lt;/span&gt;
-		&lt;/caption&gt;
-
-		&lt;colgroup&gt;
-			&lt;col&gt;
-			&lt;col span="2"&gt;
-		&lt;/colgroup&gt;
-
-		&lt;thead&gt;
-			&lt;tr&gt;
-				&lt;th scope="col" rowspan="2"&gt;구분&lt;/th&gt;
-				&lt;th scope="colgroup" colspan="2"&gt;지급금액&lt;/th&gt;
-			&lt;/tr&gt;
-			&lt;tr&gt;
-				&lt;th scope="col"&gt;보장개시일 (책임개시일)부터 가입 후 2년 미만&lt;/th&gt;
-				&lt;th scope="col"&gt;가입 후 2년 이상&lt;/th&gt;
-			&lt;/tr&gt;
-		&lt;/thead&gt;
-
-		&lt;tbody&gt;
-			&lt;tr&gt;
-				&lt;th scope="row"&gt;골이식술(BBG)&lt;/th&gt;
-				&lt;td&gt;가입금액의 15%&lt;/td&gt;
-				&lt;td&gt;가입금액의 30%&lt;/td&gt;
-			&lt;/tr&gt;
-		&lt;/tbody&gt;
-	&lt;/table&gt;
-&lt;/div&gt;
-</code></pre>
 
 </section>

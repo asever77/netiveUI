@@ -4,77 +4,18 @@
 
 
 	<div class="tit-wrap">
-		<h1 class="h-1">Layout</h1>
+		<h1 class="typo-headline-l">Layout</h1>
 	</div>
 
 	<section class="sec-wrap">
-		<h2 class="h-2">Inline-block Layout</h2>
-
-		<p>inline-block으로 레이아웃 구성 시 기본으로 생기는 여백은 font-size:0 으로 해결한다.</p>
-		<em class="bul-star">.in-item에서는 필수로 font-size를 재정의를 해줘야한다.</em>
-
-		<div class="box-guide">
-			<div class="in-wrap">
-				<div class="in-item">A</div>
-				<div class="in-item">B</div>
-				<div class="in-item">C</div>
-			</div>
-			<div class="in-wrap ta-c">
-				<div class="in-item col-xs ta-c">A</div>
-				<div class="in-item col-s ta-c">B</div>
-				<div class="in-item col-m ta-c">C</div>
-			</div>
-			<div class="in-wrap ta-r">
-				<div class="in-item col-m ta-c">A</div>
-				<div class="in-item col-s ta-c">B</div>
-				<div class="in-item col-s ta-c">C</div>
-			</div>
-		</div>
-
-<pre class="box-code"><code class="html">
-&lt;div class="in-wrap"&gt;
-	&lt;div class="in-item"&gt;...&lt;/div&gt;
-	&lt;div class="in-item"&gt;...&lt;/div&gt;
-	&lt;div class="in-item"&gt;...&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-	</section>
-
-	<section class="sec-wrap">
-		<h2 class="h-2">Float Layout</h2>
-		<p>float으로 레이아웃 구성 시 부모가 자식의 높이값을 못가져오는 현상은 :after로 해결한다.</p>
-		
-		<div class="box-guide">
-			<div class="fl-wrap">
-				<div class="fl-item-l">A</div>
-				<div class="fl-item-l">B</div>
-				<div class="fl-item-r">C</div>
-			</div>
-			<div class="fl-wrap">
-				<div class="fl-item-l">A</div>
-				<div class="fl-item-r">B</div>
-				<div class="fl-item-r">C</div>
-			</div>
-		</div>
-
-<pre class="box-code"><code class="html">
-&lt;div class="fl-wrap"&gt;
-	&lt;div class="fl-item-l"&gt;...&lt;/div&gt;
-	&lt;div class="fl-item-l"&gt;...&lt;/div&gt;
-	&lt;div class="fl-item-r"&gt;...&lt;/div&gt;
-&lt;/div&gt;
-</code></pre>
-	</section>
-
-	<section class="sec-wrap">
-		<h2 class="h-2">Flex Layout</h2>
+		<h2 class="typo-headline-m">Flex Layout</h2>
 
 		<p class="bul-care">안드로이드 2.1~4.3 브라우저와 IE 10 브라우저가 공통으로 지원하지 않는 속성: flex-flow, justify-content: space-around,
 			align-self, align-content</p>
 
-		<h3 class="h-3">아이템의 확장 지수 설정</h3>
+		<h3 class="typo-title-m">아이템의 확장 지수 설정</h3>
 		<p>breakpoint(mobile, tablet, desktop)에 지정된 확장 지수를 설정할 수 있다.</p>
-		<ul class="bul-dot mgt-xs">
+		<ul class="bul-dot mgt-x1">
 			<li>data-flex="{<b class="c-p1">n</b>-n-n}" : 4colum (~ 599)</li>
 			<li>data-flex="{n-<b class="c-p1">n</b>-n}" : 8colum (600 ~ 904)</li>
 			<li>data-flex="{n-n-<b class="c-p1">n</b>}" : 12colum (905 ~)</li>
@@ -98,7 +39,7 @@
 &lt;/div&gt;
 </code></pre>
 
-		<h3 class="h-3">정렬 순서 설정</h3>
+		<h3 class="typo-title-m">정렬 순서 설정</h3>
 		<p>data-order="{n}"</p>
 		<div class="box-guide">
 			<div class="fx-wrap">
@@ -113,7 +54,7 @@
 &lt;/div&gt;
 </code></pre>
 
-		<h3 class="h-3">방향 설정</h3>
+		<h3 class="typo-title-m">방향 설정</h3>
 		<p>data-dir="{row|rev|col|revcol}"</p>
 		<div class="box-guide">
 			<div class="fx-wrap" data-dir="row">
@@ -143,7 +84,7 @@
 &lt;/div&gt;
 </code></pre>
 
-		<h3 class="h-3">X축 정렬 설정</h3>
+		<h3 class="typo-title-m">X축 정렬 설정</h3>
 		<p>data-align="{left|right|center|justify}"</p>
 		<div class="box-guide">
 			<div class="fx-wrap" data-align="left">
@@ -174,7 +115,7 @@
 </code></pre>
 
 		<div class="test-flex1">
-			<h3 class="h-3">y축 정렬 설정</h3>
+			<h3 class="typo-title-m">y축 정렬 설정</h3>
 			<p>data-valign="{top|bottom|middle|stretch|baseline}"</p>
 			<div class="box-guide">
 				<div class="fx-wrap" data-valign="top">
@@ -211,6 +152,67 @@
 </code></pre>
 			
 	</section>
+	
+	<section class="sec-wrap">
+		<h2 class="typo-headline-m">Inline-block Layout</h2>
+
+		<p>inline-block으로 레이아웃 구성 시 기본으로 생기는 여백은 font-size:0 으로 해결한다.</p>
+		<em class="bul-star">.in-item에서는 필수로 font-size를 재정의를 해줘야한다.</em>
+
+		<div class="box-guide">
+			<div class="in-wrap">
+				<div class="in-item">A</div>
+				<div class="in-item">B</div>
+				<div class="in-item">C</div>
+			</div>
+			<div class="in-wrap ta-c">
+				<div class="in-item col-xs ta-c">A</div>
+				<div class="in-item col-s ta-c">B</div>
+				<div class="in-item col-m ta-c">C</div>
+			</div>
+			<div class="in-wrap ta-r">
+				<div class="in-item col-m ta-c">A</div>
+				<div class="in-item col-s ta-c">B</div>
+				<div class="in-item col-s ta-c">C</div>
+			</div>
+		</div>
+
+<pre class="box-code"><code class="html">
+&lt;div class="in-wrap"&gt;
+	&lt;div class="in-item"&gt;...&lt;/div&gt;
+	&lt;div class="in-item"&gt;...&lt;/div&gt;
+	&lt;div class="in-item"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+	</section>
+
+	<section class="sec-wrap">
+		<h2 class="typo-headline-m">Float Layout</h2>
+		<p>float으로 레이아웃 구성 시 부모가 자식의 높이값을 못가져오는 현상은 :after로 해결한다.</p>
+		
+		<div class="box-guide">
+			<div class="fl-wrap">
+				<div class="fl-item-l">A</div>
+				<div class="fl-item-l">B</div>
+				<div class="fl-item-r">C</div>
+			</div>
+			<div class="fl-wrap">
+				<div class="fl-item-l">A</div>
+				<div class="fl-item-r">B</div>
+				<div class="fl-item-r">C</div>
+			</div>
+		</div>
+
+<pre class="box-code"><code class="html">
+&lt;div class="fl-wrap"&gt;
+	&lt;div class="fl-item-l"&gt;...&lt;/div&gt;
+	&lt;div class="fl-item-l"&gt;...&lt;/div&gt;
+	&lt;div class="fl-item-r"&gt;...&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+	</section>
+
+
 
 
 	

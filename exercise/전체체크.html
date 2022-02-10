@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>test</title>
+
+    <style>
+        label {
+            padding: 3px 10px 3px 0;
+            cursor: pointer;
+        }
+
+        fieldset {
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <fieldset>
+            <legend>1그룹 전체체크</legend>
+            <div>
+                <input type="checkbox" id="r1_0" data-allcheck-parent="group_1">
+                <label for="r1_0">전체체크</label>
+            </div>
+
+            <div>
+                <input type="checkbox" id="r1_1" data-allcheck-child="group_1" checked>
+                <label for="r1_1">체크1</label>
+
+                <input type="checkbox" id="r1_2" data-allcheck-child="group_1" checked>
+                <label for="r1_2">체크2</label>
+
+                <input type="checkbox" id="r1_3" data-allcheck-child="group_1" checked>
+                <label for="r1_3">체크3</label>
+
+                <input type="checkbox" id="r1_4" data-allcheck-child="group_1" checked>
+                <label for="r1_4">체크4</label>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>2그룹 전체체크(disabled checked)</legend>
+            <div>
+                <input type="checkbox" id="r2_0" data-allcheck-parent="group_2">
+                <label for="r2_0">전체체크</label>
+            </div>
+
+            <div>
+                <input type="checkbox" id="r2_1" data-allcheck-child="group_2">
+                <label for="r2_1">체크1</label>
+
+                <input type="checkbox" id="r2_2" data-allcheck-child="group_2">
+                <label for="r2_2">체크2</label>
+
+                <input type="checkbox" id="r2_3" data-allcheck-child="group_2" disabled checked>
+                <label for="r2_3">체크3</label>
+
+                <input type="checkbox" id="r2_4" data-allcheck-child="group_2">
+                <label for="r2_4">체크4</label>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>3그룹 전체체크(disabled)</legend>
+            <div>
+                <input type="checkbox" id="r3_0" data-allcheck-parent="group_3">
+                <label for="r3_0">전체체크</label>
+            </div>
+
+            <div>
+                <input type="checkbox" id="r3_1" data-allcheck-child="group_3">
+                <label for="r3_1">체크1</label>
+        
+                <input type="checkbox" id="r3_2" data-allcheck-child="group_3" disabled>
+                <label for="r3_2">체크2</label>
+        
+
+                <input type="checkbox" id="r3_b_0" data-allcheck-child="group_3">
+                <label for="r3_b_0">체크3</label>
+               
+                <input type="checkbox" id="r3_4" data-allcheck-child="group_3">
+                <label for="r3_4">체크4</label>
+            </div>
+        </fieldset>
+    </div>
+    <button type="button" id="add"><span>동적 생성</span></button>
+
+    
+
+    <!-- script -->
+    <script>
+        ; (function (win, doc, undefined) {
+
+            'use strict';
+
+            const global = 'test';
+
+            win[global] = {};
+            // window.test = {} 
+
+            const Global = win[global];
+
+            Global.allCheck = {
+                init: function (opt) {
+                    //dom selector
+                    const el_parents = document.querySelectorAll('[data-allcheck-parent]');
+                    const el_childs = document.querySelectorAll('[data-allcheck-child]');
+
+                    //option 
+                    const opt_callback = opt.allCheckCallback;
+
+                    //event 
+                    for (const parent of el_parents) {
+                        if (!parent.dataset.apply) {
+                            parent.addEventListener('change', allCheckParent);
+                            isAllChecked({
+                                name: parent.dataset.allcheckParent, 
+                                type: 'child'
+                            });
+                        }
+
+                        //중복실행방지
+                        parent.dataset.apply = '1';
+                    }
+
+                    for (const child of el_childs) {
+                        if (!child.dataset.apply) {
+                            child.addEventListener('change', allCheckChild);
+                        }
+
+                        //중복실행방지
+                        child.dataset.apply = '1';
+                    }
+
+                    //behavior
+                    function allCheckParent() {
+                       isAllChecked({
+                            name: this.dataset.allcheckParent, 
+                            type: 'parent'
+                        });
+                    }
+
+                    function allCheckChild() {
+                        isAllChecked({
+                            name: this.dataset.allcheckChild, 
+                            type: 'child'
+                        });
+                    }
+                    
+                    function isAllChecked(opt){
+                        const isType = opt.type;
+                        const isName = opt.name;
+                        const parent = document.querySelector('[data-allcheck-parent="' + isName + '"]');
+                        const childs = document.querySelectorAll('[data-allcheck-child="' + isName + '"]');
+                        const allChecked = parent.checked;
+                        const len = childs.length;
+
+                        let n_checked = 0;
+                        let n_disabled = 0;
+                        
+                        //자식체크요소 반복구문 체크
+                        for (let i = 0; i < len; i++) {
+                            const child = childs[i];
+                            
+                            //부모체크 시 disabled 제외하고 전체 체크 토글
+                            if (isType === 'parent' && !child.disabled) {
+                                child.checked = allChecked;
+                            } 
+                            
+                            //자식체크된 갯수 + disabled 갯수 
+                            n_checked = child.checked && !child.disabled ? ++n_checked : n_checked;
+                            n_disabled = child.disabled ? ++n_disabled : n_disabled;
+                        }
+
+                        //자식체크요소 반복구문 체크결과에 따른 전체 체크여부 
+                        parent.checked = (len !== n_checked + n_disabled) ? false : true;
+
+                        //콜백함수 실행
+                        opt_callback({
+                            group: isName,
+                            allChecked: parent.checked
+                        });
+                    }
+                }
+            }
+
+
+            // 실행
+            Global.allCheck.init({
+                allCheckCallback: function (opt) {
+                    if (opt.allChecked) {
+                        console.log('%c' + opt.group + ' 전체체크가 설정 되었습니다.', 'color: #a4f644; background-color: #000;');
+                    } else {
+                        console.log(opt.group + ' 전체체크가 해지 되었습니다.');
+                    }
+                }
+            });
+            Global.allCheck.init({
+                allCheckCallback: function (opt) {
+                    if (opt.allChecked) {
+                        console.log('%c' + opt.group + ' 중복실행 전체체크가 설정 되었습니다.', 'color: #a4f644; background-color: #000;');
+                    } else {
+                        console.log(opt.group + ' 중복실행 전체체크가 해지 되었습니다.');
+                    }
+                }
+            });
+
+            const testBtn = document.querySelector('#add');
+            const testWrap = document.querySelector('#wrap');
+            let n = 4;
+
+            testBtn.addEventListener('click', function(){
+                let html = '<fieldset>';
+                    html += '<legend>'+ n +'그룹 전체체크(동적추가)</legend>';
+                    html += '<div>';
+                    html += '<input type="checkbox" id="r'+ n +'_0" data-allcheck-parent="group_'+ n +'">';
+                    html += '<label for="r'+ n +'_0">전체체크</label>';
+                    html += '</div>';
+                    html += '<div>';
+                    html += '<input type="checkbox" id="r'+ n +'_1" data-allcheck-child="group_'+ n +'">';
+                    html += '<label for="r'+ n +'_1">체크1</label>';
+                    html += '<input type="checkbox" id="r'+ n +'_2" data-allcheck-child="group_'+ n +'">';
+                    html += '<label for="r'+ n +'_2">체크2</label>';
+                    html += '<input type="checkbox" id="r'+ n +'_3" data-allcheck-child="group_'+ n +'">';
+                    html += '<label for="r'+ n +'_3">체크3</label>';
+                    html += '<input type="checkbox" id="r'+ n +'_4" data-allcheck-child="group_'+ n +'">';
+                    html += '<label for="r'+ n +'_4">체크4</label>';
+                    html += '</div>';
+                    html += '</fieldset>';
+
+                testWrap.insertAdjacentHTML('beforeend',html);
+
+                n = ++n;
+
+                Global.allCheck.init({
+                    allCheckCallback: function (opt) {
+                        if (opt.allChecked) {
+                            console.log('%c' + opt.group + ' 동적 전체체크가 설정 되었습니다.', 'color: #a4f644; background-color: #000;');
+                        } else {
+                            console.log(opt.group + ' 동적 전체체크가 해지 되었습니다.');
+                        }
+                    }
+                });
+            });
+
+        })(window, document);
+
+    </script>
+</body>
+
+</html>

@@ -607,6 +607,10 @@ a.ui-acco-btn {
     transition: height .3s ease;
 }
 
+.ui-acco-pnl-wrap{
+    transition: height .3s ease;
+}
+
 .ui-acco-tit-wrap {
     position: relative;
     display: inline-block;
@@ -843,7 +847,7 @@ a.ui-acco-btn:after {
     color: #666;
 }
 
-.datepicker .btn-wrap {
+.datepicker .wrap-btn {
     margin: 0;
 }
 
@@ -1238,7 +1242,7 @@ a.ui-acco-btn:after {
     color: var(--white);
 }
 
-.ui-modal-header .btn-close {
+.ui-modal-header .icon-close {
     position: absolute;
     right: .8rem;
     top: .8rem;
@@ -1267,7 +1271,7 @@ a.ui-acco-btn:after {
     background: var(--gray50);
 }
 
-.ui-modal-footer .btn-wrap {
+.ui-modal-footer .wrap-btn {
     margin: 0;
 }
 
@@ -1520,14 +1524,14 @@ a.ui-acco-btn:after {
     border: 1px solid var(--gray200);
 }
 
-.ui-drop-pnl .btn-close {
+.ui-drop-pnl .icon-close {
 	position: absolute;
 	top: 6px;
 	right: 6px;
 }
 
-.ui-drop-pnl .btn-close:before,
-.ui-drop-pnl .btn-close:after {
+.ui-drop-pnl .icon-close:before,
+.ui-drop-pnl .icon-close:after {
 	background: #212121/*var*/;
     background: var(--gray900);
 }
@@ -1538,11 +1542,11 @@ a.ui-acco-btn:after {
 	margin: 0
 }
 
-.ui-tab-btns.ui-scrollbar .btn-wrap {
+.ui-tab-btns.ui-scrollbar .wrap-btn {
 	overflow-x: initial;
 }
 
-.ui-tab-btns .btn-wrap {
+.ui-tab-btns .wrap-btn {
 	display: flex;
 	flex-wrap: nowrap;
 	margin: 0;
@@ -1962,14 +1966,14 @@ button.ui-tooltip-btn:after {
     top: 4rem;
 }
 
-.ui-datepicker .btn-close {
+.ui-datepicker .icon-close {
     position: absolute;
     top: .6rem;
     right: .6rem;
     z-index: 1;
 }
 
-.ui-datepicker .btn-close:after {
+.ui-datepicker .icon-close:after {
     color: #212121/*var*/;
     color: var(--gray900);
 }
@@ -2462,8 +2466,8 @@ td button.today {
     left: 0;
 }
 
-.device-mobile .ui-datepicker .btn-close:before,
-.device-mobile .ui-datepicker .btn-close:after {
+.device-mobile .ui-datepicker .icon-close:before,
+.device-mobile .ui-datepicker .icon-close:after {
     background: #fff;
 }
 
@@ -2674,9 +2678,9 @@ td button.today {
 	font-size: xx-small;
 }
 
-.ui-file input:active+.btn-base,
-.ui-file input:hover+.btn-base,
-.ui-file input:focus+.btn-base {
+.ui-file input:active+.btn-outlined,
+.ui-file input:hover+.btn-outlined,
+.ui-file input:focus+.btn-outlined {
 	border: 1px solid #616161/*var*/;
     border: 1px solid var(--gray700);
     background: #FAFAFA/*var*/;
@@ -2834,7 +2838,6 @@ td button.today {
 	width: 2rem;
 	height: 2rem;
 	border-radius: 50%;
-
     background-color: #000/*var*/;
     background-color: var(--black);
 }
@@ -2894,7 +2897,7 @@ td button.today {
 .ui-codinglist .srch-area{
     display: flex;
 }
-.ui-codinglist .btn-base{
+.ui-codinglist .btn-outlined{
     margin-left:.4rem;
 }
 .ui-codinglist .srch-hidden {
@@ -2910,7 +2913,7 @@ td button.today {
     font-weight: 600;
 
     font-size: 1.2rem;
-    color: #03dac6/*var*/;
+    color: #4dcbe3/*var*/;
     color: var(--secondary);
 }
 .ui-codinglist-header {
@@ -2932,7 +2935,7 @@ td button.today {
     color: var(--gray50);
     font-size: 1.2rem/*var*/;
     font-size: var(--fs-body-s);
-    border: 1px solid #03dac6/*var*/;
+    border: 1px solid #4dcbe3/*var*/;
     border: 1px solid var(--secondary);
     
 
@@ -3129,7 +3132,7 @@ td button.today {
     background-color: var(--gray900);
 
 }
-.ui-codinglist-preview .btn-close{
+.ui-codinglist-preview .icon-close{
     color:#fff/*var*/;
     color:var(--white);
 

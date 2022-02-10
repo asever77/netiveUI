@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>전체동의</title>
+</head>
+<body>
+
+  <div class="">
+    <input type="checkbox" id="allChk" data-check="all"><label for="allChk">전체동의</label>
+    <ul>
+      <li><input type="checkbox" id="itemChk1" data-check="item"><label for="itemChk1">동의1</label></li>
+      <li><input type="checkbox" id="itemChk2" data-check="item"><label for="itemChk2">동의2</label></li>
+      <li><input type="checkbox" id="itemChk3" data-check="item"><label for="itemChk3">동의3</label></li>
+      <li><input type="checkbox" id="itemChk4" data-check="item"><label for="itemChk4">동의4</label></li>
+    </ul>
+  </div>
+
+  <script>
+    // (function() {
+
+      var allCheck = {
+        checkAll: null,
+        checkList: null,
+        checkListLength: 0,
+        checkedListLength: 0,
+
+        activeAllChecked () {
+          const o = allCheck;
+          this.checked
+            ? o.allChecked(true)
+            : o.allChecked(false);
+        },
+        allChecked (v) { // true, false 에 따라 전체 체크, 해제
+          const o = this;
+          v
+            ? o.checkedListLength = o.checkListLength
+            : o.checkedListLength = 0;
+          o.callChecked(v);
+        },
+        
+        activeChecked () {
+          const o = allCheck;
+          this.checked
+            ? o.checked(true)
+            : o.checked(false);
+        },
+        checked (v) {
+          const o = this;
+          v
+            ? o.checkedListLength = o.checkedListLength + 1
+            : o.checkedListLength = o.checkedListLength - 1;
+          o.callAllChecked();
+        },
+
+        // callAllChecked () {
+        // callAllChecked : function () {
+          callAllChecked : () => {
+          console.log(this)
+
+
+          const o = this;
+          o.checkedListLength === o.checkListLength
+            ? o.checkAll.checked = true
+            : o.checkAll.checked = false;
+        },
+        callChecked (v) {
+          const o = this;
+          o.checkList.forEach(function(el,idx) {
+            o.checkList[idx].checked = v;
+          });
+        },
+
+        
+        init () {
+          const o = this;
+
+          // 체크 요소들 정의
+          o.checkAll = document.querySelector('[data-check=all]');
+          o.checkList = document.querySelectorAll('[data-check=item]');
+          o.checkListLength = o.checkList.length;
+
+          // 전체 체크
+          o.checkAll.addEventListener('click', o.activeAllChecked);
+
+          // 개별 체크
+          o.checkList.forEach((el,idx) => {
+            o.checkList[idx].addEventListener('click', o.activeChecked);
+          });
+        }
+      }
+
+
+
+      // 초기 실행
+      allCheck.init();
+    // }())
+  </script>
+
+</body>
+</html>

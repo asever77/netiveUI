@@ -298,6 +298,8 @@
 		},
 		toggleSlide: function(opt) {
 			const el = opt.el;
+			const btnID = el.getAttribute('aria-labelledby');
+			const el_btn = doc.querySelector('#' + btnID);
 			const state = opt.state;
 			let n;
 
@@ -309,24 +311,33 @@
 
 			function show(){
 				el.setAttribute('aria-hidden', false);
+				el.dataset.ing = 'true';
 				el.style.height = "auto";
 				n = el.offsetHeight;
 				el.style.height = 0;
 				void el.offsetHeight;
 				el.style.height = n + 'px';
 				
-				setTimeout(function(){
+				Global.parts.toggleSlideTimer = setTimeout(function(){
 					el.style.height = 'auto';
+					el.dataset.ing = 'false';
+					
 				},300);
 			}
 			function hide(){
-				el.style.height = el.offsetHeight + 'px';
+				if (el.dataset.ing !== 'true') {
+					el.style.height = el.offsetHeight + 'px';
 
-				setTimeout(function(){
-					el.setAttribute('aria-hidden', true);
-					el.style.height = 0;
-				},0);
-				
+					setTimeout(function(){
+						el.setAttribute('aria-hidden', true);
+						el.style.height = 0;
+						el_btn.setAttribute('aria-expanded', false);
+						el_btn.dataset.selected = false;
+					},0);
+				} else {
+					el_btn.setAttribute('aria-expanded', true);
+					el_btn.dataset.selected = true;
+				}
 			}
 		}
 	}
@@ -1672,18 +1683,24 @@
 				const that = el_captions[i];
 				const el_table = that.closest('table');
 				const ths = el_table.querySelectorAll('th');
+
 				let captionTxt = '';
 
 				that.textContent = '';
-
+	
 				for (let i = 0, len = ths.length; i < len; i++) {
 					const that = ths[i];
+					const isThead = (that.parentNode.parentNode.tagName === 'THEAD');
+					const isColSpan = that.getAttribute('colspan');
+					const isRowSpan = that.getAttribute('rowspan');
+
 					const txt = that.textContent;
 					
 					(captionTxt !== '') ?
 						captionTxt += ', ' + txt:
 						captionTxt += txt;
 				}
+				
 
 				that.textContent = captionTxt + ' 정보입니다.';
 			}
@@ -1944,7 +1961,7 @@
 			} else {
 				if (!el_clear) {
 					if (el_inp.tagName === 'INPUT') { 
-						el_wrap.insertAdjacentHTML('beforeend', '<button type="button" class="ui-clear btn-clear" tabindex="-1" aria-hidden="true"  style="margin-right:'+ pdr +'px"><span class="a11y-hidden">내용지우기</span></button>');
+						el_wrap.insertAdjacentHTML('beforeend', '<button type="button" class="ui-clear icon-clear" tabindex="-1" aria-hidden="true"  style="margin-right:'+ pdr +'px"><span class="a11y-hidden">내용지우기</span></button>');
 
 						el_clear = el_wrap.querySelector('.ui-clear');
 						el_clear.addEventListener('click', this.actClear);
@@ -2078,6 +2095,74 @@
 				} else if(number >= 1048576) {
 					return (number/1048576).toFixed(1) + 'MB';
 				}
+			}
+		},
+		allCheck: function (opt) {
+			const el_parents = document.querySelectorAll('[data-allcheck-parent]');
+			const el_childs = document.querySelectorAll('[data-allcheck-child]');
+			const opt_callback = opt.allCheckCallback;
+
+			for (const parent of el_parents) {
+				if (!parent.dataset.apply) {
+					parent.addEventListener('change', allCheckParent);
+					isAllChecked({
+						name: parent.dataset.allcheckParent, 
+						type: 'child'
+					});
+				}
+
+				parent.dataset.apply = '1';
+			}
+
+			for (const child of el_childs) {
+				if (!child.dataset.apply) {
+					child.addEventListener('change', allCheckChild);
+				}
+
+				child.dataset.apply = '1';
+			}
+
+			function allCheckParent() {
+			   isAllChecked({
+					name: this.dataset.allcheckParent, 
+					type: 'parent'
+				});
+			}
+
+			function allCheckChild() {
+				isAllChecked({
+					name: this.dataset.allcheckChild, 
+					type: 'child'
+				});
+			}
+			
+			function isAllChecked(opt){
+				const isType = opt.type;
+				const isName = opt.name;
+				const parent = document.querySelector('[data-allcheck-parent="' + isName + '"]');
+				const childs = document.querySelectorAll('[data-allcheck-child="' + isName + '"]');
+				const allChecked = parent.checked;
+				const len = childs.length;
+				let n_checked = 0;
+				let n_disabled = 0;
+
+				for (let i = 0; i < len; i++) {
+					const child = childs[i];
+					
+					if (isType === 'parent' && !child.disabled) {
+						child.checked = allChecked;
+					} 
+					
+					n_checked = child.checked && !child.disabled ? ++n_checked : n_checked;
+					n_disabled = child.disabled ? ++n_disabled : n_disabled;
+				}
+
+				parent.checked = (len !== n_checked + n_disabled) ? false : true;
+
+				opt_callback({
+					group: isName,
+					allChecked: parent.checked
+				});
 			}
 		}
 		
@@ -2338,8 +2423,8 @@
 				_dpHtml += '</div>';
 
 				_dpHtml += '<div class="datepicker-footer">';
-				_dpHtml += '<div class="btn-wrap">';
-				_dpHtml += '<button type="button" class="btn-base ui-confirm" data-confirm="'+ setId +'"><span>확인</span></button>';
+				_dpHtml += '<div class="wrap-btn">';
+				_dpHtml += '<button type="button" class="btn-mix-outlined ui-confirm" data-confirm="'+ setId +'"><span>확인</span></button>';
 				_dpHtml += '</div>';
 				_dpHtml += '</div>';
 
@@ -2516,9 +2601,8 @@
 			let nextDates = [];
 			let thisDates = [];
 			//let thisDates = [...Array(TLDate + 1).keys()].slice(1);
-			for (let i = 0, len = TLDate + 1; i < len; i++) {
-				console.log(i);
-				thisDates.push(i);
+			for (let i = 0, len = TLDate; i < len; i++) {
+				thisDates.push(i + 1);
 			}
 
 			//prevDates 계산
@@ -4019,8 +4103,6 @@
 			function act(v) {
 				const isDown = !(v === 'down');
 
-				console.log('isDown', isDown);
-
 				//set up close
 				if (!!autoclose) {
 					for (let i = 0, len = el_wraps.length; i < len; i++) {
@@ -4406,13 +4488,13 @@
 				htmlSystem += sMessage;
 				htmlSystem += '</div>';
 				htmlSystem += '<div class="ui-modal-footer">';
-				htmlSystem += '<div class="btn-wrap">';
+				htmlSystem += '<div class="wrap-btn">';
 
 				if (type === 'confirm') {
-					htmlSystem += '<button type="button" class="btn-base-m text ui-modal-cancel"><span>'+ sBtnCancelTxt +'</span></button>';
+					htmlSystem += '<button type="button" class="btn-mix-outlined-m text ui-modal-cancel"><span>'+ sBtnCancelTxt +'</span></button>';
 				}
 
-				htmlSystem += '<button type="button" class="btn-base-m text primary ui-modal-confirm"><span>'+ sBtnConfirmTxt +'</span></button>';	
+				htmlSystem += '<button type="button" class="btn-mix-outlined-m text primary ui-modal-confirm"><span>'+ sBtnConfirmTxt +'</span></button>';	
 				htmlSystem += '</div>';
 				htmlSystem += '</div>';
 				htmlSystem += '</div>';
@@ -5082,11 +5164,11 @@
 			const onePanel = opt.onePanel;
 			const callback = opt.callback;
 			const align = opt.align;
-			const el_tab = doc.querySelector('#' + id);
+			const el_tab = doc.querySelector('.ui-tab[data-id="' + id + '"]');
 
 			//:scope >
 			const el_btnwrap = el_tab.querySelector('.ui-tab-btns');
-			const el_wrap = el_btnwrap.querySelector('.btn-wrap');
+			const el_wrap = el_btnwrap.querySelector('.wrap-btn');
 
 			const el_btns = el_btnwrap.querySelectorAll('.ui-tab-btn');
 
@@ -5264,7 +5346,7 @@
 			const opt = Object.assign({}, this.options, option);
 			const id = opt.id;
 			const callback = opt.callback;
-			const el_tab = doc.querySelector('#' + id);
+			const el_tab = doc.querySelector('.ui-tab[data-id="' + id + '"]');
 
 			//:scope >
 			const el_btnwrap = el_tab.querySelector('.ui-tab-btns');
@@ -5596,11 +5678,11 @@
 				info += '<ul class="ui-codinglist-info">';
 				info += '<li>진행율(완료:<span class="n_end">0</span>+검수:<span class="n_tst">0</span>) : <span class="n_all">0</span> / <span class="total">0</span> (<span class="per0">0</span>%)</li>';
 				info += '</ul></dd></dl><span class="bar"><span></div>';
-				info += '<div class="box-srch mgt-xs">';
+				info += '<div class="box-srch mgt-x1">';
 				info += '<div class="srch-area">';
 				info += '<input type="search" id="projectListSrchCode" class="inp-base ui-inpcancel" value="" placeholder="검색어를 입력해주세요.">';
-				info += '<button type="button" id="projectListSrchBtn" class="btn-base"><span>검색</span></button>';
-				info += '<button type="button" id="projectListSrchRe" class="btn-base"><span>초기화</span></button>';
+				info += '<button type="button" id="projectListSrchBtn" class="btn-mix-outlined"><span>검색</span></button>';
+				info += '<button type="button" id="projectListSrchRe" class="btn-mix-outlined"><span>초기화</span></button>';
 				
 				info += '</div>';
 				info += '</div>';

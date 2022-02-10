@@ -2,15 +2,15 @@
 
 <div class="tit-catagory">Components Form</div>
 <div class="tit-wrap">
-	<h1 class="h-1">Date Picker2</h1>
+	<h1 class="typo-headline-l">Date Picker2</h1>
 </div>
 
 <p class="txts-m">날짜 선택이나 기간 선택할때 사용한다.</p>
 
-<h2 class="h-2">Examples</h2>
-<h3 class="h-3">Base Date Picker</h3>
+<h2 class="typo-headline-m">Examples</h2>
+<h3 class="typo-title-m">Base Date Picker</h3>
 
-<h4 class="h-4">single</h4>
+<h4 class="typo-title-m">single</h4>
 <div class="ui-datepicker" data-id="uiDatePicker1" data-title="test1">
 	<input type="tel" id="uiDatePicker1Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-12-05" data-max="2022-12-30" title="시작일">
 	<button type="button" aria-label="시작일 선택" class="ui-datepicker-btn">달력</button>
@@ -29,22 +29,22 @@
 
 
 
-<h4 class="h-4">dual</h4>
+<h4 class="typo-title-m">dual</h4>
 <div class="ui-datepicker" id="uiDatePicker2" data-dual="true" data-title="test2">
 	<input type="tel" id="uiDatePicker2Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-11-05" data-max="2022-12-30" title="시작일">
 	<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
 	<div class="ui-datepicker-wrap"></div>
 </div>
 
-<h4 class="h-4">Month single</h4>
+<h4 class="typo-title-m">Month single</h4>
 <div class="ui-datepicker" id="uiDatePicker1m" data-title="test" data-type="month">
 	<input type="tel" id="uiDatePicker1mInp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2000-12" data-max="2020-12" title="시작일">
 	<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
 	<div class="ui-datepicker-wrap"></div>
 </div>
 
-<h3 class="h-3">Period Date picker</h3>
-<h4 class="h-4">single</h4>
+<h3 class="typo-title-m">Period Date picker</h3>
+<h4 class="typo-title-m">single</h4>
 <div class="form-dpmulti">		
 	<div class="ui-datepicker" id="uiDatePicker3" data-period="true" data-dual="false" data-title="test3">
 		<input type="tel" id="uiDatePicker3Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2020-06-01" data-max="2020-07-15" title="시작일">					
@@ -57,7 +57,7 @@
 		<button type="button" class="ui-datepicker-btn" disabled aria-label="종료일 선택"></button>
 	</div>
 </div>	
-<h4 class="h-4">dual</h4>
+<h4 class="typo-title-m">dual</h4>
 <div class="form-dpmulti">		
 	<div class="ui-datepicker" id="uiDatePicker4" data-period="true" data-dual="true" data-title="test4">
 		<input type="tel" id="uiDatePicker4Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2019-12-01" data-max="2020-02-15" title="시작일">					
@@ -71,8 +71,8 @@
 	</div>
 </div>	
 
-<h2 class="h-2">HTML Structure</h2>
-<h3 class="h-3">Base type</h3>
+<h2 class="typo-headline-m">HTML Structure</h2>
+<h3 class="typo-title-m">Base type</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -85,7 +85,7 @@
 </pre>
 </div>
 
-<h3 class="h-3">Period type</h3>			
+<h3 class="typo-title-m">Period type</h3>			
 <div class="box-code">
 <pre>
 <code>
@@ -161,8 +161,8 @@
 </div>
 
 
-<h2 class="h-2">CSS Style</h2>
-<h3 class="h-3">base style</h3>
+<h2 class="typo-headline-m">CSS Style</h2>
+<h3 class="typo-title-m">base style</h3>
 <div class="box-code">
 <pre>
 <code>
@@ -176,9 +176,9 @@
 .ui-datepicker.type-dual .ui-datepicker-wrap table + table {float:right}
 .ui-datepicker .ui-datepicker-wrap {position:absolute; width:230px; margin-top:0 !important; z-index:1; top:45px; left:0; transform: translate(0, 0); opacity:0; transition:top 0.1s ease-out, opacity 0.1s ease-out}
 .ui-datepicker.visible .ui-datepicker-wrap {opacity:1; top:40px;}
-.ui-datepicker .btn-close {position:absolute; top:6px; right:6px; z-index:1;}
-.ui-datepicker .btn-close:before,
-.ui-datepicker .btn-close:after {background:#222;}
+.ui-datepicker .icon-close {position:absolute; top:6px; right:6px; z-index:1;}
+.ui-datepicker .icon-close:before,
+.ui-datepicker .icon-close:after {background:#222;}
 .datepicker-sec {width:100%; height:100%; border:solid 1px #63686d; background:#fff; }
 .datepicker-sec select {border:0; width:auto; padding-right:30px;}
 .datepicker-sec .cal-wrapper {padding:10px; min-width:450px; width:auto !important; width:450px; overflow:hidden; }
@@ -235,8 +235,8 @@ td button.today {color:#000; font-weight:900; background:#fff; border:1px solid 
 </pre>
 </div>
 
-<h2 class="h-2">Javascript</h2>
-<h3 class="h-3">netive.uiDatePicker</h3>
+<h2 class="typo-headline-m">Javascript</h2>
+<h3 class="typo-title-m">netive.uiDatePicker</h3>
 <div class="box-code">
 <pre>
 <code>

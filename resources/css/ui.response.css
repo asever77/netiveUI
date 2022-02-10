@@ -1,0 +1,101 @@
+@charset "utf-8";
+
+/* 4 columns: 0-599 ----------------------------------------------------------------------------------- */
+@media all and (max-width:599px) {
+	.base-main {
+        margin: 0 auto;
+		padding: 0 2rem;
+    }
+
+	.base-grid {
+        max-width: 100%;
+		width:100%;
+        padding: 0 2rem;
+    }
+
+    .base-grid div:nth-child(4)~div {
+        display: none;
+    }
+
+    .base-grid div+div {
+        margin-left: .8rem;
+    }
+
+    .box-guide .fx-item>b:nth-child(1) {
+        color: #4dcbe3/*var*/;
+        color: var(--secondary);
+    }
+}
+
+/* 8 columns: 600-839 ----------------------------------------------------------------------------------- */
+@media all and (min-width:600px) and (max-width:839px) {
+    .base-main {
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .base-grid {
+        max-width: 108rem;
+        padding: 0 2rem;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    .base-grid div:nth-child(8)~div {
+        display: none;
+    }
+
+    .base-grid div+div {
+        margin-left: 1.6rem;
+    }
+
+    .box-guide .fx-item>b:nth-child(2) {
+        color: #4dcbe3/*var*/;
+        color: var(--secondary);
+    }
+}
+
+/* 12 columns ----------------------------------------------------------------------------------- */
+@media all and (min-width:840px) {
+    .base-main {
+        margin: 0 auto;
+        padding: 0 3.2rem;
+    }
+
+    .base-grid {
+        max-width: 108rem;
+        padding: 0 3.2rem;
+        left: 50%;
+        transform: translate(-50%, 0);
+    }
+
+    .box-guide .fx-item>b:nth-child(3) {
+        color: orangered;
+    }
+
+    .base-grid div+div {
+        margin-left: calc((100% - 88rem) / 12);
+    }
+
+   
+
+    
+    /* .header-nav{
+		width:32rem !important;
+	}
+	.base-body{
+		left:0 !important;
+	}
+
+	.nav-open .header-wrap .logo{
+		margin-left:0 !important;
+	}
+	@keyframes menuIn {
+		0% {left:0;}
+		100% {left:32rem !important}
+	}
+	@keyframes menuOut {
+		0% {left:32rem !important}
+		100% {left:0;}
+	} */
+}

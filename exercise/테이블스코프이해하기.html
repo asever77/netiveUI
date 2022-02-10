@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <title>scope 속성의 적용범위</title>
+    <style>
+        table {
+            border-spacing: 0;
+            border-collapse: collapse
+        }
+
+        td,
+        th {
+            padding: 5px 10px;
+            border: solid 1px #999
+        }
+
+        th {
+            background: #eee
+        }
+
+        td.scoped,
+        th.scoped {
+            background: #008;
+            color: #fff
+        }
+    </style>
+</head>
+
+<body>
+    <h1><code>scope</code> 속성의 적용범위</h1>
+    <p><code>scope</code> 속성이 제공된 제목셀에 마우스 오버 혹은 키보드 접근 시 제목 셀의 적용 범위가 표시됩니다.</p>
+    <p>참고: 아래 테이블 코드 예제는 <code>scope</code> 속성의 범위를 표시하기 위해 제작되었습니다. 일부 코드는 적절한
+        구현이 아닐 수 있습니다.</p>
+
+    <table>
+        <caption><code>scope</code> 속성 적용 예제1</caption>
+        <thead>
+            <tr>
+                <th scope="col" rowspan="2">교실</th>
+                <th scope="col" colspan="2">수강생</th>
+                <th scope="col" colspan="2">비수강생</th>
+            </tr>
+            <tr>
+                <th scope="col">남</th>
+                <th scope="col">여</th>
+                <th scope="col">남</th>
+                <th scope="col">여</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="rowgroup" colspan="5">1학년</th>
+            </tr>
+            <tr>
+                <th scope="row">1반</th>
+                <td>10</td>
+                <td>5</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">2반</th>
+                <td>8</td>
+                <td>12</td>
+                <td>5</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">3반</th>
+                <td>7</td>
+                <td>6</td>
+                <td>9</td>
+                <td>7</td>
+            </tr>
+
+            <tr>
+                <th scope="rowgroup" colspan="5">2학년</th>
+            </tr>
+            <tr>
+                <th scope="row">1반</th>
+                <td>10</td>
+                <td>5</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">2반</th>
+                <td>8</td>
+                <td>12</td>
+                <td>5</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">3반</th>
+                <td>7</td>
+                <td>6</td>
+                <td>9</td>
+                <td>7</td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <th scope="rowgroup" colspan="5">3학년</th>
+            </tr>
+            <tr>
+                <th scope="row">1반</th>
+                <td>10</td>
+                <td>5</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">2반</th>
+                <td>8</td>
+                <td>12</td>
+                <td>5</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">3반</th>
+                <td>7</td>
+                <td>6</td>
+                <td>9</td>
+                <td>7</td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <th scope="rowgroup" colspan="5">4학년</th>
+            </tr>
+            <tr>
+                <th scope="row">1반</th>
+                <td>10</td>
+                <td>5</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">2반</th>
+                <td>8</td>
+                <td>12</td>
+                <td>5</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">3반</th>
+                <td>7</td>
+                <td>6</td>
+                <td>9</td>
+                <td>7</td>
+            </tr>
+        </tbody>
+    </table>
+    <hr>
+    <table>
+        <caption><code>scope</code> 속성 적용 예제2</caption>
+        <colgroup>
+            <col>
+            <col>
+        </colgroup>
+        <colgroup>
+            <col>
+            <col>
+        </colgroup>
+        <colgroup>
+            <col>
+            <col>
+        </colgroup>
+        <thead>
+            <tr>
+                <th scope="col" colspan="2" rowspan="2">교실</th>
+                <th scope="colgroup" colspan="2">수강생</th>
+                <th scope="colgroup" colspan="2">비수강생</th>
+            </tr>
+            <tr>
+                <th scope="col">남</th>
+                <th scope="col">여</th>
+                <th scope="col">남</th>
+                <th scope="col">여</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <th scope="rowgroup" rowspan="3">1학년</th>
+                <th scope="row">1반</th>
+                <td>10</td>
+                <td>5</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">2반</th>
+                <td>8</td>
+                <td>12</td>
+                <td>5</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">3반</th>
+                <td>7</td>
+                <td>6</td>
+                <td>9</td>
+                <td>7</td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <th scope="rowgroup" rowspan="3">2학년</th>
+                <th scope="row">1반</th>
+                <td>10</td>
+                <td>5</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">2반</th>
+                <td>8</td>
+                <td>12</td>
+                <td>5</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">3반</th>
+                <td>7</td>
+                <td>6</td>
+                <td>9</td>
+                <td>7</td>
+            </tr>
+        </tbody>
+        <tbody>
+            <tr>
+                <th scope="rowgroup" rowspan="3">3학년</th>
+                <th scope="row">1반</th>
+                <td>10</td>
+                <td>5</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">2반</th>
+                <td>8</td>
+                <td>12</td>
+                <td>5</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <th scope="row">3반</th>
+                <td>7</td>
+                <td>6</td>
+                <td>9</td>
+                <td>7</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        $(function () {
+            var applyIdxData = function () {
+                var i;
+                $('table').each(function () {
+                    var $table = $(this);
+                    var tidx = 0;
+                    $table.find('thead,tbody,tfoot').each(function () {
+                        var rowidx = 0;
+                        $(this).find('tr').each(function () {
+                            var colidx = parseInt($(this).data('colstart'), 10) || 0;
+                            $(this).find('th,td').each(function () {
+                                $(this).attr('data-tidx', tidx)
+                                    .attr('data-rowidx', rowidx)
+                                    .attr('data-colidx', colidx);
+                                if ($(this).attr('rowspan')) {
+                                    var $nextTr = $(this).parent();
+                                    for (var i = 1; i < Number($(this).attr('rowspan')); i++) {
+                                        $nextTr = $nextTr.next();
+                                        var colstart = 1;
+                                        if ($nextTr.data('colstart'))
+                                            colstart += Number($nextTr.data('colstart'), 10);
+                                        if ($(this).attr('colspan'))
+                                            colstart += Number($(this).attr('colspan'), 10) - 1;
+                                        $nextTr.attr('data-colstart', colstart);
+                                    }
+                                }
+                                if ($(this).attr('colspan')) {
+                                    colidx += Number($(this).attr('colspan'));
+                                } else {
+                                    colidx++;
+                                }
+                            });
+                            rowidx++;
+                        });
+                        tidx++;
+                    });
+                    if ($table.find('colgroup').length > 0) {
+                        var cgidx = 0, cgcols = 0, colsize = (function () {
+                            var size = 0;
+                            $table.find('tr').each(function () {
+                                var _size = $(this).find('th,td').length;
+                                if (_size > size) size = _size;
+                            });
+                            return size;
+                        }());
+                        $table.find('colgroup').each(function () {
+                            var cols = $(this).find('col').length;
+                            if (cols > 0) {
+                                for (i = cgcols; i < cgcols + cols; i++) {
+                                    $table.find('th[data-colidx=' + i + '], td[data-colidx=' + i + ']').attr('data-cgidx', cgidx);
+                                }
+                                cgidx++;
+                                cgcols += cols;
+                            }
+                        });
+                        for (i = cgcols; i < colsize; i++) {
+                            $table.find('th[data-colidx=' + i + '], td[data-colidx=' + i + ']').attr('data-cgidx', cgidx);
+                        }
+                        $table.find('th,td').each(function () {
+                            $(this).append(
+                                '<br><small>' + $(this).data('tidx')
+                                + ',' + $(this).data('rowidx')
+                                + ',' + $(this).data('colidx')
+                                + ',' + $(this).data('cgidx')
+                                + '<' + '/small>'
+                            );
+                        });
+                    }
+                });
+            };
+
+            applyIdxData();
+
+            $('th').attr('tabindex', 0).each(function () {
+                var scope = $(this).attr('scope');
+                $(this).append('<br><code><small>scope="' + scope + '"<' + '/small><' + '/code>');
+            });
+
+            $('th').on('focus mouseover', function () {
+                var $table = $(this).parents('table').eq(0);
+                var tidx = $(this).data('tidx');
+                var rowidx = $(this).data('rowidx');
+                var colidx = $(this).data('colidx');
+                var cgidx = $(this).data('cgidx');
+                switch ($(this).attr('scope')) {
+                    case 'row':
+                        $table.find('td').each(function () {
+                            if ($(this).data('tidx') === tidx &&
+                                $(this).data('rowidx') === rowidx &&
+                                $(this).data('colidx') !== colidx) {
+                                $(this).addClass('scoped');
+                            }
+                        });
+                        break;
+                    case 'col':
+                        var colspan = parseInt($(this).attr('colspan'), 10) || 1;
+                        $table.find('td').each(function () {
+                            var idx = $(this).data('colidx');
+
+                            if (idx >= colidx && idx < colidx + colspan) {
+                                $(this).addClass('scoped');
+                            }
+                        });
+                        break;
+                    case 'rowgroup':
+                        $table.find('td').each(function () {
+                            if ($(this).data('tidx') === tidx) {
+                                $(this).addClass('scoped');
+                            }
+                        });
+                        break;
+                    case 'colgroup':
+                        $table.find('td').each(function () {
+                            if ($(this).data('cgidx') === cgidx) {
+                                $(this).addClass('scoped');
+                            }
+                        });
+                        break;
+                }
+            }).on('blur mouseout', function () {
+                $('th,td').removeClass('scoped');
+            });
+        });
+    </script>
+</body>
+
+</html>

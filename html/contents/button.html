@@ -3,296 +3,542 @@
 <input type="hidden" id="uiJsName" value="pageButton">
 
 <div class="tit-wrap">
-	<h1 class="h-1">Buttons</h1>
+	<h1 class="typo-headline-l">Buttons</h1>
 </div>
 
 <section class="sec-wrap">
-	<h2 class="h-2">Usage</h2>
-	<p class="bul-dot">	
-		기본적으로 &lt;div class="btn-wrap"&gt; &lt;/div&gt;로 버튼요소를 감싸준다. 
-	</p>
-	<p class="bul-dot">	
-		페이지 이동 및 중간 처리없는 순수링크에는 a 태그를 사용한다.
-	</p>
-	<p class="bul-dot">
-		페이지 내에서의 동작이나 중간 처리후 이동이 필요한 경우는 button 태그를 사용한다.
-	</p>
+	<h2 class="typo-headline-m">Default Buttons</h2>
+	<p>정해진 스타일의 버튼으로 중요도, 긍정/부정에 따라 나누어진다.</p>
 
+	<h3 class="typo-title-m"></h3>
 	<div class="box-guide">
-		<button type="button" class="btn-base-m"><span>button</span></button>
-		<a href="#none" class="btn-base-m"><span>a</span></a>
-		<button type="button" class="btn-base-m primary"><span>button</span></button>
-		<a href="#none" class="btn-base-m primary"><span>a</span></a>
+		<table class="type-noline">
+			<caption class="ui-caption"></caption>
+			<colgroup>
+				<col class="col-th">
+				<col class="col-auto" span="5">
+			</colgroup>
+			<thead>
+				<tr class="typo-title-s">
+					<th scope="col">Type</th>
+					<th scope="col">Enabled</th>
+					<th scope="col">Disabled</th>
+					<th scope="col">Hovered</th>
+					<th scope="col">Focused</th>
+					<th scope="col">Pressed</th>
+				</tr>
+			</thead>
+			<tbody class="ta-c">
+				<tr>
+					<th scope="row">Base</th>
+					<td>
+						<button type="button" class="btn-base"><span>button tag</span></button>
+						<a href="#none" class="btn-base"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-base" disabled><span>button tag</span></button>
+						<a href="#none" class="btn-base disabled"><span>a tag</span></a>
+					</td>
+					<td class="hover">
+						<button type="button" class="btn-base"><span>button tag</span></button>
+						<a href="#none" class="btn-base"><span>a tag</span></a>
+					</td>
+					<td class="focus">
+						<button type="button" class="btn-base"><span>button tag</span></button>
+						<a href="#none" class="btn-base"><span>a tag</span></a>
+					</td>
+					<td class="press">
+						<button type="button" class="btn-base"><span>button tag</span></button>
+						<a href="#none" class="btn-base"><span>a tag</span></a>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">Primary</th>
+					<td>
+						<button type="button" class="btn-primary"><span>button tag</span></button>
+						<a href="#none" class="btn-primary"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-primary" disabled><span>button tag</span></button>
+						<a href="#none" class="btn-primary disabled"><span>a tag</span></a>
+					</td>
+					<td class="hover">
+						<button type="button" class="btn-primary"><span>button tag</span></button>
+						<a href="#none" class="btn-primary"><span>a tag</span></a>
+					</td>
+					<td class="focus">
+						<button type="button" class="btn-primary"><span>button tag</span></button>
+						<a href="#none" class="btn-primary"><span>a tag</span></a>
+					</td>
+					<td class="press">
+						<button type="button" class="btn-primary"><span>button tag</span></button>
+						<a href="#none" class="btn-primary"><span>a tag</span></a>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">Weak</th>
+					<td>
+						<button type="button" class="btn-weak"><span>button tag</span></button>
+						<a href="#none" class="btn-weak"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-weak" disabled><span>button tag</span></button>
+						<a href="#none" class="btn-weak disabled"><span>a tag</span></a>
+					</td>
+					<td class="hover">
+						<button type="button" class="btn-weak"><span>button tag</span></button>
+						<a href="#none" class="btn-weak"><span>a tag</span></a>
+					</td>
+					<td class="focus">
+						<button type="button" class="btn-weak"><span>button tag</span></button>
+						<a href="#none" class="btn-weak"><span>a tag</span></a>
+					</td>
+					<td class="press">
+						<button type="button" class="btn-weak"><span>button tag</span></button>
+						<a href="#none" class="btn-weak"><span>a tag</span></a>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+<pre class="box-code"><code class="html">
+&lt;button type="button" class="btn-base"&gt;
+	&lt;span&gt;button&lt;/span&gt;
+&lt;/div&gt;
+&lt;button type="button" class="btn-primary"&gt;
+	&lt;span&gt;button&lt;/span&gt;
+&lt;/div&gt;
+&lt;button type="button" class="btn-weak"&gt;
+	&lt;span&gt;button&lt;/span&gt;
+&lt;/div&gt;
+</code>
+</pre>
+
+</section>
+
+<section class="sec-wrap">
+	<h2 class="typo-headline-m">Mix buttons</h2>
+	<p>버튼의 타입, 외형, 색상, 크기의 조합으로 최종 스타일을 정의한다. </p>
+
+	<h3 class="typo-title-m">Mix - Type</h3>
+	<div class="box-guide">
+		<table class="type-noline">
+			<caption class="ui-caption"></caption>
+			<colgroup>
+				<col class="col-th">
+				<col class="col-auto" span="5">
+			</colgroup>
+			<thead>
+				<tr class="typo-title-s">
+					<th scope="col">Type</th>
+					<th scope="col">Enabled</th>
+					<th scope="col">Disabled</th>
+					<th scope="col">Hovered</th>
+					<th scope="col">Focused</th>
+					<th scope="col">Pressed</th>
+				</tr>
+			</thead>
+			<tbody class="ta-c">
+				<tr>
+					<th scope="row">Outlined</th>
+					<td>
+						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-outlined" disabled><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined disabled"><span>a tag</span></a>
+					</td>
+					<td class="hover">
+						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined"><span>a tag</span></a>
+					</td>
+					<td class="focus">
+						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined"><span>a tag</span></a>
+					</td>
+					<td class="press">
+						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined"><span>a tag</span></a>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">Filled</th>
+					<td>
+						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-filled" disabled><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled disabled"><span>a tag</span></a>
+					</td>
+					<td class="hover">
+						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled"><span>a tag</span></a>
+					</td>
+					<td class="focus">
+						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled"><span>a tag</span></a>
+					</td>
+					<td class="press">
+						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled"><span>a tag</span></a>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">Elevated</th>
+					<td>
+						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-elevated" disabled><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated disabled"><span>a tag</span></a>
+					</td>
+					<td class="hover">
+						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated"><span>a tag</span></a>
+					</td>
+					<td class="focus">
+						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated"><span>a tag</span></a>
+					</td>
+					<td class="press">
+						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated"><span>a tag</span></a>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">Text</th>
+					<td>
+						<button type="button" class="btn-mix-text"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-text" disabled><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text disabled"><span>a tag</span></a>
+					</td>
+					<td class="hover">
+						<button type="button" class="btn-mix-text"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text"><span>a tag</span></a>
+					</td>
+					<td class="focus">
+						<button type="button" class="btn-mix-text"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text"><span>a tag</span></a>
+					</td>
+					<td class="press">
+						<button type="button" class="btn-mix-text"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text"><span>a tag</span></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
 
-	<h2 class="h-3">btn-wrap</h2>
-	<p>기본적으로 width값은 flex로 영역안에 채워지며 버튼간의 기본 간격이 있다.</p>
-	<dl class="bul-dot mgt-xs">
-		<div>
-			<dt>.stick</dt> 
-			<dd>버튼의 간격이 없어진다.</dd>
-		</div>
-		<div>
-			<dt>.bottom</dt> 
-			<dd>하단 고정 버튼영역</dd>
-		</div>
-		<div>
-			<dt>.left / .center / .right</dt> 
-			<dd>정렬기준에 따라 위치</dd>
-		</div>
-	</dl>
+	<h3 class="typo-title-m">Mix - Shape</h3>
 	<div class="box-guide">
-		<div class="btn-wrap" style="outline:3px dashed var(--grey03);">
-			<button type="button" class="btn-base-m" disabled><span>button</span></button>
-			<a href="#none" class="btn-base-m"><span>a</span></a>
+		<table class="type-noline">
+			<caption class="ui-caption"></caption>
+			<colgroup>
+				<col class="col-th">
+				<col class="col-auto" span="3">
+			</colgroup>
+			<thead>
+				<tr class="typo-title-s">
+					<th scope="col">Shape</th>
+					<th scope="col">Outlined</th>
+					<th scope="col">Filled</th>
+					<th scope="col">Elevated</th>
+				</tr>
+			</thead>
+			<tbody class="ta-c">
+				<tr>
+					<th scope="row">Rectangle</th>
+					<td>
+						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled"><span>a tag</span></a>
+					</td>
+					<td >
+						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated"><span>a tag</span></a>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">Round</th>
+					<td>
+						<button type="button" class="btn-mix-outlined-round"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined-round"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-filled-round"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled-round"><span>a tag</span></a>
+					</td>
+					<td >
+						<button type="button" class="btn-mix-elevated-round"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated-round"><span>a tag</span></a>
+					</td>
+				</tr>
+
+			</tbody>
+		</table>
+	</div>
+
+	<h3 class="typo-title-m">Mix - Size</h3>
+	<div class="box-guide">
+		<table class="type-noline">
+			<caption class="ui-caption"></caption>
+			<colgroup>
+				<col class="col-th">
+				<col class="col-auto" span="4">
+			</colgroup>
+			<thead>
+				<tr class="typo-title-s">
+					<th scope="col">Size</th>
+					<th scope="col">Outlined</th>
+					<th scope="col">Filled</th>
+					<th scope="col">Elevated</th>
+					<th scope="col">Text</th>
+				</tr>
+			</thead>
+			<tbody class="ta-c">
+				<tr>
+					<th scope="row">Small</th>
+					<td>
+						<button type="button" class="btn-mix-outlined-s"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined-s round"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-filled-s"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled-s round"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-elevated-s"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated-s round"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-text-s"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text-s round"><span>a tag</span></a>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">Regular</th>
+					<td>
+						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined round"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled round"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated round"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-text"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text round"><span>a tag</span></a>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">Large</th>
+					<td>
+						<button type="button" class="btn-mix-outlined-l"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined-l round"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-filled-l"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled-l round"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-elevated-l"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated-l round"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-text-l"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text-l round"><span>a tag</span></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
+	<h3 class="typo-title-m">Mix - Color</h3>
+	<div class="box-guide">
+		<table class="type-noline">
+			<caption class="ui-caption"></caption>
+			<colgroup>
+				<col class="col-th">
+				<col class="col-auto" span="4">
+			</colgroup>
+			<thead>
+				<tr class="typo-title-s">
+					<th scope="col">Color</th>
+					<th scope="col">Outlined</th>
+					<th scope="col">Filled</th>
+					<th scope="col">Elevated</th>
+					<th scope="col">Text</th>
+				</tr>
+			</thead>
+			<tbody class="ta-c">
+				<tr>
+					<th scope="row">Primary</th>
+					<td>
+						<button type="button" class="btn-mix-outlined-primary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined round-primary"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-filled-primary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled round-primary"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-elevated-primary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated round-primary"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-text-primary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text round-primary"><span>a tag</span></a>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">Secondary</th>
+					<td>
+						<button type="button" class="btn-mix-outlined-secondary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined-r-secondary"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-filled-secondary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled-r-secondary"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-elevated-secondary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated-r-secondary"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-text-secondary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text-r-secondary"><span>a tag</span></a>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">Weak</th>
+					<td>
+						<button type="button" class="btn-mix-outlined-tertiary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined-r-tertiary"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-filled-tertiary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled-r-tertiary"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-elevated-tertiary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated-r-tertiary"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-text-tertiary"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text-r-tertiary"><span>a tag</span></a>
+					</td>
+				</tr>
+
+				<tr>
+					<th scope="row">Normal</th>
+					<td>
+						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-outlined-r"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-filled-r"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-elevated-r"><span>a tag</span></a>
+					</td>
+					<td>
+						<button type="button" class="btn-mix-text"><span>button tag</span></button>
+						<a href="#none" class="btn-mix-text-r"><span>a tag</span></a>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+<pre class="box-code"><code class="html">
+&lt;button type="button" class="btn-mix-[type]-[shape]-[size]-[color]"&gt;
+	&lt;span&gt;button&lt;/span&gt;
+&lt;/div&gt;
+[type] : outlined, filled, elevated, text
+[shape] : r
+[size] : s, l
+[color] : primary, secondary, weak
+
+</code>
+</pre>
+
+</section>
+
+<section class="sec-wrap">
+	<h2 class="typo-headline-m">Button wrap</h2>
+	<p>기본적으로 버튼을 감싸는 요소로 사용한다.</p>
+	<div class="box-guide">
+		<div class="wrap-btn" style="outline:3px dashed #E0E0E0">
+			<button type="button" class="btn-mix-outlined-m"><span>default gap</span></button>
+			<a href="#none" class="btn-mix-outlined-m"><span>default gap</span></a>
 		</div>
-		<div class="btn-wrap stick" style="outline:3px dashed var(--grey03);">
-			<button type="button" class="btn-base-m"><span>button</span></button>
-			<a href="#none" class="btn-base-m"><span>a</span></a>
+		<div class="wrap-btn no-gap" style="outline:3px dashed #E0E0E0">
+			<button type="button" class="btn-mix-outlined-m"><span>no gap</span></button>
+			<a href="#none" class="btn-mix-outlined-m"><span>no gap</span></a>
 		</div>
 		<div class="test-bottom">
-			<div class="btn-wrap bottom" style="outline:3px dashed var(--grey03);">
-				<button type="button" class="btn-base-m"><span>button</span></button>
+			<div class="wrap-btn sticky-top" style="outline:3px dashed #E0E0E0">
+				<button type="button" class="btn-mix-outlined-m"><span>sticky top</span></button>
 			</div>
 		</div>
-		<div class="btn-wrap left" style="outline:3px dashed var(--grey03);">
-			<button type="button" class="btn-base-m"><span>button</span></button>
-			<a href="#none" class="btn-base-m"><span>a</span></a>
+		<div class="test-bottom">
+			<div class="wrap-btn sticky-bottom" style="outline:3px dashed #E0E0E0">
+				<button type="button" class="btn-mix-outlined-m"><span>sticky bottom</span></button>
+			</div>
 		</div>
-		<div class="btn-wrap center" style="outline:3px dashed var(--grey03);">
-			<button type="button" class="btn-base-m"><span>button</span></button>
-			<a href="#none" class="btn-base-m"><span>a</span></a>
+		<div class="wrap-btn left" style="outline:3px dashed #E0E0E0">
+			<button type="button" class="btn-mix-outlined-m"><span>align left</span></button>
+			<a href="#none" class="btn-mix-outlined-m"><span>align left</span></a>
 		</div>
-		<div class="btn-wrap right" style="outline:3px dashed var(--grey03);">
-			<button type="button" class="btn-base-m"><span>button</span></button>
-			<a href="#none" class="btn-base-m"><span>a</span></a>
+		<div class="wrap-btn center" style="outline:3px dashed #E0E0E0">
+			<button type="button" class="btn-mix-outlined-m"><span>align center</span></button>
+			<a href="#none" class="btn-mix-outlined-m"><span>align center</span></a>
+		</div>
+		<div class="wrap-btn right" style="outline:3px dashed #E0E0E0">
+			<button type="button" class="btn-mix-outlined-m"><span>align right</span></button>
+			<a href="#none" class="btn-mix-outlined-m"><span>align right</span></a>
 		</div>
 		
 	</div>
 
 <pre class="box-code"><code class="html">
-&lt;div class="btn-wrap"&gt;
-	...
-&lt;/div&gt;
+&lt;div class="wrap-btn"&gt;...&lt;/div&gt;
 
-&lt;div class="btn-wrap stick"&gt;
-	...
-&lt;/div&gt;
+&lt;div class="wrap-btn no-gap"&gt;...&lt;/div&gt;
 
-&lt;div class="btn-wrap bottom"&gt;
-	...
-&lt;/div&gt;
+&lt;div class="wrap-btn sticky-top"&gt;...&lt;/div&gt;
 
-&lt;div class="btn-wrap left"&gt;
-	...
-&lt;/div&gt;
+&lt;div class="wrap-btn sticky-bottom"&gt;...&lt;/div&gt;
 
-&lt;div class="btn-wrap center"&gt;
-	...
-&lt;/div&gt;
+&lt;div class="wrap-btn left"&gt;...&lt;/div&gt;
 
-&lt;div class="btn-wrap right"&gt;
-	...
-&lt;/div&gt;
+&lt;div class="wrap-btn center"&gt;...&lt;/div&gt;
+
+&lt;div class="wrap-btn right"&gt;...&lt;/div&gt;
 </code>
-</pre>
-
-</section>
-
-<section class="sec-wrap">
-	<h2 class="h-2">Size</h2>
-	<h3 class="h-3">small</h3>
-	<p>컨텐츠 안에 들어가는 버튼으로 주로 텍스트와 같이 쓰인다.</p>
-	<div class="box-guide">
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-s"><span>.btn-base-s(button)</span></button>
-			<a href="#none" class="btn-base-s"><span>.btn-base-s(a)</span></a>
-		</div>
-	</div>
-
-	<h3 class="h-3">midium(base)</h3>
-	<p>form안에 들어가는 버튼으로 form 요소들의 높이와 동일하다.</p>
-	<div class="box-guide">
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-m"><span>.btn-base-m(button)</span></button>
-			<a href="#none" class="btn-base-m"><span>.btn-base-m(a)</span></a>
-		</div>
-	</div>
-
-	<h3 class="h-3">large</h3>
-	<p>페이지 하단에 들어가는 버튼으로 페이지 안의 최종단계에 쓰인다.
-	<div class="box-guide">
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-l"><span>.btn-base-l(button)</span></button>
-			<a href="#none" class="btn-base-l"><span>.btn-base-l(a)</span></a>
-		</div>
-	</div>
-
-<pre class="box-code"><code class="html">
-&lt;div class="btn-wrap"&gt;
-	&lt;button class="btn-base-s" type="button"&gt;
-		&lt;span&gt;NAME&lt;/span&gt;
-	&lt;/button&gt;
-	&lt;a class="btn-base-s" href="#none"&gt;
-		&lt;span&gt;NAME&lt;/span&gt;
-	&lt;/a&gt;
-	
-	&lt;button class="btn-base" type="button"&gt;
-		&lt;span&gt;NAME&lt;/span&gt;
-	&lt;/button&gt;
-	&lt;a class="btn-base-s" href="#none"&gt;
-		&lt;span&gt;NAME&lt;/span&gt;
-	&lt;/a&gt;
-
-	&lt;button class="btn-base-l" type="button"&gt;
-		&lt;span&gt;NAME&lt;/span&gt;
-	&lt;/button&gt;
-	&lt;a class="btn-base-s" href="#none"&gt;
-		&lt;span&gt;NAME&lt;/span&gt;
-	&lt;/a&gt;
-&lt;/div&gt;
-</code>
-</pre>
-
-</section>
-
-
-<section class="sec-wrap">
-	<h2 class="h-2">Type</h2>
-	<h3 class="h-3">Text Button</h3>
-	<div class="box-guide">
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-s text"><span>.Btn-base-s(button)</span></button>
-			<a href="#none" class="btn-base-s text"><span>.Btn-base-s(a)</span></a>
-		</div>
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-m text"><span>.Btn-base-m(button)</span></button>
-			<a href="#none" class="btn-base-m text"><span>.Btn-base-m(a)</span></a>
-		</div>
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-l text"><span>.Btn-base-l(button)</span></button>
-			<a href="#none" class="btn-base-l text"><span>.Btn-base-l(a)</span></a>
-		</div>
-	</div>
-
-	<h3 class="h-3">Outline Button(base)</h3>
-	<div class="box-guide">
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-s"><span>.btn-base-s(button)</span></button>
-			<a href="#none" class="btn-base-s"><span>.btn-base-s(a)</span></a>
-		</div>
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-m"><span>.btn-base-m(button)</span></button>
-			<a href="#none" class="btn-base-m"><span>.btn-base-m(a)</span></a>
-		</div>
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-l"><span>.btn-base-l(button)</span></button>
-			<a href="#none" class="btn-base-l"><span>.btn-base-l(a)</span></a>
-		</div>
-	</div>
-
-	<h3 class="h-3">Contained Button</h3>
-	<div class="box-guide">
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-s primary"><span>.btn-base-s(button)</span></button>
-			<a href="#none" class="btn-base-s primary"><span>.btn-base-s(a)</span></a>
-		</div>
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-m primary"><span>.btn-base-m(button)</span></button>
-			<a href="#none" class="btn-base-m primary"><span>.btn-base-m(a)</span></a>
-		</div>
-		<div class="btn-wrap">
-			<button type="button" class="btn-base-l primary"><span>.btn-base-l(button)</span></button>
-			<a href="#none" class="btn-base-l primary"><span>.btn-base-l(a)</span></a>
-		</div>
-	</div>
-
-<pre class="box-code"><code class="html">
-&lt;div class="btn-wrap"&gt;
-	&lt;button class="btn-base text" type="button"&gt;
-		&lt;span&gt;NAME&lt;/span&gt;
-	&lt;/button&gt;
-
-	&lt;button class="btn-base primary" type="button"&gt;
-		&lt;span&gt;NAME&lt;/span&gt;
-	&lt;/button&gt;
-&lt;/div&gt;
-</code>
-</pre>
-
-</section>
-
-
-<section class="sec-wrap">
-	<h2 class="h-2">Icon</h2>
-	<h3 class="h-3">Icon + Text Button</h3>
-	<p>버튼의 기본 스타일에 아이콘 추가 시 사용한다.</p>
-
-	<div class="box-guide">
-		<div class="btn-wrap center">
-			<a href="#none" class="btn-base-s text">
-				<span class="icon-material" data-icon="photo_libray"></span>
-				<span>인쇄하기</span>
-				<span class="icon-material" data-icon="add_to_photos"></span>
-			</a>
-		</div>
-
-		<div class="btn-wrap center">
-			<button type="button" class="btn-base-m">
-				<span class="icon-material" data-icon="print"></span>
-				<span>인쇄하기</span>
-				<span class="icon-material" data-icon="mail_outline"></span>
-			</button>
-		</div>
-
-		<div class="btn-wrap center">
-			<a href="#none" class="btn-base-l primary">
-				<span class="icon-material" data-icon="notifications"></span>
-				<span>인쇄하기</span>
-				<span class="icon-material" data-icon="share"></span>
-			</a>
-		</div>
-	</div>
-
-<pre class="box-code"><code class="html">
-&lt;div class="btn-wrap"&gt;
-	&lt;button class="btn-base" type="button"&gt;
-		&lt;span class="icon-material" data-icon="print"&gt;&lt;/span&gt;
-		&lt;span&gt;인쇄하기&lt;/span&gt;
-		&lt;span class="icon-material" data-icon="print"&gt;&lt;/span&gt;
-	&lt;/button&gt;
-	&lt;a class="btn-base" href="#none"&gt;
-		&lt;span class="icon-material" data-icon="print"&gt;&lt;/span&gt;
-		&lt;span&gt;인쇄하기&lt;/span&gt;
-		&lt;span class="icon-material" data-icon="print"&gt;&lt;/span&gt;
-	&lt;/a&gt;
-&lt;/div&gt;
-</code></pre>
-
-	<h3 class="h-3">Only Icon Button</h3>
-	<div class="box-guide">
-		<button type="button" class="btn-close icon-material" data-icon="close" style=" display: inline-flex; vertical-align: top;">
-			<span class="a11y-hidden">닫기</span>
-		</button>
-
-		<button type="button" class="btn-menu icon-material" data-icon="arrow_forward" style="position: relative !important; top:0 !important; left:0 !important; display: inline-flex;  vertical-align: top;">
-			<span class="a11y-hidden">닫기</span>
-		</button>
-
-		<button type="button" class="btn-grid icon-material" data-icon="grid_on" style="position: relative !important; top:0 !important; left:0 !important; display: inline-flex;  vertical-align: top;">
-			<span class="a11y-hidden">그리드 보기</span>
-		</button>
-
-	</div>
-
-<pre class="box-code"><code class="html">
-&lt;div class="btn-wrap"&gt;
-	&lt;button class="btn-name icon-material" type="button"&gt;
-		&lt;span class="icon-material" data-icon="print"&gt;&lt;/span&gt;
-		&lt;span class="a11y-hidden"&gt;인쇄하기&lt;/span&gt;
-	&lt;/button&gt;
-&lt;/div&gt;
-</code></pre>
 </pre>
 </section>
 

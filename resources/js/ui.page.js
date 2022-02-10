@@ -52,8 +52,8 @@
     netive.page.pageTableScroll = function(){
         netive.table.scroll({
             callback:function(){
-                netive.scrollBar();
-                netive.scrollBar({
+                netive.scrollBar.init();
+                netive.scrollBar.init({
                     selector: doc.querySelector('.ui-scrollbar[data-scroll-id="tblScrollTest1"]')
                 });
 
@@ -67,9 +67,13 @@
         //삭제
     };
 
+    netive.page.pageIcon = function(){
+        //삭제
+    };
+
     netive.page.pageModal = function(){
         const test = doc.querySelector('.test-modal');
-        const btns = test.querySelectorAll('.btn-base');
+        const btns = test.querySelectorAll('.btn-mix-outlined');
 
         for (let i = 0, len = btns.length; i < len; i++) {
             const that = btns[i];
@@ -403,7 +407,7 @@
             }
         }
         function tabCallback2(v){
-            const tab = doc.querySelector('#'+ v.id);
+            const tab = doc.querySelector('.ui-tab[data-id="'+ v.id +'"]');
             const btns = tab.querySelectorAll('.ui-tab-btn');
             const tit = tab.querySelector('.ui-tab-tit');
 
@@ -415,6 +419,11 @@
     netive.page.pageTable = function(){
         netive.table.caption();
     }
+
+    netive.page.pageSelection = function(){
+        //netive.table.caption();
+    }
+
 
     netive.page.pageDraggable = function(){
         netive.draggable.init({

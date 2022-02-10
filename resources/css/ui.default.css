@@ -17,9 +17,16 @@
 	--black:#000000;
 	--white:#FFFFFF;	
 
-	--primary: #6200ee;
-	--secondary: #03dac6;
-	
+	--primary: hsl(265deg 100% 47% / 100%);
+	--primary-hover: hsl(265deg 100% 42% / 100%);
+	--primary-focus: hsl(265deg 100% 42% / 100%);
+	--primary-press: hsl(265deg 100% 37% / 100%);
+	--secondary: hsl(190deg 73% 60% / 100%);
+	--secondary-hover: hsl(190deg 73% 55% / 100%);
+	--secondary-focus: hsl(190deg 73% 55% / 100%);
+	--secondary-press: hsl(190deg 73% 50% / 100%);
+	--tertiary: #ffc0f6;
+
 	--error: #f44336;
 	--success: #3182f6;
 	--link: #6296df;
@@ -31,13 +38,13 @@
 
 	--fs-headline-l: 7.4rem; /* headline-l */
 	--fs-headline-m: 3.2rem; /* headline-m */
-	--fs-headline-s: 2.2rem; /* headline-s */
+	--fs-headline-s: 2.8rem; /* headline-s */
 
-	--fs-title-l: 2.8rem; /* title-l */
-	--fs-title-m: 2.0rem; /* title-m */
-	--fs-title-s: 1.8rem; /* title-s */
+	--fs-title-l: 2rem; /* title-l */
+	--fs-title-m: 1.8rem; /* title-m */
+	--fs-title-s: 1.6rem; /* title-s */
 
-	--fs-label-l: 1.8rem; /* label-l */
+	--fs-label-l: 1.7rem; /* label-l */
 	--fs-label-m: 1.4rem; /* label-m */
 	--fs-label-s: 1.1rem; /* label-s */
 
@@ -46,7 +53,9 @@
 	--fs-body-s: 1.2rem; /* body-s */
 
 	/* etc */
-	--shadow: rgba(0,0,0,0.1);
+	--shadow-light: rgba(0,0,0,0.1);
+	--shadow: rgba(0,0,0,0.3);
+	--shadow-deep: rgba(0,0,0,0.6);
 	--dim: rgba(0,0,0,0.3);
 
 	/* code */
@@ -70,7 +79,7 @@
 	--white:#000;	/*input-bg, box-bg, table-td-bg, button-bg*/
 	--primary: #6200ee; /*button-bg-primary, button-line-primary*/
 	--secondary: #00a661;
-	--weak: #ffdad9;
+	--tertiary: #c8aeed;
 	--error: #f44336;
 	--success: #3182f6;
 	--link: #6296df;
