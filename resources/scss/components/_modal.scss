@@ -1,0 +1,235 @@
+/* modal */
+.scroll-no {
+    overflow: hidden;
+    padding-right: 1.7rem;
+}
+.modal,
+.ui-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 200;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    overflow-y: hidden;
+
+    &.n1{z-index: 201;}
+    &.n2{z-index: 202;}
+    &.n3{z-index: 203;}
+    &.n4{z-index: 204;}
+    &.n5{z-index: 205;}
+    &.n6{z-index: 206;}
+    &.n7{z-index: 207;}
+    &.n8{z-index: 208;}
+    &.ready {
+        display: flex;
+        overflow-y: hidden;
+
+        &[data-scroll="outer"] {
+            overflow-y:auto;
+            background: rgba(0, 0, 0, .5);
+    
+            .ui-modal-dim {
+                opacity: 0 !important;
+                display: none !important;
+            }
+        }
+
+        .ui-modal-dim {
+            content: "";
+            display: block;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            background: rgba(0, 0, 0, .5);
+        }
+    }
+    &.open {
+        .ui-modal-dim {opacity: 1;}
+        .ui-modal-wrap {opacity: 1;}
+    }
+    &.ps-center{
+        justify-content: center;
+        align-items: center;
+
+        &.is-over {align-items: flex-start;}
+        &.is-over .ui-modal-wrap {margin: $x3 0;}
+    }
+    &.ps-top {
+        justify-content: center;
+        align-items: flex-start;
+        overflow: hidden;
+
+        .ui-modal-wrap {margin-top: $x1;}
+    }
+    &.ps-bottom {
+        justify-content: center;
+        align-items: flex-end;
+        overflow: hidden;
+
+        .ui-modal-wrap {margin-bottom: $x1; }
+    }
+
+    &-wrap {
+        max-width: 90rem;
+        opacity: 0;
+        box-shadow: 0 $x1 $x2 rgba(0, 0, 0, 0.5);
+        position: relative;
+        z-index: 1;
+        margin: $x3;
+        background: $white;
+    }
+    &-header {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        min-height: 4rem;
+        padding: $x2 $x4 $x2 $x2;
+        background: $gray900;
+        border-bottom: $white;
+    
+        .ui-modal-tit {
+            font-weight: 500;
+            font-size: 1.6rem;
+            color: $white;
+        }
+    
+        .icon-close {
+            position: absolute;
+            right: $x1;
+            top: $x1;
+            border: 0;
+            font-family: 'Material Icons';
+            color: $white;
+        }
+    }
+    &-body {
+        position: relative;
+        margin-top: 0;
+        padding: $x3;
+        background: $white;
+    }
+    &-footer {
+        position: relative;
+        margin-top: 0;
+        padding: 0 $x3 $x3;
+        background: $white;
+    
+        .wrap-group { margin: 0;}
+    }
+    /* style - full */
+    &.type-full {
+        .ui-modal-wrap {
+            margin: 0;
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+    /* style - system */
+    &.type-system {
+        .ui-modal-wrap {
+            width: auto;
+            text-align: center;
+            font-size: 1.4rem;
+    
+            strong {font-weight: 900;}
+        }
+        .ui-modal-body,
+        .ui-modal-footer {
+            max-width:100% !important;
+            background: $primary;
+            color: $black;
+        }
+    }
+    /*effect*/
+    &.ready {
+        &.open {
+            @include modalEffect($eff:fadeIn);
+            &.ps-center.type-system .ui-modal-wrap {@include modalEffect($eff:slideDownIn);}
+            &.ps-center.type-full .ui-modal-wrap {@include modalEffect($eff:slideUpIn);}
+            &.ps-center .ui-modal-wrap {@include modalEffect($eff:scaleIn);}
+            &.ps-top .ui-modal-wrap {@include modalEffect($eff:slideDownIn);}
+            &.ps-bottom .ui-modal-wrap {@include modalEffect($eff:slideUpIn);}
+        }
+        &.close {
+            @include modalEffect($eff:fadeOut);
+            &.ps-center.type-system .ui-modal-wrap {@include modalEffect($eff:slideDownOut);}
+            &.ps-center.type-full .ui-modal-wrap {@include modalEffect($eff:slideUpOut);}
+            &.ps-center .ui-modal-wrap {@include modalEffect($eff:scaleOut);}
+            &.ps-top .ui-modal-wrap {@include modalEffect($eff:slideDownOut);}
+            &.ps-bottom .ui-modal-wrap {@include modalEffect($eff:slideUpOut);}
+        }
+    }
+}
+//ui-modal device mobile
+.ui-m {
+    .scroll-no {
+        overflow: hidden;
+        padding-right: 0;
+    }
+    
+    .ui-modal-wrap { margin: 2rem;}
+    .ui-modal.ps-top .ui-modal-wrap {margin-top: 0;}
+    .ui-modal.ps-bottom .ui-modal-wrap {margin-bottom: 0;}
+    
+    .ui-modal.type-full.ps-center {
+        justify-content: center;
+        align-items: flex-start;
+    }
+    
+    .ui-modal.type-full .ui-modal-wrap {
+        margin: 0;
+        width: 100%;
+        height: auto;
+        min-height: 100%;
+        position: relative;
+        left: 0;
+        top: auto;
+        bottom: -10vh;
+        transition: opacity 0.2s ease-in, bottom 0.2s ease-in;
+        overflow: hidden;
+        border-radius: 0;
+        opacity: 0;
+    }
+    
+    .ui-modal.open.type-full .ui-modal-wrap {
+        bottom: 0;
+        opacity: 1;
+        top: auto;
+    }
+    
+    .ui-modal-footer {padding: $x1 $x2;}
+    .ui-modal.ps-top .ui-modal-wrap,
+    .ui-modal.ps-bottom .ui-modal-wrap {margin: 0;}
+    .ui-modal.open.ps-top .ui-modal-wrap {top: 0;}
+    .ui-modal.open.ps-bottom .ui-modal-wrap {bottom: 0;}
+    .ui-modal.ps-center.is-over .ui-modal-wrap {margin: 0;}
+}
+//ui-modal document size
+.size-mobile {
+    .ps-bottom,
+    .ps-top,
+    .type-full-mobile {
+        .ui-modal-wrap {
+            margin: 0;
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+}
+.ie9 .ui-modal.open {
+    display: block;
+
+    .ui-modal-wrap {
+        opacity: 1;
+        margin: 0 auto;
+        transform: translate(0, -50%);
+        top: 50%
+    }
+}

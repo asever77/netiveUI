@@ -1,31 +1,27 @@
 ;(function(win, doc, undefined) {
-    console.log('page.js');
+    // console.log('page.js');
 
     'use strict';
 
-    console.log('page ready after');
+    // console.log('page ready after');
     netive.common.init();  
-
+    netive.page.pageGuide1 = function(){};
     netive.page.pageInputPlaceholder = function(){};
-    
     netive.page.pageInnerLabel = function(){
-        netive.form.init();
-        netive.select.init();
-        netive.form.init();
+        // netive.form.init();
+        // netive.select.init();
+        // netive.form.init();
+        netive.tooltip.init();
     };
-
     netive.page.pageColor = function(){};
     netive.page.pageUnits = function(){};
     netive.page.pagePlaceholder = function(){};
     netive.page.pageNaming = function(){};
     netive.page.pageMargin = function(){};
-    netive.page.pageIntroduction = function(){
-        netive.table.caption();
-    };
+    netive.page.pageIntroduction = function(){};
     netive.page.pageDevice = function(){};
     netive.page.pageTypography = function(){};
     netive.page.pageLayout = function(){};
-
     netive.page.pageLoading = function(){
         netive.loading.show();
         netive.loading.show();
@@ -33,47 +29,34 @@
         netive.loading.show();
         netive.loading.hide();
     };
-
     netive.page.pageButton = function(){};
     netive.page.pageBulletList = function(){};
-
-    netive.page.pagePrint = function(){
-        //삭제
-    };
-
-    netive.page.pageTableCaption = function(){
-        netive.table.caption();
-    };
-
+    netive.page.pagePrint = function(){};
+    netive.page.pageTableCaption = function(){};
     netive.page.pageTableCellFix = function(){
         netive.table.fixTd();
     };
-
     netive.page.pageTableScroll = function(){
         netive.table.scroll({
             callback:function(){
                 netive.scrollBar.init();
                 netive.scrollBar.init({
-                    selector: doc.querySelector('.ui-scrollbar[data-scroll-id="tblScrollTest1"]')
+                    selector: 'tblScrollTest1'
                 });
-
-                const wrap = doc.querySelector('.ui-scrollbar[data-scroll-id="tblScrollTest1"]').closest('.ui-tablescroll');
-                wrap.querySelector('.ui-tablescroll-clone').classList.add('aa')
             }
         });
     };
+    netive.page.pageTime = function(){
+        console.log('time')
+        netive.inputTime.init();
 
-    netive.page.pageBrickList = function(){
-        //삭제
+
     };
-
-    netive.page.pageIcon = function(){
-        //삭제
-    };
-
+    netive.page.pageBrickList = function(){};
+    netive.page.pageIcon = function(){};
     netive.page.pageModal = function(){
         const test = doc.querySelector('.test-modal');
-        const btns = test.querySelectorAll('.btn-mix-outlined');
+        const btns = test.querySelectorAll('.btn-base');
 
         for (let i = 0, len = btns.length; i < len; i++) {
             const that = btns[i];
@@ -83,14 +66,17 @@
         function modalShow() {
             const btn = this;
 
+            console.log(btn.getAttribute('modal-scroll'));
+
             netive.modal.show({ 
                 id: btn.getAttribute('modal-id'), 
-                ps: btn.getAttribute('modal-ps') === undefined ? 'center' : btn.getAttribute('modal-ps'), 
-                src: btn.getAttribute('modal-src') === undefined ? false : btn.getAttribute('modal-src'), 
-                full: btn.getAttribute('modal-mobilefull') === undefined ? false : btn.getAttribute('modal-mobilefull') === 'true' && true, 
-                width: btn.getAttribute('modal-width') === undefined ? false : btn.getAttribute('modal-width'), 
-                height: btn.getAttribute('modal-height') === undefined ? false : btn.getAttribute('modal-height'), 
-                innerScroll : btn.getAttribute('modal-scroll') === undefined ? false : btn.getAttribute('modal-scroll') === 'true' && true, 
+                ps: !btn.getAttribute('modal-ps') ? 'center' : btn.getAttribute('modal-ps'), 
+                src: !btn.getAttribute('modal-src') ? false : btn.getAttribute('modal-src'), 
+                full: !btn.getAttribute('modal-full') ? false : btn.getAttribute('modal-full'), 
+                width: !btn.getAttribute('modal-width') ? false : btn.getAttribute('modal-width'), 
+                height: !btn.getAttribute('modal-height') ? false : btn.getAttribute('modal-height'), 
+                scroll : !btn.getAttribute('modal-scroll') ? 'inner' : btn.getAttribute('modal-scroll'), 
+
                 callbackClose: function(v) { 
                     console.log('close callback', v); 
                 },
@@ -184,6 +170,10 @@
 
     netive.page.pageTooltip = function(){
         netive.tooltip.init();
+
+  
+        
+
     }
 
     netive.page.pageToast = function(){
@@ -205,6 +195,10 @@
     
         netive.rangeSlider.init({
             id : 'range4'
+        });
+
+         netive.rangeSlider.init({
+            id : 'range22'
         });
     }
 
@@ -255,51 +249,76 @@
     }
 
     netive.page.pageParallax = function(){
-        netive.scroll.parallax({
+
+       
+        netive.parallax.init({
             callback:function(v) {
                console.log(v);
             }
         });
 
         netive.callback.parallax01 = function(opt){
-            const el = opt.el;
-            const n = opt.n;
-            
-            el.style.opacity = n;
-            el.style.transform = 'translate('+ ((100 - n * 100).toFixed(2)) +'% ,0)'
+            if (document.querySelector('#uiJsName').value !== 'pageParallax') {
+                return false;
+            }
+            document.querySelector('#parallax1-1').textContent = opt.per_s;
+            document.querySelector('#parallax1-3').textContent = opt.per_e;
+            document.querySelector('#parallax1-2').textContent = opt.px;
+
+           
+            if (opt.per_e > 0) {
+                opt.el.querySelector('b').style.transform = 'translate(-'+ opt.per_e +'vw, 0)';
+            } else {
+                opt.el.querySelector('b').style.transform = 'translate('+ (100 - opt.per_s) +'vw, 0)';
+            }
+
         }
+
         netive.callback.parallax02 = function(opt){
-            const el = opt.el;
-            const n = opt.n;
+
+            if (document.querySelector('#uiJsName').value !== 'pageParallax') {
+                return false;
+            }
+            document.querySelector('#parallax2-1').textContent = opt.per_s;
+            document.querySelector('#parallax2-3').textContent = opt.per_e;
+            document.querySelector('#parallax2-2').textContent = opt.px;
             
-            el.style.opacity = n;
-            el.style.transform = 'translate('+ ((100 - n * 100).toFixed(2) * -1) +'% ,0)'
+            if (opt.per_e > 0) {
+                opt.el.querySelector('b').style.transform = 'translate(-'+ opt.per_e +'vw, '+ opt.per_e +'vh)';
+            } else {
+                opt.el.querySelector('b').style.transform = 'translate('+ (100 - opt.per_s) +'vw, -'+ (100 - opt.per_s) +'vh)';
+            }
         }
         netive.callback.parallax03 = function(opt){
-            const el = opt.el;
-            const n = opt.n;
-            
-            el.style.opacity = n;
+            if (document.querySelector('#uiJsName').value !== 'pageParallax') {
+                return false;
+            }
+            document.querySelector('#parallax3-1').textContent = opt.per_s;
+            document.querySelector('#parallax3-3').textContent = opt.per_e;
+            document.querySelector('#parallax3-2').textContent = opt.px;
+           
         }
         netive.callback.parallax04 = function(opt){
-            const el = opt.el;
-            const n = opt.n;
+            if (document.querySelector('#uiJsName').value !== 'pageParallax') {
+                return false;
+            }
+            document.querySelector('#parallax4-1').textContent = opt.per_s;
+            document.querySelector('#parallax4-3').textContent = opt.per_e;
+            document.querySelector('#parallax4-2').textContent = opt.px;
             
-            el.style.opacity = n;
-            el.style.transform = 'translate('+ ((100 - n * 100).toFixed(2)) +'% ,0)'
+          
         }
         netive.callback.parallax05 = function(opt){
-            const el = opt.el;
-            const n = opt.n;
+            if (document.querySelector('#uiJsName').value !== 'pageParallax') {
+                return false;
+            }
+            document.querySelector('#parallax5-1').textContent = opt.per_s;
+            document.querySelector('#parallax5-3').textContent = opt.per_e;
+            document.querySelector('#parallax5-2').textContent = opt.px;
             
-            el.style.opacity = n;
+           
         }
-        netive.callback.parallax06 = function(opt){
-            const el = opt.el;
-            const n = opt.n;
-            
-            el.style.opacity = n;
-        }
+
     }
 
     netive.page.pagePopupBook = function(){
@@ -314,6 +333,15 @@
         // });
 
         netive.scrollBar.init();
+
+        netive.scrollBar.init({
+            selector: 'scrollCallbackTest',
+            infiniteCallback: function(){
+                console.log('end act!!!!!!!!!!');
+                alert('끝까지 왔죠');
+            }
+        });
+
     }
 
     netive.page.pageJsonCodingList = function(){
@@ -358,16 +386,32 @@
         // netive.count.step({ id:'exeCount1', value: 12345.678 });
         // netive.count.slot({ id:'exeCount2', value: 12345.678 });
     }
+    netive.page.pageButton = function(){
+        console.log('button')
+  
 
+    }
     netive.page.pageDropdown = function(){
-        const dropchange = doc.querySelector('.drop-ps-change');
+        const dropchanges = doc.querySelectorAll('input[name="dropPs"]');
+        const drop = doc.querySelector('#uiDrop1');
 
-        dropchange.addEventListener('change', function(){
-            const wrap = this.closest('.box-guide');
-            const drop = wrap.querySelector('.ui-drop');
+        // dropchanges.forEach(element => {
+        //     element.addEventListener('change', function(){
+        //         drop.dataset.ps = this.value;
+        //         drop.textContent = 'dropdown (' + this.value + ')'; 
+        //         console.log(this.value)
+        //     });
+        // });
 
-            drop.dataset.ps = this.value;
+        dropchanges.forEach(function(element) {
+            element.addEventListener('change', function(){
+                drop.dataset.ps = this.value;
+                drop.textContent = 'dropdown (' + this.value + ')'; 
+                console.log(this.value)
+            });
         });
+
+      
     
         netive.dropdown.init({ 
             id:'uiDrop1', 
@@ -375,10 +419,12 @@
             src:'../html/components/dropdown_ajax.html',
             dropExpanded: true,
             callback: function(){
+
                 netive.tab.init({ 
                     id: 'exeTab1', 
                     current:0 
                 });
+
                 netive.dropdown.init({ 
                     id:'uiDrop5', 
                     ps:'RB',
@@ -392,16 +438,18 @@
         netive.tab.init({ 
             id:'exeTab1', 
             current: 0, 
-            effect: 'eff-fade',
             callback:tabCallback 
         });
 
         function tabCallback(v){
+            console.log(v);
+
             if (v.current === 0) {
+                
                 netive.tab.init({ 
                     id:'exeTab4', 
                     current:5, 
-                    onePanel:true,
+                    dynamic:true,
                     callback:tabCallback2 
                 });
             }
@@ -417,7 +465,7 @@
     }
 
     netive.page.pageTable = function(){
-        netive.table.caption();
+       
     }
 
     netive.page.pageSelection = function(){
@@ -445,26 +493,26 @@
     }
 
     netive.page.pageAccordion = function(){
-        console.log('page.js-acco');
+        // console.log('page.js-acco');
+        netive.accordion.init({ 
+            id:'exeAcco2', 
+            current: [0], 
+            autoclose: true,
+            callback: function(v){
+                console.log('callback2: ', v);
+            } 
+        });
 
         netive.accordion.init({ 
             id:'exeAcco1', 
-            current:[0], 
+            current: [0,2], 
             autoclose:false,
             callback:function(v){
-                console.log(v);
+                console.log('callback1: ', v);
             } 
         });
 
-        netive.accordion.init({ 
-            id:'exeAcco2', 
-            current:[0], 
-            autoclose:false,
-            callback:function(v){
-                console.log(v);
-            } 
-        });
-
+       
 
         let add_html = '';
 
@@ -482,20 +530,41 @@
         const add = doc.querySelector('#uiAccoAdd');
         
         add.addEventListener('click', function(){
-            const exe = doc.querySelector('#exeAcco1');
+            const exe = doc.querySelector('.ui-acco[data-id="exeAcco1"]');
 
             exe.insertAdjacentHTML('beforeend', add_html);
 
             netive.accordion.init({ 
                 id: 'exeAcco1', 
-                add: true,
-                callback: function(){console.log('callback')} 
+                callback: function(){console.log('callback3')} 
             });
         });
 
     }
     
-    netive.page.pageDatePicker = function(){};
+    netive.page.pageDatePicker = function(){
+        // id="uiDate_view" 
+		// value="2021-11-05" 
+		// min="2020-12-05" 
+		// max="2022-05-20" 
+		// title="시작일"
+        netive.datepicker.week = ['일', '월', '화', '수', '목', '금', '토', '년', '월', '일'];
+        netive.datepicker.isFooter = false;
+        netive.datepicker.init();
+        // const datepickerView1 = document.querySelector('#uiDate_view');
+        // netive.datepicker.init({
+        //     id: datepickerView1.id,
+        //     area: datepickerView1.closest('.ui-datepicker'),
+        //     date: datepickerView1.value,
+        //     min: datepickerView1.min,
+        //     max: datepickerView1.max,
+        //     title: datepickerView1.title,
+        //     visible: true,
+        //     callback: function(){
+        //         console.log('callback init')
+        //     }
+        // });
+    };
 
     netive.page.capture = function(){
         //삭제

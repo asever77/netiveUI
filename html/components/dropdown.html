@@ -1,40 +1,111 @@
 <input type="hidden" id="uiJsName" value="pageDropdown">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Dropdown</h1>
+	<h1 class="tit-l">Dropdown</h1>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Examples</h2>
+<article class="wrap-article">
+	<h2 class="tit-m">Examples</h2>
 
 	<div class="box-guide ta-c">
-		<div class="ui-select">
-			<select class="drop-ps-change" title="정렬선택" id="testPs1">
-				<option>Test 위치 선택</option>
-				<option value="TL">상단 좌측정렬</option>
-				<option value="TC">상단 중앙정렬</option>
-				<option value="TR">상단 우측정렬</option>
-				<option value="BL">하단 좌측정렬</option>
-				<option value="BC">하단 중앙정렬</option>
-				<option value="BR">하단 우측정렬</option>
-				<option value="RT">우측 상단정렬</option>
-				<option value="RM">우측 중앙정렬</option>
-				<option value="RB">우측 하단정렬</option>
-				<option value="LT">좌측 상단정렬</option>
-				<option value="LM">좌측 중앙정렬</option>
-				<option value="LB">좌측 하단정렬</option>
-			</select>
+
+		<div class="form-wrap mb-x2" data-type="row">
+			<div class="form-item-rowgroup">
+				<div class="form-item">
+					<div class="form-head">
+						<div class="form-title">
+							<span class="form-label">정렬선택</span>
+						</div>
+					</div>
+					<div class="form-body">
+						<div class="form-info">
+							<div class="bul-info">
+								<div>T:top, B:bottom, L:left, R:right, S:start, C:center, E:end</div>
+							</div>
+						</div>
+						<div class="form-group" data->
+							<div class="form-input">
+								<input type="radio" id="dropPs_tl" name="dropPs" value="TS">
+								<label for="dropPs_tl" class="lb-radio">T - S</label>
+							</div>
+							<div class="form-input">
+								<input type="radio" id="dropPs_tc" name="dropPs" value="TC">
+								<label for="dropPs_tc" class="lb-radio">T - C</label>
+							</div>
+							<div class="form-input">
+								<input type="radio" id="dropPs_tr" name="dropPs" value="TE">
+								<label for="dropPs_tr" class="lb-radio">T - E</label>
+							</div>
+				
+							<div class="form-input ">
+								<input type="radio" id="dropPs_bl" name="dropPs" value="BS" checked>
+								<label for="dropPs_bl" class="lb-radio">B - S</label>
+							</div>
+							<div class="form-input">
+								<input type="radio" id="dropPs_bc" name="dropPs" value="BC">
+								<label for="dropPs_bc" class="lb-radio">B - C</label>
+							</div>
+							<div class="form-input">
+								<input type="radio" id="dropPs_br" name="dropPs" value="BE">
+								<label for="dropPs_br" class="lb-radio">B - E</label>
+							</div>
+						
+							<div class="form-input">
+								<input type="radio" id="dropPs_rt" name="dropPs" value="RS">
+								<label for="dropPs_rt" class="lb-radio">R - S</label>
+							</div>
+							<div class="form-input">
+								<input type="radio" id="dropPs_rm" name="dropPs" value="RC">
+								<label for="dropPs_rm" class="lb-radio">R - C</label>
+							</div>
+							<div class="form-input">
+								<input type="radio" id="dropPs_rb" name="dropPs" value="RE">
+								<label for="dropPs_rb" class="lb-radio">R - E</label>
+							</div>
+					
+							<div class="form-input">
+								<input type="radio" id="dropPs_lt" name="dropPs" value="LS">
+								<label for="dropPs_lt" class="lb-radio">L - S</label>
+							</div>
+							<div class="form-input">
+								<input type="radio" id="dropPs_lm" name="dropPs" value="LC">
+								<label for="dropPs_lm" class="lb-radio">L - C</label>
+							</div>
+							<div class="form-input">
+								<input type="radio" id="dropPs_lb" name="dropPs" value="LE">
+								<label for="dropPs_lb" class="lb-radio">L - E</label>
+							</div>
+						
+							
+							<div class="form-input">
+								<input type="radio" id="dropPs_cc" name="dropPs" value="CC">
+								<label for="dropPs_cc" class="lb-radio">C - C</label>
+							</div>
+							
+					
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-		<button type="button" class="btn-mix-outlined ui-drop mgt-x2" id="uiDrop1"><span>dropdown</span></button>
+
+		<div style="padding:30rem; position: relative; background-color: #fbfbfb;">
+			<guide></guide>
+			<button type="button" class="ui-drop btn-base" id="uiDrop1"><span>dropdown (BS)</span></button>
+		</div>
+	
+		
 	</div>
 
-</section>
+</article>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Source Code</h2>
-	<h3 class="typo-title-m">HTML</h3>
+<article class="wrap-article">
+	<h2 class="tit-m">Source Code</h2>
+		<section class="wrap-section">
+		<h3 class="tit-s">HTML</h3>
+
 <pre class="box-code"><code class="html">
-&lt;button type="button" class="btn-mix-outlined ui-drop" id="uiDrop1"&gt;
+&lt;button type="button" class="ui-drop" id="uiDrop1"&gt;
 	&lt;span&gt;dropdown&lt;/span&gt;
 &lt;/button&gt;
 
@@ -45,9 +116,11 @@
 	&lt;button type="button" class="ui-drop-close icon-close"&gt;&lt;span class="hide"&gt;닫기&lt;/span&gt;&lt;/button&gt;
 &lt;/section&gt;
 </code></pre>
-		
-	<h3 class="typo-title-m">Javascript</h3>
-	<h4 class="typo-title-m">netive.dropdown.init</h4>
+	</section>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">Javascript</h3>
+		<h4 class="tit-xs">netive.dropdown.init</h4>
 <pre class="box-code"><code class="javascript">
 netive.dropdown.init({ 
 	id:'uiDrop1', 
@@ -60,157 +133,147 @@ netive.dropdown.init({
 });
 </code></pre>
 
-	<div class="tbl-base type-option mgt-x2">
-		<table>
-			<caption>
-				<strong>dropdown 기본 옵션</strong>
-				<span class="ui-caption"></span>
-			</caption>
-			<colgroup>
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-auto">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">Options</th>
-					<th scope="col">Type</th>
-					<th scope="col">Default</th>
-					<th scope="col">Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="nec">
-					<th scope="row">id:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>(필수) ui-drop의 아이디명 기입</td>
-				</tr>
-				<tr>
-					<th scope="row">ps:</th>
-					<td>[string]</td>
-					<td>'BL'</td>
-					<td>총 12가지 위치 설정
-						<ul>
-						<li>TL : 상단 좌측정렬</li>
-						<li>TC : 상단 중앙정렬</li>
-						<li>TR : 상단 우측정렬</li>
-						<li>BL : 하단 좌측정렬</li>
-						<li>BC : 하단 중앙정렬</li>
-						<li>BR : 하단 우측정렬</li>
-						<li>RT : 우측 상단정렬</li>
-						<li>RM : 우측 중앙정렬</li>
-						<li>RB : 우측 하단정렬</li>
-						<li>LT : 좌측 상단정렬</li>
-						<li>LM : 좌측 중앙정렬</li>
-						<li>LB : 좌측 하단정렬</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">hold:</th>
-					<td>[boolean]</td>
-					<td>true</td>
-					<td>포커스 홀드 여부
-						<ul>
-							<li>true : 'hold' 포커스 홀드</li>
-							<li>false : 'sense' 포커스 벗어날 때 자동으로 닫힘</li>
-						</ul>
-					</td>
-				</tr>
+		<div class="tbl-base type-option mt-x2">
+			<table>
+				<caption>
+					<strong>dropdown 기본 옵션</strong>
+					<span class="ui-caption"></span>
+				</caption>
+				<colgroup>
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-auto">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">Options</th>
+						<th scope="col">Type</th>
+						<th scope="col">Default</th>
+						<th scope="col">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="nec">
+						<th scope="row">id:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>(필수) ui-drop의 아이디명 기입</td>
+					</tr>
+					<tr>
+						<th scope="row">ps:</th>
+						<td>[string]</td>
+						<td>'BS'</td>
+						<td>4(상단, 하단, 왼쪽, 오른쪽) * 3(시작, 중간, 끝)의 조합으로 12가지 위치 설정<br>
+							{T | B | R | L} + {S | C | E} or CC
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">hold:</th>
+						<td>[boolean]</td>
+						<td>true</td>
+						<td>포커스 홀드 여부
+							<ul>
+								<li>true : 'hold' 포커스 홀드</li>
+								<li>false : 'sense' 포커스 벗어날 때 자동으로 닫힘</li>
+							</ul>
+						</td>
+					</tr>
 
-				<tr>
-					<th scope="row">area:</th>
-					<td>[string][object]</td>
-					<td>$('body')</td>
-					<td>Ajax로 파일을 불러올 위치<br>
-						'id' or $('#id')</td>
-				</tr>
-				<tr>
-					<th scope="row">src:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>Ajax로 파일을 불러올 url경로</td>
-				</tr>
-				<tr>
-					<th scope="row">offset:</th>
-					<td>[boolean]</td>
-					<td>false</td>
-					<td>드롭다운 콘텐츠의 위치에 따라 설정
-						<ul>
-							<li>true : 위치값 절대값(offset)</li>
-							<li>false : 위치값 상대값(position)</li>
-						</ul>
-					</td>
-				</tr>
+					<tr>
+						<th scope="row">area:</th>
+						<td>[object]</td>
+						<td>doc.querySelector('body')</td>
+						<td>
+							Ajax로 파일을 불러올 위치<br>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">src:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>Ajax로 파일을 불러올 url경로</td>
+					</tr>
+					<tr>
+						<th scope="row">offset:</th>
+						<td>[boolean]</td>
+						<td>false</td>
+						<td>드롭다운 콘텐츠의 위치에 따라 설정
+							<ul>
+								<li>true : 위치값 절대값(offset)</li>
+								<li>false : 위치값 상대값(position)</li>
+							</ul>
+						</td>
+					</tr>
 
-				<tr>
-					<th scope="row">openback:</th>
-					<td>[function]</td>
-					<td>false</td>
-					<td>오픈 시 콜백</td>
-				</tr>
-				<tr>
-					<th scope="row">closeback:</th>
-					<td>[function]</td>
-					<td>false</td>
-					<td>닫을 시 콜백</td>
-				</tr>
-				
-				
-			</tbody>
-		</table>
-	</div>
+					<tr>
+						<th scope="row">callback:</th>
+						<td>[function]</td>
+						<td>false</td>
+						<td>오픈 시 콜백</td>
+					</tr>
+					<tr>
+						<th scope="row">closeback:</th>
+						<td>[function]</td>
+						<td>false</td>
+						<td>닫을 시 콜백</td>
+					</tr>
+					
+					
+				</tbody>
+			</table>
+		</div>
 
-	<h4 class="typo-title-m">netive.dropdown.toggle</h4>
-<pre class="box-code">,<code class="javascript">
+	<h4 class="tit-xs mt-x3">netive.dropdown.toggle</h4>
+<pre class="box-code">
+<code class="javascript">
 netive.dropdown.toggle({ 
 	id:'uiDrop1',
 	state: 'open' 
 });
 </code>
 </pre>
-	<div class="tbl-base type-option">
-		<table>
-			<caption>
-				<strong>dropdown 기본 옵션</strong>
-				<span class="ui-caption"></span>
-			</caption>
-			<colgroup>
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-auto">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">Options</th>
-					<th scope="col">Type</th>
-					<th scope="col">Default</th>
-					<th scope="col">Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="nec">
-					<th scope="row">id:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>(필수) ui-drop의 아이디명 기입</td>
-				</tr>
-				
-				<tr>
-					<th scope="row">state:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>
-						<ul>
-							<li>'open' : 열림</li>
-							<li>'close' : 닫힘</li>
-						</ul>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</section>
+		<div class="tbl-base type-option">
+			<table>
+				<caption>
+					<strong>dropdown 기본 옵션</strong>
+					<span class="ui-caption"></span>
+				</caption>
+				<colgroup>
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-auto">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">Options</th>
+						<th scope="col">Type</th>
+						<th scope="col">Default</th>
+						<th scope="col">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="nec">
+						<th scope="row">id:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>(필수) ui-drop의 아이디명 기입</td>
+					</tr>
+					
+					<tr>
+						<th scope="row">state:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>
+							<ul>
+								<li>'open' : 열림</li>
+								<li>'close' : 닫힘</li>
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+</article>

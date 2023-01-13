@@ -1,0 +1,121 @@
+
+/* 
+* font display 
+* dsp-l, dsp-m, dsp-s
+*/
+.dsp {
+    &-l{
+        font-size: 10rem;
+        font-weight: 400;
+        line-height: 1.2;
+    }
+    &-m{
+        font-size: 8rem;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+    &-s{
+        font-size: 6rem;
+        font-weight: 900;
+        line-height: 1.2;
+    }
+}
+/* 
+* font title 
+* tit-l, tit-m, tit-s, tit-xs
+*/
+.tit{
+    &-l {
+        font-size: 7.2rem;
+        font-weight: 100;
+        line-height: 1.2;
+    }
+    &-m {
+        font-size: 3.4rem;
+        font-weight: 200;
+        line-height: 1.2;
+    }
+    &-s {
+        font-size: 2.2rem;
+        font-weight: 700;
+        line-height: 1.2;
+    }
+    &-xs {
+        font-size: 1.8rem;
+        font-weight: 700;
+        line-height: 1.2;
+    } 
+}
+/* 
+* font text 
+* txt-l, txt-m, txt-s
+*/
+.txt{
+    &-l {
+        font-size: 1.6rem;
+        font-weight: 700;
+    }
+    &-m {
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+    &-s {
+        font-size: 1.2rem;
+        font-weight: 400;
+    }
+}
+
+.wrap-article {
+    .tit-m{margin-bottom:$x2}
+}
+.wrap-section {
+    .tit-s{margin-bottom:$x1}
+}
+
+.tit-wrap {
+	padding: 16rem 0 12rem;
+
+	.tit-l {
+		position: relative;
+        text-transform: uppercase;
+        word-break: break-all;
+    }
+	p {
+		margin: 1.6rem 0 0;
+		padding: .8rem;	
+		font-size:1.4rem;
+	}
+}
+
+/* guide box */
+.box-code {
+	width: 100%;
+	margin: 1rem 0 0;
+	padding: 1rem 3rem 3rem;
+	line-height: 0;
+	overflow:auto;
+	background-color:$gray100;
+
+    code {
+        font-family: 'Source Code Pro';
+        font-weight: 400;
+        display: block;
+        width:100%;
+        line-height: 1.8;
+        font-size: 1.4rem;
+        color:$gray900;
+        tab-size: 2;
+        
+        b {font-weight: 500;}
+    }
+}
+.box-guide{
+	width:100%;
+	position: relative;
+	padding:2rem;
+	border-radius:0.4rem;
+	margin:1rem 0;
+	box-shadow: 0 0.3rem 0.3rem rgba(0,0,0,0.1);
+	background:$white;
+	border:1px solid $gray100;
+}

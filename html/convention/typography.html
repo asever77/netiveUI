@@ -1,0 +1,167 @@
+<input type="hidden" id="uiJsName" value="pageTypography">
+
+<div class="tit-wrap">
+	<h1 class="tit-l">Typography</h1>
+</div>
+
+<article class="wrap-article">
+	<h2 class="tit-m">Typography tokens</h2>
+	<p>국문: Pretendard, 영문: Mulish, 숫자: RobotoMono</p>
+	<div class="tbl-base type-discription tbody-stripes mt-x2">
+		<table>
+			<caption></caption>
+			<colgroup>
+				<col style="width:auto">
+				<col style="width:430px">
+				<col style="width:80px">
+				<col style="width:100px">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col" colspan="2">Role</th>
+					<th scope="col">Class</th>
+					<th scope="col">Size</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="colgroup" rowspan="3">
+						<b class="tit-xxs">Display Typography</b><br>
+						<span class="txt-s ">화면에서 가장 큰 텍스트로 스타일적인 요소가 필요한 배경위에 사용하는 제목 텍스트나 페이지에서 가장 중요한 메세지 전달이 필요한 경우 사용하는 텍스트 분류이다. <br>
+						예) main hero banner, main slogan, banner, event
+					</span>
+					</th>
+					<th scope="row">
+						<span class="dsp-l" contenteditable="true">Display</span>
+					</th>
+					<td>.dsp-l</td>
+					<td>100px / 400</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<span class="dsp-m" contenteditable="true">Display</span>
+					</th>
+					<td>.dsp-m</td>
+					<td>80px / 700</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<span class="dsp-s" contenteditable="true">Display</span>
+					</th>
+					<td>.dsp-s</td>
+					<td>60px / 900</td>
+				</tr>
+			</tbody>
+			<tbody>
+				<tr>
+					<th scope="colgroup" rowspan="4">
+						<b class="tit-xxs">Title Typography</b><br>
+						<span class="txt-s ">콘텐츠의 목차에 들어갈 수 있는 제목에 해당하는 텍스트에 사용하며 주로 heading tag(h1, h2, h3, h4)와 같이 사용한다.</span>
+					</th>
+					<th scope="row">
+						<span class="tit-l" contenteditable="true">Title</span>
+					</th>
+					<td>.tit-l</td>
+					<td>72px / 500</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<span class="tit-m" contenteditable="true">Title</span>
+					</th>
+					<td>.tit-m</td>
+					<td>32px / 200</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<span class="tit-s" contenteditable="true">Title</span>
+					</th>
+					<td>.tit-s</td>
+					<td>24px / 700</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<span class="tit-xs" contenteditable="true">Title</span>
+					</th>
+					<td>.tit-xs</td>
+					<td>18px / 900</td>
+				</tr>
+			</tbody> 
+		
+			<tbody>
+				<tr>
+					<th scope="colgroup" rowspan="3">
+						<b class="tit-xxs">Body Typography</b><br>
+						<span class="txt-s ">콘텐츠의 기본적인 본문 내용 텍스트 구절에 사용한다.</span>
+					</th>
+					<th scope="row">
+						<span class="txt-l" contenteditable="true">Body</span>
+					</th>
+					<td>.txt-l</td>
+					<td>16px / 700</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<span class="txt-m" contenteditable="true">Body</span>
+					</th>
+					<td>.txt-m</td>
+					<td>14px / 500</td>
+				</tr>
+				<tr>
+					<th scope="row">
+						<span class="txt-s" contenteditable="true">Body</span>
+					</th>
+					<td>.txt-s</td>
+					<td>12px / 400</td>
+				</tr>
+			</tbody>
+		</table>
+
+	</div>
+	<!-- <div class="box-guide mt-x2" style="word-break: break-all;">
+		<div class="fx-wrap">
+			<div class="fx-item" data-flex="2-5-7">
+				<div class="ui-select">
+					<select onchange="document.querySelector('#prview').classList.replace(document.querySelector('#prview').className, this.value);">
+						<option value="dsp-l">display large</option>
+						<option value="dsp-m">display medium</option>
+						<option value="dsp-s">display small</option>
+				
+						<option value="tit-l">title large</option>
+						<option value="tit-m">title medium</option>
+						<option value="tit-s">title small</option>
+
+						<option value="txt-l">body large</option>
+						<option value="txt-m">body medium</option>
+						<option value="txt-s">body small</option>
+					</select>
+				</div>
+			</div>
+			<div class="fx-item" data-flex="2-3-5">
+				<div class="ui-select">
+					<select onchange="document.querySelector('#prview').style.fontWeight = this.value ;">
+						<option value="100">Thin </option>
+						<option value="200">Light </option>
+						<option value="300">Demilight</option>
+						<option value="400">Regular</option>
+						<option value="500">Medium</option>
+						<option value="600">SemiBold </option>
+						<option value="700">Bold </option>
+						<option value="800">ExtraBold </option>
+						<option value="900">Black </option>
+					</select>
+				</div>
+			</div>
+		</div>
+		<div style="margin-bottom: 2rem;">
+			<input type="text" value="가나다  ABC def 012" class="inp-base" onkeyup="document.querySelector('#prview').textContent = this.value;">
+		</div>
+
+		<div class="dsp-l" id="prview" style="font-weight: 100;">
+			가나다  ABC def 012
+		</div>
+	</div> -->
+</article>
+
+
+
+

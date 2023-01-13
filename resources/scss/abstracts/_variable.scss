@@ -1,0 +1,323 @@
+@charset "utf-8";
+
+:root {
+    --gray900:#212121;
+    --gray800:#424242;
+    --gray700:#616161;
+    --gray600:#757575;
+    --gray500:#9E9E9E;
+    --gray400:#BDBDBD;	
+    --gray300:#E0E0E0;
+    --gray200:#EEEEEE;
+    --gray100:#F5F5F5;
+    --gray50:#FAFAFA;
+    --black:#000000;
+    --white:#FFFFFF;
+    
+    --primary: #6B38FB;
+    --primary-hover: #6B38FB;
+    --primary-focus: #6B38FB;
+    --primary-press: #6B38FB;
+    
+    --secondary: #bec5d1;
+    --secondary-hover: #bec5d1;
+    --secondary-focus: #bec5d1;
+    --secondary-press: #bec5d1;
+
+    --tertiary: #f8fc06;
+    --tertiary-hover: #f8fc06;
+    --tertiary-focus: #f8fc06;
+    --tertiary-press: #f8fc06;
+    
+    --error: #f44336;
+    --success: #3182f6;
+    --link: #6296df;
+}
+:root.dark {
+    --gray900:#FAFAFA;
+	--gray800:#F5F5F5;
+	--gray700:#EEEEEE;
+	--gray600:#E0E0E0;
+	--gray500:#BDBDBD;
+	--gray400:#9E9E9E;	
+	--gray300:#757575;
+	--gray200:#616161;
+	--gray100:#424242;
+	--gray50:#212121;
+    --black:#ffffff;
+	--white:#000;
+    --primary: hsl(51deg 100% 49%);;
+    --primary-hover: hsl(51deg 100% 40%);;
+    --primary-focus: hsl(51deg 100% 40%);;
+    --primary-press: hsl(51deg 100% 20%);;
+    --secondary: hsl(71deg, 74%, 67%);
+    --secondary-hover: hsl(71deg, 74%, 60%);
+    --secondary-focus: hsl(71deg, 74%, 60%);
+    --secondary-press: hsl(71deg, 74%, 50%);
+    --tertiary: #ffc0f6; 
+    --error: #f44336;
+    --success: #3182f6;
+    --link: #6296df;
+}
+
+//기본 폰트 rem기준값, 모바일 vw
+$font-default-size: 62.5%;
+$font-default-size-m: 2vw;
+$font-default-size-t: 1vw;
+
+$table-cell-gap: 0.5rem 1.5rem 0.7rem .5rem;
+
+//기본간격
+$gap : 0.8rem;
+$gap-h : calc($gap / 2);
+
+@mixin getGap($name, $n){
+    #{$name} : $gap * $n;
+}
+
+$x0: calc($gap * 0);
+$x1: calc($gap * 1);
+$x2: calc($gap * 2);
+$x3: calc($gap * 3);
+$x4: calc($gap * 4);
+$x5: calc($gap * 5);
+$x6: calc($gap * 6);
+$x7: calc($gap * 7);
+$x8: calc($gap * 8);
+$x9: calc($gap * 9);
+$x10: calc($gap * 10);
+$x11: calc($gap * 11);
+$x12: calc($gap * 12);
+$x13: calc($gap * 13);
+$x14: calc($gap * 14);
+$x15: calc($gap * 15);
+$x16: calc($gap * 16);
+$x17: calc($gap * 17);
+$x18: calc($gap * 18);
+$x19: calc($gap * 19);
+$x20: calc($gap * 20);
+$x0_5: calc($gap-h);
+$x1_5: calc($gap * 1 + $gap-h);
+$x2_5: calc($gap * 2 + $gap-h);
+$x3_5: calc($gap * 3 + $gap-h);
+$x4_5: calc($gap * 4 + $gap-h);
+$x5_5: calc($gap * 5 + $gap-h);
+$x6_5: calc($gap * 6 + $gap-h);
+$x7_5: calc($gap * 7 + $gap-h);
+$x8_5: calc($gap * 8 + $gap-h);
+$x9_5: calc($gap * 9 + $gap-h);
+$x10_5: calc($gap * 10 + $gap-h);
+$x11_5: calc($gap * 11 + $gap-h);
+$x12_5: calc($gap * 12 + $gap-h);
+$x13_5: calc($gap * 13 + $gap-h);
+$x14_5: calc($gap * 14 + $gap-h);
+$x15_5: calc($gap * 15 + $gap-h);
+$x16_5: calc($gap * 16 + $gap-h);
+$x17_5: calc($gap * 17 + $gap-h);
+$x18_5: calc($gap * 18 + $gap-h);
+$x19_5: calc($gap * 19 + $gap-h);
+$x20_5: calc($gap * 20 + $gap-h);
+
+$-x1: calc($gap * -1);
+$-x2: calc($gap * -2);
+$-x3: calc($gap * -3);
+$-x4: calc($gap * -4);
+$-x5: calc($gap * -5);
+$-x6: calc($gap * -6);
+$-x7: calc($gap * -7);
+$-x8: calc($gap * -8);
+$-x9: calc($gap * -9);
+$-x10: calc($gap * -10);
+$-x11: calc($gap * -11);
+$-x12: calc($gap * -12);
+$-x13: calc($gap * -13);
+$-x14: calc($gap * -14);
+$-x15: calc($gap * -15);
+$-x16: calc($gap * -16);
+$-x17: calc($gap * -17);
+$-x18: calc($gap * -18);
+$-x19: calc($gap * -19);
+$-x20: calc($gap * -20);
+$-x0_5: calc($gap-h * -1);
+$-x1_5: calc($gap * -1 - $gap-h);
+$-x2_5: calc($gap * -2 - $gap-h);
+$-x3_5: calc($gap * -3 - $gap-h);
+$-x4_5: calc($gap * -4 - $gap-h);
+$-x5_5: calc($gap * -5 - $gap-h);
+$-x6_5: calc($gap * -6 - $gap-h);
+$-x7_5: calc($gap * -7 - $gap-h);
+$-x8_5: calc($gap * -8 - $gap-h);
+$-x9_5: calc($gap * -9 - $gap-h);
+$-x10_5: calc($gap * -10 - $gap-h);
+$-x11_5: calc($gap * -11 - $gap-h);
+$-x12_5: calc($gap * -12 - $gap-h);
+$-x13_5: calc($gap * -13 - $gap-h);
+$-x14_5: calc($gap * -14 - $gap-h);
+$-x15_5: calc($gap * -15 - $gap-h);
+$-x16_5: calc($gap * -16 - $gap-h);
+$-x17_5: calc($gap * -17 - $gap-h);
+$-x18_5: calc($gap * -18 - $gap-h);
+$-x19_5: calc($gap * -19 - $gap-h);
+$-x20_5: calc($gap * -20 - $gap-h);
+
+$gray900:#212121;
+$gray800:#424242;
+$gray700:#616161;
+$gray600:#757575;
+$gray500:#9E9E9E;
+$gray400:#BDBDBD;	
+$gray300:#E0E0E0;
+$gray200:#EEEEEE;
+$gray100:#F5F5F5;
+$gray50:#FAFAFA;
+$black:#000000;
+$white:#ffffff;
+
+$primary:#6B38FB;
+$primary-hover:#6B38FB;
+$primary-focus:#6B38FB;
+$primary-press:#6B38FB;
+$secondary: #bec5d1;
+$secondary-hover: #bec5d1;
+$secondary-focus: #bec5d1;
+$secondary-press: #bec5d1;
+$tertiary:#f8fc06;
+$error: #f44336;
+$success: #3182f6;
+$link: #6296df;
+
+// @at-root html.dark & {
+//     $gray900:#FAFAFA;
+// 	$gray800:#F5F5F5;
+// 	$gray700:#EEEEEE;
+// 	$gray600:#E0E0E0;
+// 	$gray500:#BDBDBD;
+// 	$gray400:#9E9E9E;	
+// 	$gray300:#757575;
+// 	$gray200:#616161;
+// 	$gray100:#424242;
+// 	$gray50:#212121;
+//     $black:#ffffff;
+// 	$white:#000;
+//     $primary: hsl(265deg 100% 47% / 100%);
+//     $primary-hover: hsl(265deg 100% 42% / 100%);
+//     $primary-focus: hsl(265deg 100% 42% / 100%);
+//     $primary-press: hsl(265deg 100% 37% / 100%);
+//     $secondary: hsl(190deg 73% 60% / 100%);
+//     $secondary-hover: hsl(190deg 73% 55% / 100%);
+//     $secondary-focus: hsl(190deg 73% 55% / 100%);
+//     $secondary-press: hsl(190deg 73% 50% / 100%);
+//     $tertiary: #ffc0f6;
+//     $error: #f44336;
+//     $success: #3182f6;
+//     $link: #6296df;
+// }
+ 
+//기본 gray색상
+// $colors:(
+//   light:(
+//     gray900:#212121,
+//     gray800:#424242,
+//     gray700:#616161,
+//     gray600:#757575,
+//     gray500:#9E9E9E,
+//     gray400:#BDBDBD,	
+//     gray300:#E0E0E0,
+//     gray200:#EEEEEE,
+//     gray100:#F5F5F5,
+//     gray50:#FAFAFA,
+//     black:#000000,
+//     white:#FFFFFF,
+//     primary: hsl(265deg 100% 47% / 100%),
+//     primary-hover: hsl(265deg 100% 42% / 100%),
+//     primary-focus: hsl(265deg 100% 42% / 100%),
+//     primary-press: hsl(265deg 100% 37% / 100%),
+//     secondary: hsl(190deg 73% 60% / 100%),
+//     secondary-hover: hsl(190deg 73% 55% / 100%),
+//     secondary-focus: hsl(190deg 73% 55% / 100%),
+//     secondary-press: hsl(190deg 73% 50% / 100%),
+//     tertiary: #ffc0f6,
+//     error: #f44336,
+//     success: #3182f6,
+//     link: #6296df
+//   ),
+//   dark: (
+// 	gray900:#FAFAFA,
+// 	gray800:#F5F5F5,
+// 	gray700:#EEEEEE,
+// 	gray600:#E0E0E0,
+// 	gray500:#BDBDBD,
+// 	gray400:#9E9E9E,	
+// 	gray300:#757575,
+// 	gray200:#616161,
+// 	gray100:#424242,
+// 	gray50:#212121,
+//     black:#ffffff,
+// 	white:#000,
+//     primary: hsl(265deg 100% 47% / 100%),
+//     primary-hover: hsl(265deg 100% 42% / 100%),
+//     primary-focus: hsl(265deg 100% 42% / 100%),
+//     primary-press: hsl(265deg 100% 37% / 100%),
+//     secondary: hsl(190deg 73% 60% / 100%),
+//     secondary-hover: hsl(190deg 73% 55% / 100%),
+//     secondary-focus: hsl(190deg 73% 55% / 100%),
+//     secondary-press: hsl(190deg 73% 50% / 100%),
+//     tertiary: #ffc0f6,
+//     error: #f44336,
+//     success: #3182f6,
+//     link: #6296df
+//   ) 
+// );
+
+// //gray light,dark
+// @function background-color($key, $type: 'light'){
+//     @each $name, $color in map-get($colors, $type){
+//         @if($key == $name){
+//             @return $color
+//         }
+//     }
+// } 
+// @mixin get-color($property, $color){
+//     #{$property}: get-color($color);
+//     @at-root html.dark & {
+//         #{$property}: get-color($color, dark);
+//     }
+// }
+
+
+
+
+/* text size system */
+$fs-display-l: 10rem;
+$fs-display-m: 8rem;
+$fs-display-s: 6rem;
+
+$fs-headline-l: 7.4rem;
+$fs-headline-m: 3.2rem;
+$fs-headline-s: 2.8rem;
+
+$fs-title-l: 2rem;
+$fs-title-m: 1.8rem;
+$fs-title-s: 1.6rem;
+
+$fs-label-l: 1.7rem;
+$fs-label-m: 1.4rem;
+$fs-label-s: 1.1rem;
+
+$fs-body-l: 1.6rem;
+$fs-body-m: 1.4rem; 
+$fs-body-s: 1.2rem;
+
+/* etc */
+$shadow-light: rgba(0,0,0,0.1);
+$shadow: rgba(0,0,0,0.3);
+$shadow-deep: rgba(0,0,0,0.6);
+$dim: rgba(0,0,0,0.3);
+
+/* code */
+$code-bg: #f8f9fa;
+$code-text: #212529;
+
+
+
+

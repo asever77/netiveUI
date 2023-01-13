@@ -1,0 +1,285 @@
+/* BULLET */
+.div-wrap > [class*="bul-"]:first-child {
+    margin-top: 0;
+}
+
+$bul-lh: 1.2; /* bullet lineheight*/
+
+.bul{
+    &-error,
+    &-required,
+    &-care,
+    &-info,
+    &-help,
+    &-star,
+    &-etc,
+    &-num,
+    &-hyphen,
+    &-dot {
+        position: relative;
+        margin: 0 0 $x1;
+        width: 100%;
+
+        & > li:first-child,
+        & > div:first-child > dd:first-child,
+        & > dd:first-child,
+        &:not(ul):not(ol):not(dl):not(.bul-wrap) {margin-top: 0;}
+
+        & > li,
+        & > div > dd,
+        & > dd,
+        &:not(ul):not(ol):not(dl):not(.bul-wrap) {
+            position: relative;
+            padding-left: 0;
+            display: flex;
+            line-height: $bul-lh; 
+            text-align: justify;
+            align-items: flex-start;
+        }
+
+        &.primary {
+            color:$primary;
+        }
+        &:not(ul):not(ol):not(dl):not(.bul-wrap).primary,
+        &.primary > li::before {
+            background-color:$primary;
+        }
+
+        & > li + li{margin-top:$x1}
+    }
+}
+
+.bul-num {
+    counter-reset: dep1 0 dep2 0;
+
+    & > li {
+        counter-increment: dep1 1;
+        padding-left: 0;
+        display: flex;
+
+        &:before {
+            content: counter(dep1) '.';
+            font-weight: 400;
+            font-size: $fs-body-m;
+            line-height: $bul-lh;
+            margin-right: $x0_5;
+        }
+    }
+
+    &[data-style="custom"] > li:before {content: attr(data-bullet);}
+    &[data-style="upper-roman"] > li:before {content: counter(dep1, upper-roman) '.';}
+    &[data-style="lower-roman"] > li:before {content: counter(dep1, lower-roman) '.';}
+    &[data-style="decimal-zero"] > li:before {content: counter(dep1, decimal-leading-zero) '.';}
+    &[data-style="lower-greek"] > li:before {content: counter(dep1, lower-greek) '.';}
+    &[data-style="lower-alpha"] > li:before {content: counter(dep1, lower-alpha) '.';}
+    &[data-style="upper-alpha"] > li:before {content: counter(dep1, upper-alpha) '.';}
+
+    &[data-shape="round"] > li {
+        padding-left: 0;
+
+        &::before {
+            content: counter(dep1);
+            display: inline-block;
+            position: relative;
+            width: 1.4em;
+            height: 1.4em;
+            border-radius: 50%;
+            top:0.3em;
+            font-size: 0.6em;
+            min-width: 1.4em;
+            min-height: 1.4em;
+            max-width: 1.4em;
+            max-height: 1.4em;
+            line-height: 1.2em;
+            text-align: center;
+            border: 0.1em solid #616161;
+        }
+    }
+    &[data-shape="round"][data-style="upper-roman"] > li:before {content: counter(dep1, upper-roman);}
+    &[data-shape="round"][data-style="lower-roman"] > li:before {content: counter(dep1, lower-roman);}
+    &[data-shape="round"][data-style="decimal-zero"] > li:before {content: counter(dep1, decimal-leading-zero);}
+    &[data-shape="round"][data-style="lower-greek"] > li:before {content: counter(dep1, lower-greek);}
+    &[data-shape="round"][data-style="lower-alpha"] > li:before {content: counter(dep1, lower-alpha);}
+    &[data-shape="round"][data-style="upper-alpha"] > li:before {content: counter(dep1, upper-alpha);}
+    &[data-shape="round"][data-style="custom"] > li:before {
+        content: attr(data-bullet);
+        text-indent: -1px;
+        font-weight: 500;
+    }
+
+
+}
+ 
+dl.bul-num {
+    & dt {
+        font-size: $fs-body-l;
+        font-weight: 700;
+    }
+    & dd {
+        counter-increment: dep1 1;
+        display: flex;
+        padding: 1.2rem 0 .4rem;
+
+        &::before {
+            content: counter(dep1) '.';
+            font-weight: 400;
+            font-size: $fs-body-m;
+            line-height: 1.6;
+            margin-right: .3rem;
+        }
+
+        & + dd {
+            border-top: 1px solid #616161;
+        }
+    }
+}
+.bul-etc {
+    &[data-bullet] {
+        padding-left: 0;
+        display: flex;
+        font-size: 1.3rem;
+        color: #616161;
+    }
+    &::before {
+        content: attr(data-bullet);
+        margin-right: .3rem;
+        font-size: .9em;
+    }
+}
+
+.bul-dot {
+    & > li::before,
+    & > div > dd::before,
+    & > dd::before,
+    &:not(ul):not(ol):not(dl):not(.bul-wrap)::before {
+        content: "";
+        position: relative;
+        margin-left: 0.2rem;
+        top: .54em;
+        margin-right: $x0_5;
+        line-height: 1;
+        //width,height,radius,color
+        @include setBullet(0.2rem, 0.2rem, 50%, $gray700);
+    }
+}
+
+.bul-hyphen {
+    & > li::before,
+    & > div > dd::before,
+    & > dd::before,
+    &:not(ul):not(ol):not(dl):not(.bul-wrap)::before {
+        content: "";
+        position: relative;
+        left: 0;
+        top: .54em;
+        margin-right: $x0_5;
+        line-height: 1;
+        //width,height,radius,color
+        @include setBullet(0.4rem, 0.1rem, 0, $gray700);
+    }
+}
+
+.bul-help {
+    font-size: $fs-body-s;
+    &::before {
+        content: "help_outline";
+        font-family: 'Material Icons Outlined';
+        position: relative;
+        left: 0;
+        top: -0.1em;
+        margin-right: $x0_5;
+        font-weight: 200;
+        font-size: 1.4em;
+        line-height: 1;
+    }
+}
+
+.bul-star {
+    font-size: $fs-body-s;
+    &::before {
+        content: "*";
+        position: relative;
+        left: 0;
+        top: 0.13em;
+        margin-right: $x0_5;
+        font-weight: 400;
+        font-size: 1.4em;
+        line-height: 1;
+    }
+}
+.bul-required {
+    width: auto;
+    &::before {
+        content: "*";
+        position: relative;
+        left: 0;
+        top: 0;
+        margin-right: $x0_5;
+        font-weight: 600;
+        font-size: 1.2em;
+        line-height: 1;
+        color:$error;
+    
+    }
+}
+
+.bul-care{
+    font-size: $fs-body-s;
+    &::before {
+        content: "※";
+        position: relative;
+        left: 0;
+        top: -0.05em;
+        margin-right: $x0_5;
+        font-weight: 400;
+        font-size: 1.1em;
+        line-height: 1;
+    }
+}
+  
+.bul-info {
+    color: $gray700;
+    font-size: $fs-body-s;
+    &::before {
+        content: "info";
+        font-family: 'Material Icons Outlined';
+        position: relative;
+        left: 0;
+        top: -0.05em;
+        margin-right: $x0_5;
+        font-weight: 200;
+        font-size: 1.4em;
+        line-height: 1;
+    }
+}
+
+.bul-error {
+    color: $error;
+    font-size: $fs-body-s;
+    &::before {
+        content: "error_outline";
+        font-family: 'Material Icons Outlined';
+        position: relative;
+        left: 0;
+        top: -0.05em;
+        margin-right: $x0_5;
+        font-weight: 200;
+        font-size: 1.4em;
+        line-height: 1;
+        color: $error;
+    }
+}
+
+dl[class*="bul-"] {
+    & > div {
+        margin-top: 1.5rem
+    }
+    & > div:first-child {
+        margin-top: 0;
+    }
+    & > div > dt,
+    & > dt {
+        font-weight: 500;
+        color:$gray900;
+    }
+}

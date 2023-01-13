@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="google" content="notranslate">
+
+	<title>Netive UI Development Group</title>
+
+	<link rel="apple-touch-icon" href="../resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="../resources/img/common/ico_favicon.ico"> 
+	<link rel="canonical" href="https://asever77.github.io/netiveUI/html/">
+
+	<link rel="stylesheet" href="../resources/css/common.css">
+
+	<!-- <script defer src="/netiveUI/resources/js/lib/jquery-3.2.1.min.js"></script> -->
+	<script defer src="../resources/js/polyfill.js"></script>
+	<script defer src="../resources/js/ui.global.js"></script>
+	<script defer src="../resources/js/ui.page.js"></script>
+
+	<!-- lib -->
+	<!-- <link rel="stylesheet" href="../resources/css/lib/styles/base16/material-darker.css"> -->
+	<!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/github-dark.min.css" integrity="sha512-rO+olRTkcf304DQBxSWxln8JXCzTHlKnIdnMUwYvQa9/Jd4cQaNkItIUj6Z4nvW1dqK0SKXLbn9h4KwZTNtAyw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script> -->
+	<style>
+		.grid-wrap {
+			border:1px solid red;
+			margin:50px auto;
+			width:80%;
+			height: 80vh;
+			display: grid;
+			gap:10px 20px;
+			/* grid-template-rows: repeat(3, 1fr);
+			grid-template-columns: repeat(3, 1fr );
+			grid-template-areas:
+				"header header header"
+				"main main aside"
+				"footer none none"; */
+
+			grid-template:
+			"header header header" 80px
+			"main main aside" auto
+			"footer none none" 130px
+			/ 1fr 1fr 1fr;
+				
+		}
+		header { grid-area:header; background: greenyellow; opacity: .5;}
+		main { grid-area:main; background: skyblue; opacity: .5;}
+		aside { grid-area:aside; background: thistle; opacity: .5;}
+		footer { grid-area:footer; background: navajowhite; opacity: .5;}
+	</style>
+	
+</head>
+<body class="">
+	<div class="grid-wrap">
+		<header></header>
+		<main></main>
+		<aside></aside>
+		<footer></footer>
+	</div>
+</body>
+</html>

@@ -1,0 +1,200 @@
+
+/* ui datepicker */
+.ui-datepicker {
+    display: flex;
+    justify-content: flex-start;
+    position: relative;
+
+    .form-text + .form-input{margin-right:0 !important}
+
+    &.ui-datepicker-view .datepicker-footer{display: none;}
+    &.type-dual {
+        .ui-datepicker-wrap {
+            width: 460px;
+    
+            .tbl-datepicker {
+                width: 210px;
+                float: left;
+    
+                & +.tbl-datepicker {
+                    float: right;
+                }
+            }
+        }
+    }
+
+    &.type-month {
+        .ui-datepicker-wrap {
+            width: auto;
+        }
+        .datepicker-head-month {
+            width: 460px;
+            padding: 1rem 0;
+            margin: 1px 0 0 1px;
+    
+            button {
+                margin: -1px 0 0 -1px;
+            }
+        }
+    }
+
+    &.visible .ui-datepicker-wrap {
+        opacity: 1;
+        top: 4rem;
+    }
+
+    .icon-close {
+        position: absolute;
+        top: .6rem;
+        right: .6rem;
+        z-index: 1;
+
+        &::after {
+            color:$gray900;
+        }
+    }
+
+    .inp-base{
+        padding-right:$x4;
+
+        &::after {
+            content: 'date_range';
+    
+            position: absolute;
+            top:50%;
+            right:$x1;
+            transform: translate(0,-50%);
+            font-family: 'Material Icons';
+            font-feature-settings: 'liga';
+            word-break: keep-all;
+            line-height: 1.6;
+        } 
+    }
+
+    &-btn {
+        border: 0;
+        padding: 0;
+        text-align: right;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        background-color: transparent;
+    
+        &:focus~.inp-base,
+        &:hover~.inp-base {
+            border: 1px solid #1f1f1f;
+            background: transparent;
+        }
+        &:disabled {
+            opacity: 0.5;
+            &:disabled:focus,
+            &:disabled:hover {
+                border: 0;
+                background: transparent;
+                color: #666;
+            }
+        }
+        
+    }
+}
+.datepicker {
+    width: 100%;
+    max-width: 23rem;
+
+    .wrap-group {
+        margin: 0;
+    }
+    :disabled {
+        opacity: .8 !important;
+    }
+
+    &-header {
+        position: relative;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        
+        & > button {
+            width: 2.4rem;
+            height: 2.4rem;
+            font-family: 'Material Icons';
+            position: relative;
+            font-size: 2.2rem;
+            &::before {
+                display: block;
+                line-height: 2.6rem;
+            }
+            &.ui-prev-y::before {content: "chevron_left";}
+            &.ui-next-y::before {content: "chevron_right";}
+            &.ui-prev-m::before {content: "chevron_left";}
+            &.ui-next-m::before {content: "chevron_right";}
+        }
+    
+        .ui-today {
+            width: 2.5rem;
+            height: 2.5rem;
+            line-height: 1;
+            position: absolute;
+            top: 0;
+            right: 0;
+            &::before {
+                content: "today";
+            }
+        }
+        .datepicker-title {
+            width: 100%;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+    }
+    &-body {
+        margin: 1rem 0;
+    
+        th {font-size: 1.2rem;}
+        .datepicker-date td {
+            text-align: center
+        }
+        .week-word{display: none;} 
+        .datepicker-day {
+            width: 2.5rem;
+            height: 2.5rem;
+            border-radius: 50%;
+            margin: 0.3rem 0;
+            line-height: 1;
+            font-size: 1.2rem;
+        
+            &.selected-end,
+            &.selected-start,
+            &.selected {
+                background: $primary;
+                color: #fff;
+            }
+        
+            &.today.selected-end,
+            &.today.selected-start {
+                background: #6200ee;
+                color: #fff;
+            }
+        
+            &.today {
+                background: #fff;
+                border: 1px solid #6200ee;
+                color: #6200ee;
+            }
+        }
+        .during .datepicker-day {
+            background: #EEEEEE !important;
+        }
+        .during-not .selected-end {
+            background: #6200ee !important;
+        }
+        .during-not ~ td .datepicker-day {
+            background: #fff !important;
+        }
+    }
+}

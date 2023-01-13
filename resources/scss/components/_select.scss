@@ -1,0 +1,225 @@
+/* ui select */
+.ui-select {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+
+    select {
+        width: 100%;
+
+        &.off {
+            position: absolute;
+            z-index: -1;
+
+            &:focus+.ui-select-btn {
+                border-color: #000000;
+                &::after {
+                    content: "keyboard_arrow_up";
+                }
+            }
+        }
+    }
+
+    &.type-tel {width: 15rem;}
+    &.type-bank {width: 20rem;}
+    &.type-card {width: 20rem;}
+
+    &-btn {
+        padding: 0 0 0 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        height: auto;
+        min-height: 4rem;
+        width: 100%;
+    
+        &::after {
+            content: "keyboard_arrow_down";
+            font-family: 'Material Icons';
+            display: block;
+            position: absolute;
+            right: 0.6rem;
+            top: 50%;
+            margin-top: -1.2rem;
+            width: 2.4rem;
+            height: 2.4rem;
+            float: right;
+            overflow: hidden;
+            line-height: 1;
+            font-size: 2.2rem;
+            color: $gray800;
+        }
+    
+        span {
+            display: inline-block;
+            width: calc(100% - 4.5rem);
+            min-width: 4.5rem;
+            text-align: left;
+            word-break: nowrap;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            text-align: left;
+            line-height: 1.2;
+            margin: .8rem 0;
+        }
+    
+        &[aria-expanded="true"],
+        &:focus,
+        &:active {
+            border-color: #E0E0E0;
+            &::after{content: "keyboard_arrow_up";}
+        }
+    }
+    &-wrap {
+        display: none;
+        position: absolute;
+        z-index: 100;
+        left: 0;
+        width: auto;
+        overflow-y: auto;
+        max-height: 16.2rem;
+        -webkit-overflow-scrolling: touch;
+        border: 1px solid $gray800;
+        background: $white;
+    
+        &.on {display: block;}
+        &.top {bottom: 3.9rem;}
+        &.bottom {top: 3.9rem}
+        &.ui-scrollbar {
+            position: absolute;
+            min-height: 16.2rem;
+        }
+    }
+    &-opts {
+        overflow: hidden;
+        width: 100%;
+    
+        .ui-select-opt {
+            display: block;
+            float: left;
+            width: 100%;
+            padding: .5rem 2rem .5rem 1rem;
+            height: 4rem;
+            text-align: left;
+            white-space: nowrap;
+            background: #FFFFFF;
+            font-size: 1.4rem;
+    
+            &.selected {
+                font-weight: 700;
+                text-decoration: underline;
+                background: #EEEEEE;
+                color: #000000;
+            }
+            &.disabled { opacity: 0.5;}
+        }
+    }
+    &-title {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+    &-cancel,
+    &-confirm {display: none;}
+}
+.ui-m {
+    .ui-select{width: 100%;}
+    .ui-select-wrap.on {display: block;}
+    .ui-select-cancel,
+    .ui-select-confirm,
+    .ui-select-title,
+    .ui-select-wrap.top,
+    .ui-select-wrap.bottom {
+        bottom: -30rem;
+        top: auto;
+        animation-name: slideUpIn;
+        animation-duration: .1s;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+    }    
+    .ui-select-wrap {
+        display: none;
+        position: fixed;
+        z-index: 100;
+        left: 0;
+        bottom: -30rem;
+        width: 100%;
+        border: 0;
+        overflow-y: auto;
+        max-height: 24rem;
+        background: $white;
+    }
+    .ui-select-title {
+        position: fixed;
+        margin-bottom: 20rem;
+        left: 0;
+        top: auto;
+        display: block;
+        width: 100%;
+        height: 4rem;
+        padding: .9rem 1rem .4rem;
+        text-align: center;
+        z-index: 10;
+        background: $gray900;
+        color: $white;
+    }
+    .ui-select-opts {
+        padding: calc(4rem * 3) 0 calc(4rem * 2);
+       
+        &::after {
+            content: "";
+            display: block;
+            position: fixed;
+            bottom: 12rem;
+            width: 100%;
+            height: 1px;
+            z-index: 0;
+            border-top: 1px solid $gray100;
+            pointer-events: none;
+        }
+        &::before {
+            content: "";
+            display: block;
+            position: fixed;
+            bottom: 8rem;
+            width: 100%;
+            height: 1px;
+            z-index: 0;
+            border-top: 1px solid $gray100;
+            pointer-events: none;
+        }
+    }
+    .ui-select-opt {
+        text-align: center;
+        z-index: 1;
+        position: relative;
+        background: transparent;
+        color:$gray900;
+       
+        &.selected {
+            color: $black;
+            background-color: transparent;
+        }
+    }
+    .ui-select-cancel,
+    .ui-select-confirm {
+        position: fixed;
+        margin-bottom: 20rem;
+        right: 0;
+        display: block;
+        width: 5rem;
+        height: 4rem;
+        padding: .7rem 1rem .6rem;
+        text-align: center;
+        z-index: 11;
+        color: $white;
+        font-size: 1.4rem;
+    }
+    .ui-select-cancel {
+        left: 0;
+        right: auto;
+    }
+}

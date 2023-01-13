@@ -5,7 +5,9 @@
     <meta charset="utf-8">
     <title>scope 속성의 적용범위</title>
     <style>
+        body{text-align: center;}
         table {
+            margin: 0 auto;
             border-spacing: 0;
             border-collapse: collapse
         }
@@ -34,125 +36,102 @@
     <p>참고: 아래 테이블 코드 예제는 <code>scope</code> 속성의 범위를 표시하기 위해 제작되었습니다. 일부 코드는 적절한
         구현이 아닐 수 있습니다.</p>
 
-    <table>
-        <caption><code>scope</code> 속성 적용 예제1</caption>
-        <thead>
-            <tr>
-                <th scope="col" rowspan="2">교실</th>
-                <th scope="col" colspan="2">수강생</th>
-                <th scope="col" colspan="2">비수강생</th>
-            </tr>
-            <tr>
-                <th scope="col">남</th>
-                <th scope="col">여</th>
-                <th scope="col">남</th>
-                <th scope="col">여</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <th scope="rowgroup" colspan="5">1학년</th>
-            </tr>
-            <tr>
-                <th scope="row">1반</th>
-                <td>10</td>
-                <td>5</td>
-                <td>7</td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <th scope="row">2반</th>
-                <td>8</td>
-                <td>12</td>
-                <td>5</td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <th scope="row">3반</th>
-                <td>7</td>
-                <td>6</td>
-                <td>9</td>
-                <td>7</td>
-            </tr>
-
-            <tr>
-                <th scope="rowgroup" colspan="5">2학년</th>
-            </tr>
-            <tr>
-                <th scope="row">1반</th>
-                <td>10</td>
-                <td>5</td>
-                <td>7</td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <th scope="row">2반</th>
-                <td>8</td>
-                <td>12</td>
-                <td>5</td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <th scope="row">3반</th>
-                <td>7</td>
-                <td>6</td>
-                <td>9</td>
-                <td>7</td>
-            </tr>
-        </tbody>
-        <tbody>
-            <tr>
-                <th scope="rowgroup" colspan="5">3학년</th>
-            </tr>
-            <tr>
-                <th scope="row">1반</th>
-                <td>10</td>
-                <td>5</td>
-                <td>7</td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <th scope="row">2반</th>
-                <td>8</td>
-                <td>12</td>
-                <td>5</td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <th scope="row">3반</th>
-                <td>7</td>
-                <td>6</td>
-                <td>9</td>
-                <td>7</td>
-            </tr>
-        </tbody>
-        <tbody>
-            <tr>
-                <th scope="rowgroup" colspan="5">4학년</th>
-            </tr>
-            <tr>
-                <th scope="row">1반</th>
-                <td>10</td>
-                <td>5</td>
-                <td>7</td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <th scope="row">2반</th>
-                <td>8</td>
-                <td>12</td>
-                <td>5</td>
-                <td>8</td>
-            </tr>
-            <tr>
-                <th scope="row">3반</th>
-                <td>7</td>
-                <td>6</td>
-                <td>9</td>
-                <td>7</td>
-            </tr>
-        </tbody>
-    </table>
+        <table>
+            <caption><code>scope</code> 속성 적용 예제1</caption>
+            <colgroup>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <thead>
+                <tr>
+                    <th scope="col" colspan="2" rowspan="2">교실</th>
+                    <th scope="col" colspan="2">수강생</th>
+                    <th scope="col" colspan="2">비수강생</th>
+                </tr>
+                <tr>
+                    <th scope="col">남</th>
+                    <th scope="col">여</th>
+                    <th scope="col">남</th>
+                    <th scope="col">여</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row" rowspan="3">1학년</th>
+                    <th scope="row">1반</th>
+                    <td>10</td>
+                    <td>5</td>
+                    <td>7</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <th scope="row">2반</th>
+                    <td>8</td>
+                    <td>12</td>
+                    <td>5</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <th scope="row">3반</th>
+                    <td>7</td>
+                    <td>6</td>
+                    <td>9</td>
+                    <td>7</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <th scope="row" rowspan="3">2학년</th>
+                    <th scope="row">1반</th>
+                    <td>10</td>
+                    <td>5</td>
+                    <td>7</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <th scope="row">2반</th>
+                    <td>8</td>
+                    <td>12</td>
+                    <td>5</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <th scope="row">3반</th>
+                    <td>7</td>
+                    <td>6</td>
+                    <td>9</td>
+                    <td>7</td>
+                </tr>
+            </tbody>
+            <tbody>
+                <tr>
+                    <th scope="row" rowspan="3">3학년</th>
+                    <th scope="row">1반</th>
+                    <td>10</td>
+                    <td>5</td>
+                    <td>7</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <th scope="row">2반</th>
+                    <td>8</td>
+                    <td>12</td>
+                    <td>5</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <th scope="row">3반</th>
+                    <td>7</td>
+                    <td>6</td>
+                    <td>9</td>
+                    <td>7</td>
+                </tr>
+            </tbody>
+        </table>
     <hr>
     <table>
         <caption><code>scope</code> 속성 적용 예제2</caption>
@@ -228,8 +207,7 @@
                 <td>9</td>
                 <td>7</td>
             </tr>
-        </tbody>
-        <tbody>
+    
             <tr>
                 <th scope="rowgroup" rowspan="3">3학년</th>
                 <th scope="row">1반</th>

@@ -1,0 +1,207 @@
+
+/* BUTTON */
+/* button base */
+.btn-base {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 2rem;
+    min-width: 4rem;
+    height: 4rem;
+    font-size: $fs-body-m;
+    text-decoration: none;
+    font-weight: 400;
+    line-height: 1;
+    vertical-align: top;
+    border-radius:.3rem;
+    border: 1px solid $gray400;
+    background-color: $white;
+    color: $gray800;
+    z-index: 0;
+
+    &.hover > span, &:hover > span,
+    &.focus > span, &:focus > span {
+        text-decoration: underline;
+    }
+    > span {
+        flex: 0 auto;
+        display: block;
+        text-align: center;
+        line-height: 1;
+    }
+    &.hover, &:hover {background-color: $gray50;}
+    &.focus, &:focus {background-color: $gray50;}
+    &.active, &:active {background-color: $gray50;}
+
+    //color
+    &.primary,
+    &[data-color="primary"] {
+        background: $primary;
+        border: 0;
+        color: #fff;
+        &.hover, &:hover {background-color: $primary-hover;}
+        &.focus, &:focus {background-color: $primary-focus;}
+        &.active, &:active {background-color: $primary-press;}
+    }
+    &.secondary,
+    &[data-color="secondary"] {
+        background: $secondary;
+        border: 0;
+        color: #fff;
+        &.hover, &:hover {background-color: $secondary-hover;}
+        &.focus, &:focus {background-color: $secondary-focus;}
+        &.active, &:active {background-color: $secondary-press;}
+    }
+    
+    &.gray,
+    &[data-color="gray"] {
+        background: $gray700;
+        border: 0;
+        color: #fff;
+        &.hover, &:hover {background-color: $gray800;}
+        &.focus, &:focus {background-color: $gray800;}
+        &.active, &:active {background-color: $gray900;}
+    }
+
+
+    //size
+    &.large,
+    &[data-size="large"] {
+        height: 5rem;
+        font-size: $fs-body-l;
+        min-width: 5rem;
+
+        &[data-icon-e]::before,
+        &[data-icon]::before{
+            width:3rem;
+            height:3rem;
+        }
+        &.icon-only {
+            height: 5rem;
+            width: 5rem;
+            padding:0;
+        }
+    }
+    &,
+    &.medium,
+    &[data-size="medium"] {
+        height: 4rem;
+        font-size: $fs-body-m;
+        min-width: 4rem;
+
+        &[data-icon-e]::before,
+        &[data-icon]::before{
+            width:2rem;
+            height:2rem;
+        }
+        &.icon-only {
+            height: 4rem;
+            width: 4rem;
+            padding:0;
+        }
+    }
+    &.small,
+    &[data-size="small"] {
+        height: 2.6rem;
+        font-size: $fs-body-s;
+        min-width: 2.6rem;
+        
+        &[data-icon-e]::before,
+        &[data-icon]::before{
+            width:1.6rem;
+            height:1.6rem;
+        }
+        &.icon-only {
+            height: 2.6rem;
+            width: 2.6rem;
+            padding:0;
+            &::before {
+                transform: translateX(0);
+                margin:0;
+            }
+        }
+    }
+
+    //shape
+    &.round,
+    &[data-shape="round"] {
+        border-radius: 2.5rem;
+    }
+    &.no-line,
+    &[data-shape="no"] {
+        background:transparent;
+        border:0;
+    }
+    &.icon-only {
+        &::before {
+            transform: translateX(0);
+        }
+    }
+}
+
+
+/* X close, del button, menu ... */
+.icon-close {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    width: 3rem;
+    height: 3rem;
+    line-height: 1;
+    font-family: 'Material Icons';
+    color:$gray900;
+}
+
+.icon-clear {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    width: 2rem;
+    height: 3rem;
+    line-height: 1;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    color:$gray900;
+}
+
+.icon-clear::before {
+    content: "clear";
+    font-family: 'Material Icons';
+    font-size: 1.8rem;
+    line-height: 1;
+    display: block;
+
+    color:$gray900;
+    
+}
+
+[class*="fab-"] {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2.5rem;
+    line-height: 1;
+}
+[class*="fab-outlined-"] {
+    border:1px solid 
+}
+
+
+
+
+
+.icon-material.fab-mode::before {
+    top: 0;
+}
+
+
+.icon-close::before,
+.fab-grid::before,
+.fab-menu::before {
+    top: 0;
+}

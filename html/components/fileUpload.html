@@ -1,67 +1,91 @@
 <input type="hidden" id="uiJsName" value="pageFileUpload">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">File Upload</h1>
+	<h1 class="tit-l">File Upload</h1>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Examples</h2>
+<article class="wrap-article">
+	<h2 class="tit-m">Examples</h2>
 	<div class="box-guide">
 		<form>
-
-			<input type="file" >
-
-			<div class="form-wrap">
-				<div class="fx-wrap" data-align="justify">
-					<div class="fx-item ui-form" data-flex="1-1-1">
-						<div class="form-label">
-							<label class="form-item-label" for="test_a0_1">Label Text</label>
+			<div class="form-wrap " data-type="row">
+				<div class="form-item-rowgroup">
+					<div class="form-item">
+						<div class="form-head">
+							<div class="form-title">
+								<label class="form-item-label" for="test_a0_1">파일등록</label>
+							</div>
 						</div>
-	
-						<div class="form-item">
-							<div class="ui-file">
-								<input type="file" class="ui-file-inp" id="test_a0_1" name="avatar" multiple>
-								<div class="btn-mix-outlined">file upload</div>
+						<div class="form-body">
+							<div class="form-info">
+								<div class="bul-info">
+									<div>등록할 파일을 선택해주세요.</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="form-input">
+									<div class="ui-file">
+										<input type="file" class="ui-file-inp " id="test_a0_1" multiple title="file upload">
+										<div class="btn-base">file upload</div>
+									</div>
+									<div class="ui-file-list" data-id="test_a0_1" aria-labelledby="test_a0_1"></div>
+								</div>
 							</div>
 							
+
+							<div class="form-info">
+								<div class="bul-error">
+									<div>등록할 파일을 선택해주세요.</div>
+								</div>
+							</div>
+						
 						</div>
-						<div class="ui-file-list" data-id="test_a0_1" aria-labelledby="test_a0_1"></div>
 					</div>
-				</div>
-				<div class="fx-wrap" data-align="justify">
-					<div class="fx-item ui-form" data-flex="1-1-1">
-						<div class="form-label">
-							<label class="form-item-label" for="test_a0_2">Label Text</label>
+					
+					<div class="form-item">
+						<div class="form-head">
+							<div class="form-title">
+								<label class="form-item-label" for="test_a0_2">파일등록</label>
+							</div>
 						</div>
-	
-						<div class="form-item">
-							<div class="ui-file">
-								<input type="file" class="ui-file-inp" id="test_a0_2" name="avatar" multiple>
-								<div class="btn-mix-outlined">file upload</div>
+						<div class="form-body">
+							<div class="form-info">
+								<div class="bul-info">
+									<div>등록할 파일을 선택해주세요.</div>
+								</div>
+							</div>
+
+							<div class="form-group">
+								<div class="form-input">
+									<div class="ui-file">
+										<input type="file" class="ui-file-inp " id="test_a0_2" multiple title="file upload">
+										<div class="btn-base">file upload</div>
+									</div>
+									<div class="ui-file-list" data-id="test_a0_2" aria-labelledby="test_a0_2"></div>
+								</div>
 							</div>
 							
+
+							<div class="form-info">
+								<div class="bul-error">
+									<div>등록할 파일을 선택해주세요.</div>
+								</div>
+							</div>
+						
 						</div>
-						<div class="ui-file-list" data-id="test_a0_2" aria-labelledby="test_a0_2"></div>
 					</div>
 				</div>
 			</div>
-<!-- 
-			<input type="file" >
-			<input type="file"  multiple>
-
-			<div class="ui-file btn type-outlined" id="addfileWrap2">
-				<input type="file" class="ui-file-inp" id="addfileInp2" multiple>
-				<span>file upload</span>
-			</div>
-			<div class="ui-file-list" aria-labelledby="addfileInp2"></div> -->
 		</form>
 	</div>
-</section>
+</article>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Source Code</h2>
-	<h3 class="typo-title-m">HTML</h3>
+<article class="wrap-article">
+	<h2 class="tit-m">Source Code</h2>
 
+	<section class="wrap-section">
+		<h3 class="tit-s">HTML</h3>
 <pre class="box-code"><code class="html">
 &lt;div class="ui-file"&gt;
 	&lt;input type="file" class="ui-file-inp" id="test_a0_1" name="avatar" multiple&gt;
@@ -69,10 +93,12 @@
 &lt;/div&gt;
 &lt;div class="ui-file-list" data-id="test_a0_1" aria-labelledby="test_a0_1"&gt;&lt;/div&gt;
 </code></pre>
+	</section>
 
-	<h3 class="typo-title-m">Javascript</h3>
+	<section class="wrap-section">
+		<h3 class="tit-s">Javascript</h3>
 <pre class="box-code"><code class="javascript">
 netive.form.fileUpload();
 </code></pre>
-
-</section>
+	</section>
+</article>

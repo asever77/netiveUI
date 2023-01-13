@@ -1,0 +1,24 @@
+/* ui-drop */
+.ui-drop {
+	position: relative;
+	display: inline-block;
+
+    &-pnl {
+        display: none;
+        position: absolute;
+        z-index: 100;
+    
+        &.on {display: block;}
+    
+        .ui-drop-close {
+            position: absolute;
+            top: 6px;
+            right: 6px;
+        }
+    }
+    &-box {
+        padding: 10px;
+        background: #fff;
+        border: 1px solid #EEEEEE;
+    }
+}

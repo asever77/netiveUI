@@ -1,19 +1,19 @@
 <input type="hidden" id="uiJsName" value="pageIcon">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Icon</h1>
+	<h1 class="tit-l">Icon</h1>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Image Icon(sprite image)</h2>
+<article class="wrap-article">
+	<h2 class="tit-m">Image Icon(sprite image)</h2>
 	<p>Image sprite 방식을 사용하여 관리를 한다. 기준은 크기, 분류로 구분하여 이미지 관리를 한다.</p>
 
 	<div class="box-guide ">
-		<div class="fx-wrap mgb-x2">
-			<span class="icon-icon50" data-icon="search" aria-label="검색"></span>
-			<span class="icon-icon50" data-icon="home" aria-label="홈"></span>
-			<span class="icon-icon50" data-icon="person" aria-label="개인"></span>
-			<span class="icon-icon50" data-icon="settings" aria-label="설정"></span>
+		<div class="fx-wrap mb-x2">
+			<span class="icon50" data-icon="search" aria-label="검색"></span>
+			<span class="icon50" data-icon="home" aria-label="홈"></span>
+			<span class="icon50" data-icon="person" aria-label="개인"></span>
+			<span class="icon50" data-icon="settings" aria-label="설정"></span>
 		</div>
 
 		../resources/img/icon/icon50.png
@@ -22,23 +22,38 @@
 	
 <pre class="box-code"><code class="html">
 // icon50.png (50*50)
-&lt;span class="icon-[image]-[name]" aria-label="[name]"&gt;&lt;/span&gt;
+&lt;span class="icon50" <tag-class>data-icon="{name}"</tag-class>&gt;&lt;/span&gt;
 </code></pre>
 </pre>
-</section>
+</article>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Font Icon(material)</h2>
+<article class="wrap-article">
+	<h2 class="tit-m">Font Icon(material)</h2>
 	
-	<div class="box-guide fx-wrap" style="font-size:5rem">
-		<span class="icon-material" data-icon="search" aria-label="검색"></span>
-		<span class="icon-material" data-icon="home" aria-label="홈"></span>
-		<span class="icon-material" data-icon="person" aria-label="개인"></span>
-		<span class="icon-material" data-icon="settings" aria-label="설정"></span>
+	<div class="box-guide">
+		<ul class="material-list fx-wrap">
+			<li>
+				<span data-material="search" aria-label="검색"><guide></guide></span>
+				<p>search</p>
+			</li>
+			<li>
+				<span data-material="home" aria-label="홈"><guide></guide></span>
+				<p>home</p>
+			</li>
+			<li>
+				<span data-material="person" aria-label="개인"><guide></guide></span>
+				<p>person</p>
+			</li>
+			<li>
+				<span data-material="settings" aria-label="설정"><guide></guide></span>
+				<p>settings</p>
+			</li>
+		</ul>
+		
 	</div>
 
 <pre class="box-code"><code class="html">
-&lt;span class="icon-material" aria-label="[name]"&gt;&lt;/span&gt;
+&lt;span <tag-class>data-material="{name}"</tag-class>&gt;&lt;/span&gt;
 </code></pre>
 </pre>
-</section>
+</article>

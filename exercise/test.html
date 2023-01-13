@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .active{color:red}
+    </style>
+</head>
+<body>
+    <div class="guide full">
+        <h1 class="guide-tit">Toasts</h1>
+
+        <!-- dropdown -->
+        <div class="guide-layer">
+            <div class="guide-section">
+                <h2 class="guide-section-tit">Toasts - center</h2>
+
+                <div class="guide-box">
+                    <div class="guide-flex ratio gap">
+                        <div class="guide-flex-box">
+                            
+    <div class="module-toasts center">
+        <p class="module-toasts-content">수행하는 작업과 관련된 설명을 입력하세요.</p>
+    </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <h2 class="guide-section-tit">Toasts - left</h2>
+
+                <div class="guide-box">
+                    <div class="guide-flex ratio gap">
+                        <div class="guide-flex-box">
+                            
+    <div class="module-toasts left">
+        <p class="module-toasts-content">Please enter a description on the board. Please enter a description.</p>
+    </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script>
+        let removeToast;
+        function toast() {
+            const toasts = document.querySelectorAll(".module-toasts");
+
+            for (let that of toasts) {
+                !!that.classList.contains("active") && clearTimeout(removeToast);
+
+                removeToast = setTimeout(function () {
+                    that.classList.remove("active");
+                }, 5000);
+                
+                that.classList.add("active");
+            }
+        }
+        toast();
+    </script>
+
+</body>
+</html>

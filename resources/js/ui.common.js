@@ -3,7 +3,7 @@
 	'use strict';
 	
 	netive.common = {
-		antiCache: function(){
+		antiCache (){
 			const cssLinks = document.querySelectorAll('link[rel="stylesheet"]');
 			const jsLinks = document.querySelectorAll('script');
 			const now = new Date();
@@ -15,169 +15,72 @@
 			timestamp += now.getMinutes().toString();
 			timestamp += now.getMilliseconds().toString();
 
-			for (const cssLink of cssLinks) {
-				cssLink.href = cssLink.getAttribute('href') + '?ver=' + timestamp;
+			for (let i = 0; i < cssLinks.length; i++) {
+				cssLinks[i].href = cssLinks[i].getAttribute('href') + '?ver=' + timestamp;
 			}
 
-			for (const jsLink of jsLinks) {
-				jsLink.src = jsLink.getAttribute('src') + '?ver=' + timestamp;
+			for (let i = 0; i < jsLinks.length; i++) {
+				jsLinks[i].src = jsLinks[i].getAttribute('src') + '?ver=' + timestamp;
 			}
 		},
-		init: function(){
+		meunMap : {
+			introduction: {link: '../html/convention/introduction.html'},
+			typography: {link: '../html/convention/typography.html'},
+			color: {link: '../html/convention/color.html'},
+			naming:	{link: '../html/convention/naming.html'},
+			units:	{link: '../html/convention/units.html'},
+			
+			icon: {link: '../html/contents/icon.html'},
+			bulletList: {link: '../html/contents/bulletList.html'},
+			table: {link: '../html/contents/table.html'},
+			inputFormat: {link: '../html/contents/inputFormat.html'},
+			
+			inputPlaceholder: {link: '../html/components/inputPlaceholder.html'},
+			accordion: {link: '../html/components/accordion.html'},
+			brickList: {link: '../html/components/brickList.html'},
+			draggable: {link: '../html/components/draggable.html'},
+			dropdown: {link: '../html/components/dropdown.html'},
+			floating: {link: '../html/components/floating.html'},
+			floatingRange: {link: '../html/components/floatingRange.html'},
+			modal: {link: '../html/components/modal.html'},
+			scrollBar: {link: '../html/components/scrollBar.html'},
+			parallax: {link: '../html/components/parallax.html'},
+			popupBook: {link: '../html/components/popupBook.html'},
+			loading: {link: '../html/components/loading.html'},
+			tab: {link: '../html/components/tab.html'},
+			tableCaption: {link: '../html/components/tableCaption.html'},
+			tableCellFix: {link: '../html/components/tableCellFix.html'},
+			tableScroll: {link: '../html/components/tableScroll.html'},
+			print: {link: '../html/components/print.html'},
+			popup: {link: '../html/components/popup.html'},
+			tooltip: {link: '../html/components/tooltip.html'},
+			datePicker: {link: '../html/components/datePicker.html'},
+			inputClear: {link: '../html/components/inputClear.html'},
+			select: {link: '../html/components/select.html'},
+			selection: {link: '../html/components/selection.html'},
+			toast: {link: '../html/components/toast.html'},
+			innerLabel: {link: '../html/components/innerLabel.html'},
+			scrollMove: {link: '../html/components/scrollMove.html'},
+			countNumber: {link: '../html/components/countNumber.html'},
+			layout: {link: '../html/contents/layout.html'},
+			button: {link: '../html/contents/button.html'},
+			jsonCodingList: {link: '../html/components/jsonCodingList.html'},
+			fileUpload: {link: '../html/components/fileUpload.html'},
+			range: {link: '../html/components/range.html'},
+			slide: {link: '../html/components/slide.html'},
+			slot: {link: '../html/components/slot.html'},
+			issue: {link: '../html/memory/issue.html'},
+			time: {link: '../html/components/time.html'},
+		},
+		init(){
 			let fristHref = '../html/start/introduction.html';
-
+			
 			netive.common.antiCache();
-
+			
+			console.log(netive.common.meunMap[netive.para.get('page')].link);
 			if (!!netive.para.get('page')) {
-				switch(netive.para.get('page')) {
-					case 'introduction' :
-						fristHref = '../html/start/introduction.html';
-						break;
-					case 'typography' :
-						fristHref = '../html/start/typography.html';
-						break;
-					case 'color' :
-						fristHref = '../html/start/color.html';
-						break;
-					case 'device' :
-						fristHref = '../html/start/device.html';
-						break;
-					case 'margin' :
-						fristHref = '../html/start/margin.html';
-						break;
-					case 'naming' :
-						fristHref = '../html/start/naming.html';
-						break;
-					case 'placeholder' :
-						fristHref = '../html/start/placeholder.html';
-						break;
-					case 'units' :
-						fristHref = '../html/start/units.html';
-						break;
-					case 'icon' :
-						fristHref = '../html/contents/icon.html';
-						break;
-
-					case 'bulletList' :
-						fristHref = '../html/contents/bulletList.html';
-						break;
-					case 'table' :
-						fristHref = '../html/contents/table.html';
-						break;
-					case 'inputFormat' :
-						fristHref = '../html/contents/inputFormat.html';
-						break;
-					case 'inputPlaceholder' :
-						fristHref = '../html/components/inputPlaceholder.html';
-						break;
-
-					case 'accordion' :
-						fristHref = '../html/components/accordion.html';
-						break;
-					case 'brickList' :
-						fristHref = '../html/components/brickList.html';
-						break;
-					case 'draggable' :
-						console.log('draggable');
-						fristHref = '../html/components/draggable.html';
-						break;
-					case 'dropdown' :
-						fristHref = '../html/components/dropdown.html';
-						break;
-					case 'floating' :
-						fristHref = '../html/components/floating.html';
-						break;
-					case 'floatingRange' :
-						fristHref = '../html/components/floatingRange.html';
-						break;
-					case 'modal' :
-						fristHref = '../html/components/modal.html';
-						break;
-					case 'scrollBar' :
-						fristHref = '../html/components/scrollBar.html';
-						break;
-					case 'parallax' :
-						fristHref = '../html/components/parallax.html';
-						break;
-					case 'popupBook' :
-						fristHref = '../html/components/popupBook.html';
-						break;
-					case 'loading' :
-						fristHref = '../html/components/loading.html';
-						break;
-					case 'tab' :
-						fristHref = '../html/components/tab.html';
-						break;
-					case 'tableCaption' :
-						fristHref = '../html/components/tableCaption.html';
-						break;
-					case 'tableCellFix' :
-						fristHref = '../html/components/tableCellFix.html';
-						break;
-					case 'tableScroll' :
-						fristHref = '../html/components/tableScroll.html';
-						break;
-					case 'print' :
-						fristHref = '../html/components/print.html';
-						break;
-					case 'popup' :
-						fristHref = '../html/components/popup.html';
-						break;
-					case 'tooltip' :
-						fristHref = '../html/components/tooltip.html';
-						break;
-					case 'datePicker' :
-						fristHref = '../html/components/datePicker.html';
-						break;
-					case 'inputClear' :
-						fristHref = '../html/components/inputClear.html';
-						break;
-					case 'select' :
-						fristHref = '../html/components/select.html';
-						break;
-					case 'selection' :
-						fristHref = '../html/components/selection.html';
-						break;
-					case 'toast' :
-						fristHref = '../html/components/toast.html';
-						break;
-					case 'innerLabel' :
-						fristHref = '../html/components/innerLabel.html';
-						break;
-					case 'scrollMove' :
-						fristHref = '../html/components/scrollMove.html';
-						break;
-					case 'countNumber' :
-						fristHref = '../html/components/countNumber.html';
-						break;
-
-					case 'layout' :
-						fristHref = '../html/contents/layout.html';
-						break;
-					case 'button' :
-						fristHref = '../html/contents/button.html';
-						break;
-					case 'jsonCodingList' :
-						fristHref = '../html/components/jsonCodingList.html';
-						break;
-					case 'fileUpload' :
-						fristHref = '../html/components/fileUpload.html';
-						break;
-					case 'range' :
-						fristHref = '../html/components/range.html';
-						break;
-					case 'slide' :
-						fristHref = '../html/components/slide.html';
-						break;
-					case 'slot' :
-						fristHref = '../html/components/slot.html';
-						break;
-					case 'issue' :
-						fristHref = '../html/memory/issue.html';
-						break;
-				   
-				}
-			} 
+				fristHref = netive.common.meunMap[netive.para.get('page')].link;
+			}
 
 			netive.ajax.init({ 
 				area: document.querySelector('.base-skip'), 
@@ -206,11 +109,8 @@
 				}
 			});
 
-			console.log('------------------------------------------------------')
-
-			netive.table.caption();
+			// console.log('------------------------------------------------------')
 			netive.form.init();
-			
 		},
 		gridSwitch: function(){
 			const el_grid = document.querySelector('.base-grid');
@@ -218,15 +118,15 @@
 			el_grid.classList.toggle('on');
 		},
 		header: function(){
-			console.log('header load');
+			// console.log('header load');
 			netive.scrollBar.init();
 
 			setTimeout(function(){
-				netive.accordion.init({ 
-					id: 'exeLNB', 
-					current: 'all', 
-					autoclose: false
-				});
+				// netive.accordion.init({ 
+				// 	id: 'exeLNB', 
+				// 	current: 'all', 
+				// 	autoclose: false
+				// });
 				netive.common.menuAjax();
 				
 				doc.querySelector('.ui-nav').addEventListener('click', netive.common.toggleNav);
@@ -235,7 +135,7 @@
 			
 		},
 		toggleMode: function(){
-			document.querySelector('html').classList.toggle('dark-mode');
+			document.querySelector('html').classList.toggle('dark');
 		},
 		toggleNav: function(){
 			doc.querySelector('body').classList.toggle('nav-open');
@@ -272,13 +172,11 @@
 
 			if (!!doc.querySelector('#uiJsName')) {
 				jsName = doc.querySelector('#uiJsName').value;
-				netive.page[jsName]();
+				(!!netive.page[jsName]) && netive.page[jsName]();
 			}
 
 			if(typeof(history.pushState) == 'function') {
-				let renewURL = location.href;
-
-				
+				let renewURL = location.href;				
 
 				renewURL = renewURL.replace(/\&page=([0-9]+)/ig,'');
 				renewURL = renewURL.split('../');
@@ -286,19 +184,16 @@
 				renewURL = renewURL + v;
 
 				let paraUrl = v.split('.html');
-				console.log(paraUrl);
-
+				// console.log(paraUrl);
 				paraUrl = paraUrl[0].split('/');
-				console.log(paraUrl);
-
+				// console.log(paraUrl);
 				paraUrl = paraUrl[paraUrl.length - 1];
-				console.log(paraUrl);
-
-				
+				// console.log(paraUrl);
 
 				const indexUrl = '../html/index.html?page=' + paraUrl;
    
 				history.pushState(false, 'loading', indexUrl);
+				document.querySelector('body').dataset.page = paraUrl;
 			}
 			if(document.currentScript === undefined){
 				// IE 에서만 돌아갈 내용
@@ -334,7 +229,7 @@
 		},
 
 		menuAjax: function(){
-			const dep2btns = doc.querySelectorAll('.dep-2-btn');
+			const dep2btns = doc.querySelectorAll('.dep2-btn');
 
 			for (let i = 0, len = dep2btns.length; i < len; i++) {
 				const that = dep2btns[i];
@@ -344,13 +239,14 @@
 			function act(e){
 				const el = this;
 				const elHref = el.getAttribute('data-href');
+				const pagename = el.getAttribute('data-href');
 				const el_body = doc.querySelector('body');
-
-				!!el_body.classList.contains('nav-open') && netive.common.toggleNav();
+				console.log(pagename);
+				// !!el_body.classList.contains('nav-open') && netive.common.toggleNav();
 
 				netive.ajax.init({ 
 					area: document.querySelector('.base-main'), 
-					url: elHref, 
+					url: netive.common.meunMap[pagename].link, 
 					page: true, 
 					effect: 'page-change',
 					callback: function(){
@@ -360,7 +256,7 @@
 							focus: doc.querySelector('.base-main h1')
 						});
 						//delete netive.scrollbar;
-						netive.common.pageInit(elHref);
+						netive.common.pageInit(netive.common.meunMap[pagename].link);
 						netive.common.settingAside();
 						
 						// document.addEventListener('DOMContentLoaded', (event) => {
@@ -372,10 +268,6 @@
 					}
 				});
 			}
-
-
-
-			
 		},
 		footer: function(){
 			console.log('footer load');
@@ -383,7 +275,6 @@
 	};
 
 	//modal
-	
 
 	//page 
 	netive.page = {}

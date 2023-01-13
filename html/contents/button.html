@@ -1,544 +1,689 @@
-
-					
 <input type="hidden" id="uiJsName" value="pageButton">
-
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Buttons</h1>
+	<h1 class="tit-l">Buttons</h1>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Default Buttons</h2>
-	<p>정해진 스타일의 버튼으로 중요도, 긍정/부정에 따라 나누어진다.</p>
+<article class="wrap-article">
+	<h2 class="tit-m">Base Button</h2>
+	<p>모든 버튼의 기본 형태이며 a, button 태그로만 구성합니다.</p>
 
-	<h3 class="typo-title-m"></h3>
 	<div class="box-guide">
-		<table class="type-noline">
-			<caption class="ui-caption"></caption>
-			<colgroup>
-				<col class="col-th">
-				<col class="col-auto" span="5">
-			</colgroup>
-			<thead>
-				<tr class="typo-title-s">
-					<th scope="col">Type</th>
-					<th scope="col">Enabled</th>
-					<th scope="col">Disabled</th>
-					<th scope="col">Hovered</th>
-					<th scope="col">Focused</th>
-					<th scope="col">Pressed</th>
-				</tr>
-			</thead>
-			<tbody class="ta-c">
-				<tr>
-					<th scope="row">Base</th>
-					<td>
-						<button type="button" class="btn-base"><span>button tag</span></button>
-						<a href="#none" class="btn-base"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-base" disabled><span>button tag</span></button>
-						<a href="#none" class="btn-base disabled"><span>a tag</span></a>
-					</td>
-					<td class="hover">
-						<button type="button" class="btn-base"><span>button tag</span></button>
-						<a href="#none" class="btn-base"><span>a tag</span></a>
-					</td>
-					<td class="focus">
-						<button type="button" class="btn-base"><span>button tag</span></button>
-						<a href="#none" class="btn-base"><span>a tag</span></a>
-					</td>
-					<td class="press">
-						<button type="button" class="btn-base"><span>button tag</span></button>
-						<a href="#none" class="btn-base"><span>a tag</span></a>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">Primary</th>
-					<td>
-						<button type="button" class="btn-primary"><span>button tag</span></button>
-						<a href="#none" class="btn-primary"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-primary" disabled><span>button tag</span></button>
-						<a href="#none" class="btn-primary disabled"><span>a tag</span></a>
-					</td>
-					<td class="hover">
-						<button type="button" class="btn-primary"><span>button tag</span></button>
-						<a href="#none" class="btn-primary"><span>a tag</span></a>
-					</td>
-					<td class="focus">
-						<button type="button" class="btn-primary"><span>button tag</span></button>
-						<a href="#none" class="btn-primary"><span>a tag</span></a>
-					</td>
-					<td class="press">
-						<button type="button" class="btn-primary"><span>button tag</span></button>
-						<a href="#none" class="btn-primary"><span>a tag</span></a>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">Weak</th>
-					<td>
-						<button type="button" class="btn-weak"><span>button tag</span></button>
-						<a href="#none" class="btn-weak"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-weak" disabled><span>button tag</span></button>
-						<a href="#none" class="btn-weak disabled"><span>a tag</span></a>
-					</td>
-					<td class="hover">
-						<button type="button" class="btn-weak"><span>button tag</span></button>
-						<a href="#none" class="btn-weak"><span>a tag</span></a>
-					</td>
-					<td class="focus">
-						<button type="button" class="btn-weak"><span>button tag</span></button>
-						<a href="#none" class="btn-weak"><span>a tag</span></a>
-					</td>
-					<td class="press">
-						<button type="button" class="btn-weak"><span>button tag</span></button>
-						<a href="#none" class="btn-weak"><span>a tag</span></a>
-					</td>
-				</tr>
-
-			</tbody>
-		</table>
+		<button type="button" class="btn-base">
+			<guide></guide>
+			<span>button tag</span>
+		</button>
+		<a href="#none" class="btn-base">
+			<guide></guide>
+			<span>a tag</span>
+		</a>
 	</div>
+
 <pre class="box-code"><code class="html">
-&lt;button type="button" class="btn-base"&gt;
-	&lt;span&gt;button&lt;/span&gt;
-&lt;/div&gt;
-&lt;button type="button" class="btn-primary"&gt;
-	&lt;span&gt;button&lt;/span&gt;
-&lt;/div&gt;
-&lt;button type="button" class="btn-weak"&gt;
-	&lt;span&gt;button&lt;/span&gt;
-&lt;/div&gt;
-</code>
-</pre>
+<tag-comment>// text button</tag-comment>
+&lt;button type="button" 
+	<tag-class>class="btn-base" 
+	data-size="{ large | small }" 
+	data-shape="{ round | no }" 
+	data-color="{ primary | secondary | gray }
+	data-icon="{ name }
+	data-icon-ps="{ front | center | back }"</tag-class>&gt;
+	&lt;span&gt;<tag-input>{name}</tag-input>&lt;/span&gt;
+&lt;/button&gt;
 
-</section>
+<tag-comment>// only icon button</tag-comment>
+&lt;button type="button" 
+	<tag-class>class="btn-base"  
+	data-icon="{name}" 
+	data-icon-ps="center"</tag-class>&gt;
+	&lt;span <tag-class>class="a11y-hidden"</tag-class>&gt;<tag-input>{name}</tag-input>&lt;/span&gt;
+&lt;/button&gt;
+&lt;button type="button" 
+	<tag-class>class="btn-base" 
+	data-icon="{name}" 
+	data-icon-ps="center"
+	aria-label="{name}"</tag-class>&gt;
+&lt;/button&gt;
+</code></pre>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Mix buttons</h2>
-	<p>버튼의 타입, 외형, 색상, 크기의 조합으로 최종 스타일을 정의한다. </p>
+	
+	<section class="wrap-section">
+		<h3 class="tit-s">Size & Shape</h3>
+		<div class="box-guide">
+			<table class="type-noline mt-x2">
+				<caption class="ui-caption"></caption>
+				<colgroup>
+					<col class="col-th">
+					<col class="col-auto" span="3">
+				</colgroup>
+				<thead>
+					<tr class="tit-xxs">
+						<th scope="col">Size/Shape</th>
+						<th scope="col">Large</th>
+						<th scope="col">Medium</th>
+						<th scope="col">Small</th>
+					</tr>
+				</thead>
+				<tbody class="ta-c">
+					<tr>
+						<th>Base</th>
+						<td>
+							<button type="button" class="btn-base large"><span>button tag</span></button>
+							<a href="#none" class="btn-base large"><span>a tag</span></a>
+						</td>
+						<td>
+							<button type="button" class="btn-base"><span>button tag</span></button>
+							<a href="#none" class="btn-base"><span>a tag</span></a>
+						</td>
+						<td>
+							<button type="button" class="btn-base small"><span>button tag</span></button>
+							<a href="#none" class="btn-base small"><span>a tag</span></a>
+						</td>
 
-	<h3 class="typo-title-m">Mix - Type</h3>
+					</tr>
+					<tr>
+						<th>Round</th>
+						<td>
+							<button type="button" class="btn-base" data-size="large" data-shape="round"><span>button tag</span></button>
+							<a href="#none" class="btn-base large round"><span>a tag</span></a>
+						</td>
+						<td>
+							<button type="button" class="btn-base round"><span>button tag</span></button>
+							<a href="#none" class="btn-base round"><span>a tag</span></a>
+						</td>
+						<td>
+							<button type="button" class="btn-base small round"><span>button tag</span></button>
+							<a href="#none" class="btn-base small round"><span>a tag</span></a>
+						</td>
+					</tr>
+					<tr>
+						<th>NoLine</th>
+						<td>
+							<button type="button" class="btn-base large no-line"><span>button tag</span></button>
+							<a href="#none" class="btn-base large no-line"><span>a tag</span></a>
+						</td>
+						<td>
+							<button type="button" class="btn-base no-line"><span>button tag</span></button>
+							<a href="#none" class="btn-base no-line"><span>a tag</span></a>
+						</td>
+						<td>
+							<button type="button" class="btn-base small no-line"><span>button tag</span></button>
+							<a href="#none" class="btn-base small no-line"><span>a tag</span></a>
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">Color</h3>
+		<div class="box-guide">
+			<table class="type-noline mt-x2">
+				<caption class="ui-caption"></caption>
+				<colgroup>
+					<col class="col-th">
+					<col class="col-auto" span="5">
+				</colgroup>
+				<thead>
+					<tr class="tit-xxs">
+						<th scope="col">Color</th>
+						<th scope="col">Enabled</th>
+						<th scope="col">Disabled</th>
+						<th scope="col">Hovered</th>
+						<th scope="col">Focused</th>
+						<th scope="col">Pressed</th>
+					</tr>
+				</thead>
+				<tbody class="ta-c">
+					<tr>
+						<th scope="row">Base</th>
+						<td>
+							<button type="button" class="btn-base"><span>button tag</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base" disabled><span>button tag</span></button>
+						</td>
+						<td class="hover">
+							<button type="button" class="btn-base hover"><span>button tag</span></button>
+						</td>
+						<td class="focus">
+							<button type="button" class="btn-base focus"><span>button tag</span></button>
+						</td>
+						<td class="press">
+							<button type="button" class="btn-base active"><span>button tag</span></button>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">primary</th>
+						<td>
+							<button type="button" class="btn-base primary"><span>button tag</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base primary" disabled><span>button tag</span></button>
+						</td>
+						<td class="hover">
+							<button type="button" class="btn-base primary hover"><span>button tag</span></button>
+						</td>
+						<td class="focus">
+							<button type="button" class="btn-base primary focus"><span>button tag</span></button>
+						</td>
+						<td class="press">
+							<button type="button" class="btn-base primary active"><span>button tag</span></button>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">secondary</th>
+						<td>
+							<button type="button" class="btn-base secondary"><span>button tag</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base secondary" disabled><span>button tag</span></button>
+						</td>
+						<td class="hover">
+							<button type="button" class="btn-base secondary hover"><span>button tag</span></button>
+						</td>
+						<td class="focus">
+							<button type="button" class="btn-base secondary focus"><span>button tag</span></button>
+						</td>
+						<td class="press">
+							<button type="button" class="btn-base secondary active"><span>button tag</span></button>
+						</td>
+					</tr>
+					<tr>
+						<th>Gray</th>
+						<td>
+							<button type="button" class="btn-base gray"><span>button tag</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base gray" disabled><span>button tag</span></button>
+						</td>
+						<td class="hover">
+							<button type="button" class="btn-base gray hover"><span>button tag</span></button>
+						</td>
+						<td class="focus">
+							<button type="button" class="btn-base gray focus"><span>button tag</span></button>
+						</td>
+						<td class="press">
+							<button type="button" class="btn-base gray active"><span>button tag</span></button>
+						</td>
+					</tr>
+
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">Icon</h3>
+		<div class="box-guide">
+			<table class="type-noline mt-x2">
+				<caption class="ui-caption"></caption>
+				<colgroup>
+					<col class="col-th">
+					<col class="col-auto" span="3">
+				</colgroup>
+				<thead>
+					<tr class="tit-xxs">
+						<th scope="col">Size/Icon</th>
+						<th scope="col">Large</th>
+						<th scope="col">Medium</th>
+						<th scope="col">Small</th>
+					</tr>
+				</thead>
+				<tbody class="ta-c">
+					<tr>
+						<th>img (front)</th>
+						<td>
+							<button type="button" class="btn-base" data-size="large" 
+							data-icon="search"
+							data-icon-ps="front"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="large" 
+							data-shape="round" 
+							data-icon="search"
+							data-icon-ps="front"><span>a</span></a>
+							
+							<button type="button" class="btn-base" data-size="large" 
+							data-shape="no" 
+							data-icon="search"
+							data-icon-ps="front"><span>button</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base" data-size="medium" 
+							data-icon="search"
+							data-icon-ps="front"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="medium" 
+							data-shape="round" 
+							data-icon="search"
+							data-icon-ps="front"><span>a</span></a>
+							
+							<button type="button" class="btn-base" data-size="medium" 
+							data-shape="no" 
+							data-icon="search"
+							data-icon-ps="front"><span>button</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base" data-size="small" 
+							data-icon="search"
+							data-icon-ps="front"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="small" 
+							data-shape="round" 
+							data-icon="search"
+							data-icon-ps="front"><span>a</span></a>
+							
+							<button type="button" class="btn-base" data-size="small" 
+							data-shape="no" 
+							data-icon="search"
+							data-icon-ps="front"><span>button</span></button>
+						</td>
+					</tr>
+					<tr>
+						<th>img (back)</th>
+						<td>
+							<button type="button" class="btn-base" data-size="large" 
+							data-icon="search"
+							data-icon-ps="back"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="large" 
+							data-shape="round" 
+							data-icon="search"
+							data-icon-ps="back"><span>a</span></a>
+							
+							<button type="button" class="btn-base" data-size="large" 
+							data-shape="no" 
+							data-icon="search"
+							data-icon-ps="back"><span>button</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base" data-size="medium" 
+							data-icon="search"
+							data-icon-ps="back"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="medium" 
+							data-shape="round" 
+							data-icon="search"
+							data-icon-ps="back"><span>a</span></a>
+							
+							<button type="button" class="btn-base" data-size="medium" 
+							data-shape="no" 
+							data-icon="search"
+							data-icon-ps="back"><span>button</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base" data-size="small" 
+							data-icon="search"
+							data-icon-ps="back"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="small" 
+							data-shape="round" 
+							data-icon="search"
+							data-icon-ps="back"><span>a</span></a>
+							
+							<button type="button" class="btn-base" data-size="small" 
+							data-shape="no" 
+							data-icon="search"
+							data-icon-ps="back"><span>button</span></button>
+						</td>
+
+					</tr>
+					<tr>
+						<th>img (only)</th>
+						<td>
+							<button type="button" class="btn-base" 
+							data-size="large" 
+							data-icon="search"
+							data-icon-ps="center"><span class="a11y-hidden">button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="large" 
+							data-shape="round" 
+							data-icon="search"
+							data-icon-ps="center"><span class="a11y-hidden">a</span></a>
+
+							<button type="button" class="btn-base" data-size="large" 
+							data-shape="no" 
+							data-icon="search"
+							data-icon-ps="center"><span class="a11y-hidden">button</span></button>
+
+						</td>
+						<td>
+							<button type="button" class="btn-base icon-only" data-icon="search"><span class="a11y-hidden">button</span></button>
+							<a href="#none" class="btn-base round icon-only" data-icon="search"><span class="a11y-hidden">a</span></a>
+							<button type="button" class="btn-base icon-only no-line" data-icon="search"><span class="a11y-hidden">button</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base small icon-only" data-icon="search"><span class="a11y-hidden">button</span></button>
+							<a href="#none" class="btn-base round small icon-only" data-icon="search"><span class="a11y-hidden">a</span></a>
+							<button type="button" class="btn-base small icon-only no-line" data-icon="search"><span class="a11y-hidden">button</span></button>
+						</td>
+
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">Icon(material)</h3>
+		<p><a href="https://fonts.google.com/icons" target="_blank">Material Symbols</a></p>
+		<div class="box-guide">
+			<table class="type-noline mt-x2">
+				<caption class="ui-caption"></caption>
+				<colgroup>
+					<col class="col-th">
+					<col class="col-auto" span="3">
+				</colgroup>
+				<thead>
+					<tr class="tit-xxs">
+						<th scope="col">Size/Icon</th>
+						<th scope="col">Large</th>
+						<th scope="col">Medium</th>
+						<th scope="col">Small</th>
+
+					</tr>
+				</thead>
+				<tbody class="ta-c">
+					<tr>
+						<th>img (front)</th>
+						<td>
+							<button type="button" class="btn-base" 
+							data-size="large" 
+							data-icon-ps="front" 
+							data-material="search"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="large" 
+							data-shape="round" 
+							data-icon-ps="front" data-material="delete"><span>a</span></a>
+							
+							<button type="button" class="btn-base" 
+							data-size="large" 
+							data-shape="no" 
+							data-icon-ps="front" data-material="grade"><span>button</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base" 
+							data-size="medium" 
+							data-icon-ps="front" 
+							data-material="search"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="medium" 
+							data-shape="round" 
+							data-icon-ps="front" data-material="delete"><span>a</span></a>
+							
+							<button type="button" class="btn-base" 
+							data-size="medium" 
+							data-shape="no" 
+							data-icon-ps="front" data-material="grade"><span>button</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base" 
+							data-size="small" 
+							data-icon-ps="front" 
+							data-material="search"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="small" 
+							data-shape="round" 
+							data-icon-ps="front" data-material="delete"><span>a</span></a>
+							
+							<button type="button" class="btn-base" 
+							data-size="small" 
+							data-shape="no" 
+							data-icon-ps="front" data-material="grade"><span>button</span></button>
+						</td>
+
+					</tr>
+					<tr>
+						<th>img (back)</th>
+						<td>
+							<button type="button" class="btn-base" 
+							data-size="large" 
+							data-icon-ps="back" 
+							data-material="search"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="large" 
+							data-shape="round" 
+							data-icon-ps="back" data-material="delete"><span>a</span></a>
+							
+							<button type="button" class="btn-base" 
+							data-size="large" 
+							data-shape="no" 
+							data-icon-ps="back" data-material="grade"><span>button</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base" 
+							data-size="medium" 
+							data-icon-ps="back" 
+							data-material="search"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="medium" 
+							data-shape="round" 
+							data-icon-ps="back" data-material="delete"><span>a</span></a>
+							
+							<button type="button" class="btn-base" 
+							data-size="medium" 
+							data-shape="no" 
+							data-icon-ps="back" data-material="grade"><span>button</span></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base" 
+							data-size="small" 
+							data-icon-ps="back" 
+							data-material="search"><span>button</span></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="small" 
+							data-shape="round" 
+							data-icon-ps="back" data-material="delete"><span>a</span></a>
+							
+							<button type="button" class="btn-base" 
+							data-size="small" 
+							data-shape="no" 
+							data-icon-ps="back" data-material="grade"><span>button</span></button>
+						</td>
+					</tr>
+					<tr>
+						<th>img (only)</th>
+						<td>
+							<button type="button" class="btn-base" 
+							data-size="large" 
+							data-icon-ps="center" 
+							data-material="search" 
+							aria-label="button"></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="large" 
+							data-shape="round" 
+							data-icon-ps="center" 
+							data-material="delete"
+							aria-label="a"></a>
+							
+							<button type="button" class="btn-base" 
+							data-size="large" 
+							data-shape="no" 
+							data-icon-ps="center" 
+							data-material="grade" 
+							aria-label="button"></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base" 
+							data-size="medium" 
+							data-icon-ps="center" 
+							data-material="search" 
+							aria-label="button"></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="medium" 
+							data-shape="round" 
+							data-icon-ps="center" 
+							data-material="delete"
+							aria-label="a"></a>
+							
+							<button type="button" class="btn-base" 
+							data-size="medium" 
+							data-shape="no" 
+							data-icon-ps="center" 
+							data-material="grade" 
+							aria-label="button"></button>
+						</td>
+						<td>
+							<button type="button" class="btn-base" 
+							data-size="small" 
+							data-icon-ps="center" 
+							data-material="search" 
+							aria-label="button"></button>
+							
+							<a href="#none" class="btn-base" 
+							data-size="small" 
+							data-shape="round" 
+							data-icon-ps="center" 
+							data-material="delete"
+							aria-label="a"></a>
+							
+							<button type="button" class="btn-base" 
+							data-size="small" 
+							data-shape="no" 
+							data-icon-ps="center" 
+							data-material="grade" 
+							aria-label="button"></button>
+						</td>
+					</tr>
+					
+				</tbody>
+			</table>
+		</div>
+	</section>
+</article>
+	
+<article class="wrap-article">
+	<h2 class="tit-m">Button wrap</h2>
+	<p>기본적으로 버튼을 감싸는 요소로 사용한다.<br>
+		<a href="/project/UI/html/index.html?page=layout">layout내용 참고</a>
+	</p>
 	<div class="box-guide">
-		<table class="type-noline">
-			<caption class="ui-caption"></caption>
-			<colgroup>
-				<col class="col-th">
-				<col class="col-auto" span="5">
-			</colgroup>
-			<thead>
-				<tr class="typo-title-s">
-					<th scope="col">Type</th>
-					<th scope="col">Enabled</th>
-					<th scope="col">Disabled</th>
-					<th scope="col">Hovered</th>
-					<th scope="col">Focused</th>
-					<th scope="col">Pressed</th>
-				</tr>
-			</thead>
-			<tbody class="ta-c">
-				<tr>
-					<th scope="row">Outlined</th>
-					<td>
-						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-outlined" disabled><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined disabled"><span>a tag</span></a>
-					</td>
-					<td class="hover">
-						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined"><span>a tag</span></a>
-					</td>
-					<td class="focus">
-						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined"><span>a tag</span></a>
-					</td>
-					<td class="press">
-						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined"><span>a tag</span></a>
-					</td>
-				</tr>
-
-				<tr>
-					<th scope="row">Filled</th>
-					<td>
-						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-filled" disabled><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled disabled"><span>a tag</span></a>
-					</td>
-					<td class="hover">
-						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled"><span>a tag</span></a>
-					</td>
-					<td class="focus">
-						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled"><span>a tag</span></a>
-					</td>
-					<td class="press">
-						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled"><span>a tag</span></a>
-					</td>
-				</tr>
-
-				<tr>
-					<th scope="row">Elevated</th>
-					<td>
-						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-elevated" disabled><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated disabled"><span>a tag</span></a>
-					</td>
-					<td class="hover">
-						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated"><span>a tag</span></a>
-					</td>
-					<td class="focus">
-						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated"><span>a tag</span></a>
-					</td>
-					<td class="press">
-						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated"><span>a tag</span></a>
-					</td>
-				</tr>
-
-				<tr>
-					<th scope="row">Text</th>
-					<td>
-						<button type="button" class="btn-mix-text"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-text" disabled><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text disabled"><span>a tag</span></a>
-					</td>
-					<td class="hover">
-						<button type="button" class="btn-mix-text"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text"><span>a tag</span></a>
-					</td>
-					<td class="focus">
-						<button type="button" class="btn-mix-text"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text"><span>a tag</span></a>
-					</td>
-					<td class="press">
-						<button type="button" class="btn-mix-text"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text"><span>a tag</span></a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-
-	<h3 class="typo-title-m">Mix - Shape</h3>
-	<div class="box-guide">
-		<table class="type-noline">
-			<caption class="ui-caption"></caption>
-			<colgroup>
-				<col class="col-th">
-				<col class="col-auto" span="3">
-			</colgroup>
-			<thead>
-				<tr class="typo-title-s">
-					<th scope="col">Shape</th>
-					<th scope="col">Outlined</th>
-					<th scope="col">Filled</th>
-					<th scope="col">Elevated</th>
-				</tr>
-			</thead>
-			<tbody class="ta-c">
-				<tr>
-					<th scope="row">Rectangle</th>
-					<td>
-						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled"><span>a tag</span></a>
-					</td>
-					<td >
-						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated"><span>a tag</span></a>
-					</td>
-				</tr>
-
-				<tr>
-					<th scope="row">Round</th>
-					<td>
-						<button type="button" class="btn-mix-outlined-round"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined-round"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-filled-round"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled-round"><span>a tag</span></a>
-					</td>
-					<td >
-						<button type="button" class="btn-mix-elevated-round"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated-round"><span>a tag</span></a>
-					</td>
-				</tr>
-
-			</tbody>
-		</table>
-	</div>
-
-	<h3 class="typo-title-m">Mix - Size</h3>
-	<div class="box-guide">
-		<table class="type-noline">
-			<caption class="ui-caption"></caption>
-			<colgroup>
-				<col class="col-th">
-				<col class="col-auto" span="4">
-			</colgroup>
-			<thead>
-				<tr class="typo-title-s">
-					<th scope="col">Size</th>
-					<th scope="col">Outlined</th>
-					<th scope="col">Filled</th>
-					<th scope="col">Elevated</th>
-					<th scope="col">Text</th>
-				</tr>
-			</thead>
-			<tbody class="ta-c">
-				<tr>
-					<th scope="row">Small</th>
-					<td>
-						<button type="button" class="btn-mix-outlined-s"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined-s round"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-filled-s"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled-s round"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-elevated-s"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated-s round"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-text-s"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text-s round"><span>a tag</span></a>
-					</td>
-				</tr>
-
-				<tr>
-					<th scope="row">Regular</th>
-					<td>
-						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined round"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled round"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated round"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-text"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text round"><span>a tag</span></a>
-					</td>
-				</tr>
-
-				<tr>
-					<th scope="row">Large</th>
-					<td>
-						<button type="button" class="btn-mix-outlined-l"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined-l round"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-filled-l"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled-l round"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-elevated-l"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated-l round"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-text-l"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text-l round"><span>a tag</span></a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-
-	<h3 class="typo-title-m">Mix - Color</h3>
-	<div class="box-guide">
-		<table class="type-noline">
-			<caption class="ui-caption"></caption>
-			<colgroup>
-				<col class="col-th">
-				<col class="col-auto" span="4">
-			</colgroup>
-			<thead>
-				<tr class="typo-title-s">
-					<th scope="col">Color</th>
-					<th scope="col">Outlined</th>
-					<th scope="col">Filled</th>
-					<th scope="col">Elevated</th>
-					<th scope="col">Text</th>
-				</tr>
-			</thead>
-			<tbody class="ta-c">
-				<tr>
-					<th scope="row">Primary</th>
-					<td>
-						<button type="button" class="btn-mix-outlined-primary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined round-primary"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-filled-primary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled round-primary"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-elevated-primary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated round-primary"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-text-primary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text round-primary"><span>a tag</span></a>
-					</td>
-				</tr>
-
-				<tr>
-					<th scope="row">Secondary</th>
-					<td>
-						<button type="button" class="btn-mix-outlined-secondary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined-r-secondary"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-filled-secondary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled-r-secondary"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-elevated-secondary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated-r-secondary"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-text-secondary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text-r-secondary"><span>a tag</span></a>
-					</td>
-				</tr>
-
-				<tr>
-					<th scope="row">Weak</th>
-					<td>
-						<button type="button" class="btn-mix-outlined-tertiary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined-r-tertiary"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-filled-tertiary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled-r-tertiary"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-elevated-tertiary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated-r-tertiary"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-text-tertiary"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text-r-tertiary"><span>a tag</span></a>
-					</td>
-				</tr>
-
-				<tr>
-					<th scope="row">Normal</th>
-					<td>
-						<button type="button" class="btn-mix-outlined"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-outlined-r"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-filled"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-filled-r"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-elevated"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-elevated-r"><span>a tag</span></a>
-					</td>
-					<td>
-						<button type="button" class="btn-mix-text"><span>button tag</span></button>
-						<a href="#none" class="btn-mix-text-r"><span>a tag</span></a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-<pre class="box-code"><code class="html">
-&lt;button type="button" class="btn-mix-[type]-[shape]-[size]-[color]"&gt;
-	&lt;span&gt;button&lt;/span&gt;
-&lt;/div&gt;
-[type] : outlined, filled, elevated, text
-[shape] : r
-[size] : s, l
-[color] : primary, secondary, weak
-
-</code>
-</pre>
-
-</section>
-
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Button wrap</h2>
-	<p>기본적으로 버튼을 감싸는 요소로 사용한다.</p>
-	<div class="box-guide">
-		<div class="wrap-btn" style="outline:3px dashed #E0E0E0">
-			<button type="button" class="btn-mix-outlined-m"><span>default gap</span></button>
-			<a href="#none" class="btn-mix-outlined-m"><span>default gap</span></a>
+		<div class="wrap-group">
+			<guide></guide>
+			<button type="button" class="btn-base"><span>button 1</span></button>
 		</div>
-		<div class="wrap-btn no-gap" style="outline:3px dashed #E0E0E0">
-			<button type="button" class="btn-mix-outlined-m"><span>no gap</span></button>
-			<a href="#none" class="btn-mix-outlined-m"><span>no gap</span></a>
+		<div class="wrap-group">
+			<guide></guide>
+			<button type="button" class="btn-base"><span>button 1</span></button>
+			<a href="#none" class="btn-base"><span>button 2</span></a>
 		</div>
-		<div class="test-bottom">
-			<div class="wrap-btn sticky-top" style="outline:3px dashed #E0E0E0">
-				<button type="button" class="btn-mix-outlined-m"><span>sticky top</span></button>
-			</div>
+		<div class="wrap-group no-gap">
+			<guide></guide>
+			<button type="button" class="btn-base"><span>button 1</span></button>
+			<a href="#none" class="btn-base"><span>button 2</span></a>
 		</div>
-		<div class="test-bottom">
-			<div class="wrap-btn sticky-bottom" style="outline:3px dashed #E0E0E0">
-				<button type="button" class="btn-mix-outlined-m"><span>sticky bottom</span></button>
-			</div>
+
+		<div class="wrap-group left">
+			<guide></guide>
+			<button type="button" class="btn-base"><span>button 1</span></button>
+			<a href="#none" class="btn-base"><span>button 2</span></a>
 		</div>
-		<div class="wrap-btn left" style="outline:3px dashed #E0E0E0">
-			<button type="button" class="btn-mix-outlined-m"><span>align left</span></button>
-			<a href="#none" class="btn-mix-outlined-m"><span>align left</span></a>
+		<div class="wrap-group center">
+			<guide></guide>
+			<button type="button" class="btn-base"><span>button 1</span></button>
+			<a href="#none" class="btn-base"><span>button 2</span></a>
 		</div>
-		<div class="wrap-btn center" style="outline:3px dashed #E0E0E0">
-			<button type="button" class="btn-mix-outlined-m"><span>align center</span></button>
-			<a href="#none" class="btn-mix-outlined-m"><span>align center</span></a>
-		</div>
-		<div class="wrap-btn right" style="outline:3px dashed #E0E0E0">
-			<button type="button" class="btn-mix-outlined-m"><span>align right</span></button>
-			<a href="#none" class="btn-mix-outlined-m"><span>align right</span></a>
+		<div class="wrap-group right">
+			<guide></guide>
+			<button type="button" class="btn-base"><span>button 1</span></button>
+			<a href="#none" class="btn-base"><span>button 2</span></a>
 		</div>
 		
+		<div class="wrap-group left">
+			<guide></guide>
+			<button type="button" class="btn-base"><span>button 1</span></button>
+			<a href="#none" class="btn-base"><span>button 2</span></a>
+			<button type="button" class="btn-base"><span>button 3</span></button>
+			<a href="#none" class="btn-base"><span>button 4</span></a>
+			<button type="button" class="btn-base"><span>button 5</span></button>
+				<a href="#none" class="btn-base"><span>button 6</span></a>
+			<div class="wrap-group right">
+				<guide class="n2"></guide> 
+				<button type="button" class="btn-base"><span>button 7</span></button>
+				<a href="#none" class="btn-base"><span>button 8</span></a>
+			</div>
+		</div>
+
+		<div class="wrap-group right">
+			<guide></guide>
+			<div class="wrap-group left mr-x2">
+				<guide class="n2"></guide> 
+				<div class="bul-error">
+					<div>
+						거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다. 거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.
+					</div>
+				</div>
+			</div>
+
+			<button type="button" class="btn-base"><span>button 1</span></button>
+			<a href="#none" class="btn-base"><span>button 2</span></a>
+		</div>
 	</div>
 
 <pre class="box-code"><code class="html">
-&lt;div class="wrap-btn"&gt;...&lt;/div&gt;
+&lt;div class="wrap-group"&gt;
+	&lt;button type="button" class="btn-base"&gt;&lt;span&gt;button 1&lt;/span&gt;&lt;/button&gt;
+&lt;/div&gt;
+&lt;div class="wrap-group"&gt;
+	&lt;button type="button" class="btn-base"&gt;&lt;span&gt;button 1&lt;/span&gt;&lt;/button&gt;
+	&lt;a href="#none" class="btn-base"&gt;&lt;span&gt;button 2&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class="wrap-group no-gap"&gt;
+	&lt;button type="button" class="btn-base"&gt;&lt;span&gt;button 1&lt;/span&gt;&lt;/button&gt;
+	&lt;a href="#none" class="btn-base"&gt;&lt;span&gt;button 2&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
 
-&lt;div class="wrap-btn no-gap"&gt;...&lt;/div&gt;
+&lt;div class="wrap-group left"&gt;
+	&lt;button type="button" class="btn-base"&gt;&lt;span&gt;button 1&lt;/span&gt;&lt;/button&gt;
+	&lt;a href="#none" class="btn-base"&gt;&lt;span&gt;button 2&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class="wrap-group center"&gt;
+	&lt;button type="button" class="btn-base"&gt;&lt;span&gt;button 3&lt;/span&gt;&lt;/button&gt;
+	&lt;a href="#none" class="btn-base"&gt;&lt;span&gt;button 4&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+&lt;div class="wrap-group right"&gt;
+	&lt;button type="button" class="btn-base"&gt;&lt;span&gt;button 5&lt;/span&gt;&lt;/button&gt;
+	&lt;a href="#none" class="btn-base"&gt;&lt;span&gt;button 6&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
 
-&lt;div class="wrap-btn sticky-top"&gt;...&lt;/div&gt;
+&lt;div class="wrap-group left"&gt;
+	&lt;button type="button" class="btn-base"&gt;&lt;span&gt;button 1&lt;/span&gt;&lt;/button&gt;
+	&lt;a href="#none" class="btn-base"&gt;&lt;span&gt;button 2&lt;/span&gt;&lt;/a&gt;
+	
+	&lt;div class="wrap-group right"&gt;
+		&lt;button type="button" class="btn-base"&gt;&lt;span&gt;button 5&lt;/span&gt;&lt;/button&gt;
+		&lt;a href="#none" class="btn-base"&gt;&lt;span&gt;button 6&lt;/span&gt;&lt;/a&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="wrap-group right"&gt;
+	&lt;div class="wrap-group left"&gt;
+		&lt;guide class="n2"&gt;&lt;/guide&gt; 
+		&lt;button type="button" class="btn-base"&gt;&lt;span&gt;button 1&lt;/span&gt;&lt;/button&gt;
+		&lt;a href="#none" class="btn-base"&gt;&lt;span&gt;button 2&lt;/span&gt;&lt;/a&gt;
+	&lt;/div&gt;
 
-&lt;div class="wrap-btn sticky-bottom"&gt;...&lt;/div&gt;
+	&lt;button type="button" class="btn-base"&gt;&lt;span&gt;button 5&lt;/span&gt;&lt;/button&gt;
+	&lt;a href="#none" class="btn-base"&gt;&lt;span&gt;button 6&lt;/span&gt;&lt;/a&gt;
+&lt;/div&gt;
+</code></pre>
 
-&lt;div class="wrap-btn left"&gt;...&lt;/div&gt;
+</article>
 
-&lt;div class="wrap-btn center"&gt;...&lt;/div&gt;
-
-&lt;div class="wrap-btn right"&gt;...&lt;/div&gt;
-</code>
-</pre>
-</section>
 

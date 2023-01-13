@@ -1,0 +1,427 @@
+@charset "utf-8";
+
+/*
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&family=Roboto:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&subset=korean'); 
+@import url('https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp');
+*/
+
+@import url('https://fonts.googleapis.com/css2?family=Source+Code+Pro:wght@200;300;400;500;600&display=swap');
+
+/* google material icons */
+@font-face {
+    font-family: 'Material Icons';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../font/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format('woff2');
+}
+
+/* fallback */
+@font-face {
+    font-family: 'Material Icons Outlined';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../font/gok-H7zzDkdnRel8-DQ6KAXJ69wP1tGnf4ZGhUce.woff2) format('woff2');
+}
+
+/* fallback */
+@font-face {
+    font-family: 'Material Icons Round';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../font/LDItaoyNOAY6Uewc665JcIzCKsKc_M9flwmP.woff2) format('woff2');
+}
+
+/* fallback */
+@font-face {
+    font-family: 'Material Icons Sharp';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../font/oPWQ_lt5nv4pWNJpghLP75WiFR4kLh3kvmvR.woff2) format('woff2');
+}
+
+/* fallback */
+@font-face {
+    font-family: 'Material Icons Two Tone';
+    font-style: normal;
+    font-weight: 400;
+    src: url(../font/hESh6WRmNCxEqUmNyh3JDeGxjVVyMg4tHGctNCu0.woff2) format('woff2');
+}
+
+.material-icons {
+    font-family: 'Material Icons';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2.2rem;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-outlined {
+    font-family: 'Material Icons Outlined';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2.2rem;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-round {
+    font-family: 'Material Icons Round';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2.2rem;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-sharp {
+    font-family: 'Material Icons Sharp';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2.2rem;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+.material-icons-two-tone {
+    font-family: 'Material Icons Two Tone';
+    font-weight: normal;
+    font-style: normal;
+    font-size: 2.2rem;
+    line-height: 1;
+    letter-spacing: normal;
+    text-transform: none;
+    display: inline-block;
+    white-space: nowrap;
+    word-wrap: normal;
+    direction: ltr;
+    -webkit-font-feature-settings: 'liga';
+    -webkit-font-smoothing: antialiased;
+}
+
+/* 국문 */
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 100;
+    font-display: swap;
+    src:
+        url('../font/Pretendard-Thin.woff2') format('woff2'),
+        url('../font/Pretendard-Thin.woff') format('woff');
+
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 200;
+    font-display: swap;
+    src:
+        url('../font/Pretendard-ExtraLight.woff2') format('woff2'),
+        url('../font/Pretendard-ExtraLight.woff') format('woff');
+
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src:
+        url('../font/Pretendard-Light.woff2') format('woff2'),
+        url('../font/Pretendard-Light.woff') format('woff');
+
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src:
+        url('../font/Pretendard-Regular.woff2') format('woff2'),
+        url('../font/Pretendard-Regular.woff') format('woff');
+
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src:
+        url('../font/Pretendard-Medium.woff2') format('woff2'),
+        url('../font/Pretendard-Medium.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src:
+        url('../font/Pretendard-SemiBold.woff2') format('woff2'),
+        url('../font/Pretendard-SemiBold.woff') format('woff');
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src:
+        url('../font/Pretendard-Bold.woff2') format('woff2'),
+        url('../font/Pretendard-Bold.woff') format('woff');
+
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src:
+        url('../font/Pretendard-ExtraBold.woff2') format('woff2'),
+        url('../font/Pretendard-ExtraBold.woff') format('woff');
+
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src:
+        url('../font/Pretendard-Black.woff2') format('woff2'),
+        url('../font/Pretendard-Black.woff') format('woff');
+}
+
+/* 영문 */
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 100;
+    font-display: swap;
+    src:
+        // url('../font/Mulish-ExtraLight.woff2') format('woff2'),
+        url('../font/Mulish-ExtraLight.woff') format('woff');
+    unicode-range: U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 200;
+    font-display: swap;
+    src:
+        // url('../font/Mulish-Light.woff2') format('woff2'),
+        url('../font/Mulish-Light.woff') format('woff');
+    unicode-range: U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src:
+        // url('../font/Mulish-Light.woff2') format('woff2'),
+        url('../font/Mulish-Light.woff') format('woff'),;
+    unicode-range: U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src:
+        // url('../font/Mulish-Regular.woff2') format('woff2'),
+        url('../font/Mulish-Regular.woff') format('woff');
+    unicode-range: U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src:
+        // url('../font/Mulish-Medium.woff2') format('woff2'),
+        url('../font/Mulish-Medium.woff') format('woff');
+    unicode-range: U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src:
+        // url('../font/Mulish-SemiBold.woff2') format('woff2'),
+        url('../font/Mulish-SemiBold.woff') format('woff');
+    unicode-range: U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src:
+        // url('../font/Mulish-Bold.woff2') format('woff2'),
+        url('../font/Mulish-Bold.woff') format('woff');
+    unicode-range: U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src:
+        // url('../font/Mulish-ExtraBold.woff2') format('woff2'),
+        url('../font/Mulish-ExtraBold.woff') format('woff');
+    unicode-range: U+0041-005A, U+0061-007A;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src:
+        // url('../font/Mulish-Black.woff2') format('woff2'),
+        url('../font/Mulish-Black.woff') format('woff');
+    unicode-range: U+0041-005A, U+0061-007A;
+}
+
+
+/* 숫자 */
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 100;
+    font-display: swap;
+    src:
+        // url('../font/RobotoMono-Thin.woff2') format('woff2'),
+        url('../font/RobotoMono-Thin.woff') format('woff');
+    unicode-range: U+0030-0039;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 200;
+    font-display: swap;
+    src:
+        // url('../font/RobotoMono-Light.woff2') format('woff2'),
+        url('../font/RobotoMono-Light.woff') format('woff');
+    unicode-range: U+0030-0039;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 300;
+    font-display: swap;
+    src:
+        // url('../font/RobotoMono-ExtraLight.woff2') format('woff2'),
+        url('../font/RobotoMono-ExtraLight.woff') format('woff');
+    unicode-range: U+0030-0039;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src:
+        // url('../font/RobotoMono-Regular.woff2') format('woff2'),
+        url('../font/RobotoMono-Regular.woff') format('woff');
+    unicode-range: U+0030-0039;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src:
+        // url('../font/RobotoMono-Medium.woff2') format('woff2'),
+        url('../font/RobotoMono-Medium.woff') format('woff');
+    unicode-range: U+0030-0039;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src:
+        // url('../font/RobotoMono-SemiBold.woff2') format('woff2'),
+        url('../font/RobotoMono-SemiBold.woff') format('woff');
+    unicode-range: U+0030-0039;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src:
+        // url('../font/RobotoMono-Bold.woff2') format('woff2'),
+        url('../font/RobotoMono-Bold.woff') format('woff');
+    unicode-range: U+0030-0039;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 800;
+    font-display: swap;
+    src:
+        // url('../font/RobotoMono-Bold.woff2') format('woff2'),
+        url('../font/RobotoMono-Bold.woff') format('woff');
+    unicode-range: U+0030-0039;
+}
+
+@font-face {
+    font-family: 'Base';
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src:
+        // url('../font/RobotoMono-Bold.woff2') format('woff2'),
+        url('../font/RobotoMono-Bold.woff') format('woff'),;
+    unicode-range: U+0030-0039;
+}

@@ -1,12 +1,12 @@
 <input type="hidden" id="uiJsName" value="pageScrollBar">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Scroll Bar</h1>
+	<h1 class="tit-l">Scroll Bar</h1>
 	<p>커스텀된 스크롤바는 데스크탑 환경에서만 제공한다.</p>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Examples</h2>
+<article class="wrap-article">
+	<h2 class="tit-m">Examples</h2>
 	<div class="box-guide">
 		<div class="fx-wrap" >
 			<div class="fx-item" data-flex="1-1-1">
@@ -25,13 +25,13 @@
 			</div>
 		</div>
 		
-		<div class="ui-scrollbar mgt-x1" scroll-id="scrbar1" style="vertical-align:top; display:inline-block; height:300px; width:100%; border:1px dashed #ccc; overflow:auto"> 
+		<div class="ui-scrollbar mt-x1" data-scroll-id="scrbar1" style="vertical-align:top; display:inline-block; height:300px; width:100%; border:1px dashed #ccc; overflow:auto"> 
 			<div style="width:150vw; font-size: 20rem; text-align: left;">
 				0 1 2 3 4 5 6 7 8 9 
 			</div>
 		</div>
 
-		<div class="ui-scrollbar mgt-x1" style="vertical-align:top; display:inline-block; height:300px; width:100%; border:1px dashed #ccc; overflow:auto">
+		<div class="ui-scrollbar mt-x1" data-scroll-id="scrollCallbackTest" style="vertical-align:top; display:inline-block; height:300px; width:100%; border:1px dashed #ccc; overflow:auto">
 			<div style="width:100%; font-size: 20rem; text-align: center;">
 				0 1 2 3
 			</div>
@@ -53,14 +53,16 @@
 			<button type="button" onclick="alert(1111)" class="btn-mix-outlined">알림</button>
 		</div>  
 	</div>
-</section>
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Source Code</h2>
-	<h3 class="typo-title-m">HTML</h3>
+</article>
+<article class="wrap-article">
+	<h2 class="tit-m">Source Code</h2>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">HTML</h3>
 
 <pre class="box-code"><code class="html">
 //스크립트 적용 전
-&lt;div class="ui-scrollbar"&gt;
+&lt;div <tag-class>class="ui-scrollbar"</tag-class>&gt;
 	..........
 &lt;/div&gt;
 
@@ -84,8 +86,10 @@
 &lt;/div&gt;
 </code>
 </pre>
+	</section>
 
-	<h3 class="typo-title-m">Javascript</h3>
+	<section class="wrap-section">
+		<h3 class="tit-s">Javascript</h3>
 <pre class="box-code"><code class="javascript">
 //전체 적용 
 netive.scrollbar.init({
@@ -96,46 +100,47 @@ netive.scrollbar.init({
 
 //개별 적용
 netive.scrollbar.init({
-	selector: '{object || id}',
-	callback: function(){
+	<tag-input>selector: '{data-scroll-id}',
+	infiniteCallback: function(){
 		console.log('end');
-	}
+	}</tag-input>
 });
 </code></pre>
 
-<div class="tbl-base type-option" style="margin-bottom:100px">
-	<table>
-	<caption>옵션 설명</caption>
-	<colgroup>
-		<col class="n1">
-		<col class="n2">
-		<col class="n3">
-		<col class="n4">
-	</colgroup>
-	<thead>
-		<tr>
-			<th scope="col">Options</th>
-			<th scope="col">Type</th>
-			<th scope="col">Default</th>
-			<th scope="col">Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr class="nec">
-			<th scope="row">id:</th>
-			<td>[string]</td>
-			<td></td>
-			<td>scroll-id의 값</td>
-		</tr>
+		<div class="tbl-base type-option mt-x2" style="margin-bottom:100px">
+			<table>
+			<caption>옵션 설명</caption>
+			<colgroup>
+				<col class="n1">
+				<col class="n2">
+				<col class="n3">
+				<col class="n4">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">Options</th>
+					<th scope="col">Type</th>
+					<th scope="col">Default</th>
+					<th scope="col">Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="nec">
+					<th scope="row">id:</th>
+					<td>[string]</td>
+					<td></td>
+					<td>scroll-id의 값</td>
+				</tr>
 
-		<tr>
-			<th scope="row">callback:</th>
-			<td>[function]</td>
-			<td>function</td>
-			<td>y축 스크롤이 젤하단에 도착했을 경우 콜백 실행</td>
-		</tr>
-	</tbody>
-	</table>
-</div>
+				<tr>
+					<th scope="row">callback:</th>
+					<td>[function]</td>
+					<td>function</td>
+					<td>y축 스크롤이 젤하단에 도착했을 경우 콜백 실행</td>
+				</tr>
+			</tbody>
+			</table>
+		</div>
+	</section>
 
-				
+</article>		

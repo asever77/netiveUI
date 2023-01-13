@@ -1,0 +1,349 @@
+<input type="hidden" id="uiJsName" value="pageDatePicker">
+
+<div class="tit-catagory">Components Form</div>
+<div class="tit-wrap">
+	<h1 class="tit-l">Date Picker2</h1>
+</div>
+
+<p class="txts-m">날짜 선택이나 기간 선택할때 사용한다.</p>
+
+<h2 class="tit-m">Examples</h2>
+<h3 class="tit-s">Base Date Picker</h3>
+
+<h4 class="tit-s">single</h4>
+<div class="ui-datepicker" data-id="uiDatePicker1" data-title="test1">
+	<input type="tel" id="uiDatePicker1Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-12-05" data-max="2022-12-30" title="시작일">
+	<button type="button" aria-label="시작일 선택" class="ui-datepicker-btn">달력</button>
+	<div class="ui-datepicker-wrap"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h4 class="tit-s">dual</h4>
+<div class="ui-datepicker" id="uiDatePicker2" data-dual="true" data-title="test2">
+	<input type="tel" id="uiDatePicker2Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2017-11-05" data-max="2022-12-30" title="시작일">
+	<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
+	<div class="ui-datepicker-wrap"></div>
+</div>
+
+<h4 class="tit-s">Month single</h4>
+<div class="ui-datepicker" id="uiDatePicker1m" data-title="test" data-type="month">
+	<input type="tel" id="uiDatePicker1mInp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2000-12" data-max="2020-12" title="시작일">
+	<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
+	<div class="ui-datepicker-wrap"></div>
+</div>
+
+<h3 class="tit-s">Period Date picker</h3>
+<h4 class="tit-s">single</h4>
+<div class="form-dpmulti">		
+	<div class="ui-datepicker" id="uiDatePicker3" data-period="true" data-dual="false" data-title="test3">
+		<input type="tel" id="uiDatePicker3Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2020-06-01" data-max="2020-07-15" title="시작일">					
+		<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
+		<div class="ui-datepicker-wrap"></div>
+	</div>
+	<span class="field-text">~</span>
+	<div class="ui-datepicker">
+		<input type="tel" id="uiDatePicker3Inp_end" class="ui-datepicker-inp inp-base day-end" value="" data-min="2020-06-01" data-max="2020-12-30" title="종료일" readonly>
+		<button type="button" class="ui-datepicker-btn" disabled aria-label="종료일 선택"></button>
+	</div>
+</div>	
+<h4 class="tit-s">dual</h4>
+<div class="form-dpmulti">		
+	<div class="ui-datepicker" id="uiDatePicker4" data-period="true" data-dual="true" data-title="test4">
+		<input type="tel" id="uiDatePicker4Inp" class="ui-datepicker-inp inp-base day-start" value="" data-min="2019-12-01" data-max="2020-02-15" title="시작일">					
+		<button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"></button>
+		<div class="ui-datepicker-wrap"></div>
+	</div>
+	<span class="field-text">~</span>
+	<div class="ui-datepicker">
+		<input type="tel" id="uiDatePicker4Inp_end" class="ui-datepicker-inp inp-base day-end" value="" data-min="2019-12-01" data-max="2020-12-30" title="종료일" readonly>
+		<button type="button" class="ui-datepicker-btn" disabled aria-label="종료일 선택"></button>
+	</div>
+</div>	
+
+<h2 class="tit-m">HTML Structure</h2>
+<h3 class="tit-s">Base type</h3>
+<div class="box-code">
+<pre>
+<code>
+&lt;div class="ui-datepicker" id="uiDatePicker1" data-dual="false" data-title="test"&gt;
+	&lt;input class="ui-datepicker-inp inp-base" type="tel" value="" data-min="2020-01-01" data-max="2020-12-31" title="시작일" id="uiDatePicker1Inp"&gt;
+	&lt;button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"&gt;&lt;/button&gt;
+	&lt;div class="ui-datepicker-wrap"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+
+<h3 class="tit-s">Period type</h3>			
+<div class="box-code">
+<pre>
+<code>
+//종료일 input의 ID는 시작일 input의 ID 뒤에 '_end'를 붙이는 규칙으로 사용한다.
+&lt;div class="form-dpmulti"&gt;		
+	&lt;div class="ui-datepicker" id="uiDatePicker2" data-period="false" data-dual="false" data-title="test"&gt;
+		&lt;input class="ui-datepicker-inp inp-base" type="tel" value="" data-min="2013-10-05" data-max="2020-12-01" title="시작일" id="uiDatePicker2Inp"&gt;
+		&lt;button type="button" class="ui-datepicker-btn" aria-label="시작일 선택"&gt;&lt;/button&gt;
+		&lt;div class="ui-datepicker-wrap"&gt;&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;span class="field-text"&gt;~&lt;/span&gt;
+	&lt;div class="ui-datepicker"&gt;
+		&lt;input class="ui-datepicker-inp inp-base" type="tel" value="" data-min="2013-10-05" data-max="2020-12-01" title="종료일" id="uiDatePicker2Inp_end" readonly&gt;
+		&lt;button type="button" class="ui-datepicker-btn" aria-label="종료일 선택" disabled&gt;&lt;/button&gt;
+	&lt;/div&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+<div class="tbl-base type-option">
+	<table>
+		<caption>옵션 설명</caption>
+		<thead>
+			<tr>
+				<th scope="col">태그</th>
+				<th scope="col">속성</th>
+				<th scope="col">값</th>
+				<th scope="col">Description</th>
+			</tr>
+		</thead>
+		<tbody class="txta-l">
+			<tr>
+				<th scope="row" rowspan="3">.ui-datepicker</th>
+				<th scope="row">data-period</th>
+				<td>false</td>
+				<td>기간설정. script에서 옵션값 대신 줄 수 있음</td>
+			</tr>
+			<tr>
+				<th scope="row">data-dual</th>
+				<td>false</td>
+				<td>달력 2개월 보이게 설정. script에서 옵션값 대신 줄 수 있음</td>
+			</tr>
+			<tr>
+				<th scope="row">data-title</th>
+				<td>false</td>
+				<td>달력 제목 설정. script에서 옵션값 대신 줄 수 있음</td>
+			</tr>
+		<tbody class="txta-l">
+			<tr>
+				<th scope="row" rowspan="4">input type="tel"</th>
+				<th scope="row">data-min</th>
+				<td>2013-01-01</td>
+				<td>최소선택 년월일</td>
+			</tr>
+			<tr>
+				<th scope="row">data-max</th>
+				<td>2020-01-01</td>
+				<td>최대선택 년월일</td>
+			</tr>
+			<tr>
+				<th scope="row">id</th>
+				<td>유니크한 아이디이름 A</td>
+				<td></td>
+			</tr>
+			<tr>
+				<th scope="row">id (multi 일 경우)</th>
+				<td>유니크한 아이디이름 A + '_end'</td>
+				<td>시작일 아이디에 _end 를 붙인 이름 규칙으로 아이디 사용</td>
+			</tr>
+		</tbody>
+	</table>
+
+</div>
+
+
+<h2 class="tit-m">CSS Style</h2>
+<h3 class="tit-s">base style</h3>
+<div class="box-code">
+<pre>
+<code>
+.form-dpmulti .inp-base {width:130px}
+.ui-datepicker {display:inline-block; vertical-align:top; position:relative;}
+.ui-datepicker-btn:after {content:'date_range'; font-family:'Material Icons'; font-size:20px; word-break:keep-all;}
+.ui-datepicker .inp-base {width:130px}
+.ui-datepicker-wrap {position:absolute; width:200px;}
+.ui-datepicker.type-dual .ui-datepicker-wrap {width:460px}
+.ui-datepicker.type-dual .ui-datepicker-wrap table {width:210px; float:left}
+.ui-datepicker.type-dual .ui-datepicker-wrap table + table {float:right}
+.ui-datepicker .ui-datepicker-wrap {position:absolute; width:230px; margin-top:0 !important; z-index:1; top:45px; left:0; transform: translate(0, 0); opacity:0; transition:top 0.1s ease-out, opacity 0.1s ease-out}
+.ui-datepicker.visible .ui-datepicker-wrap {opacity:1; top:40px;}
+.ui-datepicker .icon-close {position:absolute; top:6px; right:6px; z-index:1;}
+.ui-datepicker .icon-close:before,
+.ui-datepicker .icon-close:after {background:#222;}
+.datepicker-sec {width:100%; height:100%; border:solid 1px #63686d; background:#fff; }
+.datepicker-sec select {border:0; width:auto; padding-right:30px;}
+.datepicker-sec .cal-wrapper {padding:10px; min-width:450px; width:auto !important; width:450px; overflow:hidden; }
+.datepicker-head {position: relative;}
+.datepicker-period-head {width:100%; overflow:hidden;}
+.datepicker-period-head > div {width:50%; float:left;}
+.datepicker-head-tit {border-bottom:1px solid #ccc; padding:5px; text-align:center; font-weight:600;}
+.datepicker-head-select {padding:0 10px;}
+.datepicker-head-date {text-align:center; font-size:18px; padding:5px 10px;}
+.datepicker-head-btn {position:absolute; width:100%; z-index:1;}
+.datepicker-head-today {position:absolute; z-index:1; top:0; left:0; padding:0;}
+.datepicker-head-today button {width:30px; height:30px;}
+.datepicker-head-btn button {position:absolute; width:23px; height:23px; background:url(/netiveUI/resources/img/common/ico_datepicker.png) no-repeat 0 0; top:8px}
+.datepicker-head-btn .ui-datepicker-prev {background-position:-50px 0; left:35px}
+.datepicker-head-btn .ui-datepicker-next {background-position:-50px -50px; right:35px;}
+.datepicker-head-btn .ui-datepicker-prev-y {background-position:0 0; left:10px}
+.datepicker-head-btn .ui-datepicker-next-y {background-position:0 -50px; right:10px}
+.datepicker-core {padding:10px;}
+.datepicker-core:after {content:""; display:block; clear:both;}
+.datepicker-foot {text-align:center; padding:10px 0;}
+.tbl-datepicker {width:100%; }
+.tbl-datepicker thead th {color:#222}
+.tbl-datepicker thead tr {border-bottom:1px solid #c9c9c9}
+.tbl-datepicker col.n1 {width:14.28%}
+.tbl-datepicker th {padding:5px 0; text-align:center !important; font-weight:600; background:#fff; font-size:12px;}
+.tbl-datepicker th abbr {display:block; border:0; cursor:default; }
+.tbl-datepicker td {padding:4px 0 0; text-align:center; border:0; }
+.tbl-datepicker td span,
+.tbl-datepicker td button {position:relative; display:block; width:30px; height:30px; line-height:28px; margin:0 auto; color:#444; text-align:center;}
+.tbl-datepicker td span {color:#666; cursor:default; opacity:0.5}
+.tbl-datepicker th.day-sun,
+.tbl-datepicker td.day-sun button {color:red; }
+.tbl-datepicker th.day-sat,
+.tbl-datepicker td.day-sat button {color:blue; }
+.tbl-datepicker td.empty {opacity:0.5}
+.tbl-datepicker td.empty button:hover {font-weight:400;}
+.tbl-datepicker td:not(.empty) button:hover {color:#fff; font-weight:900; background:#444 !important; border:1px solid #444; }
+.tbl-datepicker td button.selected {color:#fff; font-weight:900; background:#444 !important; border:1px solid #444; }
+.tbl-datepicker td button.selected-end {color:#fff; font-weight:900; background:#444 !important; }
+.tbl-datepicker td button.selected-start {color:#fff; font-weight:900; background:#444 !important;}
+.tbl-datepicker td button.selected-ing { background:rgb(227, 247, 255);}
+.tbl-datepicker td button:disabled {cursor:default; opacity:0.5;}
+.tbl-datepicker td button:disabled:hover {font-weight:400 !important;}
+.tbl-datepicker td.hover:not(.disabled) button {color:#fff; background:#444;}
+.tbl-datepicker td.hover-on:not(.disabled) button {color:#fff; background:#444; }  
+.tbl-datepicker td.hover:not(.disabled) span {color:#fff; background:#444;}
+.tbl-datepicker td.hover-on:not(.disabled) span {color:#fff; background:#444; }  
+.tbl-datepicker.off-tbl td.hover:not(.disabled) button {color:#444; background:transparent;}
+.tbl-datepicker.off-tbl td.hover-on:not(.disabled) button {color:#444; background:transparent; }  
+.tbl-datepicker.off-tbl td.hover:not(.disabled) button:hover {color:#fff; background:#444;}
+.tbl-datepicker.off-tbl td.hover-on:not(.disabled) button:hover {color:#fff; background:#444; }  
+td button.today {color:#000; font-weight:900; background:#fff; border:1px solid transparent; text-decoration:underline;}
+</code>
+</pre>
+</div>
+
+<h2 class="tit-m">Javascript</h2>
+<h3 class="tit-s">netive.uiDatePicker</h3>
+<div class="box-code">
+<pre>
+<code>
+//single
+netive<span class="na">.uiDatePicker</span>({ <span class="s">
+	selector: '.ui-datepicker', // '#uiDatePicker1'
+	dual: false,
+	period: false,
+	title: false, //'datepicker title'
+	date_split: '-', //'.'
+	shortDate: false, //false:YYYYMMDD or true:DDMMYYYY
+	dateMonths: new Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12'),
+	weekDay: new Array('일', '월', '화', '수', '목', '금', '토'),
+
+	callback: function(v){ console.log(v); },
+	openback: function(){ console.log('open callback'); },
+	closeback: function(){ console.log('close callback'); }</span>
+});
+</code>
+</pre>
+</div>
+<div class="tbl-base type-option">
+	<table>
+		<caption>옵션 설명</caption>
+		<colgroup>
+			<col class="n1">
+			<col class="n2">
+			<col class="n3">
+			<col class="n4">
+		</colgroup>
+		<thead>
+			<tr>
+				<th scope="col">Options</th>
+				<th scope="col">Type</th>
+				<th scope="col">Default</th>
+				<th scope="col">Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class="nec">
+				<th scope="row">selector:</th>
+				<td>[string]</td>
+				<td>'name'</td>
+				<td>.class나 #아이디 값</td>
+			</tr>
+			<tr>
+				<th scope="row">dual:</th>
+				<td>[boolean]</td>
+				<td>false</td>
+				<td>true 일 경우 2개월이 보임</td>
+			</tr>
+			<tr>
+				<th scope="row">period :</th>
+				<td>[boolean]</td>
+				<td>false</td>
+				<td>true 일 경우 기간 선택으로 변경</td>
+			</tr>
+			<tr>
+				<th scope="row">title :</th>
+				<td>[string]</td>
+				<td>input title</td>
+				<td>달력의 제목 설정</td>
+			</tr>
+			<tr>
+				<th scope="row">date_split :</th>
+				<td>[string]</td>
+				<td>'-'</td>
+				<td>'-' : 2020-05-10<br>
+				'.' : 2020.05.10</td>
+			</tr>
+			<tr>
+				<th scope="row">shortDate :</th>
+				<td>[boolean]</td>
+				<td>false</td>
+				<td>false:YYYYMMDD or true:DDMMYYYY</td>
+			</tr>
+			<tr>
+				<th scope="row">dateMonths :</th>
+				<td>[boolean]</td>
+				<td>new Array('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12')</td>
+				<td>월 텍스트</td>
+			</tr>
+			<tr>
+				<th scope="row">weekDay :</th>
+				<td>[boolean]</td>
+				<td>new Array('일', '월', '화', '수', '목', '금', '토')</td>
+				<td>요일 텍스트</td>
+			</tr>
+			<tr>
+				<th scope="row">callback:</th>
+				<td>[function]</td>
+				<td>false</td>
+				<td>날짜를 선택했을 때 콜백값으로 {id: "uiDatePicker1Inp", value: "2020-06-16", name: undefined}</td>
+			</tr>
+			<tr>
+				<th scope="row">openback:</th>
+				<td>[function]</td>
+				<td>false</td>
+				<td>달력 오픈 시 콜백</td>
+			</tr>
+			<tr>
+				<th scope="row">closeback:</th>
+				<td>[function]</td>
+				<td>false</td>
+				<td>달력 닫을 시 콜백</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+

@@ -1,0 +1,48 @@
+
+<input type="hidden" id="uiJsName" value="pageCountNumber">
+
+<div class="tit-wrap">
+	<h1 class="tit-l">Count Number</h1>
+</div>
+
+<section class="wrap-article">
+	<h2 class="tit-m">Examples</h2>
+	<h3 class="tit-s">Step Count</h3>
+	','콤마를 자동 생성합니다.</p>
+	<div class="box-guide">
+		<div class="ui-count" id="exeCount1" style="font-size:5.0rem; color:#000; width:100%">89.67 </div>
+		<div class="wrap-group txta-l">
+			<button type="button" class="btn-mix-outlined" onclick="netive.count.step({ id:'exeCount1', value: 12345.67 });">12345.67 재실행</button>
+		</div>
+	</div>
+	<h3 class="tit-s">Slot Count</h3>
+	<div class="box-guide">
+		<div class="ui-count" id="exeCount2" style="font-size:5.0rem; color:#000; width:100%">89.67 </div>
+		<div class="wrap-group txta-l">
+			<button type="button" class="btn-mix-outlined" onclick="netive.count.slot({ id:'exeCount2', value: 12345 });">12345 재실행</button>
+		</div>
+	</div>
+</section>
+
+<section class="wrap-article">
+	<h2 class="tit-m">Source Code</h2>
+	<h3 class="tit-s">HTML</h3>
+
+<pre class="box-code"><code class="html">
+&lt;div class="ui-count" id="exeCount1"&gt;504025&lt;/div&gt;
+</code>
+</pre>
+
+	<h3 class="tit-s">Javascript</h3>
+<pre class="box-code"><code class="javascript">
+netive.count.step({ 
+	id:'exeCount1', 
+	value: 504025 
+});
+
+netive.count.slot({ 
+	id:'exeCount2', 
+	value: 5040.25 
+});
+</code></pre>
+</section>

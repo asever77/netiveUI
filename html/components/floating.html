@@ -1,102 +1,115 @@
 <input type="hidden" id="uiJsName" value="pageFloating">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Floating</h1>
+	<h1 class="tit-l">Floating</h1>
 	<p>특정위치에서 고정되거나 고정되었던 오브젝트가 원위치로 돌아가는 설정</p>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Examples</h2>
-	<h3 class="typo-title-m">상단고정 → 원위치</h3>
-	<p>상단에 fixed로 고정에서 원위치로 들어가는 방식</p>
-	<div class="box-guide">
-		<div class="ui-floating" data-fix="true" data-ps="top" data-mg="100">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">상단고정 → 원위치1</div>
-			</div>
-		</div>
-		<br>
-		<div class="ui-floating" data-fix="true" data-ps="top" data-mg="50">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">상단고정 → 원위치2</div>
-			</div>
-		</div>
-		<br>	
-		<div class="ui-floating" data-fix="true" data-ps="top">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">상단고정 → 원위치3</div>
-			</div>
-		</div>
-	</div>
-	<h3 class="typo-title-m">원위치 → 상단고정</h3>
-	<p>특정위치에 도달하면 원위치에서 벗어나 상단에 fixed로 고정되는 방식</p>
-	<div class="box-guide">
-		<div class="ui-floating" data-fix="false" data-ps="top">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">원위치 → 상단고정1</div>
-			</div>
-		</div>
-		<br>
-		<div class="ui-floating" data-fix="false" data-ps="top" data-mg="50">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">원위치 → 상단고정2</div>
-			</div>
-		</div>
-		<br>
-		<div class="ui-floating" data-fix="false" data-ps="top" data-mg="100">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">원위치 → 상단고정3</div>
-			</div>
-		</div>
-	</div>
-	<h3 class="typo-title-m">하단고정 → 원위치</h3>
-	<p>하단에 fixed로 고정에서 원위치로 들어가는 방식</p>
-	<div class="box-guide">
-		<div class="ui-floating" data-fix="true" data-ps="bottom" data-mg="100">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">하단고정 → 원위치1</div>
-			</div>
-		</div>
-		<br>
-		<div class="ui-floating" data-fix="true" data-ps="bottom" data-mg="50">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">하단고정 → 원위치2</div>
-			</div>
-		</div>
-		<br>
-		<div class="ui-floating" data-fix="true" data-ps="bottom">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">하단고정 → 원위치3</div>
-			</div>
-		</div>
-	</div>
+<article class="wrap-article">
+	<h2 class="tit-m">Examples</h2>
 
-	<h3 class="typo-title-m">원위치 → 하단고정</h3>
-	<p>특정위치에 도달하면 원위치에서 벗어나 하단에 fixed로 고정되는 방식</p>
-	<div class="box-guide">
-		<div class="ui-floating"  data-fix="false" data-ps="bottom">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">원위치 → 하단고정1</div>
+	<section class="wrap-section">
+		<h3 class="tit-s">상단고정 → 원위치</h3>
+		<p>상단에 fixed로 고정에서 원위치로 들어가는 방식</p>
+		<div class="box-guide">
+			<div class="ui-floating" data-fix="true" data-ps="top" data-mg="100">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">상단고정 → 원위치1</div>
+				</div>
+			</div>
+			<br><br><br><br><br><br><br>
+			<div class="ui-floating" data-fix="true" data-ps="top" data-mg="50">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">상단고정 → 원위치2</div>
+				</div>
+			</div>
+			<br><br><br><br><br><br><br>
+			<div class="ui-floating" data-fix="true" data-ps="top">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">상단고정 → 원위치3</div>
+				</div>
 			</div>
 		</div>
-		<br>
-		<div class="ui-floating"  data-fix="false" data-ps="bottom" data-mg="50">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">원위치 → 하단고정2</div>
-			</div>
-		</div>
-		<br>
-		<div class="ui-floating"  data-fix="false" data-ps="bottom" data-mg="100">
-			<div class="ui-floating-wrap">
-				<div class="tst-obj">원위치 → 하단고정3</div>
-			</div>
-		</div>
-	</div>
-</section>
+	</section>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Source Code</h2>
-	<h3 class="typo-title-m">HTML</h3>
+	<section class="wrap-section">
+		<h3 class="tit-s">원위치 → 상단고정</h3>
+		<p>특정위치에 도달하면 원위치에서 벗어나 상단에 fixed로 고정되는 방식</p>
+		<div class="box-guide">
+			<div class="ui-floating" data-fix="false" data-ps="top">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">원위치 → 상단고정1</div>
+				</div>
+			</div>
+			<br><br><br><br><br><br><br>
+			<div class="ui-floating" data-fix="false" data-ps="top" data-mg="50">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">원위치 → 상단고정2</div>
+				</div>
+			</div>
+			<br><br><br><br><br><br><br>
+			<div class="ui-floating" data-fix="false" data-ps="top" data-mg="100">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">원위치 → 상단고정3</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">하단고정 → 원위치</h3>
+		<p>하단에 fixed로 고정에서 원위치로 들어가는 방식</p>
+		<div class="box-guide">
+			<div class="ui-floating" data-fix="true" data-ps="bottom" data-mg="100">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">하단고정 → 원위치1</div>
+				</div>
+			</div>
+			<br><br><br><br><br><br><br>
+			<div class="ui-floating" data-fix="true" data-ps="bottom" data-mg="50">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">하단고정 → 원위치2</div>
+				</div>
+			</div>
+			<br><br><br><br><br><br><br>
+			<div class="ui-floating" data-fix="true" data-ps="bottom">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">하단고정 → 원위치3</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">원위치 → 하단고정</h3>
+		<p>특정위치에 도달하면 원위치에서 벗어나 하단에 fixed로 고정되는 방식</p>
+		<div class="box-guide">
+			<div class="ui-floating"  data-fix="false" data-ps="bottom">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">원위치 → 하단고정1</div>
+				</div>
+			</div>
+			<br><br><br><br><br><br><br>
+			<div class="ui-floating"  data-fix="false" data-ps="bottom" data-mg="50">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">원위치 → 하단고정2</div>
+				</div>
+			</div>
+			<br><br><br><br><br><br><br>
+			<div class="ui-floating"  data-fix="false" data-ps="bottom" data-mg="100">
+				<div class="ui-floating-wrap">
+					<div class="tst-obj">원위치 → 하단고정3</div>
+				</div>
+			</div>
+		</div>
+	</section>
+</article>
+
+<article class="wrap-article">
+	<h2 class="tit-m">Source Code</h2>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">HTML</h3>
 <pre class="box-code"><code class="html">
 &lt;div class="ui-floating" data-fix="true" data-ps="top" data-mg="100"&gt;
 	&lt;div class="ui-floating-wrap"&gt;
@@ -105,55 +118,58 @@
 &lt;/div&gt;
 </code>
 </pre>
-<div class="tbl-base type-option mgt-x2" style="margin-bottom:100px">
-	<table>
-	<caption>옵션 설명</caption>
-	<colgroup>
-		<col class="n1">
-		<col class="n2">
-		<col class="n4">
-	</colgroup>
-	<thead>
-		<tr>
-			<th scope="col">Options</th>
-			<th scope="col">Type</th>
-			<th scope="col">Description</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<th scope="row">data-ps</th>
-			<td>'top' / 'bottom'</td>
-			<td>고정될 위치 설정
-				<ul>
-				<li>'top' : 상단</li>
-				<li>'bottom' : 하단</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">data-fix</th>
-			<td>'true' / 'false'</td>
-			<td>고정되어 시작할지 여부
-				<ul>
-				<li>true : 고정에서 기본</li>
-				<li>false : 기본에서 고정</li>
-				</ul>
-			</td>
-		</tr>
-		<tr>
-			<th scope="row">data-mg</th>
-			<td>[number]</td>
-			<td>고정될 위치 margin값</td>
-		</tr>
-		
-	</tbody>
-	</table>
-</div>
+		<div class="tbl-base type-option mt-x2" style="margin-bottom:100px">
+			<table>
+			<caption>옵션 설명</caption>
+			<colgroup>
+				<col class="n1">
+				<col class="n2">
+				<col class="n4">
+			</colgroup>
+			<thead>
+				<tr>
+					<th scope="col">Options</th>
+					<th scope="col">Type</th>
+					<th scope="col">Description</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row">data-ps</th>
+					<td>'top' / 'bottom'</td>
+					<td>고정될 위치 설정
+						<ul>
+						<li>'top' : 상단</li>
+						<li>'bottom' : 하단</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">data-fix</th>
+					<td>'true' / 'false'</td>
+					<td>고정되어 시작할지 여부
+						<ul>
+						<li>true : 고정에서 기본</li>
+						<li>false : 기본에서 고정</li>
+						</ul>
+					</td>
+				</tr>
+				<tr>
+					<th scope="row">data-mg</th>
+					<td>[number]</td>
+					<td>고정될 위치 margin값</td>
+				</tr>
+				
+			</tbody>
+			</table>
+		</div>
+	</section>
 
-	<h3 class="typo-title-m">Javascript</h3>
+	<section class="wrap-section">
+		<h3 class="tit-s">Javascript</h3>
 <pre class="box-code"><code class="javascript">
 netive.floating.init();
 </code>
 </pre>
-</section>
+	</section>
+</article>

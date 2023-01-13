@@ -1,92 +1,132 @@
 <input type="hidden" id="uiJsName" value="pageSelect">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Select</h1>
+	<h1 class="tit-l">Select</h1>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Examples</h2>
-	<h3 class="typo-title-m">CSS Design</h3>
-	<p>CSS로 스타일 표현하나 IE등 일부 브라우저에서는 지원을 안함.</p>
-	<div class="box-guide">
-		<div class="form-wrap">
-			<div class="fx-wrap" data-align="justify">
-				<div class="fx-item ui-form" data-flex="1-1-1">
-					<div class="form-label">
-						<label class="form-item-label" for="test_a0_1">Label Text</label>
-					</div>
+<article class="wrap-article">
+	<h2 class="tit-m">Examples</h2>
 
+	<section class="wrap-section">
+		<h3 class="tit-s">CSS Design</h3>
+		<p>CSS로 스타일 표현하나 IE등 일부 브라우저에서는 지원을 안함.</p>
+		<div class="box-guide">
+			<div class="form-wrap " data-type="row">
+				<div class="form-item-rowgroup">
 					<div class="form-item">
-						<select title="년도 선택" id="test_a0_1">
-							<option value="1" selected>2018</option>
-							<option value="2">2017</option>
-							<option value="3">2016</option>
-							<option value="4">2015</option>
-						</select>
+						<div class="form-head">
+							<div class="form-title">
+								<label class="form-item-label" for="test_a0_1">Label Text</label>
+							</div>
+						</div>
+						<div class="form-body">
+							<div class="form-group">
+								<div class="form-input">
+									<select title="년도 선택" id="test_a0_1">
+										<option value="1" selected>2018</option>
+										<option value="2">2017</option>
+										<option value="3">2016</option>
+										<option value="4">2015</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-info">
+								<div class="bul-info">
+									<div>기본 select에 css로 스타일을 입힌 유형</div>
+								</div>
+							</div>
+						
+						</div>
 					</div>
 				</div>
 			</div>
+
 		</div>
-	</div>
+	</section>
 
-	<h3 class="typo-title-m">Custom Select</h3>
-	<p>모든 브라우저에서 동일한 UI와 디자인으로 접근 가능. option도 디자인 표현이 가능 </p>
-	<div class="box-guide">
-		<div class="form-wrap">
+	<section class="wrap-section">
+		<h3 class="tit-s">Custom Select</h3>
+		<p>모든 브라우저에서 동일한 UI와 디자인으로 접근 가능. option도 디자인 표현이 가능 </p>
+		<div class="box-guide">
 
-			<div class="fx-wrap" data-align="justify">
-				<div class="fx-item ui-form" data-flex="1-1-1">
-					<div class="form-label">
-						<label class="form-item-label ui-select-label" for="uiSel1">Label Text</label>
-					</div>
-
+			<div class="form-wrap " data-type="row">
+				<div class="form-item-rowgroup">
 					<div class="form-item">
-						<div class="ui-select">
-							<select title="Palette 앨범" id="uiSel1" onchange="console.log(this.selectedIndex);">
-								<option value="1">이 지금</option>
-								<option value="2">팔레트(Feat. G-DRAGON)</option>
-								<option value="3" >이런 엔딩</option>
-								<option value="4">사랑이 잘(with 오혁)</option>
-								<option value="5">잼잼</option>
-								<option value="6">Black Out</option>
-								<option value="7">마침표</option>
-								<option value="8">밤편지(Through the Night)</option>
-								<option value="9">그렇게 사랑은</option>
-								<option value="10" selected>이름에게</option>
-							</select>
+						<div class="form-head">
+							<div class="form-title">
+								<label class="form-item-label" for="uiSel1">Label Text</label>
+							</div>
+						</div>
+						<div class="form-body">
+							<div class="form-group">
+								<div class="form-input">
+									<div class="ui-select">
+										<select title="Palette 앨범" id="uiSel1" onchange="console.log(this.selectedIndex);">
+											<option value="1">이 지금</option>
+											<option value="2">팔레트(Feat. G-DRAGON)</option>
+											<option value="3" >이런 엔딩</option>
+											<option value="4">사랑이 잘(with 오혁)</option>
+											<option value="5">잼잼</option>
+											<option value="6">Black Out</option>
+											<option value="7">마침표</option>
+											<option value="8">밤편지(Through the Night)</option>
+											<option value="9">그렇게 사랑은</option>
+											<option value="10" selected>이름에게</option>
+										</select>
+									</div>
+								</div>
+							</div>
+							<div class="form-info">
+								<div class="bul-info">
+									<div>자바스크립트로 커스텀스타일을 적용한 유형</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="form-item-rowgroup">
+					<div class="form-item">
+						<div class="form-head">
+							<div class="form-title">
+								<label class="form-item-label" for="uiSel2">Label Text</label>
+							</div>
+						</div>
+						<div class="form-body">
+							<div class="form-group">
+								<div class="form-input">
+									<div class="ui-select">
+										<select title="구 선택" id="uiSel2" onchange="alert(this.value)">
+											<option value="1">1</option>
+											<option value="2">2</option>
+											<option value="3" selected="selected">3</option>
+											<option value="4">4</option>
+										</select>
+									</div>
+								</div>
+								<button type="button" class="btn-base" id="changeOption">동적 셀렉트 옵션 추가</button>
+							</div>
+							<div class="form-info">
+								<div class="bul-info">
+									<div>동적으로 옵션값 추가 시 </div>
+								</div>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 
-			<div class="fx-wrap" data-align="justify">
-				<div class="fx-item ui-form" data-flex="1-1-1">
-					<div class="form-label">
-						<label class="form-item-label ui-select-label" for="uiSel2">Label Text</label>
-						<div class="form-label-util">
-							<button type="button" class="btn-mix-outlined-s" id="changeOption">동적 셀렉트 옵션 추가</button>
-						</div>
-					</div>
-
-					<div class="form-item">
-						<div class="ui-select">
-							<select title="구 선택" id="uiSel2" onchange="alert(this.value)">
-								<option value="1">1</option>
-								<option value="2">2</option>
-								<option value="3" selected="selected">3</option>
-								<option value="4">4</option>
-							</select>
-						</div>
-					</div>
-				</div>
-			</div>
+			
 		</div>
-	</div>
-</section>
+	</section>
+</article>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Source Code</h2>
-	<h3 class="typo-title-m">HTML</h3>
+<article class="wrap-article">
+	<h2 class="tit-m">Source Code</h2>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">HTML</h3>
 <pre class="box-code"><code class="html">
 &lt;div class="ui-select"&gt;
 	&lt;select title="Palette 앨범" id="uiSel1"&gt;
@@ -121,11 +161,13 @@
 	&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
+	</section>
 
-	<h3 class="typo-title-m">Javascript</h3>
+	<section class="wrap-section">
+		<h3 class="tit-s">Javascript</h3>
 
-	<h4 class="typo-title-m">netive.select.init()</h4>
-	<p>현재 select box기준으로 디자인 select 생성. 첫적용이나 동적인 변경이 있을때 사용한다. 특히 동적인 변경일 경우는 id로 개별 실행해주는게 좋다.</p>
+		<h4 class="tit-xxs mt-x3">netive.select.init()</h4>
+		<p>현재 select box기준으로 디자인 select 생성. 첫적용이나 동적인 변경이 있을때 사용한다. 특히 동적인 변경일 경우는 id로 개별 실행해주는게 좋다.</p>
 <pre class="box-code"><code class="javascript">
 //전체 실행
 netive.select.init();
@@ -139,7 +181,7 @@ netive.select.init({
 });
 </code></pre>
 
-	<h4 class="typo-title-m">netive.select.act()</h4>
+	<h4 class="tit-xxs mt-x3">netive.select.act()</h4>
 	<p>마우스, 키보드 이벤트가 아닌 option값 선택을 할 때 사용. netive.uiSelect()을 사용해도 되나 불필요한 재구성을 하지 않아 값변경 시에는 netive.select.act를
 		사용한다. </p>
 <pre class="box-code"><code class="javascript">
@@ -151,52 +193,53 @@ netive.select.act({
 </code>
 </pre>
 
-	<div class="tbl-base type-option">
-		<table>
-			<caption>
-				<strong>selectg 기본 옵션</strong>
-				<span class="ui-caption"></span>
-			</caption>
-			<colgroup>
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-auto">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">Options</th>
-					<th scope="col">Type</th>
-					<th scope="col">Default</th>
-					<th scope="col">Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="nec">
-					<th scope="row">id:</th>
-					<td>[string]</td>
-					<td>false</td>
-					<td>.ui-select에 포함된 select의 아이디명 기입</td>
-				</tr>
-				<tr>
-					<th scope="row">current:</th>
-					<td>[number]</td>
-					<td>null</td>
-					<td>select option 선택</td>
-				</tr>
-				<tr>
-					<th scope="row">customscroll:</th>
-					<td>[boolean]</td>
-					<td>true</td>
-					<td>custom scroll 적용</td>
-				</tr>
-				<tr>
-					<th scope="row">callback:</th>
-					<td>[function]</td>
-					<td>false</td>
-					<td>값 선택 시 콜백실행.</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</section>
+		<div class="tbl-base type-option">
+			<table>
+				<caption>
+					<strong>selectg 기본 옵션</strong>
+					<span class="ui-caption"></span>
+				</caption>
+				<colgroup>
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-auto">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">Options</th>
+						<th scope="col">Type</th>
+						<th scope="col">Default</th>
+						<th scope="col">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="nec">
+						<th scope="row">id:</th>
+						<td>[string]</td>
+						<td>false</td>
+						<td>.ui-select에 포함된 select의 아이디명 기입</td>
+					</tr>
+					<tr>
+						<th scope="row">current:</th>
+						<td>[number]</td>
+						<td>null</td>
+						<td>select option 선택</td>
+					</tr>
+					<tr>
+						<th scope="row">customscroll:</th>
+						<td>[boolean]</td>
+						<td>true</td>
+						<td>custom scroll 적용</td>
+					</tr>
+					<tr>
+						<th scope="row">callback:</th>
+						<td>[function]</td>
+						<td>false</td>
+						<td>값 선택 시 콜백실행.</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+</article>

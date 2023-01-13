@@ -1,0 +1,143 @@
+<input type="hidden" id="uiJsName" value="pageNaming">
+
+<div class="tit-wrap">
+	<h1 class="tit-l">Naming</h1>
+</div>
+
+<article class="wrap-article">
+	<h2 class="tit-m">CSS Class Naming</h2>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">기본규칙</h3>
+		<ul class="bul-dot">
+			<li>Kebab casing으로 영문 소문자, 숫자, hyphen(-)으로 조합하여 작성한다.</li>
+			<li>hyphen(-)조합은 최대 3단계를 초과하지 않는 걸 권장한다.</li>
+			<li>단어와 숫자 조합은 하이픈(-)을 생략한다.</li>
+			<li>숫자는 1부터 시작하며 '01' 과 같이 앞에 '0'을 붙여 사용하지 않는다.</li>
+			<li>Multi class의 조합은 3개 이하(우선순위 점수 33점 미만)을 권장한다.</li>
+			<li>id는 사용하지 않는다.</li>
+		</ul>
+	
+<pre class="box-code"><code class="css">
+.base-main
+.btn-mix-outlined-s
+.list2
+.btn-mix-outlined .on
+</code></pre>
+	</section>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">Reserve a Prefix</h3>
+		<p>예약된 접두사로 기본적으로 공통 사용하는 CSS naming 입니다.</p>
+
+		<div class="tbl-base type-discription mt-x2">
+			<table>
+				<caption>reserve a prefix, Description</caption>
+				<colgroup>
+					<col class="col-th">
+					<col class="col-auto">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">Reserve a Prefix</th>
+						<th scope="col">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">.base-</th>
+						<td>
+							페이지내에서 유니크하게 하나만 사용하는 기본적인 구조로 주로 전체적인 레이아웃 요소나 페이지의 필수요소 이다.<br>
+							<p class="txt-s ">base-wrap, base-header, base-body, base-content, base-footer, base-skip</p>				
+						</td>
+					</tr>
+
+					<tr>
+						<th scope="row">.btn-</th>
+						<td>button 관련된 스타일</td>
+					</tr>
+			
+		
+					<tr>
+						<th scope="row">.bul-</th>
+						<td>bullet에 관련된 스타일</td>
+					</tr>
+				
+					<tr>
+						<th scope="row">.wrap-</th>
+						<td>독립적인 item요소를 그룹으로 묶어주는 스타일
+							<p class="txt-s ">wrap-group, wrap-bul</p>	
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">.form-</th>
+						<td>입력양식의 레이아웃 스타일</td>
+					</tr>
+					<tr>
+						<th scope="row">.inp-</th>
+						<td>input, select, textarea에 관련된 스타일</td>
+					</tr>
+					<tr>
+						<th scope="row">.lb-</th>
+						<td>radio,checkbox의 label 스타일</td>
+					</tr>
+					
+
+					<tr>
+						<th scope="row">.ui-</th>
+						<td>자바스크립트 관련 클래스</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">Module</h3>
+		<p>모듈단위로 구성하여 어느 곳에 위치하더라도 동일한 스타일을 제공하도록 구성한다.</p>
+
+		<div class="tbl-base type-discription mt-x2">
+			<table>
+				<caption></caption>
+				<colgroup>
+					<col class="col-th">
+					<col class="col-auto">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">Reserve a suffix</th>
+						<th scope="col">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">[module]-wrap</th>
+						<td>
+							모듈단위의 최상위로 감싸는 영역
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">[module]-item</th>
+						<td>
+							주 콘텐츠내용이 들어가는 영역(반복되는 영역)
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+<pre class="box-code"><code class="css">
+&lt;div class="{module}"&gt;
+	&lt;div class="{module}-wrap"&gt;
+		&lt;div class="{module}-item"&gt;
+			&lt;h3 class="{module}-title"&gt;&lt;/h3&gt;
+			&lt;div class="{module}-content"&gt;&lt;/div&gt;
+			&lt;a href="#" class="{module}-link"&gt;&lt;/a&gt;
+		&lt;/div&gt;
+		...
+		
+	&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+	</section>
+</article>

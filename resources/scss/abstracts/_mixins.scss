@@ -1,0 +1,69 @@
+@mixin flexbox() {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+}
+
+@mixin flex($values) {
+    -webkit-box-flex: $values;
+    -moz-box-flex: $values;
+    -webkit-flex: $values;
+    -ms-flex: $values;
+    flex: $values;
+}
+
+@mixin order($val) {
+    -webkit-box-ordinal-group: $val;
+    -moz-box-ordinal-group: $val;
+    -ms-flex-order: $val;
+    -webkit-order: $val;
+    order: $val;
+}
+
+@mixin setBullet($width, $height, $radius, $color) {
+    min-width: $width;
+    min-height: $height;
+    max-width: $width;
+    max-height: $height;
+    border-radius: $radius;
+    background-color: $color;
+}
+
+@mixin modalEffect($eff) {
+    animation-name: $eff;
+    animation-duration: .2s;
+    animation-iteration-count: 1;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+//color
+
+
+@function light-or-dark($color) {
+    $light-contrast: color-contrast($color, $white);
+    $dark-contrast: color-contrast($color, $black);
+
+    @if $light-contrast > $dark-contrast {
+        @return 'dark';
+    }
+
+    @else {
+        @return 'light';
+    }
+}
+
+/* grid */
+@mixin gridItem($colstart, $colend, $rowstart, $rowend) {
+    grid-column-start: $colstart;
+    -ms-grid-column: $colstart;
+    grid-column-end: $colend;
+    -ms-grid-column-span: calc($colend - $colstart);
+
+    grid-row-start: $rowstart;
+    -ms-grid-row: $rowstart;
+    grid-row-end: $rowend;
+    -ms-grid-row-span: calc($rowend - $rowstart);
+}

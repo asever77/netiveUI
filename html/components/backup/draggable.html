@@ -1,0 +1,106 @@
+
+<input type="hidden" id="uiJsName" value="pageDraggable">
+ 
+<div class="tit-catagory">Components</div>
+<div class="tit-wrap">
+	<h1 class="tit-l">Draggable</h1>
+</div>
+
+<h2 class="tit-m">Examples</h2>
+<h3 class="tit-s">Draggable Base</h3>
+<div class="ui-draggable" id="drag1">
+    <button type="button" class="ui-draggable-item n1" name="a">a</button>
+    <button type="button" class="ui-draggable-item n2" name="b">b</button>
+    <button type="button" class="ui-draggable-item n3" name="c">c</button>
+
+    <div class="ui-draggable-area n1" name="a">a</div>
+    <div class="ui-draggable-area n2" name="b">b</div>
+    <div class="ui-draggable-area n3" name="c">c</div>
+</div>
+
+<h3 class="tit-s">Draggable :and</h3>
+<div class="ui-draggable" id="drag2">
+    <button type="button" class="ui-draggable-item n1" name="de">d</button>
+    <button type="button" class="ui-draggable-item n2" name="de">e</button>
+    <button type="button" class="ui-draggable-item n3" name="f">f</button>
+
+    <div class="ui-draggable-area n1" name="de">d and e</div>
+    <div class="ui-draggable-area n2" name="f">f</div>
+</div>
+
+<h3 class="tit-s">Draggable :or</h3>		
+<p>ui-draggable-area에 속성으로 limit="true"를 주면 중복 답안일 경우 처음 하나만 들어갈 수 있다.</p>
+<div class="ui-draggable" id="drag3">
+    <button type="button" class="ui-draggable-item n1" name="gh">g</button>
+    <button type="button" class="ui-draggable-item n2" name="gh">h</button>
+    <button type="button" class="ui-draggable-item n3" name="i">i</button>
+
+    <div class="ui-draggable-area n1" name="gh" limit="true">g or h</div>
+    <div class="ui-draggable-area n2" name="gh" limit="true">g or h</div>
+    <div class="ui-draggable-area n3" name="i">i</div>
+</div>
+
+<h3 class="tit-s">Draggable :moving</h3>		
+<p>ui-draggable-item에 속성으로 onlymove="true"를 주면 정해진 영역들을 지나갈때 body에 dragps="number" </p>
+<div class="ui-draggable" id="drag4">
+    <button type="button" class="ui-draggable-item n1" name="j" onlymove="true">j</button>
+    <div class="ui-draggable-area n1" name="j">j</div>
+    <div class="ui-draggable-area n2" name="j">j</div>
+    <div class="ui-draggable-area n3" name="j">j</div>
+</div>
+
+<h3 class="tit-s">Draggable :line</h3>					
+<p>ui-draggable-item에 속성으로 line="true"추가  </p>
+<div class="ui-draggable type-line" id="drag5">
+    <button type="button" class="ui-draggable-item n1" name="k" line="true">k</button>
+    <button type="button" class="ui-draggable-item n2" name="l" line="true">l</button>
+    <button type="button" class="ui-draggable-item n3" name="m" line="true">m</button>
+
+    <div class="ui-draggable-area n3" name="k">k</div>
+    <div class="ui-draggable-area n2" name="l">l</div>
+    <div class="ui-draggable-area n1" name="m">m</div>
+
+    <svg>
+        <line x1="0" y1="0" x2="0" y2="0" name="k"></line>
+        <line x1="0" y1="0" x2="0" y2="0" name="l"></line>
+        <line x1="0" y1="0" x2="0" y2="0" name="m"></line>
+    </svg>
+</div>
+
+<h2 class="tit-m">HTML Structure</h2>
+<h3 class="tit-s">basic type</h3>
+<div class="box-code">
+<pre>
+<code>
+&lt;div class="ui-draggable" id="drag1"&gt;
+    &lt;button type="button" class="ui-draggable-item n1" name="a"&gt;a&lt;/button&gt;
+    &lt;button type="button" class="ui-draggable-item n2" name="b"&gt;b&lt;/button&gt;
+    &lt;button type="button" class="ui-draggable-item n3" name="c"&gt;c&lt;/button&gt;
+
+    &lt;div class="ui-draggable-area n1" name="a"&gt;a&lt;/div&gt;
+    &lt;div class="ui-draggable-area n2" name="b"&gt;b&lt;/div&gt;
+    &lt;div class="ui-draggable-area n3" name="c"&gt;c&lt;/div&gt;
+
+     &lt;svg&gt;
+        &lt;line x1="0" y1="0" x2="0" y2="0" name="a"&gt;&lt;/line&gt;
+        &lt;line x1="0" y1="0" x2="0" y2="0" name="b"&gt;&lt;/line&gt;
+        &lt;line x1="0" y1="0" x2="0" y2="0" name="c"&gt;&lt;/line&gt;
+    &lt;/svg&gt;
+&lt;/div&gt;
+</code>
+</pre>
+</div>
+
+<h2 class="tit-m">Javascript</h2>
+<h3 class="tit-s">netive.draggable.init</h3>
+<div class="box-code">
+<pre>
+<code>
+netive.draggable.init({
+    id:'drag1'
+});
+
+</code>
+</pre>
+</div>
+

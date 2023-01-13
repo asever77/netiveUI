@@ -1,53 +1,67 @@
 <input type="hidden" id="uiJsName" value="pageParallax">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Parallax Scroll</h1>
+	<h1 class="tit-l">Parallax Scroll</h1>
+</div>
+<div style="height:100vh; background-color: #f1f1f1;"></div>
+
+<div style="position: fixed; top:50%; left:50%; z-index: 100; transform: translate(-50%,-50%); padding:20px; background-color: rgba(255,255,255,.5);">
+	<div>
+		<strong>itemA - 퍼센트</strong><span id="parallax1-1">0</span>% / <span id="parallax1-3">0</span>% / <strong>위치값</strong><span id="parallax1-2">0</span>px
+	</div>
+	<div>
+		<strong>itemB - 퍼센트</strong><span id="parallax2-1">0</span>% / <span id="parallax2-3">0</span>% / <strong>위치값</strong><span id="parallax2-2">0</span>px
+	</div>
+	<div>
+		<strong>itemC - 퍼센트</strong><span id="parallax3-1">0</span>% / <span id="parallax3-3">0</span>% / <strong>위치값</strong><span id="parallax3-2">0</span>px
+	</div>
+	<div>
+		<strong>itemD - 퍼센트</strong><span id="parallax4-1">0</span>% / <span id="parallax4-3">0</span>% / <strong>위치값</strong><span id="parallax4-2">0</span>px
+	</div>
+	<div>
+		<strong>itemE - 퍼센트</strong><span id="parallax5-1">0</span>% / <span id="parallax5-3">0</span>% / <strong>위치값</strong><span id="parallax5-2">0</span>px
+	</div>
+
 </div>
 
 <div class="ui-parallax">
-	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="0" data-end="20">
-		<h2 class="typo-headline-m">Examples</h2>
+	<section class="wrap-article ui-parallax-wrap parallax-test" data-act="parallax01">
 		<div class="parallax-cont" style="overflow: hidden;">
-			<b class="ui-parallax-item" 
-			data-act="parallax01" style="opacity: 0; transform:translate(100%, 0);">A</b>
+			<b >A</b>
 		</div>
 	</section>
 
-	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="0" data-end="0">
+	<section class="wrap-article ui-parallax-wrap parallax-test" data-act="parallax02">
 		<div class="parallax-cont" style="overflow: hidden;">
-			<b class="ui-parallax-item" 
-			data-act="parallax02" style="opacity:0;transform:translate(-100%,0);">B</b>
+			<b 
+			data-act="parallax02">B</b>
 		</div>
 	</section>
 
-	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="0" data-end="20">
+	<section class="wrap-article ui-parallax-wrap parallax-test" data-act="parallax03">
 		<div class="parallax-cont" style="overflow: hidden;">
-			<b class="ui-parallax-item" 
-			data-act="parallax03" style="opacity:0;">C</b>
+			<b 
+			data-act="parallax03">C</b>
 		</div>
 	</section>
 
-	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="0" data-end="20">
+	<section class="wrap-article ui-parallax-wrap parallax-test" data-act="parallax04">
 		<div class="parallax-cont" style="overflow: hidden;">
-			<b class="ui-parallax-item" 
-			data-act="parallax04" style="opacity:0; transform:translate(100%, 0);">D</b>
+			<b 
+			data-act="parallax04" >D</b>
 		</div>
 	</section>
 
-	<section class="sec-wrap ui-parallax-wrap parallax-test" data-start="60" data-end="20">
-		<div class="ui-parallax-item" data-act="parallax05" style="opacity:0;">
-			<h2 class="typo-headline-m">Source Code</h2>
-			<h3 class="typo-title-m">HTML</h3>
+	<section class="wrap-article ui-parallax-wrap parallax-test" data-act="parallax05">
+		<div data-act="parallax05">
+			<b style="position: absolute;opacity: .1;margin-top: -258px;">E</b>
+			<h2 class="tit-m">Source Code</h2>
+			<h3 class="tit-s">HTML</h3>
 
 <pre class="box-code"><code class="html">
 &lt;div class="ui-parallax&gt;
-	&lt;section class="ui-parallax-wrap" data-start="100" data-end="20"&gt;
+	&lt;section class="ui-parallax-wrap" data-act="{function name}"&gt;
 		...
-	&lt;/section&gt;
-	&lt;section class="ui-parallax-wrap" data-start="70" data-end="20"&gt;
-		&lt;div class="ui-parallax-item" data-act="실행함수명"&gt;
-			...
-		&lt;/div&gt;
 	&lt;/section&gt;
 	...
 &lt;/div&gt;
@@ -58,22 +72,19 @@
 
 	<section class="ui-parallax-wrap parallax-test" data-start="118" data-end="20">
 		<div class="ui-parallax-item" data-act="parallax06" style="opacity:0;">
-			<h3 class="typo-title-m">Javascript</h3>
+			<h3 class="tit-s">Javascript</h3>
 
 <pre class="box-code"><code class="javascript">
 netive.scroll.parallax({
 	callback:function(v) {
-		console.log(v);
+		console.log(v.el, v.px, v.per);
 	}
 });
 
-netive.callback.실행함수명 = function(opt){
-	const el = opt.el;
-	const n = opt.n;
-	
-	//스타일 적용
-	el.style.opacity = n;
-	el.style.transform = 'translate('+ ((100 - n * 100).toFixed(2)) +'% ,0)';
+netive.callback.{function name} = function(v){
+	const el = v.el;
+	const px = v.px;
+	const per = v.per;
 }
 </code>
 </pre>

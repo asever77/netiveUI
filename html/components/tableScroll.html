@@ -1,11 +1,19 @@
+<style>
+	.ui-tablescroll-wrap.ui-scrollbar .ui-scrollbar-barwrap.type-y{
+		height: calc(100% - 34px);
+		top:auto;
+		bottom:0;
+	}
+</style>
+
 <input type="hidden" id="uiJsName" value="pageTableScroll">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Table Scroll</h1>
+	<h1 class="tit-l">Table Scroll</h1>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Examples</h2>
+<article class="wrap-article">
+	<h2 class="tit-m">Examples</h2>
 	<p>thead 고정, tbody 영역 스크롤 정보성 테이블</p>
 
 	<div class="box-guide">
@@ -87,7 +95,7 @@
 			</div>
 		</div>
 
-		<div class="ui-tablescroll tbl-base mgt-x2">
+		<div class="ui-tablescroll tbl-base mt-x2">
 			<div class="ui-tablescroll-wrap">
 				<table>
 					<caption>
@@ -166,11 +174,12 @@
 			
 		</div>
 	</div>
-</section>
+</article>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Source Code</h2>
-	<h3 class="typo-title-m">HTML</h3>
+<article class="wrap-article">
+	<h2 class="tit-m">Source Code</h2>
+	<section class="wrap-section">
+		<h3 class="tit-s">HTML</h3>
 <pre class="box-code"><code class="html">
 &lt;div class="ui-tablescroll tbl-base"&gt;
 	&lt;div class="ui-tablescroll-wrap"&gt;
@@ -182,8 +191,9 @@
 
 </code>
 </pre>
-
-<h3 class="typo-title-m">Javascript</h3>
+	</section>
+	<section class="wrap-section">
+	<h3 class="tit-s">Javascript</h3>
 <pre class="box-code"><code class="javascript">
 netive.table.scroll({
 	callback: function(){
@@ -192,5 +202,5 @@ netive.table.scroll({
 });
 </code>
 </pre>
-	
-</section>
+	</section>
+</article>

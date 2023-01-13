@@ -2,15 +2,14 @@
 <input type="hidden" id="uiJsName" value="pageToast">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Toast</h1>
+	<h1 class="tit-l">Toast</h1>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Examples</h2>
-	<p>기본적인 콘텐츠 모달</p>
+<article class="wrap-article">
+	<h2 class="tit-m">Examples</h2>
 	<div class="box-guide">
-		<div class="test-modal fx-wrap" data-wrap="wrap">
-			<button type="button" class="btn-mix-outlined" 
+		<div class="test-modal wrap-group">
+			<button type="button" class="btn-base" 
 			onclick="netive.toast.show({
 				delay: 'short',
 				classname : '',
@@ -19,7 +18,7 @@
 			>
 				<span>Show(bottom)</span>
 			</button>
-			<button type="button" class="btn-mix-outlined" 
+			<button type="button" class="btn-base" 
 			onclick="netive.toast.show({
 				delay: 'short',
 				classname : 'top',
@@ -29,7 +28,7 @@
 				<span>Show(top)</span>
 			</button>
 
-			<button type="button" class="btn-mix-outlined" 
+			<button type="button" class="btn-base" 
 			onclick="netive.toast.hide()"
 			>
 				<span>Hide</span>
@@ -38,26 +37,41 @@
 		</div>
 	</div>
 
+	<div class="box-guide">
+		<guide></guide>
+		<div class="toast" d="assertive" style="position:relative !important; top:0;">안녕하세요.</div>
+	</div>
+
 	
-</section>
+</article>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Source Code</h2>
-	<h3 class="typo-title-m">HTML</h3>
+<article class="wrap-article">
+	<h2 class="tit-m">Source Code</h2>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">HTML</h3>
 <pre class="box-code"><code class="html">
-
+&lt;div class="toast" aria-live="assertive"&gt;
+	...
+&lt;/div&gt;
 </code></pre>
 
 
-
-	<h3 class="typo-title-m">Javascript</h3>
-	<h4 class="typo-title-m">base show</h4>
+	</section>
+	<section class="wrap-section">
+		<h3 class="tit-s">Javascript</h3>
 <pre class="box-code"><code class="javascript">
+netive.toast.show({
+	delay: 'short',
+	status
+	classname : '',
+	conts: '안녕하세요.'
+});
 
+netive.toast.hide();
 </code></pre>
 
-
-
+	</section>
 			
-</section>
+</article>
 

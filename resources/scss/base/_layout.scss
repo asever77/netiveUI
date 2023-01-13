@@ -1,0 +1,606 @@
+/* inline-block layout */
+.in{
+    &-wrap {
+        position: relative;
+        font-size: 0;
+        & + .in-wrap {
+            margin-top: $x1;
+        }
+    }
+    &-wrap > *,
+    &-item {
+        font-size: $fs-body-m;
+        display: inline-block;
+        vertical-align: top;
+    }
+}
+
+
+/* float layout */
+.fl{
+    &-wrap {
+        position: relative;
+
+        & + .fl-wrap {margin-top: $x1;}
+
+        &::after {
+            content: "";
+            display: block;
+            clear: both;
+        }
+    }
+    &-item {
+        &-l {
+            float: left;
+            position: relative;
+        }
+        &-r {
+            float: right;
+            position: relative;
+        }
+    }
+}
+
+/* flex layout */
+.fx{
+    &-wrap {
+        position: relative;
+        display: -webkit-box;
+        display: -moz-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-lines: single;
+        -ms-flex-wrap: nowrap;
+        flex-wrap: nowrap;
+
+        &[data-wrap="nowrap"] {
+            -webkit-box-lines: single;
+            -moz-flex-wrap: nowrap;
+            -ms-flex-wrap: nowrap;
+            flex-wrap: nowrap;
+        }
+        &[data-wrap="wrap"] {
+            -webkit-box-lines: multiple;
+            -moz-flex-wrap: wrap;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+        }
+        &[data-dir="row"] {
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: reverse;
+            -moz-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+        }
+        &[data-dir="rev"] {
+            -webkit-box-orient: horizontal;
+            -webkit-box-direction: reverse;
+            -moz-flex-direction: row-reverse;
+            -ms-flex-direction: row-reverse;
+            flex-direction: row-reverse;
+        }
+        &[data-dir="col"] {
+            -webkit-box-orient: vertical;
+            -ms-flex-direction: column;
+            flex-direction: column;
+        }
+        &[data-dir="revcol"] {
+            -webkit-box-orient: vertical;
+            -webkit-box-direction: reverse;
+            -ms-flex-direction: column-reverse;
+            flex-direction: column-reverse;
+        }
+        &[data-align="left"] {
+            -webkit-box-pack: start;
+            -moz-box-justify-content: flex-start;
+            -ms-flex-pack: start;
+            justify-content: flex-start;
+        }
+        &[data-align="right"] {
+            -webkit-box-pack: end;
+            -moz-box-justify-content: flex-end;
+            -ms-flex-pack: end;
+            justify-content: flex-end;
+        }
+        &[data-align="center"] {
+            -webkit-box-pack: center;
+            -moz-box-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+        }
+        &[data-align="justify"] {
+            -webkit-box-pack: justify;
+            -moz-justify-content: space-between;
+            -ms-flex-pack: justify;
+            justify-content: space-between;
+        }
+        &[data-valign="top"] {
+            -webkit-box-align: start;
+            -moz-align-items: flex-start;
+            -ms-flex-align: start;
+            align-items: flex-start;
+        }
+        &[data-valign="bottom"] {
+            -webkit-box-align: end;
+            -moz-align-items: flex-end;
+            -ms-flex-align: end;
+            align-items: flex-end;
+        }
+        &[data-valign="center"] {
+            -webkit-box-align: center;
+            -moz-align-items: center;
+            -ms-flex-align: center;
+            align-items: center;
+        }
+        &[data-valign="stretch"] {
+            -webkit-box-align: stretch;
+            -moz-align-items: stretch;
+            -ms-flex-align: stretch;
+            align-items: stretch;
+        }
+        &[data-valign="baseline"] {
+            -webkit-box-align: baseline;
+            -moz-align-items: baseline;
+            -ms-flex-align: baseline;
+            align-items: baseline;
+        }
+    }
+}
+/* data-flex="n-n-n" */
+@for $i from 1 through 12 {
+    .col-4 [data-flex^="#{$i}-"] {
+        -webkit-box-flex: #{$i};
+        -ms-flex: #{$i};
+        flex: #{$i};
+    }
+    .col-8 [data-flex*="-#{$i}-"] {
+        -webkit-box-flex: #{$i};
+        -ms-flex: #{$i};
+        flex: #{$i};
+    }
+    [data-flex$="-#{$i}"] {
+        -webkit-box-flex: #{$i};
+        -ms-flex: #{$i};
+        flex: #{$i};
+    }
+    [data-order="#{$i}"] {
+        -webkit-box-ordinal-group: #{$i};
+        -ms-flex-order: #{$i};
+        order: #{$i};
+    }
+}
+
+/* grid layout */
+/* gridItem($colstart, $colend, $rowstart, $rowend) */
+.gd{
+    &-wrap{
+        display: -ms-grid;
+        display: grid;
+        width:100%;
+        min-width:800px;
+        margin:0 auto;
+        grid-template:
+        "header header  header" 100px
+        "nav    main    aside"  minmax(300px, 1fr)
+        "footer footer  footer" 100px
+        /130px  1fr     100px ;
+        gap:10px;
+        -ms-grid-columns: 130px 10px 1fr 10px 100px;
+        -ms-grid-rows: 100px 10px minmax(300px, 1fr) 10px 100px;
+    }
+    &-header {
+        position: relative;
+        @include gridItem(1,6, 1,2);
+        grid-area: header;
+    }
+    &-nav    {
+        position: relative;
+        @include gridItem(1,2, 3,4);
+        grid-area: nav;
+    }
+    &-main   {
+        position: relative;
+        @include gridItem(3,4, 3,4);
+        grid-area: main;
+    }
+    &-aside  {
+        position: relative;
+        @include gridItem(5,6, 3,4);
+        grid-area: aside;
+        align-self:start;
+        -ms-grid-row-align: start;
+    }
+    &-footer {
+        position: relative;
+        @include gridItem(1,6, 5,6);
+        grid-area: footer;
+    }
+    &-item{
+        position: relative;
+    }
+    &-main-wrap{
+        display: -ms-grid;
+        display: grid;
+        width:100%;
+        margin:0 auto;
+        
+        grid-template-columns :160px 1fr 100px 100px;
+        grid-template-rows :150px minmax(150px, 1fr) 150px 100px;
+        gap:10px;
+    
+        -ms-grid-columns: 160px 10px 1fr 10px 100px 10px 100px;
+        -ms-grid-rows: 150px 10px minmax(150px, 1fr) 10px 150px 10px 100px;
+        
+        .gd-item.n1 {
+            @include gridItem(1,2, 1,2); 
+            grid-area:1/1/2/2;
+            grid-column:1/2;
+            grid-row:1/2;
+        }
+        .gd-item.n2 {
+            @include gridItem(3,4, 1,2); 
+            grid-area:1/2/2/3;
+            grid-column:2/3;
+            grid-row:1/2;
+        }
+        .gd-item.n3 {
+            @include gridItem(5,8, 1,2); 
+            grid-area:1/3/2/5;
+            grid-column:3/5;
+            grid-row:1/2;
+        }
+        .gd-item.n4 {
+            @include gridItem(1,8, 3,4); 
+            grid-area:2/1/3/5;
+            grid-column:1/5;
+            grid-row:2/3;
+        }
+        .gd-item.n5 {
+            @include gridItem(1,2, 5,6); 
+            grid-area:3/1/4/2;
+            grid-column:1/2;
+            grid-row:3/4;
+        }
+        .gd-item.n6 {
+            @include gridItem(1,2, 7,8); 
+            grid-area:4/1/5/2;
+            grid-column:1/2;
+            grid-row:4/5;
+        }
+        .gd-item.n7 {
+            @include gridItem(3,4, 5,8); 
+            grid-area:3/2/5/3;
+            grid-column:2/3;
+            grid-row:3/5;
+        }
+        .gd-item.n8 {
+            @include gridItem(5,6, 5,6); 
+            grid-area:3/3/4/4;
+            grid-column:3/4;
+            grid-row:3/4;
+        }
+        .gd-item.n9 {
+            @include gridItem(7,8, 5,6); 
+            grid-area:3/4/4/5;
+            grid-column:4/5;
+            grid-row:3/4;
+        }
+        .gd-item.n10{
+            @include gridItem(5,6, 7,8); 
+            grid-area:4/3/5/4;
+            grid-column:3/4;
+            grid-row:4/5;
+        }
+    }
+    &-header-wrap {
+        display: -ms-grid;
+        display: grid;
+        width:100%;
+        margin:0 auto;
+        padding:20px;
+    
+        align-content: center;
+        align-items: center;
+        grid-template:
+        "logo  gnb util" auto
+        /100px 1fr auto ;
+        gap:10px;
+       
+        -ms-grid-columns: 100px 10px 1fr 10px minmax(min-content, max-content);
+        -ms-grid-rows: minmax(min-content, max-content);
+    
+        .gd-header-logo {
+            @include gridItem(1,2, 1,2);
+            grid-area: logo;
+        }
+        .gd-header-gnb {
+            @include gridItem(3,4, 1,2);
+            grid-area: gnb;
+    
+            align-self: center;
+            -ms-grid-row-align: center;
+        }
+        .gd-header-util {
+            @include gridItem(5,6, 1,2);
+            grid-area: util;
+    
+            align-self: center;
+            -ms-grid-row-align: center;
+        }
+    }
+}
+
+/* form layout */ 
+/* 가로형 : 기본 */
+.form{
+    &-wrap{
+        position: relative;
+    }
+    &-item {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+    
+        & + .form-item-rowgroup,
+        & + .form-item {
+            margin-top:$x2;
+        }
+    }
+    &-item-rowgroup{
+        display: block;
+        & + .form-item-rowgroup,
+        & + .form-item {
+            margin-top:$x2;
+        }
+    }
+    &-head {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        margin-right:$x1;
+        min-height: $x5;
+         
+        .bul-required {
+            position: absolute !important;
+            top: $-x0_5; 
+            left: 0;
+        } 
+    }
+    &-title{
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        margin-top:$x1;
+    
+        .ui-tooltip-btn {
+            top:.6rem
+        }
+    }
+    &-label{
+        position: relative;
+        margin-right:$x1;
+    }
+    &-body {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+    }
+    &-group{
+        position: relative;
+        display: flex;
+        margin-top: $-x1;
+        flex-wrap: wrap;
+        justify-content: flex-start;
+    
+        > *:not(.form-group) {
+            margin-top: $x1;
+        }
+    
+        &[data-wrap="nowrap"] {
+            flex-wrap: nowrap;
+        }
+        & + .form-info {
+            margin-top:$x1;
+        }
+
+        .form-text,
+        .form-input {
+            margin-right: $x1;
+           
+            & + .form-text {
+                margin-right: $x0_5;
+                margin-left: $-x0_5;
+            }
+        }
+    }
+    &-input{
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+    &-text{
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+    }
+    &-info {
+        position: relative;
+        margin:0 0 $x0_5 0;
+    }
+}
+
+
+/* 세로형 */
+[data-type="col"]{
+    .form-item {
+        flex-direction: column;
+    }
+    .form-item {
+        & + .form-item-rowgroup,
+        & + .form-item {
+            margin-top:$x6;
+        }
+    }
+    .form-item-rowgroup{
+        display: block;
+        & + .form-item-rowgroup,
+        & + .form-item {
+            margin-top:$x6;
+        }
+    }
+
+    .form-head{
+        min-height: 0;
+        margin-bottom: $x0_5;
+        width: 100%;
+        justify-content: space-between;
+        min-width:0;
+        max-width: 100%;
+        flex-direction: row;
+       
+    }
+    .form-title {
+        margin-top:0;
+    }
+    .form-body {
+        flex: 1;
+        width: 100%;
+    }
+}
+/* 스타일 - 테이블 */
+.style-table:not([data-type="col"]) {
+    background-color: $gray200;
+    border-top: 1px solid $gray400;
+    border-left: 1px solid $gray400;
+
+    .form-item-rowgroup{
+        display: flex;
+
+        & + .form-item-rowgroup,
+        & + .form-item {
+            margin-top:0;
+        }
+    }
+    
+    .form-item{
+        flex:1;
+        border: 1px solid $gray400;
+        border-top:0;
+        border-left:0;
+
+        .form-head {
+            flex:0;
+            padding:$x2;
+
+            .bul-required{
+                left:$x2;
+                top:$x2;
+            }
+
+        }
+        .form-body{
+            flex:1;
+            height: 100%;
+            background-color: #fff;
+            padding:$x2;
+            border-left: 1px solid $gray400;
+        }
+
+        & + .form-item-rowgroup,
+        & + .form-item {
+            margin-top:0;
+        }
+    }
+}
+
+/* custom : size */
+.form-head{
+    min-width: 130px; max-width:130px; 
+    .form-title{margin-right:auto;}
+}
+
+.ui-m {
+    .form-item {
+        flex-direction: column;
+    }
+    .form-head{
+        max-width: 100%;
+    }
+    .form-body{
+        flex: 1;
+        width: 100%;
+    }
+    .form-item-rowgroup{
+        flex-direction: column;
+    }
+    .style-table:not([data-type=col]) .form-item .form-body{
+        border:0;
+    }
+}
+
+/* 공용 layout : article > section > divsion > group */
+.wrap{
+    &-article {
+        position:relative;
+        width:100%;
+        padding:$x1;
+
+        & + .wrap-article{ margin-top:$x16;}
+    }
+    &-section {
+        position:relative;
+        width:100%;
+
+        & + .wrap-section{ margin-top:$x5;}
+    }
+    &-divsion {
+        position:relative;
+        width:100%;
+
+        & + .wrap-divsion{ margin-top:$x3;}
+    }
+    &-group {
+        position: relative;
+        margin: 0;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    
+        & > *:not(guide) {
+            flex: 1 auto;
+            
+            & + * {margin-left: $gap;}
+        }
+        & > .wrap-group {flex: auto; }
+    
+        &.no-gap {
+            & > * + * {margin-left: 0;}
+            & > .btn-base + .btn-base {margin-left: -0.1rem;}
+        }
+        &.type-many {
+            width: calc(100% + ($gap * 2));
+            margin-left: calc($gap * -1);
+            flex-wrap: wrap;
+            
+            & > * {margin: $gap;}
+        }
+        &.left > *:not(.wrap-group),
+        &.center > *,
+        &.right > *:not(.wrap-group) {flex: 0 0 auto}
+        &.left {
+            justify-content: flex-start;
+    
+            .wrap-group + .wrap-group {
+                margin:0;
+            }
+        }
+        &.center {justify-content: center;}
+        &.right {justify-content: flex-end;}
+    }
+    * + &-section{margin-top:$x5;}
+}

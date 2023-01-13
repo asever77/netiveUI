@@ -1,0 +1,65 @@
+[data-icon]::before {
+    content:"";
+    display: block;
+    position: relative;
+}
+[data-icon="none"]::before {
+    display: none;
+}
+
+
+
+
+.btn-base {
+    &[data-icon-ps="front"]::before{
+        transform: translateX(calc($gap * -1));
+    }
+    &[data-icon-ps="back"]::before{
+        transform: translateX($gap);
+        order:2;
+    }
+    &[data-icon-ps="center"]{
+        padding:0;
+
+        &::before{
+            transform: translateX(0);
+            margin:0;
+        }
+    }
+
+    &[data-icon="search"]::before {
+        width:2rem;
+        height:2rem;
+        outline:1px dashed $gray400;
+        background: $gray50;
+        background-repeat: no-repeat;
+        background-position: 0 0;
+    }
+}
+
+
+.icon50{
+    width:5rem;
+    height:5rem;
+    &::before {
+        outline:1px dashed $gray400;
+        width:5rem;
+        height:5rem;
+        background-image: url(/project/UI/resources/img/icon/icon50.png);
+        background-repeat: no-repeat;
+    }
+    &[data-icon="search"]::before {background-position: 0 0;}
+    &[data-icon="home"]::before {background-position: -5rem 0;}
+    &[data-icon="person"]::before {background-position: -10rem 0;}
+    &[data-icon="settings"]::before {background-position: -15rem 0;}
+}
+
+
+[data-material]::before {
+    content: attr(data-material);
+    font-family: 'Material Icons';
+    font-feature-settings: 'liga';
+    display: block;
+    position: relative;
+    top: .1rem;
+}

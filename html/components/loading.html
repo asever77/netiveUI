@@ -1,13 +1,13 @@
 <input type="hidden" id="uiJsName" value="pageLoading">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Loading</h1>
+	<h1 class="tit-l">Loading</h1>
 </div>
 
-<section class="sec-wrap">
-    <h2 class="typo-headline-m">Examples</h2>
+<section class="wrap-article">
+    <h2 class="tit-m">Examples</h2>
     <div class="box-guide">
-        <div class="wrap-btn">
+        <div class="wrap-group">
             <button type="button" class="btn-mix-outlined " onclick="
                 netive.loading.show({ 
                     styleClass:'clock', 
@@ -22,9 +22,9 @@
             "><span>Orbit</span></button>
         </div>  
     </div>
-    <div class="box-guide" id="loadingArea" style="position: relative; overflow: hidden;">
-        <h3 lang="typo-title-m">In area</h3>
-        <div class="wrap-btn">
+    <div class="box-guide" id="loadingArea" style="position: relative; overflow: hidden; ">
+        <h3 lang="tit-s">In area</h3>
+        <div class="wrap-group" style="height: 300px;">
             <button type="button" class="btn-mix-outlined " onclick="
                 netive.loading.show({ 
                     selector: document.querySelector('#loadingArea'),
@@ -43,16 +43,16 @@
     </div>
 </section>
 
-<section class="sec-wrap">
-    <h2 class="typo-headline-m">Source Code</h2>
-    <h3 class="typo-title-m">HTML</h3>
+<section class="wrap-article">
+    <h2 class="tit-m">Source Code</h2>
+    <h3 class="tit-s">HTML</h3>
 <pre class="box-code"><code class="html">
 &lt;div class="ui-loading {name} visible"&gt;
     &lt;div class="ui-loading-wrap"&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
 
-    <h3 class="typo-title-m">Javascript</h3>
+    <h3 class="tit-s mt-x3">Javascript</h3>
 <pre class="box-code"><code class="javascript">
     netive.loading.show({
         selector: $('target'),

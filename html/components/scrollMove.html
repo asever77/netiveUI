@@ -1,15 +1,15 @@
 <input type="hidden" id="uiJsName" value="pageScrollMove">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Scroll Move</h1>
+	<h1 class="tit-l">Scroll Move</h1>
 	<p>특정 위치로 스크롤 이동이 필요할때 사용한다.</p>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Examples</h2>
+<article class="wrap-article">
+	<h2 class="tit-m">Examples</h2>
 	<div class="box-guide">
 		<div class="ui-scrollbar ui-scrollmove test-scrollmove-hor" data-area="test1">
-			<div class="test-scrollmove-hor-wrap">
+			<div class="test-scrollmove-hor-wrap" style="width: 400vw;">
 				<div class="test ui-scrollmove-item" data-name="0"><span>1</span></div>
 				<div class="test ui-scrollmove-item" data-name="1"><span>2</span></div>
 				<div class="test ui-scrollmove-item" data-name="2"><span>3</span></div>
@@ -20,7 +20,7 @@
 				<div class="test ui-scrollmove-item" data-name="7"><span>8</span></div>
 			</div>
 		</div>
-		<div class="wrap-btn type-many">
+		<div class="wrap-group type-many">
 			<button type="button" class="btn-mix-outlined ui-scrollmove-btn" data-align="center" data-name="0" data-area="test1"><span>01</span></button>
 			<button type="button" class="btn-mix-outlined ui-scrollmove-btn" data-align="center" data-name="1" data-area="test1"><span>02</span></button>
 			<button type="button" class="btn-mix-outlined ui-scrollmove-btn" data-align="center" data-name="2" data-area="test1"><span>03</span></button>
@@ -43,7 +43,7 @@
 				<div class="test ui-scrollmove-item" data-name="bottom2"><span>C2</span></div>
 			</div>
 		</div>
-		<div class="wrap-btn">
+		<div class="wrap-group">
 			<button type="button" data-area="test2" class="ui-scrollmove-btn btn-mix-outlined" data-name="top"><span>a</span></button>
 			<button type="button" data-area="test2" class="ui-scrollmove-btn btn-mix-outlined" data-align="center" data-callback="testscroll" data-name="1" ><span>b</span></button>
 			<button type="button" data-area="test2" class="ui-scrollmove-btn btn-mix-outlined" data-name="bottom"><span>c</span></button>
@@ -52,11 +52,12 @@
 			<button type="button" data-area="test2" class="ui-scrollmove-btn btn-mix-outlined" data-name="bottom2"><span>c2</span></button>
 		</div>
 	</div>
-</section>
+</article>
 
-<section class="sec-wrap">
-    <h2 class="typo-headline-m">Source Code</h2>
-	<h3 class="typo-title-m">HTML</h3>
+<article class="wrap-article">
+    <h2 class="tit-m">Source Code</h2>
+	<section class="wrap-section">
+		<h3 class="tit-s">HTML</h3>
 
 <pre class="box-code"><code class="html">
 &lt;div class="ui-scrollmove" data-area="name"&gt;
@@ -71,8 +72,9 @@ netive.callback.testscroll = function(){
 	console.log('callback');
 };
 </code></pre>
-
-	<h3 class="typo-title-m">Javascript</h3>
+	</section>
+	<section class="wrap-section">
+		<h3 class="tit-s">Javascript</h3>
 <pre class="box-code"><code class="script">
 netive.scroll.init();
 
@@ -87,80 +89,81 @@ netive.scroll.move({
 });
 </code></pre>
 
-	<div class="tbl-base type-option mgt-x2">
-		<table>
-			<caption>옵션 설명</caption>
-			<colgroup>
-				<col class="n1">
-				<col class="n2">
-				<col class="n3">
-				<col class="n4">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">Options</th>
-					<th scope="col">Type</th>
-					<th scope="col">Default</th>
-					<th scope="col">Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr>
-					<th scope="row">selector:</th>
-					<td>[object]</td>
-					<td>document.querySelector('html, body')</td>
-					<td>스크롤 영역 지정</td>
-				</tr>
-				<tr>
-					<th scope="row">top:</th>
-					<td>[number]</td>
-					<td>0</td>
-					<td>세로 이동할 위치값</td>
-				</tr>
-				<tr>
-					<th scope="row">left:</th>
-					<td>[number]</td>
-					<td>0</td>
-					<td>가로 이동할 위치값</td>
-				</tr>
-				<tr>
-					<th scope="row">add:</th>
-					<td>[number]</td>
-					<td>0</td>
-					<td>이동 시 이동값 추가</td>
-				</tr>
-				
-				<tr>
-					<th scope="row">align:</th>
-					<td>[string]</td>
-					<td>'default'</td>
-					<td>스크롤 아이템 기준위치
-						<ul>
-						<li>'default' : top,left </li>
-						<li>'center' : center,middle </li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">focus:</th>
-					<td>[object]</td>
-					<td>false</td>
-					<td>스크롤 완료 후 포커스 갈 위치의 id or $(...)</td>
-				</tr>
-				<tr>
-					<th scope="row">callback:</th>
-					<td>[function/string]</td>
-					<td></td>
-					<td>
-						<ul>
-						<li>이동 시 : 스크롤 좌표값, complete = false </li>
-						<li>완료 시 : 이동할 포커스 아이디명, complete = true </li>
-						</ul>
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-</section>			
+		<div class="tbl-base type-option mt-x2">
+			<table>
+				<caption>옵션 설명</caption>
+				<colgroup>
+					<col class="n1">
+					<col class="n2">
+					<col class="n3">
+					<col class="n4">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">Options</th>
+						<th scope="col">Type</th>
+						<th scope="col">Default</th>
+						<th scope="col">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<th scope="row">selector:</th>
+						<td>[object]</td>
+						<td>document.querySelector('html, body')</td>
+						<td>스크롤 영역 지정</td>
+					</tr>
+					<tr>
+						<th scope="row">top:</th>
+						<td>[number]</td>
+						<td>0</td>
+						<td>세로 이동할 위치값</td>
+					</tr>
+					<tr>
+						<th scope="row">left:</th>
+						<td>[number]</td>
+						<td>0</td>
+						<td>가로 이동할 위치값</td>
+					</tr>
+					<tr>
+						<th scope="row">add:</th>
+						<td>[number]</td>
+						<td>0</td>
+						<td>이동 시 이동값 추가</td>
+					</tr>
+					
+					<tr>
+						<th scope="row">align:</th>
+						<td>[string]</td>
+						<td>'default'</td>
+						<td>스크롤 아이템 기준위치
+							<ul>
+							<li>'default' : top,left </li>
+							<li>'center' : center,middle </li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">focus:</th>
+						<td>[object]</td>
+						<td>false</td>
+						<td>스크롤 완료 후 포커스 갈 위치의 id or $(...)</td>
+					</tr>
+					<tr>
+						<th scope="row">callback:</th>
+						<td>[function/string]</td>
+						<td></td>
+						<td>
+							<ul>
+							<li>이동 시 : 스크롤 좌표값, complete = false </li>
+							<li>완료 시 : 이동할 포커스 아이디명, complete = true </li>
+							</ul>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+</article>			
 
 			

@@ -2,36 +2,369 @@
 <input type="hidden" id="uiJsName" value="pageModal">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Modal</h1>
-	<p>시스템 알림창, 컨텐츠창 사용</p>
+	<h1 class="tit-l">Modal</h1>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Examples</h2>
-	<h3 class="typo-title-m">Base Modal</h3>
-	<p>기본적인 콘텐츠 모달</p>
+<article class="wrap-article">
+	<h2 class="tit-m">Base Modal</h2>
+
 	<div class="box-guide">
-		<div class="test-modal fx-wrap" data-wrap="wrap">
-			<button type="button" class="btn-mix-outlined" 
-				modal-id="modal_sample1" 
-				modal-src="./modal/modalSample1.html" 
-				modal-mobilefull="true"
-			>
-				<span>Ajax / center</span>
-			</button>
-			<button type="button" class="btn-mix-outlined" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-mobilefull="true" modal-scroll="true"><span>Ajax / center / scroll</span></button>
-			<button type="button" class="btn-mix-outlined" modal-id="modal_sample2" modal-src="./modal/modalSample2.html" modal-ps="top"><span>Ajax / top</span></button>
-			<button type="button" class="btn-mix-outlined" modal-id="modal_sample2" modal-src="./modal/modalSample2.html" modal-ps="bottom"><span>Ajax / bottom</span></button>
-			<button type="button" class="btn-mix-outlined" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-height="500"><span>Ajax / center / scroll / height</span></button>
-			<button type="button" class="btn-mix-outlined" modal-id="modal_sample1" modal-src="./modal/modalSample1.html" modal-width="400"><span>Ajax / center / scroll / width</span></button>
+		<div class="wrap-group test-modal" >
+			<button type="button" class="btn-base" 
+			modal-id="modal_sample1" 
+			modal-src="./modal/modalSample1.html" 
+			modal-full="true">
+			<span>full:true</span></button>
+
+			<button type="button" class="btn-base" 
+			modal-id="modal_sample1" 
+			modal-src="./modal/modalSample1.html" 
+			modal-full="mobile"  >
+			<span>full:mobile</span></button>
+
+			<button type="button" class="btn-base" 
+			modal-id="modal_sample2" 
+			modal-src="./modal/modalSample2.html" 
+			modal-ps="top">
+			<span>ps:top</span></button>
+
+			<button type="button" class="btn-base" 
+			modal-id="modal_sample2" 
+			modal-src="./modal/modalSample2.html" 
+			modal-ps="bottom">
+			<span>ps:bottom</span></button>
+			
+			<button type="button" class="btn-base" 
+			modal-id="modal_sample2" 
+			modal-src="./modal/modalSample2.html" 
+			modal-height="500">
+			<span>height:500</span></button>
+
+			<button type="button" class="btn-base" 
+			modal-id="modal_sample1" 
+			modal-src="./modal/modalSample1.html" 
+			modal-width="400">
+			<span>width:400</span></button>
+
+			<button type="button" class="btn-base" 
+			modal-id="modal_sample1" 
+			modal-src="./modal/modalSample1.html" 
+			modal-scroll="outer">
+			<span>scroll:outer</span></button>
 		</div>
 	</div>
 
-	<h3 class="typo-title-m">System Modal</h3>
-	<p>시스템 알림 모달</p>
 	<div class="box-guide">
-		<div class="wrap-btn mgt-x2 txta-l">
-			<button type="button" class="btn-mix-outlined" onclick="
+		<section class="modal" style="display:flex !important; position:relative !important; width: 100%; justify-content: center; align-items: center;">
+			<guide></guide>
+			<div class="ui-modal-wrap" style="opacity: 1 !important;">
+				<header class="ui-modal-header">
+					<guide2></guide2>
+					<h2 class="ui-modal-tit">제목2</h2>
+					<button type="button" class="icon-close" aria-label="close" onclick=""><span >close</span></button>
+				</header>
+				<div class="ui-modal-body">
+					<guide2></guide2>
+					<p><a href="#">기본적인 모달 레이어 팝업</a></p>
+					<p>width, height 값은 콘텐츠 내용에 따라 자동으로 설정</p>
+					<p>특정 크기 값을 줄수도 있음.</p>
+				</div>
+				<div class="ui-modal-footer">
+					<guide2></guide2>
+					<div class="wrap-group">
+						
+						<button type="button" class="btn-base">
+							<span>취소</span>
+						</button>
+						<button type="button" class="btn-base">
+							<span>확인</span>
+						</button>
+						<guide2></guide2>
+					</div>
+				</div>
+			</div>
+		</section>
+	</div>
+
+
+	<section class="wrap-section">
+		<h3 class="tit-s">HTML</h3>
+<pre class="box-code"><code class="html">
+//컨텐츠 팝업
+&lt;article class="ui-modal" id="modalIdName"&gt;
+    &lt;div class="ui-modal-wrap"&gt;
+        &lt;header class="ui-modal-header"&gt;
+            &lt;h1 class="ui-modal-tit"&gt;modal title&lt;/h1&gt;
+			//onclick
+            &lt;button type="button" class="icon-close" aria-label="close" onclick="
+				netive.modal.hide({ 
+					id:'modalIdName', 
+					callback:function(v){ console.log('close callback', v); } 
+				});
+            "&gt;&lt;span &gt;close&lt;/span&gt;&lt;/button&gt;
+			//close button
+			&lt;button type="button" class="icon-close ui-modal-close" aria-label="close"&gt;&lt;span &gt;close&lt;/span&gt;&lt;/button&gt;
+        &lt;/header&gt;
+        &lt;div class="ui-modal-body"&gt;
+            ...
+        &lt;/div&gt;
+        &lt;div class="ui-modal-footer"&gt;
+            &lt;div class="wrap-group"&gt;
+                &lt;button type="button" class="btn-base"&gt;
+                    &lt;span&gt;취소&lt;/span&gt;
+                &lt;/button&gt;
+                &lt;button type="button" class="btn-base"&gt;
+                    &lt;span&gt;확인&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/article&gt;
+
+//시스템알림 팝업 (자동 생성됨)
+&lt;div class="ui-modal type-system type-confirm n0 current ready ps-center open" id="uiSystemModal" data-remove="true" data-n="0" data-scrolltop="0" role="dialog"&gt;
+	&lt;div class="ui-modal-wrap"&gt;
+		&lt;div class="ui-modal-body"&gt;
+			...
+		&lt;/div&gt;
+		&lt;div class="ui-modal-footer"&gt;
+			&lt;div class="wrap-group"&gt;
+				&lt;button type="button" class="btn-base-m text ui-modal-cancel"&gt;
+					&lt;span&gt;Cancel&lt;/span&gt;
+				&lt;/button&gt;
+				&lt;button type="button" class="btn-base-m text primary ui-modal-confirm"&gt;
+					&lt;span&gt;Ok&lt;/span&gt;
+				&lt;/button&gt;
+			&lt;/div&gt;
+		&lt;/div&gt;
+	&lt;/div&gt;
+	&lt;div class="ui-modal-dim"&gt;&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+	</section>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">Javascript</h3>
+		<h4 class="tit-xs">netive.modal.show</h4>
+<pre class="box-code"><code class="javascript">
+//base modal
+netive.modal.show({ 
+	id:'IDname', 
+	type: 'normal',
+	full: false,
+	ps: 'center',
+	src: false,
+	remove: false,
+	width: false,
+	height: false,
+	mg: 10,
+	callback: function() { console.log('callback'); },
+	endfocus: false //document.querySelector('...'),
+});
+</code></pre>
+		<div class="tbl-base type-option mt-x2">
+			<table>
+				<caption>
+					<strong>netive.uiModal 옵션 설명</strong>
+					<span class="ui-caption"></span>
+				</caption>
+				<colgroup>
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-auto">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">Options</th>
+						<th scope="col">Type</th>
+						<th scope="col">Default</th>
+						<th scope="col">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="nec">
+						<th scope="row">id:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>(필수) ui-modal의 아이디명 기입</td>
+					</tr>
+					<tr>
+						<th scope="row">type:</th>
+						<td>[string]</td>
+						<td>'normal'</td>
+						<td>
+							<ul class="bul-dot">
+								<li>'normal' : 콘텐츠 모달</li>
+								<li>'alert' : 시스템 팝업</li>
+								<li>'confirm' : 시스템 팝업</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">scroll:</th>
+						<td>[string]</td>
+						<td>'inner'</td>
+						<td>
+							<ul class="bul-dot">
+								<li>'inner' : 모달내부 컨텐츠 스크롤</li>
+								<li>'outer' : 화면전체 스크롤</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">ps:</th>
+						<td>[string]</td>
+						<td>'center'</td>
+						<td>모달 레이어 팝업 나타날 위치 설정
+							<ul class="bul-dot">
+								<li>'top' : 상단 위치</li>
+								<li>'center' : 중앙 위치</li>
+								<li>'bottom' : 하단 위치</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">full:</th>
+						<td>[boolean]</td>
+						<td>false</td>
+						<td>mobile에서 전체 사이즈 모달 레이어 팝업 설정
+							<ul>
+							<li>true : 전체화면</li>
+							<li>false : 기본 사이즈</li>
+							<li>mobile : 모바일 환경에서만 전체화면</li>
+							<li>desktop : 데스크탑 환경에서만 전체화면</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">src:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>Ajax로 파일을 불러올 url경로</ul>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">remove:</th>
+						<td>[boolean]</td>
+						<td>false</td>
+						<td>코드 삭제 여부</ul>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">width:</th>
+						<td>[number]</td>
+						<td></td>
+						<td>모달 레이어 팝업 가로 크기<br>
+							옵션이 없을 경우 모달 팝업의 크기
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">height:</th>
+						<td>[number]</td>
+						<td></td>
+						<td>모달 레이어 팝업 세로 크기<br>
+							옵션이 없을 경우 모달 팝업의 크기
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">gap:</th>
+						<td>[number]</td>
+						<td>20</td>
+						<td>모달창 상하 여백 크기</td>
+					</tr>
+					<tr>
+						<th scope="row">callback:</th>
+						<td>[function]</td>
+						<td>false</td>
+						<td>모달 레이어 팝업 오픈 시 콜백값 실행</td>
+					</tr>
+					<tr>
+						<th scope="row">endfocus:</th>
+						<td>[string]</td>
+						<td>document.activeElement</td>
+						<td>모달 레이어 팝업 닫을 시 포커스가 갈 위치의 아이디 값 설정<br>
+							기본으로 모달 레이어 팝업 띄우기 전 포커스로 설정되나 그 값도 없을 경우 body로 설정
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+
+		<h4 class="tit-xs mt-x4">netive.modal.hide</h4>
+<pre class="box-code"><code class="javascript">
+netive.modal.hide({ 
+	id: 'modal_name', 
+	remove: false,
+	endfocus: document.querySelector('...'),
+	callback: function(v){ console.log(v) }
+});
+</code></pre>
+		<div class="tbl-base type-option mt-x2">
+			<table>
+				<caption>
+					<strong>netive.modal.hide 옵션 설명</strong>
+					<span class="ui-caption"></span>
+				</caption>
+				<colgroup>
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-auto">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">Options</th>
+						<th scope="col">Type</th>
+						<th scope="col">Default</th>
+						<th scope="col">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="nec">
+						<th scope="row">id:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>(필수) ui-modal의 아이디명 기입</td>
+					</tr>
+					<tr>
+						<th scope="row">remove:</th>
+						<td>[boolean]</td>
+						<td>false</td>
+						<td>모달팝업 콘텐츠 삭제 여부
+							<ul>
+							<li>true: 코드삭제</li>
+							<li>false: 미삭제</li>
+							</ul>
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">endfocus:</th>
+						<td>[string]</td>
+						<td>document.activeElement</td>
+						<td>모달팝업 닫을 시 포커스가 갈 위치의 아이디 값 설정<br>
+							기본으로 모달팝업 띄우기 전 포커스로 설정되나 그 값도 없을 경우 body로 설정
+						</td>
+					</tr>
+					<tr>
+						<th scope="row">callback:</th>
+						<td>[function]</td>
+						<td></td>
+						<td>모달팝업 닫을 시 콜백함수 실행</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</section>
+</article>
+
+<article class="wrap-article">
+	<h2 class="tit-m">System Modal</h2>
+
+	<div class="box-guide">
+		<div class="wrap-group">
+			<button type="button" class="btn-base" onclick="
 				netive.modal.show({
 					type : 'alert',
 					sMessage: '<strong>Please</strong> <br>check the information you entered again.',
@@ -43,7 +376,7 @@
 						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>alert system</span></button>
-			<button type="button" class="btn-mix-outlined" onclick="
+			<button type="button" class="btn-base" onclick="
 				netive.modal.show({
 					type : 'alert',
 					ps: 'top',
@@ -56,7 +389,7 @@
 						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>alert system / top</span></button>
-			<button type="button" class="btn-mix-outlined" onclick="
+			<button type="button" class="btn-base" onclick="
 				netive.modal.show({
 					type : 'alert',
 					ps: 'bottom',
@@ -70,9 +403,9 @@
 					}
 			});"><span>alert system / bottom</span></button>
 		</div>
-		<input type="text" class="inp-base" placeholder="focus" id="testEndFocus">
-		<div class="wrap-btn mgt-x2 txta-l">
-			<button type="button" class="btn-mix-outlined" onclick="
+		<input type="text" class="inp-base mt-x2" placeholder="focus" id="testEndFocus">
+		<div class="wrap-group mt-x2">
+			<button type="button" class="btn-base" onclick="
 				netive.modal.show({
 					type : 'confirm',
 					sMessage: 'Would you like to send <br>the information you entered?',
@@ -89,7 +422,7 @@
 						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>confirm system</span></button>
-			<button type="button" class="btn-mix-outlined" onclick="
+			<button type="button" class="btn-base" onclick="
 				netive.modal.show({
 					type : 'confirm',
 					ps: 'top',
@@ -107,7 +440,7 @@
 						document.querySelector('#testEndFocus').focus();
 					}
 			});"><span>confirm system / top</span></button>
-			<button type="button" class="btn-mix-outlined" onclick="
+			<button type="button" class="btn-base" onclick="
 				netive.modal.show({
 					type : 'confirm',
 					ps: 'bottom',
@@ -127,43 +460,42 @@
 			});"><span>confirm system / bottom</span></button>
 		</div>
 	</div>
-</section>
-
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Source Code</h2>
-	<h3 class="typo-title-m">HTML</h3>
+	<div class="box-guide">
+		<div class="modal type-system type-confirm current ready ps-center open" role="dialog" aria-modal="true" aria-live="polite" data-remove="true" data-scroll="inner" 
+		style="position:relative !important">
+			<guide></guide>
+			<div tabindex="0" class="ui-focusloop-start">
+				<span>시작지점입니다.</span>
+			</div>
+			<div class="ui-modal-wrap">
+				<guide2></guide2>
+				<div class="ui-modal-body" style="overflow-y: auto; height: 100%; max-height: 833px;">
+					<guide2></guide2>
+					Would you like to send
+					<br>the information you entered?
+				</div>
+				<div class="ui-modal-footer">
+					<guide2></guide2>
+					<div class="wrap-group">
+						<button type="button" class="btn-base no-line ui-modal-cancel">
+							<span>Cancel</span>
+						</button>
+						<button type="button" class="btn-base no-line gray ui-modal-confirm">
+							<span>Ok</span>
+						</button>
+						<guide2></guide2>
+					</div>
+				</div>
+			</div>
+			<div class="ui-modal-dim" style="position:absolute !important;"></div>
+			<div tabindex="0" class="ui-focusloop-end">
+				<span>마지막지점입니다.</span>
+			</div>
+		</div>
+	</div>
+	<section class="wrap-section">
+		<h3 class="tit-s">HTML</h3>
 <pre class="box-code"><code class="html">
-//컨텐츠 팝업
-&lt;section class="ui-modal" id="modalIdName"&gt;
-    &lt;div class="ui-modal-wrap"&gt;
-        &lt;header class="ui-modal-header"&gt;
-            &lt;h1 class="ui-modal-tit"&gt;modal title&lt;/h1&gt;
-			//onclick
-            &lt;button type="button" class="icon-close" aria-label="close" onclick="
-				netive.modal.hide({ 
-					id:'modalIdName', 
-					callback:function(v){ console.log('close callback', v); } 
-				});
-            "&gt;&lt;span &gt;close&lt;/span&gt;&lt;/button&gt;
-			//close button
-			&lt;button type="button" class="icon-close ui-modal-close" aria-label="close"&gt;&lt;span &gt;close&lt;/span&gt;&lt;/button&gt;
-        &lt;/header&gt;
-        &lt;div class="ui-modal-body"&gt;
-            ...
-        &lt;/div&gt;
-        &lt;div class="ui-modal-footer"&gt;
-            &lt;div class="wrap-btn"&gt;
-                &lt;button type="button" class="btn-mix-outlined"&gt;
-                    &lt;span&gt;취소&lt;/span&gt;
-                &lt;/button&gt;
-                &lt;button type="button" class="btn-mix-outlined"&gt;
-                    &lt;span&gt;확인&lt;/span&gt;
-                &lt;/button&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-    &lt;/div&gt;
-&lt;/section&gt;
-
 //시스템알림 팝업 (자동 생성됨)
 &lt;div class="ui-modal type-system type-confirm n0 current ready ps-center open" id="uiSystemModal" data-remove="true" data-n="0" data-scrolltop="0" role="dialog"&gt;
 	&lt;div class="ui-modal-wrap"&gt;
@@ -171,11 +503,11 @@
 			...
 		&lt;/div&gt;
 		&lt;div class="ui-modal-footer"&gt;
-			&lt;div class="wrap-btn"&gt;
-				&lt;button type="button" class="btn-mix-outlined-m text ui-modal-cancel"&gt;
+			&lt;div class="wrap-group"&gt;
+				&lt;button type="button" class="btn-base-m text ui-modal-cancel"&gt;
 					&lt;span&gt;Cancel&lt;/span&gt;
 				&lt;/button&gt;
-				&lt;button type="button" class="btn-mix-outlined-m text primary ui-modal-confirm"&gt;
+				&lt;button type="button" class="btn-base-m text primary ui-modal-confirm"&gt;
 					&lt;span&gt;Ok&lt;/span&gt;
 				&lt;/button&gt;
 			&lt;/div&gt;
@@ -184,210 +516,11 @@
 	&lt;div class="ui-modal-dim"&gt;&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
+	</section>
 
-	<h3 class="typo-title-m">Javascript</h3>
-	<h4 class="typo-title-m">base show</h4>
-<pre class="box-code"><code class="javascript">
-//base modal
-netiv.modal.show({ 
-	id:'IDname', 
-	type: 'normal',
-	full: false,
-	ps: 'center',
-	src: false,
-	remove: false,
-	width: false,
-	height: false,
-	mg: 10,
-	callback: function() { console.log('callback'); },
-	endfocus: false //document.querySelector('...'),
-});
-</code></pre>
-	<div class="tbl-base type-option mgt-x2">
-		<table>
-			<caption>
-				<strong>netive.uiModal 옵션 설명</strong>
-				<span class="ui-caption"></span>
-			</caption>
-			<colgroup>
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-auto">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">Options</th>
-					<th scope="col">Type</th>
-					<th scope="col">Default</th>
-					<th scope="col">Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="nec">
-					<th scope="row">id:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>(필수) ui-modal의 아이디명 기입</td>
-				</tr>
-				<tr>
-					<th scope="row">type:</th>
-					<td>[string]</td>
-					<td>'normal'</td>
-					<td>
-						<ul class="bul-dot">
-							<li>'normal' : 콘텐츠 모달</li>
-							<li>'alert' : 시스템 팝업</li>
-							<li>'confirm' : 시스템 팝업</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">ps:</th>
-					<td>[string]</td>
-					<td>'center'</td>
-					<td>모달 레이어 팝업 나타날 위치 설정
-						<ul class="bul-dot">
-							<li>'top' : 상단 위치</li>
-							<li>'center' : 중앙 위치</li>
-							<li>'bottom' : 하단 위치</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">full:</th>
-					<td>[boolean]</td>
-					<td>false</td>
-					<td>mobile에서 전체 사이즈 모달 레이어 팝업 설정
-						<ul>
-						<li>true : 전체화면</li>
-						<li>false : 기본 사이즈</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">src:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>Ajax로 파일을 불러올 url경로</ul>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">remove:</th>
-					<td>[boolean]</td>
-					<td>false</td>
-					<td>코드 삭제 여부</ul>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">width:</th>
-					<td>[number]</td>
-					<td></td>
-					<td>모달 레이어 팝업 가로 크기<br>
-						옵션이 없을 경우 모달 팝업의 크기
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">height:</th>
-					<td>[number]</td>
-					<td></td>
-					<td>모달 레이어 팝업 세로 크기<br>
-						옵션이 없을 경우 모달 팝업의 크기
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">mg:</th>
-					<td>[number]</td>
-					<td>10</td>
-					<td>모달창 상하 여백 크기</td>
-				</tr>
-				<tr>
-					<th scope="row">callback:</th>
-					<td>[function]</td>
-					<td>false</td>
-					<td>모달 레이어 팝업 오픈 시 콜백값 실행</td>
-				</tr>
-				<tr>
-					<th scope="row">endfocus:</th>
-					<td>[string]</td>
-					<td>document.activeElement</td>
-					<td>모달 레이어 팝업 닫을 시 포커스가 갈 위치의 아이디 값 설정<br>
-						기본으로 모달 레이어 팝업 띄우기 전 포커스로 설정되나 그 값도 없을 경우 body로 설정
-					</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-
-
-	<h4 class="typo-title-m">base hide</h4>
-	<p>모달 레이어 팝업 닫을 시 사용</p>
-<pre class="box-code"><code class="javascript">
-netive.modal.hide({ 
-	id: 'modal_name', 
-	remove: false,
-	endfocus: document.querySelector('...'),
-	callback: function(v){ console.log(v) }
-});
-</code></pre>
-	<div class="tbl-base type-option mgt-x2">
-		<table>
-			<caption>
-				<strong>netive.modal.hide 옵션 설명</strong>
-				<span class="ui-caption"></span>
-			</caption>
-			<colgroup>
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-auto">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">Options</th>
-					<th scope="col">Type</th>
-					<th scope="col">Default</th>
-					<th scope="col">Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="nec">
-					<th scope="row">id:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>(필수) ui-modal의 아이디명 기입</td>
-				</tr>
-				<tr>
-					<th scope="row">remove:</th>
-					<td>[boolean]</td>
-					<td>false</td>
-					<td>모달팝업 콘텐츠 삭제 여부
-						<ul>
-						<li>true: 코드삭제</li>
-						<li>false: 미삭제</li>
-						</ul>
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">endfocus:</th>
-					<td>[string]</td>
-					<td>document.activeElement</td>
-					<td>모달팝업 닫을 시 포커스가 갈 위치의 아이디 값 설정<br>
-						기본으로 모달팝업 띄우기 전 포커스로 설정되나 그 값도 없을 경우 body로 설정
-					</td>
-				</tr>
-				<tr>
-					<th scope="row">callback:</th>
-					<td>[function]</td>
-					<td></td>
-					<td>모달팝업 닫을 시 콜백함수 실행</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
-
-
-	<h4 class="typo-title-m">system show</h4>
+	<section class="wrap-section">
+		<h3 class="tit-s">Javascript</h3>		
+ 		<h4 class="tit-xs mt-x4">netive.modal.show : system </h4>
 <pre class="box-code"><code class="javascript">
 netive.modal.show({ 
 	type: 'alert', //'confirm'
@@ -402,78 +535,78 @@ netive.modal.show({
 	sCancelCallback: function() { console.log('callback'); }
 });
 </code></pre>
-	<div class="tbl-base type-option mgt-x2">
-		<table>
-			<caption>
-				<strong>netive.uiModal - system modal option 설명</strong>
-				<span class="ui-caption"></span>
-			</caption>
-			<colgroup>
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-xs">
-				<col class="col-auto">
-			</colgroup>
-			<thead>
-				<tr>
-					<th scope="col">Options</th>
-					<th scope="col">Type</th>
-					<th scope="col">Default</th>
-					<th scope="col">Description</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr class="nec">
-					<th scope="row">sMessage:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>메시지 입력. 태그가능</td>
-				</tr>
-				<tr>
-					<th scope="row">sBtnConfirmTxt:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>confirm 버튼 명</td>
-				</tr>
-				<tr>
-					<th scope="row">sBtnCancelTxt:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>cancel 버튼 명</td>
-				</tr>
-				<tr>
-					<th scope="row">sZindex:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>zindex 값 지정</td>
-				</tr>
-				<tr>
-					<th scope="row">sClass:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>class 추가</td>
-				</tr>
-				<tr>
-					<th scope="row">sConfirmCallback:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>confirm 클릭 시 콜백</td>
-				</tr>
-				<tr>
-					<th scope="row">sCancelCallback:</th>
-					<td>[string]</td>
-					<td></td>
-					<td>cancel 클릭 시 콜백</td>
-				</tr>
-			</tbody>
-		</table>
-	</div>
+		<div class="tbl-base type-option mt-x2">
+			<table>
+				<caption>
+					<strong>netive.uiModal - system modal option 설명</strong>
+					<span class="ui-caption"></span>
+				</caption>
+				<colgroup>
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-xs">
+					<col class="col-auto">
+				</colgroup>
+				<thead>
+					<tr>
+						<th scope="col">Options</th>
+						<th scope="col">Type</th>
+						<th scope="col">Default</th>
+						<th scope="col">Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="nec">
+						<th scope="row">sMessage:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>메시지 입력. 태그가능</td>
+					</tr>
+					<tr>
+						<th scope="row">sBtnConfirmTxt:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>confirm 버튼 명</td>
+					</tr>
+					<tr>
+						<th scope="row">sBtnCancelTxt:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>cancel 버튼 명</td>
+					</tr>
+					<tr>
+						<th scope="row">sZindex:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>zindex 값 지정</td>
+					</tr>
+					<tr>
+						<th scope="row">sClass:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>class 추가</td>
+					</tr>
+					<tr>
+						<th scope="row">sConfirmCallback:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>confirm 클릭 시 콜백</td>
+					</tr>
+					<tr>
+						<th scope="row">sCancelCallback:</th>
+						<td>[string]</td>
+						<td></td>
+						<td>cancel 클릭 시 콜백</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 
-	<h4 class="typo-title-m">system hide</h4>
-	<p>모달 레이어 팝업 닫을 시 사용</p>
+		<h4 class="tit-xs mt-x4">netive.modal.hideSystem</h4>
+		<p>모달 레이어 팝업 닫을 시 사용</p>
 <pre class="box-code"><code class="javascript">
 netive.modal.hideSystem();
 </code></pre>
-			
-</section>
+	</section>	
+</article>
 

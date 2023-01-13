@@ -11,22 +11,22 @@
 
 		<div class="ui-tab tab_page item3" data-id="exeTab1">
 			<div class="ui-tab-btns">
-				<button type="button" class="ui-tab-btn"><span>tab1</span></button>
-				<button type="button" class="ui-tab-btn"><span>tab2</span></button>
-				<button type="button" class="ui-tab-btn"><span>tab3</span></button>
+				<button type="button" data-tab="0" class="ui-tab-btn"><span>tab1</span></button>
+				<button type="button" data-tab="1" class="ui-tab-btn"><span>tab2</span></button>
+				<button type="button" data-tab="2" class="ui-tab-btn"><span>tab3</span></button>
 			</div>
 			<div class="ui-tab-pnls">
-				<section class="ui-tab-pnl">
+				<section class="ui-tab-pnl" data-tab="0">
 					<h3>tab1</h3>
 					<p>...</p>
 					<a href="#">...</a>
 				</section>
-				<section class="ui-tab-pnl">
+				<section class="ui-tab-pnl" data-tab="1">
 					<h3>tab2</h3>
 					<p>...</p>
 					<a href="#">...</a>
 				</section>
-				<section class="ui-tab-pnl">
+				<section class="ui-tab-pnl" data-tab="2">
 					<h3>tab3</h3>
 					<p>...</p>
 					<a href="#">...</a>
@@ -34,5 +34,6 @@
 			</div>
 		</div>
 	</div>
-	<button type="button" class="ui-drop-close icon-close"><span class="hide">닫기</span></button>
+	<button type="button" class="ui-drop-close no-line btn-base icon-only" data-material="close "><span class="a11y-hidden">닫기</span></button>
+	</div>
 </section>

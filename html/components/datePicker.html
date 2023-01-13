@@ -1,158 +1,168 @@
 <input type="hidden" id="uiJsName" value="pageDatePicker">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Date Picker</h1>
+	<h1 class="tit-l">Date Picker</h1>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Examples</h2>
-	<h3 class="typo-title-m">Base Date Picker</h3>
-	<form>
-		<div class="box-guide">
-			<div class="form-wrap">
-				<div class="fx-wrap" data-align="justify">
-					<div class="fx-item ui-form" data-flex="1-1-1">
-						<div class="form-label">
-							<label class="form-item-label" for="uiDate_1">single date</label>
-						</div>
+<article class="wrap-article">
+	<h2 class="tit-m">Examples</h2>
 
+	<section class="wrap-section">
+		<h3 class="tit-s">Base Date Picker - toggle</h3>
+		<form>
+			<div class="box-guide"> 
+				<div class="form-wrap style-table" data-type="row">
+					<div class="form-item-rowgroup">
 						<div class="form-item">
-							<div class="ui-datepicker">
-								<button type="button" class="ui-datepicker-btn" onclick="netive.datepicker.open('uiDate_1');">
-									<span class="a11y-hidden">년월일 선택</span>
-								</button>
-								<input 
-									type="date" 
-									id="uiDate_1" 
-									class="inp-base" 
-									value="2021-11-05" 
-									min="2020-12-05" 
-									max="2022-05-20" 
-									title="시작일"
-									readonly 
-									required>
+							<div class="form-head">
+								<div class="form-title">
+									<label class="form-label" for="uiDate_1">single date</label>
+								</div>
 							</div>
-						</div>
+							<div class="form-body">
+								<div class="form-group">
+									<div class="form-input">
+										<div class="ui-datepicker">
+											<input 
+												type="date" 
+												id="uiDate_1" 
+												class="inp-base" 
+												value="2021-11-05" 
+												min="2020-12-05" 
+												max="2025-05-20" 
+												title="시작일"
+												readonly 
+												required>
+											<button type="button" class="ui-datepicker-btn" data-target="uiDate_1">
+												<span class="a11y-hidden">년월일 선택</span>
+											</button>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>						
 					</div>
-					<div class="fx-item ui-form" data-flex="1-1-1">
-						<div class="form-label">
-							<label class="form-item-label" for="uiDate_4">single date</label>
-						</div>
-
+					<div class="form-item-rowgroup">
 						<div class="form-item">
-							<div class="ui-datepicker">
-								<button type="button" class="ui-datepicker-btn" onclick="netive.datepicker.open('uiDate_4');">
-									<span class="a11y-hidden">년월일 선택</span>
-								</button>
-								<input 
-									type="date" 
-									id="uiDate_4" 
-									class="inp-base" 
-									value="" 
-									min="2020-12-05" 
-									max="2022-05-20" 
-									title="시작일"
-									readonly 
-									required>
+							<div class="form-head">
+								<div class="form-title">
+									<label class="form-label" for="uiDate_2">Period date</label>
+								</div>
 							</div>
-						</div>
-					</div>
-				</div>
-
-				<div class="fx-wrap" data-align="justify">
-					<div class="fx-item ui-form" data-flex="1-1-1">
-						<div class="form-label">
-							<label class="form-item-label" for="uiDate_2">Period date</label>
-						</div>
-
-						<div class="form-item">
-							<div class="ui-datepicker">
-								<button type="button" class="ui-datepicker-btn" onclick="netive.datepicker.open('uiDate_2');">
-									<span class="a11y-hidden">년월일 선택</span>
-								</button>
-								<input 
-									type="date" 
-									id="uiDate_2" 
-									class="inp-base" 
-									value="" 
-									min="2017-12-05" 
-									max="2022-12-30" 
-									title="시작일"
-									data-period="start"
-									readonly 
-									required>
-								<div class="form-sc">~</div>
-								<input 
-									type="date" 
-									id="uiDate_3" 
-									class="inp-base" 
-									value="" 
-									min="2017-12-05" 
-									max="2022-12-30" 
-									title="종료일"
-									data-period="end"
-									readonly 
-									required>
+							<div class="form-body">
+								<div class="form-group">
+									<div class="ui-datepicker">
+										
+										<div class="form-input">
+											<input 
+											type="date" 
+												id="uiDate_2" 
+												class="inp-base" 
+												value="" 
+												min="2017-12-05" 
+												max="2025-12-30" 
+												title="시작일"
+												data-period="start"
+												readonly 
+												required>
+										</div>
+										<div class="form-text">
+											~
+										</div>
+										<div class="form-input">
+											<input 
+												type="date" 
+												id="uiDate_3" 
+												class="inp-base" 
+												value="" 
+												min="2017-12-05" 
+												max="2025-12-30" 
+												title="종료일"
+												data-period="end"
+												readonly 
+												required>
+										</div>
+										<button type="button" class="ui-datepicker-btn" data-target="uiDate_2">
+											<span class="a11y-hidden">년월일 선택</span>
+										</button>
+									</div>
+								</div>
 							</div>
-						</div>
+						</div>						
 					</div>
 				</div>
 
-				<div class="fx-wrap" data-align="justify">
-					<div class="fx-item ui-form" data-flex="1-1-1">
-						<div class="form-label">
-							<label class="form-item-label" for="uiDate_2a">Period date</label>
-						</div>
-
-						<div class="form-item">
-							<div class="ui-datepicker">
-								<button type="button" class="ui-datepicker-btn" onclick="netive.datepicker.open('uiDate_2a');">
-									<span class="a11y-hidden">년월일 선택</span>
-								</button>
-								<input 
-									type="date" 
-									id="uiDate_2a" 
-									class="inp-base" 
-									value="2021-07-23" 
-									min="2017-12-05" 
-									max="2022-12-30" 
-									title="시작일"
-									data-period="start"
-									readonly 
-									required>
-								<div class="form-sc">~</div>
-								<input 
-									type="date" 
-									id="uiDate_3a" 
-									class="inp-base" 
-									value="" 
-									min="2017-12-05" 
-									max="2022-12-30" 
-									title="종료일"
-									data-period="end"
-									readonly 
-									required>
-							</div>
-						</div>
-					</div>
-				</div>
 			</div>
-		</div>
-	</form>
-</section>
+		</form>
+	</section>
+	
+	<section class="wrap-section">
+		<h3 class="tit-s">Base Date Picker - visible</h3>
+		<div class="box-guide fx-wrap">
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Source Code</h2>
-	<h3 class="typo-title-m">HTML</h3>
+			<div class="ui-datepicker ui-datepicker-view fx-item" data-target="uiDate_view">
+				<input 
+					data-view="true" 
+
+					type="hidden" 
+					id="uiDate_view" 
+					class="inp-base" 
+					value="2021.11.05" 
+					min="2020-12-05" 
+					max="2025-05-20" 
+					title="시작일"
+					readonly 
+					required>
+			</div>
+
+			<div class="ui-datepicker ui-datepicker-view flex-item ml-x4" data-target="uiDate_view2">
+				<input 
+					data-view="true" 
+
+					type="hidden" 
+					id="uiDate_view2" 
+					class="inp-base" 
+					value="2021-11-05" 
+					min="2020-12-05" 
+					max="2025-05-20" 
+					title="시작일"
+					data-period="start"
+					readonly 
+					required>
+				
+				<input 
+					data-view="true" 
+
+					type="hidden" 
+					id="uiDate_view2" 
+					class="inp-base" 
+					value="2021-11-05" 
+					min="2020-12-05" 
+					max="2025-05-20" 
+					title="시작일"
+					data-period="end"
+					readonly 
+					required>
+			</div>
+			
+		</div>
+	</section>
+	
+</article>
+
+<article class="wrap-article">
+	<h2 class="tit-m">Source Code</h2>
+	<section class="wrap-section"></section>
+		<h3 class="tit-s">HTML</h3>
 
 <pre class="box-code"><code class="html">
 &lt;div class="ui-datepicker"&gt;
-	&lt;button type="button" class="ui-datepicker-btn"&gt;
+	&lt;button type="button" class="ui-datepicker-btn" data-target="{아이디A}"&gt;
 		&lt;span class="a11y-hidden"&gt;년월일 선택&lt;/span&gt;
 	&lt;/button&gt;
 	&lt;input 
 		type="text" 
-		id="uiDate_1" 
+		id="{아이디A}" 
 		class="inp-base" 
 		value="2021-11-05" 
 		min="2020-12-05" 
@@ -164,40 +174,46 @@
 &lt;/div&gt;
 
 &lt;div class="ui-datepicker"&gt;
-	&lt;button type="button" class="ui-datepicker-btn"&gt;
+	&lt;button type="button" class="ui-datepicker-btn" data-target="{아이디B}"&gt;
 		&lt;span class="a11y-hidden"&gt;년월일 선택&lt;/span&gt;
 	&lt;/button&gt;
-	&lt;input 
-		type="text" 
-		id="uiDate_2" 
-		class="inp-base" 
-		value="" 
-		min="2017-12-05" 
-		max="2022-12-30" 
-		title="시작일"
-		data-period="start"
-		readonly 
-		required
-	&gt;
-	&lt;div class="form-sc""&gt;~&lt;/div&gt;
-	&lt;input 
-		type="text" 
-		id="uiDate_3" 
-		class="inp-base" 
-		value="" 
-		min="2017-12-05" 
-		max="2022-12-30" 
-		title="종료일"
-		data-period="end"
-		readonly 
-		required
-	&gt;
+	&lt;div class="form-input"&gt;
+		&lt;input 
+		type="date" 
+			id="{아이디B}" 
+			class="inp-base" 
+			value="" 
+			min="2017-12-05" 
+			max="2022-12-30" 
+			title="시작일"
+			data-period="start"
+			readonly 
+			required&gt;
+	&lt;/div&gt;
+	&lt;div class="form-text"&gt;~&lt;/div&gt;
+	&lt;div class="form-input"&gt;
+		&lt;input 
+			type="date" 
+			id="{아이디C}" 
+			class="inp-base" 
+			value="" 
+			min="2017-12-05" 
+			max="2024-12-30" 
+			title="종료일"
+			data-period="end"
+			readonly 
+			required&gt;
+	&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-
-<h3 class="typo-title-m">Javascript</h3>
+	</section>
+	<section class="wrap-section">
+		<h3 class="tit-s">Javascript</h3>
 <pre class="box-code"><code class="javascript">
 //생성
+netive.datepicker.week = ['일', '월', '화', '수', '목', '금', '토', '년', '월', '일'];
+netive.datepicker.isFooter = false; true - 하단 확인버튼 생성, false 하단 버튼 없음. 날짜 클릭 시 바로 선택
+
 netive.datepicker.init({
 	id: 'input id name',
 	date: 'YYYY-MM-DD',
@@ -226,5 +242,5 @@ netive.datepicker.destoroy({
 	}
 });
 </code></pre>
-
 </section>
+</article>

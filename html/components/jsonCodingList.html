@@ -1,35 +1,40 @@
 <input type="hidden" id="uiJsName" value="pageJsonCodingList">
 
 <div class="tit-wrap">
-	<h1 class="typo-headline-l">Coding Schedule List</h1>
+	<h1 class="tit-l">Coding Schedule List</h1>
 </div>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Examples</h2>
-	<div class="box-guide">
-		<div class="ui-codinglist" id="projectList"></div>
-	</div>
-</section>
+<article class="wrap-article">
+	<div class="ui-codinglist" id="projectList"></div>
+	
+	<section class="wrap-section">
+		<h3 class="tit-s">EXCEL</h3>
+		<p>IA엑셀 문서에서 필요한 정보를 셀을 복사하여 구성한다. excel파일에 IA문서 버전을 기록하면 버전관리에 도움이 된다.</p>
+		<div class="mt-x1 mb-x2">
+			<img src="../resources/img/sample_excel.png" alt="샘플 엑셀 화면">
+		</div>
+		<div class="wrap-group txta-l">
+			
+			
+			<a href="/netiveUI/resources/data/codinglist.xlsx" class="btn-mix-outlined"><span>샘플 코딩리스트 excel 파일 다운로드</span></a>
+		</div>
+	</section>
+</article>
 
-<section class="sec-wrap">
-	<h3 class="typo-title-m">EXCEL</h3>
-	<p>IA엑셀 문서에서 필요한 정보를 셀을 복사하여 구성한다. excel파일에 IA문서 버전을 기록하면 버전관리에 도움이 된다.</p>
-	<div class="wrap-btn txta-l">
-		<a href="/netiveUI/resources/data/codinglist.xlsx" class="btn-mix-outlined"><span>샘플 코딩리스트 excel 파일 다운로드</span></a>
-	</div>
-</section>
+<article class="wrap-article">
+	<h2 class="tit-m">Source Code</h2>
 
-<section class="sec-wrap">
-	<h2 class="typo-headline-m">Source Code</h2>
-	<h3 class="typo-title-m">HTML</h3>
+	<section class="wrap-section">
+		<h3 class="tit-s">HTML</h3>
 
 <pre class="box-code"><code class="html">
 &lt;div class="ui-codinglist" id="projectlist"&gt;&lt;/div&gt;
 </code>
 </pre>
-
-	<h3 class="typo-title-m">Json</h3>
-	<p>코딩 리스트 excel파일의 data를 드래그 카피하여 지정된 json파일에 복사한다.</p>
+	</section>
+	<section class="wrap-section">
+		<h3 class="tit-s">Json</h3>
+		<p>코딩 리스트 excel파일의 data를 드래그 카피하여 지정된 json파일에 복사한다.</p>
 <pre class="box-code"><code class="javascript">
 {"list":[
 	{"state":"상태","date":"일정","enddate":"종료일","pub":"퍼블","id":"화면ID","d1":"D1","d2":"D2","d3":"D3","d4":"D4","d5":"D5","d6":"D6","d7":"D7","d8":"D8","r1":"경로","r2":"","r3":"","r4":"","page":"","memo":"메모"},
@@ -37,8 +42,9 @@
 ]}
 </code>
 </pre>
-
-	<h3 class="typo-title-m">Javascript</h3>
+	</section>
+	<section class="wrap-section">
+		<h3 class="tit-s">Javascript</h3>
 <pre class="box-code"><code class="javascript">
 netive.project.list({ 
 	id:'project.list', 
@@ -47,8 +53,8 @@ netive.project.list({
 });
 </code>
 </pre>
-
-</section>
+	</section>
+</article>
 
 
 

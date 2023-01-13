@@ -1,160 +1,229 @@
 <input type="hidden" id="uiJsName" value="pageLayout">
 
 <div class="page-layout">
-
-
 	<div class="tit-wrap">
-		<h1 class="typo-headline-l">Layout</h1>
+		<h1 class="tit-l">Layout</h1>
 	</div>
 
-	<section class="sec-wrap">
-		<h2 class="typo-headline-m">Flex Layout</h2>
+	<article class="wrap-article">
+		<h2 class="tit-m">Grid Layout</h2>
+		<section class="wrap-section">
+			<div class="box-guide">
+				<div class="gd-wrap">
+					<header class="gd-header"><guide2></guide2>
+						<div class="gd-header-wrap">
+							<div class="gd-item gd-header-logo" class="logo" style="height: 60px;"><guide2></guide2>LOGO</div>
+							<nav class="gd-item gd-header-gnb" class="gnb"><guide2></guide2>gnb</nav>
+							<div class="gd-item gd-header-util" class="util"><guide2></guide2>util</div>
+						</div>
+					</header>
+					
+					<nav class="gd-nav"><guide2></guide2>
+						nav
+					</nav>
+					<main class="gd-main"><guide2></guide2>
+						<div class="gd-main-wrap">
+							<section class="gd-item n1"><guide2></guide2>1</section>
+							<section class="gd-item n2"><guide2></guide2>2</section>
+							<section class="gd-item n3"><guide2></guide2>3</section>
+							<section class="gd-item n4"><guide2></guide2>4</section>
+							<section class="gd-item n5"><guide2></guide2>5</section>
+							<section class="gd-item n6"><guide2></guide2>6</section>
+							<section class="gd-item n7"><guide2></guide2>7</section>
+							<section class="gd-item n8"><guide2></guide2>8</section>
+							<section class="gd-item n9"><guide2></guide2>9</section>
+							<section class="gd-item n10"><guide2></guide2>10</section>
+						</div>
+					</main>
+					<aside class="gd-aside"><guide2></guide2>
+						aside
+					</aside>
+					
+					<footer class="gd-footer"><guide2></guide2>
+						footer
+					</footer>
+				</div>
+			</div>
+<pre class="box-code"><code class="html">
+&lt;div class="gd-wrap"&gt;
+	&lt;header class="gd-header"&gt;&lt;/header&gt;
+	&lt;nav class="gd-nav"&gt;&lt;/nav&gt;
+	&lt;main class="gd-main"&gt;&lt;/main&gt;
+	&lt;aside class="gd-aside"&gt;&lt;/aside&gt;
+	&lt;footer class="gd-footer"&gt;
+&lt;/footer&gt;
+</code></pre>
+			
+
+		</section>
+	</article>
+
+	<article class="wrap-article">
+		<h2 class="tit-m">Flex Layout</h2>
 
 		<p class="bul-care">안드로이드 2.1~4.3 브라우저와 IE 10 브라우저가 공통으로 지원하지 않는 속성: flex-flow, justify-content: space-around,
 			align-self, align-content</p>
 
-		<h3 class="typo-title-m">아이템의 확장 지수 설정</h3>
-		<p>breakpoint(mobile, tablet, desktop)에 지정된 확장 지수를 설정할 수 있다.</p>
-		<ul class="bul-dot mgt-x1">
-			<li>data-flex="{<b class="c-p1">n</b>-n-n}" : 4colum (~ 599)</li>
-			<li>data-flex="{n-<b class="c-p1">n</b>-n}" : 8colum (600 ~ 904)</li>
-			<li>data-flex="{n-n-<b class="c-p1">n</b>}" : 12colum (905 ~)</li>
-		</ul>
-		<div class="box-guide">
-			<div class="fx-wrap">
-				<div class="fx-item" data-flex="1-2-3"><b>1</b>-<b>2</b>-<b>3</b></div>
-				<div class="fx-item" data-flex="2-3-1"><b>2</b>-<b>3</b>-<b>1</b></div>
-				<div class="fx-item" data-flex="1-3-2"><b>1</b>-<b>3</b>-<b>2</b></div>
+		<section class="wrap-section">
+			<h3 class="tit-s">아이템의 확장 지수 설정</h3>
+			<p>breakpoint(mobile, tablet, desktop)에 지정된 확장 지수를 설정할 수 있다.</p>
+			<ul class="bul-dot mt-x1">
+				<li>data-flex="{ <b class="c-p1">n</b>-n-n }" : 4colum (~ 599)</li>
+				<li>data-flex="{ n-<b class="c-p1">n</b>-n }" : 8colum (600 ~ 904)</li>
+				<li>data-flex="{ n-n-<b class="c-p1">n</b> }" : 12colum (905 ~)</li>
+			</ul>
+			<div class="box-guide">
+				<div class="fx-wrap">
+					<div class="fx-item" data-flex="1-2-3"><b>1</b>-<b>2</b>-<b>3</b></div>
+					<div class="fx-item" data-flex="2-3-1"><b>2</b>-<b>3</b>-<b>1</b></div>
+					<div class="fx-item" data-flex="1-3-2"><b>1</b>-<b>3</b>-<b>2</b></div>
+				</div>
+				<div class="fx-wrap">
+					<div class="fx-item" data-flex="1-1-10"><b>1</b>-<b>1</b>-<b>10</b></div>
+					<div class="fx-item" data-flex="1-6-1"><b>1</b>-<b>6</b>-<b>1</b></div>
+					<div class="fx-item" data-flex="1-2-1"><b>1</b>-<b>2</b>-<b>1</b></div>
+				</div>
+				
 			</div>
-			<div class="fx-wrap">
-				<div class="fx-item" data-flex="1-1-10"><b>1</b>-<b>1</b>-<b>10</b></div>
-				<div class="fx-item" data-flex="1-6-1"><b>1</b>-<b>6</b>-<b>1</b></div>
-				<div class="fx-item" data-flex="1-2-1"><b>1</b>-<b>2</b>-<b>1</b></div>
-			</div>
-			
-		</div>
 <pre class="box-code"><code class="html">
 &lt;div class="fx-wrap"&gt;
 	&lt;div class="fx-item" data-flex="1-2-3"&gt;...&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-
-		<h3 class="typo-title-m">정렬 순서 설정</h3>
-		<p>data-order="{n}"</p>
-		<div class="box-guide">
-			<div class="fx-wrap">
-				<div class="fx-item" data-order="2">A(2)</div>
-				<div class="fx-item" data-order="3">B(3)</div>
-				<div class="fx-item" data-order="1">C(1)</div>
+		</section>
+		
+		<section class="wrap-section">
+			<h3 class="tit-s">정렬 순서 설정</h3>
+			<p>data-order="{n}"</p>
+			<div class="box-guide">
+				<div class="fx-wrap">
+					<div class="fx-item" data-order="2">A(2)</div>
+					<div class="fx-item" data-order="3">B(3)</div>
+					<div class="fx-item" data-order="1">C(1)</div>
+				</div>
 			</div>
-		</div>
 <pre class="box-code"><code class="html">
 &lt;div class="fx-wrap"&gt;
 	&lt;div class="fx-item" data-order="1"&gt;...&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
+		</section>
 
-		<h3 class="typo-title-m">방향 설정</h3>
-		<p>data-dir="{row|rev|col|revcol}"</p>
-		<div class="box-guide">
-			<div class="fx-wrap" data-dir="row">
-				<div class="fx-item">A</div>
-				<div class="fx-item">B</div>
-				<div class="fx-item">C</div>
+		<section class="wrap-section">
+			<h3 class="tit-s">방향 설정</h3>
+			<p>data-dir="{ row | rev | col | revcol }"</p>
+			<div class="box-guide">
+				<div class="fx-wrap" data-align="justify" data-valign="top">
+					<div class="fx-wrap" data-dir="row" style="width:20%;">
+						<guide></guide>
+						<div class="fx-item">A</div>
+						<div class="fx-item">B</div>
+						<div class="fx-item">C</div>
+					</div>
+					<div class="fx-wrap" data-dir="rev" style="width:20%;">
+						<guide></guide>
+						<div class="fx-item">A</div>
+						<div class="fx-item">B</div>
+						<div class="fx-item">C</div>
+					</div>
+				
+					<div class="fx-wrap" data-dir="col" style="height:200px;">
+						<guide></guide>
+						<div class="fx-item">A</div>
+						<div class="fx-item">B</div>
+						<div class="fx-item">C</div>
+					</div>
+					<div class="fx-wrap" data-dir="revcol" style="height:200px;">
+						<guide></guide>
+						<div class="fx-item">A</div>
+						<div class="fx-item">B</div>
+						<div class="fx-item">C</div>
+					</div>
+				</div>
 			</div>
-			<div class="fx-wrap" data-dir="rev">
-				<div class="fx-item">A</div>
-				<div class="fx-item">B</div>
-				<div class="fx-item">C</div>
-			</div>
-			<div class="fx-wrap" data-dir="col">
-				<div class="fx-item">A</div>
-				<div class="fx-item">B</div>
-				<div class="fx-item">C</div>
-			</div>
-			<div class="fx-wrap"  data-dir="revcol">
-				<div class="fx-item">A</div>
-				<div class="fx-item">B</div>
-				<div class="fx-item">C</div>
-			</div>
-		</div>
 <pre class="box-code"><code class="html">
 &lt;div class="fx-wrap" data-dir="row"&gt;
 	&lt;div class="fx-item"&gt;...&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
+		</section>
 
-		<h3 class="typo-title-m">X축 정렬 설정</h3>
-		<p>data-align="{left|right|center|justify}"</p>
-		<div class="box-guide">
-			<div class="fx-wrap" data-align="left">
-				<div class="fx-item" style="max-width:10vw">A</div>
-				<div class="fx-item" style="max-width:10vw">B</div>
-				<div class="fx-item" style="max-width:10vw">C</div>
+		<section class="wrap-section">
+			<h3 class="tit-s">X축 정렬 설정</h3>
+			<p>data-align="{ left | right | center | justify }"</p>
+			<div class="box-guide">
+				<div class="fx-wrap" data-align="left">
+					<div class="fx-item" style="max-width:10vw">A</div>
+					<div class="fx-item" style="max-width:10vw">B</div>
+					<div class="fx-item" style="max-width:10vw">C</div>
+				</div>
+				<div class="fx-wrap" data-align="right">
+					<div class="fx-item" style="max-width:10vw">A</div>
+					<div class="fx-item" style="max-width:10vw">B</div>
+					<div class="fx-item" style="max-width:10vw">C</div>
+				</div>
+				<div class="fx-wrap" data-align="center">
+					<div class="fx-item" style="max-width:10vw">A</div>
+					<div class="fx-item" style="max-width:10vw">B</div>
+					<div class="fx-item" style="max-width:10vw">C</div>
+				</div>
+				<div class="fx-wrap" data-align="justify">
+					<div class="fx-item" style="max-width:10vw">A</div>
+					<div class="fx-item" style="max-width:10vw">B</div>
+					<div class="fx-item" style="max-width:10vw">C</div>
+				</div>
 			</div>
-			<div class="fx-wrap" data-align="right">
-				<div class="fx-item" style="max-width:10vw">A</div>
-				<div class="fx-item" style="max-width:10vw">B</div>
-				<div class="fx-item" style="max-width:10vw">C</div>
-			</div>
-			<div class="fx-wrap" data-align="center">
-				<div class="fx-item" style="max-width:10vw">A</div>
-				<div class="fx-item" style="max-width:10vw">B</div>
-				<div class="fx-item" style="max-width:10vw">C</div>
-			</div>
-			<div class="fx-wrap" data-align="justify">
-				<div class="fx-item" style="max-width:10vw">A</div>
-				<div class="fx-item" style="max-width:10vw">B</div>
-				<div class="fx-item" style="max-width:10vw">C</div>
-			</div>
-		</div>
 <pre class="box-code"><code class="html">
 &lt;div class="fx-wrap" data-align="left"&gt;
 	&lt;div class="fx-item"&gt;...&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-
-		<div class="test-flex1">
-			<h3 class="typo-title-m">y축 정렬 설정</h3>
-			<p>data-valign="{top|bottom|middle|stretch|baseline}"</p>
-			<div class="box-guide">
-				<div class="fx-wrap" data-valign="top">
-					<div class="fx-item-0">A</div>
-					<div class="fx-item-0">B</div>
-					<div class="fx-item-0">C</div>
-				</div>
-				<div class="fx-wrap" data-valign="bottom">
-					<div class="fx-item-0">A</div>
-					<div class="fx-item-0">B</div>
-					<div class="fx-item-0">C</div>
-				</div>
-				<div class="fx-wrap" data-valign="center">
-					<div class="fx-item-0">A</div>
-					<div class="fx-item-0">B</div>
-					<div class="fx-item-0">C</div>
-				</div>
-				<div class="fx-wrap" data-valign="stretch">
-					<div class="fx-item-0">A</div>
-					<div class="fx-item-0">B</div>
-					<div class="fx-item-0">C</div>
-				</div>
-				<div class="fx-wrap" data-valign="baseline">
-					<div class="fx-item-0">A</div>
-					<div class="fx-item-0">B</div>
-					<div class="fx-item-0">C</div>
+		</section>
+		
+		<section class="wrap-section">
+			<div class="test-flex1">
+				<h3 class="tit-s">y축 정렬 설정</h3>
+				<p>data-valign="{ top | bottom | middle | stretch | baseline }"</p>
+				<div class="box-guide">
+					<div class="fx-wrap" data-align="justify" data-valign="top">
+						<div class="fx-wrap" data-valign="top">
+							<div class="fx-item">A</div>
+							<div class="fx-item">B</div>
+							<div class="fx-item">C</div>
+						</div>
+						<div class="fx-wrap" data-valign="bottom">
+							<div class="fx-item">A</div>
+							<div class="fx-item">B</div>
+							<div class="fx-item">C</div>
+						</div>
+						<div class="fx-wrap" data-valign="center">
+							<div class="fx-item">A</div>
+							<div class="fx-item">B</div>
+							<div class="fx-item">C</div>
+						</div>
+						<div class="fx-wrap" data-valign="stretch">
+							<div class="fx-item">A</div>
+							<div class="fx-item">B</div>
+							<div class="fx-item">C</div>
+						</div>
+						<div class="fx-wrap" data-valign="baseline">
+							<div class="fx-item">A</div>
+							<div class="fx-item">B</div>
+							<div class="fx-item">C</div>
+						</div>
+					</div>
 				</div>
 			</div>
-		</div>
 <pre class="box-code"><code class="html">
 &lt;div class="fx-wrap" data-valign="top"&gt;
 	&lt;div class="fx-item"&gt;...&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-			
-	</section>
+		</section>
+	</article>
 	
-	<section class="sec-wrap">
-		<h2 class="typo-headline-m">Inline-block Layout</h2>
+	<article class="wrap-article">
+		<h2 class="tit-m">Inline-block Layout</h2>
 
 		<p>inline-block으로 레이아웃 구성 시 기본으로 생기는 여백은 font-size:0 으로 해결한다.</p>
 		<em class="bul-star">.in-item에서는 필수로 font-size를 재정의를 해줘야한다.</em>
@@ -184,10 +253,10 @@
 	&lt;div class="in-item"&gt;...&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-	</section>
+	</article>
 
-	<section class="sec-wrap">
-		<h2 class="typo-headline-m">Float Layout</h2>
+	<article class="wrap-article">
+		<h2 class="tit-m">Float Layout</h2>
 		<p>float으로 레이아웃 구성 시 부모가 자식의 높이값을 못가져오는 현상은 :after로 해결한다.</p>
 		
 		<div class="box-guide">
@@ -210,7 +279,176 @@
 	&lt;div class="fl-item-r"&gt;...&lt;/div&gt;
 &lt;/div&gt;
 </code></pre>
-	</section>
+
+	</article>
+
+	<article class="wrap-article">
+		<h2 class="tit-m">Wrap</h2>
+		<section class="wrap-section">
+			<h3 class="tit-s">Article : wrap-article</h3>
+			<p>콘텐츠의 독립적인 내용의 제일 큰 단위의 영역으로 주로 행단위로 간격을 구분한다.</p>
+			<div class="box-guide">
+				<guide></guide>
+				<article class="wrap-article mt-x0">
+					<guide2></guide2>
+					article 1
+				</article>
+				<article class="wrap-article">
+					<guide2></guide2>
+					article 2
+				</article>
+			</div>
+		</section>
+
+		<section class="wrap-section">
+			<h3 class="tit-s">Section : wrap-section</h3>
+			<p>관련있는 콘텐츠의 구분하는 영역으로 주로 행단위로 간격을 구분한다.</p>
+			<div class="box-guide">
+				<guide></guide>
+				<section class="wrap-section mt-x0">
+					<guide2></guide2>
+					section 1
+				</section>
+				<section class="wrap-section">
+					<guide2></guide2>
+					section 2
+				</section>
+			</div>
+		</section>
+
+		<section class="wrap-section">
+			<h3 class="tit-s">Divsion : wrap-divsion</h3>
+			<p>의미적인 관련없이 구분하는 영역으로 주로 행단위로 간격을 구분한다.</p>
+			<div class="box-guide">
+				<guide></guide>
+				<div class="wrap-divsion mt-x0">
+					<guide2></guide2>
+					div 1
+				</div>
+				<div class="wrap-divsion">
+					<guide2></guide2>
+					div 2
+				</div>
+			</div>
+		</section>
+
+
+		<section class="wrap-section">
+			<h3 class="tit-s">Group : wrap-group</h3>
+			<p>가장 작은 단위 요소들의 영역으로 행과 열단위로 구분한다.</p>
+			<div class="box-guide">
+				<div class="wrap-group">
+					<guide></guide>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 1
+					</div>
+				</div>
+				<div class="wrap-group">
+					<guide></guide>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 1
+					</div>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 2
+					</div>
+				</div>
+				<div class="wrap-group no-gap">
+					<guide></guide>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 1
+					</div>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 2
+					</div>
+				</div>
+		
+				<div class="wrap-group left">
+					<guide></guide>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 1
+					</div>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 2
+					</div>
+				</div>
+				<div class="wrap-group center">
+					<guide></guide>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 1
+					</div>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 2
+					</div>
+				</div>
+				<div class="wrap-group right">
+					<guide></guide>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 1
+					</div>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 2
+					</div>
+				</div>
+				
+				<div class="wrap-group left">
+					<guide></guide>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 1
+					</div>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 2
+					</div>
+					<div class="wrap-group right">
+						<div style="position:relative">
+							<guide2></guide2>
+							그룹요소 3
+						</div>
+						<div style="position:relative">
+							<guide2></guide2>
+							그룹요소 4
+						</div>
+					</div>
+				</div>
+		
+				<div class="wrap-group right">
+					<guide></guide>
+					<div class="wrap-group left mr-x2">
+						<guide2></guide2> 
+						<div class="bul-error">
+							<div>
+								거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다. 거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.
+							</div>
+						</div>
+					</div>
+		
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 1
+					</div>
+					<div style="position:relative">
+						<guide2></guide2>
+						그룹요소 2
+					</div>
+				</div>
+			</div>
+		</section>
+		
+	</article>
+
+	
 
 
 
