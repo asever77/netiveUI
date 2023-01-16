@@ -11,6 +11,8 @@
     background:#6200ee;
 }
 .ui-toast{
+    z-index: 500;
+    
     &-ready .toast{
         display:block;
         opacity: 0;
@@ -34,6 +36,7 @@
         }
     }
 }
+
 .ui-time-modal{
     opacity:0;
     position: fixed;
@@ -44,7 +47,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 100;
+    z-index: 300;
     transition: opacity 0.2s ease-in;
     
     &.on{opacity: 1;}

@@ -270,12 +270,19 @@ tag-input{color: orangered}
 //margin, padding
 @for $i from 0 through 20 {
     .m {
+        &g-x#{$i} {margin: calc($gap * $i) !important;}
         &b-x#{$i} {margin-bottom: calc($gap * $i) !important;}
         &t-x#{$i} {margin-top: calc($gap * $i) !important;}
         &l-x#{$i} {margin-left: calc($gap * $i) !important;}
         &r-x#{$i} {margin-right: calc($gap * $i) !important;}
+        &g-x#{$i}-5 {margin: calc($gap * $i + $gap / 2) !important;}
+        &b-x#{$i}-5 {margin-bottom: calc($gap * $i + $gap / 2) !important;}
+        &t-x#{$i}-5 {margin-top: calc($gap * $i + $gap / 2) !important;}
+        &l-x#{$i}-5 {margin-left: calc($gap * $i + $gap / 2) !important;}
+        &r-x#{$i}-5 {margin-right: calc($gap * $i + $gap / 2) !important;}
     }
     .p {
+        &d-x#{$i} {padding: calc($gap * $i) !important;}
         &b-x#{$i} {padding-bottom: calc($gap * $i) !important;}
         &t-x#{$i} {padding-top: calc($gap * $i) !important;}
         &l-x#{$i} {padding-left: calc($gap * $i) !important;}

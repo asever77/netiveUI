@@ -9,20 +9,29 @@
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 200;
+    z-index: 100;
     width: 100%;
     height: 100%;
     overflow: hidden;
     overflow-y: hidden;
 
-    &.n1{z-index: 201;}
-    &.n2{z-index: 202;}
-    &.n3{z-index: 203;}
-    &.n4{z-index: 204;}
-    &.n5{z-index: 205;}
-    &.n6{z-index: 206;}
-    &.n7{z-index: 207;}
-    &.n8{z-index: 208;}
+    &.n1{z-index: 101;}
+    &.n2{z-index: 102;}
+    &.n3{z-index: 103;}
+    &.n4{z-index: 104;}
+    &.n5{z-index: 105;}
+    &.n6{z-index: 106;}
+    &.n7{z-index: 107;}
+    &.n8{z-index: 108;}
+    &.type-system{z-index: 600;}
+    &.type-system.n1{z-index: 601;}
+    &.type-system.n2{z-index: 602;}
+    &.type-system.n3{z-index: 603;}
+    &.type-system.n4{z-index: 604;}
+    &.type-system.n5{z-index: 605;}
+    &.type-system.n6{z-index: 606;}
+    &.type-system.n7{z-index: 607;}
+    &.type-system.n8{z-index: 608;}
     &.ready {
         display: flex;
         overflow-y: hidden;

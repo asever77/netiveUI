@@ -4607,7 +4607,6 @@
 				elModal.classList.remove('type-full');
 				elModal.classList.remove('type-full-mobile');
 				elModal.classList.remove('type-full-desktop');
-
 				elModal.classList.add('n' + openLen);
 				elModal.classList.add('current');
 				elModal.classList.add('ready');
@@ -4619,10 +4618,12 @@
 				elModal.setAttribute('aria-labelledby', id + '_label');
 				elModal.setAttribute('aria-describedby', id + '_desc');
 				elModal.setAttribute('role', 'dialog');
+
 				if (!!elModalTit) {
 					elModalTit.setAttribute('tabindex', 0);
 					elModalTit.id = id + '_label';
 				} 
+
 				elModalBody.style.overflowY = 'auto';
 				elModalBody.id = id + '_desc';
 				// let space = gap;
@@ -4687,10 +4688,7 @@
 				
 				//clearTimeout(timer);
 				//timer = setTimeout(function(){
-				Global.focus.loop({ 
-					selector: elModal, 
-				});
-
+				Global.focus.loop({ selector: elModal });
 				elModal.classList.add('open');
 				(!!sZindex) ? elModal.style.zIndex = sZindex : '';
 				(win.innerHeight < elModalWrap.offsetHeight) ? 

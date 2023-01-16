@@ -1,3 +1,13 @@
+.base-skip{z-index: 999;}
+.base-wrap{z-index: 0;
+    .base-header{z-index: 20;}
+    .base-body{z-index: 10;}
+    .base-footer{z-index: 0;}
+}
+.ui-modal{z-index: 100;}
+.ui-drop-pnl{z-index: 200;}
+.ui-tooltip{z-index: 300;}
+
 /* inline-block layout */
 .in{
     &-wrap {
@@ -14,7 +24,6 @@
         vertical-align: top;
     }
 }
-
 
 /* float layout */
 .fl{

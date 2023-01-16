@@ -2,7 +2,7 @@
 .ui-tooltip {
     visibility: hidden;
     position: absolute;
-    z-index: 300;
+    z-index: 400;
     padding: 1rem;
     font-size: 1.2rem;
     border: 1px solid #E0E0E0;
@@ -27,7 +27,7 @@
         animation-fill-mode: forwards;
     }
 
-    &.hover {z-index: 301;}
+    &.hover {z-index: 401;}
     &.fix {display: block !important;}
     &-btn {cursor: help;}
 
