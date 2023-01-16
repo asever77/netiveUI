@@ -287,6 +287,11 @@ tag-input{color: orangered}
         &t-x#{$i} {padding-top: calc($gap * $i) !important;}
         &l-x#{$i} {padding-left: calc($gap * $i) !important;}
         &r-x#{$i} {padding-right: calc($gap * $i) !important;}
+        &d-x#{$i}-5 {padding: calc($gap * $i + $gap / 2) !important;}
+        &b-x#{$i}-5 {padding-bottom: calc($gap * $i + $gap / 2) !important;}
+        &t-x#{$i}-5 {padding-top: calc($gap * $i + $gap / 2) !important;}
+        &l-x#{$i}-5 {padding-left: calc($gap * $i + $gap / 2) !important;}
+        &r-x#{$i}-5 {padding-right: calc($gap * $i + $gap / 2) !important;}
     }
 }
 

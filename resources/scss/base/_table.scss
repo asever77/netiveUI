@@ -5,7 +5,7 @@
     width: 100%;
     position: relative;
     font-size: 1.4rem;
-    & table {
+    table {
         width: 100%;
         & > thead {
             border-bottom: 2px solid $gray400;
@@ -50,7 +50,7 @@
         }
     }
    
-    & .ui-tablescroll-clone {
+    .ui-tablescroll-clone {
         position: absolute;
         width: 100%;
         top: 0;
@@ -74,3 +74,23 @@
     }
 }
 
+/* 4 columns: 0-599 ----------------------------------------------------------------------------------- */
+@media all and (max-width:599px) {
+    .tbl-base {overflow-x:auto; 
+        table {
+            width: max-content;
+            min-width: 100%;
+        }
+    }
+}
+
+/* 8 columns: 600-839 ----------------------------------------------------------------------------------- */
+@media all and (min-width:600px) and (max-width:839px) {
+
+}
+
+/* 12 columns ----------------------------------------------------------------------------------- */
+@media all and (min-width:840px) {
+
+
+}
