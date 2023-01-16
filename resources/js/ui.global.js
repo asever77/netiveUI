@@ -2626,9 +2626,28 @@
 			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
+
+			const track = el_range.querySelector('.ui-range-track');
+
+			!!track && track.remove();
+
+			let html = '<div class="ui-range-track">';
+			html += '<div class="ui-range-bar"></div>';
+			html += '<span class="left ui-range-point" data-range="from"><em class="n" data-from="'+ id +'"></em></span>';
+
+			if (!!el_to) {
+				html += '<span class="right ui-range-point" data-range="to"><em class="n" data-to="'+ id +'"></em></span>';
+			}
+			
+			html += '</div>';
+
+			el_range.insertAdjacentHTML('beforeend', html);
+			html = '';
+
 			const el_from_btn = el_range.querySelector('.ui-range-point.left');
 			const el_to_btn = el_range.querySelector('.ui-range-point.right');
 			const eventName = !!Global.state.browser.ie ? 'click' : 'input';
+
 			el_from_btn.dataset.range = 'from';
 			el_to_btn ? el_to_btn.dataset.range = 'to' : '';
 			el_range.dataset.from = '0';
@@ -2818,8 +2837,9 @@
 			}
 
 			for (let i = 0; i < datepickers.length; i++) {
-				const inps = datepickers[i].querySelectorAll('input[type="date"]');
-				const btns = datepickers[i].querySelector('.ui-datepicker-btn');
+				const dp = datepickers[i];
+				const inps = dp.querySelectorAll('input[type="date"]');
+				const btns = dp.querySelector('.ui-datepicker-btn');
 				
 				!!btns && btns.remove();
 
@@ -2850,16 +2870,16 @@
 					}
 					html += '</button>'; 
 
-					datepickers[i].insertAdjacentHTML('beforeend', html);
+					dp.insertAdjacentHTML('beforeend', html);
 					html = '';
 					
-					const btn = datepickers[i].querySelector('.ui-datepicker-btn');
+					const btn = dp.querySelector('.ui-datepicker-btn');
 
 					btn.addEventListener('click', act);
 				}
-				
 			}
 
+			//view
 			const views = doc.querySelectorAll('.ui-datepicker-view');
 
 			for (let i = 0; i < views.length; i++) {

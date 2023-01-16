@@ -23,12 +23,7 @@
 		<div class="box-guide">
 			<div class="ui-range" data-id="range2" data-type="single">
 				<input class="ui-range-inp" data-range="from" type="range" step="1" min="0" max="100" value="0" id="range2" list="range2_tickmarks" />
-				<div class="ui-range-track">
-					<div class="ui-range-bar"></div>
-					<span class="left ui-range-point">
-						<em class="n" data-from="range2"></em>
-					</span>
-				</div>
+				
 				<datalist class="ui-range-marks" id="range2_tickmarks">
 					<guide2></guide2>
 					<option value="0" label="0"><guide2></guide2></option>
@@ -40,39 +35,21 @@
 			</div>
 
 			<div class="ui-range mt-x6" data-id="range22" data-type="single">
-				<input class="ui-range-inp" data-range="from" type="range" step="10" min="0" max="100" value="0" />
-				<div class="ui-range-track">
-					<div class="ui-range-bar"></div>
-					<span class="left ui-range-point" >
-						<em class="n" data-from="range22"></em>
-					</span>
-				</div>
+				<input class="ui-range-inp" data-range="from" type="range" step="10" min="0" max="100" value="50" />
+				
 			</div>
 	
 			<div class="ui-range mt-x6" data-id="range1">
 				<input class="ui-range-inp" data-range="from" type="range" step="1" min="0" max="100" value="0" />
 				<input class="ui-range-inp" data-range="to" type="range" step="1" min="0" max="100" value="50" />
-				<div class="ui-range-track">
-					<div class="ui-range-bar"></div>
-					<span class="left ui-range-point">
-						<em class="n" data-from="range1"></em>
-					</span>
-					<span class="right ui-range-point">
-						<em class="n" data-to="range1"></em>
-					</span>
-				</div>
+				
 			</div>
 		</div>
 
 		<div class="box-guide" style="height:14rem; display: flex; justify-content: center;">
 			<div class="ui-range" data-id="range3" data-type="single" data-orient="vertical" style="width:10rem">
 				<input class="ui-range-inp" data-range="from" type="range" step="100" min="100" max="10000" value="0" />
-				<div class="ui-range-track">
-					<div class="ui-range-bar"></div>
-					<span class="left ui-range-point">
-						<em class="n"  data-from="range3"></em>
-					</span>
-				</div>
+		
 			</div>
 		</div>
 
@@ -80,15 +57,7 @@
 			<div class="ui-range" data-id="range4" data-orient="vertical" style="width:10rem">
 				<input class="ui-range-inp" data-range="from" type="range" min="100" max="10000" value="0" step="100" />
 				<input class="ui-range-inp" data-range="to" type="range" min="100" max="10000" value="6000" step="100"/>
-				<div class="ui-range-track">
-					<div class="ui-range-bar"></div>
-					<span class="left ui-range-point">
-						<em class="n"  data-from="range4"></em>
-					</span>
-					<span class="right ui-range-point">
-						<em class="n" data-to="range4"></em>
-					</span>
-				</div>
+				
 			</div>
 		</div>
 	</section>
@@ -101,18 +70,23 @@
 //single
 &lt;div class="ui-range" data-id="range2" data-type="single"&gt;
 	&lt;input class="ui-range-inp" data-range="from" type="range" step="1" min="0" max="100" value="0" /&gt;
+	<tag-comment>
+	//스크립트 자동생성
 	&lt;div class="ui-range-track"&gt;
 		&lt;div class="ui-range-bar"&gt;&lt;/div&gt;
 		&lt;div class="left ui-range-point"&gt;
 			&lt;em class="n" data-from="range2"&gt;&lt;/em&gt;
 		&lt;/div&gt;
 	&lt;/div&gt;
+	</tag-comment>
 &lt;/div&gt;
 
 //dual
 &lt;div class="ui-range" data-id="range1"&gt;
 	&lt;input class="ui-range-inp" data-range="from" type="range" step="1" min="0" max="100" value="0" /&gt;
 	&lt;input class="ui-range-inp" data-range="to" type="range" step="1" min="0" max="100" value="50" /&gt;
+	<tag-comment>
+	//스크립트 자동생성
 	&lt;div class="ui-range-track"&gt;
 		&lt;div class="ui-range-bar"&gt;&lt;/div&gt;
 		&lt;div class="left ui-range-point"&gt;
@@ -122,17 +96,12 @@
 			&lt;em class="n" data-to="range1"&gt;&lt;/em&gt;
 		&lt;/div&gt;
 	&lt;/div&gt;
+	</tag-comment>
 &lt;/div&gt;
 
 //vertical : data-orient="vertical"
 &lt;div class="ui-range" data-id="range2" data-orient="vertical" data-type="single"&gt;
 	&lt;input class="ui-range-inp" data-range="from" type="range" step="1" min="0" max="100" value="0" /&gt;
-	&lt;div class="ui-range-track"&gt;
-		&lt;div class="ui-range-bar"&gt;&lt;/div&gt;
-		&lt;div class="left ui-range-point"&gt;
-			&lt;em class="n" data-from="range2"&gt;&lt;/em&gt;
-		&lt;/div&gt;
-	&lt;/div&gt;
 &lt;/div&gt;
 </code>
 </pre>
