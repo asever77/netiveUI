@@ -5,3 +5,29 @@ body[data-page="color"] {
 body[data-page="dropdown"] {
     .lb-radio{min-width: 6rem;}
 }
+
+/* 4 columns: 0-599 */
+@media all and (max-width:599px) {
+    body[data-page="datePicker"] {
+        .box-guide.fx-wrap{
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            .ui-datepicker{
+                justify-content: center;
+            }
+        }
+    }
+
+}
+
+/* 8 columns: 600-839 */
+@media all and (min-width:600px) and (max-width:839px) {
+
+}
+/* 12 columns  */
+@media all and (min-width:840px) {
+
+
+}

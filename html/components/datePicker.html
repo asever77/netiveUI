@@ -21,8 +21,8 @@
 							</div>
 							<div class="form-body">
 								<div class="form-group">
-									<div class="form-input">
-										<div class="ui-datepicker">
+									<div class="ui-datepicker">
+										<div class="form-input">
 											<input 
 												type="date" 
 												id="uiDate_1" 
@@ -33,10 +33,8 @@
 												title="시작일"
 												readonly 
 												required>
-											<button type="button" class="ui-datepicker-btn" data-target="uiDate_1">
-												<span class="a11y-hidden">년월일 선택</span>
-											</button>
 										</div>
+										<button type="button" class="ui-datepicker-btn" data-target="uiDate_1"><span class="datepicker-date inp-base"><span class="datepicker-date-yyyy">2021</span><span class="datepicker-date-mm">11</span><span class="datepicker-date-dd">05</span><span class="a11y-hidden">선택</span></span></button>
 									</div>
 								</div>
 							</div>
@@ -52,7 +50,6 @@
 							<div class="form-body">
 								<div class="form-group">
 									<div class="ui-datepicker">
-										
 										<div class="form-input">
 											<input 
 											type="date" 
@@ -82,9 +79,6 @@
 												readonly 
 												required>
 										</div>
-										<button type="button" class="ui-datepicker-btn" data-target="uiDate_2">
-											<span class="a11y-hidden">년월일 선택</span>
-										</button>
 									</div>
 								</div>
 							</div>
@@ -98,7 +92,7 @@
 	
 	<section class="wrap-section">
 		<h3 class="tit-s">Base Date Picker - visible</h3>
-		<div class="box-guide fx-wrap">
+		<div class="box-guide fx-wrap" data-align="space-around">
 
 			<div class="ui-datepicker ui-datepicker-view fx-item" data-target="uiDate_view">
 				<input 
@@ -107,7 +101,7 @@
 					type="hidden" 
 					id="uiDate_view" 
 					class="inp-base" 
-					value="2021.11.05" 
+					value="2022-11-05" 
 					min="2020-12-05" 
 					max="2025-05-20" 
 					title="시작일"
@@ -115,7 +109,7 @@
 					required>
 			</div>
 
-			<div class="ui-datepicker ui-datepicker-view flex-item ml-x4" data-target="uiDate_view2">
+			<div class="ui-datepicker ui-datepicker-view flex-item" data-target="uiDate_view2">
 				<input 
 					data-view="true" 
 

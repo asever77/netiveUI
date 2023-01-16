@@ -123,6 +123,12 @@
             -ms-flex-pack: justify;
             justify-content: space-between;
         }
+        &[data-align="space-around"] {
+            -webkit-box-pack: justify;
+            -moz-justify-content: space-around;
+            -ms-flex-pack: justify;
+            justify-content:space-around;
+        }
         &[data-valign="top"] {
             -webkit-box-align: start;
             -moz-align-items: flex-start;
@@ -417,7 +423,7 @@
 
         .form-text,
         .form-input {
-            margin-right: $x1;
+            // margin-right: $x1;
            
             & + .form-text {
                 margin-right: $x0_5;
@@ -612,4 +618,20 @@
         &.right {justify-content: flex-end;}
     }
     * + &-section{margin-top:$x5;}
+}
+
+/* 4 columns: 0-599 ----------------------------------------------------------------------------------- */
+@media all and (max-width:599px) {
+    
+}
+
+/* 8 columns: 600-839 ----------------------------------------------------------------------------------- */
+@media all and (min-width:600px) and (max-width:839px) {
+
+}
+
+/* 12 columns ----------------------------------------------------------------------------------- */
+@media all and (min-width:840px) {
+
+
 }

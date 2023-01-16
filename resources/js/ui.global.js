@@ -2,10 +2,11 @@
  * ui.global.js
  * User Interface script 
  * modify: 2023.01.11
- * ver: 1.0.4
+ * ver: 1.0.5
  * desc: 
- * 23.01.10 datepicker update : 날짜 클릭 시 값전달 및 창닫기 옵션 추가. isFooter : true
- * 23.01.11 modal full height 값설정, modal dim 클릭 시 close
+ * 1.0.3 (23.01.10) datepicker update : 날짜 클릭 시 값전달 및 창닫기 옵션 추가. isFooter : true
+ * 1.0.4 (23.01.11) modal full height 값설정, modal dim 클릭 시 close
+ * 1.0.5 (23.01.16) datepicker button 자동생성 및 값 적용으로 인한 기존 마크업 버튼 삭제 후 재생성
  */
 ;(function (win, doc, undefined) {
 
@@ -2805,15 +2806,58 @@
 	Global.datepicker = {
 		isFooter: false,
 		week : ['일', '월', '화', '수', '목', '금', '토', '년', '월' , '일'],
+		baseTxt: ['년','월','일'],
 		init(v){
 			const btns = doc.querySelectorAll('.ui-datepicker-btn');
+			const datepickers = doc.querySelectorAll('.ui-datepicker');
 			this.week = v === undefined || v.week === undefined ? this.week : v.week;
 			this.isFooter = v === undefined || v.isFooter === undefined ? this.isFooter : v.isFooter
 
-			for (let i = 0; i < btns.length; i++) {
-				btns[i].addEventListener('click', function(){
-					Global.datepicker.open(btns[i].dataset.target)
-				});
+			const act = (e) => {
+				Global.datepicker.open(e.currentTarget.dataset.target);
+			}
+
+			for (let i = 0; i < datepickers.length; i++) {
+				const inps = datepickers[i].querySelectorAll('input[type="date"]');
+				const btns = datepickers[i].querySelector('.ui-datepicker-btn');
+				
+				!!btns && btns.remove();
+
+				if (!!inps.length) {
+					const id = inps[0].id;
+					let v0 = inps[0].value.split('-');
+
+					(!inps[0].value) ? v0 = Global.datepicker.baseTxt : '';
+
+					let html = '<button type="button" class="ui-datepicker-btn" data-target="'+ id +'">';
+					html += '<span class="datepicker-date inp-base">';
+					html += '<span class="datepicker-date-yyyy">'+ v0[0] +'</span>';
+					html += '<span class="datepicker-date-mm">'+ v0[1] +'</span>';
+					html += '<span class="datepicker-date-dd">'+ v0[2] +'</span>';
+					html += '<span class="a11y-hidden">선택</span>'; 
+					html += '</span>'; 
+
+					if (inps.length > 1) {	
+						let v1 = inps[1].value.split('-');
+						(!inps[1].value) ? v1 = Global.datepicker.baseTxt : '';
+						html += '<span class="form-text">~</span>';
+						html += '<span class="datepicker-date inp-base">';
+						html += '<span class="datepicker-date-yyyy">'+ v1[0] +'</span>';
+						html += '<span class="datepicker-date-mm">'+ v1[1] +'</span>';
+						html += '<span class="datepicker-date-dd">'+ v1[2] +'</span>';
+						html += '<span class="a11y-hidden">선택</span>'; 
+						html += '</span>'; 
+					}
+					html += '</button>'; 
+
+					datepickers[i].insertAdjacentHTML('beforeend', html);
+					html = '';
+					
+					const btn = datepickers[i].querySelector('.ui-datepicker-btn');
+
+					btn.addEventListener('click', act);
+				}
+				
 			}
 
 			const views = doc.querySelectorAll('.ui-datepicker-view');
@@ -3003,21 +3047,35 @@
 		},
 		confirm(opt){
 			const id = opt.id;
-			const el_dp =  document.querySelector('.datepicker[data-id="'+opt.id+'"]');
+			const el_dp =  document.querySelector('.datepicker[data-id="'+ id +'"]');
 			const startDay = el_dp.dataset.start;
 			const endDay = el_dp.dataset.end;
 			const el_inp = document.getElementById(id);
 			const el_uidp = el_inp.closest('.ui-datepicker');	
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
+			const el_btn =  document.querySelector('.ui-datepicker-btn[data-target="'+ id +'"]');
+			const s_yy = el_btn.querySelectorAll('.datepicker-date-yyyy');
+			const s_mm = el_btn.querySelectorAll('.datepicker-date-mm');
+			const s_dd = el_btn.querySelectorAll('.datepicker-date-dd');
+
 			const callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
 
 			el_inp.value = startDay;
+
+			const _startDay = startDay.split('-');
+			s_yy[0].textContent = !!startDay ? _startDay[0] : Global.datepicker.baseTxt[0];
+			s_mm[0].textContent = !!startDay ? _startDay[1] : Global.datepicker.baseTxt[1];
+			s_dd[0].textContent = !!startDay ? _startDay[2] : Global.datepicker.baseTxt[2];
 
 			!!callback && callback();
 
 			if (!!el_end) {
 				el_end.value = endDay;
+				const _endDay = endDay.split('-');
+				s_yy[1].textContent = !!endDay ? _endDay[0] : Global.datepicker.baseTxt[0];
+				s_mm[1].textContent = !!endDay ? _endDay[1] : Global.datepicker.baseTxt[1];
+				s_dd[1].textContent = !!endDay ? _endDay[2] : Global.datepicker.baseTxt[2];
 			}
 
 			if (el_dp.classList.contains('sheet-bottom')) {
