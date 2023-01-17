@@ -7,6 +7,7 @@
  * 1.0.3 (23.01.10) datepicker update : 날짜 클릭 시 값전달 및 창닫기 옵션 추가. isFooter : true
  * 1.0.4 (23.01.11) modal full height 값설정, modal dim 클릭 시 close
  * 1.0.5 (23.01.16) datepicker button 자동생성 및 값 적용으로 인한 기존 마크업 버튼 삭제 후 재생성
+ * 1.0.5 (23.01.16) rangeSlider 눈금옵션추가 및 자동생성
  */
 ;(function (win, doc, undefined) {
 
@@ -1413,6 +1414,7 @@
 		miuntUnit : 5, //분단위
 		timerWheel : null,
 		nowScrollTop : 0,
+		hUnit : 0,
 		set(v) {
 			const inp = v;
 			const id = inp.id;
@@ -1552,7 +1554,7 @@
 				}
 
 				group.appendChild(btn);
-				btn = '';
+				btn = '';				
 			}
 
 			//시간
@@ -1595,21 +1597,23 @@
 					group.appendChild(btn);
 				}
 			}
-		
+
+			Global.inputTime.hUnit = el_hour.querySelectorAll('button')[0].offsetHeight;
+			console.log(Global.inputTime.hUnit);
 			Global.scroll.move({ 
-				top: Number(40 * (isPM ? 1 : 0)), 
+				top: Number(Global.inputTime.hUnit * (isPM ? 1 : 0)), 
 				selector: el_midday, 
 				effect: 'auto', 
 				align: 'default' 
 			});
 			Global.scroll.move({ 
-				top: Number(40 * (hour - 1)), 
+				top: Number(Global.inputTime.hUnit * (hour - 1)), 
 				selector: el_hour, 
 				effect: 'auto', 
 				align: 'default' 
 			});
 			Global.scroll.move({ 
-				top: Number(40 * Number(minute / Global.inputTime.miuntUnit)), 
+				top: Number(Global.inputTime.hUnit * Number(minute / Global.inputTime.miuntUnit)), 
 				selector: el_minute, 
 				effect: 'auto', 
 				align: 'default' 
@@ -1724,9 +1728,9 @@
 				const btn = el.querySelectorAll('button');
 				const len = btn.length;
 				const n = v < 0 ? 0 : v > len - 1 ? len - 1 : v;
-
+				
 				el.scrollTo({
-					top: 40 * n,
+					top: Global.inputTime.hUnit * n,
 					behavior: 'smooth'
 				});
 				selectedInit(n, el.querySelectorAll('button'));
@@ -1739,7 +1743,7 @@
 			}
 			const actValue = (v, w) => {
 				let n_hour = Number(v.dataset.hour);
-				currentN = Math.floor((Math.floor(getScrollTop) + 20) / 40);
+				currentN = Math.floor((Math.floor(getScrollTop) + (Global.inputTime.hUnit / 2)) / Global.inputTime.hUnit);
 
 				switch (eType) {
 					case 'touchstart' :
@@ -1784,7 +1788,7 @@
 
 						el_hour_button[n_hour - 1].dataset.selected = true;
 						Global.scroll.move({ 
-							top: Number(40 * (n_hour - 1)), 
+							top: Number(Global.inputTime.hUnit * (n_hour - 1)), 
 							selector: el_hour
 						});
 
@@ -1808,7 +1812,7 @@
 						}
 						
 						Global.scroll.move({ 
-							top: Number(40 * isPM), 
+							top: Number(Global.inputTime.hUnit * isPM), 
 							selector: el_midday
 						});
 						
@@ -1855,7 +1859,7 @@
 					currentN = 0;
 
 					el_pp.scrollTo({
-						top: 40 * index,
+						top: Global.inputTime.hUnit * index,
 						behavior: 'smooth'
 					});
 					actValue(el_wrap, index);
@@ -1867,9 +1871,9 @@
 					
 					event.preventDefault();
 					if (event.deltaY > 0) {//아래로
-						getScrollTop = that.scrollTop + 40;
+						getScrollTop = that.scrollTop + Global.inputTime.hUnit;
 					} else if (event.deltaY < 0) {//위로
-						getScrollTop = that.scrollTop - 40;
+						getScrollTop = that.scrollTop - Global.inputTime.hUnit;
 					}
 					actValue(that_wrap);
 				},
@@ -2623,9 +2627,13 @@
 	Global.rangeSlider = {
 		init(opt){
 			const id = opt.id;
+			const tickmark = opt.tickmark;
 			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
+			const el_inp = el_range.querySelectorAll('.ui-range-inp');
+			const max = Number(el_inp[0].max);
+			const min = Number(el_inp[0].min);
 
 			const track = el_range.querySelector('.ui-range-track');
 
@@ -2640,6 +2648,18 @@
 			}
 			
 			html += '</div>';
+
+			if (!!tickmark) {
+				html += '<datalist class="ui-range-marks" id="'+ id +'_tickmarks">';
+				const len = (max-min) / tickmark;
+
+				for (let i = 0; i < len + 1; i++) {
+					html += '<option value="'+ tickmark*i +'" label="'+ tickmark*i +'"></option>';
+					console.log(html);
+				}
+
+				html += '</datalist>';
+			}
 
 			el_range.insertAdjacentHTML('beforeend', html);
 			html = '';
@@ -3768,7 +3788,10 @@
 				const scrtop = doc.documentElement.scrollTop;
 				const wraph = el_wrap.offsetHeight;
 				const btn_h = btn.offsetHeight;
-				const opt_h = 40;
+
+				
+
+				let opt_h = 40;
 				const win_h = win.innerHeight;
 				const className = win_h - ((offtop - scrtop) + btn_h) > wraph ? 'bottom' : 'top';
 				const n = el_select.selectedIndex;
@@ -3790,7 +3813,8 @@
 				setTimeout(() => {
 					el_optwrap = el_wrap.querySelector('.ui-select-opts');
 					el_opts = el_optwrap.querySelectorAll('.ui-select-opt');
-					
+					// console.log(el_opts[0].offsetHeight );
+					opt_h = el_opts[0].offsetHeight;
 					Global.scroll.move({ 
 						top: Number(opt_h * n) , 
 						//:scope >
@@ -4156,9 +4180,10 @@
 			const _opts = el.querySelectorAll('.ui-select-opt');
 			const el_uiSelect = el.closest('.ui-select');
 			const el_btn = el_uiSelect.querySelector('.ui-select-btn');
+			const opt_h = _opts[0].offsetHeight;
 
 			el.scrollTo({
-				top: 40 * v,
+				top: opt_h * v,
 				behavior: 'smooth'
 			});
 
@@ -4174,12 +4199,14 @@
 		wrapTouch (e){
 			const that = e.currentTarget;
 			const wrap = that.querySelector('.ui-select-opts');
+			const opts = wrap.querySelectorAll('.ui-select-opt');
 
 			let timerScroll = null;
 			let touchMoving = false;
 			const wrapT = that.getBoundingClientRect().top;
 			let getScrollTop = Math.abs(wrap.getBoundingClientRect().top - wrapT);
 			let currentN = 0;
+			let opt_h = opts[0].offsetHeight;
 
 			clearTimeout(timerScroll);
 			
@@ -4199,7 +4226,8 @@
 							getScrollTop = Math.abs(wrap.getBoundingClientRect().top - wrapT);
 							scrollCompare();
 						} else {
-							currentN = Math.floor((Math.floor(getScrollTop) + 20) / 40);
+							console.log(opt_h);
+							currentN = Math.floor((Math.floor(getScrollTop) + (opt_h / 2)) / opt_h);
 							Global.select.scrollSelect(currentN,  that);
 						}
 					},100);

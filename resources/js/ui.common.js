@@ -35,7 +35,6 @@
       bulletList: { link: '../html/contents/bulletList.html' },
       table: { link: '../html/contents/table.html' },
       inputFormat: { link: '../html/contents/inputFormat.html' },
-      
 
       inputPlaceholder: { link: '../html/components/inputPlaceholder.html' },
       accordion: { link: '../html/components/accordion.html' },
@@ -259,13 +258,6 @@
             //delete netive.scrollbar;
             netive.common.pageInit(netive.common.meunMap[pagename].link);
             netive.common.settingAside();
-
-            // document.addEventListener('DOMContentLoaded', (event) => {
-            // 	document.querySelectorAll('pre code').forEach((el) => {
-            // 		alert(1);
-            // 	  hljs.highlightElement(el);
-            // 	});
-            //   });
           }
         });
       }

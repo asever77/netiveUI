@@ -4581,9 +4581,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
     overflow-x: auto;
   }
   .tbl-base table {
-    width: -webkit-max-content;
-    width: -moz-max-content;
-    width: max-content;
+    width: 93rem;
     min-width: 100%;
   }
 }
@@ -6462,7 +6460,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   width: 20rem;
 }
 .ui-select-btn {
-  padding: 0 0 0 1rem;
+  padding: 0 3.6rem 0 1rem;
   display: flex;
   align-items: center;
   justify-content: flex-start;
@@ -6488,8 +6486,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
 }
 .ui-select-btn span {
   display: inline-block;
-  width: calc(100% - 4.5rem);
-  min-width: 4.5rem;
+  width: 100%;
   text-align: left;
   word-break: nowrap;
   text-overflow: ellipsis;
@@ -6514,7 +6511,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   overflow-y: auto;
   max-height: 16.2rem;
   -webkit-overflow-scrolling: touch;
-  border: 1px solid #424242;
+  border: 0.1rem solid #424242;
   background: #ffffff;
 }
 .ui-select-wrap.on {
@@ -6623,9 +6620,9 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   position: fixed;
   bottom: 12rem;
   width: 100%;
-  height: 1px;
+  height: 0.1rem;
   z-index: 0;
-  border-top: 1px solid #F5F5F5;
+  border-top: 0.1rem solid #F5F5F5;
   pointer-events: none;
 }
 .ui-m .ui-select-opts::before {
@@ -6634,9 +6631,9 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   position: fixed;
   bottom: 8rem;
   width: 100%;
-  height: 1px;
+  height: 0.1rem;
   z-index: 0;
-  border-top: 1px solid #F5F5F5;
+  border-top: 0.1rem solid #F5F5F5;
   pointer-events: none;
 }
 .ui-m .ui-select-opt {
@@ -6903,165 +6900,6 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   top: 0;
 }
 
-.ui-time-modal {
-  opacity: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 300;
-  transition: opacity 0.2s ease-in;
-}
-.ui-time-modal.on {
-  opacity: 1;
-}
-.ui-time-modal .dim {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.4);
-}
-
-.ui-time-wrap {
-  position: relative;
-  width: 320px;
-  height: 270px;
-  background-color: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 16px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-  border-radius: 8px;
-  z-index: 1;
-}
-.ui-time-wrap .btn-close {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 20px;
-  height: 20px;
-  background-color: #ccc;
-}
-.ui-time-tit {
-  position: absolute;
-  top: 24px;
-  left: 24px;
-  font-size: 18px;
-}
-.ui-time-line {
-  position: absolute;
-  top: 50%;
-  width: 100%;
-  height: 40px;
-  pointer-events: none;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  z-index: 0;
-}
-.ui-time-line div {
-  display: block;
-  border-top: 2px solid #150f95;
-  border-bottom: 2px solid #150f95;
-  width: 100%;
-  height: 40px;
-  pointer-events: none;
-  max-width: 44px;
-  min-width: 44px;
-  margin: 0 16px;
-}
-.ui-time-line div:first-child {
-  max-width: 54px;
-  min-width: 54px;
-}
-.ui-time-midday {
-  max-width: 90px;
-  min-width: 90px;
-}
-.ui-time-hour {
-  max-width: 70px;
-  min-width: 70px;
-}
-.ui-time-minute {
-  max-width: 80px;
-  min-width: 80px;
-}
-.ui-time-minute button::before {
-  content: ":";
-  position: absolute;
-  top: 0;
-  left: 0;
-  line-height: 40px;
-}
-.ui-time-midday, .ui-time-hour, .ui-time-minute {
-  position: relative;
-  overflow-y: auto;
-  height: 12rem;
-  margin: 0;
-  /* scroll hidden */
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
-}
-.ui-time-midday::-webkit-scrollbar, .ui-time-hour::-webkit-scrollbar, .ui-time-minute::-webkit-scrollbar {
-  display: none;
-  width: 0; /* Remove scrollbar space */
-  height: 0;
-  background: transparent; /* Optional: just make scrollbar invisible */
-  -webkit-appearance: none;
-}
-.ui-time-midday button, .ui-time-hour button, .ui-time-minute button {
-  position: relative;
-  display: block;
-  margin: 0;
-  min-height: 4rem;
-  color: #b8b8b8;
-  font-size: 20px;
-}
-.ui-time-midday button[data-selected=true], .ui-time-hour button[data-selected=true], .ui-time-minute button[data-selected=true] {
-  font-weight: 700;
-  color: #150f95;
-}
-.ui-time-btns {
-  position: absolute;
-  bottom: 16px;
-  width: 100%;
-  padding: 0 2.4rem;
-}
-.ui-time-btns .btn-base {
-  width: 100%;
-  background-color: #150f95;
-  color: #fff;
-  height: 36px;
-  border: 0;
-  border-radius: 4px;
-}
-.ui-time-group {
-  position: relative;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  padding-top: 4rem;
-  padding-bottom: 4rem;
-  min-height: 12rem;
-}
-.ui-time-view {
-  border: 1px solid black;
-  width: 100%;
-  height: 4rem;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-}
-
 /* ui tooltip:z-index 300 ~ 399 */
 .ui-tooltip {
   visibility: hidden;
@@ -7183,6 +7021,165 @@ button.ui-tooltip-btn:after {
   font-size: 1rem;
   font-weight: 700;
   color: #424242;
+}
+
+.ui-time-modal {
+  opacity: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 300;
+  transition: opacity 0.2s ease-in;
+}
+.ui-time-modal.on {
+  opacity: 1;
+}
+.ui-time-modal .dim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+.ui-time-wrap {
+  position: relative;
+  width: 32rem;
+  height: 27rem;
+  background-color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.6rem;
+  box-shadow: 0 0 1rem rgba(0, 0, 0, 0.3);
+  border-radius: 0.8rem;
+  z-index: 1;
+}
+.ui-time-wrap .btn-close {
+  position: absolute;
+  top: 2.4rem;
+  right: 2.4rem;
+  width: 2rem;
+  height: 2rem;
+  background-color: #ccc;
+}
+.ui-time-tit {
+  position: absolute;
+  top: 2.4rem;
+  left: 2.4rem;
+  font-size: 1.8rem;
+}
+.ui-time-line {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  height: 4rem;
+  pointer-events: none;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  z-index: 0;
+}
+.ui-time-line div {
+  display: block;
+  border-top: 2px solid #150f95;
+  border-bottom: 2px solid #150f95;
+  width: 100%;
+  height: 4rem;
+  pointer-events: none;
+  max-width: 4.4rem;
+  min-width: 4.4rem;
+  margin: 0 1.6rem;
+}
+.ui-time-line div:first-child {
+  max-width: 5.4rem;
+  min-width: 5.4rem;
+}
+.ui-time-midday {
+  max-width: 9rem;
+  min-width: 9rem;
+}
+.ui-time-hour {
+  max-width: 7rem;
+  min-width: 7rem;
+}
+.ui-time-minute {
+  max-width: 8rem;
+  min-width: 8rem;
+}
+.ui-time-minute button::before {
+  content: ":";
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 4rem;
+}
+.ui-time-midday, .ui-time-hour, .ui-time-minute {
+  position: relative;
+  overflow-y: auto;
+  height: 12rem;
+  margin: 0;
+  /* scroll hidden */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.ui-time-midday::-webkit-scrollbar, .ui-time-hour::-webkit-scrollbar, .ui-time-minute::-webkit-scrollbar {
+  display: none;
+  width: 0; /* Remove scrollbar space */
+  height: 0;
+  background: transparent; /* Optional: just make scrollbar invisible */
+  -webkit-appearance: none;
+}
+.ui-time-midday button, .ui-time-hour button, .ui-time-minute button {
+  position: relative;
+  display: block;
+  margin: 0;
+  min-height: 4rem;
+  color: #b8b8b8;
+  font-size: 2rem;
+}
+.ui-time-midday button[data-selected=true], .ui-time-hour button[data-selected=true], .ui-time-minute button[data-selected=true] {
+  font-weight: 700;
+  color: #150f95;
+}
+.ui-time-btns {
+  position: absolute;
+  bottom: 1.6rem;
+  width: 100%;
+  padding: 0 2.4rem;
+}
+.ui-time-btns .btn-base {
+  width: 100%;
+  background-color: #150f95;
+  color: #fff;
+  height: 3.6rem;
+  border: 0;
+  border-radius: 0.4rem;
+}
+.ui-time-group {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  min-height: 12rem;
+}
+.ui-time-view {
+  border: 1px solid black;
+  width: 100%;
+  height: 4rem;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }
 
 /* layout */

@@ -25,7 +25,7 @@
     &.type-card {width: 20rem;}
 
     &-btn {
-        padding: 0 0 0 1rem;
+        padding: 0 3.6rem 0 1rem;
         display: flex;
         align-items: center;
         justify-content: flex-start;
@@ -52,8 +52,8 @@
     
         span {
             display: inline-block;
-            width: calc(100% - 4.5rem);
-            min-width: 4.5rem;
+            width: 100%;
+            // min-width: 4.5rem;
             text-align: left;
             word-break: nowrap;
             text-overflow: ellipsis;
@@ -61,7 +61,7 @@
             overflow: hidden;
             text-align: left;
             line-height: 1.2;
-            margin: .8rem 0;
+            margin: 0.8rem 0;
         }
     
         &[aria-expanded="true"],
@@ -80,7 +80,7 @@
         overflow-y: auto;
         max-height: 16.2rem;
         -webkit-overflow-scrolling: touch;
-        border: 1px solid $gray800;
+        border: 0.1rem solid $gray800;
         background: $white;
     
         &.on {display: block;}
@@ -175,9 +175,9 @@
             position: fixed;
             bottom: 12rem;
             width: 100%;
-            height: 1px;
+            height: 0.1rem;
             z-index: 0;
-            border-top: 1px solid $gray100;
+            border-top: 0.1rem solid $gray100;
             pointer-events: none;
         }
         &::before {
@@ -186,9 +186,9 @@
             position: fixed;
             bottom: 8rem;
             width: 100%;
-            height: 1px;
+            height: 0.1rem;
             z-index: 0;
-            border-top: 1px solid $gray100;
+            border-top: 0.1rem solid $gray100;
             pointer-events: none;
         }
     }

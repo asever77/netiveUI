@@ -182,23 +182,25 @@
 
     netive.page.pageRange = function(){
         netive.rangeSlider.init({
-            id : 'range1'
+            id: 'range1'
         });
     
         netive.rangeSlider.init({
-            id : 'range2'
+            id: 'range2',
+            tickmark: 25
         });
     
         netive.rangeSlider.init({
-            id : 'range3'
+            id: 'range3'
         });
     
         netive.rangeSlider.init({
-            id : 'range4'
+            id: 'range4'
         });
 
          netive.rangeSlider.init({
-            id : 'range22'
+            id: 'range22',
+            tickmark: 10
         });
     }
 
