@@ -16,10 +16,11 @@
 			<li>숫자는 1부터 시작하며 '01' 과 같이 앞에 '0'을 붙여 사용하지 않는다.</li>
 			<li>Multi class의 조합은 3개 이하(우선순위 점수 33점 미만)을 권장한다.</li>
 			<li>id는 사용하지 않는다.</li>
+			<li>엘리먼트(div, li, ...)에 직접적인 스타일을 주지 않는다. 꼭 class로 스타일을 작성한다.</li>
 		</ul>
 	
 <pre class="box-code"><code class="css">
-.base-main
+<div class="tit-m">name-name</div>  
 .btn-mix-outlined-s
 .list2
 .btn-mix-outlined .on
@@ -110,6 +111,12 @@
 					</tr>
 				</thead>
 				<tbody>
+					<tr>
+						<th scope="row">[module]</th>
+						<td>
+							유니크한 모듈 이름
+						</td>
+					</tr>
 					<tr>
 						<th scope="row">[module]-wrap</th>
 						<td>
