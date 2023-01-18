@@ -1692,7 +1692,6 @@
 			const that = e.currentTarget;
 			const eType = e.type;
 			const unit = Global.inputTime.miuntUnit;
-
 			const el_wrap = that.closest('.ui-time-wrap');
 			const el_midday = el_wrap.querySelector('.ui-time-midday');
 			const el_midday_button = el_midday.querySelectorAll('button');
@@ -1707,7 +1706,6 @@
 			let wrapT = 0;
 			let getScrollTop = 0;
 			let currentN = 0;
-
 			let actEnd;
 
 			const selectedInit = (v, el) => {
@@ -3698,6 +3696,7 @@
 	 * in use: Global.state, (Global.scrollBar), Global.parts
 	 */
 	Global.select = {
+		data: {},
 		options: {
 			id: false, 
 			current: null,
@@ -3730,7 +3729,6 @@
 			let el_btn;
 			let el_wrap;
 			let el_dim ;
-
 			let setOption;
 
 			//init
@@ -3767,6 +3765,8 @@
 				const a = Math.floor(elT - dT);
 				const b = wH - 240;
 
+				console.log(el_uiselect);
+
 				el_uiselect.dataset.orgtop = dT;
 
 				if (a > b) {
@@ -3777,23 +3777,22 @@
 				} 
 			}
 			const optOpen = (btn) => {
+				console.log(btn.id);
+				const id = btn.id;
 				const el_body = doc.querySelector('body');
 				const el_uiselect = btn.closest('.ui-select');
-				const el_wrap = el_uiselect.querySelector('.ui-select-wrap');
+				const el_wrap = document.querySelector('.ui-select-wrap[data-id="'+ id +'"]');
 				let el_optwrap = el_wrap.querySelector('.ui-select-opts');
 				let el_opts = el_optwrap.querySelectorAll('.ui-select-opt');
 				const el_select = el_uiselect.querySelector('select');
 				const el_option = el_select.querySelectorAll('option');
 				const offtop = el_uiselect.getBoundingClientRect().top;
+				const offleft = el_uiselect.getBoundingClientRect().left;
 				const scrtop = doc.documentElement.scrollTop;
-				const wraph = el_wrap.offsetHeight;
+				const scrleft = doc.documentElement.scrollLeft;
+				let wraph = el_wrap.offsetHeight;
 				const btn_h = btn.offsetHeight;
-
-				
-
-				let opt_h = 40;
 				const win_h = win.innerHeight;
-				const className = win_h - ((offtop - scrtop) + btn_h) > wraph ? 'bottom' : 'top';
 				const n = el_select.selectedIndex;
 
 				el_body.classList.add('dim-select');
@@ -3801,7 +3800,6 @@
 				btn.setAttribute('aria-expanded', true);
 				el_uiselect.classList.add('on');
 				el_wrap.classList.add('on');
-				el_wrap.classList.add(className);
 				el_wrap.setAttribute('aria-hidden', false);
 				el_opts[n].classList.add('selected');
 				
@@ -3809,15 +3807,14 @@
 					(el_wrap.dataset.scrollId) && Global.scrollBar.destroy(el_wrap.dataset.scrollId);
 					Global.scrollBar.init();
 				} 
-					
+
 				setTimeout(() => {
 					el_optwrap = el_wrap.querySelector('.ui-select-opts');
 					el_opts = el_optwrap.querySelectorAll('.ui-select-opt');
-					// console.log(el_opts[0].offsetHeight );
-					opt_h = el_opts[0].offsetHeight;
+					wraph = el_wrap.offsetHeight;
+					const opt_h = el_opts[0].offsetHeight;
 					Global.scroll.move({ 
 						top: Number(opt_h * n) , 
-						//:scope >
 						selector: customscroll ? el_wrap.querySelector('.ui-scrollbar-item') : el_wrap, 
 						effect: 'auto', 
 						align: 'default' 
@@ -3832,6 +3829,16 @@
 					
 					el_wrap.addEventListener('mouseleave', selectLeave);
 					el_wrap.addEventListener('blur', optBlur);
+
+					if (!isMobile) {
+						if ((win_h - wraph) + scrtop > offtop + scrtop + btn_h) {
+							el_wrap.style.top = offtop + scrtop + btn_h + 'px';
+							el_wrap.style.left = offleft + scrleft + 'px';
+						} else {
+							el_wrap.style.top = offtop + scrtop - wraph + 'px';
+							el_wrap.style.left = offleft + scrleft + 'px';
+						}
+					}
 				}, 0);
 
 				openScrollMove(el_uiselect);
@@ -3870,12 +3877,20 @@
 			}
 			const optConfirm = (e) => {
 				const el_confirm = e.currentTarget;
-				const el_uiSelect = el_confirm.closest('.ui-select');
+				const el_wrap = el_confirm.closest('.ui-select-wrap');
+				const id_inp = el_wrap.dataset.id;
+				const id = id_inp.split('-')[0];
+				const el_select = document.querySelector('#'+ id);
+				const el_uiSelect = el_select.closest('.ui-select');
 				const el_body = doc.querySelector('body');
 				const el_btn = el_uiSelect.querySelector('.ui-select-btn');
-				const el_wrap = el_uiSelect.querySelector('.ui-select-wrap');
-				const el_select = el_uiSelect.querySelector('select');
+				
 				const orgTop = el_uiSelect.dataset.orgtop;
+
+
+
+				// 선택하고 닫으면 전에꺼가 selected 됨
+
 
 				Global.select.act({ 
 					id: el_btn.dataset.id, 
@@ -3892,7 +3907,6 @@
 				el_wrap.classList.remove('bottom');
 				el_wrap.setAttribute('aria-hidden', true);
 			}
-
 			const eventFn = () => {
 				// $(doc).off('click.dp').on('click.dp', '.ui-select-btn', function(e){
 				// 	var $this = $(this).closest('.ui-datepicker').find('.inp-base');
@@ -3945,7 +3959,6 @@
 					that.addEventListener('change', Global.select.selectChange);
 				}
 			}
-
 			//option set
 			setOption = (uiSelect, v) => {
 				let _select = (uiSelect !== undefined) ? uiSelect.closest('.ui-select') : uiSelect;
@@ -4027,6 +4040,7 @@
 
 			//select set
 			const set = (el_uiSelect, el_select, selectID) => {
+				console.log('set');
 				(selectID === undefined) ? el_select.id = 'uiSelect_' + idN : '';
 				listID = selectID + '_list';
 				selectDisabled = el_select.disabled;
@@ -4037,11 +4051,11 @@
 				//(!el_select.data('callback') || !!callback) && el_select.data('callback', callback);
 
 				if (customscroll) {
-					htmlOption += '<div class="ui-select-wrap ui-scrollbar" scroll-id="uiSelectScrollBar_'+ idN +'">';
+					htmlOption += '<div class="ui-select-wrap ui-scrollbar" scroll-id="uiSelectScrollBar_'+ idN +'" data-id="'+ selectID +'_inp">';
 					idN = idN + 1;
 					sessionStorage.setItem('scrollbarID', idN);
 				} else {
-					htmlOption += '<div class="ui-select-wrap" style="min-width:' + el_uiSelect.offsetWidth + 'px">';
+					htmlOption += '<div class="ui-select-wrap" style="min-width:' + el_uiSelect.offsetWidth + 'px" data-id="'+ selectID +'_inp">';
 				}
 
 				htmlOption += '<strong class="ui-select-title">'+ selectTitle +'</strong>';
@@ -4058,7 +4072,9 @@
 				el_uiSelect.insertAdjacentHTML('beforeend', htmlButton);
 				el_select.classList.add('off');
 				el_select.setAttribute('aria-hidden', true)
-				el_uiSelect.insertAdjacentHTML('beforeend', htmlOption);
+				// el_uiSelect.insertAdjacentHTML('beforeend', htmlOption);
+				const body = document.querySelector('body');
+				body.insertAdjacentHTML('beforeend', htmlOption);
 
 				if (selectDisabled) {
 					const _btn = el_uiSelect.querySelector('.ui-select-btn');
@@ -4077,14 +4093,16 @@
 				const that = el_uiSelects[i];
 
 				el_btn = that.querySelector('.ui-select-btn');
-				el_wrap = that.querySelector('.ui-select-wrap');
 				el_dim = that.querySelector('.dim');
 				el_select = that.querySelector('select');
 				selectID = el_select.id;
+				el_wrap = document.querySelector('.ui-select-wrap[data-id="'+ selectID +'_inp"]');
 				
-				el_btn && el_btn.remove();
-				el_wrap && el_wrap.remove();
-				el_dim && el_dim.remove();
+				console.log(el_wrap);
+
+				!!el_btn && el_btn.remove();
+				!!el_wrap && el_wrap.remove();
+				!!el_dim && el_dim.remove();
 
 				set(that, el_select, selectID);
 			}
@@ -4177,8 +4195,12 @@
 			(isTure.indexOf('ui-select-wrap') < 0) && Global.select.hide();
 		},
 		scrollSelect (v, el){
+			console.log(v,el)
+			const id_inp = el.dataset.id;
+			const id = id_inp.split('_')[0];
 			const _opts = el.querySelectorAll('.ui-select-opt');
-			const el_uiSelect = el.closest('.ui-select');
+			const el_select = document.querySelector('#' + id);
+			const el_uiSelect = el_select.closest('.ui-select');
 			const el_btn = el_uiSelect.querySelector('.ui-select-btn');
 			const opt_h = _opts[0].offsetHeight;
 
@@ -4239,11 +4261,14 @@
 			that.addEventListener('touchmove', actMove);
 		},
 		optClick (e) {
-			const _uiSelect = this.closest('.ui-select');
+			const that = e.currentTarget;
+			const _wrap = that.closest('.ui-select-wrap');
+			const id_inp = _wrap.dataset.id;
+			const id = id_inp.split('_')[0];
+			const el_select = document.querySelector('#' + id);
+			const _uiSelect = el_select.closest('.ui-select');
 			const _btn = _uiSelect.querySelector('.ui-select-btn');
-			const el_select = _uiSelect.querySelector('select');
-			const _wrap = _uiSelect.querySelector('.ui-select-wrap');
-			const idx = Global.parts.getIndex(this);
+			const idx = Global.parts.getIndex(that);
 			const isMobile = Global.state.device.mobile;
 
 			if (!isMobile) {
@@ -4288,9 +4313,10 @@
 
 			for (let i = 0, len = el_btns.length; i < len; i++) {
 				const that = el_btns[i];
+				const _id = that.id;
 
 				el_select = that.closest('.ui-select');
-				el_wrap = el_select.querySelector('.ui-select-wrap');
+				el_wrap = document.querySelector('.ui-select-wrap[data-id="'+ _id +'"]');
 				orgTop = el_select.dataset.orgtop;
 
 				that.dataset.expanded = false;
@@ -4317,7 +4343,10 @@
 			const el_uiSelect = el_select.closest('.ui-select');
 			const el_btn = el_uiSelect.querySelector('.ui-select-btn');
 			const el_text = el_btn.querySelector('span');
-			const el_btnopts = el_uiSelect.querySelectorAll('.ui-select-opt');
+
+
+			const el_selectWrap = document.querySelector('.ui-select-wrap[data-id="'+ id +'_inp"]');
+			const el_btnopts = el_selectWrap.querySelectorAll('.ui-select-opt');
 
 			// var dataCallback = el_select.data('callback'),
 			// 	callback = opt.callback === undefined ? dataCallback === undefined ? false : dataCallback : opt.callback,
@@ -4366,78 +4395,64 @@
 	 * in use: Global.ajax, Global.focus
 	 */
 	Global.dropdown = {
+		data : {},
 		options: {
-			ps: 'BS',
-			area: doc.querySelector('body'),
 			src: false,
+			area: doc.querySelector('body'),
 			offset: true,
-			callback:false
+			callback:false,
+			closeback:false,
+			ps: 'BS',
 		},
 		init(option){
+			const el_btns = doc.querySelectorAll('.ui-drop');
 			const opt = Object.assign({}, Global.dropdown.options, option);
-			const id = opt.id;
-			const ps = opt.ps;
-			const hold = opt.hold;
-			const area = opt.area;
-			const src = opt.src;
-			const offset = opt.offset;
-			const callback = opt.callback !== undefined ? opt.callback : false;
-
-			//set
-			const setDropdown = () => {
-				const el_btn = doc.querySelector('#' + id);
-				const el_pnl = doc.querySelector('[data-id="'+ id +'"]'); 
-				const el_close = el_pnl.querySelector('.ui-drop-close');
-
-				//set up
-				el_btn.setAttribute('aria-expanded', false);
-				el_btn.dataset.ps = ps;
-				el_pnl.setAttribute('aria-hidden', true);
-				el_pnl.setAttribute('aria-labelledby', id);
-				el_pnl.dataset.id = id;
-				el_pnl.dataset.ps = ps;
-
-				const actionClose = () => {
-					const id = this.closest('.ui-drop-pnl').dataset.id;
-
-					Global.dropdown.toggle({ 
-						id: id 
-					});
-					doc.querySelector('#' + id).focus();
+			
+			if (!!opt && !!opt.id) {
+				Global.dropdown.data[opt.id] = {
+					area: opt.area,
+					src: opt.src,
+					offset: opt.offset,
+					callback: opt.callback,
+					closeback: opt.closeback,
+					ps: opt.ps,
 				}
-				const action = (e) => {
-					e.preventDefault();
-					const that = e.currentTarget;
-	
-					that.dataset.sct = doc.documentElement.scrollTop;
-					Global.dropdown.toggle({ 
-						id: that.id,
-					});
+			} 
+
+			for (let btn of el_btns) {
+				Global.dropdown.data[btn.id] = {
+					src: !!btn.dataset.src ? btn.dataset.src : opt.src,
+					area: !!btn.dataset.area ? btn.dataset.area : opt.area,
+					offset: !!btn.dataset.offset ? btn.dataset.offset : opt.offset,
+					callback: !!btn.dataset.callback ? btn.dataset.callback : opt.callback,
+					closeback: !!btn.dataset.closeback ? btn.dataset.closeback : opt.closeback,
+					ps: !!btn.dataset.ps ? btn.dataset.ps : opt.ps,
 				}
 
-				//event
-				el_btn.addEventListener('click', action);
-				el_close.addEventListener('click', actionClose);
-				!!callback && callback();
+				btn.removeEventListener('click', Global.dropdown.act);
+				btn.addEventListener('click', Global.dropdown.act);
 			}
+		},
+		act (e) {
+			e.preventDefault();
+			const that = e.currentTarget;
+			const id = that.id;
+			const opt = Global.dropdown.data[id];
 
-			//ajax 
-			if (!!src && !doc.querySelector('[data-id="' + id + '"]')) {
-				Global.ajax.init({
-					area: area,
-					url: src,
-					add: true,
-					callback: function(){
-						setDropdown();
-					}
-				});
-			} else {
-				setDropdown();
-			}
+			that.dataset.sct = doc.documentElement.scrollTop;
+			Global.dropdown.toggle({ 
+				id: id,
+				src: opt.src,
+				area: opt.area,
+				offset: opt.offset,
+				callback: opt.callback,
+				closeback: opt.closeback,
+				ps: opt.ps,
+			});
 		},
 		back (e) {
 			e.preventDefault();
-
+			
 			let isTure = '';
 
 			for (let i = 0, len = e.path.length; i < len; i++) {
@@ -4447,41 +4462,80 @@
 			// for (let path of e.path) {
 			// 	isTure = isTure + path.classList;
 			// }
-
-			(isTure.indexOf('ui-drop-pnl') < 0) && Global.dropdown.hide();
+			console.log('back', (isTure.indexOf('ui-drop-pnl') < 0));
+			if(isTure.indexOf('ui-drop-pnl') < 0) {
+				Global.dropdown.hide();
+				doc.removeEventListener('click', Global.dropdown.back);
+			} 
 		},
-		toggle (opt) {
-			const id = opt.id;
+		toggle (option) {
+			const id = option.id;
 			const el_btn = doc.querySelector('#' + id);
-			const el_pnl = doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]');
-			const state = opt.state !== undefined ? opt.state : 'toggle';
-			let btnExpanded =  el_btn.getAttribute('aria-expanded');
+			let el_pnl = doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]');
 
-			let ps = el_btn.dataset.ps;
-	
-			if (!!el_btn.dataset.ps) {
-				ps = el_btn.dataset.ps;
+			const opt = Object.assign({}, Global.dropdown.data[id], option);
+			const ps = opt.ps;
+			const src = opt.src ;
+			const area = opt.area;
+			const offset = opt.offset;
+			const callback = opt.callback;
+			const closeback = opt.closeback;
+			const state = !!opt.state ? opt.state : 'toggle';
+			let isExpanded = el_btn.getAttribute('aria-expanded');
+
+			el_btn.dataset.src = src;
+			el_btn.dataset.area = area;
+			el_btn.dataset.offset = offset;
+			el_btn.dataset.callback = !!callback && callback;
+			el_btn.dataset.closeback = !!closeback && closeback;
+			el_btn.dataset.ps = ps;
+			Global.dropdown.data[id] = {
+				src: src,
+				area: area,
+				offset: offset,
+				callback: callback,
+				closeback: closeback,
+				ps: ps,
 			}
-			
+
+			if (isExpanded === null) {
+				isExpanded = 'false';
+				el_btn.setAttribute('aria-expanded', false);
+			} else {
+				isExpanded = el_btn.getAttribute('aria-expanded');
+			} 
+
 			if (state === 'open') {
-				btnExpanded = 'false';
+				isExpanded = 'false';
 			} else if (state === 'close') {
-				btnExpanded = 'true';
+				isExpanded = 'true';
+			}
+
+			//set
+			const set = () => {
+				el_pnl = doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]');
+				el_pnl.setAttribute('aria-hidden', true);
+				el_pnl.setAttribute('aria-labelledby', id);
+				el_pnl.dataset.ps = ps;
+
+				!!callback && Global.callback[callback]();
+				show();
 			}
 			
-			const pnlShow = () => {
+			const show = () => {
 				const elBody = doc.querySelector('body');
 
-				(!el_btn.closest('.ui-drop-pnl')) && Global.dropdown.hide();
+				!el_btn.closest('.ui-drop-pnl') && Global.dropdown.hide();
 
 				Global.focus.loop({
 					selector: doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]'),
-					callback:pnlHide
+					callback: hide
 				});
 
 				el_btn.setAttribute('aria-expanded', true);	
 				el_pnl.setAttribute('aria-hidden', false)
 				el_pnl.classList.add('on');
+				el_pnl.style.marginTop = 0;
 
 				const sT = Math.floor(doc.documentElement.scrollTop);
 				const btn_w = Math.ceil(el_btn.offsetWidth);
@@ -4490,8 +4544,6 @@
 				const btn_l = Math.ceil(el_btn.getBoundingClientRect().left);
 				const pnl_w = Math.ceil(el_pnl.offsetWidth);
 				const pnl_h = Math.ceil(el_pnl.offsetHeight);
-
-				el_pnl.style.marginTop = 0;
 
 				switch (ps) {
 					case 'BS': 
@@ -4557,36 +4609,73 @@
 						el_pnl.style.left = btn_l + 'px';
 				}
 				
-				setTimeout(() => {
-					elBody.classList.add('dropdownOpened');
-					setTimeout(() => {
-						el_pnl.focus();
-					},0);
-				},0);
+				elBody.classList.add('dropdownOpened');
+				el_pnl.focus();
 
+				//close event
+				const el_close = el_pnl.querySelector('.ui-drop-close');
+				el_close.addEventListener('click', Global.dropdown.close);
+
+				//back event
 				doc.removeEventListener('click', Global.dropdown.back);
-
 				setTimeout(() => {
 					doc.addEventListener('click', Global.dropdown.back);
 				},0);
 			}
-			const pnlHide = () => {
+			const hide = () => {
 				const in_pnl = el_btn.closest('.ui-drop-pnl');
 				const elBody = doc.querySelector('body');
 
-				if (!in_pnl) {
-					elBody.classList.remove('dropdownOpened');
-				}
-	
+				(!in_pnl) && elBody.classList.remove('dropdownOpened');
 				el_btn.setAttribute('aria-expanded', false)
 				el_btn.focus();
 				el_pnl.setAttribute('aria-hidden', true)
 				el_pnl.setAttribute('tabindex', -1)
 				el_pnl.classList.remove('on');
+
+				!!closeback && Global.callback[closeback]();
 			}
 
-			btnExpanded === 'false' ? pnlShow(): pnlHide();
+			if (isExpanded === 'false') {
+				if (!!el_pnl) {
+					show();
+				} else {
+					Global.ajax.init({
+						area: area,
+						url: src,
+						add: true,
+						callback: set
+					});
+				}
+			} else {
+				hide();
+			}
 		}, 
+		close(e) {
+			const that = e.currentTarget;
+			const wrap = that.closest('.ui-drop-pnl');
+			const box = wrap.querySelector('.ui-drop-box');
+			const drops = box.querySelectorAll('.ui-drop');
+			const id = wrap.dataset.id;
+
+			for(let drop of drops) {
+				const _id = drop.id;
+				const _btn = document.querySelector('#'+ _id);
+				const _pnl = document.querySelector('.ui-drop-pnl[data-id="'+ _id +'"]');
+
+				_btn.setAttribute('aria-expanded', false);
+
+				if (!!_pnl) {
+					_pnl.setAttribute('hidden', true);
+					_pnl.setAttribute('tabindex', -1);
+					_pnl.classList.remove('on');
+				}
+			}
+
+			that.removeEventListener('click', Global.dropdown.close);
+			Global.dropdown.toggle({ id: id });
+			doc.querySelector('#' + id).focus();
+		},
 		hide () {
 			const elBody = doc.querySelector('body')
 			const elDrops = doc.querySelectorAll('.ui-drop');
@@ -4594,16 +4683,13 @@
 
 			elBody.classList.remove('dropdownOpened');
 
-			for (let i = 0, len = elDrops.length; i < len; i++) {
-				const that = elDrops[i];
-				that.setAttribute('aria-expanded', false);
+			for (let elDrop of elDrops) {
+				elDrop.setAttribute('aria-expanded', false);
 			}
-
-			for (let i = 0, len = elDropPnls.length; i < len; i++) {
-				const that = elDropPnls[i];
-				that.setAttribute('hidden', true);
-				that.setAttribute('tabindex', -1);
-				that.classList.remove('on');
+			for (let elDropPnl of elDropPnls) {
+				elDropPnl.setAttribute('hidden', true);
+				elDropPnl.setAttribute('tabindex', -1);
+				elDropPnl.classList.remove('on');
 			}
 
 			doc.removeEventListener('click', Global.dropdown.back);
@@ -5460,6 +5546,7 @@
 
 	/**
 	 * TAB
+	 * modify (23.01.18) : 실행방법 변경
 	 * in use: Global.state, Global.para, Global.scroll, Global.ajax
 	 */
 	Global.tab = {

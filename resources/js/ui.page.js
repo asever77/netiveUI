@@ -7,7 +7,7 @@
     netive.common.init();  
     netive.page.pageGuide1 = function(){};
     netive.page.pageInputPlaceholder = function(){};
-    netive.page.pageInnerLabel = function(){
+    netive.page.pageFormLayout = function(){
         // netive.form.init();
         // netive.select.init();
         // netive.form.init();
@@ -372,7 +372,7 @@
   
     }
 
-    netive.page.pageInputClear = function(){
+    netive.page.pageInput = function(){
         netive.form.init();
     }
 
@@ -384,57 +384,55 @@
         netive.floating.init();
     }
 
-    netive.page.pageCountNumber = function(){
-        // netive.count.step({ id:'exeCount1', value: 12345.678 });
-        // netive.count.slot({ id:'exeCount2', value: 12345.678 });
-    }
+
     netive.page.pageButton = function(){
         console.log('button')
-  
-
     }
-    netive.page.pageDropdown = function(){
+
+
+    //CALLBACK - DROPDOWN
+    netive.callback.dropTabAct = () => {
+       console.log('callback');
+        netive.tab.init({ 
+            id: 'exeTab1', 
+            current:0 
+        });
+
+        netive.dropdown.init({ 
+            id:'uiDrop5', 
+            ps:'RB',
+            src:'../html/components/contents/dropdown_ajax2.html',
+        });
+    }
+    netive.callback.dropClose = () => {
+        // console.log('closeback');
+    }
+    netive.callback.dropTabAct2 = () => {
+        console.log('callback2');
+        netive.tab.init({ 
+            id: 'exeTab2', 
+            current:0 
+        });
+    }
+    netive.page.pageDropdown = () => {
         const dropchanges = doc.querySelectorAll('input[name="dropPs"]');
         const drop = doc.querySelector('#uiDrop1');
 
-        // dropchanges.forEach(element => {
-        //     element.addEventListener('change', function(){
-        //         drop.dataset.ps = this.value;
-        //         drop.textContent = 'dropdown (' + this.value + ')'; 
-        //         console.log(this.value)
-        //     });
-        // });
-
         dropchanges.forEach(function(element) {
             element.addEventListener('change', function(){
-                drop.dataset.ps = this.value;
+
+                netive.dropdown.data.uiDrop1.ps = this.value;
                 drop.textContent = 'dropdown (' + this.value + ')'; 
                 console.log(this.value)
             });
         });
-
-      
-    
-        netive.dropdown.init({ 
-            id:'uiDrop1', 
-            ps:'BL',
-            src:'../html/components/dropdown_ajax.html',
-            dropExpanded: true,
-            callback: function(){
-
-                netive.tab.init({ 
-                    id: 'exeTab1', 
-                    current:0 
-                });
-
-                netive.dropdown.init({ 
-                    id:'uiDrop5', 
-                    ps:'RB',
-                    src:'../html/components/dropdown_ajax2.html',
-                });
-            }
-        });
+        netive.dropdown.init();
     }
+
+
+
+
+
 
     netive.page.pageTab = function(){
         netive.tab.init({ 

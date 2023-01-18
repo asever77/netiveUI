@@ -36,6 +36,11 @@
       table: { link: '../html/contents/table.html' },
       inputFormat: { link: '../html/contents/inputFormat.html' },
 
+      //FORM
+      formLayout: { link: '../html/components/formLayout.html' },
+      input: { link: '../html/components/input.html' },
+
+
       inputPlaceholder: { link: '../html/components/inputPlaceholder.html' },
       accordion: { link: '../html/components/accordion.html' },
       brickList: { link: '../html/components/brickList.html' },
@@ -56,11 +61,11 @@
       popup: { link: '../html/components/popup.html' },
       tooltip: { link: '../html/components/tooltip.html' },
       datePicker: { link: '../html/components/datePicker.html' },
-      inputClear: { link: '../html/components/inputClear.html' },
+     
       select: { link: '../html/components/select.html' },
       selection: { link: '../html/components/selection.html' },
       toast: { link: '../html/components/toast.html' },
-      innerLabel: { link: '../html/components/innerLabel.html' },
+     
       scrollMove: { link: '../html/components/scrollMove.html' },
       countNumber: { link: '../html/components/countNumber.html' },
       layout: { link: '../html/contents/layout.html' },

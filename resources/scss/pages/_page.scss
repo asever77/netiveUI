@@ -6,6 +6,16 @@ body[data-page="dropdown"] {
     .lb-radio{min-width: 6rem;}
 }
 
+
+body[data-page="tableScroll"] {
+    .ui-tablescroll-wrap.ui-scrollbar .ui-scrollbar-barwrap.type-y{
+		height: calc(100% - 34px);
+		top:auto;
+		bottom:0;
+	}
+}
+
+
 /* 4 columns: 0-599 */
 @media all and (max-width:599px) {
     body[data-page="datePicker"] {
