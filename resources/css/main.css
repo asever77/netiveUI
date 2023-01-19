@@ -8466,8 +8466,8 @@ body[data-page=scrollMove] .test-scrollmove-ver {
 body[data-page=scrollMove] .test-scrollmove-ver .test {
   width: 100%;
   height: 20rem;
-  border: 1px dashed #ccc;
-  background: #fff;
+  border: 1px dashed var(--gray200);
+  background: var(--white);
   display: flex;
   align-items: center;
   justify-content: center;
