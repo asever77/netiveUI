@@ -6445,10 +6445,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   z-index: -1;
 }
 .ui-select select.off:focus + .ui-select-btn {
-  border-color: #000000;
-}
-.ui-select select.off:focus + .ui-select-btn::after {
-  content: "keyboard_arrow_up";
+  border-color: #424242;
 }
 .ui-select.type-tel {
   width: 15rem;
@@ -6496,11 +6493,11 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   line-height: 1.2;
   margin: 0.8rem 0;
 }
-.ui-select-btn[aria-expanded=true], .ui-select-btn:focus, .ui-select-btn:active {
-  border-color: #E0E0E0;
-}
-.ui-select-btn[aria-expanded=true]::after, .ui-select-btn:focus::after, .ui-select-btn:active::after {
+.ui-select-btn[aria-expanded=true]::after {
   content: "keyboard_arrow_up";
+}
+.ui-select-btn:focus, .ui-select-btn:active {
+  border-color: #424242;
 }
 .ui-select-wrap {
   display: none;
@@ -6568,11 +6565,23 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
 }
 .ui-m .ui-select-wrap.on {
   display: block;
-  bottom: 0;
+}
+.ui-m .ui-select-wrap.off {
+  -webkit-animation-name: slideUpOut;
+          animation-name: slideUpOut;
+  -webkit-animation-duration: 0.1s;
+          animation-duration: 0.1s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-timing-function: ease-in-out;
+          animation-timing-function: ease-in-out;
+  -webkit-animation-fill-mode: forwards;
+          animation-fill-mode: forwards;
 }
 .ui-m .ui-select-cancel,
 .ui-m .ui-select-confirm,
 .ui-m .ui-select-title,
+.ui-m .ui-select-wrap,
 .ui-m .ui-select-wrap.top,
 .ui-m .ui-select-wrap.bottom {
   bottom: -30rem;

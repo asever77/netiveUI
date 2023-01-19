@@ -2,12 +2,13 @@
  * ui.global.js
  * User Interface script 
  * modify: 2023.01.11
- * ver: 1.0.5
+ * ver: 1.0.6
  * desc: 
  * 1.0.3 (23.01.10) datepicker update : 날짜 클릭 시 값전달 및 창닫기 옵션 추가. isFooter : true
  * 1.0.4 (23.01.11) modal full height 값설정, modal dim 클릭 시 close
  * 1.0.5 (23.01.16) datepicker button 자동생성 및 값 적용으로 인한 기존 마크업 버튼 삭제 후 재생성
  * 1.0.5 (23.01.16) rangeSlider 눈금옵션추가 및 자동생성
+ * 1.0.6 (23.01.19) select callback 작업
  */
 ;(function (win, doc, undefined) {
 
@@ -53,8 +54,8 @@
 					}
 				}
 			})(),
-			width: window.innerWidth,
-			height: window.innerHeight,
+			width: win.innerWidth,
+			height: win.innerHeight,
 			breakpoint: null,
 			colClass: null,
 			ios: (/ip(ad|hone|od)/i).test(UA),
@@ -141,11 +142,11 @@
 					Global.state.scroll.y > scroll_pos ? 'up' : Global.state.scroll.y < scroll_pos ? 'down' : ''; 
 				Global.state.scroll.y = scroll_pos;
 			}
-			window.addEventListener('scroll', (e) => {
-				last_know_scroll_position = window.scrollY;
+			win.addEventListener('scroll', (e) => {
+				last_know_scroll_position = win.scrollY;
 
 				if (!ticking) {
-					window.requestAnimationFrame(() => {
+					win.requestAnimationFrame(() => {
 						doSomething(last_know_scroll_position);
 						ticking = false;
 					});
@@ -162,8 +163,8 @@
 				const browser = Global.state.browser;
 				const device = Global.state.device;
 
-				device.width = window.innerWidth;
-				device.height = window.innerHeight;
+				device.width = win.innerWidth;
+				device.height = win.innerHeight;
 
 				device.touch = device.ios || device.android || (doc.ontouchstart !== undefined && doc.ontouchstart !== null);
 				device.mobile = device.touch && (device.ios || device.android);
@@ -192,7 +193,7 @@
 				el_html.classList.add(clsMobileSystem);
 				el_html.classList.add(clsMobile);
 			
-				const w = window.innerWidth;
+				const w = win.innerWidth;
 
 				clearTimeout(timerWin);
 				timerWin = setTimeout(() => {
@@ -217,7 +218,7 @@
 			act();
 		},
 		pageName() {
-			const page = document.URL.substring(document.URL.lastIndexOf("/") + 1);
+			const page = doc.URL.substring(doc.URL.lastIndexOf("/") + 1);
 			const pagename = page.split('?');
 
 			return pagename[0];
@@ -289,11 +290,11 @@
 
 		//기본 선택자 설정
 		selectorType(v) {
-			let base = document.querySelector('body');
+			let base = doc.querySelector('body');
 
 			if (v !== null) {
 				if (typeof v === 'string') {
-					base = document.querySelector(v);
+					base = doc.querySelector(v);
 				} else {
 					base = v;
 				} 
@@ -471,7 +472,7 @@
 	
 			loading && Global.loading.show();
 
-			if (!!effect && !!document.querySelector(effect)) {
+			if (!!effect && !!doc.querySelector(effect)) {
 				area.classList.remove(effect + ' action');
 				area.classList.add(effect);
 			}
@@ -516,7 +517,7 @@
 	 */
 	Global.scroll = {
 		options : {
-			selector: document.querySelector('html, body'),
+			selector: doc.querySelector('html, body'),
 			focus: false,
 			top: 0,
 			left:0,
@@ -526,7 +527,7 @@
 			callback: false,	
 		},
 		init() {
-			const el_areas = document.querySelectorAll('.ui-scrollmove-btn[data-area]');
+			const el_areas = doc.querySelectorAll('.ui-scrollmove-btn[data-area]');
 
 			for (let i = 0, len = el_areas.length; i < len; i++) {
 				const that = el_areas[i];
@@ -773,7 +774,7 @@
 			const is_expanded = !!el_sheet;
 			let show = !is_expanded || is_expanded === 'false';
 
-			let endfocus = opt.endfocus === false ? document.activeElement : opt.endfocus;
+			let endfocus = opt.endfocus === false ? doc.activeElement : opt.endfocus;
 
 			if (state !== undefined) {
 				show = state;
@@ -838,7 +839,7 @@
 	 */
 	Global.scrollBar = {
 		options : {
-			scope: document.querySelector('body'),
+			scope: doc.querySelector('body'),
 			selector: false,
 			callback:false,
 			infiniteCallback:false,
@@ -847,7 +848,7 @@
 		},
 		init (option) {
 			const opt = Object.assign({}, Global.scrollBar.options, option);
-			const el_scope = !!opt.scope ? opt.scope : document.querySelector('body');
+			const el_scope = !!opt.scope ? opt.scope : doc.querySelector('body');
 			let scrollBars = el_scope.querySelectorAll('.ui-scrollbar');
 
 			if (!!opt.infiniteCallback) {
@@ -1139,7 +1140,7 @@
 			}
 			
 			if (!!option && !!opt.selector) {
-				scrollBars = document.querySelector('[data-scroll-id="'+ opt.selector +'"]');
+				scrollBars = doc.querySelector('[data-scroll-id="'+ opt.selector +'"]');
 
 				const that = scrollBars;
 				let scrollId = opt.selector;
@@ -1244,10 +1245,10 @@
 			(path) ? cookieset += 'path=' + path + ';' : '';
 			(domain) ? cookieset += 'domain=' + domain + ';' : '';
 
-			document.cookie = cookieset;
+			doc.cookie = cookieset;
 		},
 		get(name) {
-			const match = ( document.cookie || ' ' ).match( new RegExp(name + ' *= *([^;]+)') );
+			const match = ( doc.cookie || ' ' ).match( new RegExp(name + ' *= *([^;]+)') );
 
 			return (match) ? match[1] : null;
 		},
@@ -1468,10 +1469,10 @@
 			el_view.addEventListener('click', this.show);
 		},
 		show(e){
-			const body = document.querySelector('body');
+			const body = doc.querySelector('body');
 			const that = e.currentTarget;
 			const id = that.dataset.id;
-			const inp = document.querySelector('#' + id);
+			const inp = doc.querySelector('#' + id);
 			const title = inp.title;
 			const txt_midday = Global.inputTime.middayUnit;
 			const min_time = !!inp.min ? inp.min : null;
@@ -1544,7 +1545,7 @@
 			//오전,오후
 			for (let i = 0; i < 2; i++) {
 				const group = el_midday.querySelector('.ui-time-group');
-				let btn = document.createElement('button');
+				let btn = doc.createElement('button');
 				btn.type = 'button';
 				btn.value = i;
 				btn.textContent = txt_midday[i];
@@ -1560,7 +1561,7 @@
 			//시간
 			for (let i = 1; i < hour_len + 1; i++) {
 				const group = el_hour.querySelector('.ui-time-group');
-				let btn = document.createElement('button');
+				let btn = doc.createElement('button');
 
 				btn.type = 'button';
 				btn.value = i;
@@ -1581,7 +1582,7 @@
 			for (let i = 0; i < 60; i++) {
 				if (i === 0 || i % Global.inputTime.miuntUnit === 0) {
 					const group = el_minute.querySelector('.ui-time-group');
-					let btn = document.createElement('button');
+					let btn = doc.createElement('button');
 
 					btn.type = 'button';
 					btn.value = Global.parts.add0(i);
@@ -1672,11 +1673,11 @@
 			const val_midday = Number(el_wrap.dataset.midday);
 			const val_hour = Number(el_wrap.dataset.hour);
 			const val_minute = Number(el_wrap.dataset.minute);
-			const el_view = document.querySelector('.ui-time-view[data-id="'+id+'"]');
+			const el_view = doc.querySelector('.ui-time-view[data-id="'+id+'"]');
 			const view_midday = el_view.querySelector('.ui-time-view-midday');
 			const view_hour = el_view.querySelector('.ui-time-view-hour');
 			const view_minute = el_view.querySelector('.ui-time-view-minute');
-			const el_inp = document.querySelector('#'+id);
+			const el_inp = doc.querySelector('#'+id);
 			const val_hour_24 = val_hour === 24 ? 0 : val_hour;
 
 			view_midday.textContent =  Global.inputTime.middayUnit[val_midday];
@@ -1894,10 +1895,10 @@
 						}
 					}
 					
-					document.addEventListener('mousemove', onMouseMove);
-					document.onmouseup = (e) => {
-						document.removeEventListener('mousemove', onMouseMove);
-						document.onmouseup = null;
+					doc.addEventListener('mousemove', onMouseMove);
+					doc.onmouseup = (e) => {
+						doc.removeEventListener('mousemove', onMouseMove);
+						doc.onmouseup = null;
 						console.log('mousedown',Math.abs(that_wrap.getBoundingClientRect().top - wrapT));
 						getScrollTop = Math.abs(that_wrap.getBoundingClientRect().top - wrapT);
 
@@ -1936,7 +1937,7 @@
 				const wrap = inp.parentElement;
 
 				if (!wrap.querySelector('.prefix')){
-					const preFixTxt = document.createElement('span');
+					const preFixTxt = doc.createElement('span');
 					const theFirstChild = wrap.firstChild;
 					const txt = inp.dataset.prefix;
 
@@ -1953,7 +1954,7 @@
 				const wrap = inp.parentElement;
 
 				if (!wrap.querySelector('.suffix')){
-					const fixTxt = document.createElement('span');
+					const fixTxt = doc.createElement('span');
 					const txt = inp.dataset.suffix;
 
 					fixTxt.classList.add('suffix');
@@ -2021,7 +2022,7 @@
 				case 'input' :
 				if (!!isValue) {
 					if (!wrap.querySelector('.ui-clear')) {
-						const clearbutton = document.createElement('button');
+						const clearbutton = doc.createElement('button');
 						clearbutton.type = 'button';
 						clearbutton.classList.add('btn-clear');
 						clearbutton.classList.add('ui-clear');
@@ -2059,7 +2060,7 @@
 		},
 
 		fileUpload() {
-			const el_files = document.querySelectorAll('.ui-file-inp');
+			const el_files = doc.querySelectorAll('.ui-file-inp');
 			const fileTypes = [
 				"image/apng",
 				"image/bmp",
@@ -2076,10 +2077,10 @@
 			const fileDelete = (e) => {
 				const id = e.currentTarget.dataset.id;
 				
-				const list = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
+				const list = doc.querySelector('.ui-file-list[data-id="'+ id +'"]');
 				const list_ul = list.querySelector('ul');
 				const list_li = list.querySelectorAll('li');
-				const inp = document.querySelector('#'+ id);
+				const inp = doc.querySelector('#'+ id);
 				const nodes = [... list_ul.children];
 				const index = Number(nodes.indexOf(e.currentTarget.closest('li')));
 
@@ -2110,7 +2111,7 @@
 			const updateImageDisplay = (e) => {
 				const el_file = e.currentTarget;
 				const id = el_file.id;
-				const preview = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
+				const preview = doc.querySelector('.ui-file-list[data-id="'+ id +'"]');
 				const curFiles = el_file.files;
 
 				while(preview.firstChild) {
@@ -2118,12 +2119,12 @@
 				}
 
 				if(curFiles.length === 0) {
-					const para = document.createElement('p');
+					const para = doc.createElement('p');
 					para.textContent = 'No files currently selected for upload';
 					preview.appendChild(para);
 				} else {
-					const list = document.createElement('ul');
-					const title = document.createElement('h4');
+					const list = doc.createElement('ul');
+					const title = doc.createElement('h4');
 					
 					title.textContent = 'File upload list';
 					title.classList.add('a11y-hidden');
@@ -2133,9 +2134,9 @@
 					
 					for (let i = 0, len = curFiles.length; i < len; i++) {
 						const that = curFiles[i];
-						const listItem = document.createElement('li');
-						const para = document.createElement('p');
-						const delbutton = document.createElement('button');
+						const listItem = doc.createElement('li');
+						const para = doc.createElement('p');
+						const delbutton = doc.createElement('button');
 
 						delbutton.type = 'button';
 						delbutton.classList.add('ui-file-del');
@@ -2146,7 +2147,7 @@
 						para.textContent = that.name + ', ' + returnFileSize(that.size) + '.';
 
 						if(validFileType(that)) {
-							const image = document.createElement('img');
+							const image = doc.createElement('img');
 							image.src = URL.createObjectURL(that);
 
 							listItem.appendChild(image);
@@ -2170,8 +2171,8 @@
 			}
 		},
 		allCheck(opt) {
-			const el_parents = document.querySelectorAll('[data-allcheck-parent]');
-			const el_childs = document.querySelectorAll('[data-allcheck-child]');
+			const el_parents = doc.querySelectorAll('[data-allcheck-parent]');
+			const el_childs = doc.querySelectorAll('[data-allcheck-child]');
 			const opt_callback = opt.allCheckCallback;
 
 			const allCheckParent = () => {
@@ -2191,8 +2192,8 @@
 			const isAllChecked = (opt) =>{
 				const isType = opt.type;
 				const isName = opt.name;
-				const parent = document.querySelector('[data-allcheck-parent="' + isName + '"]');
-				const childs = document.querySelectorAll('[data-allcheck-child="' + isName + '"]');
+				const parent = doc.querySelector('[data-allcheck-parent="' + isName + '"]');
+				const childs = doc.querySelectorAll('[data-allcheck-child="' + isName + '"]');
 				const allChecked = parent.checked;
 				const len = childs.length;
 				let n_checked = 0;
@@ -2626,7 +2627,7 @@
 		init(opt){
 			const id = opt.id;
 			const tickmark = opt.tickmark;
-			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
+			const el_range = doc.querySelector('.ui-range[data-id="'+ id +'"]');
 			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
 			const el_inp = el_range.querySelectorAll('.ui-range-inp');
@@ -2732,14 +2733,14 @@
 		rangeFrom(opt){
 			const id = opt.id;
 			const v = opt.value;
-			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
+			const el_range = doc.querySelector('.ui-range[data-id="'+ id +'"]');
 			const type = !!opt.type ? opt.type : !!el_range.dataset.type ? el_range.dataset.type : null;
 			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
 			const el_left = el_range.querySelector(".ui-range-point.left");
 			const el_right = el_range.querySelector(".ui-range-point.right");
 			const el_bar = el_range.querySelector(".ui-range-bar");
-			const inp_froms = document.querySelectorAll('[data-from="'+ id +'"]');
+			const inp_froms = doc.querySelectorAll('[data-from="'+ id +'"]');
 
 			let percent;
 			let value = el_from.value;
@@ -2791,13 +2792,13 @@
 		rangeTo(opt){
 			const id = opt.id;
 			const v = opt.value;
-			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
+			const el_range = doc.querySelector('.ui-range[data-id="'+ id +'"]');
 			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
 			const el_left = el_range.querySelector(".ui-range-point.left");
 			const el_right = el_range.querySelector(".ui-range-point.right");
 			const el_bar = el_range.querySelector(".ui-range-bar");
-			const inp_tos = document.querySelectorAll('[data-to="'+ id +'"]');
+			const inp_tos = doc.querySelectorAll('[data-to="'+ id +'"]');
 			let value = el_to.value;
 			let min = el_to.min;
 			let max = el_to.max;
@@ -2930,7 +2931,7 @@
 			}
 			
 			if (!opt) {
-				el_dp = document.querySelectorAll('.datepicker');
+				el_dp = doc.querySelectorAll('.datepicker');
 
 				for (let i = 0, len = el_dp.length; i < len; i++) {
 					const that = el_dp[i];
@@ -2940,7 +2941,7 @@
 					}
 				}
 			} else {
-				el_dp = document.querySelector('.datepicker[data-id="'+ opt.id +'"]');
+				el_dp = doc.querySelector('.datepicker[data-id="'+ opt.id +'"]');
 				el_dp.remove();
 			}
 
@@ -2971,17 +2972,17 @@
 			const currentDate = opt.date;
 			let wdate = opt.date;
 			const title = opt.title;
-			const el_inp = document.querySelector('#' + setId);
+			const el_inp = doc.querySelector('#' + setId);
 			const el_uidp = el_inp.closest('.ui-datepicker');
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
 			const setDate = (opt.date === '' || opt.date === undefined) ? new Date(): opt.date;
 			let period = (opt.period === '' || opt.period === undefined) ? false : opt.period;
-			const area = (opt.area === '' || opt.area === undefined) ? document.querySelector('body') : opt.area;
+			const area = (opt.area === '' || opt.area === undefined) ? doc.querySelector('body') : opt.area;
 			const date = new Date(setDate);
 			const _viewYear = date.getFullYear();
 			const _viewMonth = date.getMonth();
-			let el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
+			let el_dp = doc.querySelector('.datepicker[data-id="'+setId+'"]');
 			const yyyymm = _viewYear + '-' + Global.parts.add0(_viewMonth + 1);
 			const callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
 			let _dpHtml = '';
@@ -3046,8 +3047,8 @@
 				_dpHtml += '</section>';
 
 				area.insertAdjacentHTML('beforeend',_dpHtml);
-				//document.querySelector('#' + setId).parentNode.insertAdjacentHTML('beforeend',_dpHtml);
-				el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
+				//doc.querySelector('#' + setId).parentNode.insertAdjacentHTML('beforeend',_dpHtml);
+				el_dp = doc.querySelector('.datepicker[data-id="'+setId+'"]');
 
 				this.dateMake({
 					setDate: date,
@@ -3085,14 +3086,14 @@
 		},
 		confirm(opt){
 			const id = opt.id;
-			const el_dp =  document.querySelector('.datepicker[data-id="'+ id +'"]');
+			const el_dp =  doc.querySelector('.datepicker[data-id="'+ id +'"]');
 			const startDay = el_dp.dataset.start;
 			const endDay = el_dp.dataset.end;
-			const el_inp = document.getElementById(id);
+			const el_inp = doc.getElementById(id);
 			const el_uidp = el_inp.closest('.ui-datepicker');	
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
-			const el_btn =  document.querySelector('.ui-datepicker-btn[data-target="'+ id +'"]');
+			const el_btn =  doc.querySelector('.ui-datepicker-btn[data-target="'+ id +'"]');
 			const s_yy = el_btn.querySelectorAll('.datepicker-date-yyyy');
 			const s_mm = el_btn.querySelectorAll('.datepicker-date-mm');
 			const s_dd = el_btn.querySelectorAll('.datepicker-date-dd');
@@ -3135,8 +3136,8 @@
 		dateMake(opt){
 			const setDate = opt.setDate;
 			const setId = opt.setId;
-			const el_dp = document.querySelector('.datepicker[data-id="' + setId + '"]');
-			const el_inp = document.querySelector('#' + setId);
+			const el_dp = doc.querySelector('.datepicker[data-id="' + setId + '"]');
+			const el_inp = doc.querySelector('#' + setId);
 			const el_uidp = el_inp.closest('.ui-datepicker');	
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
@@ -3395,7 +3396,7 @@
 
 			function keyMove(e) {
 				// 
-				const isShift = !!window.event.shiftKey;
+				const isShift = !!win.event.shiftKey;
 				const n = Number(e.currentTarget.dataset.n);
 				const keycode = e.keyCode;
 				const keys = Global.state.keys;
@@ -3450,7 +3451,7 @@
 			const n = 0;
 			const id = el_dp.dataset.id;
 			const date = new Date(el_dp.dataset.date);
-			const el_inp = document.querySelector('#' + id);
+			const el_inp = doc.querySelector('#' + id);
 			const el_uidp = el_inp.closest('.ui-datepicker');
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
@@ -3520,7 +3521,7 @@
 					}
 				}
 
-				const now_focus = document.activeElement;
+				const now_focus = doc.activeElement;
 				Global.datepicker.dateMake({
 					setDate: date,
 					setId: id
@@ -3530,8 +3531,8 @@
 		},
 		nextYear(event) {
 			const dpId = event.target.dataset.dpid;
-			const el_inp = document.querySelector('#' + dpId);
-			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_inp = doc.querySelector('#' + dpId);
+			const el_dp = doc.querySelector('.datepicker[data-id="'+dpId+'"]');
 			const el_next = el_dp.querySelector('.ui-next-y');
 			const el_prev = el_dp.querySelector('.ui-prev-y');
 			const el_next_m = el_dp.querySelector('.ui-next-m');
@@ -3582,8 +3583,8 @@
 		},
 		prevYear(event) {
 			const dpId = event.target.dataset.dpid;
-			const el_inp = document.querySelector('#' + dpId);
-			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_inp = doc.querySelector('#' + dpId);
+			const el_dp = doc.querySelector('.datepicker[data-id="'+dpId+'"]');
 			const el_next = el_dp.querySelector('.ui-next-y');
 			const el_prev = el_dp.querySelector('.ui-prev-y');
 			const el_next_m = el_dp.querySelector('.ui-next-m');
@@ -3633,7 +3634,7 @@
 		},
 		nextMonth(event) {
 			const dpId = event.target.dataset.dpid;
-			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_dp = doc.querySelector('.datepicker[data-id="'+dpId+'"]');
 			let date = new Date(el_dp.dataset.date);
 			let year = date.getFullYear();
 			let month = date.getMonth() + 1;
@@ -3655,7 +3656,7 @@
 		},
 		prevMonth(event) {
 			const dpId = event.target.dataset.dpid;
-			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_dp = doc.querySelector('.datepicker[data-id="'+dpId+'"]');
 			let date = new Date(el_dp.dataset.date);
 			let year = date.getFullYear();
 			let month = date.getMonth();
@@ -3677,7 +3678,7 @@
 		},
 		goToday(event) {
 			const dpId = event.target.dataset.dpid;
-			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_dp = doc.querySelector('.datepicker[data-id="'+dpId+'"]');
 			const date = new Date();
 			const year = date.getFullYear();
 			const month = date.getMonth() + 1;
@@ -3765,8 +3766,6 @@
 				const a = Math.floor(elT - dT);
 				const b = wH - 240;
 
-				console.log(el_uiselect);
-
 				el_uiselect.dataset.orgtop = dT;
 
 				if (a > b) {
@@ -3777,11 +3776,10 @@
 				} 
 			}
 			const optOpen = (btn) => {
-				console.log(btn.id);
 				const id = btn.id;
 				const el_body = doc.querySelector('body');
 				const el_uiselect = btn.closest('.ui-select');
-				const el_wrap = document.querySelector('.ui-select-wrap[data-id="'+ id +'"]');
+				const el_wrap = doc.querySelector('.ui-select-wrap[data-id="'+ id +'"]');
 				let el_optwrap = el_wrap.querySelector('.ui-select-opts');
 				let el_opts = el_optwrap.querySelectorAll('.ui-select-opt');
 				const el_select = el_uiselect.querySelector('select');
@@ -3864,6 +3862,7 @@
 				const el_select = el_uiselect.querySelector('select');
 				const opts = el_uiselect.querySelectorAll('option');
 				const n = el_select.selectedIndex;
+				selectID = el_select.id;
 
 				that.dataset.sct = doc.documentElement.scrollTop;
 
@@ -3879,18 +3878,13 @@
 				const el_confirm = e.currentTarget;
 				const el_wrap = el_confirm.closest('.ui-select-wrap');
 				const id_inp = el_wrap.dataset.id;
-				const id = id_inp.split('-')[0];
-				const el_select = document.querySelector('#'+ id);
+				const id = id_inp.split('_')[0];
+				const el_select = doc.querySelector('#'+ id);
 				const el_uiSelect = el_select.closest('.ui-select');
 				const el_body = doc.querySelector('body');
 				const el_btn = el_uiSelect.querySelector('.ui-select-btn');
-				
+				const callback = Global.select.data[id].callback;
 				const orgTop = el_uiSelect.dataset.orgtop;
-
-
-
-				// 선택하고 닫으면 전에꺼가 selected 됨
-
 
 				Global.select.act({ 
 					id: el_btn.dataset.id, 
@@ -3901,61 +3895,47 @@
 				el_btn.dataset.expanded = false;
 				el_btn.setAttribute('aria-expanded', false)
 				el_btn.focus();
-				el_uiSelect.classList.remove('on');
-				el_wrap.classList.remove('on');
-				el_wrap.classList.remove('top');
-				el_wrap.classList.remove('bottom');
-				el_wrap.setAttribute('aria-hidden', true);
+				el_wrap.classList.add('off');
+				
+				const aniend = () => {
+					el_uiSelect.classList.remove('on');
+					el_wrap.classList.remove('off');
+					el_wrap.classList.remove('on');
+					el_wrap.classList.remove('top');
+					el_wrap.classList.remove('bottom');
+					el_wrap.setAttribute('aria-hidden', true);
+					el_wrap.removeEventListener('animationend', aniend);
+				}
+				el_wrap.addEventListener('animationend', aniend);
+				!!callback && Global.callback[callback]({
+					id: el_btn.dataset.id, 
+					current: el_select.selectedIndex
+				});
 			}
 			const eventFn = () => {
-				// $(doc).off('click.dp').on('click.dp', '.ui-select-btn', function(e){
-				// 	var $this = $(this).closest('.ui-datepicker').find('.inp-base');
-				// 	Global.sheets.bottom({
-				// 		id: $this.attr('id'),
-				// 		callback: function(){
-				// 		}
-				// 	});
-				// });
-				
-				//const el_dims = doc.querySelectorAll('.dim-select');
+				const el_dims = doc.querySelectorAll('.dim-select');
 				const el_confirms = doc.querySelectorAll('.ui-select-confirm');
 				const el_cancels = doc.querySelectorAll('.ui-select-cancel');
 				const el_btns = doc.querySelectorAll('.ui-select-btn');
-				//const el_opts = doc.querySelectorAll('.ui-select-opt');
-				//const el_wraps = doc.querySelectorAll('.ui-select-wrap');
 				const el_labels = doc.querySelectorAll('.ui-select-label');
 				const el_selects = doc.querySelectorAll('.ui-select select');
 
-				// for (let el_dim of el_dims) {
-				// 	el_dim.addEventListener('click', selectClick);
+				// for (let that of el_dims) {
+				// 	that.addEventListener('click', selectClick);
 				// }
-
-				for (let i = 0, len = el_confirms.length; i < len; i++) {
-					const that = el_confirms[i];
+				for (let that of el_confirms) {
 					that.addEventListener('click', optConfirm);
 				}
-
-				for (let i = 0, len = el_cancels.length; i < len; i++) {
-					const that = el_cancels[i];
+				for (let that of el_cancels) {
 					that.addEventListener('click', Global.select.hide);
 				}
-
-				for (let i = 0, len = el_btns.length; i < len; i++) {
-					const that = el_btns[i];
+				for (let that of el_btns) {
 					that.addEventListener('click', selectClick);
-					// that.addEventListener('keydown', selectKey);
-					// that.addEventListener('mouseover', selectOver);
-					// that.addEventListener('focus', selectOver);
-					// that.addEventListener('mouseleave', selectLeave);
 				}
-
-				for (let i = 0, len = el_labels.length; i < len; i++) {
-					const that = el_labels[i];
+				for (let that of el_labels) {
 					that.addEventListener('click', labelClick);
 				}
-
-				for (let i = 0, len = el_selects.length; i < len; i++) {
-					const that = el_selects[i];
+				for (let that of el_selects) {
 					that.addEventListener('change', Global.select.selectChange);
 				}
 			}
@@ -3975,7 +3955,6 @@
 				let _selected = false;
 				let _disabled = false;
 				let _hidden = false;
-				let _val = false;
 				let _hiddenCls;
 				let _optionIdName;
 
@@ -4004,7 +3983,6 @@
 					_hiddenCls =  _hidden ? 'hidden' : '';
 
 					if (_selected) {
-						_val = that.value;
 						btnTxt = that.textContent;
 						optionSelectedID = _optionID + '_' + i;
 						selectN = i;
@@ -4040,7 +4018,6 @@
 
 			//select set
 			const set = (el_uiSelect, el_select, selectID) => {
-				console.log('set');
 				(selectID === undefined) ? el_select.id = 'uiSelect_' + idN : '';
 				listID = selectID + '_list';
 				selectDisabled = el_select.disabled;
@@ -4067,13 +4044,14 @@
 				htmlOption += '<button type="button" class="ui-select-cancel"><span>취소</span></strong>';
 				htmlOption += '<button type="button" class="ui-select-confirm"><span>확인</span></strong>';
 				htmlOption += '</div>';
+
 				htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
 				
 				el_uiSelect.insertAdjacentHTML('beforeend', htmlButton);
 				el_select.classList.add('off');
 				el_select.setAttribute('aria-hidden', true)
 				// el_uiSelect.insertAdjacentHTML('beforeend', htmlOption);
-				const body = document.querySelector('body');
+				const body = doc.querySelector('body');
 				body.insertAdjacentHTML('beforeend', htmlOption);
 
 				if (selectDisabled) {
@@ -4096,92 +4074,21 @@
 				el_dim = that.querySelector('.dim');
 				el_select = that.querySelector('select');
 				selectID = el_select.id;
-				el_wrap = document.querySelector('.ui-select-wrap[data-id="'+ selectID +'_inp"]');
+				el_wrap = doc.querySelector('.ui-select-wrap[data-id="'+ selectID +'_inp"]');
 				
-				console.log(el_wrap);
-
 				!!el_btn && el_btn.remove();
 				!!el_wrap && el_wrap.remove();
 				!!el_dim && el_dim.remove();
+
+				Global.select.data[selectID] = {
+					callback: !!el_select.dataset.callback ? el_select.dataset.callback : false,
+				}
 
 				set(that, el_select, selectID);
 			}
 
 			//event
 			eventFn();
-			
-			/* 현재 사용안함 
-			const optPrev = (e, id, n, len) => {
-				e.preventDefault();
-				const current = (n === 0) ?0 :n - 1;
-
-				Global.select.act({ id: id, current: current });
-			}
-			
-			const optNext = (e, id, n, len) => {
-				e.preventDefault();
-				const current = n === len - 1 ? len - 1 :n + 1;
-
-				Global.select.act({ id: id, current: current });
-			}
-			const optScroll = (el_wrap, n_top, wrap_h, key) => {
-				const dT = doc.documentElement.scrollTop;
-
-				Global.scroll.move({ 
-					top: Number(n_top), 
-					selector: customscroll ? el_wrap.querySelector('.ui-scrollbar-item') : el_wrap, 
-					effect: 'auto', 
-					align: 'default' 
-				});
-			}
-			const selectKey = (e) => {
-				const el_btn = e.currentTarget;
-				const id = el_btn.dataset.id;
-				const el_list = doc.querySelector('#' + id + '_list');
-				const el_wrap = el_list.closest('.ui-select-wrap');
-				const el_optwrap = el_wrap.querySelector('.ui-select-opts');
-				const el_opts = el_wrap.querySelectorAll('.ui-select-opt');
-				const list_selected = el_list.querySelector('.selected');
-
-				let n = Number(Global.parts.getIndex(list_selected));
-				let nn = 0;
-				let nnn = 0;
-				let wrap_h = el_wrap.offsetHeight;
-				let len = el_opts.length;
-				let n_top = 0;
-
-				if (e.altKey) {
-					if (e.keyCode === keys.up) {
-						optOpen(el_btn);
-					}
-
-					e.keyCode === keys.down && Global.select.hide();
-					return;
-				}
-
-				switch (e.keyCode) {
-					case keys.up:
-					case keys.left:
-						nn = n - 1 < 0 ? 0 : n - 1;
-						nnn = Math.abs(el_optwrap.getBoundingClientRect().top);
-						n_top = el_opts[nn].getBoundingClientRect().top + nnn;
-
-						optScroll(el_wrap, n_top, wrap_h, 'up');
-						optPrev(e, id, n, len);
-						break;
-
-					case keys.down:
-					case keys.right:
-						nn = n + 1 > len - 1 ? len - 1 : n + 1;
-						nnn = Math.abs(el_optwrap.getBoundingClientRect().top);
-						n_top = el_opts[nn].getBoundingClientRect().top + nnn;
-						
-						optScroll(el_wrap, n_top, wrap_h, 'down');
-						optNext(e, id, n, len);
-						break;
-				}
-			}
-			*/
 		},
 		back (e){
 			e.preventDefault();
@@ -4195,11 +4102,10 @@
 			(isTure.indexOf('ui-select-wrap') < 0) && Global.select.hide();
 		},
 		scrollSelect (v, el){
-			console.log(v,el)
 			const id_inp = el.dataset.id;
 			const id = id_inp.split('_')[0];
 			const _opts = el.querySelectorAll('.ui-select-opt');
-			const el_select = document.querySelector('#' + id);
+			const el_select = doc.querySelector('#' + id);
 			const el_uiSelect = el_select.closest('.ui-select');
 			const el_btn = el_uiSelect.querySelector('.ui-select-btn');
 			const opt_h = _opts[0].offsetHeight;
@@ -4248,7 +4154,6 @@
 							getScrollTop = Math.abs(wrap.getBoundingClientRect().top - wrapT);
 							scrollCompare();
 						} else {
-							console.log(opt_h);
 							currentN = Math.floor((Math.floor(getScrollTop) + (opt_h / 2)) / opt_h);
 							Global.select.scrollSelect(currentN,  that);
 						}
@@ -4265,11 +4170,12 @@
 			const _wrap = that.closest('.ui-select-wrap');
 			const id_inp = _wrap.dataset.id;
 			const id = id_inp.split('_')[0];
-			const el_select = document.querySelector('#' + id);
+			const el_select = doc.querySelector('#' + id);
 			const _uiSelect = el_select.closest('.ui-select');
 			const _btn = _uiSelect.querySelector('.ui-select-btn');
 			const idx = Global.parts.getIndex(that);
 			const isMobile = Global.state.device.mobile;
+			const callback = Global.select.data[id].callback;
 
 			if (!isMobile) {
 				Global.select.act({ 
@@ -4282,6 +4188,11 @@
 			} else {
 				Global.select.scrollSelect(idx, _wrap);
 			}
+
+			!!callback && Global.callback[callback]({
+				id: _btn.dataset.id, 
+				current: idx 
+			});
 		},
 		selectOver () {
 			const body = doc.querySelector('body');
@@ -4290,14 +4201,20 @@
 		},
 		selectChange (e) {
 			const that = e.target;
+			const id = that.id;
 			const uiSelect = that.closest('.ui-select');
-			
+			const callback = Global.select.data[id].callback;
+
 			uiSelect.dataset.fn;
 
 			Global.select.act({
-				id: that.id,
+				id: id,
 				current: that.options.selectedIndex,
 				original:true
+			});
+			!!callback && Global.callback[callback]({
+				id: id, 
+				current: that.options.selectedIndex 
 			});
 		},
 		hide (){
@@ -4316,7 +4233,7 @@
 				const _id = that.id;
 
 				el_select = that.closest('.ui-select');
-				el_wrap = document.querySelector('.ui-select-wrap[data-id="'+ _id +'"]');
+				el_wrap = doc.querySelector('.ui-select-wrap[data-id="'+ _id +'"]');
 				orgTop = el_select.dataset.orgtop;
 
 				that.dataset.expanded = false;
@@ -4343,28 +4260,20 @@
 			const el_uiSelect = el_select.closest('.ui-select');
 			const el_btn = el_uiSelect.querySelector('.ui-select-btn');
 			const el_text = el_btn.querySelector('span');
-
-
-			const el_selectWrap = document.querySelector('.ui-select-wrap[data-id="'+ id +'_inp"]');
+			const el_selectWrap = doc.querySelector('.ui-select-wrap[data-id="'+ id +'_inp"]');
 			const el_btnopts = el_selectWrap.querySelectorAll('.ui-select-opt');
-
-			// var dataCallback = el_select.data('callback'),
-			// 	callback = opt.callback === undefined ? dataCallback === undefined ? false : dataCallback : opt.callback,
-			let current = opt.current;
 			const org = opt.original === undefined ? false : opt.original;
+
+			let current = opt.current;
 
 			if (el_uiSelect.dataset.current !== undefined) {
 				current = el_uiSelect.dataset.current;
 				el_select.selectedIndex = el_uiSelect.dataset.current;
 			} 
 
-			//!org && el_uiSelect.find('option').prop('selected', false).eq(current).prop('selected', true);
 			if (!org) {
 				el_opts[current].selected = true;
-
-				// el_uiSelect.find('option').prop('selected', false).eq(current).prop('selected', true).trigger('change');
 			} 
-			//trigger 오류 확인필요
 			
 			const optCurrent = el_opts[current];
 
@@ -4374,19 +4283,12 @@
 
 			el_text.textContent = optCurrent.textContent;
 
-			for (let i = 0, len = el_btnopts.length; i < len; i++) {
-				const that = el_btnopts[i];
+			for (let that of el_btnopts) {
 				that.classList.remove('selected');
 			}
 
 			el_btnopts[current].classList.add('selected');
 			Global.state.device.mobile && el_btnopts[current].focus();
-
-			// callback && callback({ 
-			// 	id: id, 
-			// 	current: current, 
-			// 	val: optCurrent.val() 
-			// });
 		}
 	}
 	
@@ -4660,8 +4562,8 @@
 
 			for(let drop of drops) {
 				const _id = drop.id;
-				const _btn = document.querySelector('#'+ _id);
-				const _pnl = document.querySelector('.ui-drop-pnl[data-id="'+ _id +'"]');
+				const _btn = doc.querySelector('#'+ _id);
+				const _pnl = doc.querySelector('.ui-drop-pnl[data-id="'+ _id +'"]');
 
 				_btn.setAttribute('aria-expanded', false);
 
@@ -4752,7 +4654,7 @@
 			let gap = opt.gap;
 			let id = opt.id;
 			let remove = opt.remove;
-			let endfocus = opt.endfocus === false ? document.activeElement : opt.endfocus;
+			let endfocus = opt.endfocus === false ? doc.activeElement : opt.endfocus;
 			const scr_t = doc.documentElement.scrollTop;
 			let timer;
 
@@ -5172,7 +5074,7 @@
 			const classname = opt.classname;
 			const conts = opt.conts;
 			const status = opt.status;
-			const el_body = document.querySelector('body');
+			const el_body = doc.querySelector('body');
 			let toast = '<div class="ui-toast toast '+ classname +'" aria-live="'+ status +'">'+ conts +'</div>';
 			let time = (delay === 'short') ? 2000 : 3500;
 
@@ -5410,7 +5312,7 @@
 	 */
 	Global.floating = {
 		init () {
-			const el_body = document.body;
+			const el_body = doc.body;
 			const el_items = doc.querySelectorAll('.ui-floating');
 
 			el_body.dataset.fixheight = 0;
@@ -5449,11 +5351,11 @@
 				}
 			}
 
-			window.removeEventListener('scroll', this.scrollAct);
-			window.addEventListener('scroll', this.scrollAct);
+			win.removeEventListener('scroll', this.scrollAct);
+			win.addEventListener('scroll', this.scrollAct);
 		},
 		scrollAct () {
-			const elBody = document.body;
+			const elBody = doc.body;
 			const el_items = doc.querySelectorAll('.ui-floating');
 			
 			for (let i = 0, len = el_items.length; i < len; i++) {
@@ -5539,8 +5441,8 @@
 					}
 				}
 			}
-			window.removeEventListener('scroll', act);
-			window.addEventListener('scroll', act);
+			win.removeEventListener('scroll', act);
+			win.addEventListener('scroll', act);
 		}
 	}
 
@@ -5550,6 +5452,7 @@
 	 * in use: Global.state, Global.para, Global.scroll, Global.ajax
 	 */
 	Global.tab = {
+		data: {},
 		options: {
 			current: 0,
 			dynamic: false,
@@ -5566,12 +5469,9 @@
 
 			let current = isNaN(opt.current) ? 0 : opt.current;
 
-			//:scope >
 			const el_btnwrap = el_tab.querySelector('.ui-tab-btns');
 			const el_wrap = el_btnwrap.querySelector('.wrap-group');
 			const el_btns = el_btnwrap.querySelectorAll('.ui-tab-btn');
-
-			//:scope >
 			const el_pnlwrap = el_tab.querySelector('.ui-tab-pnls');
 			const el_pnls = el_pnlwrap.querySelectorAll('.ui-tab-pnl');
 			const keys = Global.state.keys;
@@ -5601,66 +5501,15 @@
 				}
 			}
 
-			//event
-			const evtClick = (e) => {
-				Global.tab.toggle({ 
-					id: id, 
-					current: Number(e.currentTarget.dataset.tab), 
-					align:align,
-					dynamic:dynamic,
-					callback:callback
-				}); 
-			}
-			const keyEvent = (v) => {
-				Global.tab.toggle({ 
-					id: id, 
-					current: v, 
-					align:align,
-					dynamic:dynamic,
-					callback:callback 
-				});
-			}
-			const evtKeys = (e) => {
-				const that = this;
-				const n = Number(that.dataset.tab);
-				const m = Number(that.dataset.len);
-
-				const upLeftKey = (e) => {
-					e.preventDefault();
-					keyEvent(!that.getAttribute('tab-first') ? n - 1 : m - 1);
-				}
-				const downRightKey = (e) => {
-					e.preventDefault();
-					keyEvent(!that.getAttribute('tab-last') ? n + 1 : 0);
-				}
-				const endKey = (e) => {
-					e.preventDefault();
-					keyEvent(m - 1);
-				}
-				const homeKey = (e) => {
-					e.preventDefault();
-					keyEvent(0);
-				}
-
-				switch(e.keyCode){
-					case keys.up: 
-					case keys.left: upLeftKey(e);
-					break;
-
-					case keys.down: 
-					case keys.right: downRightKey(e);
-					break;
-
-					case keys.end: endKey(e);
-					break;
-
-					case keys.home: homeKey(e);
-					break;
-				}
-			}
-			
 			//setting
 			el_btnwrap.setAttribute('role','tablist');
+			Global.tab.data[id] = {
+				id: id,
+				current: 0,
+				dynamic: dynamic,
+				callback: callback,
+				align : align
+			};
 
 			for (let i = 0, len = el_btns.length; i < len; i++) {
 				const el_btn = el_btns[i];
@@ -5679,7 +5528,7 @@
 				const cls = isCurrent ? 'add' : 'remove';
 				
 				if (!el_btn.id) {
-					el_btn.id = id + '-btn-' + n;
+					el_btn.id = id + '_btn_' + n;
 				} 
 
 				const el_pnl = el_pnlwrap.querySelector('.ui-tab-pnl[data-tab="'+ n +'"]');
@@ -5692,24 +5541,24 @@
 						el_pnl.dataset.tab = i;
 					}
 					if (!el_pnl.id) {
-						el_pnl.id = id + '-pnl-' + n;
+						el_pnl.id = id + '_pnl_' + n;
 					} 
 				} else {
 					el_pnls[0].setAttribute('role','tabpanel');
 					el_pnls[0].setAttribute('tabindex','0');
 					el_pnls[0].dataset.tab = current;
-					el_pnls[0].id = id + '-pnl';
+					el_pnls[0].id = id + '_pnl';
 				}
   
-				const btnID = el_btn.id;
-				const pnlID = !dynamic ? el_pnl.id : el_pnls[0].id;
+				const btnId = el_btn.id;
+				const pnlId = !dynamic ? el_pnl.id : el_pnls[0].id;
 
-				el_btn.setAttribute('aria-controls', pnlID);
+				el_btn.setAttribute('aria-controls', pnlId);
 				el_btn.classList[cls]('selected');
 				el_btn.setAttribute('aria-selected', !!isCurrent ? true : false);
 
 				if (!dynamic) {
-					el_pnl.setAttribute('aria-labelledby', btnID);
+					el_pnl.setAttribute('aria-labelledby', btnId);
 
 					if ((Number(current) === Number(el_pnl.dataset.tab))) {
 						el_pnl.setAttribute('aria-hidden', false);
@@ -5719,13 +5568,19 @@
 						el_pnl.classList.remove('selected');
 					}
 				} else {
-					el_pnls[0].setAttribute('aria-labelledby', btnID);
+					el_pnls[0].setAttribute('aria-labelledby', btnId);
 					el_pnls[0].setAttribute('aria-hidden', false);
 					el_pnls[0].classList[cls]('selected');
 				}
 
 				i === 0 && el_btn.setAttribute('tab-first', true);
 				i === len - 1 && el_btn.setAttribute('tab-last', true);
+
+				const btnCallbak = el_btn.dataset.callback;
+
+				Global.tab.data[id][btnId] = {
+					callback: btnCallbak,
+				}
 
 				if (isCurrent) {
 					Global.scroll.move({ 
@@ -5734,15 +5589,80 @@
 						add : 0,
 						align: align 
 					});
+					!!Global.tab.data[id][btnId].callback && Global.callback[Global.tab.data[id][btnId].callback]({
+						id: id,
+						btnId: btnId,
+						pnlId: pnlId,
+					});
 				}
 
-				el_btn.addEventListener('click', evtClick);
-				el_btn.addEventListener('keydown', evtKeys);
+				el_btn.removeEventListener('click', Global.tab.evtClick);
+				el_btn.removeEventListener('keydown',  Global.tab.evtKeys);
+				el_btn.addEventListener('click',  Global.tab.evtClick);
+				el_btn.addEventListener('keydown',  Global.tab.evtKeys);
 			}
 
 			callback && callback(opt);
-			
-			
+		},
+		evtClick (e) {
+			const that = e.currentTarget;
+			const id = that.closest('.ui-tab').dataset.id;
+
+			Global.tab.toggle({ 
+				id: Global.tab.data[id].id, 
+				current: Number(e.currentTarget.dataset.tab), 
+				align: Global.tab.data[id].align,
+				dynamic: Global.tab.data[id].dynamic,
+				callback: Global.tab.data[id].callback
+			}); 
+		},
+		evtKeys (e) {
+			const that = e.currentTarget;
+			const id = that.closest('.ui-tab').dataset.id;
+			const n = Number(that.dataset.tab);
+			const m = Number(that.dataset.len);
+			const keyEvent = (v) => {
+				Global.tab.toggle({ 
+					id: Global.tab.data[id].id, 
+					current: v, 
+					align: Global.tab.data[id].align,
+					dynamic: Global.tab.data[id].dynamic,
+					callback: Global.tab.data[id].callback 
+				});
+			}
+
+			const upLeftKey = (e) => {
+				e.preventDefault();
+				keyEvent(!that.getAttribute('tab-first') ? n - 1 : m - 1);
+			}
+			const downRightKey = (e) => {
+				e.preventDefault();
+				keyEvent(!that.getAttribute('tab-last') ? n + 1 : 0);
+			}
+			const endKey = (e) => {
+				e.preventDefault();
+				keyEvent(m - 1);
+			}
+			const homeKey = (e) => {
+				e.preventDefault();
+				keyEvent(0);
+			}
+
+			switch(e.keyCode){
+				case keys.up: 
+				case keys.left: upLeftKey(e);
+					break;
+
+				case keys.down: 
+				case keys.right: downRightKey(e);
+					break;
+
+				case keys.end: endKey(e);
+					break;
+
+				case keys.home: homeKey(e);
+					break;
+			}
 		},
 		toggle (option) {
 			const opt = Object.assign({}, this.options, option);
@@ -5759,6 +5679,7 @@
 			const el_current = el_btnwrap.querySelector('.ui-tab-btn[data-tab="'+ current +'"]');
 			const el_pnlcurrent = el_pnlwrap.querySelector('.ui-tab-pnl[data-tab="'+ current +'"]');
 			const btnId = el_current.id;
+			const pnlId = !!el_pnlcurrent ? el_pnlcurrent.id : id + '_pnl';
 			let el_scroll = el_btnwrap.querySelector('.ui-scrollbar-item');
 
 			for (let i = 0, len = el_btn.length; i < len; i++) {
@@ -5796,6 +5717,14 @@
 				el_pnls[0].setAttribute('aria-labelledby', btnId);
 			}
 
+			const btncallback = Global.tab.data[id][btnId].callback;
+
+			!!btncallback && Global.callback[btncallback]({
+				id: id,
+				btnId: btnId,
+				pnlId: pnlId,
+			});
+
 			callback && callback(opt);
 		}
 	}
@@ -5822,7 +5751,7 @@
 			const el_wraps = el_parallax.querySelectorAll('.ui-parallax-wrap');
 			const act = () => {
 				const isWin = el_area === window;
-				const areaH = isWin ? window.innerHeight : el_area.offsetHeight;
+				const areaH = isWin ? win.innerHeight : el_area.offsetHeight;
 
 				for (let i = 0, len = el_wraps.length; i < len; i++) {
 					const that = el_wraps[i];
@@ -6225,27 +6154,27 @@
 						sessionStorage.setItem('codinglist', parentWrap.dataset.id);
 
 						const sId = sessionStorage.getItem('codinglist');
-						if (!!document.querySelector('.ui-codinglist tr.on')) {
-							document.querySelector('.ui-codinglist tr.on').classList.remove('on');
+						if (!!doc.querySelector('.ui-codinglist tr.on')) {
+							doc.querySelector('.ui-codinglist tr.on').classList.remove('on');
 						}
-						document.querySelector('[data-id="'+ sId +'"]').classList.add('on');
+						doc.querySelector('[data-id="'+ sId +'"]').classList.add('on');
 					});
 				}
 
-				document.querySelector('#pubWorker').addEventListener('change', function(){
+				doc.querySelector('#pubWorker').addEventListener('change', function(){
 					if (this.value === '전체') {
-						document.querySelector('.ui-codinglist').removeAttribute('data-pub');
+						doc.querySelector('.ui-codinglist').removeAttribute('data-pub');
 						perSet(len, endsum, delsum);
 					} else {
-						document.querySelector('.ui-codinglist').dataset.pub = this.value;
+						doc.querySelector('.ui-codinglist').dataset.pub = this.value;
 						
 
 					}
 
-					const pubs = document.querySelectorAll('tr[data-pub="'+ this.value+'"]');
-					const pubs_end = document.querySelectorAll('tr[data-pub="'+ this.value+'"][data-state="완료"]');
-					const pubs_del = document.querySelectorAll('tr[data-pub="'+ this.value+'"][data-state="제외"]');
-					const trs = document.querySelectorAll('tr');
+					const pubs = doc.querySelectorAll('tr[data-pub="'+ this.value+'"]');
+					const pubs_end = doc.querySelectorAll('tr[data-pub="'+ this.value+'"][data-state="완료"]');
+					const pubs_del = doc.querySelectorAll('tr[data-pub="'+ this.value+'"][data-state="제외"]');
+					const trs = doc.querySelectorAll('tr');
 					trs.forEach(function(tr){
 						tr.classList.remove('worker-view');
 					});
@@ -6253,7 +6182,7 @@
 						pub.classList.add('worker-view');
 					});
 
-					document.querySelector('.ui-codinglist-info .target').textContent = this.value;
+					doc.querySelector('.ui-codinglist-info .target').textContent = this.value;
 
 					if (this.value === '전체') {
 						perSet(len, endsum, delsum);
@@ -6266,15 +6195,15 @@
 					}
 				});
 
-				document.querySelector('#arstate').addEventListener('change', function(){
+				doc.querySelector('#arstate').addEventListener('change', function(){
 					if (this.value === '전체') {
-						document.querySelector('.ui-codinglist').removeAttribute('data-state');
+						doc.querySelector('.ui-codinglist').removeAttribute('data-state');
 					} else {
-						document.querySelector('.ui-codinglist').dataset.state = this.value;
+						doc.querySelector('.ui-codinglist').dataset.state = this.value;
 					}
 
-					const pubs = document.querySelectorAll('tr[data-state="'+ this.value+'"]');
-					const trs = document.querySelectorAll('tr');
+					const pubs = doc.querySelectorAll('tr[data-state="'+ this.value+'"]');
+					const trs = doc.querySelectorAll('tr');
 
 					trs.forEach(function(tr){
 						tr.classList.remove('state-view');
@@ -6284,8 +6213,8 @@
 					});
 				});
 
-				document.querySelector('#nameToggle').addEventListener('click', function(){
-					document.querySelector('.ui-codinglist').classList.toggle('name-toggle-view');
+				doc.querySelector('#nameToggle').addEventListener('click', function(){
+					doc.querySelector('.ui-codinglist').classList.toggle('name-toggle-view');
 				});
 
 				const el_info = doc.querySelector('.ui-codinglist-info');
@@ -6347,7 +6276,7 @@
 			}
 
 			Global.ajax.init({
-				area: document.querySelector('#' + opt.id),
+				area: doc.querySelector('#' + opt.id),
 				url: opt.url, 
 				page: false, 
 				callback: callback 
@@ -6641,8 +6570,8 @@
 	// 		//++make
 	// 		const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
 	// 		const el_itemWrap = el_item.querySelector('.ui-scrollbar-wrap');
-	// 		const _display = window.getComputedStyle(el_scrollbar).display;
-	// 		const _padding = window.getComputedStyle(el_scrollbar).padding;
+	// 		const _display = win.getComputedStyle(el_scrollbar).display;
+	// 		const _padding = win.getComputedStyle(el_scrollbar).padding;
 
 	// 		el_itemWrap.style.display = _display;
 	// 		el_itemWrap.style.padding = _padding;

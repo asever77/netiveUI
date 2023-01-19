@@ -13,9 +13,9 @@
 			<div class="ui-tab-btns">
 				<guide2></guide2>
 				<div class="wrap-group">
-					<button type="button" data-tab="0" class="ui-tab-btn"><span>탭1</span></button>
-					<button type="button" data-tab="1" class="ui-tab-btn"><span>탭2</span></button>
-					<button type="button" data-tab="2" class="ui-tab-btn"><span>탭3</span></button>
+					<button type="button" data-tab="0" data-callback="callbackTab1"  class="ui-tab-btn"><span>탭1</span></button>
+					<button type="button" data-tab="1" data-callback="callbackTab2"  class="ui-tab-btn"><span>탭2</span></button>
+					<button type="button" data-tab="2" data-callback="callbackTab3"  class="ui-tab-btn"><span>탭3</span></button>
 					<guide2></guide2>
 				</div>
 			</div>
@@ -72,10 +72,22 @@
 		<h3 class="tit-s">HTML</h3>
 
 <pre class="box-code"><code class="html">
+버튼마다 개별 콜백 설정
+&lt;button type="button" <tag-class>data-callback="callbackTab1"</tag-class> ...>
+&lt;button type="button" <tag-class>data-callback="callbackTab2"</tag-class> ...>
+<tag-class>netive.callback.callbackTab1 = () => {
+	....
+	콜백1 실행
+}</tag-class>
+<tag-class>netive.callback.callbackTab2 = () => {
+	....
+	콜백2 실행
+}</tag-class>
+
 &lt;div class="ui-tab" data-id="exeTab1"&gt;
 	&lt;div class="ui-tab-btns"&gt;
 		&lt;div class="wrap-group"&gt;
-			&lt;button type="button" data-tab="0" class="ui-tab-btn"&gt;&lt;span&gt;탭1&lt;/span&gt;&lt;/button&gt;
+			&lt;button type="button" data-tab="0" data-callback="callbackTab1" class="ui-tab-btn"&gt;&lt;span&gt;탭1&lt;/span&gt;&lt;/button&gt;
 			...
 		&lt;/div&gt;
 	&lt;/div&gt;

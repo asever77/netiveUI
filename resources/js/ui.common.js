@@ -29,7 +29,7 @@
       color: { link: '../html/convention/color.html' },
       naming: { link: '../html/convention/naming.html' },
       units: { link: '../html/convention/units.html' },
-      margin: { link: '../html/convention/margin.html' },
+      gap: { link: '../html/convention/gap.html' },
       
       icon: { link: '../html/contents/icon.html' },
       bulletList: { link: '../html/contents/bulletList.html' },

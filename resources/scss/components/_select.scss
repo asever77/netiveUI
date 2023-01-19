@@ -11,12 +11,7 @@
             position: absolute;
             z-index: -1;
 
-            &:focus+.ui-select-btn {
-                border-color: #000000;
-                &::after {
-                    content: "keyboard_arrow_up";
-                }
-            }
+            &:focus+.ui-select-btn {border-color: $gray800;}
         }
     }
 
@@ -64,12 +59,9 @@
             margin: 0.8rem 0;
         }
     
-        &[aria-expanded="true"],
+        &[aria-expanded="true"]::after{content: "keyboard_arrow_up";}
         &:focus,
-        &:active {
-            border-color: #E0E0E0;
-            &::after{content: "keyboard_arrow_up";}
-        }
+        &:active {border-color: $gray800;}
     }
     &-wrap {
         display: none;
@@ -128,11 +120,20 @@
     .ui-select{width: 100%;}
     .ui-select-wrap.on {
         display: block;
-        bottom: 0;
+        // bottom: 0;
     }
+    .ui-select-wrap.off {
+        animation-name: slideUpOut;
+        animation-duration: .1s;
+        animation-iteration-count: 1;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards;
+    }
+
     .ui-select-cancel,
     .ui-select-confirm,
     .ui-select-title,
+    .ui-select-wrap,
     .ui-select-wrap.top,
     .ui-select-wrap.bottom {
         bottom: -30rem;
