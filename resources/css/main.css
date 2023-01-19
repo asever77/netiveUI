@@ -8474,6 +8474,11 @@ body[data-page=scrollMove] .test-scrollmove-ver .test {
   font-size: 10rem;
   line-height: 1;
 }
+body[data-page=scrollMove] .ui-scrollbar-wrap .flex-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 body[data-page=scrollMove] .test-scrollmove-ver .test + .test {
   margin-top: 1rem;
 }

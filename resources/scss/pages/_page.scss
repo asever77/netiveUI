@@ -101,6 +101,11 @@ body[data-page="scrollMove"] {
         font-size:10rem;
         line-height: 1;
     }
+    .ui-scrollbar-wrap .flex-wrap{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
     .test-scrollmove-ver .test+.test{
         margin-top:1rem;
     }
