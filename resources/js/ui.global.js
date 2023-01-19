@@ -547,7 +547,13 @@
 			const add = el.dataset.add === undefined ? 0 : el.dataset.add;
 			const align = el.dataset.align === undefined ? 'default' : el.dataset.align;
 			const callback = el.dataset.callback === undefined ? false : el.dataset.callback;
-			const el_area = doc.querySelector('.ui-scrollmove[data-area="'+ area +'"]');
+			let el_area = doc.querySelector('.ui-scrollmove[data-area="'+ area +'"]');
+			const item = el_area.querySelector('.ui-scrollbar-item');
+			
+			if (!!item) {
+				el_area = el_area.querySelector('.ui-scrollbar-item');
+			}
+
 			const el_item = el_area.querySelector('.ui-scrollmove-item[data-name="'+ name +'"]');
 			
 			let top = (el_area.getBoundingClientRect().top - el_item.getBoundingClientRect().top) - el_area.scrollTop;
@@ -579,14 +585,15 @@
 			const focus = opt.focus;
 			const effect = opt.effect;
 			let selector = opt.selector;
-
-			//jquery selector인 경우 변환
-			// if (!!selector[0]) {
-			// 	selector = selector[0];
-			// }
-
+			const item = selector.querySelector('.ui-scrollbar-item');
+			
+			if (!!item) {
+				selector = selector.querySelector('.ui-scrollbar-item');
+			}
+			
 			switch (align) {
-				case 'center':				
+				case 'center':
+					console.log('move', Math.abs(left) , (selector.offsetWidth / 2) , add);	
 					selector.scrollTo({
 						top: Math.abs(top) - (selector.offsetHeight / 2) + add,
 						left: Math.abs(left) - (selector.offsetWidth / 2) + add,
@@ -602,7 +609,6 @@
 						behavior: effect
 					});
 			}
-
 			this.checkEnd({
 				selector : selector,
 				nowTop : selector.scrollTop, 

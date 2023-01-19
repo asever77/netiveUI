@@ -38,6 +38,7 @@
 
     };
     netive.page.pageScrollMove = () => {
+        netive.scrollBar.init();
         netive.scroll.init();
         netive.scroll.init();
         netive.callback.testscroll = function(){

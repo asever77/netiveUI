@@ -5050,7 +5050,6 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   position: sticky;
   z-index: 3;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.87);
   padding: 0.8rem 0;
 }
 .ui-codinglist-state {
@@ -6768,7 +6767,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   clear: both;
   width: 100%;
   height: 1px;
-  background: #EEEEEE;
+  background: var(--gray50);
 }
 .ui-tab-btns.ui-scrollbar .wrap-group {
   overflow-x: initial;
@@ -6818,7 +6817,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   left: 0;
   width: 100%;
   padding: 1.6rem;
-  background: #fff;
+  background: var(--white);
   visibility: hidden;
   position: absolute;
   opacity: 0;
@@ -7922,26 +7921,6 @@ fieldset {
   margin: 0.3rem 0.3rem 0 0;
 }
 
-.parallax-test:first-child .parallax-cont {
-  margin-top: 0;
-}
-
-.parallax-test .parallax-cont {
-  padding: 0;
-  margin: 1rem auto 0;
-  width: 100%;
-  top: 0;
-  background: #FAFAFA;
-}
-
-.parallax-test b {
-  display: block;
-  width: 100%;
-  text-align: center;
-  font-weight: 900;
-  font-size: 50vw;
-}
-
 .ui-scrollbar.test1 {
   margin: 1rem 1rem 0 0;
   vertical-align: top;
@@ -8120,65 +8099,6 @@ html.col-12 .coln12 {
 
 .ui-parallax-wrap[data-act=parallax02] b {
   transform: translate(0, -100vh);
-}
-
-.test-scrollmove-hor {
-  overflow-x: auto;
-}
-
-.test-scrollmove-hor > div {
-  display: flex;
-  justify-content: space-between;
-}
-
-.test-scrollmove-hor > div > div:focus {
-  background: black;
-  color: #fff;
-}
-
-.test-scrollmove-hor .test {
-  flex: 0 auto;
-  min-width: 10rem;
-  padding: 2rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 4rem;
-  line-height: 1;
-  opacity: 0.1;
-  transition: opacity 0.8s;
-  border: 1px dashed #E0E0E0;
-  background: #fff;
-}
-
-.test-scrollmove-hor .test.tada {
-  opacity: 1;
-}
-
-.test-scrollmove-hor .wrap-group {
-  flex-wrap: wrap;
-}
-
-.test-scrollmove-ver {
-  width: 100%;
-  height: 30rem;
-  overflow-y: auto;
-}
-
-.test-scrollmove-ver .test {
-  width: 100%;
-  height: 20rem;
-  border: 1px dashed #ccc;
-  background: #fff;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 10rem;
-  line-height: 1;
-}
-
-.test-scrollmove-ver .test + .test {
-  margin-top: 1rem;
 }
 
 pre[data-ke-type] {
@@ -8477,6 +8397,85 @@ body[data-page=tableScroll] .ui-tablescroll-wrap.ui-scrollbar .ui-scrollbar-barw
   height: calc(100% - 34px);
   top: auto;
   bottom: 0;
+}
+
+body[data-page=parallax] .info-value {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 100;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background: var(--gray200);
+  opacity: 0.8;
+}
+body[data-page=parallax] .parallax-test:first-child .parallax-cont {
+  margin-top: 0;
+}
+body[data-page=parallax] .parallax-test .parallax-cont {
+  padding: 0;
+  margin: 1rem auto 0;
+  width: 100%;
+  top: 0;
+  background: var(--gray100);
+}
+body[data-page=parallax] .parallax-test b {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-weight: 900;
+  font-size: 50vw;
+}
+
+body[data-page=scrollMove] .test-scrollmove-hor {
+  overflow-x: auto;
+}
+body[data-page=scrollMove] .test-scrollmove-hor .test-scrollmove-hor-wrap {
+  display: flex;
+  justify-content: space-between;
+}
+body[data-page=scrollMove] .test-scrollmove-hor .test-scrollmove-hor-wrap .test:focus {
+  background: black;
+  color: #fff;
+}
+body[data-page=scrollMove] .test-scrollmove-hor .test {
+  flex: 0 auto;
+  min-width: 10rem;
+  padding: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  line-height: 1;
+  opacity: 0.1;
+  transition: opacity 0.8s;
+  border: 1px dashed #E0E0E0;
+  background: #fff;
+}
+body[data-page=scrollMove] .test-scrollmove-hor .test.tada {
+  opacity: 1;
+}
+body[data-page=scrollMove] .test-scrollmove-hor .wrap-group {
+  flex-wrap: wrap;
+}
+body[data-page=scrollMove] .test-scrollmove-ver {
+  width: 100%;
+  height: 30rem;
+  overflow-y: auto;
+}
+body[data-page=scrollMove] .test-scrollmove-ver .test {
+  width: 100%;
+  height: 20rem;
+  border: 1px dashed #ccc;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 10rem;
+  line-height: 1;
+}
+body[data-page=scrollMove] .test-scrollmove-ver .test + .test {
+  margin-top: 1rem;
 }
 
 /* MOBILE -- 4 columns: 0-599 */
