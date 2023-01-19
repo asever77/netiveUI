@@ -10,7 +10,7 @@
  * 1.0.5 (23.01.16) rangeSlider 눈금옵션추가 및 자동생성
  * 1.0.6 (23.01.19) select callback 작업
  */
-;(function (win, doc, undefined) {
+((win, doc, undefined) => {
 
 	'use strict';
 
@@ -25,14 +25,14 @@
 	//const filter = "win16|win32|win64|mac|macintel";
 	
 	//requestAnimationFrame
-	win.requestAFrame = (function () {
+	win.requestAFrame = (() => {
 		return win.requestAnimationFrame || win.webkitRequestAnimationFrame || win.mozRequestAnimationFrame || win.oRequestAnimationFrame ||
 			//if all else fails, use setTimeout
 			function (callback) {
 				return win.setTimeout(callback, 1000 / 60); //shoot for 60 fp
 			};
 	})();
-	win.cancelAFrame = (function () {
+	win.cancelAFrame = (() => {
 		return win.cancelAnimationFrame || win.webkitCancelAnimationFrame || win.mozCancelAnimationFrame || win.oCancelAnimationFrame ||
 			function (id) {
 				win.clearTimeout(id);
@@ -159,7 +159,7 @@
 		resizeState() {
 			let timerWin;
 
-			const act = function() {
+			const act = () => {
 				const browser = Global.state.browser;
 				const device = Global.state.device;
 
@@ -449,7 +449,7 @@
 			contType: 'application/x-www-form-urlencoded',
 			dataType: 'html'
 		},
-		init : function(option){
+		init (option){
 			if (option === undefined) {
 				return false;
 			}
@@ -480,7 +480,7 @@
 			xhr.open(type, url);
 			xhr.setRequestHeader(mimeType, contType);
 			xhr.send();
-			xhr.onreadystatechange = function () {
+			xhr.onreadystatechange = () => {
 				if (xhr.readyState !== XMLHttpRequest.DONE) {
 					return;
 				}
@@ -622,7 +622,7 @@
 			let nowTop = opt.nowTop;
 			let nowLeft = opt.nowLeft;
 
-			Global.scroll.checkEndTimer = setTimeout(function(){
+			Global.scroll.checkEndTimer = setTimeout(() => {
 				//스크롤 현재 진행 여부 판단
 				if (nowTop === el_selector.scrollTop && nowLeft === el_selector.scrollLeft) {
 					clearTimeout(Global.scroll.checkEndTimer);
@@ -792,17 +792,15 @@
 				Global.sheets.dim({
 					id: id,
 					show: true,
-					callback: function(){
+					callback: () => {
 						const dim = doc.querySelector('.sheet-dim');
-
-						dim.addEventListener('click', dimAct);
-
-						function dimAct(){
+						const dimAct = () => {
 							Global.sheets.bottom({
 								id: id,
 								state: false
 							});
 						}
+						dim.addEventListener('click', dimAct);
 					}
 				});
 
@@ -821,7 +819,7 @@
 				el_sheet.classList.remove('on');
 				el_sheet.classList.add('off');
 				
-				setTimeout(function(){
+				setTimeout(() => {
 					!!callback && callback();
 					el_sheet.remove();
 
@@ -1252,7 +1250,7 @@
 
 			return (match) ? match[1] : null;
 		},
-		del: function(name){
+		del(name){
 			const expireDate = new Date();
 
 			expireDate.setDate(expireDate.getDate() + -1);
@@ -2915,7 +2913,7 @@
 					week: this.week,
 					period: inp.dataset.period,
 					visible: true,
-					callback: function(){
+					callback: () => {
 						console.log('callback init')
 					}
 				});
@@ -2952,7 +2950,7 @@
 
 			Global.sheets.bottom({
 				id: base.id,
-				callback: function(){
+				callback: () => {
 					Global.datepicker.make({
 						id: base.id,
 						date: base.value,
@@ -2960,7 +2958,7 @@
 						max: base.max,
 						title: base.title,
 						period: base.dataset.period,
-						callback: function(){
+						callback: () => {
 							console.log('callback init')
 						}
 					});
@@ -3121,7 +3119,7 @@
 				Global.sheets.bottom({
 					id: id,
 					state: false,
-					callback: function(){
+					callback: () => {
 						Global.datepicker.destroy({
 							id : id
 						});
@@ -3250,7 +3248,7 @@
 			let _dpHtml = '';
 
 			//dates 정리
-			dates.forEach(function(date,i) {
+			dates.forEach((date,i) => {
 				let _class = '';
 				let _disabled = false;
 
@@ -3376,26 +3374,7 @@
 				});
 				btn.removeEventListener('click', dayClickConfirm);
 			}
-
-			for (let i = 0; i < len; i++) {
-				const that = dayBtns[i];
-
-				if (Global.datepicker.isFooter || period) {
-					that.addEventListener('click', Global.datepicker.daySelect);
-				} else {
-					that.addEventListener('click', (e) => {
-						Global.datepicker.daySelect(e);
-						that.dataset.n = i;
-						dayClickConfirm(e);
-					});
-				}
-				that.dataset.n = i;
-
-				that.addEventListener('keydown', keyMove);
-			}
-
-			function keyMove(e) {
-				// 
+			const keyMove = (e) => {
 				const isShift = !!win.event.shiftKey;
 				const n = Number(e.currentTarget.dataset.n);
 				const keycode = e.keyCode;
@@ -3441,6 +3420,25 @@
 						break;
 				}
 			}
+
+			for (let i = 0; i < len; i++) {
+				const that = dayBtns[i];
+
+				if (Global.datepicker.isFooter || period) {
+					that.addEventListener('click', Global.datepicker.daySelect);
+				} else {
+					that.addEventListener('click', (e) => {
+						Global.datepicker.daySelect(e);
+						that.dataset.n = i;
+						dayClickConfirm(e);
+					});
+				}
+				that.dataset.n = i;
+
+				that.addEventListener('keydown', keyMove);
+			}
+
+			
 		},
 		daySelect(event) {
 			const el_btn = event.currentTarget;
@@ -4828,7 +4826,7 @@
 				let timerResize;
 				const winResize = () => {
 					clearTimeout(timerResize);
-					timerResize = setTimeout(function(){
+					timerResize = setTimeout(() => {
 						Global.modal.reset();
 					}, 200);
 				}
@@ -4875,7 +4873,7 @@
 						area: elBody,
 						url: src,
 						add: true,
-						callback: function(){
+						callback: () => {
 							act();
 						}
 					});
@@ -6148,8 +6146,9 @@
 				
 				const links = doc.querySelectorAll('.ui-coding-link');
 				for (let i = 0; i < links.length; i++) {
-					links[i].addEventListener('click', function(){
-						const parentWrap = this.closest('tr');
+					links[i].addEventListener('click', (e) => {
+						const that = e.currentTarget;
+						const parentWrap = that.closest('tr');
 						
 						sessionStorage.setItem('codinglist', parentWrap.dataset.id);
 
@@ -6161,19 +6160,21 @@
 					});
 				}
 
-				doc.querySelector('#pubWorker').addEventListener('change', function(){
-					if (this.value === '전체') {
+				doc.querySelector('#pubWorker').addEventListener('change', (e) => {
+					const that = e.currentTarget;
+
+					if (that.value === '전체') {
 						doc.querySelector('.ui-codinglist').removeAttribute('data-pub');
 						perSet(len, endsum, delsum);
 					} else {
-						doc.querySelector('.ui-codinglist').dataset.pub = this.value;
+						doc.querySelector('.ui-codinglist').dataset.pub = that.value;
 						
 
 					}
 
-					const pubs = doc.querySelectorAll('tr[data-pub="'+ this.value+'"]');
-					const pubs_end = doc.querySelectorAll('tr[data-pub="'+ this.value+'"][data-state="완료"]');
-					const pubs_del = doc.querySelectorAll('tr[data-pub="'+ this.value+'"][data-state="제외"]');
+					const pubs = doc.querySelectorAll('tr[data-pub="'+ that.value+'"]');
+					const pubs_end = doc.querySelectorAll('tr[data-pub="'+ that.value+'"][data-state="완료"]');
+					const pubs_del = doc.querySelectorAll('tr[data-pub="'+ that.value+'"][data-state="제외"]');
 					const trs = doc.querySelectorAll('tr');
 					trs.forEach(function(tr){
 						tr.classList.remove('worker-view');
@@ -6182,9 +6183,9 @@
 						pub.classList.add('worker-view');
 					});
 
-					doc.querySelector('.ui-codinglist-info .target').textContent = this.value;
+					doc.querySelector('.ui-codinglist-info .target').textContent = that.value;
 
-					if (this.value === '전체') {
+					if (that.value === '전체') {
 						perSet(len, endsum, delsum);
 					} else {
 						const target_len = pubs.length;
@@ -6195,25 +6196,27 @@
 					}
 				});
 
-				doc.querySelector('#arstate').addEventListener('change', function(){
-					if (this.value === '전체') {
+				doc.querySelector('#arstate').addEventListener('change', (e) => {
+					const that = e.currentTarget;
+
+					if (that.value === '전체') {
 						doc.querySelector('.ui-codinglist').removeAttribute('data-state');
 					} else {
-						doc.querySelector('.ui-codinglist').dataset.state = this.value;
+						doc.querySelector('.ui-codinglist').dataset.state = that.value;
 					}
 
-					const pubs = doc.querySelectorAll('tr[data-state="'+ this.value+'"]');
+					const pubs = doc.querySelectorAll('tr[data-state="'+ that.value+'"]');
 					const trs = doc.querySelectorAll('tr');
 
-					trs.forEach(function(tr){
+					trs.forEach((tr) => {
 						tr.classList.remove('state-view');
 					});
-					pubs.forEach(function(pub){
+					pubs.forEach((pub) => {
 						pub.classList.add('state-view');
 					});
 				});
 
-				doc.querySelector('#nameToggle').addEventListener('click', function(){
+				doc.querySelector('#nameToggle').addEventListener('click', () => {
 					doc.querySelector('.ui-codinglist').classList.toggle('name-toggle-view');
 				});
 
@@ -6268,7 +6271,7 @@
 				}
 
 				srchBtn.addEventListener('click', srchAct);
-				srchCode.addEventListener('keyup', function(){
+				srchCode.addEventListener('keyup', () => {
 					if (win.event.keyCode === 13) {
 						srchAct();
 					}

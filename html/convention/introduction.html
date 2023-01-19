@@ -69,8 +69,8 @@
 		&lt;script src="../resources/js/ui.global.js"&gt;&lt;/script&gt;
 		&lt;script src="../resources/js/ui.common.js"&gt;&lt;/script&gt;
 		&lt;script&gt;
-		;(function(win, doc, undefined) {
-			doc.addEventListener("DOMContentLoaded", function(){
+		((win, doc, undefined) => {
+			doc.addEventListener("DOMContentLoaded", () => {
 				여기에 실행할 내용 입력
 			});
 		})(window, document);
@@ -79,6 +79,28 @@
 <tag-class>&lt;/html&gt;</tag-class>
 </code></pre>
 	</section>
+
+</article>
+
+<article class="wrap-article">
+	<h2 class="tit-m">Javascript</h2>
+<pre class="box-code mt-x4"><code class="html">
+<tag-comment>//Javascript in page</tag-comment>
+&lt;script&gt;
+((win, doc, undefined) => {
+
+	'use strict';
+
+	doc.addEventListener("DOMContentLoaded", () => {
+		여기에 실행할 내용 입력
+	});
+})(window, document);
+&lt;/script&gt;
+
+<tag-comment>//Javascript in js</tag-comment>
+
+
+</code></pre>
 
 </article>
 

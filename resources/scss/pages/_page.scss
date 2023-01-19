@@ -16,7 +16,9 @@ body[data-page="tableScroll"] {
 }
 
 
-/* 4 columns: 0-599 */
+
+
+/* MOBILE -- 4 columns: 0-599 */
 @media all and (max-width:599px) {
     body[data-page="datePicker"] {
         .box-guide.fx-wrap{
@@ -30,13 +32,40 @@ body[data-page="tableScroll"] {
         }
     }
 
+    body[data-page="button"],
+    body[data-page="typography"] {
+        .type-noline,
+        .type-discription {
+            table {width: 100%;}
+            thead {display: none;}
+            table, tr, tbody, th, td{
+                width: 100%;
+                display: block;
+                border: 0;
+            }
+            tr{border-bottom:1px solid $gray300;}
+            tbody{border:0;}
+            tbody+tbody{
+                margin-top:5rem; 
+                tr:first-child > * {border:0;}
+            }
+        }
+        .type-noline {display: block;}
+        .type-noline th{padding:2rem 0 1rem}
+        .type-noline tr{overflow: hidden;}
+        .type-noline td{
+            float: left;
+        }
+    }
+
 }
 
-/* 8 columns: 600-839 */
+/* TABLET -- 8 columns: 600-839 */
 @media all and (min-width:600px) and (max-width:839px) {
 
 }
-/* 12 columns  */
+
+/* DESKTOP -- 12 columns  */
 @media all and (min-width:840px) {
 
 
