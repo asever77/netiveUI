@@ -7,6 +7,8 @@
     netive.common.init();  
     
     //PAGE
+    netive.page.pageA11y_1 = () => {};
+
     netive.page.pageIntroduction = () => {};
     netive.page.pageNaming = () => {};
     netive.page.pageTypography = () => {};

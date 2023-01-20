@@ -1,4 +1,4 @@
-<input type="hidden" id="uiJsName" value="pageGuide1">
+<input type="hidden" id="uiJsName" value="pageA11y1">
 
 <div class="tit-wrap">
 	<h1 class="tit-l">대체 텍스트</h1>
@@ -66,9 +66,9 @@
 	<section class="wrap-section">
 		<h3 class="tit-s">버튼</h3>
 		<p>버튼의 기능에 따라 명확한 대체 텍스트를 제공하며 동일한 이미지라도 기능에 따라 다르게 제공해야 한다. </p>
-		
+
 <pre class="box-code"><code>
-&lt;button type="button" title="공자사항 더보기"&gt;&lt;/button&gt;
+&lt;button type="button" aria-label="공자사항 더보기"&gt;&lt;/button&gt;
 &lt;input type="image" src="../" alt="메뉴 더보기"&gt;
 &lt;a href="#"&gt;&lt;img src="../prev.png" alt="이전 글보기"&gt;&lt;/a&gt;
 &lt;a href="#"&gt;&lt;img src="../prev.png" alt="이전 배너보기"&gt;&lt;/a&gt;
@@ -83,11 +83,19 @@
 			바른 예시) 문의사항이 있을 경우 <b>문의 메일 보내기</b> 클릭해주세요. <a href="mailTo:help@netive.com">문의 메일 보내기</a>
 		</div>
 		
+	</section>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">title vs aria-label</h3>
+		<p>title의 경우 스크린리더마다 설정에 따라 타이틀 텍스트 출력하는 방식이 달라진다. 특정 스크린리더에서는 화살표 키 이동 시 링크나 버튼의 요소의 추간된 타이틀 텍스틑 읽지 않는 경우도 있다. </p>
+		<p>aria-label 속성을 사용하게 되면 접근성 API에서 aria-label 속성으로 선언된 텍스트만 표시하므로 화면에 보이는 텍스트와 스크린리더용 텍스트를 함께 작성해 주어야 한다. </p>
+		
 <pre class="box-code"><code>
-&lt;button type="button" title="공자사항 더보기"&gt;&lt;/button&gt;
-&lt;input type="image" src="../" alt="메뉴 더보기"&gt;
-&lt;a href="#"&gt;&lt;img src="../prev.png" alt="이전 글보기"&gt;&lt;/a&gt;
-&lt;a href="#"&gt;&lt;img src="../prev.png" alt="이전 배너보기"&gt;&lt;/a&gt;
+//title
+&lt;button type="button"&gt;&lt;span class="a11y-hidden"&gt;공지사항&lt;/span&gt;더보기&lt;/button&gt;
+
+//aria-label
+&lt;button type="button" aria-label="공자사항 더보기"&gt;더보기&lt;/button&gt;
 </code></pre>
 	</section>
 

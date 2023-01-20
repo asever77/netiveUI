@@ -2250,6 +2250,7 @@
 	 * in use: Global.state, Global.para
 	 */
 	Global.accordion = {
+		data: {},
 		options: {
 			current: null,
 			autoclose: false,
@@ -2294,76 +2295,7 @@
 
 			el_acco.dataset.n = len;
 
-			const evtClick = (event) => {
-				const that = event.currentTarget;
-				const btnId = that.id;
-				const n = that.dataset.n;
-				const wrap = that.closest('.ui-acco-pnl');
-				let accoId = btnId.split('Btn');
-					accoId = accoId[0];
-
-				if (!!btnId) {
-					event.preventDefault();
-
-					if (!!wrap) {
-						wrap.style.height = 'auto';
-					} 
-					
-					Global.accordion.toggle({ 
-						id: accoId, 
-						current: [n]
-					});
-				}
-			}
-			const evtKeys = (event) => {
-				const that = event.currentTarget;
-				const btnId = that.id;
-				const n = Number(that.dataset.n);
-				const keys = Global.state.keys;
-	
-				let accoId = btnId.split('Btn');
-					accoId = accoId[0];
-	
-				const acco = doc.querySelector('.ui-acco[data-id="' + accoId +'"]');
-				const len = Number(acco.dataset.n);
-	
-				const upLeftKey = (event) => {
-					event.preventDefault();
-					that.dataset.order !== 'first' ?
-					acco.querySelector('#' + accoId + 'Btn' + (n - 1)).focus():
-					acco.querySelector('#' + accoId + 'Btn' + (len - 1)).focus();
-				}
-				const downRightKey = (event) => {
-					event.preventDefault();
-					that.dataset.order !== 'last' ?
-					acco.querySelector('#' + accoId + 'Btn' + (n + 1)).focus():
-					acco.querySelector('#' + accoId + 'Btn0').focus();
-				}
-				const endKey = (event) => {
-					event.preventDefault();
-					acco.querySelector('#' + accoId + 'Btn' + (len - 1)).focus();
-				}
-				const homeKey = (event) => {
-					event.preventDefault();
-					acco.querySelector('#' + accoId + 'Btn0').focus();
-				}
-	
-				switch(event.keyCode){
-					case keys.up:	
-					case keys.left: upLeftKey(e);
-						break;
-	
-					case keys.down:
-					case keys.right: downRightKey(e);
-						break;
-	
-					case keys.end: endKey(e);
-						break;
-	
-					case keys.home: homeKey(e);
-						break;
-				}
-			}
+			
 
 			//panel의 aria, 높이값, 이벤트 등 기본 설정 & 전체열림일 경우 panel 설정
 			for (let i = 0; i < len; i++) {
@@ -2410,17 +2342,16 @@
 				if (i === 0) {el_btn.dataset.order = 'first';}
 				if (i === len - 1) {el_btn.dataset.order = 'last';}
 
-				el_btn.removeEventListener('click', evtClick);
-				el_btn.removeEventListener('keydown', evtKeys);
-				el_btn.addEventListener('click', evtClick);
-				el_btn.addEventListener('keydown', evtKeys);
+				el_btn.removeEventListener('click', Global.accordion.evtClick);
+				el_btn.removeEventListener('keydown', Global.accordion.evtKeys);
+				el_btn.addEventListener('click', Global.accordion.evtClick);
+				el_btn.addEventListener('keydown', Global.accordion.evtKeys);
 			}
 
 			//열려있는 panel 설정
 			//current값은 array형식으로 하나이상의 구성
 			const currentLen = current === null ? 0 : current === 'all' ? len :current.length;
 
-			console.log(currentLen, current);
 			for (let i = 0; i < currentLen; i++) {
 				const n = (current === 'all') ? i : current[i];
 				const this_wrap = el_acco.querySelector('.ui-acco-wrap[data-n="'+ n +'"]');
@@ -2448,6 +2379,76 @@
 				autoclose: autoclose,
 				current: current
 			};
+		},
+		evtClick(event) {
+			const that = event.currentTarget;
+			const btnId = that.id;
+			const n = that.dataset.n;
+			const wrap = that.closest('.ui-acco-pnl');
+			let accoId = btnId.split('Btn');
+				accoId = accoId[0];
+
+			if (!!btnId) {
+				event.preventDefault();
+
+				if (!!wrap) {
+					wrap.style.height = 'auto';
+				} 
+				
+				Global.accordion.toggle({ 
+					id: accoId, 
+					current: [n]
+				});
+			}
+		},
+		evtKeys (event) {
+			const that = event.currentTarget;
+			const btnId = that.id;
+			const n = Number(that.dataset.n);
+			const keys = Global.state.keys;
+
+			let accoId = btnId.split('Btn');
+				accoId = accoId[0];
+
+			const acco = doc.querySelector('.ui-acco[data-id="' + accoId +'"]');
+			const len = Number(acco.dataset.n);
+
+			const upLeftKey = (event) => {
+				event.preventDefault();
+				that.dataset.order !== 'first' ?
+				acco.querySelector('#' + accoId + 'Btn' + (n - 1)).focus():
+				acco.querySelector('#' + accoId + 'Btn' + (len - 1)).focus();
+			}
+			const downRightKey = (event) => {
+				event.preventDefault();
+				that.dataset.order !== 'last' ?
+				acco.querySelector('#' + accoId + 'Btn' + (n + 1)).focus():
+				acco.querySelector('#' + accoId + 'Btn0').focus();
+			}
+			const endKey = (event) => {
+				event.preventDefault();
+				acco.querySelector('#' + accoId + 'Btn' + (len - 1)).focus();
+			}
+			const homeKey = (event) => {
+				event.preventDefault();
+				acco.querySelector('#' + accoId + 'Btn0').focus();
+			}
+
+			switch(event.keyCode){
+				case keys.up:	
+				case keys.left: upLeftKey(e);
+					break;
+
+				case keys.down:
+				case keys.right: downRightKey(e);
+					break;
+
+				case keys.end: endKey(e);
+					break;
+
+				case keys.home: homeKey(e);
+					break;
+			}
 		},
 		timer : null,
 		toggle(opt){
