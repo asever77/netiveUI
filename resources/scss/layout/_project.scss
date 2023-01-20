@@ -424,25 +424,6 @@ html.col-12 .coln12 {
 	display: inline-block
 }
 
-.page-layout .fx-wrap,
-.page-layout .fl-wrap,
-.page-layout .in-wrap {
-	border: 1px solid #E0E0E0;
-	
-	background: #EEEEEE;
-	
-}
-
-.page-layout .in-item,
-.page-layout [class*="fx-item"],
-.page-layout .fl-item-r,
-.page-layout .fl-item-l {
-	border: 1px dashed #E0E0E0;
-	
-	padding: 1rem;
-	background: #fff;
-	
-}
 
 .test-flex1 [class*="fx-item"]:nth-child(1) {
 	min-height: 9rem;

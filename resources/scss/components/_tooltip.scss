@@ -5,8 +5,8 @@
     z-index: 400;
     padding: 1rem;
     font-size: 1.2rem;
-    border: 1px solid #E0E0E0;
-    background: #FAFAFA;
+    border: 1px solid $gray100;
+    background: $gray50;
     box-shadow: 0 .2rem 1rem rgba(0,0,0,0.1);
     text-align: justify;
 
@@ -37,9 +37,9 @@
         display: block;
         width: 1rem;
         height: 1rem;
-        background: #FAFAFA;
-        border-top: 1px solid  #E0E0E0;
-        border-right: 1px solid  #E0E0E0;
+        background: $gray50;
+        border-top: 1px solid  $gray100;
+        border-right: 1px solid  $gray100;
     }
     &[data-ps="top"] .ui-tooltip-arrow {
         left: 0;
@@ -91,8 +91,8 @@ button.ui-tooltip-btn {
     color: transparent;
     overflow: hidden;
     font-size: xx-small;
-    border: 1px solid #424242;
-    background: #fff;
+    border: 1px solid $gray500;
+    background: $white;
     &:after {
         content: "?";
         position: absolute;
@@ -103,6 +103,6 @@ button.ui-tooltip-btn {
         height: 100%;
         font-size: 1rem;
         font-weight: 700;
-        color: #424242;
+        color: $gray500;
     }
 }

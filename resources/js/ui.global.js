@@ -2,13 +2,14 @@
  * ui.global.js
  * User Interface script 
  * modify: 2023.01.11
- * ver: 1.0.6
+ * ver: 1.0.7
  * desc: 
  * 1.0.3 (23.01.10) datepicker update : 날짜 클릭 시 값전달 및 창닫기 옵션 추가. isFooter : true
  * 1.0.4 (23.01.11) modal full height 값설정, modal dim 클릭 시 close
  * 1.0.5 (23.01.16) datepicker button 자동생성 및 값 적용으로 인한 기존 마크업 버튼 삭제 후 재생성
  * 1.0.5 (23.01.16) rangeSlider 눈금옵션추가 및 자동생성
  * 1.0.6 (23.01.19) select callback 작업
+ * 1.0.7 (23.01.20) scroll.move customscroll 여부에 따른 동작분리
  */
 ((win, doc, undefined) => {
 
@@ -586,14 +587,14 @@
 			const effect = opt.effect;
 			let selector = opt.selector;
 			const item = selector.querySelector('.ui-scrollbar-item');
-			
-			if (!!item) {
+			const isCustomScroll = selector.classList.contains('ui-scrollbar');
+
+			if (!!item && !!isCustomScroll) {
 				selector = selector.querySelector('.ui-scrollbar-item');
 			}
 			
 			switch (align) {
 				case 'center':
-					console.log('move', Math.abs(left) , (selector.offsetWidth / 2) , add);	
 					selector.scrollTo({
 						top: Math.abs(top) - (selector.offsetHeight / 2) + add,
 						left: Math.abs(left) - (selector.offsetWidth / 2) + add,
@@ -2417,25 +2418,26 @@
 
 			//열려있는 panel 설정
 			//current값은 array형식으로 하나이상의 구성
-			const currentLen = current === null ? 0 : current.length;
-			if (current !== 'all') {
-				for (let i = 0; i < currentLen; i++) {
-					const this_wrap = el_acco.querySelector('.ui-acco-wrap[data-n="'+ current[i] +'"]');
-					const _tit = this_wrap.querySelector('.ui-acco-tit');
-					const _btn = _tit.querySelector('.ui-acco-btn');
-					const _pnl = this_wrap.querySelector('.ui-acco-pnl');
+			const currentLen = current === null ? 0 : current === 'all' ? len :current.length;
 
-					//direct children 
-					if (accoId === this_wrap.closest('.ui-acco').dataset.id && !!_pnl) {
-						_btn.dataset.selected = true;
-						_btn.setAttribute('aria-expanded', true);
-						_pnl.classList.remove('off');
-						_pnl.style.height = 'auto';
-						_pnl.setAttribute('aria-hidden', false);
-						_btn.dataset.selected = true;
-						_pnl.style.height = _pnl.offsetHeight + 'px';
-					} 
-				}
+			console.log(currentLen, current);
+			for (let i = 0; i < currentLen; i++) {
+				const n = (current === 'all') ? i : current[i];
+				const this_wrap = el_acco.querySelector('.ui-acco-wrap[data-n="'+ n +'"]');
+				const _tit = this_wrap.querySelector('.ui-acco-tit');
+				const _btn = _tit.querySelector('.ui-acco-btn');
+				const _pnl = this_wrap.querySelector('.ui-acco-pnl');
+
+				//direct children 
+				if (accoId === this_wrap.closest('.ui-acco').dataset.id && !!_pnl) {
+					_btn.dataset.selected = true;
+					_btn.setAttribute('aria-expanded', true);
+					_pnl.classList.remove('off');
+					_pnl.style.height = 'auto';
+					_pnl.setAttribute('aria-hidden', false);
+					_btn.dataset.selected = true;
+					_pnl.style.height = _pnl.offsetHeight + 'px';
+				} 
 			}
 			
 			//콜백실행

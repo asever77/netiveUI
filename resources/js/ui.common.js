@@ -117,21 +117,21 @@
       // console.log('------------------------------------------------------')
       netive.form.init();
     },
-    gridSwitch: function () {
+    gridSwitch () {
       const el_grid = document.querySelector('.base-grid');
 
       el_grid.classList.toggle('on');
     },
-    header: function () {
+    header () {
       // console.log('header load');
       netive.scrollBar.init();
 
-      setTimeout(function () {
-        // netive.accordion.init({ 
-        // 	id: 'exeLNB', 
-        // 	current: 'all', 
-        // 	autoclose: false
-        // });
+      setTimeout(() => {
+        netive.accordion.init({ 
+        	id: 'exeLNB', 
+        	current: 'all', 
+        	autoclose: false
+        });
         netive.common.menuAjax();
 
         doc.querySelector('.ui-nav').addEventListener('click', netive.common.toggleNav);
@@ -229,20 +229,15 @@
       // script.async = true; 
       // script.defer = true; 
       // (typeof element === 'undefined' ? document.getElementsByTagName('html')[0] : element).appendChild(script);
-
+      
 
     },
 
     menuAjax: function () {
       const dep2btns = doc.querySelectorAll('.dep2-btn');
-
-      for (let i = 0, len = dep2btns.length; i < len; i++) {
-        const that = dep2btns[i];
-        that.addEventListener('click', act);
-      }
-
-      function act(e) {
-        const el = this;
+      const act = (e) => {
+        console.log(e);
+        const el = e.currentTarget;
         const elHref = el.getAttribute('data-href');
         const pagename = el.getAttribute('data-href');
         const el_body = doc.querySelector('body');
@@ -254,17 +249,21 @@
           url: netive.common.meunMap[pagename].link,
           page: true,
           effect: 'page-change',
-          callback: function () {
+          callback: () => {
             netive.scroll.move({
-              value: 0,
-              speed: 0,
-              focus: doc.querySelector('.base-main h1')
+              top: 0,
+              focus: document.querySelector('.base-main h1')
             });
+           
             //delete netive.scrollbar;
             netive.common.pageInit(netive.common.meunMap[pagename].link);
-            netive.common.settingAside();
+            // netive.common.settingAside();
           }
         });
+      }
+
+      for (let that of dep2btns) {
+        that.addEventListener('click', act);
       }
     },
     footer: function () {

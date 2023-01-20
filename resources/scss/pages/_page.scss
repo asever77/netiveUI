@@ -57,7 +57,7 @@ body[data-page="scrollMove"] {
         justify-content: space-between;
     }
     .test-scrollmove-hor .test-scrollmove-hor-wrap .test:focus{
-        background:$balck;
+        background:$black;
         color:$white;
     }
     .test-scrollmove-hor .test{
@@ -108,6 +108,25 @@ body[data-page="scrollMove"] {
     }
 }
 
+body[data-page="layout"] {
+    .fx-wrap,
+    .fl-wrap,
+    .in-wrap {
+        border: 1px solid $gray500;
+        background: $gray200;
+    }
+    
+    .in-item,
+    [class*="fx-item"],
+    .fl-item-r,
+    .fl-item-l {
+        border: 1px dashed $gray500;
+        
+        padding: 1rem;
+        background: $white;
+        
+    }
+}
 
 /* MOBILE -- 4 columns: 0-599 */
 @media all and (max-width:599px) {
