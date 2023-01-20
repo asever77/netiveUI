@@ -77,6 +77,8 @@
       slot: { link: '../html/components/slot.html' },
       issue: { link: '../html/memory/issue.html' },
       time: { link: '../html/components/time.html' },
+
+      a11y1: { link: '../html/a11y/a11y1.html' },
     },
     init() {
       let fristHref = '../html/convention/introduction.html';
@@ -243,7 +245,6 @@
         const el_body = doc.querySelector('body');
         console.log(pagename);
         // !!el_body.classList.contains('nav-open') && netive.common.toggleNav();
-
         netive.ajax.init({
           area: document.querySelector('.base-main'),
           url: netive.common.meunMap[pagename].link,
