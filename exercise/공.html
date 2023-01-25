@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>animate Script</title>
+<meta http-equiv="Content-Type" content="text/html; charset=euc-kr" />
+<style type="text/css">
+	body { margin:0; }
+	#wawa {
+		position:absolute;
+		left:100px; top:0;
+		width:50px; height:50px;
+		background:#484954;
+		-moz-border-radius:100px;
+		-webkit-border-radius:100px;
+		border-radious:100px;
+		-moz-box-shadow:0 0 30px green;
+		-webkit-box-shadow:0 0 30px green;
+		box-shadow:0 0 30px green;
+	}
+	#wawa div:nth-child(1) {
+		position:absolute;
+		left:10px; top:13px;
+		width:4px; height:4px;
+		background:#ddd;
+		-moz-border-radius:10px;
+		-webkit-border-radius:10px;
+		border-radious:10px;
+	}
+	#wawa div:nth-child(2) {
+		position:absolute;
+		left:15px; top:8px;
+		width:4px; height:4px;
+		background:#ddd;
+		-moz-border-radius:10px;
+		-webkit-border-radius:10px;
+		border-radious:10px;
+	}
+	#wawa div:nth-child(3) {
+		position:absolute;
+		left:17px; top:15px;
+		width:4px; height:4px;
+		background:#ddd;
+		-moz-border-radius:10px;
+		-webkit-border-radius:10px;
+		border-radious:10px;
+	}
+	#bg {
+		position:absolute;
+		left:75px; top:353px;
+		width:100px; height:5px;
+		background:#666;
+	}
+</style>
+</head>
+<body>
+
+<div id="wawa"><div></div><div></div><div></div></div>
+<div id="bg"></div>
+<div id="result" style="position:absolute; left:200px; top:200px;"></div>
+<div style="position:absolute; left:200px; top:250px;"><button onclick="startFunc(this);">start</button></div>
+<div style="position:absolute; left:245px; top:250px;"><button onclick="document.location.reload();">reset</button></div>
+
+<script type="text/javascript">
+	var styleTop = 1;
+	var sSpeed = 1;
+	var gID = document.getElementById("wawa");
+
+	function startFunc(t){
+		t.disabled = "true";
+		wawaFuncDown();
+	}
+
+	function wawaFuncDown(){
+		movementDown = setTimeout(function(){
+			sSpeed = sSpeed + 0.4;
+			styleTop = styleTop + 1 * sSpeed;
+			gID.style.top = styleTop + "px";
+			wawaFuncDown();
+
+			if(parseInt(gID.style.top) > 300){
+				clearTimeout(movementDown);
+				//gID.style.height = "20px";
+				wawaFuncUp();
+			}
+
+            document.getElementById("result").innerHTML = "T1 : " + styleTop + "<br />" + "S1 : " + sSpeed;
+		},15)
+	}
+	function wawaFuncUp(){
+		movementUp = setTimeout(function(){
+			//gID.style.height = "50px";
+			if(sSpeed > 0){
+				sSpeed = sSpeed - 0.42;
+			} else {
+				//sSpeed = 1;
+				clearTimeout(movementDown);
+				wawaFuncDown();
+			}
+			styleTop = styleTop - 1 * sSpeed;
+			gID.style.top = styleTop + "px";
+			wawaFuncUp();
+
+			if(sSpeed < 0){
+				clearTimeout(movementUp);
+				wawaFuncDown();
+			}
+			if(parseInt(gID.style.top) > 300){
+				clearTimeout(movementUp);
+			}
+
+            document.getElementById("result").innerHTML = "T2 : " + styleTop + "<br />" + "S2 : " + sSpeed;
+		},15)
+	}
+</script>
+
+
+</body>
+</html>

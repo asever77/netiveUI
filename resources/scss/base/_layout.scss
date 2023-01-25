@@ -409,7 +409,7 @@
         margin-top: $-x1;
         flex-wrap: wrap;
         justify-content: flex-start;
-    
+        
         > *:not(.form-group) {
             margin-top: $x1;
         }
@@ -420,7 +420,7 @@
         & + .form-info {
             margin-top:$x1;
         }
-
+        & + .form-group{margin-top: 0;} 
         .form-text,
         .form-input {
             // margin-right: $x1;

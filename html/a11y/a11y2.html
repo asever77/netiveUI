@@ -1,0 +1,88 @@
+
+<input type="hidden" id="uiJsName" value="pageA11y2">
+
+<div class="tit-wrap">
+	<h1 class="tit-l">재생 조절</h1>
+	
+</div>
+
+<article class="wrap-article">
+	<h2 class="tit-m">자동 재생</h2>
+	<p>페이지 진입 시 자동으로 3초이상의 소리(동영상 포함)가 재생되지 않아야 한다. <br>
+		불가피하게 제공 해야 하는 경우에는 3초 내 정지하거나 ESC 키 선택 시 정지하거나 소스 상에서 정지 기능이 가장 먼저 위치하여 컨트롤 할 수 있어야 한다.</p>		
+</article>	
+<article class="wrap-article">	
+	<h2 class="tit-m">시간 제한</h2>
+	<ul class="bul-dot mt-x2">
+		<li>콘텐츠에 시간적인 제약이 있음을 사용자에게 반드시 알려주어야 합니다.</li>
+		<li>시간 제약을 연장 또는 우회할 수 있는 수단을 함께 제공해야 합니다.</li>
+		<li>경매나 실시간 게임, 듣기 평가용 콘텐츠 등과 같이 원천적으로 콘텐츠의 이용에 따르는 시간 조절을 허용할 수 없는 콘텐츠는 예외입니다.</li>
+	</ul>
+	<div class="box-guide  mt-x2">
+		<div class="form-wrap" data-type="row">
+			<div class="form-item">
+				<div class="form-head">
+					<label for="testA11y2_1" class="form-title">
+						휴대폰 인증번호
+					</label>
+				</div>
+				<div class="form-body">
+					<div class="form-info">
+						<div class="bul-info">
+							발급된 인증번호를 입력하세요.<br>
+							3분 이내에 입력하지 않으면 로그아웃 됩니다.
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="form-text">
+							남은 시간 : 1분 30초
+						</div>
+						<button type="button" class="btn-base ml-x1" data-color="gray" data-size="small"><span>3분 연장하기</span></button>
+					</div>
+					<div class="form-group">
+						<div class="form-input">
+							<input type="tel" class="inp-base" id="testA11y2_1">
+						</div>
+						<button type="button" class="btn-base ml-x1"><span>확인</span></button>
+					</div>
+					<div class="form-info">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</article>
+
+<article class="wrap-article">	
+	<h2 class="tit-m">배너 자동 변경</h2>
+	<ul class="bul-dot mt-x2">
+		<li>자동 재생되는 콘텐츠를 일시 정시 시키고, 다시 재생할 수 있도록 컨트롤 제공해야 한다.</li>
+		<li>전체 배너의 갯수를 인지할 수 있도록 리스트 제공한다.</li>
+		<li>마우스 뿐만 아니라 키보드로도 모든 컨트롤 요소에 초점이 갈 수 있도록 제공한다.</li>
+	</ul>
+	<div class="box-guide mt-x2">
+		<h3 class="tit-s">Swiper</h3>
+		<p><a href="https://swiperjs.com/" target="_blank">https://swiperjs.com/</a></p>
+		<hr>
+		<div class="swiper mySwiper" data-id="test">
+			<button type="button" class="btn-base swiper-button-switch" data-state="stop" data-id="test" data-shape="no" data-icon-ps="center" data-material="stop" data aria-label="slide 정지"></button>
+			<div class="swiper-wrapper">
+				<div class="swiper-slide"><a href="#">Slide 1</a> d</div>
+				<div class="swiper-slide">Slide 2</div>
+				<div class="swiper-slide"><a href="#">Slide 3</a></div>
+				<div class="swiper-slide"><a href="#">Slide 4</a></div>
+				<div class="swiper-slide"><a href="#">Slide 5</a></div>
+				<div class="swiper-slide"><a href="#">Slide 6</a></div>
+				<div class="swiper-slide"><a href="#">Slide 7</a></div>
+				<div class="swiper-slide"><a href="#">Slide 8</a></div>
+				<div class="swiper-slide"><a href="#">Slide 9</a></div>
+			</div>
+			<div class="swiper-button-next"></div>
+			<div class="swiper-button-prev"></div>
+			<div class="swiper-pagination"></div>
+		</div>
+	</div>
+ 
+</article>
+
