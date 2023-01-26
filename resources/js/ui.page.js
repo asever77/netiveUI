@@ -7,6 +7,65 @@
     netive.common.init();  
     
     //PAGE
+    netive.page.pageA11y = () => {
+        const swiperName = 'test'
+        const el_sw = document.querySelector('.mySwiper[data-id="test"]');
+        const el_sw_items = el_sw.querySelectorAll('.swiper-slide');
+        const el_stop = el_sw.querySelector('.swiper-button-switch');
+console.log(111);
+        el_sw.setAttribute('aria-label', '테스트 슬라이드 배너');
+        el_sw.setAttribute('tabindex', '0');
+        const swiper = new Swiper('.mySwiper[data-id="test"]', {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            autoplay: {
+                delay: 1000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+            on: {
+                slideChange: function () {
+                   
+                }
+            },
+            a11y: {
+                prevSlideMessage: 'Previous slide',
+                nextSlideMessage: 'Next slide',
+                slideLabelMessage: '총 {{slidesLength}}장의 슬라이드 중 {{index}}번 슬라이드 입니다.',
+              },
+        });
+        const switchPlayStop = (e) => {
+            const that = e.currentTarget;
+            const id = that.dataset.id;
+            const state = that.dataset.state;
+            console.log(that);
+            if (state === 'stop') {
+                swiper.autoplay.stop();
+                that.dataset.state = 'play';
+                that.dataset.material = 'play_arrow';
+                that.setAttribute('aria-label','slide 재생');
+            } else if (state === 'play') {
+                swiper.autoplay.start();
+                that.dataset.state = 'stop';
+                that.dataset.material = 'stop';
+                that.setAttribute('aria-label','slide 중지');
+            }
+        }
+        // for (let item of el_sw_items) {
+        //     item.addEventListener('mouseover', swiper.autoplay.stop);
+        //     item.addEventListener('mouseleave', swiper.autoplay.start);
+        // }
+        el_sw.addEventListener('focus', swiper.autoplay.stop);
+        el_stop.addEventListener('click', switchPlayStop);
+    };
     netive.page.pageA11y1 = () => {};
     netive.page.pageA11y2 = () => {
         
@@ -70,6 +129,7 @@
 
     };
     netive.page.pageA11y3 = () => {};
+    netive.page.pageA11y4 = () => {};
 
     netive.page.pageIntroduction = () => {};
     netive.page.pageNaming = () => {};

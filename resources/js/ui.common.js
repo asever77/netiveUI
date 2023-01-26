@@ -78,9 +78,11 @@
       issue: { link: '../html/memory/issue.html' },
       time: { link: '../html/components/time.html' },
 
+      a11y: { link: '../html/a11y/a11y.html' },
       a11y1: { link: '../html/a11y/a11y1.html' },
       a11y2: { link: '../html/a11y/a11y2.html' },
       a11y3: { link: '../html/a11y/a11y3.html' },
+      a11y4: { link: '../html/a11y/a11y4.html' },
     },
     init() {
       let fristHref = '../html/convention/introduction.html';

@@ -4260,7 +4260,7 @@ select.inp-base {
   background-color: #6B38FB;
 }
 .bul-error > li + li, .bul-required > li + li, .bul-care > li + li, .bul-info > li + li, .bul-help > li + li, .bul-star > li + li, .bul-etc > li + li, .bul-num > li + li, .bul-hyphen > li + li, .bul-dot > li + li {
-  margin-top: 0.8rem;
+  margin: top 0.4rem;
 }
 
 .bul-num {
@@ -8373,10 +8373,45 @@ pre {
   	100% {left:0;}
   } */
 }
+body[data-page=a11y] .principle-4,
+body[data-page=a11y2] .principle-4 {
+  margin-top: 3.2rem;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+body[data-page=a11y] .principle-4 > div,
+body[data-page=a11y2] .principle-4 > div {
+  width: calc(25% - 6rem);
+  margin: 0 3rem;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+body[data-page=a11y] .principle-4 > div > dt,
+body[data-page=a11y2] .principle-4 > div > dt {
+  display: flex;
+  padding: 2rem;
+  width: 15rem;
+  height: 15rem;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  border: 0.2rem solid var(--gray600);
+  background-color: var(--gray50);
+  font-weight: 700;
+  font-size: 2.6rem;
+  line-height: 1.2;
+  margin-bottom: 1.6rem;
+}
+body[data-page=a11y] .swiper,
 body[data-page=a11y2] .swiper {
   width: 100%;
   height: 100%;
 }
+body[data-page=a11y] .swiper-slide,
 body[data-page=a11y2] .swiper-slide {
   text-align: center;
   font-size: 18rem;
@@ -8386,6 +8421,7 @@ body[data-page=a11y2] .swiper-slide {
   justify-content: center;
   align-items: center;
 }
+body[data-page=a11y] .swiper-slide img,
 body[data-page=a11y2] .swiper-slide img {
   display: block;
   width: 100%;
@@ -8393,13 +8429,20 @@ body[data-page=a11y2] .swiper-slide img {
   -o-object-fit: cover;
      object-fit: cover;
 }
+body[data-page=a11y] .swiper,
 body[data-page=a11y2] .swiper {
   margin-left: auto;
   margin-right: auto;
 }
+body[data-page=a11y] .swiper-button-next,
+body[data-page=a11y] .swiper-button-prev,
 body[data-page=a11y2] .swiper-button-next,
 body[data-page=a11y2] .swiper-button-prev {
   background-color: black;
+}
+
+body[data-page=time] .inp-base {
+  width: 23rem;
 }
 
 body[data-page=color] .color-box span {

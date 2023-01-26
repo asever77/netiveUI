@@ -1,0 +1,42 @@
+
+<input type="hidden" id="uiJsName" value="pageA11y4">
+
+<div class="tit-wrap">
+	<h1 class="tit-l">명도 대비</h1>
+	<p>저시력자, 고령자 등도 인식할 수 있도록 콘텐츠의 배경과 텍스트의 명도 대비를 4.5:1 이상으로 적용해야 한다.</p>
+</div>
+
+<article class="wrap-article">
+	<h2 class="tit-m">선택</h2>
+	<ul class="bul-dot mt-x2">
+		<li>색으로만 구분하지 않고 색의 의미를 텍스트로 추가 제공한다.</li>
+		<li>그래프도 색상만이 아니라 모양, 무늬, 패턴으로 의미를 구분해줘야 한다..</li>
+		<li>선택 표시를 색으로 구분할 경우 테두리, 구분선, 밑줄 등으로 추가로 구분 표시한다.</li>
+	</ul>
+
+	<div class="box-guide  mt-x2">
+		<div>
+			<img src="../../resources/img/a11y/ex_graph.png" alt="그래프 예시">
+		</div>
+		<hr>
+		<div class="ui-tab type-scroll " data-id="exeTab1">
+			<div class="ui-tab-btns" role="tablist">
+				<div class="wrap-group">
+					<button type="button" data-tab="0" data-callback="callbackTab1" class="ui-tab-btn selected" role="tab" aria-selected="true" data-len="3" id="exeTab1_btn_0" aria-controls="exeTab1_pnl_0" tab-first="true"><span>탭1</span></button>
+					<button type="button" data-tab="1" data-callback="callbackTab2" class="ui-tab-btn" role="tab" aria-selected="false" data-len="3" id="exeTab1_btn_1" aria-controls="exeTab1_pnl_1"><span>탭2</span></button>
+					<button type="button" data-tab="2" data-callback="callbackTab3" class="ui-tab-btn" role="tab" aria-selected="false" data-len="3" id="exeTab1_btn_2" aria-controls="exeTab1_pnl_2" tab-last="true"><span>탭3</span></button>
+				</div>
+			</div>
+			<div class="ui-tab-pnls">
+				<section class="ui-tab-pnl selected" data-tab="0" role="tabpanel" tabindex="0" id="exeTab1_pnl_0" aria-labelledby="exeTab1_btn_0" aria-hidden="false">
+					<h2 class="tit-s ui-tab-tit">탭1 title</h2>
+					<p>탭1 content</p>
+					<a href="#">더보기</a>
+				</section>
+			</div>
+		</div>
+	</div>
+</article>
+
+
+
