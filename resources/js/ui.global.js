@@ -5153,33 +5153,44 @@
 		// 	id: false,
 		// 	ps: false
 		// },
+		current: null,
 		timerShow: null,
 		timerHide: null,
 		show (e){
 			e.preventDefault();
+
+			console.log(e);
 
 			const elBody = doc.querySelector('body');
 			const el = e.currentTarget;
 			const elId = el.getAttribute('aria-describedby');
 			const elSrc = el.dataset.src;
 			const evType = e.type;
-
 			let elTooltip = doc.querySelector('#' + elId);
+
+			//툴팁 모바일에서 클릭, 하단 노출 건 확인필요
+
 			const act = () => {
+				console.log('act');
+
 				elTooltip = doc.querySelector('#' + elId);
 
 				const tooltips = doc.querySelectorAll('.ui-tooltip');
 				const btns = doc.querySelectorAll('.ui-tooltip-btn');
+				const elClose = elTooltip.querySelector('.ui-tooltip-close');
 				const elArrow = elTooltip.querySelector('.ui-tooltip-arrow');
 				const classToggle = evType !== 'click' ? 'add' : 'remove';
-				
+				let that = null;
+
 				if (evType === 'click' && el.dataset.view !== 'fix') {
 					for (let i = 0, len = tooltips.length; i < len; i++) {
-						const that = tooltips[i];
-
+						that = tooltips[i];
+						
 						if (that.id !== elId) {
 							that.removeAttribute('style');
 							that.setAttribute('aria-hidden', true);
+						} else {
+							Global.tooltip.current = el;
 						}
 					}
 
@@ -5189,12 +5200,14 @@
 					}
 
 					el.dataset.view = 'fix';
+					
+					// doc.removeEventListener('click', Global.tooltip.back);
 
-					doc.removeEventListener('click', Global.tooltip.back);
-
-					setTimeout(() => {
-						doc.addEventListener('click', Global.tooltip.back);
-					},0);
+					// setTimeout(() => {
+					// 	doc.addEventListener('click', Global.tooltip.back);
+					// },0);
+				} else {
+					Global.tooltip.current = null;
 				}
 
 				for (let i = 0, len = tooltips.length; i < len; i++) {
@@ -5232,22 +5245,35 @@
 
 					elTooltip.dataset.ps = arrow;
 					elTooltip.setAttribute('aria-hidden', false);
+
+					if (!!Global.tooltip.current) {
+						setTimeout(() => {
+							Global.focus.loop({ selector: that });
+						},0);	
+					}
+
+					console.log(elClose);
+					el.addEventListener('mouseleave', Global.tooltip.hide)
+					elClose.addEventListener('click', Global.tooltip.hide2);
 				},100);
 				
-				el.addEventListener('blur', Global.tooltip.hide);
-				el.addEventListener('mouseleave', Global.tooltip.hide)
+				// el.addEventListener('blur', Global.tooltip.hide);
+				
 			}
 
 			if (!!elSrc && !elTooltip) {	
-				elBody.insertAdjacentHTML('beforeend', '<div class="ui-tooltip" id="'+ elId +'" role="tooltip" aria-hidden="true"><div class="ui-tooltip-arrow"></div>');
+				elBody.insertAdjacentHTML('beforeend', '<div class="ui-tooltip" id="'+ elId +'" role="tooltip" aria-hidden="true"><h3 class="ui-tooltip-tit">'+ el.textContent +'</h3><div class="ui-tooltip-arrow"></div></div>');
 				Global.ajax.init({
 					area: doc.querySelector('#' + elId),
 					url: elSrc,
 					add: true,
 					callback: () => {
+						const _tooltip = document.querySelector('#' + elId);
+						_tooltip.insertAdjacentHTML('beforeend', '<button type="button" class="ui-tooltip-close" data-id="'+ elId +'" aria-label="'+ el.textContent +' 닫기"></button>');
 						act();
 					}
 				});
+				
 			} else {
 				if (el.dataset.view !== 'fix') {
 					//아무것도 없는 상태
@@ -5267,11 +5293,12 @@
 		back (e){
 			e.preventDefault();
 
-			const tooltips = doc.querySelectorAll('.ui-tooltip');
+			const tooltips = doc.querySelectorAll('.ui-tooltip[aria-hidden="false"]');
 			const btns = doc.querySelectorAll('.ui-tooltip-btn');
 
 			for (let i = 0, len = tooltips.length; i < len; i++) {
 				const that = tooltips[i];
+				const id = that.id
 				that.setAttribute('aria-hidden', true);
 			}
 
@@ -5281,6 +5308,23 @@
 			}
 
 			doc.removeEventListener('click', Global.tooltip.back);
+			// !!Global.tooltip.current && Global.tooltip.current.focus();
+		},
+		hide2 (e){
+			e.preventDefault();
+			
+			const el = e.currentTarget;
+			const elId = el.dataset.id;
+			const elTooltip = doc.querySelector('#' + elId);
+			const elBtn = Global.tooltip.current;
+
+			elBtn.dataset.view = 'unfix';
+			clearTimeout(Global.tooltip.timerShow);
+			elTooltip.classList.remove('hover');
+			elTooltip.setAttribute('aria-hidden', true);
+
+			el.removeEventListener('click', Global.tooltip.hide2);
+			!!Global.tooltip.current && Global.tooltip.current.focus();
 		},
 		hide (e){
 			e.preventDefault();
@@ -5307,9 +5351,9 @@
 				const that = el_btn[i];
 
 				that.addEventListener('mouseover', Global.tooltip.show);
-				that.addEventListener('focus', Global.tooltip.show);
+				// that.addEventListener('focus', Global.tooltip.show);
 				that.addEventListener('click', Global.tooltip.show);
-				win.addEventListener('resize',  Global.tooltip.back);
+				// win.addEventListener('resize',  Global.tooltip.back);
 			}
 		}
 	}

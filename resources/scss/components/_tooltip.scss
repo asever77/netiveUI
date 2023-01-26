@@ -30,6 +30,15 @@
     &.hover {z-index: 401;}
     &.fix {display: block !important;}
     &-btn {cursor: help;}
+    &-close {
+        position: absolute;
+        top:0; 
+        right:0;
+        width:2rem;
+        height: 2rem;
+        background-color: $gray900;
+
+    }
 
     .ui-tooltip-arrow {
         content: "";
