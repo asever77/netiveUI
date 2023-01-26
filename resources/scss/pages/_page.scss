@@ -208,6 +208,17 @@ body[data-page="layout"] {
 
 /* MOBILE -- 4 columns: 0-599 */
 @media all and (max-width:599px) {
+
+    body[data-page="a11y"],
+    body[data-page="a11y2"] {
+        .principle-4 {
+            & > div{
+                width: 100%;
+                margin-bottom: $x8;
+            }
+        }
+    }
+
     body[data-page="datePicker"] {
         .box-guide.fx-wrap{
             flex-direction: column;

@@ -45,7 +45,7 @@ $bul-lh: 1.2; /* bullet lineheight*/
             background-color:$primary;
         }
 
-        & > li + li{margin: top $x0_5;}
+        & > li + li{margin-top: $x0_5;}
     }
 }
 
