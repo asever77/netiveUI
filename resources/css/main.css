@@ -8563,6 +8563,32 @@ body[data-page=layout] .fl-item-l {
 
 /* MOBILE -- 4 columns: 0-599 */
 @media all and (max-width: 599px) {
+  body[data-page=a11y1] .tbl-base table {
+    width: 100%;
+  }
+  body[data-page=a11y1] .tbl-base thead {
+    display: none;
+  }
+  body[data-page=a11y1] .tbl-base table, body[data-page=a11y1] .tbl-base tr, body[data-page=a11y1] .tbl-base tbody, body[data-page=a11y1] .tbl-base th, body[data-page=a11y1] .tbl-base td {
+    width: 100%;
+    display: block;
+    border: 0;
+  }
+  body[data-page=a11y1] .tbl-base th {
+    font-size: 2rem;
+  }
+  body[data-page=a11y1] .tbl-base tr {
+    border-bottom: 1px solid var(--gray300);
+  }
+  body[data-page=a11y1] .tbl-base tbody {
+    border: 0;
+  }
+  body[data-page=a11y1] .tbl-base tbody + tbody {
+    margin-top: 5rem;
+  }
+  body[data-page=a11y1] .tbl-base tbody + tbody tr:first-child > * {
+    border: 0;
+  }
   body[data-page=a11y] .principle-4 > div,
 body[data-page=a11y2] .principle-4 > div {
     width: 100%;

@@ -208,7 +208,24 @@ body[data-page="layout"] {
 
 /* MOBILE -- 4 columns: 0-599 */
 @media all and (max-width:599px) {
-
+    body[data-page="a11y1"]{
+        .tbl-base {
+            table {width: 100%;}
+            thead {display: none;}
+            table, tr, tbody, th, td{
+                width: 100%;
+                display: block;
+                border: 0;
+            }
+            th{font-size: 2rem;}
+            tr{border-bottom:1px solid $gray300;}
+            tbody{border:0;}
+            tbody+tbody{
+                margin-top:5rem; 
+                tr:first-child > * {border:0;}
+            }
+        }
+    }
     body[data-page="a11y"],
     body[data-page="a11y2"] {
         .principle-4 {
