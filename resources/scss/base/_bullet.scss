@@ -476,7 +476,7 @@ dl[class*="bul-"] {
                 line-height: 1;
             }
         }
-        &[data-bullet="etc"] {
+        &[data-bullet="custom"] {
             > div,
             > li {
                 display: flex;
@@ -491,6 +491,7 @@ dl[class*="bul-"] {
                 margin-top: 0.11em;
             }
         }
+        
         &[data-number] {
             counter-reset: dep1 0 dep2 0;
 

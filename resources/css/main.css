@@ -4693,13 +4693,13 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   font-size: 1.1em;
   line-height: 1;
 }
-.list-base[data-bullet=etc] > div,
-.list-base[data-bullet=etc] > li {
+.list-base[data-bullet=custom] > div,
+.list-base[data-bullet=custom] > li {
   display: flex;
   padding: 0;
 }
-.list-base[data-bullet=etc] > div::before,
-.list-base[data-bullet=etc] > li::before {
+.list-base[data-bullet=custom] > div::before,
+.list-base[data-bullet=custom] > li::before {
   content: attr(data-text);
   display: block;
   margin-right: 0.4rem;
