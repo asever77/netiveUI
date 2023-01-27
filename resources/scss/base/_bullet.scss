@@ -75,8 +75,8 @@ $bul-lh: 1.2; /* bullet lineheight*/
     &[data-style="upper-alpha"] > li:before {content: counter(dep1, upper-alpha) '.';}
 
     &[data-shape="round"] > li {
-        padding-left: 0;
-
+        padding-left: 0; 
+  
         &::before {
             content: counter(dep1);
             display: inline-block;
@@ -103,7 +103,7 @@ $bul-lh: 1.2; /* bullet lineheight*/
     &[data-shape="round"][data-style="upper-alpha"] > li:before {content: counter(dep1, upper-alpha);}
     &[data-shape="round"][data-style="custom"] > li:before {
         content: attr(data-bullet);
-        text-indent: -1px;
+        text-indent: -0.1em;
         font-weight: 500;
     }
 
@@ -506,25 +506,45 @@ dl[class*="bul-"] {
                 font-weight: 400;
                 font-size: 1em;
                 margin-right: 0.2em;
+                min-width: 1em;
+                display: block;
+                text-align: right;
             }
         }
         &[data-number="base"] {
             > div::before,
             > li::before {content: counter(dep1) ".";}
         }
-        &[data-number="custom"] > li:before {content: attr(data-bullet);}
-        &[data-number="upper-roman"] > li:before {content: counter(dep1, upper-roman) '.';}
-        &[data-number="lower-roman"] > li:before {content: counter(dep1, lower-roman) '.';}
-        &[data-number="decimal-zero"] > li:before {content: counter(dep1, decimal-leading-zero) '.';}
-        &[data-number="lower-greek"] > li:before {content: counter(dep1, lower-greek) '.';}
-        &[data-number="lower-alpha"] > li:before {content: counter(dep1, lower-alpha) '.';}
-        &[data-number="upper-alpha"] > li:before {content: counter(dep1, upper-alpha) '.';}
+        &[data-number="upper-roman"]{
+            > div::before,
+            > li:before {content: counter(dep1, upper-roman) '.';}
+        } 
+        &[data-number="lower-roman"]{
+            > div::before,
+            > li:before {content: counter(dep1, lower-roman) '.';}
+        } 
+        &[data-number="decimal-zero"] {
+            > div::before,
+            > li:before {content: counter(dep1, decimal-leading-zero) '.'; min-width: 1.5em;}
+        }
+        &[data-number="lower-greek"] {
+            > div::before,
+            > li:before {content: counter(dep1, lower-greek) '.';}
+        }
+        &[data-number="lower-alpha"] {
+            > div::before,
+            > li:before {content: counter(dep1, lower-alpha) '.';}
+        }
+        &[data-number="upper-alpha"] {
+            > div::before,
+            > li:before {content: counter(dep1, upper-alpha) '.';}
+        }
 
+        &[data-shape="round"] > div,
         &[data-shape="round"] > li {
             padding-left: 0;
 
             &::before {
-                content: counter(dep1);
                 display: inline-block;
                 position: relative;
                 width: 1.4em;
@@ -532,24 +552,49 @@ dl[class*="bul-"] {
                 border-radius: 50%;
                 top:0.5em;
                 font-size: 0.6em;
-                min-width: 1.4em;
-                min-height: 1.4em;
-                max-width: 1.4em;
-                max-height: 1.4em;
+                min-width: 1.5em;
+                min-height: 1.5em;
+                max-width: 1.5em;
+                max-height: 1.5em;
                 line-height: 1.36em;
+                text-align: center; 
+                border: 0.1em solid #616161;
+            }
+        }
+        &[data-shape="square"] > div,
+        &[data-shape="square"] > li {
+            padding-left: 0;
+
+            &::before {
+                display: inline-block;
+                position: relative;
+                width: 1.4em;
+                height: 1.4em;
+                border-radius: 0.2em;
+                top:0.5em;
+                font-size: 0.6em;
+                min-width: 1.6em;
+                min-height: 1.6em;
+                max-width: 1.6em;
+                max-height: 1.6em;
+                line-height: 1.39em;
                 text-align: center;
                 border: 0.1em solid #616161;
             }
         }
-        &[data-shape="round"][data-number="upper-roman"] > li:before {content: counter(dep1, upper-roman);}
-        &[data-shape="round"][data-number="lower-roman"] > li:before {content: counter(dep1, lower-roman);}
-        &[data-shape="round"][data-number="decimal-zero"] > li:before {content: counter(dep1, decimal-leading-zero);}
-        &[data-shape="round"][data-number="lower-greek"] > li:before {content: counter(dep1, lower-greek);}
-        &[data-shape="round"][data-number="lower-alpha"] > li:before {content: counter(dep1, lower-alpha);}
-        &[data-shape="round"][data-number="upper-alpha"] > li:before {content: counter(dep1, upper-alpha);}
-        &[data-shape="round"][data-number="custom"] > li:before {
-            content: attr(data-bullet);
-            text-indent: -1px;
+
+        &[data-shape][data-number="base"] > li:before {content: counter(dep1);}
+        &[data-shape][data-number="upper-roman"] > li:before {content: counter(dep1, upper-roman);}
+        &[data-shape][data-number="lower-roman"] > li:before {content: counter(dep1, lower-roman);}
+        &[data-shape][data-number="decimal-zero"] > li:before {content: counter(dep1, decimal-leading-zero);}
+        &[data-shape][data-number="lower-greek"] > li:before {content: counter(dep1, lower-greek);}
+        &[data-shape][data-number="lower-alpha"] > li:before {content: counter(dep1, lower-alpha);}
+        &[data-shape][data-number="upper-alpha"] > li:before {content: counter(dep1, upper-alpha);}
+
+        &[data-number="custom"] > li:before {content: attr(data-text);}
+        &[data-shape][data-number="custom"] > li:before {
+            content: attr(data-text);
+            text-indent: -0.1em;
             font-weight: 500;
         }
     }
