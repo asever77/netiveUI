@@ -1,0 +1,522 @@
+<input type="hidden" id="uiJsName" value="pageList">
+
+<div class="tit-wrap">
+	<h1 class="tit-l">List</h1>
+</div>
+										
+<article class="wrap-article">
+	<h2 class="tit-m">Definition list</h2>
+	<p>제목과 내용으로 구분되는 기본 목록에 사용한다.</p>
+	
+	<section class="wrap-section">
+		<h3 class="tit-s">기본 스타일</h3>
+		<div class="box-guide">
+			<div class="div-wrap">
+				<dl class="list-definition">
+					<div class="list-definition-item">
+						<guide></guide>
+						<dt class="list-definition-head">
+							<guide2></guide2>
+							기존 대출에 미납이자가 있는 경우
+						</dt>
+						<dd class="list-definition-body">
+							<guide2></guide2>
+							대출금이 5천만원을 초과하면 인지세가 35,000원 발생합니다.
+						</dd>
+						<dd class="list-definition-body">
+							<guide2></guide2>
+							대출금이 5천만원을 초과하면 인지세가 35,000원 발생합니다.
+						</dd>
+					</div>
+					<div class="list-definition-item">
+						<guide></guide>
+						<dt class="list-definition-head">
+							<guide2></guide2>
+							기존 대출에 미납이자가 있는 경우2
+						</dt>
+						<dd class="list-definition-body">
+							<guide2></guide2>
+							대출금이 5천만원을 초과하면 인지세가 35,000원 발생합니다.
+						</dd>
+						<dd class="list-definition-body">
+							<guide2></guide2>
+							대출금이 5천만원을 초과하면 인지세가 35,000원 발생합니다.
+						</dd>
+					</div>
+				</dl>
+
+				<div class="list-definition mt-x2">
+					<section class="list-definition-item">
+						<h3 class="list-definition-head">
+							기존 대출에 미납이자가 있는 경우
+						</h3>
+						<div class="list-definition-body">
+							대출금이 5천만원을 초과하면 인지세가 35,000원 발생합니다.
+						</div>
+						<div class="list-definition-body">
+							대출금이 5천만원을 초과하면 인지세가 35,000원 발생합니다.
+						</div>
+					</section>
+				</div>
+
+			</div>
+		</div>
+<pre class="box-code"><code class="html">
+&lt;dl <tag-class>class="list-definition"</tag-class>&gt;
+	&lt;div <tag-class>class="list-definition-item"</tag-class>&gt;
+		&lt;dt <tag-class>class="list-definition-head"</tag-class>&gt;제목 텍스트&lt;/dt&gt;
+		&lt;dd <tag-class>class="list-definition-body"</tag-class>&gt;내용 텍스트&lt;/dd&gt;
+		...
+	&lt;/div&gt;
+	...
+&lt;/dl&gt;
+
+&lt;div <tag-class>class="list-definition"</tag-class>&gt;
+	&lt;section <tag-class>class="list-definition-item"</tag-class>&gt;
+		&lt;h3 <tag-class>class="list-definition-head"</tag-class>&gt;제목 텍스트&lt;/h3&gt;
+		&lt;div <tag-class>class="list-definition-body"</tag-class>&gt;내용 텍스트&lt;/div&gt;
+		...
+	&lt;/section&gt;
+	...
+&lt;/div&gt;
+</code></pre>
+	</section>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">블릿 스타일</h3>
+		<p>data-head="dot|hyphen" data-body="dot|hyphen"</p>
+		<div class="box-guide">
+			<div class="div-wrap">
+				<dl class="list-definition" data-head="dot" data-body="dot">
+					<div class="list-definition-item">
+						<dt class="list-definition-head">
+							기존 대출에 미납이자가 있는 경우
+						</dt>
+						<dd class="list-definition-body">
+							대출금이 5천만원을 초과하면 인지세가 35,000원 발생합니다.
+						</dd>
+						<dd class="list-definition-body">
+							대출금이 5천만원을 초과하면 인지세가 35,000원 발생합니다.
+						</dd>
+					</div>
+				</dl>
+
+				<div class="list-definition mt-x2" data-head="hyphen" data-body="hyphen">
+					<section class="list-definition-item">
+						<h3 class="list-definition-head">
+							기존 대출에 미납이자가 있는 경우
+						</h3>
+						<div class="list-definition-body">
+							대출금이 5천만원을 초과하면 인지세가 35,000원 발생합니다.
+						</div>
+						<div class="list-definition-body">
+							대출금이 5천만원을 초과하면 인지세가 35,000원 발생합니다.
+						</div>
+					</section>
+				</div>
+			</div>
+		</div>
+<pre class="box-code"><code class="html">
+&lt;dl <tag-class>class="list-definition"</tag-class> <tag-data>data-head="dot|hyphen" data-body="dot|hyphen"</tag-data>&gt;
+	&lt;div <tag-class>class="list-definition-item"</tag-class>&gt;
+		&lt;dt <tag-class>class="list-definition-head"</tag-class>&gt;제목 텍스트&lt;/dt&gt;
+		&lt;dd <tag-class>class="list-definition-body"</tag-class>&gt;내용 텍스트&lt;/dd&gt;
+		...
+	&lt;/div&gt;
+	...
+&lt;/dl&gt;
+</code></pre>
+	</section>
+</article>
+
+<article class="wrap-article">
+	<h2 class="tit-m">Unordered List</h2>
+	<p>순서가 없는 목록으로 점이나 사각형 등 의미없는 도형이 앞에 붙는 목록에 사용한다.</p>
+	
+	<div class="box-guide">
+		<ul class="list-base" data-bullet="dot">
+			<li>
+				<guide2></guide2>
+				리스트 목록 내용1
+			</li>
+			<li>
+				<guide2></guide2>
+				리스트 목록 내용2
+				<ul class="list-base mt-x0_5" data-bullet="hyphen">
+					<li>
+						<guide2></guide2>
+						리스트 목록 내용2-1
+					</li>
+					<li>
+						<guide2></guide2>
+						리스트 목록 내용2-2
+					</li>
+				</ul>
+			</li>
+			<li>
+				<guide2></guide2>
+				리스트 목록 내용3
+			</li>
+		</ul>
+
+		<div class="list-base mt-x2" data-bullet="dot">
+			<div>리스트 목록 내용</div>
+		</div>
+		<div class="list-base" data-bullet="info">
+			<div>리스트 목록 내용</div>
+		</div>
+		<div class="list-base" data-bullet="error">
+			<div>리스트 목록 내용</div>
+		</div>
+		<div class="list-base" data-bullet="help">
+			<div>리스트 목록 내용</div>
+		</div>
+		<div class="list-base" data-bullet="star">
+			<div>리스트 목록 내용</div>
+		</div>
+		<div class="list-base" data-bullet="care">
+			<div>리스트 목록 내용</div>
+		</div>
+		<div class="list-base" data-bullet="etc">
+			<div data-text="[예제]">리스트 목록 내용<br>리스트 목록 내용</div>
+		</div>
+		<div class="list-base" data-bullet="etc">
+			<div data-text="+">리스트 목록 내용</div>
+		</div>
+	</div>
+
+<pre class="box-code"><code>
+&lt;ul <tag-class>class="list-base"</tag-class> <tag-data>data-bullet="dot|hyphen"</tag-data>&gt;
+	&lt;li&gt;리스트 목록 내용1&lt;/li&gt;
+	&lt;li&gt;리스트 목록 내용2&lt;/li&gt;
+	...
+&lt;/ul&gt;
+
+&lt;div <tag-class>class="list-base"</tag-class> <tag-data>data-bullet="dot|hyphen"</tag-data>&gt;
+	&lt;div <tag-data>data-text="{text}"</tag-data> &gt;리스트 목록 내용&lt;/div&gt;
+&lt;/div&gt;
+</code></pre>
+</article>
+
+<article class="wrap-article">
+	<h2 class="tit-m">Ordered list</h2>
+	<p>순서가 있는 목록으로 숫자, 문자등 의미있는 기호로 표시한는 목록에 사용한다.</p>
+
+	<div class="box-guide">
+		<ol class="list-base" data-number="base">
+			<li>
+				<div>
+					기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 보험기간이 종료되지 않은 경우에는 갱신보험료를 계속 납입하셔야 합니다.
+				</div>
+			</li>
+			<li>
+				<div>
+					갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 됩니다.
+					<ol class="list-base mt-x1" data-number="base" data-shape="round">
+						<li>
+							<div>
+								기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 보험기간이 종료되지 않은 경우에는 갱신보험료를 계속 납입하셔야 합니다.
+							</div>
+						</li>
+						<li>
+							<div>
+								기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 보험기간이 종료되지 않은 경우에는 갱신보험료를 계속 납입하셔야 합니다.
+							</div>
+						</li>
+					</ol>
+				</div>
+			</li>
+		</ol>
+		<hr class="hr-cont">
+		<ol class="list-base" data-number="decimal-zero">
+			<li>
+				<div>
+					기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 
+				</div>
+			</li>
+			<li>
+				<div>
+					갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+
+					<ol class="list-base mt-x1" data-number="decimal-zero" data-shape="round">
+						<li>
+							<div>
+								기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 
+							</div>
+						</li>
+						<li>
+							<div>
+								갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+							</div>
+						</li>
+					</ol>
+				</div>
+			</li>
+		</ol>
+		<hr class="hr-cont">
+		<ol class="list-base" data-number="upper-roman">
+			<li>
+				<div>
+					기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 보험기간이 종료되지 않은 경우에는 갱신보험료를 계속 납입하셔야 합니다.
+					<ol class="list-base mt-x1" data-number="upper-roman" data-shape="round">
+						<li>
+							<div>
+								기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 보험기간이 종료되지 않은 경우에는 갱신보험료를 계속 납입하셔야 합니다.
+							</div>
+						</li>
+						<li>
+							<div>
+								갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+							</div>
+						</li>
+					</ol>
+				</div>
+			</li>
+			<li>
+				<div>
+					갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+				</div>
+			</li>
+		</ol>
+		<hr class="hr-cont">
+		<ol class="list-base" data-number="lower-roman">
+			<li>
+				<div>
+					기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 보험기간이 종료되지 않은 경우에는 갱신보험료를 계속 납입하셔야 합니다.
+				</div>
+			</li>
+			<li>
+				<div>
+					갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+					<ol class="list-base mt-x1" data-number="lower-roman" data-shape="round">
+						<li>
+							<div>
+								기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 보험기간이 종료되지 않은 경우에는 갱신보험료를 계속 납입하셔야 합니다.
+							</div>
+						</li>
+						<li>
+							<div>
+								갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+							</div>
+						</li>
+					</ol>
+				</div>
+			</li>
+		</ol>
+		<hr class="hr-cont">
+		<ol class="list-base" data-number="lower-greek">
+			<li>
+				<div>
+					기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 
+					<ol class="list-base mt-x1" data-number="lower-greek" data-shape="round">
+						<li>
+							<div>
+								기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 
+							</div>
+						</li>
+						<li>
+							<div>
+								갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+							</div>
+						</li>
+					</ol>
+				</div>
+			</li>
+			<li>
+				<div>
+					갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+				</div>
+			</li>
+		</ol>
+		<hr class="hr-cont">
+		<ol class="list-base" data-number="lower-alpha">
+			<li>
+				<div>
+					기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 
+				</div>
+			</li>
+			<li>
+				<div>
+					갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+					<ol class="list-base mt-x1" data-number="lower-alpha" data-shape="round">
+						<li>
+							<div>
+								기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 
+							</div>
+						</li>
+						<li>
+							<div>
+								갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+							</div>
+						</li>
+					</ol>
+				</div>
+			</li>
+		</ol>
+		<hr class="hr-cont">
+		<ol class="list-base" data-number="upper-alpha">
+			<li>
+				<div>
+					기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 
+				</div>
+			</li>
+			<li>
+				<div>
+					갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+					<ol class="list-base mt-x1" data-number="upper-alpha" data-shape="round">
+						<li>
+							<div>
+								기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 
+							</div>
+						</li>
+						<li>
+							<div>
+								갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+							</div>
+						</li>
+					</ol>
+				</div>
+			</li>
+		</ol>
+		<hr class="hr-cont">
+		<ol class="list-base" data-number="custom">
+			<li data-bullet="가.">
+				<div>
+					기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 보험기간이 종료되지 않은 경우에는 갱신보험료를 계속 납입하셔야 합니다.
+					<ol class="list-base mt-x1" data-number="custom" data-shape="round">
+						<li data-bullet="ㄱ">
+							<div>
+								기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 보험기간이 종료되지 않은 경우에는 갱신보험료를 계속 납입하셔야 합니다.
+							</div>
+						</li>
+						<li data-bullet="ㄴ">
+							<div>
+								기본계약 납입기간이 완료된 이후에도 이 갱신형 특별약관의 보험기간이 종료되지 않은 경우에는 갱신보험료를 계속 납입하셔야 합니다.
+							</div>
+						</li>
+					</ol>
+				</div>
+			</li>
+			<li data-bullet="나.">
+				<div>
+					갱신시점 갱신보험료가 인상될 경우 기본계약 납기중에는 인상된 갱신보험료는 합계보험료에 합산하여 납입하시게 되며, 기본계약 납입기간이 종료된 경우 갱신형 특별약관의 보험료만 납입하시게 됩니다.
+				</div>
+			</li>
+		</ol>
+	</div>
+<pre class="box-code"><code class="html">
+&lt;ol <tag-class>class="list-base"</tag-class>&gt;
+	&lt;li&gt;기본계약 납입기간이 ...&lt;/li&gt;
+	...
+&lt;/ol&gt;
+
+&lt;ol <tag-class>class="list-base" data-shape="round"
+</tag-class>&gt;
+	&lt;li&gt;기본계약 납입기간이 ...&lt;/li&gt;
+	...
+&lt;/ol&gt;
+
+<tag-comment>// decimal-zero, upper-roman, lower-roman, lower-greek, lower-alpha, upper-alpha, custom</tag-comment>
+&lt;ol <tag-class>class="list-base"
+	data-number="{ decimal-zero | upper-roman | lower-roman | lower-greek | lower-alpha | upper-alpha | custom }"
+</tag-class>&gt;
+	&lt;li&gt;기본계약 납입기간이 ...&lt;/li&gt;
+	...
+&lt;/ol&gt;
+
+&lt;ol <tag-class>class="list-base" data-number="custom"
+</tag-class>&gt;
+	&lt;li <tag-class>data-bullet="가"</tag-class>&gt;기본계약 납입기간이 ...&lt;/li&gt;
+	&lt;li <tag-class>data-bullet="나"</tag-class>&gt;기본계약 납입기간이 ...&lt;/li&gt;
+	...
+&lt;/ol&gt;
+</code></pre>
+
+	<section class="wrap-section">
+		<h3 class="tit-s">순서에 사용되는 특수문자</h3>
+		<ul class="bul-dot">
+			<li>① ② ③ ④ ⑤ ⑥ ⑦ ⑧ ⑨ ⑩ ⑪  ⑫ ⑬ ⑭ ⑮</li>
+			<li>⑴ ⑵ ⑶ ⑷ ⑸ ⑹ ⑺ ⑻ ⑼ ⑽ ⑾ ⑿ ⒀ ⒁ ⒂</li>
+
+			<li>㉠ ㉡ ㉢ ㉣ ㉤ ㉥ ㉦ ㉧ ㉨ ㉩ ㉪ ㉫ ㉬ ㉭</li>
+			<li>㉮ ㉯ ㉰ ㉱ ㉲ ㉳ ㉴ ㉵ ㉶ ㉷ ㉸ ㉹ ㉺ ㉻</li>
+			<li>㈀ ㈁ ㈂ ㈃㈄ ㈅ ㈆ ㈇ ㈈ ㈉ ㈊ ㈋ ㈌ ㈍</li>
+			<li>㈎ ㈏ ㈐ ㈑ ㈒ ㈓ ㈔ ㈕ ㈖ ㈗ ㈘ ㈙ ㈚ ㈛</li>
+
+			<li>ⓐ ⓑ ⓒ ⓓ ⓔ ⓕ ⓖ ⓗ ⓘ ⓙ ⓚ ⓛ ⓜ ⓝ ⓞ ⓟ ⓠ ⓡ ⓢ ⓣ ⓤ ⓥ ⓦ ⓧ ⓨ ⓩ</li>
+			<li>⒜ ⒝ ⒞ ⒟ ⒠ ⒡ ⒢ ⒣ ⒤ ⒥ ⒦ ⒧ ⒨ ⒩ ⒪ ⒫ ⒬ ⒭ ⒮ ⒯ ⒰ ⒱ ⒲ ⒳ ⒴ ⒵ </li>
+
+			<li>Ⅰ Ⅱ Ⅲ Ⅳ Ⅴ Ⅵ Ⅶ Ⅷ Ⅸ Ⅹ</li>
+			<li>ⅰ ⅱ ⅲ ⅳ ⅴ ⅵ ⅶ ⅷ ⅸ ⅹ</li>
+
+			<li>㈠ ㈡ ㈢ ㈣ ㈤ ㈥ ㈦ ㈧ ㈨ ㈩</li>
+		</ul>
+	</section>
+</article>
+
+<article class="wrap-article">
+	<h2 class="tit-m">Etc List</h2>
+	<p>기타 블릿이나 요소를 추가할 경우 사용한다.</p>
+	<div class="box-guide">
+		<div class="bul-error">
+			<div>
+				거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다. 거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.
+			</div>
+		</div>
+		<div class="bul-info">
+			<div>
+				거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다. 거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.
+			</div>
+		</div>
+		<div class="bul-help">
+			<div>
+				거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다. 거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.
+			</div>
+		</div>
+		<div class="bul-star">
+			<div>
+				거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다. 거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.
+			</div>
+		</div>
+		<div class="bul-care">
+			<div>
+				거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다. 거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.
+			</div>
+		</div>
+		<div class="bul-etc" data-bullet="ex)">
+			<div>
+				거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다. 거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.
+			</div>
+		</div>
+		<div class="bul-etc" data-bullet="[예제]">
+			<div>
+				거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다. 거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.거래 마감 및 시간 오차 등으로 인해 시작과 종료시간 10분 동안은 해지가 불가능할 수 있습니다.
+			</div>
+		</div>
+	</div>
+
+<pre class="box-code"><code class="html">
+&lt;div class="bul-info"&gt;
+	&lt;div&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="bul-help"&gt;
+	&lt;div&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="bul-star"&gt;
+	&lt;div&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="bul-care"&gt;
+	&lt;div&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div class="bul-etc" data-bullet="ex)"&gt;
+	&lt;div&gt;...&lt;/div&gt;
+&lt;/div&gt;
+
+</code></pre>
+
+</article>
+

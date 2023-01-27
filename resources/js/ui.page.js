@@ -12,7 +12,8 @@
         const el_sw = document.querySelector('.mySwiper[data-id="test"]');
         const el_sw_items = el_sw.querySelectorAll('.swiper-slide');
         const el_stop = el_sw.querySelector('.swiper-button-switch');
-console.log(111);
+
+        
         el_sw.setAttribute('aria-label', '테스트 슬라이드 배너');
         el_sw.setAttribute('tabindex', '0');
         const swiper = new Swiper('.mySwiper[data-id="test"]', {
@@ -142,6 +143,7 @@ console.log(111);
     netive.page.pageIcon = () => {};
     netive.page.pageLayout = () => {};
     netive.page.pageTable = () => {};
+    netive.page.pageList = () => {};
    
     netive.page.pageLoading = () => {
         netive.loading.show();

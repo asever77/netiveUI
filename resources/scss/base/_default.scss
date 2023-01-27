@@ -251,6 +251,7 @@ guide2 {
 tag-comment{color:$gray400}
 tag-class{color:$success}
 tag-input{color: orangered}
+tag-data{color: orangered}
 
 /* Remove all animations and transitions for people that prefer not to see them */
 @media (prefers-reduced-motion: reduce) {

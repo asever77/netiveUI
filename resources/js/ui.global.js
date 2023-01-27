@@ -5145,76 +5145,59 @@
 
 	/**
 	 * TOOLTIP POPUP
-	 * in use: Global.ajax
+	 * in use: Global.ajax, Global.loop
 	 */
 	Global.tooltip = {
-		// options: {
-		// 	visible: null,
-		// 	id: false,
-		// 	ps: false
-		// },
 		current: null,
 		timerShow: null,
 		timerHide: null,
 		show (e){
 			e.preventDefault();
 
-			console.log(e);
-
 			const elBody = doc.querySelector('body');
 			const el = e.currentTarget;
 			const elId = el.getAttribute('aria-describedby');
 			const elSrc = el.dataset.src;
+			const view = el.dataset.view;
+			const elTit = !!el.getAttribute('aria-label') ? el.getAttribute('aria-label') : el.textContent;
 			const evType = e.type;
 			let elTooltip = doc.querySelector('#' + elId);
 
-			//툴팁 모바일에서 클릭, 하단 노출 건 확인필요
+			const el_events = doc.querySelectorAll('a, button');
 
+			//툴팁 모바일에서 클릭, 하단 노출 건 확인필요
 			const act = () => {
 				console.log('act');
-
 				elTooltip = doc.querySelector('#' + elId);
 
 				const tooltips = doc.querySelectorAll('.ui-tooltip');
-				const btns = doc.querySelectorAll('.ui-tooltip-btn');
-				const elClose = elTooltip.querySelector('.ui-tooltip-close');
 				const elArrow = elTooltip.querySelector('.ui-tooltip-arrow');
 				const classToggle = evType !== 'click' ? 'add' : 'remove';
-				let that = null;
 
-				if (evType === 'click' && el.dataset.view !== 'fix') {
-					for (let i = 0, len = tooltips.length; i < len; i++) {
-						that = tooltips[i];
-						
+				if (evType === 'click') {
+					Global.tooltip.current = elId;
+					for (let that of el_events) {
+						that.addEventListener('click', Global.tooltip.allHide);
+					}
+					for (let that of tooltips) {
 						if (that.id !== elId) {
-							that.removeAttribute('style');
+							// that.removeAttribute('style');
+							document.querySelector('.ui-tooltip-btn[aria-describedby="'+that.id+'"]').dataset.view = 'unfix';
+							that.classList.remove('fix');
 							that.setAttribute('aria-hidden', true);
 						} else {
-							Global.tooltip.current = el;
+							that.classList.add('fix');
+							el.dataset.view = 'fix';
 						}
 					}
-
-					for (let i = 0, len = btns.length; i < len; i++) {
-						const that = btns[i];
-						that.dataset.view = 'unfix';
-					}
-
-					el.dataset.view = 'fix';
 					
-					// doc.removeEventListener('click', Global.tooltip.back);
-
-					// setTimeout(() => {
-					// 	doc.addEventListener('click', Global.tooltip.back);
-					// },0);
+					
 				} else {
-					Global.tooltip.current = null;
-				}
-
-				for (let i = 0, len = tooltips.length; i < len; i++) {
-					const that = tooltips[i];
-
-					if (that.id !== elId) {
-						that.classList.remove('hover');
+					//hover
+					for (let that of tooltips) {
+						if (that.id !== elId) {
+							that.classList.remove('hover');
+						}
 					}
 				}
 
@@ -5228,132 +5211,125 @@
 				const wH = win.innerHeight;
 				const dT = doc.documentElement.scrollTop;
 				const dL = doc.documentElement.scrollLeft;
+				const tW = Math.floor(elTooltip.offsetWidth);
+				const left = (tW / 2 > (elL - dL) + (elW / 2)) ? 10 : elL - (tW / 2) + (elW / 2);
+				wW < Math.floor(left) + tW ? elTooltip.style.right = '10px' : '';
+				elTooltip.style.left = Math.floor(left) + 'px';
 
-				clearTimeout(Global.tooltip.timerHide);
-				Global.tooltip.timerShow = setTimeout(() => {
-					const tW = Math.floor(elTooltip.offsetWidth);
-					const left = (tW / 2 > (elL - dL) + (elW / 2)) ? 10 : elL - (tW / 2) + (elW / 2);
-					wW < Math.floor(left) + tW ? elTooltip.style.right = '10px' : '';
-					elTooltip.style.left = Math.floor(left) + 'px';
+				const tH = Math.floor(elTooltip.offsetHeight);
+				const top = (elT - dT > wH / 2) ? elT + dT - tH - 8 : elT + elH + dT + 8;
+				elTooltip.style.top = Math.floor(top) + 'px';
 
-					const tH = Math.floor(elTooltip.offsetHeight);
-					const top = (elT - dT > wH / 2) ? elT + dT - tH - 8 : elT + elH + dT + 8;
-					elTooltip.style.top = Math.floor(top) + 'px';
+				const arrow = (elT - dT > wH / 2) ? 'top' : 'bottom';
+				elArrow.style.left = Math.floor(elL - left + (elW / 2)) + 'px';
 
-					const arrow = (elT - dT > wH / 2) ? 'top' : 'bottom';
-					elArrow.style.left = Math.floor(elL - left + (elW / 2)) + 'px';
+				elTooltip.dataset.ps = arrow;
+				elTooltip.setAttribute('aria-hidden', false);
 
-					elTooltip.dataset.ps = arrow;
-					elTooltip.setAttribute('aria-hidden', false);
-
-					if (!!Global.tooltip.current) {
-						setTimeout(() => {
-							Global.focus.loop({ selector: that });
-						},0);	
+				setTimeout(() => {
+					if (evType === 'click') {
+						Global.focus.loop({ selector: elTooltip });
+						elTooltip.focus();
 					}
+					Global.tooltip.current = null;
+					elTooltip.querySelector('.ui-tooltip-close').addEventListener('click', Global.tooltip.hide);
+				}, 100);
 
-					console.log(elClose);
-					el.addEventListener('mouseleave', Global.tooltip.hide)
-					elClose.addEventListener('click', Global.tooltip.hide2);
-				},100);
-				
-				// el.addEventListener('blur', Global.tooltip.hide);
-				
+				el.addEventListener('mouseleave', Global.tooltip.hide);
+				Global.state.device.mobile && el.removeEventListener('mouseleave', Global.tooltip.hide);
 			}
 
+			//툴팁이 없다면 생성하기
 			if (!!elSrc && !elTooltip) {	
-				elBody.insertAdjacentHTML('beforeend', '<div class="ui-tooltip" id="'+ elId +'" role="tooltip" aria-hidden="true"><h3 class="ui-tooltip-tit">'+ el.textContent +'</h3><div class="ui-tooltip-arrow"></div></div>');
+				elBody.insertAdjacentHTML('beforeend', '<div class="ui-tooltip" id="'+ elId +'" role="tooltip" aria-hidden="true"><h3 class="ui-tooltip-tit">'+ elTit +'</h3><div class="ui-tooltip-arrow"></div></div>');
+
 				Global.ajax.init({
 					area: doc.querySelector('#' + elId),
 					url: elSrc,
 					add: true,
 					callback: () => {
 						const _tooltip = document.querySelector('#' + elId);
-						_tooltip.insertAdjacentHTML('beforeend', '<button type="button" class="ui-tooltip-close" data-id="'+ elId +'" aria-label="'+ el.textContent +' 닫기"></button>');
+						_tooltip.insertAdjacentHTML('beforeend', '<button type="button" class="ui-tooltip-close" data-id="'+ elId +'" aria-label="'+ elTit +' 닫기"></button>');
+						
 						act();
 					}
 				});
-				
 			} else {
-				if (el.dataset.view !== 'fix') {
-					//아무것도 없는 상태
+				//열린툴팁 제외
+				if (view !== 'fix') {
 					act();
-				} else {
-					//click으로 띄운상태
-					if (evType === 'click') {
-						el.dataset.view = 'unfix';
-						Global.tooltip.hide(e);
-					} else {
-						act();
-					}
 				}
 			}
-
 		},
-		back (e){
-			e.preventDefault();
+		allHide () {
+			const tooltips = doc.querySelectorAll('.ui-tooltip');
+			const tooltipBtns = doc.querySelectorAll('.ui-tooltip-btn');
+			const el_events = doc.querySelectorAll('a, button');
 
-			const tooltips = doc.querySelectorAll('.ui-tooltip[aria-hidden="false"]');
-			const btns = doc.querySelectorAll('.ui-tooltip-btn');
-
-			for (let i = 0, len = tooltips.length; i < len; i++) {
-				const that = tooltips[i];
-				const id = that.id
-				that.setAttribute('aria-hidden', true);
+			for (let that of tooltipBtns) {
+				if (that.getAttribute('aria-describedby') !== Global.tooltip.current) {
+					that.dataset.view = 'unfix';
+				}
 			}
-
-			for (let i = 0, len = btns.length; i < len; i++) {
-				const that = btns[i];
-				that.dataset.view = 'unfix';
+			for (let that of tooltips) {
+				if (that.id !== Global.tooltip.current) {
+					that.classList.remove('hover');
+					that.classList.remove('fix');
+					that.setAttribute('aria-hidden', true);
+				}
 			}
-
-			doc.removeEventListener('click', Global.tooltip.back);
-			// !!Global.tooltip.current && Global.tooltip.current.focus();
-		},
-		hide2 (e){
-			e.preventDefault();
-			
-			const el = e.currentTarget;
-			const elId = el.dataset.id;
-			const elTooltip = doc.querySelector('#' + elId);
-			const elBtn = Global.tooltip.current;
-
-			elBtn.dataset.view = 'unfix';
-			clearTimeout(Global.tooltip.timerShow);
-			elTooltip.classList.remove('hover');
-			elTooltip.setAttribute('aria-hidden', true);
-
-			el.removeEventListener('click', Global.tooltip.hide2);
-			!!Global.tooltip.current && Global.tooltip.current.focus();
+			if (!Global.tooltip.current) {
+				for (let that of el_events) {
+					that.removeEventListener('click', Global.tooltip.allHide);
+				}
+			}
 		},
 		hide (e){
 			e.preventDefault();
 			
-			const el = e.currentTarget;
-			const elId = el.getAttribute('aria-describedby');
-			const elTooltip = doc.querySelector('#' + elId);
+			const type = e.type;
+			let el = e.currentTarget;
+			let elId = el.getAttribute('aria-describedby');
+			let isFocus = true;
+			
+			if (!elId) {
+				const openTooltip = doc.querySelector('.ui-tooltip[aria-hidden="false"]');
 
+				elId = openTooltip.id;
+				el = doc.querySelector('.ui-tooltip-btn[aria-describedby="'+ elId +'"]');
+				isFocus = false;
+			}
+
+			if (type === 'click' && isFocus) {
+				elId = el.dataset.id;
+			} 
+
+			const elTooltip = doc.querySelector('#' + elId);
+			const elBtn = doc.querySelector('.ui-tooltip-btn[aria-describedby="'+ elId +'"]');
+			
 			if (el.dataset.view !== 'fix') {
-				clearTimeout(Global.tooltip.timerShow);
 				elTooltip.classList.remove('hover');
 				elTooltip.setAttribute('aria-hidden', true);
-			}
+				// elTooltip.remove();
+			} 
+			if (type === 'click') {
+				el.removeEventListener('click', Global.tooltip.hide);
+				isFocus && elBtn.focus();
+				elBtn.dataset.view = 'unfix';
+			} 
 
 			el.removeEventListener('blur', Global.tooltip.hide);
 			el.removeEventListener('mouseleave', Global.tooltip.hide);
 		},
 		init () {
-			//const opt = {...this.options, ...option};
-			//const opt = Object.assign({}, Global.tooltip.options, option);
 			const el_btn = doc.querySelectorAll('.ui-tooltip-btn');
 
 			for (let i = 0, len = el_btn.length; i < len; i++) {
 				const that = el_btn[i];
 
 				that.addEventListener('mouseover', Global.tooltip.show);
-				// that.addEventListener('focus', Global.tooltip.show);
 				that.addEventListener('click', Global.tooltip.show);
-				// win.addEventListener('resize',  Global.tooltip.back);
+				Global.state.device.mobile && that.removeEventListener('mouseover', Global.tooltip.show);
 			}
 		}
 	}

@@ -283,3 +283,275 @@ dl[class*="bul-"] {
         color:$gray900;
     }
 }
+
+.list-{
+    &definition {
+        &-item {
+            position: relative;
+            
+            & + .list-definition-item{margin-top: $x1;}
+        }
+        &-head {
+            position: relative;
+            font-weight: 700;
+            font-size: 1.8rem;
+            margin-bottom: $x0_5;
+        }
+        &-body {
+            position: relative;
+            font-weight: 400;
+            font-size: 1.4rem;
+
+            & + .list-definition-body{margin-top: $x0_5;}
+        }
+
+        &[data-head="dot"] {
+            .list-definition-head {padding-left: 1rem;}
+            .list-definition-body {padding-left: 1rem;}
+            .list-definition-head::before {
+                content: "";
+                position: absolute;
+                left: 0.1em;
+                top: 0.65em;
+                line-height: 1;
+                width: 0.4rem;
+                height: 0.4rem;
+                border-radius: 50%;
+                background-color: $gray900;
+            }
+        }
+        &[data-body="dot"] {
+            .list-definition-body {padding-left: 1rem;}
+            .list-definition-body::before {
+                content: "";
+                position: absolute;
+                left: 0.2em;
+                top: 0.65em;
+                line-height: 1;
+                width: 0.3rem;
+                height: 0.3rem;
+                border-radius: 50%;
+                background-color: $gray900;
+            }
+        }
+        &[data-head="hyphen"] {
+            .list-definition-head {padding-left: 1rem;}
+            .list-definition-body {padding-left: 1rem;}
+            .list-definition-head::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0.69em;
+                line-height: 1;
+                width: 0.6rem;
+                height: 0.2rem;
+                background-color: $gray900;
+            }
+        }
+        &[data-body="hyphen"] {
+            .list-definition-body {padding-left: 1rem;}
+            .list-definition-body::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0.69em;
+                line-height: 1;
+                width: 0.4rem;
+                height: 0.1rem;
+                background-color: $gray900;
+            }
+        }
+       
+    }
+
+    &base {
+        > div,
+        > li {
+            position: relative;
+            padding-left: 1rem;
+        }
+
+        &[data-bullet="dot"] {
+            > div::before,
+            > li::before {
+                content: "";
+                position: absolute;
+                left: 0.2em;
+                top: 0.65em;
+                line-height: 1;
+                width: 0.3rem;
+                height: 0.3rem;
+                border-radius: 50%;
+                background-color: $gray900;
+            }
+        }
+        &[data-bullet="hyphen"] {
+            > div::before,
+            > li::before {
+                content: "";
+                position: absolute;
+                left: 0;
+                top: 0.69em;
+                line-height: 1;
+                width: 0.4rem;
+                height: 0.1rem;
+                background-color: $gray900;
+            }
+        }
+        &[data-bullet="info"] {
+            > div,
+            > li {
+                padding-left: 1.8rem;
+            }
+            > div::before,
+            > li::before {
+                content: "info";
+                font-family: "Material Icons Outlined";
+                position: absolute;
+                left: 0;
+                top: 0.16em;
+                font-weight: 200;
+                font-size: 1em;
+                line-height: 1;
+            }
+        }
+        &[data-bullet="error"] {
+            > div,
+            > li {
+                padding-left: 1.8rem;
+                color: $error;
+            }
+            > div::before,
+            > li::before {
+                content: "error_outline";
+                font-family: "Material Icons Outlined";
+                position: absolute;
+                left: 0;
+                top: 0.16em;
+                font-weight: 200;
+                font-size: 1em;
+                line-height: 1;
+            }
+        }
+        &[data-bullet="help"] {
+            > div,
+            > li {padding-left: 1.8rem;}
+            > div::before,
+            > li::before {
+                content: "help_outline";
+                font-family: "Material Icons Outlined";
+                position: absolute;
+                left: 0;
+                top: 0.16em;
+                font-weight: 200;
+                font-size: 1em;
+                line-height: 1;
+            }
+        }
+        &[data-bullet="star"] {
+            > div,
+            > li {padding-left: 1.2rem;}
+            > div::before,
+            > li::before {
+                content: "*";
+                position: absolute;
+                left: 0.1em;
+                top: 0.35em;
+                font-weight: 400;
+                font-size: 1em;
+                line-height: 1;
+            }
+        }
+        &[data-bullet="care"] {
+            > div,
+            > li { padding-left: 1.2rem;}
+            > div::before,
+            > li::before {
+                content: "※";
+                position: absolute;
+                left: 0;
+                top: 0.12em;
+                font-weight: 400;
+                font-size: 1.1em;
+                line-height: 1;
+            }
+        }
+        &[data-bullet="etc"] {
+            > div,
+            > li {
+                display: flex;
+                padding: 0;
+            }
+            > div::before,
+            > li::before {
+                content: attr(data-text);
+                display: block;
+                margin-right: 0.4rem;
+                font-size: 0.8em;
+                margin-top: 0.11em;
+            }
+        }
+        &[data-number] {
+            counter-reset: dep1 0 dep2 0;
+
+            > div,
+            > li { 
+                counter-increment: dep1 1;
+                display: flex;
+                padding: 0;
+            }
+            > div::before,
+            > li::before {
+                content: counter(dep1) ".";
+                font-weight: 400;
+                font-size: 1em;
+                margin-right: 0.2em;
+            }
+        }
+        &[data-number="base"] {
+            > div::before,
+            > li::before {content: counter(dep1) ".";}
+        }
+        &[data-number="custom"] > li:before {content: attr(data-bullet);}
+        &[data-number="upper-roman"] > li:before {content: counter(dep1, upper-roman) '.';}
+        &[data-number="lower-roman"] > li:before {content: counter(dep1, lower-roman) '.';}
+        &[data-number="decimal-zero"] > li:before {content: counter(dep1, decimal-leading-zero) '.';}
+        &[data-number="lower-greek"] > li:before {content: counter(dep1, lower-greek) '.';}
+        &[data-number="lower-alpha"] > li:before {content: counter(dep1, lower-alpha) '.';}
+        &[data-number="upper-alpha"] > li:before {content: counter(dep1, upper-alpha) '.';}
+
+        &[data-shape="round"] > li {
+            padding-left: 0;
+
+            &::before {
+                content: counter(dep1);
+                display: inline-block;
+                position: relative;
+                width: 1.4em;
+                height: 1.4em;
+                border-radius: 50%;
+                top:0.5em;
+                font-size: 0.6em;
+                min-width: 1.4em;
+                min-height: 1.4em;
+                max-width: 1.4em;
+                max-height: 1.4em;
+                line-height: 1.36em;
+                text-align: center;
+                border: 0.1em solid #616161;
+            }
+        }
+        &[data-shape="round"][data-number="upper-roman"] > li:before {content: counter(dep1, upper-roman);}
+        &[data-shape="round"][data-number="lower-roman"] > li:before {content: counter(dep1, lower-roman);}
+        &[data-shape="round"][data-number="decimal-zero"] > li:before {content: counter(dep1, decimal-leading-zero);}
+        &[data-shape="round"][data-number="lower-greek"] > li:before {content: counter(dep1, lower-greek);}
+        &[data-shape="round"][data-number="lower-alpha"] > li:before {content: counter(dep1, lower-alpha);}
+        &[data-shape="round"][data-number="upper-alpha"] > li:before {content: counter(dep1, upper-alpha);}
+        &[data-shape="round"][data-number="custom"] > li:before {
+            content: attr(data-bullet);
+            text-indent: -1px;
+            font-weight: 500;
+        }
+    }
+    
+}

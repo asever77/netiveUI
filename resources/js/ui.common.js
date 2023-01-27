@@ -35,6 +35,7 @@
       bulletList: { link: '../html/contents/bulletList.html' },
       table: { link: '../html/contents/table.html' },
       inputFormat: { link: '../html/contents/inputFormat.html' },
+      list: { link: '../html/contents/list.html' },
 
       //FORM
       formLayout: { link: '../html/components/formLayout.html' },

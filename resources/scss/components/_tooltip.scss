@@ -2,7 +2,9 @@
 .ui-tooltip {
     visibility: hidden;
     position: absolute;
-    z-index: 400;
+    top:0;
+    left:0;
+    z-index: -1;
     padding: 1rem;
     font-size: 1.2rem;
     border: 1px solid $gray100;
@@ -26,9 +28,12 @@
         animation-timing-function: linear;
         animation-fill-mode: forwards;
     }
-
-    &.hover {z-index: 401;}
-    &.fix {display: block !important;}
+   
+    &.hover {
+        z-index: 402;
+        .ui-tooltip-close {display: none;}
+    }
+    &.fix { z-index: 401;}
     &-btn {cursor: help;}
     &-close {
         position: absolute;
@@ -37,7 +42,9 @@
         width:2rem;
         height: 2rem;
         background-color: $gray900;
-
+    }
+    &-tit {
+        font-size: 1.6rem;
     }
 
     .ui-tooltip-arrow {
