@@ -22,7 +22,7 @@
 
 		<div class="box-guide">
 			<div class="ui-range" data-id="range2" data-type="single">
-				<input class="ui-range-inp" data-range="from" type="range" step="1" min="0" max="100" value="0" id="range2" list="range2_tickmarks" />
+				<input class="ui-range-inp" data-range="from" type="range" step="1" min="1" max="4" value="1" id="range2" list="range2_tickmarks" />
 			
 			</div>
 
@@ -32,8 +32,8 @@
 			</div>
 	
 			<div class="ui-range mt-x6" data-id="range1">
-				<input class="ui-range-inp" data-range="from" type="range" step="1" min="0" max="100" value="0" />
-				<input class="ui-range-inp" data-range="to" type="range" step="1" min="0" max="100" value="50" />
+				<input class="ui-range-inp" data-range="from" type="range" step="1" min="1000" max="5000" value="1000" />
+				<input class="ui-range-inp" data-range="to" type="range" step="1" min="1000" max="5000" value="3000" />
 				
 			</div>
 		</div>
@@ -82,10 +82,10 @@
 	&lt;div class="ui-range-track"&gt;
 		&lt;div class="ui-range-bar"&gt;&lt;/div&gt;
 		&lt;div class="left ui-range-point"&gt;
-			&lt;em class="n" data-from="range1"&gt;&lt;/em&gt;
+			&lt;em class="ui-range-txt" data-from="range1"&gt;&lt;/em&gt;
 		&lt;/div&gt;
 		&lt;div class="right ui-range-point"&gt;
-			&lt;em class="n" data-to="range1"&gt;&lt;/em&gt;
+			&lt;em class="ui-range-txt" data-to="range1"&gt;&lt;/em&gt;
 		&lt;/div&gt;
 	&lt;/div&gt;
 	</tag-comment>
@@ -102,7 +102,12 @@
 <h3 class="tit-s">Javascript</h3>
 <pre class="box-code"><code class="javascript">
 netive.rangeSlider.init({
-	id : 'range1'
+	id: 'range1',
+	step: 500,
+	min:1000,
+	max:5000,
+	text: ['매우높음', '매우높음2', '높음', '높음2', '보통', '보통2','낮음', '낮음2', '매우낮음'],
+	tickmark: ['1000', '2000', '3000', '4000', '5000'],
 });
 
 //single type 필수

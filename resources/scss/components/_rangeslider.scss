@@ -27,15 +27,12 @@
         transform: rotate(-90deg);
         margin-left: 6rem;
 
-        .ui-range-point {
-            justify-content: center;
-
-            .n {
-                top: 2.4rem;
-                left: 2rem;
-                transform: rotate(90deg);
-                transform-origin: 0 0;
-            }
+        .ui-range-point {justify-content: center;}
+        .ui-range-txt {
+            top: 2.4rem;
+            left: 2rem;
+            transform: rotate(90deg);
+            transform-origin: 0 0;
         }
     }
         
@@ -130,14 +127,14 @@
 
             &::before {content: 'arrow_right';}
         }
+    }
 
-        .n {
-            position: absolute;
-            top: -1.8rem;
-            text-align: center;
-            font-size: 1.2rem;
-            pointer-events: none;
-        }
+    &-txt {
+        position: absolute;
+        top: -1.8rem;
+        text-align: center;
+        font-size: 1.2rem;
+        pointer-events: none;
     }
 
     &-marks {

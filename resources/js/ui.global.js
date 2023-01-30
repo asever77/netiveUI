@@ -10,6 +10,7 @@
  * 1.0.5 (23.01.16) rangeSlider 눈금옵션추가 및 자동생성
  * 1.0.6 (23.01.19) select callback 작업
  * 1.0.7 (23.01.20) scroll.move customscroll 여부에 따른 동작분리
+ * 1.0.8 (23.01.30) rangeSlider : step, text 추가
  */
 ((win, doc, undefined) => {
 
@@ -2633,35 +2634,43 @@
 	Global.rangeSlider = {
 		init(opt){
 			const id = opt.id;
-			const tickmark = opt.tickmark;
+			
 			const el_range = doc.querySelector('.ui-range[data-id="'+ id +'"]');
 			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
 			const el_inp = el_range.querySelectorAll('.ui-range-inp');
-			const max = Number(el_inp[0].max);
-			const min = Number(el_inp[0].min);
 
+			const isText = !!opt.text ? opt.text : false;
 			const track = el_range.querySelector('.ui-range-track');
+			const step = !!opt.step ? opt.step : 1;
+			const min = !!opt.min ? opt.min : Number(el_inp[0].min);
+			const max = !!opt.max ? opt.max : Number(el_inp[0].max);
+			const tickmark = !!opt.tickmark ? opt.tickmark : false;
+
+			Global.rangeSlider[id] = {
+				id: id,
+				text: isText,
+			}
 
 			!!track && track.remove();
 
 			let html = '<div class="ui-range-track">';
 			html += '<div class="ui-range-bar"></div>';
-			html += '<span class="left ui-range-point" data-range="from"><em class="n" data-from="'+ id +'"></em></span>';
+			html += '<span class="left ui-range-point" data-range="from"><em class="ui-range-txt" data-from="'+ id +'"></em></span>';
 
 			if (!!el_to) {
-				html += '<span class="right ui-range-point" data-range="to"><em class="n" data-to="'+ id +'"></em></span>';
+				html += '<span class="right ui-range-point" data-range="to"><em class="ui-range-txt" data-to="'+ id +'"></em></span>';
 			}
 			
 			html += '</div>';
 
 			if (!!tickmark) {
 				html += '<datalist class="ui-range-marks" id="'+ id +'_tickmarks">';
-				const len = (max-min) / tickmark;
+				console.log(tickmark.length);
+				const len = tickmark.length;
 
-				for (let i = 0; i < len + 1; i++) {
-					html += '<option value="'+ tickmark*i +'" label="'+ tickmark*i +'"></option>';
-					console.log(html);
+				for (let i = 0; i < len; i++) {
+					html += '<option value="'+ i +'" label="'+ tickmark[i] +'"></option>';
 				}
 
 				html += '</datalist>';
@@ -2718,6 +2727,13 @@
 				el_from_btn.addEventListener('mouseover', inputFocus);
 				el_to_btn.addEventListener('touchstart', inputFocus);
 				el_from_btn.addEventListener('touchstart', inputFocus);
+
+				el_inp[0].step = step;
+				el_inp[1].step = step;
+				el_inp[0].min = min;
+				el_inp[0].max = max;
+				el_inp[1].min = min;
+				el_inp[1].max = max;
 			} else {
 				//single
 				Global.rangeSlider.rangeFrom({
@@ -2735,6 +2751,10 @@
 					el_from.classList.add('on');
 					el_from.focus();
 				});
+
+				el_inp[0].step = step;
+				el_inp[0].min = min;
+				el_inp[0].max = max;
 			}
 		},
 		rangeFrom(opt){
@@ -2749,10 +2769,12 @@
 			const el_bar = el_range.querySelector(".ui-range-bar");
 			const inp_froms = doc.querySelectorAll('[data-from="'+ id +'"]');
 
+			const txtArray = Global.rangeSlider[id].text;
+			const txtALen = txtArray.length;
+			
 			let percent;
-			let value = el_from.value;
-			let min = el_from.min;
-			let max = el_from.max;
+			let min = Number(el_from.min);
+			let max = Number(el_from.max);
 
 			if (v) {
 				el_from.value = v;
@@ -2790,7 +2812,22 @@
 				if (that.tagName === 'INPUT') {
 					that.value = from_value;
 				} else {
-					that.textContent = from_value;
+					
+					if (!!txtArray) {
+						const u = Number(max - min) / (txtALen - 1);
+						
+						for (let j = 0; j < txtALen; j++) {
+							that.textContent = txtArray[j];
+
+							const v_min = u * j <= 0 ? min : u * j + min;
+							if (from_value <= v_min) {
+								break;
+							}
+						}
+					} else {
+						that.textContent = from_value;
+					}
+				
 				}
 			}
 
@@ -2806,9 +2843,13 @@
 			const el_right = el_range.querySelector(".ui-range-point.right");
 			const el_bar = el_range.querySelector(".ui-range-bar");
 			const inp_tos = doc.querySelectorAll('[data-to="'+ id +'"]');
+			
 			let value = el_to.value;
-			let min = el_to.min;
-			let max = el_to.max;
+			let min = Number(el_from.min);
+			let max = Number(el_from.max);
+			
+			const txtArray = Global.rangeSlider[id].text;
+			const txtALen = txtArray.length;
 
 			if (v) {
 				el_to.value = v;
@@ -2836,7 +2877,20 @@
 				if (that.tagName === 'INPUT') {
 					that.value = el_to.value;
 				} else {
-					that.textContent = el_to.value;
+					if (!!txtArray) {
+						const u = Number(max - min) / (txtALen - 1);
+						
+						for (let j = 0; j < txtALen; j++) {
+							that.textContent = txtArray[j];
+
+							const v_min = u * j <= 0 ? min : u * j + min;
+							if (el_to.value <= v_min) {
+								break;
+							}
+						}
+					} else {
+						that.textContent = el_to.value;
+					}
 				}
 			}
 

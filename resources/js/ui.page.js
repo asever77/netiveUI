@@ -222,25 +222,35 @@
     };
     netive.page.pageRange = () => {
         netive.rangeSlider.init({
-            id: 'range1'
+            id: 'range1',
+            step: 500,
+            min:1000,
+            max:5000,
+            text: ['매우높음', '매우높음2', '높음', '높음2', '보통', '보통2','낮음', '낮음2', '매우낮음'],
+            tickmark: ['1000', '2000', '3000', '4000', '5000'],
         });
     
         netive.rangeSlider.init({
             id: 'range2',
-            tickmark: 25
+            text: ['1단계', '2단계', '3단계', '4단계'],
+            min:1,
+            max:4,
+            step: 1,
+            tickmark: ['1단계', '2단계', '3단계', '4단계']
         });
     
         netive.rangeSlider.init({
-            id: 'range3'
+            id: 'range3',
         });
     
         netive.rangeSlider.init({
-            id: 'range4'
+            id: 'range4',
+            step: 1000,
         });
 
          netive.rangeSlider.init({
             id: 'range22',
-            tickmark: 10
+            step: 10,
         });
     }
     netive.page.pageFileUpload = function(){

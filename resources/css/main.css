@@ -6482,7 +6482,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
 .ui-range[data-orient=vertical] .ui-range-point {
   justify-content: center;
 }
-.ui-range[data-orient=vertical] .ui-range-point .n {
+.ui-range[data-orient=vertical] .ui-range-txt {
   top: 2.4rem;
   left: 2rem;
   transform: rotate(90deg);
@@ -6587,7 +6587,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
 .ui-range-point.right::before {
   content: "arrow_right";
 }
-.ui-range-point .n {
+.ui-range-txt {
   position: absolute;
   top: -1.8rem;
   text-align: center;
