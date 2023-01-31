@@ -61,8 +61,8 @@
 						<div class="form-body">
 							<div class="form-group">
 								<div class="form-input">
-									<div class="ui-select">
-										<select title="Palette 앨범" id="uiSel1" onchange="console.log(this.selectedIndex);" data-callback="selectedCallback1">
+									<div class="ui-select" data-style="base" data-state="error">
+										<select title="Palette 앨범" id="uiSel1" data-callback="selectedCallback1" >
 											<option value="1">이 지금</option>
 											<option value="2">팔레트(Feat. G-DRAGON)</option>
 											<option value="3" >이런 엔딩</option>
@@ -128,7 +128,7 @@
 	<section class="wrap-section">
 		<h3 class="tit-s">HTML</h3>
 <pre class="box-code"><code class="html">
-&lt;div class="ui-select"&gt;
+&lt;div class="ui-select" data-style="{error}" data-state="{error}"&gt;
 	&lt;select title="Palette 앨범" id="uiSel1"&gt;
 		&lt;option&gt;...&lt;/option&gt;
 		...
@@ -136,7 +136,7 @@
 &lt;/div&gt;
 
 //스크립트 적용 후
-&lt;div class="ui-select"&gt;
+&lt;div class="ui-select" data-style="{error}" data-state="{error}" data-ps="top|bottom"&gt;
 	&lt;select title="Palette 앨범" id="uiSel1" class="off"&gt;
 		&lt;option&gt;...&lt;/option&gt;
 		...
@@ -144,7 +144,9 @@
 	&lt;button type="button" class="ui-select-btn " id="uiSel1_inp" role="combobox" aria-autocomplete="list" aria-owns="uiSel1_list" aria-haspopup="true" aria-expanded="true" aria-activedescendant="uiSel1_opt_0" data-n="0" data-id="uiSel1" tabindex="-1"&gt;
 		&lt;span&gt;1&lt;/span&gt;
 	&lt;/button&gt;
-	&lt;div class="ui-select-wrap on bottom" style="min-width: 332px;" aria-hidden="false"&gt;
+
+
+	&lt;div class="ui-select-wrap on bottom" style="min-width: 332px;" aria-hidden="false" data-style="{error}" data-state="{error}" data-ps="top|bottom"&gt;
 		&lt;strong class="ui-select-title"&gt;구 선택&lt;/strong&gt;
 		&lt;div class="ui-select-opts" role="listbox" id="uiSel1_list" aria-hidden="false"&gt;
 			&lt;button type="button" role="option" id="uiSel1_opt_0" class="ui-select-opt selected " value="1" tabindex="-1"&gt;

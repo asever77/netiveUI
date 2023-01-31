@@ -3853,7 +3853,8 @@
 				const btn_h = btn.offsetHeight;
 				const win_h = win.innerHeight;
 				const n = el_select.selectedIndex;
-
+				const state = !!el_uiselect.dataset.state ? el_uiselect.dataset.state : '';
+				
 				el_body.classList.add('dim-select');
 				btn.dataset.expanded = true;
 				btn.setAttribute('aria-expanded', true);
@@ -3872,6 +3873,7 @@
 					el_opts = el_optwrap.querySelectorAll('.ui-select-opt');
 					wraph = el_wrap.offsetHeight;
 					const opt_h = el_opts[0].offsetHeight;
+					const opt_w = el_opts[0].offsetWidth;
 					Global.scroll.move({ 
 						top: Number(opt_h * n) , 
 						selector: customscroll ? el_wrap.querySelector('.ui-scrollbar-item') : el_wrap, 
@@ -3891,13 +3893,24 @@
 
 					if (!isMobile) {
 						if ((win_h - wraph) + scrtop > offtop + scrtop + btn_h) {
-							el_wrap.style.top = offtop + scrtop + btn_h + 'px';
+							el_uiselect.dataset.ps = 'bottom';
+							el_wrap.dataset.ps = 'bottom';
+							el_wrap.dataset.state = state;
+							el_wrap.style.top = offtop + scrtop + btn_h - 1 + 'px';
 							el_wrap.style.left = offleft + scrleft + 'px';
 						} else {
-							el_wrap.style.top = offtop + scrtop - wraph + 'px';
+							el_uiselect.dataset.ps = 'top';
+							el_wrap.dataset.ps = 'top';
+							el_wrap.dataset.state = state;
+							el_wrap.style.top = offtop + scrtop - wraph + 1 + 'px';
 							el_wrap.style.left = offleft + scrleft + 'px';
 						}
+
+						el_wrap.style.minWidth = el_uiselect.offsetWidth + 'px';
+						el_wrap.style.maxWidth = el_uiselect.offsetWidth + 'px';
+						el_optwrap.style.minWidth = el_uiselect.offsetWidth + 'px';
 					}
+					
 				}, 0);
 
 				openScrollMove(el_uiselect);
@@ -4085,11 +4098,13 @@
 				selectTitle = el_select.title;
 				hiddenClass = '';
 
+				const isStyle = !!el_uiSelect.dataset.style ? el_uiSelect.dataset.style : '';
+
 				//callback 나중에 작업필요
 				//(!el_select.data('callback') || !!callback) && el_select.data('callback', callback);
-
+				
 				if (customscroll) {
-					htmlOption += '<div class="ui-select-wrap ui-scrollbar" scroll-id="uiSelectScrollBar_'+ idN +'" data-id="'+ selectID +'_inp">';
+					htmlOption += '<div class="ui-select-wrap ui-scrollbar" scroll-id="uiSelectScrollBar_'+ idN +'" data-id="'+ selectID +'_inp" data-style="'+ isStyle +'">';
 					idN = idN + 1;
 					sessionStorage.setItem('scrollbarID', idN);
 				} else {
@@ -4109,6 +4124,10 @@
 				htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
 				
 				el_uiSelect.insertAdjacentHTML('beforeend', htmlButton);
+
+				
+
+
 				el_select.classList.add('off');
 				el_select.setAttribute('aria-hidden', true)
 				// el_uiSelect.insertAdjacentHTML('beforeend', htmlOption);
@@ -4245,7 +4264,9 @@
 				});
 				_btn.focus();
 				Global.select.hide();
-				el_select.onchange();
+
+				console.log(!!el_select.getAttribute('onchange'))
+				!!el_select.getAttribute('onchange') && el_select.onchange();
 			} else {
 				Global.select.scrollSelect(idx, _wrap);
 			}
