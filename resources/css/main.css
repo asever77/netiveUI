@@ -6594,15 +6594,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   font-size: 1.2rem;
   pointer-events: none;
 }
-.ui-range-marks {
-  position: relative;
-  width: 100%;
-  position: absolute;
-  display: flex;
-  justify-content: space-between;
-  top: 100%;
-}
-.ui-range-marks option {
+.ui-range-btn {
   display: flex;
   justify-content: center;
   font-size: 1.2rem;
@@ -6612,7 +6604,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   text-align: center;
   padding-top: 0.8rem;
 }
-.ui-range-marks option::before {
+.ui-range-btn::before {
   content: "";
   display: block;
   width: 1px;
@@ -6622,6 +6614,14 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   position: absolute;
   transform: translate(-50%, 0);
   top: 0;
+}
+.ui-range-marks {
+  position: relative;
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  top: 100%;
 }
 
 /* ui scroll bar */

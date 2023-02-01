@@ -139,7 +139,28 @@
         font-size: 1.2rem;
         pointer-events: none;
     }
+    &-btn {
+        display: flex;
+        justify-content: center;
+        font-size: 1.2rem;
+        width: $rangeWidth;
+        padding:0;
+        position: relative;
+        text-align: center;
+        padding-top:$x1;
 
+        &::before{
+            content:"";
+            display:block;
+            width:1px;
+            height: $x0_5;
+            background-color: $black;
+            left:50%;
+            position: absolute;
+            transform: translate(-50%,0);
+            top:0;
+        }
+    }
     &-marks {
         position: relative;
         width: 100%;
@@ -148,27 +169,5 @@
         justify-content: space-between;
         top:100%;
 
-        option {
-            display: flex;
-            justify-content: center;
-            font-size: 1.2rem;
-            width: $rangeWidth;
-            padding:0;
-            position: relative;
-            text-align: center;
-            padding-top:$x1;
-
-            &::before{
-                content:"";
-                display:block;
-                width:1px;
-                height: $x0_5;
-                background-color: $black;
-                left:50%;
-                position: absolute;
-                transform: translate(-50%,0);
-                top:0;
-            }
-        }
     }
 }
