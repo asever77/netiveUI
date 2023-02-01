@@ -1,42 +1,62 @@
 <!doctype html>
 <script>
 
+let eventMixin = {
+  on(eventName, handler) {
+    console.log(this._eventHandlers)
+    if (!this._eventHandlers) this._eventHandlers = {};
+    if (!this._eventHandlers[eventName]) {
+      this._eventHandlers[eventName] = [];
+    }
+    this._eventHandlers[eventName].push(handler);
 
-  class CoffeeMachine {
-    _waterAmount = 0;
-
-    set waterAmount(value) {
-      if (value < 0) {
-        throw new Error('물의 양은 음수가 될 수 없습니다.');
+    console.log(this._eventHandlers[eventName], handler)
+  },
+  off(eventName, handler) {
+    let handlers = this._eventHandlers?.[eventName];
+    if (!handlers) return;
+    for (let i = 0; i < handlers.length; i++) {
+      console.log(handlers[i], handler, i--)
+      if (handlers[i] === handler) {
+        handlers.splice(i--, 1);
       }
-      this._waterAmount = value;
+    }
+  },
+  trigger(eventName,...args) {
+    if (!this._eventHandlers?.[eventName]) {
+      return;
     }
 
-    get waterAmount() {
-      return this._waterAmount;
-    }
-
-    constructor(power) {
-      this._power = power;
-    }
-
-    get power() {
-      return this._power;
-    }
+    this._eventHandlers[eventName].forEach(handler => handler.apply(this, args));
   }
+}
+ 
+class Menu{
+  choose(value) {
+    this.trigger('select2', value);
+  }
+}
+console.log(Menu.prototype);
+Object.assign(Menu.prototype, eventMixin);
+console.log(Menu.prototype);
 
-  let coffeeMachine = new CoffeeMachine(100);
-  console.log(coffeeMachine._waterAmount);
-  coffeeMachine.waterAmount = 10;
-  console.log(coffeeMachine._waterAmount);
+let menu = new Menu();
 
-  coffeeMachine.waterAmount = 100;
-  console.log(coffeeMachine._waterAmount);
+console.log(menu);
 
-  alert(`전력량이 ${coffeeMachine.power}인 커피머신을 만듭니다.`); // 전력량이 100인 커피머신을 만듭니다.
+menu.on('select', value => console.log(`selected value: ${value}`));
+menu.choose('123');
 
-  coffeeMachine._power = 25; // Error (setter 없음)
-  alert(`전력량이 ${coffeeMachine.power}인 커피머신을 만듭니다.`); 
+
+
+
+
+
+
+
+
+
+
 </script>
 
 </html>

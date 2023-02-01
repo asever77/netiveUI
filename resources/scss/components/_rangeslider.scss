@@ -35,7 +35,10 @@
             transform-origin: 0 0;
         }
     }
-        
+    
+    &.same {
+        .ui-range-point {pointer-events:none !important;}
+    }
     &-inp {
         width: 100%;
         top: .5rem;
@@ -102,9 +105,9 @@
         z-index: 13;
         cursor: pointer;
 
-        &:hover{pointer-events:none;}
+        // &:hover{pointer-events:none;}
         &.on {
-            z-index: 1;
+            z-index: 14;
             pointer-events:none;
             box-shadow:0 0 4px rgba(0,0,0,0.5);
         }

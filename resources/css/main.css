@@ -6488,6 +6488,9 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   transform: rotate(90deg);
   transform-origin: 0 0;
 }
+.ui-range.same .ui-range-point {
+  pointer-events: none !important;
+}
 .ui-range-inp {
   width: 100%;
   top: 0.5rem;
@@ -6558,11 +6561,8 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   z-index: 13;
   cursor: pointer;
 }
-.ui-range-point:hover {
-  pointer-events: none;
-}
 .ui-range-point.on {
-  z-index: 1;
+  z-index: 14;
   pointer-events: none;
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
 }

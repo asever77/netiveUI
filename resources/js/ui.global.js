@@ -2634,12 +2634,10 @@
 	Global.rangeSlider = {
 		init(opt){
 			const id = opt.id;
-			
 			const el_range = doc.querySelector('.ui-range[data-id="'+ id +'"]');
 			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
 			const el_inp = el_range.querySelectorAll('.ui-range-inp');
-
 			const isText = !!opt.text ? opt.text : false;
 			const track = el_range.querySelector('.ui-range-track');
 			const step = !!opt.step ? opt.step : 1;
@@ -2688,45 +2686,31 @@
 			el_range.dataset.from = '0';
 			el_range.dataset.to = '0';
 
-			const inputFocus = (e) => {
-				const point = e.currentTarget
-				const toForm = e.currentTarget.dataset.range;
-				const eType = e.type;
-				const _p = e.currentTarget.parentNode;
-				const _c = _p.querySelectorAll('.ui-range-point');
-
-				if (eType === 'touchstart') {
-					for (const pt of _c) {
-						pt.classList.toggle('on');
-					}
-				}
-				console.log(toForm);
-				if (toForm === 'to') {
-					el_to.classList.add('on');
-					el_from.classList.remove('on');
-					el_to.focus();
-				} else {
-					el_to.classList.remove('on');
-					el_from.classList.add('on');
-					el_from.focus();
-				}
-			}
 
 			if (el_from && el_to) {
 				//range
 				Global.rangeSlider.rangeFrom({id: id});
 				Global.rangeSlider.rangeTo({id: id});
 
+				//input - click input event
 				el_from.addEventListener(eventName, () => {
 					Global.rangeSlider.rangeFrom({id: id});
 				});
 				el_to.addEventListener(eventName, () => {
 					Global.rangeSlider.rangeTo({id: id});
 				});
-				el_to_btn.addEventListener('mouseover', inputFocus);
-				el_from_btn.addEventListener('mouseover', inputFocus);
-				el_to_btn.addEventListener('touchstart', inputFocus);
-				el_from_btn.addEventListener('touchstart', inputFocus);
+
+				//point - mouseover event
+				if (!Global.state.device.mobile) {
+					el_to_btn.addEventListener('mouseover', Global.rangeSlider.inputFocus);
+					el_from_btn.addEventListener('mouseover', Global.rangeSlider.inputFocus);
+				} else {
+					//point - touchstart event
+					// el_to_btn.addEventListener('touchstart', Global.rangeSlider.touchFocus);
+					// el_from_btn.addEventListener('touchstart', Global.rangeSlider.touchFocus);
+					console.log(el_range);
+					el_range.addEventListener('touchstart', Global.rangeSlider.touchFocus);
+				}
 
 				el_inp[0].step = step;
 				el_inp[1].step = step;
@@ -2755,6 +2739,146 @@
 				el_inp[0].step = step;
 				el_inp[0].min = min;
 				el_inp[0].max = max;
+			}
+		},
+		n:0,
+		touchFocus(e) {
+			const paths = e.path;
+			let toForm ;
+			let uirange;
+			let el_point_to;
+			let el_point_from ;
+			let el_to;
+			let el_from;
+
+			
+			
+			for (let i = 0; i < paths.length; i++) {
+				
+				if (paths[i].classList.contains('ui-range-point')) {
+					const point = paths[i];
+					toForm = point.dataset.range;
+					uirange = point.closest('.ui-range');
+					el_point_to = uirange.querySelector('.ui-range-point[data-range="to"]');
+					el_point_from = uirange.querySelector('.ui-range-point[data-range="from"]');
+					el_to = uirange.querySelector('.ui-range-inp[data-range="to"]');
+					el_from = uirange.querySelector('.ui-range-inp[data-range="from"]');
+
+					if (toForm === 'to') {
+						el_point_to.classList.add('on');
+						el_point_from.classList.remove('on');
+
+						el_to.classList.add('on');
+						el_from.classList.remove('on');
+
+					} else {
+						el_point_to.classList.remove('on');
+						el_point_from.classList.add('on');
+
+						el_to.classList.remove('on');
+						el_from.classList.add('on');
+
+
+						 el_from.dispatchEvent(new Event('touchstart'));
+						 console.log('point')
+						break;
+					}
+				} else {
+					console.log('input')
+				}
+
+				if (paths[i].classList.contains('ui-range')) {
+					break;	
+				}
+				
+			}
+
+			
+			
+
+			// const point = e.currentTarget
+			// const toForm = point.dataset.range;
+			// const eType = e.type;
+			// const point_parent = point.parentNode;
+			// const uirange = point.closest('.ui-range');
+			// const el_to = uirange.querySelector('.ui-range-inp[data-range="to"]');
+			// const el_from = uirange.querySelector('.ui-range-inp[data-range="from"]');
+			// const el_point_to = point_parent.querySelector('.ui-range-point[data-range="to"]');
+			// const el_point_from = point_parent.querySelector('.ui-range-point[data-range="from"]');
+
+			// console.log(e);
+
+
+
+
+			// if (toForm === 'to') {
+			// 	el_point_to.classList.add('on');
+			// 	el_point_from.classList.remove('on');
+			// 	el_to.classList.add('on');
+			// 	el_from.classList.remove('on');
+			// 	el_to.focus();
+				
+			// 	el_point_from.addEventListener('touchend touchcancel', Global.rangeSlider.valuecheck);
+	
+			// } else {
+			// 	el_point_from.classList.add('on');
+			// 	el_point_to.classList.remove('on');
+			// 	el_to.classList.remove('on');
+			// 	el_from.classList.add('on');
+
+			// 	console.log(Global.rangeSlider.n)
+			// 	if (Global.rangeSlider.n === 0) {
+			// 		// el_point_from.dispatchEvent(new Event('click'));
+
+			// 		el_point_from.click();
+			// 		Global.rangeSlider.n = 1;
+			// 		console.log(Global.rangeSlider.n)
+			// 	}
+				
+				
+			// 	el_point_from.addEventListener('touchend touchcancel', Global.rangeSlider.valuecheck);
+			// }	
+		},
+		inputFocus(e) {
+			const point = e.currentTarget
+			const toForm = point.dataset.range;
+			const eType = e.type;
+			const point_parent = point.parentNode;
+			const uirange = point.closest('.ui-range');
+			const el_to = uirange.querySelector('.ui-range-inp[data-range="to"]');
+			const el_from = uirange.querySelector('.ui-range-inp[data-range="from"]');
+			const el_point_to = point_parent.querySelector('.ui-range-point[data-range="to"]');
+			const el_point_from = point_parent.querySelector('.ui-range-point[data-range="from"]');
+
+			point.removeEventListener('mouseover', Global.rangeSlider.inputFocus);
+
+			if (toForm === 'to') {
+				el_to.classList.add('on');
+				el_from.classList.remove('on');
+				el_to.focus();
+				el_to.addEventListener('change', Global.rangeSlider.valuecheck);
+				el_point_from.addEventListener('mouseover', Global.rangeSlider.inputFocus);
+	
+			} else {
+				el_to.classList.remove('on');
+				el_from.classList.add('on');
+				el_from.focus();
+				el_from.addEventListener('change', Global.rangeSlider.valuecheck);
+				el_point_to.addEventListener('mouseover', Global.rangeSlider.inputFocus);
+			}	
+		},
+		valuecheck(e){
+			const el = e.currentTarget;
+			const uirange = el.closest('.ui-range');
+			const el_to = uirange.querySelector('.ui-range-inp[data-range="to"]');
+			const el_from = uirange.querySelector('.ui-range-inp[data-range="from"]');
+
+			console.log(el_to.value,el_from.value);
+
+			if (el_to.value === el_from.value) {
+				uirange.classList.add('same');
+			} else {
+				uirange.classList.remove('same')
 			}
 		},
 		rangeFrom(opt){
@@ -2832,6 +2956,14 @@
 			}
 
 			el_range.dataset.from = from_value;
+			
+			if (!!el_to) {
+				if (el_to.value === el_from.value) {
+					el_range.classList.add('same');
+				} else {
+					el_range.classList.remove('same')
+				}
+			}
 		},
 		rangeTo(opt){
 			const id = opt.id;
@@ -2895,6 +3027,14 @@
 			}
 
 			el_range.dataset.to = el_to.value;
+			
+			if (!!el_from) {
+				if (el_to.value === el_from.value) {
+					el_range.classList.add('same');
+				} else {
+					el_range.classList.remove('same')
+				}
+			}
 		}
 	}
 
