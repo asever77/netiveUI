@@ -47,15 +47,17 @@
         border: none;
         z-index: 10;
         appearance: none;
-        // opacity: 0;
+        opacity: 0;
         padding: 0;
         margin: 0;
         height: $rangeWidth;
         cursor: pointer;
         background-color: transparent;
+        pointer-events: none;
+        -webkit-appearance: none;
 
         &:focus ~ .ui-range-track{outline: 1px solid #000;}
-        &.on {z-index: 11;}
+        &.on { pointer-events: all; z-index: 9;}
         &::-webkit-slider-thumb {
             pointer-events: all;
             /* appearance, background-color는 지워도 됨 */
@@ -65,6 +67,9 @@
             width: $rangeWidth;
             height: $rangeWidth;
             margin-top: 0rem;
+            z-index: 13;
+            cursor: pointer;
+            -webkit-appearance: none;
         }
         &[data-range="from"]:focus ~ .ui-range-track .left.ui-range-point,
         &[data-range="to"]:focus ~ .ui-range-track .right.ui-range-point {
@@ -101,14 +106,14 @@
         height: $rangeWidth;
         border-radius: 50%;
         background-color:$primary;
-        pointer-events:all;
+        pointer-events:none;
         z-index: 13;
         cursor: pointer;
 
         // &:hover{pointer-events:none;}
         &.on {
             z-index: 14;
-            pointer-events:none;
+            // pointer-events:none;
             box-shadow:0 0 4px rgba(0,0,0,0.5);
         }
         &::before {
