@@ -1,8 +1,8 @@
 /**
  * ui.global.js
  * User Interface script 
- * modify: 2023.01.11
- * ver: 1.0.7
+ * modify: 2023.02.08
+ * ver: 1.0.9
  * desc: 
  * 1.0.3 (23.01.10) datepicker update : 날짜 클릭 시 값전달 및 창닫기 옵션 추가. isFooter : true
  * 1.0.4 (23.01.11) modal full height 값설정, modal dim 클릭 시 close
@@ -11,6 +11,7 @@
  * 1.0.6 (23.01.19) select callback 작업
  * 1.0.7 (23.01.20) scroll.move customscroll 여부에 따른 동작분리
  * 1.0.8 (23.01.30) rangeSlider : step, text 추가
+ * 1.0.9 (23.02.08) datepicker,sheet 포커스 이동 수정
  */
 ((win, doc, undefined) => {
 
@@ -768,7 +769,7 @@
 			const id = opt.id;
 			const state = opt.state;
 			const callback = opt.callback;
-
+			const el_focus = opt.focus;
 			const el_base = doc.querySelector('#'+ id);
 			let el_sheet = doc.querySelector('[data-id*="'+id+'"]');
 
@@ -821,7 +822,6 @@
 				});
 
 				el_sheet.querySelector('.ui-focusloop-start').focus();
-				console.log(el_sheet.querySelector('.ui-focusloop-start'));
 			} else {
 				//hide
 				el_sheet.classList.remove('on');
@@ -831,7 +831,7 @@
 					!!callback && callback();
 					el_sheet.remove();
 
-					doc.querySelector('#'+id).focus();
+					!!el_focus ? el_focus.focus() :  doc.querySelector('#'+id).focus();
 				},300);
 			}
 		}
@@ -3081,12 +3081,16 @@
 						html += '<span class="datepicker-date-dd">'+ v1[2] +'</span>';
 						html += '<span class="a11y-hidden">선택</span>'; 
 						html += '</span>'; 
+
+						inps[1].setAttribute('tabindex', -1);
+						inps[1].setAttribute('aria-hidden', true);
 					}
 					html += '</button>'; 
 
+					inps[0].setAttribute('tabindex', -1);
 					dp.insertAdjacentHTML('beforeend', html);
 					html = '';
-					
+
 					const btn = dp.querySelector('.ui-datepicker-btn');
 
 					btn.addEventListener('click', act);
@@ -3311,11 +3315,12 @@
 				s_mm[1].textContent = !!endDay ? _endDay[1] : Global.datepicker.baseTxt[1];
 				s_dd[1].textContent = !!endDay ? _endDay[2] : Global.datepicker.baseTxt[2];
 			}
-
+			el_btn.focus();
 			if (el_dp.classList.contains('sheet-bottom')) {
 				Global.sheets.bottom({
 					id: id,
 					state: false,
+					focus: el_btn,
 					callback: () => {
 						Global.datepicker.destroy({
 							id : id

@@ -5496,9 +5496,11 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   display: flex;
   align-items: center;
 }
-.ui-datepicker-btn:focus ~ .inp-base, .ui-datepicker-btn:hover ~ .inp-base {
-  border: 1px solid #1f1f1f;
-  background: transparent;
+.ui-datepicker-btn:focus, .ui-datepicker-btn:hover {
+  outline: 0;
+}
+.ui-datepicker-btn:focus .inp-base, .ui-datepicker-btn:hover .inp-base {
+  border: 1px solid var(--gray900);
 }
 .ui-datepicker-btn:disabled {
   opacity: 0.5;

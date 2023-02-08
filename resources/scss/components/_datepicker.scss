@@ -88,12 +88,11 @@
         background-color: transparent;
         display: flex;
         align-items: center;
-    
-        &:focus~.inp-base,
-        &:hover~.inp-base {
-            border: 1px solid #1f1f1f;
-            background: transparent;
-        }
+      
+        &:focus,
+        &:hover {outline:0;}
+        &:focus .inp-base,
+        &:hover .inp-base { border: 1px solid $gray900;}
         &:disabled {
             opacity: 0.5;
             &:disabled:focus,
