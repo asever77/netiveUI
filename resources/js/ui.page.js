@@ -213,6 +213,21 @@
         netive.datepicker.week = ['일', '월', '화', '수', '목', '금', '토', '년', '월', '일'];
         netive.datepicker.isFooter = false;
         netive.datepicker.init();
+
+       
+        netive.callback.uiDate_1 = (v) => {
+            console.log('callback', v);
+        }
+        netive.callback.uiDate_2 = (v) => {
+            console.log('callback', v);
+        }
+        netive.callback.uiDate_view = (v) => {
+            console.log('callback', v);
+        }
+        netive.callback.uiDate_view2 = (v) => {
+            console.log('callback', v);
+        }
+
     };
     netive.page.pageTime = () => {
         console.log('time')

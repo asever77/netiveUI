@@ -1,8 +1,8 @@
 /**
  * ui.global.js
  * User Interface script 
- * modify: 2023.02.08
- * ver: 1.0.9
+ * modify: 2023.02.20
+ * ver: 1.0.10
  * desc: 
  * 1.0.3 (23.01.10) datepicker update : 날짜 클릭 시 값전달 및 창닫기 옵션 추가. isFooter : true
  * 1.0.4 (23.01.11) modal full height 값설정, modal dim 클릭 시 close
@@ -12,6 +12,7 @@
  * 1.0.7 (23.01.20) scroll.move customscroll 여부에 따른 동작분리
  * 1.0.8 (23.01.30) rangeSlider : step, text 추가
  * 1.0.9 (23.02.08) datepicker,sheet 포커스 이동 수정
+ * 1.0.10 (23.02.20) datepicker callback 추가
  */
 ((win, doc, undefined) => {
 
@@ -3037,14 +3038,14 @@
 	 * in use: Global.state, Global.sheets, Global.parts
 	 */
 	Global.datepicker = {
-		isFooter: false,
+		isFooter: true,
 		week : ['일', '월', '화', '수', '목', '금', '토', '년', '월' , '일'],
 		baseTxt: ['년','월','일'],
 		init(v){
 			const btns = doc.querySelectorAll('.ui-datepicker-btn');
 			const datepickers = doc.querySelectorAll('.ui-datepicker');
-			this.week = v === undefined || v.week === undefined ? this.week : v.week;
-			this.isFooter = v === undefined || v.isFooter === undefined ? this.isFooter : v.isFooter
+			Global.datepicker.week = v === undefined || v.week === undefined ? Global.datepicker.week : v.week;
+			Global.datepicker.isFooter = v === undefined || v.isFooter === undefined ? Global.datepicker.isFooter : v.isFooter;
 
 			const act = (e) => {
 				Global.datepicker.open(e.currentTarget.dataset.target);
@@ -3062,6 +3063,8 @@
 					let v0 = inps[0].value.split('-');
 
 					(!inps[0].value) ? v0 = Global.datepicker.baseTxt : '';
+
+					!Global.callback[id] ? Global.callback[id] = {} : '';
 
 					let html = '<button type="button" class="ui-datepicker-btn" data-target="'+ id +'">';
 					html += '<span class="datepicker-date inp-base">';
@@ -3101,7 +3104,7 @@
 			const views = doc.querySelectorAll('.ui-datepicker-view');
 
 			for (let i = 0; i < views.length; i++) {
-				Global.datepicker.isFooter = true;
+				// Global.datepicker.isFooter = true;
 				const inp = doc.querySelector('#' + views[i].dataset.target);
 				
 				Global.datepicker.make({
@@ -3234,14 +3237,13 @@
 				_dpHtml += '</table>';
 				_dpHtml += '</div>';
 
-				if (isFooter || period) {
-					_dpHtml += '<div class="datepicker-footer">';
-					_dpHtml += '<div class="wrap-group">';
-					_dpHtml += '<button type="button" class="btn-mix-outlined ui-confirm" data-confirm="'+ setId +'"><span>확인</span></button>';
-					_dpHtml += '</div>';
-					_dpHtml += '</div>';
-				} 
+			console.log(isFooter);
 
+				_dpHtml += '<div class="datepicker-footer '+ (!isFooter ? 'a11y-hidden' : '') +' ">';
+				_dpHtml += '<div class="wrap-group">';
+				_dpHtml += '<button type="button" class="btn-mix-outlined ui-confirm" data-confirm="'+ setId +'"><span>확인</span></button>';
+				_dpHtml += '</div>';
+				_dpHtml += '</div>';
 				_dpHtml += '</div>';
 				_dpHtml += '</section>';
 
@@ -3293,44 +3295,60 @@
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
 			const el_btn =  doc.querySelector('.ui-datepicker-btn[data-target="'+ id +'"]');
+			const isView = el_inp.dataset.view === 'true' ? true : false;
+			const isBtn = !!el_btn;
+
 			const s_yy = el_btn.querySelectorAll('.datepicker-date-yyyy');
 			const s_mm = el_btn.querySelectorAll('.datepicker-date-mm');
 			const s_dd = el_btn.querySelectorAll('.datepicker-date-dd');
 
 			const callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
+			let value_callback = [];
 
 			el_inp.value = startDay;
+			value_callback.push(startDay);
 
 			const _startDay = startDay.split('-');
+			
 			s_yy[0].textContent = !!startDay ? _startDay[0] : Global.datepicker.baseTxt[0];
 			s_mm[0].textContent = !!startDay ? _startDay[1] : Global.datepicker.baseTxt[1];
 			s_dd[0].textContent = !!startDay ? _startDay[2] : Global.datepicker.baseTxt[2];
+			
 
 			!!callback && callback();
 
 			if (!!el_end) {
 				el_end.value = endDay;
+				value_callback.push(endDay);
 				const _endDay = endDay.split('-');
+				
 				s_yy[1].textContent = !!endDay ? _endDay[0] : Global.datepicker.baseTxt[0];
 				s_mm[1].textContent = !!endDay ? _endDay[1] : Global.datepicker.baseTxt[1];
 				s_dd[1].textContent = !!endDay ? _endDay[2] : Global.datepicker.baseTxt[2];
 			}
-			el_btn.focus();
-			if (el_dp.classList.contains('sheet-bottom')) {
-				Global.sheets.bottom({
-					id: id,
-					state: false,
-					focus: el_btn,
-					callback: () => {
-						Global.datepicker.destroy({
-							id : id
-						});
-					}
-				});
-			} else {
-				Global.datepicker.destroy({
-					id : id
-				});
+
+			console.log(id);
+
+			!!netive.callback[id] && netive.callback[id](value_callback);
+
+			if (!isView) {
+				el_btn.focus();
+				if (el_dp.classList.contains('sheet-bottom')) {
+					Global.sheets.bottom({
+						id: id,
+						state: false,
+						focus: el_btn,
+						callback: () => {
+							Global.datepicker.destroy({
+								id : id
+							});
+						}
+					});
+				} else {
+					Global.datepicker.destroy({
+						id : id
+					});
+				}
 			}
 		},
 		dateMake(opt){
@@ -3567,8 +3585,6 @@
 			const len = dayBtns.length;
 			const dayClickConfirm = (e) => {
 				const btn = e.currentTarget;
-				console.log(btn)
-
 				const id = btn.closest('.datepicker').dataset.id;
 
 				Global.datepicker.confirm({
@@ -3639,8 +3655,6 @@
 
 				that.addEventListener('keydown', keyMove);
 			}
-
-			
 		},
 		daySelect(event) {
 			const el_btn = event.currentTarget;
@@ -3655,6 +3669,7 @@
 			const el_uidp = el_inp.closest('.ui-datepicker');
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
+			const isView = el_inp.dataset.view === 'true' ? true : false;
 
 			period = (!!el_dp.dataset.end) ? 'end' : period;
 
@@ -3668,6 +3683,12 @@
 					that.classList.remove('selected-start');
 				}
 				el_btn.classList.add('selected-start');
+
+				// if (isView) {
+				// 	Global.datepicker.confirm({
+				// 		id: id
+				// 	});
+				// } 
 			} else {
 				//period mode
 				if (period === 'start') {
@@ -3696,6 +3717,12 @@
 								el_dp.dataset.end = selectDay;
 								el_btn.classList.add('selected-end');
 							}
+							if (!Global.datepicker.isFooter) {
+								Global.datepicker.confirm({
+									id: id
+								});
+							} 
+							
 						} else {
 							//end값 수정`
 							if (el_dp.dataset.start === selectDay) {
@@ -3717,6 +3744,11 @@
 									el_btn.classList.add('selected-end');
 								}
 							}
+							if (!Global.datepicker.isFooter) {
+								Global.datepicker.confirm({
+									id: id
+								});
+							} 
 						}
 					}
 				}
@@ -3726,7 +3758,8 @@
 					setDate: date,
 					setId: id
 				});
-				el_dp.querySelector('.datepicker-day[data-date="'+ now_focus.dataset.date +'"]').focus();
+
+				!!now_focus.dataset.date && el_dp.querySelector('.datepicker-day[data-date="'+ now_focus.dataset.date +'"]').focus();
 			}
 		},
 		nextYear(event) {
