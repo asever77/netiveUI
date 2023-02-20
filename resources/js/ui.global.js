@@ -12,7 +12,7 @@
  * 1.0.7 (23.01.20) scroll.move customscroll 여부에 따른 동작분리
  * 1.0.8 (23.01.30) rangeSlider : step, text 추가
  * 1.0.9 (23.02.08) datepicker,sheet 포커스 이동 수정
- * 1.0.10 (23.02.20) datepicker callback 추가
+ * 1.0.10 (23.02.20) datepicker callback 추가, select, dropdown back click 
  */
 ((win, doc, undefined) => {
 
@@ -4296,10 +4296,6 @@
 				htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
 				
 				el_uiSelect.insertAdjacentHTML('beforeend', htmlButton);
-
-				
-
-
 				el_select.classList.add('off');
 				el_select.setAttribute('aria-hidden', true)
 				// el_uiSelect.insertAdjacentHTML('beforeend', htmlOption);
@@ -4344,14 +4340,19 @@
 		},
 		back (e){
 			e.preventDefault();
-
+			
 			let isTure = '';
+			const path = e.composedPath();
 
-			for (let path of e.path) {
-				isTure = isTure + path.classList;
+			for (let i = 0, len = path.length; i < len; i++) {
+				const that = path[i];
+				isTure = isTure + that.classList;
 			}
 
-			(isTure.indexOf('ui-select-wrap') < 0) && Global.select.hide();
+			if(isTure.indexOf('ui-select-wrap') < 0) {
+				Global.select.hide();
+				doc.removeEventListener('click', Global.select.back);
+			} 
 		},
 		scrollSelect (v, el){
 			const id_inp = el.dataset.id;
@@ -4610,15 +4611,13 @@
 			e.preventDefault();
 			
 			let isTure = '';
+			const path = e.composedPath();
 
-			for (let i = 0, len = e.path.length; i < len; i++) {
-				const that = e.path[i];
+			for (let i = 0, len = path.length; i < len; i++) {
+				const that = path[i];
 				isTure = isTure + that.classList;
 			}
-			// for (let path of e.path) {
-			// 	isTure = isTure + path.classList;
-			// }
-			console.log('back', (isTure.indexOf('ui-drop-pnl') < 0));
+
 			if(isTure.indexOf('ui-drop-pnl') < 0) {
 				Global.dropdown.hide();
 				doc.removeEventListener('click', Global.dropdown.back);
