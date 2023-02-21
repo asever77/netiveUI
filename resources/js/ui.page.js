@@ -215,9 +215,9 @@
         netive.datepicker.init();
 
        
-        netive.callback.uiDate_1 = (v) => {
-            console.log('callback', v);
-        }
+        // netive.callback.uiDate_1 = (v) => {
+        //     console.log('callback', v);
+        // }
         netive.callback.uiDate_2 = (v) => {
             console.log('callback', v);
         }

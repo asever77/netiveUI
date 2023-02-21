@@ -1,8 +1,8 @@
 /**
  * ui.global.js
  * User Interface script 
- * modify: 2023.02.20
- * ver: 1.0.10
+ * modify: 2023.02.21
+ * ver: 1.0.11
  * desc: 
  * 1.0.3 (23.01.10) datepicker update : 날짜 클릭 시 값전달 및 창닫기 옵션 추가. isFooter : true
  * 1.0.4 (23.01.11) modal full height 값설정, modal dim 클릭 시 close
@@ -13,6 +13,7 @@
  * 1.0.8 (23.01.30) rangeSlider : step, text 추가
  * 1.0.9 (23.02.08) datepicker,sheet 포커스 이동 수정
  * 1.0.10 (23.02.20) datepicker callback 추가, select, dropdown back click 
+ * 1.0.11 (23.02.21) datepicker callback 없는 경우 에러 수정 
  */
 ((win, doc, undefined) => {
 
@@ -322,7 +323,6 @@
 				requestAnimationFrame(scrollTo);
 			} else {
 				!!callback && callback();
-				console.log('End off.')
 			}
 		},
 
@@ -1607,7 +1607,6 @@
 			}
 
 			Global.inputTime.hUnit = el_hour.querySelectorAll('button')[0].offsetHeight;
-			console.log(Global.inputTime.hUnit);
 			Global.scroll.move({ 
 				top: Number(Global.inputTime.hUnit * (isPM ? 1 : 0)), 
 				selector: el_midday, 
@@ -1906,7 +1905,6 @@
 					doc.onmouseup = (e) => {
 						doc.removeEventListener('mousemove', onMouseMove);
 						doc.onmouseup = null;
-						console.log('mousedown',Math.abs(that_wrap.getBoundingClientRect().top - wrapT));
 						getScrollTop = Math.abs(that_wrap.getBoundingClientRect().top - wrapT);
 
 						actValue(that_wrap.closest('.ui-time-wrap'));
@@ -2485,7 +2483,6 @@
 					
 					//show 동작
 					const show = () => {
-						console.log('show');
 						isShow = true;
 						el_btn.setAttribute('aria-expanded', true);
 						el_btn.dataset.selected = true;
@@ -2496,7 +2493,6 @@
 
 					//hide 동작
 					const hide = () => {
-						console.log('hide');
 						isShow = false;						
 						el_btn.setAttribute('aria-expanded', false);
 						el_btn.dataset.selected = false;
@@ -2585,13 +2581,9 @@
 					el_pnl = this_wrap.querySelector('.ui-acco-pnl');
 					el_btn = el_tit.querySelector('.ui-acco-btn');
 
-					console.log('selected', el_btn.dataset.selected);
-
 					//direct children 
 					if (accoId === this_wrap.closest('.ui-acco').dataset.id && !!el_pnl) {
-						// console.log(state,data_selected);
 						switch(state) {
-						
 							case 'toggle' : (el_btn.dataset.selected === 'true') ? act('hide') : act('show');
 								break;
 							case 'open' : act('show');
@@ -2669,8 +2661,6 @@
 
 				for (let i = 0; i < len; i++) {
 					const n = (max - min) / (len - 1);
-
-					console.log(max,min,n,len)
 
 					html += '<button class="ui-range-btn" data-id="'+ id +'" type="button" data-value="'+ (n * i + min) +'">'+ tickmark[i] +'</button>';
 				}
@@ -2779,7 +2769,6 @@
 					value : value
 				});
 			} else {
-				console.log(value === to)
 				if (value === to && rg !== 'to') {
 					Global.rangeSlider.rangeFrom({
 						id : id,
@@ -2815,8 +2804,6 @@
 			const el_from = uirange.querySelector('.ui-range-inp[data-range="from"]');
 			const el_point_to = point_parent.querySelector('.ui-range-point[data-range="to"]');
 			const el_point_from = point_parent.querySelector('.ui-range-point[data-range="from"]');
-
-			console.log(point, toForm, e);
 
 			if (toForm === 'to') {
 				el_point_to.classList.add('on');
@@ -2866,8 +2853,6 @@
 			const uirange = el.closest('.ui-range');
 			const el_to = uirange.querySelector('.ui-range-inp[data-range="to"]');
 			const el_from = uirange.querySelector('.ui-range-inp[data-range="from"]');
-
-			console.log(el_to.value,el_from.value);
 
 			if (el_to.value === el_from.value) {
 				uirange.classList.add('same');
@@ -3064,7 +3049,7 @@
 
 					(!inps[0].value) ? v0 = Global.datepicker.baseTxt : '';
 
-					!Global.callback[id] ? Global.callback[id] = {} : '';
+					!Global.callback[id] ? Global.callback[id] = () => {} : '';
 
 					let html = '<button type="button" class="ui-datepicker-btn" data-target="'+ id +'">';
 					html += '<span class="datepicker-date inp-base">';
@@ -3117,9 +3102,7 @@
 					week: this.week,
 					period: inp.dataset.period,
 					visible: true,
-					callback: () => {
-						console.log('callback init')
-					}
+					callback: () => {}
 				});
 			}
 		},
@@ -3162,9 +3145,7 @@
 						max: base.max,
 						title: base.title,
 						period: base.dataset.period,
-						callback: () => {
-							console.log('callback init')
-						}
+						callback: () => {}
 					});
 				}
 			});
@@ -3236,9 +3217,6 @@
 				_dpHtml += '<tbody class="datepicker-date"></tbody>';
 				_dpHtml += '</table>';
 				_dpHtml += '</div>';
-
-			console.log(isFooter);
-
 				_dpHtml += '<div class="datepicker-footer '+ (!isFooter ? 'a11y-hidden' : '') +' ">';
 				_dpHtml += '<div class="wrap-group">';
 				_dpHtml += '<button type="button" class="btn-mix-outlined ui-confirm" data-confirm="'+ setId +'"><span>확인</span></button>';
@@ -3326,8 +3304,6 @@
 				s_mm[1].textContent = !!endDay ? _endDay[1] : Global.datepicker.baseTxt[1];
 				s_dd[1].textContent = !!endDay ? _endDay[2] : Global.datepicker.baseTxt[2];
 			}
-
-			console.log(id);
 
 			!!netive.callback[id] && netive.callback[id](value_callback);
 
@@ -3489,13 +3465,11 @@
 					}
 					
 				} else if (viewYear > max_viewYear ) {
-					console.log('>');
 					_disabled = true;
 				}
 
 				//min date
 				if (viewYear === min_viewYear) {
-					console.log('===', viewMonth,  min_viewMonth);
 					if (viewMonth === min_viewMonth) {
 						if (date < min_viewDay) {
 							_disabled = true;
@@ -3505,7 +3479,6 @@
 					}
 					
 				} else if (viewYear < min_viewYear ) {
-					console.log('<');
 					_disabled = true;
 				}
 
@@ -3985,7 +3958,6 @@
 				body.dataset.selectopen = true;
 			}
 			const optBlur = (e) => {
-				console.log('opt blur')
 				//if (doc.querySelector('body').dataset.selectopen) { .. }); dim
 				//optClose();
 			}
@@ -4438,7 +4410,6 @@
 				_btn.focus();
 				Global.select.hide();
 
-				console.log(!!el_select.getAttribute('onchange'))
 				!!el_select.getAttribute('onchange') && el_select.onchange();
 			} else {
 				Global.select.scrollSelect(idx, _wrap);
@@ -5174,8 +5145,6 @@
 			for (let i = 0, len = elModals.length; i < len; i++) {
 				
 				const that = elModals[i];
-				console.log(that);
-
 				const elModalHead = that.querySelector('.ui-modal-header');
 				const elModalBody = that.querySelector('.ui-modal-body');
 				const elModalFoot = that.querySelector('.ui-modal-footer');
@@ -5266,7 +5235,6 @@
 				!!endfocus && endfocus.focus();
 
 				const sid = elModal.querySelector('.ui-modal-body').dataset.scrollId;
-				console.log(sid);
 				!!sid && Global.scrollBar.destroy(sid);
 
 				elModal.removeEventListener('animationend', closeEnd);
@@ -5294,7 +5262,6 @@
 			// 	!!endfocus && endfocus.focus();
 
 			// 	const sid = elModal.querySelector('.ui-modal-body').dataset.scrollId;
-			// 	console.log(sid);
 			// 	!!sid && Global.scrollBar.destroy(sid);
 			// },210);
 		}, 
@@ -5415,7 +5382,6 @@
 
 			//툴팁 모바일에서 클릭, 하단 노출 건 확인필요
 			const act = () => {
-				console.log('act');
 				elTooltip = doc.querySelector('#' + elId);
 
 				const tooltips = doc.querySelectorAll('.ui-tooltip');
@@ -6340,7 +6306,6 @@
 							dateStart = changeFormatDate(dateStart)
 							const todayModify = dateDiff(dateStart, new Date());
 							
-							console.log('todayModify', todayModify);
 							if (Number(todayModify) === 0) {
 								cls = cls + ' today-mod';
 							} 
@@ -6652,7 +6617,6 @@
 						off_l = $this.position().left / scale;
 
 					for (var i = 0, len = $area.length; i < len; i++) {
-						console.log(i);
 						arrTs.push($area.eq(i).position().top);
 						arrTe.push($area.eq(i).position().top + $area.eq(i).outerHeight() * scale);
 						arrLs.push($area.eq(i).position().left);
