@@ -3024,6 +3024,8 @@
 	 */
 	Global.datepicker = {
 		isFooter: true,
+		holidaySolar: ['1-1', '3-1', '5-5', '6-6', '8-15', '10-3', '10-9', '12-25'],
+		holidayLunar: ['12-30', '1-1', '1-2', '4-8', '8-14', '8-15', '8-16'],
 		week : ['일', '월', '화', '수', '목', '금', '토', '년', '월' , '일'],
 		baseTxt: ['년','월','일'],
 		init(v){
@@ -3636,7 +3638,7 @@
             /* 양력/음력 변환 */
             var date = lunarCalc(solYear, solMonth, solDay, 1);
 			//(date.leapMonth ? "(윤)" : "") + 
-            return date.year + "-" + date.month + "-" + date.day;
+            return date.month + "-" + date.day;
 		},
 		dateMake(opt){
 			const setDate = opt.setDate;
@@ -3833,10 +3835,37 @@
 
 				
 
-				let lunarDate = Global.datepicker.solarToLunar(viewYear,  (viewMonth + 1),  date);
+				const lunarDate = Global.datepicker.solarToLunar(viewYear,  (viewMonth + 1),  date);
+				const lunarDate_m = Number(lunarDate.split('-')[0]);
+				const lunarDate_d = Number(lunarDate.split('-')[1]);
 
-				console.log(lunarDate);
+				for (let i = 0; i < Global.datepicker.holidaySolar.length; i++) {
+					const holidaySolar = Global.datepicker.holidaySolar[i];
+					const holidaySolar_m = Number(holidaySolar.split('-')[0]);
+					const holidaySolar_d = Number(holidaySolar.split('-')[1]);
 
+					console.log(holidaySolar_m, (viewMonth + 1), holidaySolar_d , date)
+
+					if (holidaySolar_m === (viewMonth + 1)) {
+						if (holidaySolar_d === date) {
+							isHoliday = true;
+						}
+					} 
+				}
+
+				for (let i = 0; i < Global.datepicker.holidayLunar.length; i++) {
+					const holidayLunar = Global.datepicker.holidayLunar[i];
+					const holidayLunar_m = Number(holidayLunar.split('-')[0]);
+					const holidayLunar_d = Number(holidayLunar.split('-')[1]);
+
+					console.log(holidayLunar_m, lunarDate_m, holidayLunar_d , lunarDate_d)
+
+					if (holidayLunar_m === lunarDate_m) {
+						if (holidayLunar_d === lunarDate_d) {
+							isHoliday = true;
+						}
+					} 
+				}
 
 				_dpHtml += '<td class="'+ _class +'">';
 
