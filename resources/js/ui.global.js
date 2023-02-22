@@ -3756,7 +3756,7 @@
 			//dates 합치기
 			const dates = prevDates.concat(thisDates, nextDates);
 			let _dpHtml = '';
-
+			let subDay = false;
 			//dates 정리
 			dates.forEach((date,i) => {
 				let _class = '';
@@ -3832,36 +3832,41 @@
 				} else {
 					_dpHtml += '';
 				}
-
 				
-
 				const lunarDate = Global.datepicker.solarToLunar(viewYear,  (viewMonth + 1),  date);
 				const lunarDate_m = Number(lunarDate.split('-')[0]);
 				const lunarDate_d = Number(lunarDate.split('-')[1]);
 
+				//양력 공휴일, 대체휴일
 				for (let i = 0; i < Global.datepicker.holidaySolar.length; i++) {
 					const holidaySolar = Global.datepicker.holidaySolar[i];
 					const holidaySolar_m = Number(holidaySolar.split('-')[0]);
 					const holidaySolar_d = Number(holidaySolar.split('-')[1]);
 
-					console.log(holidaySolar_m, (viewMonth + 1), holidaySolar_d , date)
-
 					if (holidaySolar_m === (viewMonth + 1)) {
 						if (holidaySolar_d === date) {
+							if (isHoliday) {
+								if ((holidaySolar_m +'-'+ holidaySolar_d) !== '1-1' && (holidaySolar_m +'-'+ holidaySolar_d) !== '6-6') {
+									subDay = true;
+								}  
+							}
 							isHoliday = true;
 						}
 					} 
 				}
-
+				//음력 공휴일, 대체휴일
 				for (let i = 0; i < Global.datepicker.holidayLunar.length; i++) {
 					const holidayLunar = Global.datepicker.holidayLunar[i];
 					const holidayLunar_m = Number(holidayLunar.split('-')[0]);
 					const holidayLunar_d = Number(holidayLunar.split('-')[1]);
 
-					console.log(holidayLunar_m, lunarDate_m, holidayLunar_d , lunarDate_d)
-
 					if (holidayLunar_m === lunarDate_m) {
 						if (holidayLunar_d === lunarDate_d) {
+							if (isHoliday) {
+								if ((holidayLunar_m +'-'+ holidayLunar_d) !== '1-1' && (holidayLunar_m +'-'+ holidayLunar_d) !== '6-6') {
+									subDay = true;
+								} 
+							}
 							isHoliday = true;
 						}
 					} 
@@ -3870,9 +3875,11 @@
 				_dpHtml += '<td class="'+ _class +'">';
 
 				if (date !== '') {
-						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.parts.add0(viewMonth + 1)+'-'+ Global.parts.add0(date)+ '" '+ (isHoliday || _disabled ? 'disabled' : '') +'>';
-					
+					console.log(isHoliday, subDay, lunarDate);
+						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.parts.add0(viewMonth + 1)+'-'+ Global.parts.add0(date)+ '" '+ (isHoliday || _disabled || (!isHoliday && subDay) ? 'disabled' : '') +'>';
 				}
+
+				(!isHoliday && subDay) ? subDay = false : '';
 				
 				_dpHtml += '<span>' + date +'</span>';
 				_dpHtml += '<span class="week-word">' + (date && week[(i+7) % 7]) +'</span>';
