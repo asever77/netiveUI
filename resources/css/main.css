@@ -2917,14 +2917,14 @@ input[type=checkbox] {
 }
 
 :checked + .lb-switch::before {
-  background-color: hsl(265deg, 100%, 47%);
+  background-color: hsl(265, 100%, 47%);
   opacity: 0.5;
 }
 
 :checked + .lb-switch::after {
   box-shadow: -0.1rem 0.1rem 0.4rem rgba(0, 0, 0, 0.1);
   transform: translate(2rem, -50%);
-  background-color: hsl(265deg, 100%, 47%);
+  background-color: hsl(265, 100%, 47%);
 }
 
 :disabled + .lb-switch {
@@ -5217,7 +5217,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
 .ui-datepicker-btn:disabled {
   opacity: 0.5;
 }
-.ui-datepicker-btn:disabled:disabled:focus, .ui-datepicker-btn:disabled:disabled:hover {
+.ui-datepicker-btn:disabled:focus, .ui-datepicker-btn:disabled:hover {
   border: 0;
   background: transparent;
   color: #666;
@@ -5233,7 +5233,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
 .datepicker .wrap-group {
   margin: 0;
 }
-.datepicker :disabled {
+.datepicker:disabled {
   opacity: 0.8 !important;
 }
 .datepicker-header {
@@ -5292,6 +5292,14 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
 .datepicker-body .datepicker-date td {
   text-align: center;
 }
+.datepicker-body .datepicker-date td:nth-child(1) .datepicker-day {
+  color: red;
+  pointer-events: none;
+}
+.datepicker-body .datepicker-date td:nth-child(7) .datepicker-day {
+  color: rgb(11, 135, 211);
+  pointer-events: none;
+}
 .datepicker-body .week-word {
   display: none;
 }
@@ -5303,9 +5311,13 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   line-height: 1;
   font-size: 1.2rem;
 }
+.datepicker-body .datepicker-day[data-holiday=true] {
+  color: red !important;
+  pointer-events: none;
+}
 .datepicker-body .datepicker-day.selected-end, .datepicker-body .datepicker-day.selected-start, .datepicker-body .datepicker-day.selected {
   background: #6B38FB;
-  color: #fff;
+  color: #fff !important;
 }
 .datepicker-body .datepicker-day.today.selected-end, .datepicker-body .datepicker-day.today.selected-start {
   background: #6200ee;

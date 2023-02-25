@@ -3022,10 +3022,62 @@
 	 * DATE PICKER
 	 * in use: Global.state, Global.sheets, Global.parts
 	 */
+	
 	Global.datepicker = {
 		isFooter: true,
-		holidaySolar: ['1-1', '3-1', '5-5', '6-6', '8-15', '10-3', '10-9', '12-25'],
-		holidayLunar: ['12-30', '1-1', '1-2', '4-8', '8-14', '8-15', '8-16'],
+		specialday:{
+			"1":[
+				{"solar":true, "day":1, "holiday":true, "name":"신정", "sub":true},
+				{"solar":false, "day":1, "holiday":true, "name":"설날", "sub":true},
+				{"solar":false, "day":2, "holiday":true, "name":"설날 다음날", "sub":false}
+			],
+			"2":[],
+			"3":[
+				{"solar":true, "day":1, "holiday":true, "name":"삼일절", "sub":true}
+			],
+			"4":[
+				{"solar":false, "day":8, "holiday":true, "name":"석가탄신일", "sub":true}
+			],
+			"5":[
+				{"solar":true, "day":5, "holiday":true, "name":"어린이날", "sub":true}
+			],
+			"6":[
+				{"solar":true, "day":6, "holiday":true, "name":"현충일", "sub":false}
+			],
+			"7":[],
+			"8":[
+				{"solar":false, "day":14, "holiday":true, "name":"추석 전날", "sub":false},
+				{"solar":false, "day":15, "holiday":true, "name":"추석", "sub":true},
+				{"solar":false, "day":16, "holiday":true, "name":"추석 다음날", "sub":false}
+			],
+			"9":[],
+			"10":[
+				{"solar":true, "day":3, "holiday":true, "name":"개천절", "sub":true},
+				{"solar":true, "day":9, "holiday":true, "name":"한글날", "sub":true}
+			],
+			"11":[
+				{"solar":true, "day":7, "holiday":false, "name":"창립기념일", "sub":false}
+			],
+			"12":[
+				{"solar":true, "day":25, "holiday":true, "name":"성탄절", "sub":true},
+				{"solar":false, "day":'last', "holiday":true, "name":"설날 전날", "sub":false}
+			],
+		},
+		// holiday: [
+		// 	/* solar and lunar - month - day - name - 대체휴일 */
+		// 	['L-1-1-설날-1', 'S-1-1-신정-1'],
+		// 	[],
+		// 	['S-3-1-삼일절-1'],
+		// 	['L-4-8-부처님 오신 날-0'],
+		// 	['S-5-5-어린이날-1'],
+		// 	['S-6-6-현충일-0'],
+		// 	[],
+		// 	['L-8-15-추석-1'],
+		// 	[],
+		// 	['S-10-3-개천절-1', 'S-10-9-한글날-1'],
+		// 	[],
+		// 	['S-12-25-성탄절-0']
+		// ],
 		week : ['일', '월', '화', '수', '목', '금', '토', '년', '월' , '일'],
 		baseTxt: ['년','월','일'],
 		init(v){
@@ -3756,13 +3808,14 @@
 			//dates 합치기
 			const dates = prevDates.concat(thisDates, nextDates);
 			let _dpHtml = '';
-			let subDay = false;
+			Global.callback[setId].subDay = false;
+
 			//dates 정리
-			dates.forEach((date,i) => {
+			dates.forEach((date, i) => {
 				let _class = '';
 				let _disabled = false;
 				let isHoliday = i % 7 === 0 || i % 7 === 6 ? true : false;
-				
+				let isHolidaySunday = i % 7 === 0 ? true : false;
 				// _class = (i % 7 === 0) ? 'hday' : '';
 				// _class = (i % 7 === 0) ? 'hday' : _class;
 
@@ -3836,53 +3889,95 @@
 				const lunarDate = Global.datepicker.solarToLunar(viewYear,  (viewMonth + 1),  date);
 				const lunarDate_m = Number(lunarDate.split('-')[0]);
 				const lunarDate_d = Number(lunarDate.split('-')[1]);
+				const specialdayMonth_solar = Global.datepicker.specialday[(viewMonth + 1)];
+				const specialdayMonth_lunar = Global.datepicker.specialday[lunarDate_m];
+				let specialdayName = '';
+				let isPublicHoliday = false;
 
-				//양력 공휴일, 대체휴일
-				for (let i = 0; i < Global.datepicker.holidaySolar.length; i++) {
-					const holidaySolar = Global.datepicker.holidaySolar[i];
-					const holidaySolar_m = Number(holidaySolar.split('-')[0]);
-					const holidaySolar_d = Number(holidaySolar.split('-')[1]);
-
-					if (holidaySolar_m === (viewMonth + 1)) {
-						if (holidaySolar_d === date) {
-							if (isHoliday) {
-								if ((holidaySolar_m +'-'+ holidaySolar_d) !== '1-1' && (holidaySolar_m +'-'+ holidaySolar_d) !== '6-6') {
-									subDay = true;
-								}  
-							}
-							isHoliday = true;
-						}
-					} 
-				}
-				//음력 공휴일, 대체휴일
-				for (let i = 0; i < Global.datepicker.holidayLunar.length; i++) {
-					const holidayLunar = Global.datepicker.holidayLunar[i];
-					const holidayLunar_m = Number(holidayLunar.split('-')[0]);
-					const holidayLunar_d = Number(holidayLunar.split('-')[1]);
-
-					if (holidayLunar_m === lunarDate_m) {
-						if (holidayLunar_d === lunarDate_d) {
-							if (isHoliday) {
-								if ((holidayLunar_m +'-'+ holidayLunar_d) !== '1-1' && (holidayLunar_m +'-'+ holidayLunar_d) !== '6-6') {
-									subDay = true;
+				if (!!date) {
+					//양력 공휴일
+					let holidayOverlap = false;
+					if (specialdayMonth_solar.length > 0){
+						for (let item of specialdayMonth_solar) {
+							if (!!item.solar && !!item.holiday && item.day === date) {
+								//대체휴일(토,일)
+								if (isHoliday && item.sub) {
+									Global.callback[setId].subDay = true;
 								} 
+
+								//2023년부터 석가탄신일, 성탄절도 대체공휴일 적용대상
+								if (viewYear < 2023 && (viewMonth + 1) === 12 && date === 25) {
+									Global.callback[setId].subDay = false;
+								} 
+								
+								isHoliday = true;
+								isPublicHoliday = true;
+								holidayOverlap = true;
+								specialdayName = item.name;
+								console.log(specialdayName);
+							} else if (!!item.solar && !item.holiday && item.day === date) {
+								specialdayName = item.name;
 							}
-							isHoliday = true;
 						}
-					} 
+					}
+					// 음력공휴일
+					if (specialdayMonth_lunar.length > 0) {
+						for (let item of specialdayMonth_lunar) {
+							if (!item.solar) {
+								if (!!item.holiday && item.day === lunarDate_d) {
+									//대체휴일: 석가탄신일(토,일,공휴일) 추석,설날(일,공휴일)
+									if (lunarDate_m === 4 && lunarDate_d === 8) {
+										if ((isHoliday || holidayOverlap) && item.sub ) {
+											Global.callback[setId].subDay = true;
+										} 
+									} else {
+										if ((isHolidaySunday || holidayOverlap) && item.sub ) {
+											Global.callback[setId].subDay = true;
+										} 
+									} 
+									
+									isHoliday = true;
+									isPublicHoliday = true;
+									specialdayName = item.name;
+									console.log(specialdayName);
+								} else if (!!item.holiday && item.day === 'last') {
+									//설 전날 마지막일 찾기
+									const lunarDateNext = Global.datepicker.solarToLunar(viewYear,  (viewMonth + 1),  date + 1);
+									const lunarDateNext_m = Number(lunarDateNext.split('-')[0]);
+									
+									if (lunarDateNext_m !== undefined && lunarDate_m !== lunarDateNext_m){
+										if ((isHolidaySunday || holidayOverlap) && item.sub ) {
+											Global.callback[setId].subDay = true;
+										} 
+
+										isHoliday = true;
+										isPublicHoliday = true;
+										specialdayName = item.name;
+										console.log(specialdayName);
+									}
+								}
+
+								//2023년부터 석가탄신일, 성탄절도 대체공휴일 적용대상
+								if (viewYear < 2023 && lunarDate_m === 4 && lunarDate_d === 8) {
+									Global.callback[setId].subDay = false;
+								}
+							} 
+						}
+					}
 				}
 
 				_dpHtml += '<td class="'+ _class +'">';
 
 				if (date !== '') {
-					console.log(isHoliday, subDay, lunarDate);
-						_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.parts.add0(viewMonth + 1)+'-'+ Global.parts.add0(date)+ '" '+ (isHoliday || _disabled || (!isHoliday && subDay) ? 'disabled' : '') +'>';
+					_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.parts.add0(viewMonth + 1)+'-'+ Global.parts.add0(date)+ '" data-holiday='+ (isPublicHoliday || _disabled || (!isHoliday && Global.callback[setId].subDay) ? 'true' : 'false') +' aria-label="'+ viewYear +'년 '+ (viewMonth + 1) +'월 '+ date + '일 ' + week[(i+7) % 7] + '요일 '+ (!!specialdayName ? specialdayName : Global.callback[setId].subDay ? '대체휴일' : '') +'">';
+
+					console.log(date, specialdayName);
 				}
 
-				(!isHoliday && subDay) ? subDay = false : '';
+				(!isHoliday && Global.callback[setId].subDay) ? Global.callback[setId].subDay = false : '';
 				
-				_dpHtml += '<span>' + date +'</span>';
-				_dpHtml += '<span class="week-word">' + (date && week[(i+7) % 7]) +'</span>';
+				_dpHtml += '<span>'+ date +'</span>';
+				_dpHtml += '<span class="week-word">' + (date && week[(i+7) % 7])  +'</span>';
 				_dpHtml += '</button>';
 				_dpHtml += '</td>';
 			});

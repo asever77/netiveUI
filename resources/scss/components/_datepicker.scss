@@ -88,15 +88,16 @@
         background-color: transparent;
         display: flex;
         align-items: center;
-      
+        
         &:focus,
         &:hover {outline:0;}
         &:focus .inp-base,
         &:hover .inp-base { border: 1px solid $gray900;}
         &:disabled {
             opacity: 0.5;
-            &:disabled:focus,
-            &:disabled:hover {
+
+            &:focus,
+            &:hover {
                 border: 0;
                 background: transparent;
                 color: #666;
@@ -120,7 +121,7 @@
     .wrap-group {
         margin: 0;
     }
-    :disabled {
+    &:disabled {
         opacity: .8 !important;
     }
 
@@ -170,7 +171,15 @@
     
         th {font-size: 1.2rem;}
         .datepicker-date td {
-            text-align: center
+            text-align: center;
+             &:nth-child(1) .datepicker-day{
+                color: red;
+                pointer-events: none;
+            }
+            &:nth-child(7) .datepicker-day{
+                color: rgb(11, 135, 211);
+                pointer-events: none;
+            }
         }
         .week-word{display: none;} 
         .datepicker-day {
@@ -180,12 +189,16 @@
             margin: 0.3rem 0;
             line-height: 1;
             font-size: 1.2rem;
-        
+
+            &[data-holiday="true"] {
+                color:red !important;
+                pointer-events: none;
+            }
             &.selected-end,
             &.selected-start,
             &.selected {
                 background: $primary;
-                color: #fff;
+                color: #fff !important;
             }
         
             &.today.selected-end,
