@@ -1,8 +1,8 @@
 /**
  * ui.global.js
  * User Interface script 
- * modify: 2023.02.21
- * ver: 1.0.11
+ * modify: 2023.02.26
+ * ver: 1.0.12
  * desc: 
  * 1.0.3 (23.01.10) datepicker update : 날짜 클릭 시 값전달 및 창닫기 옵션 추가. isFooter : true
  * 1.0.4 (23.01.11) modal full height 값설정, modal dim 클릭 시 close
@@ -14,6 +14,7 @@
  * 1.0.9 (23.02.08) datepicker,sheet 포커스 이동 수정
  * 1.0.10 (23.02.20) datepicker callback 추가, select, dropdown back click 
  * 1.0.11 (23.02.21) datepicker callback 없는 경우 에러 수정 
+ * 1.0.12 (23.02.26) datepicker 공휴일, 대체휴일 설정 추가
  */
 ((win, doc, undefined) => {
 
@@ -3063,21 +3064,6 @@
 				{"solar":false, "day":'last', "holiday":true, "name":"설날 전날", "sub":false}
 			],
 		},
-		// holiday: [
-		// 	/* solar and lunar - month - day - name - 대체휴일 */
-		// 	['L-1-1-설날-1', 'S-1-1-신정-1'],
-		// 	[],
-		// 	['S-3-1-삼일절-1'],
-		// 	['L-4-8-부처님 오신 날-0'],
-		// 	['S-5-5-어린이날-1'],
-		// 	['S-6-6-현충일-0'],
-		// 	[],
-		// 	['L-8-15-추석-1'],
-		// 	[],
-		// 	['S-10-3-개천절-1', 'S-10-9-한글날-1'],
-		// 	[],
-		// 	['S-12-25-성탄절-0']
-		// ],
 		week : ['일', '월', '화', '수', '목', '금', '토', '년', '월' , '일'],
 		baseTxt: ['년','월','일'],
 		init(v){
@@ -3700,7 +3686,7 @@
 			const el_uidp = el_inp.closest('.ui-datepicker');	
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
-			const isHoliyday = el_inp.dataset.holiday;
+			const isHoliyday = el_inp.dataset.holiday === 'true' ? true : false;
 
 			if (!!el_dp.dataset.period) {
 				if (el_dp.dataset.end !== '' && (el_dp.dataset.end !== el_dp.dataset.start)) {
@@ -3914,7 +3900,6 @@
 								isPublicHoliday = true;
 								holidayOverlap = true;
 								specialdayName = item.name;
-								console.log(specialdayName);
 							} else if (!!item.solar && !item.holiday && item.day === date) {
 								specialdayName = item.name;
 							}
@@ -3939,7 +3924,6 @@
 									isHoliday = true;
 									isPublicHoliday = true;
 									specialdayName = item.name;
-									console.log(specialdayName);
 								} else if (!!item.holiday && item.day === 'last') {
 									//설 전날 마지막일 찾기
 									const lunarDateNext = Global.datepicker.solarToLunar(viewYear,  (viewMonth + 1),  date + 1);
@@ -3953,7 +3937,6 @@
 										isHoliday = true;
 										isPublicHoliday = true;
 										specialdayName = item.name;
-										console.log(specialdayName);
 									}
 								}
 
@@ -3969,9 +3952,7 @@
 				_dpHtml += '<td class="'+ _class +'">';
 
 				if (date !== '') {
-					_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.parts.add0(viewMonth + 1)+'-'+ Global.parts.add0(date)+ '" data-holiday='+ (isPublicHoliday || _disabled || (!isHoliday && Global.callback[setId].subDay) ? 'true' : 'false') +' aria-label="'+ viewYear +'년 '+ (viewMonth + 1) +'월 '+ date + '일 ' + week[(i+7) % 7] + '요일 '+ (!!specialdayName ? specialdayName : Global.callback[setId].subDay ? '대체휴일' : '') +'">';
-
-					console.log(date, specialdayName);
+					_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.parts.add0(viewMonth + 1)+'-'+ Global.parts.add0(date)+ '" data-holiday='+ (isPublicHoliday || _disabled || (!isHoliday && Global.callback[setId].subDay) ? 'true' : 'false') +' aria-label="'+ viewYear +'년 '+ (viewMonth + 1) +'월 '+ date + '일 ' + week[(i+7) % 7] + '요일 '+ (!!specialdayName ? specialdayName : Global.callback[setId].subDay ? '대체휴일' : '') +'" '+ (isHoliyday && (isPublicHoliday || isHoliday || Global.callback[setId].subDay) ? 'disabled' : '') +'>';
 				}
 
 				(!isHoliday && Global.callback[setId].subDay) ? Global.callback[setId].subDay = false : '';

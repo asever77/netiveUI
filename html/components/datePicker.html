@@ -61,6 +61,7 @@
 												max="2025-12-30" 
 												title="시작일"
 												data-period="start"
+												data-holiday="true" 
 												readonly 
 												required>
 										</div>
@@ -77,6 +78,7 @@
 												max="2025-12-30" 
 												title="종료일"
 												data-period="end"
+												data-holiday="true" 
 												readonly 
 												required>
 										</div>
@@ -106,11 +108,12 @@
 					min="2000-12-05" 
 					max="2045-05-20" 
 					title="시작일"
+					data-holiday="true" 
 					readonly 
 					required>
 			</div>
 
-			<!-- <div class="ui-datepicker ui-datepicker-view flex-item" data-target="uiDate_view2">
+			<div class="ui-datepicker ui-datepicker-view flex-item" data-target="uiDate_view2">
 				<input 
 					data-view="true" 
 
@@ -138,7 +141,7 @@
 					data-period="end"
 					readonly 
 					required>
-			</div> -->
+			</div> 
 			
 		</div>
 	</section>
@@ -151,6 +154,8 @@
 		<h3 class="tit-s">HTML</h3>
 
 <pre class="box-code"><code class="html">
+data-holiday="true" 일 경우 공휴일 이벤트 없음
+
 &lt;div class="ui-datepicker"&gt;
 	&lt;button type="button" class="ui-datepicker-btn" data-target="{아이디A}"&gt;
 		&lt;span class="a11y-hidden"&gt;년월일 선택&lt;/span&gt;
@@ -163,6 +168,7 @@
 		min="2020-12-05" 
 		max="2022-05-20" 
 		title="시작일" 
+		data-holiday="true"
 		readonly 
 		required
 	&gt;
@@ -205,9 +211,51 @@
 	<section class="wrap-section">
 		<h3 class="tit-s">Javascript</h3>
 <pre class="box-code"><code class="javascript">
-//생성
+//공휴일 설정
+netive.datepicker.specialday:{
+	"1":[
+		{"solar":true, "day":1, "holiday":true, "name":"신정", "sub":true},
+		{"solar":false, "day":1, "holiday":true, "name":"설날", "sub":true},
+		{"solar":false, "day":2, "holiday":true, "name":"설날 다음날", "sub":false}
+	],
+	"2":[],
+	"3":[
+		{"solar":true, "day":1, "holiday":true, "name":"삼일절", "sub":true}
+	],
+	"4":[
+		{"solar":false, "day":8, "holiday":true, "name":"석가탄신일", "sub":true}
+	],
+	"5":[
+		{"solar":true, "day":5, "holiday":true, "name":"어린이날", "sub":true}
+	],
+	"6":[
+		{"solar":true, "day":6, "holiday":true, "name":"현충일", "sub":false}
+	],
+	"7":[],
+	"8":[
+		{"solar":false, "day":14, "holiday":true, "name":"추석 전날", "sub":false},
+		{"solar":false, "day":15, "holiday":true, "name":"추석", "sub":true},
+		{"solar":false, "day":16, "holiday":true, "name":"추석 다음날", "sub":false}
+	],
+	"9":[],
+	"10":[
+		{"solar":true, "day":3, "holiday":true, "name":"개천절", "sub":true},
+		{"solar":true, "day":9, "holiday":true, "name":"한글날", "sub":true}
+	],
+	"11":[
+		{"solar":true, "day":7, "holiday":false, "name":"창립기념일", "sub":false}
+	],
+	"12":[
+		{"solar":true, "day":25, "holiday":true, "name":"성탄절", "sub":true},
+		{"solar":false, "day":'last', "holiday":true, "name":"설날 전날", "sub":false}
+	],
+}
+
+//요일 텍스트 및 달력단위 텍스트 설정
 netive.datepicker.week = ['일', '월', '화', '수', '목', '금', '토', '년', '월', '일'];
-netive.datepicker.isFooter = false; true - 하단 확인버튼 생성, false 하단 버튼 없음. 날짜 클릭 시 바로 선택
+
+//하단 확인버튼 설정 - true: 하단 확인버튼 생성, false: 하단 버튼 없음. 날짜 클릭 시 바로 선택
+netive.datepicker.isFooter = false; 
 
 netive.datepicker.init({
 	id: 'input id name',

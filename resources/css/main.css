@@ -5294,11 +5294,9 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
 }
 .datepicker-body .datepicker-date td:nth-child(1) .datepicker-day {
   color: red;
-  pointer-events: none;
 }
 .datepicker-body .datepicker-date td:nth-child(7) .datepicker-day {
   color: rgb(11, 135, 211);
-  pointer-events: none;
 }
 .datepicker-body .week-word {
   display: none;
@@ -5311,9 +5309,11 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   line-height: 1;
   font-size: 1.2rem;
 }
+.datepicker-body .datepicker-day:disabled {
+  opacity: 1 !important;
+}
 .datepicker-body .datepicker-day[data-holiday=true] {
   color: red !important;
-  pointer-events: none;
 }
 .datepicker-body .datepicker-day.selected-end, .datepicker-body .datepicker-day.selected-start, .datepicker-body .datepicker-day.selected {
   background: #6B38FB;

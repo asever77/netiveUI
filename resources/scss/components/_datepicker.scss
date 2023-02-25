@@ -174,11 +174,9 @@
             text-align: center;
              &:nth-child(1) .datepicker-day{
                 color: red;
-                pointer-events: none;
             }
             &:nth-child(7) .datepicker-day{
                 color: rgb(11, 135, 211);
-                pointer-events: none;
             }
         }
         .week-word{display: none;} 
@@ -189,10 +187,10 @@
             margin: 0.3rem 0;
             line-height: 1;
             font-size: 1.2rem;
-
+            
+            &:disabled{opacity: 1 !important;}
             &[data-holiday="true"] {
                 color:red !important;
-                pointer-events: none;
             }
             &.selected-end,
             &.selected-start,

@@ -211,7 +211,7 @@
     }
     netive.page.pageDatePicker = () => {
         netive.datepicker.week = ['일', '월', '화', '수', '목', '금', '토', '년', '월', '일'];
-        netive.datepicker.isFooter = false;
+        netive.datepicker.isFooter = true;
         netive.datepicker.init();
 
         
