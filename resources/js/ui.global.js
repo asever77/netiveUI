@@ -520,6 +520,19 @@
 	 * SCROLL : 기본적인 스크롤 동작, 값
 	 * in use: Global.callback
 	 */
+	/**
+	 * intersection observer
+	 */
+	// Global.io = new IntersectionObserver(function (entries) {
+	// 	entries.forEach(function (entry) {
+	// 		if (entry.intersectionRatio > 0) {
+	// 			entry.target.classList.add('tada');
+	// 		} else {
+	// 			entry.target.classList.remove('tada');
+	// 		}
+	// 	});
+	// });
+
 	Global.scroll = {
 		options : {
 			selector: doc.querySelector('html, body'),
