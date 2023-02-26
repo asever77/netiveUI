@@ -3053,7 +3053,8 @@
 				{"solar":false, "day":8, "holiday":true, "name":"석가탄신일", "sub":false}
 			],
 			"5":[
-				{"solar":true, "day":5, "holiday":true, "name":"어린이날", "sub":true}
+				{"solar":true, "day":5, "holiday":true, "name":"어린이날", "sub":true},
+				{"solar":true, "day":10, "holiday":false, "name":"내생일", "sub":false}
 			],
 			"6":[
 				{"solar":true, "day":6, "holiday":true, "name":"현충일", "sub":false}
@@ -3071,7 +3072,7 @@
 				{"solar":true, "day":9, "holiday":true, "name":"한글날", "sub":true}
 			],
 			"11":[
-				{"solar":true, "day":7, "holiday":false, "name":"창립기념일", "sub":false}
+				{"solar":true, "day":7, "holiday":false, "name":"네티브 창립기념일", "sub":false}
 			],
 			"12":[
 				{"solar":true, "day":25, "holiday":true, "name":"성탄절", "sub":false},
