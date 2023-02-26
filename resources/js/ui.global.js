@@ -3041,16 +3041,16 @@
 		isFooter: true,
 		specialday:{
 			"1":[
-				{"solar":true, "day":1, "holiday":true, "name":"신정", "sub":true},
+				{"solar":true, "day":1, "holiday":true, "name":"신정", "sub":false},
 				{"solar":false, "day":1, "holiday":true, "name":"설날", "sub":true},
-				{"solar":false, "day":2, "holiday":true, "name":"설날 다음날", "sub":false}
+				{"solar":false, "day":2, "holiday":true, "name":"설날 다음날", "sub":true}
 			],
 			"2":[],
 			"3":[
 				{"solar":true, "day":1, "holiday":true, "name":"삼일절", "sub":true}
 			],
 			"4":[
-				{"solar":false, "day":8, "holiday":true, "name":"석가탄신일", "sub":true}
+				{"solar":false, "day":8, "holiday":true, "name":"석가탄신일", "sub":false}
 			],
 			"5":[
 				{"solar":true, "day":5, "holiday":true, "name":"어린이날", "sub":true}
@@ -3060,9 +3060,10 @@
 			],
 			"7":[],
 			"8":[
-				{"solar":false, "day":14, "holiday":true, "name":"추석 전날", "sub":false},
+				{"solar":true, "day":15, "holiday":true, "name":"광복절", "sub":true},
+				{"solar":false, "day":14, "holiday":true, "name":"추석 전날", "sub":true},
 				{"solar":false, "day":15, "holiday":true, "name":"추석", "sub":true},
-				{"solar":false, "day":16, "holiday":true, "name":"추석 다음날", "sub":false}
+				{"solar":false, "day":16, "holiday":true, "name":"추석 다음날", "sub":true}
 			],
 			"9":[],
 			"10":[
@@ -3073,8 +3074,8 @@
 				{"solar":true, "day":7, "holiday":false, "name":"창립기념일", "sub":false}
 			],
 			"12":[
-				{"solar":true, "day":25, "holiday":true, "name":"성탄절", "sub":true},
-				{"solar":false, "day":'last', "holiday":true, "name":"설날 전날", "sub":false}
+				{"solar":true, "day":25, "holiday":true, "name":"성탄절", "sub":false},
+				{"solar":false, "day":'last', "holiday":true, "name":"설날 전날", "sub":true}
 			],
 		},
 		week : ['일', '월', '화', '수', '목', '금', '토', '년', '월' , '일'],
@@ -3922,6 +3923,7 @@
 					if (specialdayMonth_lunar.length > 0) {
 						for (let item of specialdayMonth_lunar) {
 							if (!item.solar) {
+								
 								if (!!item.holiday && item.day === lunarDate_d) {
 									//대체휴일: 석가탄신일(토,일,공휴일) 추석,설날(일,공휴일)
 									if (lunarDate_m === 4 && lunarDate_d === 8) {
@@ -3939,9 +3941,12 @@
 									specialdayName = item.name;
 								} else if (!!item.holiday && item.day === 'last') {
 									//설 전날 마지막일 찾기
-									const lunarDateNext = Global.datepicker.solarToLunar(viewYear,  (viewMonth + 1),  date + 1);
+									let lunarDateNext = Global.datepicker.solarToLunar(viewYear,  (viewMonth + 1),  date + 1);
+									if (!lunarDateNext) {
+										lunarDateNext = Global.datepicker.solarToLunar(viewYear,  (viewMonth + 2),  1);
+									}
 									const lunarDateNext_m = Number(lunarDateNext.split('-')[0]);
-									
+									console.log(date, lunarDateNext, lunarDateNext_m, lunarDate_m);
 									if (lunarDateNext_m !== undefined && lunarDate_m !== lunarDateNext_m){
 										if ((isHolidaySunday || holidayOverlap) && item.sub ) {
 											Global.callback[setId].subDay = true;
