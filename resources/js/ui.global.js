@@ -3072,7 +3072,7 @@
 				{"solar":true, "day":9, "holiday":true, "name":"한글날", "sub":true}
 			],
 			"11":[
-				{"solar":true, "day":7, "holiday":false, "name":"네티브 창립기념일", "sub":false}
+				{}
 			],
 			"12":[
 				{"solar":true, "day":25, "holiday":true, "name":"성탄절", "sub":false},
