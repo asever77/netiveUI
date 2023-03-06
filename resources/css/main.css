@@ -5777,13 +5777,14 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   height: 100%;
   opacity: 0;
   background: rgba(0, 0, 0, 0.5);
-}
-.modal.open .ui-modal-dim,
-.ui-modal.open .ui-modal-dim {
-  opacity: 1;
+  transition: opacity 0.4s ease-in-out;
 }
 .modal.open .ui-modal-wrap,
 .ui-modal.open .ui-modal-wrap {
+  opacity: 1;
+}
+.modal.open.current .ui-modal-dim,
+.ui-modal.open.current .ui-modal-dim {
   opacity: 1;
 }
 .modal.ps-center,

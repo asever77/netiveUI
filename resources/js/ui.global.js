@@ -15,6 +15,7 @@
  * 1.0.10 (23.02.20) datepicker callback 추가, select, dropdown back click 
  * 1.0.11 (23.02.21) datepicker callback 없는 경우 에러 수정 
  * 1.0.12 (23.02.26) datepicker 공휴일, 대체휴일 설정 추가
+ * 1.0.13 (23.03.06) select 위치설정 inner 추가
  */
 ((win, doc, undefined) => {
 
@@ -715,6 +716,7 @@
 			const callback = opt.callback;
 			const tags = el.querySelectorAll('*');
 			const tagLen = tags.length;
+			const elEnd = '<div tabindex="0" class="ui-focusloop-end" aria-label="모달 마지막 위치입니다."></div>'
 
 			for (let i = 0; i < tagLen; i++) {
 				const _tag = tags[i];
@@ -725,15 +727,16 @@
 					break;
 				}
 			}
-			for (let i = tagLen - 1; i >= 0; i--) {
-				const _tag = tags[i];
-				const tag_name = _tag.tagName;
-				if (tag_name === 'H1' || tag_name === 'H2' || tag_name === 'H3' || tag_name === 'H4' || tag_name === 'H5' || tag_name === 'H6' || tag_name === 'BUTTON' || tag_name === 'A' || tag_name === 'INPUT' || tag_name === 'TEXTAREA') {
-					_tag.classList.add('ui-focusloop-end');
-					_tag.setAttribute('tabindex', 0);
-					break;
-				}
-			}
+			el.insertAdjacentHTML('beforeend', elEnd);
+			// for (let i = tagLen - 1; i >= 0; i--) {
+			// 	const _tag = tags[i];
+			// 	const tag_name = _tag.tagName;
+			// 	if (tag_name === 'H1' || tag_name === 'H2' || tag_name === 'H3' || tag_name === 'H4' || tag_name === 'H5' || tag_name === 'H6' || tag_name === 'BUTTON' || tag_name === 'A' || tag_name === 'INPUT' || tag_name === 'TEXTAREA') {
+			// 		_tag.classList.add('ui-focusloop-end');
+			// 		_tag.setAttribute('tabindex', 0);
+			// 		break;
+			// 	}
+			// }
 
 			const el_start = el.querySelector('.ui-focusloop-start');
 			const el_end = el.querySelector('.ui-focusloop-end');
@@ -2689,7 +2692,6 @@
 			const el_to_btn = el_range.querySelector('.ui-range-point.right');
 			const eventName = !!Global.state.browser.ie ? 'click' : 'input';
 			const marks = el_range.querySelector('.ui-range-marks');
-			
 
 			el_from_btn.dataset.range = 'from';
 			el_to_btn ? el_to_btn.dataset.range = 'to' : '';
@@ -3038,7 +3040,7 @@
 	 */
 	
 	Global.datepicker = {
-		isFooter: true,
+		isFooter: false,
 		specialday:{
 			"1":[
 				{"solar":true, "day":1, "holiday":true, "name":"신정", "sub":false},
@@ -3053,8 +3055,7 @@
 				{"solar":false, "day":8, "holiday":true, "name":"석가탄신일", "sub":false}
 			],
 			"5":[
-				{"solar":true, "day":5, "holiday":true, "name":"어린이날", "sub":true},
-				{"solar":true, "day":10, "holiday":false, "name":"내생일", "sub":false}
+				{"solar":true, "day":5, "holiday":true, "name":"어린이날", "sub":true}
 			],
 			"6":[
 				{"solar":true, "day":6, "holiday":true, "name":"현충일", "sub":false}
@@ -3360,7 +3361,7 @@
 				s_dd[1].textContent = !!endDay ? _endDay[2] : Global.datepicker.baseTxt[2];
 			}
 
-			!!netive.callback[id] && netive.callback[id](value_callback);
+			!!Global.callback[id] && Global.callback[id](value_callback);
 
 			if (!isView) {
 				el_btn.focus();
@@ -4356,7 +4357,8 @@
 			id: false, 
 			current: null,
 			customscroll: true,
-			callback: false
+			callback: false,
+			inner: true
 		},
 		init (option) {
 			const opt = Object.assign({}, this.options, option);
@@ -4368,6 +4370,7 @@
 			const el_uiSelects = doc.querySelectorAll('.ui-select');
 			const keys = Global.state.keys;
 			const isMobile = Global.state.device.mobile;
+			const isInner = opt.inner;
 
 			let el_select;
 			let $selectCurrent;
@@ -4484,18 +4487,34 @@
 					el_wrap.addEventListener('blur', optBlur);
 
 					if (!isMobile) {
+						
 						if ((win_h - wraph) + scrtop > offtop + scrtop + btn_h) {
+							console.log(122);
 							el_uiselect.dataset.ps = 'bottom';
 							el_wrap.dataset.ps = 'bottom';
 							el_wrap.dataset.state = state;
-							el_wrap.style.top = offtop + scrtop + btn_h - 1 + 'px';
-							el_wrap.style.left = offleft + scrleft + 'px';
+
+							if (isInner) {
+								el_wrap.style.bottom = 'auto';
+								el_wrap.style.top = btn_h - 1 + 'px';
+								el_wrap.style.left = '0px';
+							} else {
+								el_wrap.style.top = offtop + scrtop + btn_h - 1 + 'px';
+								el_wrap.style.left = offleft + scrleft + 'px';
+							}
 						} else {
 							el_uiselect.dataset.ps = 'top';
 							el_wrap.dataset.ps = 'top';
 							el_wrap.dataset.state = state;
-							el_wrap.style.top = offtop + scrtop - wraph + 1 + 'px';
-							el_wrap.style.left = offleft + scrleft + 'px';
+
+							if (isInner) {
+								el_wrap.style.top = 'auto';
+								el_wrap.style.bottom = btn_h - 1 + 'px';
+								el_wrap.style.left = '0px';
+							} else {
+								el_wrap.style.top = offtop + scrtop - wraph + 1 + 'px';
+								el_wrap.style.left = offleft + scrleft + 'px';
+							}
 						}
 
 						el_wrap.style.minWidth = el_uiselect.offsetWidth + 'px';
@@ -4720,7 +4739,7 @@
 				el_select.setAttribute('aria-hidden', true)
 				// el_uiSelect.insertAdjacentHTML('beforeend', htmlOption);
 				const body = doc.querySelector('body');
-				body.insertAdjacentHTML('beforeend', htmlOption);
+				isInner ? el_uiSelect.insertAdjacentHTML('beforeend', htmlOption) : body.insertAdjacentHTML('beforeend', htmlOption);
 
 				if (selectDisabled) {
 					const _btn = el_uiSelect.querySelector('.ui-select-btn');
@@ -5852,8 +5871,6 @@
 							el.dataset.view = 'fix';
 						}
 					}
-					
-					
 				} else {
 					//hover
 					for (let that of tooltips) {
@@ -5892,9 +5909,10 @@
 					if (evType === 'click') {
 						Global.focus.loop({ selector: elTooltip });
 						elTooltip.focus();
+						elTooltip.querySelector('.ui-tooltip-close').addEventListener('click', Global.tooltip.hide);
 					}
 					Global.tooltip.current = null;
-					elTooltip.querySelector('.ui-tooltip-close').addEventListener('click', Global.tooltip.hide);
+					
 				}, 100);
 
 				el.addEventListener('mouseleave', Global.tooltip.hide);
@@ -5919,6 +5937,15 @@
 			} else {
 				//열린툴팁 제외
 				if (view !== 'fix') {
+					const isTit = elTooltip.querySelector('.ui-tooltip-tit');
+					const isClose = elTooltip.querySelector('.ui-tooltip-close');
+					
+					if (!isTit) {
+						elTooltip.insertAdjacentHTML('afterbegin', '<h3 class="ui-tooltip-tit">'+ elTit +'</h3>');
+					}
+					if (!isClose) {
+						elTooltip.insertAdjacentHTML('afterbegin', '<button type="button" class="ui-tooltip-close" data-id="'+ elId +'" aria-label="'+ elTit +' 닫기"></button>');
+					}
 					act();
 				}
 			}
@@ -5954,14 +5981,6 @@
 			let elId = el.getAttribute('aria-describedby');
 			let isFocus = true;
 			
-			if (!elId) {
-				const openTooltip = doc.querySelector('.ui-tooltip[aria-hidden="false"]');
-
-				elId = openTooltip.id;
-				el = doc.querySelector('.ui-tooltip-btn[aria-describedby="'+ elId +'"]');
-				isFocus = false;
-			}
-
 			if (type === 'click' && isFocus) {
 				elId = el.dataset.id;
 			} 
@@ -5995,7 +6014,6 @@
 			}
 		}
 	}
-
 	/**
 	 * FLOATING CONTENT
 	 */
