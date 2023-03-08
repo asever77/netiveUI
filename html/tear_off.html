@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      -webkit-user-select:none;
+      -moz-user-select:none;
+      -ms-user-select:none;
+      user-select:none;
+    }
+    .ui-tearOff{
+      position: absolute;
+      width: 300px;
+      height: 200px;
+
+      border-radius: 20px;
+      overflow: hidden;
+    }
+    .ui-tearOff-inner{
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background-color: aquamarine;
+    }
+    .ui-tearOff-cover{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; 
+      left: 0;
+      background-color: silver;
+    }
+    .ui-tearOff-mask{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; 
+      left: 0;
+      clip-path: polygon(0 0, 92% 0, 100% 8%, 100% 100%, 0 100%);
+      opacity: 1;
+    }
+
+    
+    .ui-tearOff-corner-mask{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; 
+      left: 0;
+      clip-path: polygon(0 0, 90% 0, 100% 10%, 100% 100%, 0 100%);
+    }
+    .ui-tearOff-corner-back{
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0; 
+      left: 0;
+      clip-path: polygon(0 0, 100% 100%, 100% 100%, 0 100%);
+      background: slategray; 
+    }
+    .ui-tearOff-corner {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 8%;
+      height: 8%;
+      z-index: 2;
+      cursor: pointer;
+      box-shadow: 0 7px 10px rgb(0 0 0 / 30%);
+      opacity: 1;
+    }
+    .complete .ui-tearOff-mask{
+      opacity: 0;
+      transition: all .2s ease-out;
+      pointer-events: none;
+    }
+    .complete .ui-tearOff-corner{
+      opacity: 0;
+      transition: all .2s ease-out;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="ui-tearOff" data-id="sticker">
+    <div class="ui-tearOff-corner">
+      <div class="ui-tearOff-corner-mask">
+        <div class="ui-tearOff-corner-back"></div>
+      </div>
+    </div>
+    <div class="ui-tearOff-inner">
+       내용
+    </div>
+    <div class="ui-tearOff-mask">
+      <div class="ui-tearOff-cover"></div>
+    </div>
+  </div>
+
+  <script>
+    const tearOff = (opt) => {
+      const id = opt.id;
+      const el_tearOff = document.querySelector('.ui-tearOff[data-id="'+ id +'"]');
+      const el_corner = el_tearOff.querySelector('.ui-tearOff-corner');
+      const el_mask = el_tearOff.querySelector('.ui-tearOff-mask');
+      const el_x = el_tearOff.getBoundingClientRect().left;
+      const el_y = el_tearOff.getBoundingClientRect().top;
+      const el_w = el_tearOff.offsetWidth;
+      const el_h = el_tearOff.offsetHeight;
+      let sX = 0;
+      let sY = 0;
+      let mX = 0;
+      let mY = 0;
+      let nX = 100;
+      let nY = 0;
+
+      const eventEnd = (e) => {
+        console.log('end');
+        
+        if (nY > 40 && nX < 60) {
+          el_tearOff.classList.add('complete');
+          el_mask.style.clipPath = 'polygon(0 0, 0 0, 100% 100%, 100% 100%, 0 100%)';
+          el_corner.style.width = '100%';
+          el_corner.style.height = '100%';
+        } else {
+          el_tearOff.classList.remove('complete');
+          el_mask.style.clipPath = 'polygon(0 0, 92% 0, 100% 8%, 100% 100%, 0 100%)';
+          el_corner.style.width = '8%';
+          el_corner.style.height = '8%';        
+        }
+
+        document.removeEventListener('mousemove', eventMove);
+        document.removeEventListener('mouseup', eventEnd);
+        document.removeEventListener('touchmove', eventMove);
+        document.removeEventListener('touchend', eventEnd);
+      }
+      const eventMove = (e) => {
+        mX = e.clientX - el_x;
+        mY = e.clientY - el_y;
+
+        if (e.clientX === undefined) {
+          mX = e.changedTouches[0].clientX - el_x;
+          mY = e.changedTouches[0].clientY - el_y;
+        }
+
+        nX = 100 - ((el_w - mX) / el_w * 100);
+        nY = 100 - ((el_h - mY) / el_h * 100);
+        nY = nY > 100 ? 100 : nY;
+        nX = nX < 0 ? 0 : nX;
+        nY = nY < 8 ? 8 : nY;
+        nX = nX > 98 ? 98 : nX;
+
+        el_corner.style.width = (100 - nX) + '%';
+        el_corner.style.height = nY + '%';
+        //100 , 0
+        el_mask.style.clipPath = 'polygon(0 0, '+ nX +'% 0, 100% '+ nY +'%, 100% 100%, 0 100%)';
+
+      }
+      const eventStart = (e) => {
+        sX = e.clientX;
+        sY = e.clientY;
+
+        if (sX === undefined) {
+          sX = e.changedTouches[0].clientX;
+          sY = e.changedTouches[0].clientY;
+        }
+
+        console.log('touch',e, e.changedTouches[0].clientX);
+
+        document.addEventListener('mousemove', eventMove);
+        document.addEventListener('mouseup', eventEnd);
+        document.addEventListener('touchmove', eventMove);
+        document.addEventListener('touchend', eventEnd);
+      }
+
+      el_corner.addEventListener('mousedown', eventStart);
+      el_corner.addEventListener('touchstart', eventStart);
+
+    }
+
+    tearOff({
+      id: 'sticker'
+    });
+  </script>
+</body>
+</html>
