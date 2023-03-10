@@ -6,15 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
+    html{
+      padding:0;
+    }
     body {
       -webkit-user-select:none;
       -moz-user-select:none;
       -ms-user-select:none;
       user-select:none;
+
+      padding:0 20px;
+      margin: 0;
     }
     .ui-tearOff{
-      position: absolute;
-      width: 300px;
+      position: relative;
+      width: 100%;
       height: 200px;
 
       border-radius: 20px;
@@ -40,7 +46,7 @@
       height: 100%;
       top: 0; 
       left: 0;
-      clip-path: polygon(0 0, 92% 0, 100% 8%, 100% 100%, 0 100%);
+      clip-path: polygon(0 0, 89% 0, 100% 16%, 100% 100%, 0 100%);
       opacity: 1;
     }
 
@@ -66,12 +72,13 @@
       position: absolute;
       top: 0;
       right: 0;
-      width: 8%;
-      height: 8%;
+      width: 11%;
+      height: 16%;
       z-index: 2;
       cursor: pointer;
       box-shadow: 0 7px 10px rgb(0 0 0 / 30%);
       opacity: 1;
+      outline: 1px solid blue;
     }
     .complete .ui-tearOff-mask{
       opacity: 0;
@@ -86,6 +93,7 @@
   </style>
 </head>
 <body>
+  <div style="width:100%; background-color: red; height: 200px;"></div>
   <div class="ui-tearOff" data-id="sticker">
     <div class="ui-tearOff-corner">
       <div class="ui-tearOff-corner-mask">
@@ -99,15 +107,16 @@
       <div class="ui-tearOff-cover"></div>
     </div>
   </div>
-
+  <div style="width:100%; background-color: tomato; height: 600px;"></div>
   <script>
     const tearOff = (opt) => {
       const id = opt.id;
+      const body = document.querySelector('body');
       const el_tearOff = document.querySelector('.ui-tearOff[data-id="'+ id +'"]');
       const el_corner = el_tearOff.querySelector('.ui-tearOff-corner');
       const el_mask = el_tearOff.querySelector('.ui-tearOff-mask');
-      const el_x = el_tearOff.getBoundingClientRect().left;
-      const el_y = el_tearOff.getBoundingClientRect().top;
+      let el_x = el_tearOff.getBoundingClientRect().left;
+      let el_y = el_tearOff.getBoundingClientRect().top;
       const el_w = el_tearOff.offsetWidth;
       const el_h = el_tearOff.offsetHeight;
       let sX = 0;
@@ -116,30 +125,36 @@
       let mY = 0;
       let nX = 100;
       let nY = 0;
+      const baseWH = [11,16];
 
       const eventEnd = (e) => {
         console.log('end');
         
-        if (nY > 40 && nX < 60) {
+        if (nY > 20 && nX < 930) {
           el_tearOff.classList.add('complete');
           el_mask.style.clipPath = 'polygon(0 0, 0 0, 100% 100%, 100% 100%, 0 100%)';
           el_corner.style.width = '100%';
           el_corner.style.height = '100%';
         } else {
           el_tearOff.classList.remove('complete');
-          el_mask.style.clipPath = 'polygon(0 0, 92% 0, 100% 8%, 100% 100%, 0 100%)';
-          el_corner.style.width = '8%';
-          el_corner.style.height = '8%';        
+          el_mask.style.clipPath = 'polygon(0 0, 89% 0, 100% 16%, 100% 100%, 0 100%)';
+          el_corner.style.width = baseWH[1] + '%';
+          el_corner.style.height = baseWH[0] + '%';        
         }
 
+        body.style.overflow = 'auto';
         document.removeEventListener('mousemove', eventMove);
         document.removeEventListener('mouseup', eventEnd);
         document.removeEventListener('touchmove', eventMove);
         document.removeEventListener('touchend', eventEnd);
       }
       const eventMove = (e) => {
+        el_x = el_tearOff.getBoundingClientRect().left;
+        el_y = el_tearOff.getBoundingClientRect().top;
+        
         mX = e.clientX - el_x;
         mY = e.clientY - el_y;
+
 
         if (e.clientX === undefined) {
           mX = e.changedTouches[0].clientX - el_x;
@@ -167,7 +182,8 @@
           sX = e.changedTouches[0].clientX;
           sY = e.changedTouches[0].clientY;
         }
-
+       
+        body.style.overflow = 'hidden';
         document.addEventListener('mousemove', eventMove);
         document.addEventListener('mouseup', eventEnd);
         document.addEventListener('touchmove', eventMove);
