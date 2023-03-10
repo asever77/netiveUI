@@ -1,8 +1,8 @@
 /**
  * ui.global.js
  * User Interface script 
- * modify: 2023.02.26
- * ver: 1.0.12
+ * modify: 2023.03.10
+ * ver: 1.0.14
  * desc: 
  * 1.0.3 (23.01.10) datepicker update : 날짜 클릭 시 값전달 및 창닫기 옵션 추가. isFooter : true
  * 1.0.4 (23.01.11) modal full height 값설정, modal dim 클릭 시 close
@@ -16,6 +16,7 @@
  * 1.0.11 (23.02.21) datepicker callback 없는 경우 에러 수정 
  * 1.0.12 (23.02.26) datepicker 공휴일, 대체휴일 설정 추가
  * 1.0.13 (23.03.06) select 위치설정 inner 추가
+ * 1.0.14 (23.03.10) modal drag close 추가
  */
 ((win, doc, undefined) => {
 
@@ -5502,6 +5503,52 @@
 						callbackClose: callbackClose
 					});
 				}
+
+				// 드래그 닫기 추가 --
+				const elDrag = elModal.querySelector('.ui-modal-drag');
+				if (!!elDrag) {
+					let sX = 0;
+					let sY = 0;
+					let mX = 0;
+					let mY = 0;
+					let el_draghead = null;
+					let m_n = 0;
+					let m_wrap = null;
+					let el_ThisModal = null;
+					const eventEnd = (e) => {
+						if (m_n > 40) {
+							Global.modal.hide({ 
+								id: el_ThisModal.id, 
+								remove: remove,
+								callbackClose: callbackClose
+							});
+							elDrag.removeEventListener('touchstart', eventStart);
+						} else {
+							m_wrap ? m_wrap.style.marginTop = '0' : '';
+						}
+						document.removeEventListener('touchmove', eventMove);
+						document.removeEventListener('touchend', eventEnd);
+					}
+					const eventMove = (e) => {
+						m_wrap = el_draghead.closest('.ui-modal-wrap');
+						mX = e.changedTouches[0].clientX;
+						mY = e.changedTouches[0].clientY;
+						m_n = (sY - mY) > 0 ? 0 : (sY - mY);
+						m_n = (m_n * -1);
+						m_wrap.style.marginTop = m_n +'px'
+					}
+					const eventStart = (e) => {
+						el_draghead = e.currentTarget;
+						el_ThisModal = el_draghead.closest('.ui-modal');
+						sX = e.changedTouches[0].clientX;
+						sY = e.changedTouches[0].clientY;
+
+						document.addEventListener('touchmove', eventMove);
+						document.addEventListener('touchend', eventEnd);
+					}
+					elDrag.addEventListener('touchstart', eventStart);
+				}
+				//-- 드래그 닫기 추가
 
 				if (!!elModalClose) {
 					elModalClose.addEventListener('click', closeAct);

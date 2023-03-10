@@ -88,7 +88,14 @@
 
         .ui-modal-wrap {margin-bottom: $x1; }
     }
-
+    &-drag {
+        position: absolute;
+        background-color: aqua;
+        opacity: 0.5;
+        width:100%;
+        height: 2rem;
+        z-index: 3;
+    }
     &-wrap {
         max-width: 90rem;
         opacity: 0;
