@@ -80,6 +80,7 @@
         overflow: hidden;
 
         .ui-modal-wrap {margin-top: $x1;}
+        .ui-modal-drag {top:auto; bottom:0;}
     }
     &.ps-bottom {
         justify-content: center;
@@ -88,6 +89,9 @@
 
         .ui-modal-wrap {margin-bottom: $x1; }
     }
+    &[data-scroll="outer"] {
+        .ui-modal-drag {display: none;}
+    }
     &-drag {
         position: absolute;
         background-color: aqua;
@@ -95,6 +99,7 @@
         width:100%;
         height: 2rem;
         z-index: 3;
+        top:0;
     }
     &-wrap {
         max-width: 90rem;

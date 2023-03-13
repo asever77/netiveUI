@@ -5810,6 +5810,11 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
 .ui-modal.ps-top .ui-modal-wrap {
   margin-top: 0.8rem;
 }
+.modal.ps-top .ui-modal-drag,
+.ui-modal.ps-top .ui-modal-drag {
+  top: auto;
+  bottom: 0;
+}
 .modal.ps-bottom,
 .ui-modal.ps-bottom {
   justify-content: center;
@@ -5820,6 +5825,10 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
 .ui-modal.ps-bottom .ui-modal-wrap {
   margin-bottom: 0.8rem;
 }
+.modal[data-scroll=outer] .ui-modal-drag,
+.ui-modal[data-scroll=outer] .ui-modal-drag {
+  display: none;
+}
 .modal-drag,
 .ui-modal-drag {
   position: absolute;
@@ -5828,6 +5837,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   width: 100%;
   height: 2rem;
   z-index: 3;
+  top: 0;
 }
 .modal-wrap,
 .ui-modal-wrap {

@@ -17,6 +17,7 @@
  * 1.0.12 (23.02.26) datepicker 공휴일, 대체휴일 설정 추가
  * 1.0.13 (23.03.06) select 위치설정 inner 추가
  * 1.0.14 (23.03.10) modal drag close 추가
+ * 1.0.15 (23.03.13) modal drag close - top,bottom 경우 추가
  */
 ((win, doc, undefined) => {
 
@@ -5423,15 +5424,19 @@
 				switch (ps) {
 					case 'center' :
 						elModal.classList.add('ps-center');
+						elModal.dataset.ps = 'center';
 						break;
 					case 'top' :
 						elModal.classList.add('ps-top');
+						elModal.dataset.ps = 'top';
 						break;
 					case 'bottom' :
 						elModal.classList.add('ps-bottom');
+						elModal.dataset.ps = 'bottom';
 						break;
 					default :
 						elModal.classList.add('ps-center');
+						elModal.dataset.ps = 'center';
 						break;
 				}
 				
@@ -5506,6 +5511,9 @@
 
 				// 드래그 닫기 추가 --
 				const elDrag = elModal.querySelector('.ui-modal-drag');
+				const elDragWrap = elDrag.closest('.ui-modal');
+				const elDragPs = elDragWrap.dataset.ps;
+
 				if (!!elDrag) {
 					let sX = 0;
 					let sY = 0;
@@ -5515,8 +5523,9 @@
 					let m_n = 0;
 					let m_wrap = null;
 					let el_ThisModal = null;
+
 					const eventEnd = (e) => {
-						if (m_n > 40) {
+						if (Math.abs(m_n) > 40) {
 							Global.modal.hide({ 
 								id: el_ThisModal.id, 
 								remove: remove,
@@ -5524,8 +5533,13 @@
 							});
 							elDrag.removeEventListener('touchstart', eventStart);
 						} else {
-							m_wrap ? m_wrap.style.marginTop = '0' : '';
+							if(m_wrap) {
+								elDragPs === 'bottom' || elDragPs === 'top' ?
+								m_wrap.style.transform = 'translateY(0px)' : 
+								m_wrap.style.marginTop = '0';
+							}
 						}
+						
 						document.removeEventListener('touchmove', eventMove);
 						document.removeEventListener('touchend', eventEnd);
 					}
@@ -5535,7 +5549,16 @@
 						mY = e.changedTouches[0].clientY;
 						m_n = (sY - mY) > 0 ? 0 : (sY - mY);
 						m_n = (m_n * -1);
-						m_wrap.style.marginTop = m_n +'px'
+						
+						if (elDragPs === 'top') {
+							m_n = (sY - mY) < 0 ? 0 : (sY - mY);
+							m_n = (m_n * -1);
+							m_wrap.style.transform = 'translateY('+ m_n +'px)'; 
+						} else {
+							elDragPs === 'bottom' ?
+							m_wrap.style.transform = 'translateY('+ m_n +'px)' : 
+							m_wrap.style.marginTop = m_n +'px';
+						}
 					}
 					const eventStart = (e) => {
 						el_draghead = e.currentTarget;
