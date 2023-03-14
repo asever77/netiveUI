@@ -18,6 +18,7 @@
  * 1.0.13 (23.03.06) select 위치설정 inner 추가
  * 1.0.14 (23.03.10) modal drag close 추가
  * 1.0.15 (23.03.13) modal drag close - top,bottom 경우 추가
+ * 1.0.16 (23.03.14) tab keys 수정
  */
 ((win, doc, undefined) => {
 
@@ -6228,7 +6229,6 @@
 
 	/**
 	 * TAB
-	 * modify (23.01.18) : 실행방법 변경
 	 * in use: Global.state, Global.para, Global.scroll, Global.ajax
 	 */
 	Global.tab = {
@@ -6410,7 +6410,6 @@
 					callback: Global.tab.data[id].callback 
 				});
 			}
-
 			const upLeftKey = (e) => {
 				e.preventDefault();
 				keyEvent(!that.getAttribute('tab-first') ? n - 1 : m - 1);
@@ -6429,18 +6428,18 @@
 			}
 
 			switch(e.keyCode){
-				case keys.up: 
-				case keys.left: upLeftKey(e);
+				case Global.state.keys.up: 
+				case Global.state.keys.left: upLeftKey(e);
 					break;
 
-				case keys.down: 
-				case keys.right: downRightKey(e);
+				case Global.state.keys.down: 
+				case Global.state.keys.right: downRightKey(e);
 					break;
 
-				case keys.end: endKey(e);
+				case Global.state.keys.end: endKey(e);
 					break;
 
-				case keys.home: homeKey(e);
+				case Global.state.keys.home: homeKey(e);
 					break;
 			}
 		},
