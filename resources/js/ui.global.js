@@ -19,6 +19,7 @@
  * 1.0.14 (23.03.10) modal drag close 추가
  * 1.0.15 (23.03.13) modal drag close - top,bottom 경우 추가
  * 1.0.16 (23.03.14) tab keys 수정
+ * 1.0.17 (23.03.23) input clear - search, data-keep인 경우 x버튼 노출 수정
  */
 ((win, doc, undefined) => {
 
@@ -2002,30 +2003,44 @@
 				inp.addEventListener('focus', this.actClear);
 				inp.addEventListener('input', this.actClear);
 				inp.addEventListener('blur', this.actClear);
-				
+				console.log(inp.type)
 				//prefix, suffix text
 				!!inp.dataset.prefix && prefix(inp);
 				!!inp.dataset.suffix && suffix(inp);
-
-			
-				
+				!!inp.value && (!!inp.dataset.clear || inp.type === 'search') && (!!inp.dataset.keep || inp.type === 'search') && this.actClear(inp.id);
 			}
 		},
 		clearTimer:{},
 		actClear(event) {
-			const inp = event.currentTarget;
+			let inp;
+
+			if (typeof event === 'string') {
+				inp = document.querySelector('#'+ event);
+			} else {
+				inp = event.currentTarget;
+			}
+
 			const id = inp.id;
 			const title = inp.title;
 			const wrap = inp.parentElement;
 			const suffix = wrap.querySelector('.suffix');
 			const isValue = inp.value;
-			const eventType = event.type;
-			const isClear = inp.dataset.clear;
+			let eventType = event.type;
+			const isClear = inp.dataset.clear || inp.type === 'search' ? true : false;
+			let isKeep = inp.dataset.keep;
 			const w_suffix = !!suffix ? suffix.offsetWidth : 0;
 			const paddingR = Number((inp.style.paddingRight).split('px')[0]);
 
 			if (!isClear) {
 				return false;
+			}
+
+			if (typeof event === 'string') {
+				eventType = 'input';
+			}
+
+			if (inp.type === 'search') {
+				isKeep = true;
 			}
 			
 			const clear = () => {
@@ -2033,57 +2048,57 @@
 				inp.value = '';
 				inp.focus();
 			}
-
 			const beforeClear = () => {
 				const btn = wrap.querySelector('.ui-clear');
-
-				if (!!btn) {
-					const w = btn.offsetWidth;
-					inp.style.paddingRight = paddingR - w + 'px';
-					btn.removeEventListener('click', clear);
-					btn.remove();
+				const btnclear = () => {
+					if (!!btn) {
+						const w = btn.offsetWidth;
+						inp.style.paddingRight = paddingR - w + 'px';
+						btn.removeEventListener('click', clear);
+						btn.remove();
+					}
 				}
+
+				(!!isKeep) ? (!inp.value) && btnclear() : btnclear();
 			}
 
 			switch (eventType) {
 				case 'focus' :
 				case 'input' :
-				if (!!isValue) {
-					if (!wrap.querySelector('.ui-clear')) {
-						const clearbutton = doc.createElement('button');
-						clearbutton.type = 'button';
-						clearbutton.classList.add('btn-clear');
-						clearbutton.classList.add('ui-clear');
-						clearbutton.setAttribute('aria-label', 'Clear '+ title);
-						clearbutton.dataset.id = id;
-						
-						wrap.appendChild(clearbutton);
+					if (!!isValue) {
+						if (!wrap.querySelector('.ui-clear')) {
+							const clearbutton = doc.createElement('button');
+							clearbutton.type = 'button';
+							clearbutton.classList.add('btn-clear');
+							clearbutton.classList.add('ui-clear');
+							clearbutton.setAttribute('aria-label', 'Clear '+ title);
+							clearbutton.dataset.id = id;
+							
+							wrap.appendChild(clearbutton);
 
-						const btn = wrap.querySelector('.ui-clear');
-						const w = btn.offsetWidth + w_suffix;
-						
-						inp.style.paddingRight = w + 'px'
-						btn.style.marginRight = w_suffix + 'px';
+							const btn = wrap.querySelector('.ui-clear');
+							const w = btn.offsetWidth + w_suffix;
 
-						btn.addEventListener('focus', () => {
-							clearTimeout(this.clearTimer)
-						});
-						btn.addEventListener('blur', beforeClear);
-						btn.removeEventListener('click', clear);
-						btn.addEventListener('click', clear);
+							inp.style.paddingRight = w + 'px'
+							btn.style.marginRight = w_suffix + 'px';
+
+							btn.addEventListener('focus', () => clearTimeout(this.clearTimer));
+							btn.addEventListener('blur', beforeClear);
+							btn.removeEventListener('click', clear);
+							btn.addEventListener('click', clear);
+						}
+					} else {
+						beforeClear();
 					}
-				} else {
-					beforeClear();
-				}
-				break;
+					break;
 
 				case 'blur' :
-				if (!!wrap.querySelector('.ui-clear')) {
-					this.clearTimer = setTimeout(() => {
-						beforeClear();
-					},300);
-				}
-				break;
+					if (!!wrap.querySelector('.ui-clear')) {
+						this.clearTimer = setTimeout(() => {
+							beforeClear();
+						},300);
+					}
+					break;
 			}
 		},
 
