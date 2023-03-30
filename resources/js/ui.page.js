@@ -279,15 +279,15 @@
     netive.page.pageSelection = () => {}
     netive.page.pageSelect = () => {
         netive.select.init();
-        netive.select.init();
-        netive.select.init();
-        netive.select.init({
-            id: 'forSelLocal',
-            current: 0,
-            callback: function (v) {
-                console.log(v);
-            }
-        });
+        // netive.select.init();
+        // netive.select.init();
+        // netive.select.init({
+        //     id: 'forSelLocal',
+        //     current: 0,
+        //     callback: function (v) {
+        //         console.log(v);
+        //     }
+        // });
 
         let opttxt = 5;
         doc.querySelector('#changeOption').addEventListener('click', function () {

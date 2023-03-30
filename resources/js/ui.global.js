@@ -2003,24 +2003,24 @@
 				inp.addEventListener('focus', this.actClear);
 				inp.addEventListener('input', this.actClear);
 				inp.addEventListener('blur', this.actClear);
-				console.log(inp.type)
+				
 				//prefix, suffix text
 				!!inp.dataset.prefix && prefix(inp);
 				!!inp.dataset.suffix && suffix(inp);
-				!!inp.value && (!!inp.dataset.clear || inp.type === 'search') && (!!inp.dataset.keep || inp.type === 'search') && this.actClear(inp.id);
+				!!inp.value && (!!inp.dataset.clear || inp.type === 'search') && (!!inp.dataset.keep || inp.type === 'search') && this.actClear(inp);
 			}
 		},
 		clearTimer:{},
 		actClear(event) {
 			let inp;
-
-			if (typeof event === 'string') {
-				inp = document.querySelector('#'+ event);
+			const isInput = event.type === 'text' || event.type === 'search' || event.type === 'number' || event.type === 'tel' || event.type === 'email' || event.type === 'file' || event.type === 'password' || event.type === 'url' || event.type === 'tel' || event.type === 'date';
+			if (isInput) {
+				inp = event;
 			} else {
 				inp = event.currentTarget;
 			}
 
-			const id = inp.id;
+			// const id = inp.id;
 			const title = inp.title;
 			const wrap = inp.parentElement;
 			const suffix = wrap.querySelector('.suffix');
@@ -2035,10 +2035,10 @@
 				return false;
 			}
 
-			if (typeof event === 'string') {
+			if (isInput) {
 				eventType = 'input';
 			}
-
+			
 			if (inp.type === 'search') {
 				isKeep = true;
 			}
@@ -2058,7 +2058,6 @@
 						btn.remove();
 					}
 				}
-
 				(!!isKeep) ? (!inp.value) && btnclear() : btnclear();
 			}
 
@@ -2072,7 +2071,7 @@
 							clearbutton.classList.add('btn-clear');
 							clearbutton.classList.add('ui-clear');
 							clearbutton.setAttribute('aria-label', 'Clear '+ title);
-							clearbutton.dataset.id = id;
+							// clearbutton.dataset.id = id;
 							
 							wrap.appendChild(clearbutton);
 
@@ -4667,58 +4666,63 @@
 				if (v !== undefined) {
 					_current = v;
 				}
+ 
+				if (!!_optLen) {
+					_select.disabled = false;
+					for (let i = 0; i < _optLen; i++) {
+						const that = _options[i];
 
-				for (let i = 0; i < _optLen; i++) {
-					const that = _options[i];
+						_hidden = that.hidden;
 
-					_hidden = that.hidden;
-
-					if (_current !== null) {
-						if (_current === i) {
-							_selected = true;
-							that.selected = true;
+						if (_current !== null) {
+							if (_current === i) {
+								_selected = true;
+								that.selected = true;
+							} else {
+								_selected = false;
+								that.selected = false;
+							}
 						} else {
-							_selected = false;
-							that.selected = false;
+							_selected = that.selected;
 						}
-					} else {
-						_selected = that.selected;
+
+						_disabled = that.disabled;
+						_hiddenCls =  _hidden ? 'hidden' : '';
+
+						if (_selected) {
+							btnTxt = that.textContent;
+							optionSelectedID = _optionID + '_' + i;
+							selectN = i;
+						}
+
+						_selected && _hidden ? hiddenClass = 'opt-hidden' : '';
+						_optionIdName = _optionID + '_' + i;
+
+						if (Global.state.device.mobile) {
+							_disabled ?
+								_selected ?
+									htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
+									htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
+								_selected ?
+									htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">' :
+									htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">';
+						} else {
+							_disabled ?
+								_selected ?
+									htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
+									htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
+								_selected ?
+									htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">' :
+									htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">';
+						}
+
+						htmlOption += '<span class="ui-select-txt">' + that.textContent + '</span>';
+						htmlOption += '</button>';
 					}
-
-					_disabled = that.disabled;
-					_hiddenCls =  _hidden ? 'hidden' : '';
-
-					if (_selected) {
-						btnTxt = that.textContent;
-						optionSelectedID = _optionID + '_' + i;
-						selectN = i;
-					}
-
-					_selected && _hidden ? hiddenClass = 'opt-hidden' : '';
-					_optionIdName = _optionID + '_' + i;
-
-					if (Global.state.device.mobile) {
-						_disabled ?
-							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
-							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">';
-					} else {
-						_disabled ?
-							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled selected '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt disabled '+ _hiddenCls + '" value="' + that.value + '" disabled tabindex="-1">' :
-							_selected ?
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt selected '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">' :
-								htmlOption += '<button type="button" role="option" id="' + _optionIdName + '" class="ui-select-opt '+ _hiddenCls + '" value="' + that.value + '" tabindex="-1">';
-					}
-
-					htmlOption += '<span class="ui-select-txt">' + that.textContent + '</span>';
-					htmlOption += '</button>';
+				} else {
+					btnTxt = '';
+					_select.disabled = true;
 				}
-
 				return htmlOption;
 			}
 
@@ -4726,8 +4730,7 @@
 			const set = (el_uiSelect, el_select, selectID) => {
 				(selectID === undefined) ? el_select.id = 'uiSelect_' + idN : '';
 				listID = selectID + '_list';
-				selectDisabled = el_select.disabled;
-				selectTitle = el_select.title;
+ 				selectTitle = el_select.title;
 				hiddenClass = '';
 
 				const isStyle = !!el_uiSelect.dataset.style ? el_uiSelect.dataset.style : '';
@@ -4755,6 +4758,7 @@
 
 				htmlButton = '<button type="button" class="ui-select-btn '+ hiddenClass +'" id="' + selectID + '_inp" role="combobox" aria-autocomplete="list" aria-owns="' + listID + '" aria-haspopup="true" aria-expanded="false" aria-activedescendant="' + optionSelectedID + '" data-n="' + selectN + '" data-id="' + selectID + '" tabindex="-1"><span>' + btnTxt + '</span></button>';
 				
+				selectDisabled = el_select.disabled;
 				el_uiSelect.insertAdjacentHTML('beforeend', htmlButton);
 				el_select.classList.add('off');
 				el_select.setAttribute('aria-hidden', true)
