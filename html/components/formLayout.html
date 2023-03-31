@@ -7,7 +7,7 @@
 <article class="wrap-article">
 	<h2 class="tit-m">HTML</h2>
 <pre class="box-code"><code class="html">
-&lt;div <tag-class>class="form-wrap <tag-input>{style-table}</tag-input>"</tag-class> data-type="<tag-input>{row|col}</tag-input>"&gt;
+&lt;div <tag-class>class="form-wrap"</tag-class> data-type="<tag-input>{row|col}</tag-input>" data-style="<tag-input>{table|...}</tag-input>"&gt;
 	&lt;div <tag-class>class="form-item-group"</tag-class>&gt;
 		&lt;div <tag-class>class="form-item"</tag-class>&gt;
 			&lt;div <tag-class>class="form-head"</tag-class>&gt;
@@ -38,61 +38,100 @@
 	<p>data-type="row"</p>
 	<section class="wrap-section">
 		<h3 class="tit-s">기본형(no line)</h3>
-		<div class="box-guide">
-			<div class="form-wrap" data-type="row">
+		<div class="form-wrap" data-type="row">
+			<div class="form-item">
+				<div class="form-head">
+					<div class="form-title">
+						<div class="bul-required">
+							<guide2></guide2>
+							<div class="a11y-hidden">필수입력</div>
+						</div>
+						<label class="form-label" for="form_a_1"><guide2></guide2>주민번호</label>
+						<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html" aria-label="툴팁 설명"><guide2></guide2></button>
+					</div>
+				</div>
+				<div class="form-body">
+					<div class="form-info">
+						<guide2></guide2>
+						<div class="bul-info">
+							<p>Helper Text <br>Helper Text</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="form-group">
+							<div class="form-input w-x16">
+								<div class="ui-select">
+									<select title="선택" id="s-3">
+										<option>선택하세요</option>
+										<option>선택하세요1</option>
+										<option>선택하세요2</option>
+										<option>선택하세요3</option>
+									<select>
+								</div>
+							</div>
+							<div class="form-input w-x11">
+								<input type="tel" class="inp-base" id="form_a_1" value="230101" placeholder="placeholder text">
+							</div>
+							<div class="form-text">-</div>
+							<div class="form-input w-x12">
+								<input type="password" class="inp-base" title="name" value="7777777" placeholder="placeholder text">
+							</div>
+						</div>
+	
+						<div class="form-input">
+							<input type="radio" id="rdo1_1" name="rdo1">
+							<label for="rdo1_1" class="lb-radio">라디오 버튼 1</label>
+						</div>
+
+						<div class="form-input">
+							<input type="radio" id="rdo1_2" name="rdo1">
+							<label for="rdo1_2" class="lb-radio">라디오 버튼 2</label>
+						</div>
+
+						<button type="button" class="btn-base">
+							<span>버튼</span>
+						</button>
+					</div>
+					
+					<div class="form-info">
+						<div class="bul-error" aria-live="polite">
+							<div>Error Text</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-item-group">
 				<div class="form-item">
 					<div class="form-head">
 						<div class="form-title">
 							<div class="bul-required">
-								<guide2></guide2>
 								<div class="a11y-hidden">필수입력</div>
 							</div>
-							<label class="form-label" for="form_a_1"><guide2></guide2>주민번호</label>
-							<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html" aria-label="툴팁 설명"><guide2></guide2></button>
+							<label class="form-label" for="form_a_2">Label Text</label>
+							<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
 						</div>
+
 					</div>
 					<div class="form-body">
-						<div class="form-info">
-							<guide2></guide2>
-							<div class="bul-info">
-								<p>Helper Text <br>Helper Text</p>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="form-group" data-type="주민번호">
-								<div class="form-input">
-									<div class="ui-select">
-										<select title="선택" id="s-3">
-											<option>선택하세요</option>
-											<option>선택하세요1</option>
-											<option>선택하세요2</option>
-											<option>선택하세요3</option>
-										<select>
-									</div>
-								</div>
-								<div class="form-input">
-									<input type="tel" class="inp-base" id="form_a_1" value="230101" placeholder="placeholder text">
-								</div>
-								<div class="form-text">-</div>
-								<div class="form-input">
-									<input type="password" class="inp-base" title="name" value="7777777" placeholder="placeholder text">
-								</div>
-							</div>
-		
+						<div class="form-group" data-wrap="nowrap">
 							<div class="form-input">
-								<input type="radio" id="rdo1_1" name="rdo1">
-								<label for="rdo1_1" class="lb-radio">라디오 버튼 1</label>
+								<input type="text" class="inp-base" id="form_a_2" value="hello" placeholder="placeholder text">
 							</div>
-
+							<div class="form-text">-</div>
 							<div class="form-input">
-								<input type="radio" id="rdo1_2" name="rdo1">
-								<label for="rdo1_2" class="lb-radio">라디오 버튼 2</label>
+								<input type="text" class="inp-base" title="name" value="hello" placeholder="placeholder text">
 							</div>
-
+							
 							<button type="button" class="btn-base">
 								<span>버튼</span>
 							</button>
+						</div>
+
+						<div class="form-info">
+							<div class="bul-info">
+								<div>Helper Text <br>Helper Text</div>
+							</div>
 						</div>
 						
 						<div class="form-info">
@@ -102,136 +141,30 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-item-group">
-					<div class="form-item">
-						<div class="form-head">
-							<div class="form-title">
-								<div class="bul-required">
-									<div class="a11y-hidden">필수입력</div>
-								</div>
-								<label class="form-label" for="form_a_2">Label Text</label>
-								<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
-							</div>
-
-						</div>
-						<div class="form-body">
-							<div class="form-group" data-wrap="nowrap">
-								<div class="form-input">
-									<input type="text" class="inp-base" id="form_a_2" value="hello" placeholder="placeholder text">
-								</div>
-								<div class="form-text">-</div>
-								<div class="form-input">
-									<input type="text" class="inp-base" title="name" value="hello" placeholder="placeholder text">
-								</div>
-								
-								<button type="button" class="btn-base">
-									<span>버튼</span>
-								</button>
-							</div>
-
-							<div class="form-info">
-								<div class="bul-info">
-									<div>Helper Text <br>Helper Text</div>
-								</div>
-							</div>
-							
-							<div class="form-info">
-								<div class="bul-error" aria-live="polite">
-									<div>Error Text</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="form-item">
-						<div class="form-head">
-							<div class="form-title">
-								<label class="form-label" for="form_a_2">Label Text</label>
-								<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
-							</div>
-							
-						</div>
-						<div class="form-body">
-							<div class="form-group lock">
-								<div class="form-input">
-									<input type="radio" id="rdo2_1" name="rdo2">
-									<label for="rdo2_1" class="lb-radio">라디오체크 1</label>
-								</div>
-								<div class="form-input">
-									<input type="radio" id="rdo2_2" name="rdo2">
-									<label for="rdo2_2" class="lb-radio">라디오체크 1</label>
-								</div>
-							</div>
-	
-							<div class="form-info">
-								<div class="bul-info">
-									<div>Helper Text <br>Helper Text</div>
-								</div>
-							</div>
-							
-							<div class="form-info">
-								<div class="bul-error" aria-live="polite">
-									<div>Error Text</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-
-			<div class="form-wrap mt-x6" data-type="row" data-style="table">
 				<div class="form-item">
 					<div class="form-head">
 						<div class="form-title">
-							<div class="bul-required">
-								<guide2></guide2>
-								<div class="a11y-hidden">필수입력</div>
-							</div>
-							<label class="form-label" for="form_a_1"><guide2></guide2>주민번호</label>
-							<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html" aria-label="툴팁 설명"><guide2></guide2></button>
+							<label class="form-label" for="form_a_2">Label Text</label>
+							<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
 						</div>
+						
 					</div>
 					<div class="form-body">
-						<div class="form-info">
-							<guide2></guide2>
-							<div class="bul-info">
-								<p>Helper Text <br>Helper Text</p>
+						<div class="form-group lock">
+							<div class="form-input">
+								<input type="radio" id="rdo2_1" name="rdo2">
+								<label for="rdo2_1" class="lb-radio">라디오체크 1</label>
+							</div>
+							<div class="form-input">
+								<input type="radio" id="rdo2_2" name="rdo2">
+								<label for="rdo2_2" class="lb-radio">라디오체크 1</label>
 							</div>
 						</div>
 
-						<div class="form-group">
-							<div class="form-group" data-type="주민번호">
-								<div class="form-input">
-									<div class="ui-select">
-										<select title="선택" id="uiSel12">
-											<option>선택하세요</option>
-											<option>선택하세요1</option>
-											<option>선택하세요2</option>
-											<option>선택하세요3</option>
-										<select>
-									</div>
-								</div>
-								<div class="form-input">
-									<input type="tel" class="inp-base" id="form_a_1" value="230101" placeholder="placeholder text">
-								</div>
-								<div class="form-text">-</div>
-								<div class="form-input">
-									<input type="password" class="inp-base" title="name" value="7777777" placeholder="placeholder text">
-								</div>
+						<div class="form-info">
+							<div class="bul-info">
+								<div>Helper Text <br>Helper Text</div>
 							</div>
-		
-							<div class="form-input">
-								<input type="radio" id="rdo1_1" name="rdo1">
-								<label for="rdo1_1" class="lb-radio">라디오 버튼 1</label>
-							</div>
-
-							<div class="form-input">
-								<input type="radio" id="rdo1_2" name="rdo1">
-								<label for="rdo1_2" class="lb-radio">라디오 버튼 2</label>
-							</div>
-
-							<button type="button" class="btn-base">
-								<span>버튼</span>
-							</button>
 						</div>
 						
 						<div class="form-info">
@@ -241,138 +174,103 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-item-group">
-					<div class="form-item">
-						<div class="form-head">
-							<div class="form-title">
-								<div class="bul-required">
-									<div class="a11y-hidden">필수입력</div>
-								</div>
-								<label class="form-label" for="form_a_2">Label Text</label>
-								<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
-							</div>
+			</div>
+		</div>
 
+		<div class="form-wrap mt-x6" data-type="row" data-style="table">
+			<div class="form-item">
+				<div class="form-head">
+					<div class="form-title">
+						<div class="bul-required">
+							<guide2></guide2>
+							<div class="a11y-hidden">필수입력</div>
 						</div>
-						<div class="form-body">
-							<div class="form-group" data-wrap="nowrap">
-								<div class="form-input">
-									<input type="text" class="inp-base" id="form_a_2" value="hello" placeholder="placeholder text">
-								</div>
-								<div class="form-text">-</div>
-								<div class="form-input">
-									<input type="text" class="inp-base" title="name" value="hello" placeholder="placeholder text">
-								</div>
-								
-								<button type="button" class="btn-base">
-									<span>버튼</span>
-								</button>
-							</div>
-
-							<div class="form-info">
-								<div class="bul-info">
-									<div>Helper Text <br>Helper Text</div>
-								</div>
-							</div>
-							
-							<div class="form-info">
-								<div class="bul-error" aria-live="polite">
-									<div>Error Text</div>
-								</div>
-							</div>
+						<label class="form-label" for="form_a_1"><guide2></guide2>주민번호</label>
+						<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html" aria-label="툴팁 설명"><guide2></guide2></button>
+					</div>
+				</div>
+				<div class="form-body">
+					<div class="form-info">
+						<guide2></guide2>
+						<div class="bul-info">
+							<p>Helper Text <br>Helper Text</p>
 						</div>
 					</div>
-					<div class="form-item">
-						<div class="form-head">
-							<div class="form-title">
-								<label class="form-label" for="form_a_2">Label Text</label>
-								<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
+
+					<div class="form-group">
+						<div class="form-group" data-type="주민번호">
+							<div class="form-input">
+								<div class="ui-select">
+									<select title="선택" id="uiSel12">
+										<option>선택하세요</option>
+										<option>선택하세요1</option>
+										<option>선택하세요2</option>
+										<option>선택하세요3</option>
+									<select>
+								</div>
 							</div>
-							
+							<div class="form-input">
+								<input type="tel" class="inp-base" id="form_a_1" value="230101" placeholder="placeholder text">
+							</div>
+							<div class="form-text">-</div>
+							<div class="form-input">
+								<input type="password" class="inp-base" title="name" value="7777777" placeholder="placeholder text">
+							</div>
 						</div>
-						<div class="form-body">
-							<div class="form-group lock">
-								<div class="form-input">
-									<input type="radio" id="rdo2_1" name="rdo2">
-									<label for="rdo2_1" class="lb-radio">라디오체크 1</label>
-								</div>
-								<div class="form-input">
-									<input type="radio" id="rdo2_2" name="rdo2">
-									<label for="rdo2_2" class="lb-radio">라디오체크 1</label>
-								</div>
-							</div>
 	
-							<div class="form-info">
-								<div class="bul-info">
-									<div>Helper Text <br>Helper Text</div>
-								</div>
-							</div>
-							
-							<div class="form-info">
-								<div class="bul-error" aria-live="polite">
-									<div>Error Text</div>
-								</div>
-							</div>
+						<div class="form-input">
+							<input type="radio" id="rdo1_1" name="rdo1">
+							<label for="rdo1_1" class="lb-radio">라디오 버튼 1</label>
+						</div>
+
+						<div class="form-input">
+							<input type="radio" id="rdo1_2" name="rdo1">
+							<label for="rdo1_2" class="lb-radio">라디오 버튼 2</label>
+						</div>
+
+						<button type="button" class="btn-base">
+							<span>버튼</span>
+						</button>
+					</div>
+					
+					<div class="form-info">
+						<div class="bul-error" aria-live="polite">
+							<div>Error Text</div>
 						</div>
 					</div>
 				</div>
-				
-
 			</div>
-	
-			<div class="form-wrap  mt-x6" data-type="col">
+			<div class="form-item-group">
 				<div class="form-item">
 					<div class="form-head">
 						<div class="form-title">
 							<div class="bul-required">
-								<guide2></guide2>
 								<div class="a11y-hidden">필수입력</div>
 							</div>
-							<label class="form-label" for="form_a_1"><guide2></guide2>주민번호</label>
-							<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html" aria-label="툴팁 설명"><guide2></guide2></button>
+							<label class="form-label" for="form_a_2">Label Text</label>
+							<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
 						</div>
+
 					</div>
 					<div class="form-body">
-						<div class="form-info">
-							<guide2></guide2>
-							<div class="bul-info">
-								<p>Helper Text <br>Helper Text</p>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<div class="form-group" data-type="주민번호">
-								<div class="form-input">
-									<div class="ui-select">
-										<select title="선택" id="uiSel13">
-											<option>선택하세요</option>
-											<option>선택하세요1</option>
-											<option>선택하세요2</option>
-											<option>선택하세요3</option>
-										<select>
-									</div>
-								</div>
-								<div class="form-input">
-									<input type="tel" class="inp-base" id="form_a_1" value="230101" placeholder="placeholder text">
-								</div>
-								<div class="form-text">-</div>
-								<div class="form-input">
-									<input type="password" class="inp-base" title="name" value="7777777" placeholder="placeholder text">
-								</div>
-							</div>
-		
+						<div class="form-group" data-wrap="nowrap">
 							<div class="form-input">
-								<input type="radio" id="rdo1_1" name="rdo1">
-								<label for="rdo1_1" class="lb-radio">라디오 버튼 1</label>
+								<input type="text" class="inp-base" id="form_a_2" value="hello" placeholder="placeholder text">
 							</div>
-
+							<div class="form-text">-</div>
 							<div class="form-input">
-								<input type="radio" id="rdo1_2" name="rdo1">
-								<label for="rdo1_2" class="lb-radio">라디오 버튼 2</label>
+								<input type="text" class="inp-base" title="name" value="hello" placeholder="placeholder text">
 							</div>
-
+							
 							<button type="button" class="btn-base">
 								<span>버튼</span>
 							</button>
+						</div>
+
+						<div class="form-info">
+							<div class="bul-info">
+								<div>Helper Text <br>Helper Text</div>
+							</div>
 						</div>
 						
 						<div class="form-info">
@@ -382,83 +280,183 @@
 						</div>
 					</div>
 				</div>
-				<div class="form-item-group">
-					<div class="form-item">
-						<div class="form-head">
-							<div class="form-title">
-								<div class="bul-required">
-									<div class="a11y-hidden">필수입력</div>
-								</div>
-								<label class="form-label" for="form_a_2">Label Text</label>
-								<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
-							</div>
-
+				<div class="form-item">
+					<div class="form-head">
+						<div class="form-title">
+							<label class="form-label" for="form_a_2">Label Text</label>
+							<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
 						</div>
-						<div class="form-body">
-							<div class="form-group" data-wrap="nowrap">
-								<div class="form-input">
-									<input type="text" class="inp-base" id="form_a_2" value="hello" placeholder="placeholder text">
-								</div>
-								<div class="form-text">-</div>
-								<div class="form-input">
-									<input type="text" class="inp-base" title="name" value="hello" placeholder="placeholder text">
-								</div>
-								
-								<button type="button" class="btn-base">
-									<span>버튼</span>
-								</button>
-							</div>
-
-							<div class="form-info">
-								<div class="bul-info">
-									<div>Helper Text <br>Helper Text</div>
-								</div>
-							</div>
-							
-							<div class="form-info">
-								<div class="bul-error" aria-live="polite">
-									<div>Error Text</div>
-								</div>
-							</div>
-						</div>
+						
 					</div>
-					<div class="form-item">
-						<div class="form-head">
-							<div class="form-title">
-								<label class="form-label" for="form_a_2">Label Text</label>
-								<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
+					<div class="form-body">
+						<div class="form-group lock">
+							<div class="form-input">
+								<input type="radio" id="rdo2_1" name="rdo2">
+								<label for="rdo2_1" class="lb-radio">라디오체크 1</label>
 							</div>
-							
+							<div class="form-input">
+								<input type="radio" id="rdo2_2" name="rdo2">
+								<label for="rdo2_2" class="lb-radio">라디오체크 1</label>
+							</div>
 						</div>
-						<div class="form-body">
-							<div class="form-group lock">
-								<div class="form-input">
-									<input type="radio" id="rdo2_1" name="rdo2">
-									<label for="rdo2_1" class="lb-radio">라디오체크 1</label>
-								</div>
-								<div class="form-input">
-									<input type="radio" id="rdo2_2" name="rdo2">
-									<label for="rdo2_2" class="lb-radio">라디오체크 1</label>
-								</div>
+
+						<div class="form-info">
+							<div class="bul-info">
+								<div>Helper Text <br>Helper Text</div>
 							</div>
-	
-							<div class="form-info">
-								<div class="bul-info">
-									<div>Helper Text <br>Helper Text</div>
-								</div>
-							</div>
-							
-							<div class="form-info">
-								<div class="bul-error" aria-live="polite">
-									<div>Error Text</div>
-								</div>
+						</div>
+						
+						<div class="form-info">
+							<div class="bul-error" aria-live="polite">
+								<div>Error Text</div>
 							</div>
 						</div>
 					</div>
 				</div>
-				
-
 			</div>
+			
+
+		</div>
+
+		<div class="form-wrap  mt-x6" data-type="col">
+			<div class="form-item">
+				<div class="form-head">
+					<div class="form-title">
+						<div class="bul-required">
+							<guide2></guide2>
+							<div class="a11y-hidden">필수입력</div>
+						</div>
+						<label class="form-label" for="form_a_1"><guide2></guide2>주민번호</label>
+						<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html" aria-label="툴팁 설명"><guide2></guide2></button>
+					</div>
+				</div>
+				<div class="form-body">
+					<div class="form-info">
+						<guide2></guide2>
+						<div class="bul-info">
+							<p>Helper Text <br>Helper Text</p>
+						</div>
+					</div>
+
+					<div class="form-group">
+						<div class="form-group" data-type="주민번호">
+							<div class="form-input">
+								<div class="ui-select">
+									<select title="선택" id="uiSel13">
+										<option>선택하세요</option>
+										<option>선택하세요1</option>
+										<option>선택하세요2</option>
+										<option>선택하세요3</option>
+									<select>
+								</div>
+							</div>
+							<div class="form-input">
+								<input type="tel" class="inp-base" id="form_a_1" value="230101" placeholder="placeholder text">
+							</div>
+							<div class="form-text">-</div>
+							<div class="form-input">
+								<input type="password" class="inp-base" title="name" value="7777777" placeholder="placeholder text">
+							</div>
+						</div>
+	
+						<div class="form-input">
+							<input type="radio" id="rdo1_1" name="rdo1">
+							<label for="rdo1_1" class="lb-radio">라디오 버튼 1</label>
+						</div>
+
+						<div class="form-input">
+							<input type="radio" id="rdo1_2" name="rdo1">
+							<label for="rdo1_2" class="lb-radio">라디오 버튼 2</label>
+						</div>
+
+						<button type="button" class="btn-base">
+							<span>버튼</span>
+						</button>
+					</div>
+					
+					<div class="form-info">
+						<div class="bul-error" aria-live="polite">
+							<div>Error Text</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="form-item-group">
+				<div class="form-item">
+					<div class="form-head">
+						<div class="form-title">
+							<div class="bul-required">
+								<div class="a11y-hidden">필수입력</div>
+							</div>
+							<label class="form-label" for="form_a_2">Label Text</label>
+							<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
+						</div>
+
+					</div>
+					<div class="form-body">
+						<div class="form-group" data-wrap="nowrap">
+							<div class="form-input">
+								<input type="text" class="inp-base" id="form_a_2" value="hello" placeholder="placeholder text">
+							</div>
+							<div class="form-text">-</div>
+							<div class="form-input">
+								<input type="text" class="inp-base" title="name" value="hello" placeholder="placeholder text">
+							</div>
+							
+							<button type="button" class="btn-base">
+								<span>버튼</span>
+							</button>
+						</div>
+
+						<div class="form-info">
+							<div class="bul-info">
+								<div>Helper Text <br>Helper Text</div>
+							</div>
+						</div>
+						
+						<div class="form-info">
+							<div class="bul-error" aria-live="polite">
+								<div>Error Text</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="form-item">
+					<div class="form-head">
+						<div class="form-title">
+							<label class="form-label" for="form_a_2">Label Text</label>
+							<button type="button" class="ui-tooltip-btn" aria-describedby="tt2" data-src="./components/tooltip_ajax2.html">툴팁 설명</button>
+						</div>
+						
+					</div>
+					<div class="form-body">
+						<div class="form-group lock">
+							<div class="form-input">
+								<input type="radio" id="rdo2_1" name="rdo2">
+								<label for="rdo2_1" class="lb-radio">라디오체크 1</label>
+							</div>
+							<div class="form-input">
+								<input type="radio" id="rdo2_2" name="rdo2">
+								<label for="rdo2_2" class="lb-radio">라디오체크 1</label>
+							</div>
+						</div>
+
+						<div class="form-info">
+							<div class="bul-info">
+								<div>Helper Text <br>Helper Text</div>
+							</div>
+						</div>
+						
+						<div class="form-info">
+							<div class="bul-error" aria-live="polite">
+								<div>Error Text</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+
 		</div>
 	</section>
 
