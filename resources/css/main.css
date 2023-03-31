@@ -3626,20 +3626,20 @@ select.inp-base {
 /* 가로형 : 기본 */
 .form-wrap {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
 }
 .form-item {
   position: relative;
   display: flex;
   align-items: flex-start;
+  gap: 1.6rem;
 }
-.form-item + .form-item-rowgroup, .form-item + .form-item {
-  margin-top: 1.6rem;
-}
-.form-item-rowgroup {
-  display: block;
-}
-.form-item-rowgroup + .form-item-rowgroup, .form-item-rowgroup + .form-item {
-  margin-top: 1.6rem;
+.form-item-group {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.6rem;
 }
 .form-head {
   position: relative;
@@ -3647,13 +3647,15 @@ select.inp-base {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-  margin-right: 0.8rem;
   min-height: 4rem;
 }
 .form-head .bul-required {
   position: absolute !important;
-  top: -0.4rem;
-  left: 0;
+  top: -0.9rem;
+  margin: 0 !important;
+}
+.form-head .ui-tooltip-btn {
+  top: 0.6rem;
 }
 .form-title {
   position: relative;
@@ -3661,9 +3663,6 @@ select.inp-base {
   justify-content: flex-start;
   align-items: flex-start;
   margin-top: 0.8rem;
-}
-.form-title .ui-tooltip-btn {
-  top: 0.6rem;
 }
 .form-label {
   position: relative;
@@ -3677,12 +3676,9 @@ select.inp-base {
 .form-group {
   position: relative;
   display: flex;
-  margin-top: -0.8rem;
   flex-wrap: wrap;
   justify-content: flex-start;
-}
-.form-group > *:not(.form-group) {
-  margin-top: 0.8rem;
+  gap: 0.8rem;
 }
 .form-group[data-wrap=nowrap] {
   flex-wrap: nowrap;
@@ -3693,16 +3689,12 @@ select.inp-base {
 .form-group + .form-group {
   margin-top: 0;
 }
-.form-group .form-text + .form-text,
-.form-group .form-input + .form-text {
-  margin-right: 0.4rem;
-  margin-left: -0.4rem;
-}
 .form-input {
   position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+  flex: auto;
 }
 .form-text {
   position: relative;
@@ -3714,23 +3706,28 @@ select.inp-base {
   position: relative;
   margin: 0 0 0.4rem 0;
 }
+.form-info > * {
+  margin-bottom: 0 !important;
+}
+
+.form-group[data-type=주민번호] .form-input {
+  width: 12rem;
+}
 
 /* 세로형 */
+[data-type=col] {
+  gap: 3.2rem;
+}
 [data-type=col] .form-item {
   flex-direction: column;
+  gap: 0;
 }
-[data-type=col] .form-item + .form-item-rowgroup, [data-type=col] .form-item + .form-item {
-  margin-top: 4.8rem;
-}
-[data-type=col] .form-item-rowgroup {
-  display: block;
-}
-[data-type=col] .form-item-rowgroup + .form-item-rowgroup, [data-type=col] .form-item-rowgroup + .form-item {
-  margin-top: 4.8rem;
+[data-type=col] .form-item-group {
+  gap: 1.6rem 3.2rem;
 }
 [data-type=col] .form-head {
   min-height: 0;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0;
   width: 100%;
   justify-content: space-between;
   min-width: 0;
@@ -3746,40 +3743,33 @@ select.inp-base {
 }
 
 /* 스타일 - 테이블 */
-.style-table:not([data-type=col]) {
+[data-style=table]:not([data-type=col]) {
   background-color: var(--gray200);
   border-top: 1px solid var(--gray400);
   border-left: 1px solid var(--gray400);
+  gap: 0;
 }
-.style-table:not([data-type=col]) .form-item-rowgroup {
+[data-style=table]:not([data-type=col]) .form-item-group {
   display: flex;
+  gap: 0;
 }
-.style-table:not([data-type=col]) .form-item-rowgroup + .form-item-rowgroup, .style-table:not([data-type=col]) .form-item-rowgroup + .form-item {
-  margin-top: 0;
-}
-.style-table:not([data-type=col]) .form-item {
+[data-style=table]:not([data-type=col]) .form-item {
   flex: 1;
   border: 1px solid var(--gray400);
   border-top: 0;
   border-left: 0;
+  gap: 0;
 }
-.style-table:not([data-type=col]) .form-item .form-head {
+[data-style=table]:not([data-type=col]) .form-item .form-head {
   flex: 0;
   padding: 1.6rem;
 }
-.style-table:not([data-type=col]) .form-item .form-head .bul-required {
-  left: 1.6rem;
-  top: 1.6rem;
-}
-.style-table:not([data-type=col]) .form-item .form-body {
+[data-style=table]:not([data-type=col]) .form-item .form-body {
   flex: 1;
   height: 100%;
   background-color: var(--white);
   padding: 1.6rem;
   border-left: 1px solid var(--gray400);
-}
-.style-table:not([data-type=col]) .form-item + .form-item-rowgroup, .style-table:not([data-type=col]) .form-item + .form-item {
-  margin-top: 0;
 }
 
 /* custom : size */

@@ -205,6 +205,7 @@
 
     netive.page.pageFormLayout = () => {
         netive.tooltip.init();
+        netive.select.init();
     };
     netive.page.pageInput = () => {
         netive.form.init();

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="initial-scale=1.0, width=device-width, user-scalable=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<title>Shake.js</title>
+<style type="text/css">
+ 
+</style>
+</head>
+<body>
+  deviceorientation
+  <div id="a"></div>
+  <div id="b"></div>
+  <div id="c"></div>
+  
+<script type="text/javascript">
+window.onload = function() {
+  if (window.DeviceOrientationEvent) {
+    alert('OK');
+    window.addEventListener('deviceorientation', handleOrientation, false);
+  } else {
+    alert('Sorry');
+  }
+ 
+
+  function handleOrientation(event) {
+    alert(event)
+    var absolute = event.absolute;
+    var alpha    = event.alpha;
+    var beta     = event.beta;
+    var gamma    = event.gamma;
+   
+    // Do stuff with the new orientation data
+  }
+};
+</script>
+</body>
+</html>

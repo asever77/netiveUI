@@ -350,23 +350,20 @@
 .form{
     &-wrap{
         position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: $x2;
     }
     &-item {
         position: relative;
         display: flex;
         align-items: flex-start;
-    
-        & + .form-item-rowgroup,
-        & + .form-item {
-            margin-top:$x2;
-        }
+        gap: $x2;
     }
-    &-item-rowgroup{
-        display: block;
-        & + .form-item-rowgroup,
-        & + .form-item {
-            margin-top:$x2;
-        }
+    &-item-group{
+        display: flex;
+        align-items: flex-start;
+        gap: $x2;
     }
     &-head {
         position: relative;
@@ -374,14 +371,16 @@
         flex-direction: column;
         justify-content: flex-start;
         align-items: center;
-        margin-right:$x1;
         min-height: $x5;
          
         .bul-required {
             position: absolute !important;
-            top: $-x0_5; 
-            left: 0;
-        } 
+            top:-.9rem;
+            margin: 0 !important;
+        }
+        .ui-tooltip-btn {
+            top:.6rem
+        }
     }
     &-title{
         position: relative;
@@ -389,10 +388,6 @@
         justify-content: flex-start;
         align-items: flex-start;
         margin-top:$x1;
-    
-        .ui-tooltip-btn {
-            top:.6rem
-        }
     }
     &-label{
         position: relative;
@@ -406,14 +401,14 @@
     &-group{
         position: relative;
         display: flex;
-        margin-top: $-x1;
         flex-wrap: wrap;
         justify-content: flex-start;
+        gap: $x1;
         
-        > *:not(.form-group) {
-            margin-top: $x1;
-        }
-    
+        // > *:not(.form-group) {
+        //     margin-top: $x1;
+        // }
+            
         &[data-wrap="nowrap"] {
             flex-wrap: nowrap;
         }
@@ -421,21 +416,20 @@
             margin-top:$x1;
         }
         & + .form-group{margin-top: 0;} 
-        .form-text,
-        .form-input {
-            // margin-right: $x1;
-           
-            & + .form-text {
-                margin-right: $x0_5;
-                margin-left: $-x0_5;
-            }
-        }
+        // .form-text,
+        // .form-input {
+        //     & + .form-text {
+        //         margin-right: $x0_5;
+        //         margin-left: $-x0_5;
+        //     }
+        // }
     }
     &-input{
         position: relative;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
+        flex: auto;
     }
     &-text{
         position: relative;
@@ -446,60 +440,49 @@
     &-info {
         position: relative;
         margin:0 0 $x0_5 0;
+
+        & > * {margin-bottom: 0 !important;} 
     }
 }
 
+.form-group[data-type="주민번호"] {
+    .form-input{width: 12rem;}
+}
 
 /* 세로형 */
 [data-type="col"]{
+    gap:$x4;
+
     .form-item {
         flex-direction: column;
+        gap:0;
     }
-    .form-item {
-        & + .form-item-rowgroup,
-        & + .form-item {
-            margin-top:$x6;
-        }
-    }
-    .form-item-rowgroup{
-        display: block;
-        & + .form-item-rowgroup,
-        & + .form-item {
-            margin-top:$x6;
-        }
-    }
-
+    .form-item-group{gap:$x2 $x4;}
     .form-head{
         min-height: 0;
-        margin-bottom: $x0_5;
+        margin-bottom: 0;
         width: 100%;
         justify-content: space-between;
         min-width:0;
         max-width: 100%;
         flex-direction: row;
-       
     }
-    .form-title {
-        margin-top:0;
-    }
+    .form-title {margin-top:0;}
     .form-body {
         flex: 1;
         width: 100%;
     }
 }
 /* 스타일 - 테이블 */
-.style-table:not([data-type="col"]) {
+[data-style="table"]:not([data-type="col"]) {
     background-color: $gray200;
     border-top: 1px solid $gray400;
     border-left: 1px solid $gray400;
+    gap:0;
 
-    .form-item-rowgroup{
+    .form-item-group{
         display: flex;
-
-        & + .form-item-rowgroup,
-        & + .form-item {
-            margin-top:0;
-        }
+        gap:0;
     }
     
     .form-item{
@@ -507,16 +490,11 @@
         border: 1px solid $gray400;
         border-top:0;
         border-left:0;
+        gap:0;
 
         .form-head {
             flex:0;
             padding:$x2;
-
-            .bul-required{
-                left:$x2;
-                top:$x2;
-            }
-
         }
         .form-body{
             flex:1;
@@ -524,11 +502,6 @@
             background-color: $white;
             padding:$x2;
             border-left: 1px solid $gray400;
-        }
-
-        & + .form-item-rowgroup,
-        & + .form-item {
-            margin-top:0;
         }
     }
 }
