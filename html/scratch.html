@@ -36,10 +36,10 @@
 </div>
   <div style="width:100%;  height: 600px;"></div>
   <script>
-    function scracth(_id, option = {}) {
+    const scracth = (_id, option = {}) => {
       const canvas = document.getElementById(_id);
       const body = document.querySelector('body');
-      let ctx = canvas.getContext('2d');
+      const ctx = canvas.getContext('2d');
       let width = canvas.width;
       let height = canvas.height;
       let size = option.size || 20;
