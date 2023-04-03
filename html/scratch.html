@@ -102,8 +102,8 @@
               ctx.restore()
             })
             i -= 0.1;
-
-          }, 50)
+            console.log(i);
+          }, 0)
         }
 
         if (stopDrawing) return
@@ -119,7 +119,6 @@
         if (!check || check.length == 0) {
           json.target = true;
           inSideArray.push(json);  //대상원을 추가 합니다
-          console.log('!check || check.length == 0, inSideArray:', inSideArray, maxSize);
         }
         dataArray.push(json)  //다시 그리기용(페이드인 아웃용) 배열에 넣습니다
         // console.log('dataArray', dataArray);
@@ -164,7 +163,6 @@
         _drawding(mX, mY);
       }
       const eventStart = (e) => {
-        console.log(!ctx, stopDrawing);
         if (!ctx || stopDrawing) return;
 
         sX = e.clientX;

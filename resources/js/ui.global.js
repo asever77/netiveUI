@@ -1219,32 +1219,51 @@
 		},
 		destroy(v) {
 			const el_scrollbar = doc.querySelector('[data-scroll-id="' + v +'"]');
-			const el_barwrap = el_scrollbar.querySelectorAll('.ui-scrollbar-barwrap');
-			const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
-			const el_wrap = el_item.querySelector('.ui-scrollbar-wrap');
-			const wrapHtml = el_wrap.innerHTML;
+			const inner_scrollbars = el_scrollbar.querySelectorAll('[data-scroll-id]');
+			const act = (el) => {
+				const that = el;
+				const el_barwrap = that.querySelectorAll('.ui-scrollbar-barwrap');
+				const el_item = that.querySelector('.ui-scrollbar-item');
 
-			el_scrollbar.dataset.ready = 'no';
-			el_scrollbar.classList.remove('ready');
-			el_scrollbar.classList.remove('view-y');
-			el_scrollbar.classList.remove('view-x');
-			el_scrollbar.classList.remove('view-scrollbar');
-			el_scrollbar.style.overflow = 'auto';
+				if (el_item === null) {
+					return false;
+				}
 
-			el_barwrap.forEach((userItem) => {
-				el_scrollbar.removeChild(userItem);
-			});
+				const el_wrap = el_item.querySelector('.ui-scrollbar-wrap');
+				const wrapHtml = el_wrap.innerHTML;
+				
+				that.dataset.ready = 'no';
+				that.classList.remove('ready');
+				that.classList.remove('view-y');
+				that.classList.remove('view-x');
+				that.classList.remove('view-scrollbar');
+				that.style.overflow = 'auto';
+				
+				el_barwrap.forEach((userItem) => {
 
-			el_scrollbar.removeChild(el_item);
-			el_scrollbar.innerHTML = wrapHtml;
-			el_scrollbar.removeAttribute('data-scroll-id');
-			el_scrollbar.removeAttribute('data-item-w');
-			el_scrollbar.removeAttribute('data-item-h');
-			el_scrollbar.removeAttribute('data-wrap-w');
-			el_scrollbar.removeAttribute('data-wrap-h');
-			el_scrollbar.removeAttribute('data-direction');
-			el_scrollbar.removeAttribute('data-ready');
-			el_scrollbar.removeAttribute('style');
+					console.log(that, userItem);
+					that.removeChild(userItem);
+				});
+
+				that.removeChild(el_item);
+				that.innerHTML = wrapHtml;
+				// that.removeAttribute('data-scroll-id');
+				that.removeAttribute('data-item-w');
+				that.removeAttribute('data-item-h');
+				that.removeAttribute('data-wrap-w');
+				that.removeAttribute('data-wrap-h');
+				that.removeAttribute('data-direction');
+				that.removeAttribute('data-ready');
+				that.removeAttribute('style');
+			}
+
+			if (inner_scrollbars.length) {
+				for (const inner of inner_scrollbars) {
+					act(inner);
+				}
+			} else {
+				act(el_scrollbar);
+			}
 		},
 		reset(v) {
 			Global.scrollBar.destroy(v);

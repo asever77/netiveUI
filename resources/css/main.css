@@ -10101,7 +10101,7 @@ select.inp-base {
 }
 [data-type=col] .form-head {
   min-height: 0;
-  margin-bottom: 0;
+  margin-bottom: 0.4rem;
   width: 100%;
   justify-content: space-between;
   min-width: 0;

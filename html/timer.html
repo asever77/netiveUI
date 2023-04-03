@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html {
+      padding: 0;
+    }
+
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      padding: 0 20px;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    .circle_progress_wrap {
+      position: relative;
+      width: 120px;
+      height: 120px;
+    }
+    .circle_progress { transform: rotate(-90deg); }
+    .ci
+    .frame, .bar { fill: none; }
+    .frame { stroke: #e6e6e6; }
+    .bar {
+      stroke: #03c75a;
+      stroke-linecap: round;
+    }
+    .value {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 0;
+      text-align: center;
+      color: #888;
+      font-size: 16px;
+      line-height: 120px;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="width:100%; height: 200px;"></div>
+  <div class="circle_progress_wrap ui-">
+    <svg class="circle_progress" width="120" height="120" viewBox="0 0 120 120">
+      <circle class="frame" cx="60" cy="60" r="54" stroke-width="10" />
+      <circle class="bar" cx="60" cy="60" r="54" stroke-width="10" />
+    </svg>
+    <input id="control" type="range" value="0" />
+    <strong class="value"></strong>
+  </div>
+  <div style="width:100%;  height: 600px;"></div>
+  <script>
+    const control = document.getElementById('control');
+    const bar = document.querySelector('.bar');
+    const value = document.querySelector('.value');
+    const RADIUS = 54;
+    const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
+
+    const progress = (v) => {
+      let per = v;
+
+      if (isNaN(per)) {
+        per = v.target.valueAsNumber
+      }
+
+      const progress = per / 100;
+      const dashoffset = CIRCUMFERENCE * (1 - progress);
+
+      console.log((per / 33.33));
+
+      value.innerHTML= (per / 33.33).toFixed(0) +'초';
+      bar.style.strokeDashoffset = dashoffset;
+    }
+
+    // control.addEventListener('input', (event) => {
+    //   progress(event.target.valueAsNumber);
+    // });
+    // control.addEventListener('change', (event) => {
+    //   progress(event.target.valueAsNumber);
+    // });
+
+    control.addEventListener('input', progress);
+    control.addEventListener('change', progress);
+
+    bar.style.strokeDasharray = CIRCUMFERENCE;
+    const endTime = 300;
+    let time = 0;
+    let timer;
+
+    const progressPlay = () => {
+      timer = setTimeout(() => {
+        if (time === endTime + 1) {
+          clearTimeout(timer);
+        } else {
+          progress(time / endTime * 100);
+          time = time + 1;
+          progressPlay();
+        }
+      },0)
+    }
+    progressPlay();
+    
+
+  </script>
+</body>
+
+</html>
