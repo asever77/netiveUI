@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    html {
+      padding: 0;
+    }
+
+    body {
+      -webkit-user-select: none;
+      -moz-user-select: none;
+      -ms-user-select: none;
+      user-select: none;
+
+      padding: 0 20px;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    canvas{width: 100%; height: 100%;}
+  </style>
+</head>
+
+<body>
+  <div style="width:100%; height: 200px;"></div>
+  <div style="display: inline-block;width: 100%;height: 200px;position: relative;left: 0;top:0;background: yellow ">
+    <canvas id="canvas"> </canvas>
+</div>
+  <div style="width:100%;  height: 600px;"></div>
+  <script>
+    function scracth(_id, option = {}) {
+      const canvas = document.getElementById(_id);
+      const body = document.querySelector('body');
+      let ctx = canvas.getContext('2d');
+      let width = canvas.width;
+      let height = canvas.height;
+      let size = option.size || 20;
+      let row = height / size / 1.65;
+      let column = width / size / 1.65;
+      let maxSize = row * column;
+
+      let inSideArray = [];
+      let dataArray = [];
+
+      console.log(row, column, maxSize);
+
+      // //갯수 구한게 맞는지 확인식
+      // for(let i=0;i < column;i++){
+      //     for(let j=0;j < row;j++){
+      //         _drawding(size + column * column * i , size + row * row * j)
+      //     }
+      // }
+
+      //검은색으로 덮어둡니다.
+      ctx.save()//현재상태 저장(뒤에 그림이 보이는 투명한 상태)
+      ctx.beginPath()
+      ctx.fillStyle = '#222'
+      ctx.rect(0, 0, width, height)//직사각형(x,y,width,height)
+      ctx.fill()
+      ctx.closePath()
+      ctx.restore()// 이전 상태로(뒤에 그림이 보이는 투명한 상태)
+
+      let stopDrawing = false;
+      let inter = null;
+
+      const _isInside = (x1, y1) => {
+        if (inSideArray.length >= maxSize) {  //총 크기에 원이 다다른 경우
+          stopDrawing = true  //그만그려
+          
+          canvas.removeEventListener('touchmove', eventMove);
+          let i = 1
+          inter = setInterval(() => {  //페이드 인 아웃 효과 입니다
+            ctx.save()
+            ctx.beginPath()
+            ctx.clearRect(0, 0, width, height)
+            ctx.rect(0, 0, width, height)
+            ctx.fillStyle = `rgba(0,0,0,${i})`
+            ctx.fill()
+            ctx.closePath()
+            ctx.restore()
+
+            if (i <= 0) {
+              clearInterval(inter)
+              inter = null
+            }
+
+            dataArray.forEach(item => {
+              ctx.save()
+              ctx.beginPath()
+              ctx.globalCompositeOperation = 'destination-out'
+              ctx.arc(item.x, item.y, size, (Math.PI / 180) * 0, (Math.PI / 180) * 360, false)
+              ctx.fill()
+              ctx.closePath()
+              ctx.restore()
+            })
+            i -= 0.1;
+
+          }, 50)
+        }
+
+        if (stopDrawing) return
+
+        let check = inSideArray.filter(arg => {  //조사합니다 대상원이 포함되는지
+          let x = arg.x - x1
+          let y = arg.y - y1
+          let my_len = Math.sqrt(Math.abs(x * x) + Math.abs(y * y))
+          return my_len < size
+        })
+
+        let json = { x: x1, y: y1, target: false }
+        if (!check || check.length == 0) {
+          json.target = true;
+          inSideArray.push(json);  //대상원을 추가 합니다
+          console.log('!check || check.length == 0, inSideArray:', inSideArray, maxSize);
+        }
+        dataArray.push(json)  //다시 그리기용(페이드인 아웃용) 배열에 넣습니다
+        // console.log('dataArray', dataArray);
+      }
+
+      //그리는 함수 입니다
+      const _drawding = (_x, _y) => {
+        ctx.save()
+        ctx.beginPath()
+        ctx.globalCompositeOperation = 'destination-out'//기존 콘텐츠는 새 모양과 겹치지 않는 곳에 유지됩니다.
+        ctx.arc(_x, _y, size, (Math.PI / 180) * 0, (Math.PI / 180) * 360, false)
+        //arc(x, y, radius(반지름), startAngle, endAngle, anticlockwise(시계반향회전))
+        //각도를 라디안으로 radians = (Math.PI/180)*degrees
+        ctx.fill()
+        ctx.closePath()
+        ctx.restore()
+      }
+
+      let sX = 0;
+      let sY = 0;
+      let mX = 0;
+      let mY = 0;
+
+      const eventEnd = (e) => {
+        body.style.overflow = 'auto';
+        canvas.removeEventListener('touchmove', eventMove);
+        canvas.removeEventListener('touchend', eventEnd);
+      }
+      const eventMove = (e) => {
+        mX = e.clientX;
+        mY = e.clientY;
+
+        if (mX === undefined || mY === undefined) {
+          mX = e.changedTouches[0].clientX;
+          mY = e.changedTouches[0].clientY;
+        }
+
+        mX = mX - canvas.parentElement.offsetLeft || canvas.offsetLeft;
+        mY = mY - canvas.parentElement.offsetTop || canvas.offsetTop;
+
+        _isInside(mX, mY);
+        _drawding(mX, mY);
+      }
+      const eventStart = (e) => {
+        console.log(!ctx, stopDrawing);
+        if (!ctx || stopDrawing) return;
+
+        sX = e.clientX;
+        sY = e.clientY;
+
+        if (sX === undefined || sY === undefined) {
+          sX = e.changedTouches[0].clientX;
+          sY = e.changedTouches[0].clientY;
+        }
+        
+        body.style.overflow = 'hidden';
+        canvas.addEventListener('touchmove', eventMove);
+        canvas.addEventListener('touchend', eventEnd);
+      }
+      canvas.addEventListener('touchstart', eventStart);
+
+      //이벤트부분 드래그 형식으로 바꿀 필요 있음.
+      // canvas.addEventListener('mousemove', (event) => {
+       
+      //   if (!ctx || stopDrawing) return;
+
+      //   let x1 = event.clientX - canvas.parentElement.offsetLeft || canvas.offsetLeft
+      //   let y1 = event.clientY - canvas.parentElement.offsetTop || canvas.offsetTop
+      //   _isInside(x1, y1)
+      //   _drawding(x1, y1)
+      // });
+
+      return {
+        reDraw: (arg) => {
+          if (!inter) {
+            //초기화를 합니다 && 그리기 입니다.
+            ctx.save()
+            ctx.beginPath()
+            ctx.clearRect(0, 0, width, height)
+            ctx.rect(0, 0, width, height)
+            ctx.fillStyle = `rgba(0,0,0,1)`
+            ctx.fill()
+            ctx.closePath()
+            ctx.restore()
+            stopDrawing = false
+            inter = null
+            inSideArray = inSideArray.filter((arg) => false)
+            dataArray = dataArray.filter((arg) => false)
+          }
+
+          if (arg && arg instanceof Function) {
+            arg(stopDrawing)
+            console.log(inter)
+          }
+        }
+      }
+    }
+
+    let sct = scracth('canvas');
+
+    // let btn = document.getElementById('btn')
+    // btn.addEventListener('click', (event) => {
+    //   sct.reDraw(result => {
+    //     console.log(result)
+    //   })
+    // })
+
+  </script>
+</body>
+
+</html>
