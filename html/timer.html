@@ -34,11 +34,19 @@
       position: relative;
       width: 120px;
       height: 120px;
-      opacity: 1;
-      transform: scale(1);
-     
+      opacity: 0;
+      transform: scale(0);
+    }
+    .ui-timercircle.show{
+      animation-duration: .3s;
+      animation-name: 쨘;
+      animation-iteration-count: 1;
+      animation-timing-function:ease-out; 
+      animation-fill-mode:forwards;
     }
     .ui-timercircle.off{
+      opacity: 1;
+      transform: scale(1);
       animation-delay: .2s;
       animation-duration: .3s;
       animation-name: 띠용;
@@ -57,6 +65,7 @@
       stroke: #03c75a;
       stroke-linecap: round;
     }
+    
     .ui-timercircle.ready .ui-timercircle-bar{transition: none;}
     .ui-timercircle-value {
       position: absolute;
@@ -91,18 +100,26 @@
       50%  {transform-origin: 50% 50%; transform: scale(1); opacity: .7}
       100% {transform-origin: 50% 50%; transform: scale(0); opacity: 0}
     }
+    @keyframes 쨘 {
+      0%   {transform-origin: 50% 50%; transform: scale(0); opacity: 0;}
+      40%  {transform-origin: 50% 50%; transform: scale(1); opacity: .4}
+      50%  {transform-origin: 50% 50%; transform: scale(1.2); opacity: .7}
+      100% {transform-origin: 50% 50%; transform: scale(1); opacity: 1}
+    }
   </style>
 </head>
 
 <body>
   <div style="position: relative; width:100%; height: 200px;"><guide></guide></div>
-
+  <button type="button" class="btn-base" onclick="">
+    <span>실행</span>
+  </button>
   <div class="ui-timercircle" data-id="test1">
     <svg class="ui-timercircle-item">
       <circle class="ui-timercircle-frame" />
       <circle class="ui-timercircle-bar" />
     </svg>
-    <div class="ui-timercircle-value">0</div>
+    <div class="ui-timercircle-value"></div>
   </div>
 
   <div style="position: relative; width:100%; height: 600px;"><guide></guide></div>
@@ -127,10 +144,13 @@
     let time = 0;
     let timer;
     let second = 0;
+
+    if (el_wrap.classList.contains('show')) {
+      return false;
+    }
     
     //setting
     const set = () => {
-      el_wrap.classList.add('ready');
       el_bar.removeAttribute('style');
       el_wrap.classList.contains('off') && el_wrap.classList.remove('off');
       el_wrap.style.width = size + 'px';
@@ -148,10 +168,9 @@
       el_bar.setAttribute('stroke-width', storke);
       el_bar.style.strokeDashoffset = circumference;
       el_bar.style.strokeDasharray = circumference;
-      el_value.textContent = reverse ? option.endTime / 100 : (startTime / 100) + 1;
+     
       
     }
-    
     const act = (v) => {
       const per = v.toFixed(0);
       const n = Number((per / (10000 / endTime)).toFixed(0));
@@ -172,14 +191,13 @@
         el_value.textContent = reverse ? 0 : _endTime;
       }
     }
-
     const repeat = () => {
       timer = setTimeout(() => {
-        
         if (time === endTime) {
           clearTimeout(timer);
           !!callback && callback();
           act(100);
+          el_wrap.classList.remove('show');
         } else {
           act(time / (endTime) * 100);
           time = time + 1;
@@ -188,27 +206,32 @@
       },9);
     };
 
+    el_value.textContent = reverse ? option.endTime / 100 : (startTime / 100);
+    el_wrap.classList.add('ready');
     set();
     setTimeout(() => {
+      el_wrap.classList.add('show');
       el_wrap.classList.remove('ready');
       repeat();
-    });
+    },300);
     
   }
 
-  TimerCircle({
-    id: 'test1',
-    radius:30,
-    storke: 10,
-    reverse: false,
-    startTime: 0,
-    endTime: 300, //100 1초
-    callback: () => {
-      console.log('완료');
-      document.querySelector('.ui-timercircle[data-id="test1"]').classList.add('off');
-    }
+  document.querySelector('.btn-base').addEventListener('click', () => {
+    TimerCircle({
+      id: 'test1',
+      radius:30,
+      storke: 10,
+      reverse: false,
+      startTime: 0,
+      endTime: 300, //100 1초
+      callback: () => {
+        console.log('완료');
+        document.querySelector('.ui-timercircle[data-id="test1"]').classList.add('off');
+      }
+    });
   });
-    
+
   </script>
 </body>
 
