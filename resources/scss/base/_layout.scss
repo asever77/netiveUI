@@ -195,19 +195,30 @@
     }
     &-item {position: relative;}
 }
+
 .grid-wrap[data-grid="form"]{
-    margin:0 auto;
-    grid-template:
-    "head body" minmax(10rem, 1fr)
-    /13rem  1fr;
-    gap: $gap;
-    -ms-grid-columns: 13rem $gap 1fr;
-    -ms-grid-rows: minmax(300px, 1fr);
+    gap: $x3;
 
     .grid{
+        &-item{
+            width:100%;
+
+            display: grid;
+            grid-template:
+            "head body" minmax(10rem, 1fr)
+            /13rem  1fr;
+            gap: $x1;
+
+            -ms-grid-columns: 13rem $x1 1fr;
+            -ms-grid-rows: minmax(10rem, 1fr);
+        }
         &-head{
             position: relative;
             grid-area: head;
+
+            display: flex;
+            align-items: flex-start;
+            .bul-required{position: absolute; top:-1.1rem; left:0;}
         }
         &-body{
             position: relative;
@@ -218,32 +229,36 @@
             width:100%;
 
             grid-template:
-            "a" min-content
-            "b" minmax(4rem, 1fr)
-            "c" min-content
+            "infoA" max-content
+            "cont" max-content
+            "infoB" max-content
             /1fr;
-            gap: $gap-h;
+            gap: $x0_5;
+
             -ms-grid-columns: 1fr;
-            -ms-grid-rows: 1fr $gap-h 1fr $gap-h 1fr;
+            -ms-grid-rows: 1fr $x0_5 1fr $x0_5 1fr;
 
             .form-info{
                 position: relative;
                 margin: 0;
-                grid-area: a;
+                grid-area: infoA;
             }
-            .form-group{
+            .form-cont{
                 position: relative;
                 margin: 0;
-                grid-area: b;
+                grid-area: cont;
+                display: flex;
+
             }
-            .form-group ~ .form-info{
+            .form-cont ~ .form-info{
                 position: relative;
                 margin: 0;
-                grid-area: c;
+                grid-area: infoB;
             }
         }
     }
 }
+
 .grid-wrap[data-grid="main"]{
     min-width:800px;
     margin:0 auto;

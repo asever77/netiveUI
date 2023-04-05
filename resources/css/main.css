@@ -9740,22 +9740,33 @@ select.inp-base {
 }
 
 .grid-wrap[data-grid=form] {
-  margin: 0 auto;
+  gap: 2.4rem;
+}
+.grid-wrap[data-grid=form] .grid-item {
+  width: 100%;
+  display: grid;
   grid-template: "head body" minmax(10rem, 1fr)/13rem 1fr;
   gap: 0.8rem;
   -ms-grid-columns: 13rem 0.8rem 1fr;
-  -ms-grid-rows: minmax(300px, 1fr);
+  -ms-grid-rows: minmax(10rem, 1fr);
 }
 .grid-wrap[data-grid=form] .grid-head {
   position: relative;
   grid-area: head;
+  display: flex;
+  align-items: flex-start;
+}
+.grid-wrap[data-grid=form] .grid-head .bul-required {
+  position: absolute;
+  top: -1.1rem;
+  left: 0;
 }
 .grid-wrap[data-grid=form] .grid-body {
   position: relative;
   grid-area: body;
   display: grid;
   width: 100%;
-  grid-template: "a" min-content "b" minmax(4rem, 1fr) "c" min-content/1fr;
+  grid-template: "infoA" max-content "cont" max-content "infoB" max-content/1fr;
   gap: 0.4rem;
   -ms-grid-columns: 1fr;
   -ms-grid-rows: 1fr 0.4rem 1fr 0.4rem 1fr;
@@ -9763,17 +9774,18 @@ select.inp-base {
 .grid-wrap[data-grid=form] .grid-body .form-info {
   position: relative;
   margin: 0;
-  grid-area: a;
+  grid-area: infoA;
 }
-.grid-wrap[data-grid=form] .grid-body .form-group {
+.grid-wrap[data-grid=form] .grid-body .form-cont {
   position: relative;
   margin: 0;
-  grid-area: b;
+  grid-area: cont;
+  display: flex;
 }
-.grid-wrap[data-grid=form] .grid-body .form-group ~ .form-info {
+.grid-wrap[data-grid=form] .grid-body .form-cont ~ .form-info {
   position: relative;
   margin: 0;
-  grid-area: c;
+  grid-area: infoB;
 }
 
 .grid-wrap[data-grid=main] {
