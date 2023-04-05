@@ -720,10 +720,17 @@
 			}
 			
 			const el = opt.selector;
+
+			if (!!el.querySelector('.ui-modal-wrap') && !el.querySelector('.ui-modal-wrap .ui-modal-guide')) {
+				const modal_wrap = el.querySelector('.ui-modal-wrap');
+				modal_wrap.insertAdjacentHTML('beforeend','<h5 class="ui-modal-guide">모달창 마지막 위치입니다.</h5>')
+			}
+
 			const callback = opt.callback;
 			const tags = el.querySelectorAll('*');
 			const tagLen = tags.length;
-			const elEnd = '<div tabindex="0" class="ui-focusloop-end" aria-label="모달 마지막 위치입니다."></div>'
+			
+			// const elEnd = '<div tabindex="0" class="ui-focusloop-end" aria-label="모달 마지막 위치입니다."></div>'
 
 			for (let i = 0; i < tagLen; i++) {
 				const _tag = tags[i];
@@ -734,6 +741,7 @@
 					break;
 				}
 			}
+ 
 			el.insertAdjacentHTML('beforeend', elEnd);
 			// for (let i = tagLen - 1; i >= 0; i--) {
 			// 	const _tag = tags[i];
@@ -881,7 +889,7 @@
 			const opt = Object.assign({}, Global.scrollBar.options, option);
 			const el_scope = !!opt.scope ? opt.scope : doc.querySelector('body');
 			let scrollBars = el_scope.querySelectorAll('.ui-scrollbar');
-
+			
 			if (!!opt.infiniteCallback) {
 				Global.scrollBar[option.selector] = option.infiniteCallback;
 			}
@@ -920,8 +928,8 @@
 				el_item.style.width = '100%';
 				el_scrollbar.style.overflow = 'hidden';
 
-				const itemW = el_item.scrollWidth;
-				const itemH = el_item.scrollHeight;
+				let itemW = el_item.scrollWidth;
+				let itemH = el_item.scrollHeight;
 
 				el_scrollbar.dataset.itemH = itemH;
 				el_scrollbar.dataset.itemW = itemW;
@@ -945,8 +953,8 @@
 
 					//resizing
 					if (changeH || changeW) {
-						const barH = Math.floor(nWrapH / (nItemH / 100));
-						const barW = Math.floor(nWrapW / (nItemW / 100));
+						let barH = Math.floor(nWrapH / (nItemH / 100));
+						let barW = Math.floor(nWrapW / (nItemW / 100));
 						const el_barY = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
 						const el_barX = _el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 
@@ -1017,6 +1025,11 @@
 					
 					el_barY.style.top = hPer - _hPer + '%';
 					el_barX.style.left = wPer - _wPer + '%';
+					
+					if (el_barY.offsetHeight > wrapH / 100 * barH) {
+						el_barY.style.marginTop = '-' + ((el_barY.offsetHeight - (wrapH / 100 * barH)) / 100) * (hPer - _hPer) + 'px';
+					}
+					
 					
 					if (prevHeightPercent < scrT) {
 						scrollDirection = 'down';
@@ -1151,8 +1164,8 @@
 						el_scrollbar.classList.add('view-x') : 
 						el_scrollbar.classList.remove('view-x');
 
-					const barH = Math.floor(wrapH / (itemH / 100));
-					const barW = Math.floor(wrapW / (itemW / 100));
+					let barH = Math.floor(wrapH / (itemH / 100));
+					let barW = Math.floor(wrapW / (itemW / 100));
 					const el_barY = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-y .ui-scrollbar-bar');
 					const el_barX = el_scrollbar.querySelector('.ui-scrollbar-barwrap.type-x .ui-scrollbar-bar');
 
@@ -1224,14 +1237,14 @@
 				const that = el;
 				const el_barwrap = that.querySelectorAll('.ui-scrollbar-barwrap');
 				const el_item = that.querySelector('.ui-scrollbar-item');
+				let wrapHtml;
+				let el_wrap;
 
-				if (el_item === null) {
-					return false;
+				if (el_item !== null) {
+					el_wrap = el_item.querySelector('.ui-scrollbar-wrap');
+					wrapHtml = el_wrap.innerHTML;
 				}
 
-				const el_wrap = el_item.querySelector('.ui-scrollbar-wrap');
-				const wrapHtml = el_wrap.innerHTML;
-				
 				that.dataset.ready = 'no';
 				that.classList.remove('ready');
 				that.classList.remove('view-y');
@@ -1240,13 +1253,14 @@
 				that.style.overflow = 'auto';
 				
 				el_barwrap.forEach((userItem) => {
-
-					console.log(that, userItem);
 					that.removeChild(userItem);
 				});
 
-				that.removeChild(el_item);
-				that.innerHTML = wrapHtml;
+				if (el_item !== null) {
+					that.removeChild(el_item);
+					that.innerHTML = wrapHtml;
+				}
+				
 				// that.removeAttribute('data-scroll-id');
 				that.removeAttribute('data-item-w');
 				that.removeAttribute('data-item-h');
@@ -5728,8 +5742,8 @@
 				const elModalBody = that.querySelector('.ui-modal-body');
 				const elModalFoot = that.querySelector('.ui-modal-footer');
 				const h_win = win.innerHeight;
-				const h_head = elModalHead.outerHeight;
-				const h_foot = elModalFoot.outerHeight;
+				const h_head = !!elModalHead ? elModalHead.outerHeight : 0;
+				const h_foot = !!elModalFoot ? elModalFoot.outerHeight : 0;
 				const h = h_win - (h_head + h_foot);
 
 				if (Global.state.browser.size !== 'desktop') {

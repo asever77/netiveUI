@@ -16,7 +16,6 @@
       -moz-user-select: none;
       -ms-user-select: none;
       user-select: none;
-
       padding: 0 20px;
       margin: 0;
     }
@@ -25,96 +24,158 @@
       box-sizing: border-box;
     }
 
-    .circle_progress_wrap {
+
+    @keyframes 띠용 {
+      0% {transform: scale(1); opacity: 1;}
+      40% {transform: scale(1.4); opacity: .8}
+      50% {transform: scale(1); opacity: .7}
+      100% {transform: scale(0); opacity: 0}
+    }
+    .progress-circle.off{
+      animation-delay: .2s;
+      animation-duration: .3s;
+      animation-name: 띠용;
+      animation-iteration-count: 1;
+      animation-timing-function:ease-out; 
+      animation-fill-mode:forwards;}
+    .progress-circle {
       position: relative;
       width: 120px;
       height: 120px;
+      opacity: 1;
+      transform: scale(1);
     }
-    .circle_progress { transform: rotate(-90deg); }
-    .ci
-    .frame, .bar { fill: none; }
-    .frame { stroke: #e6e6e6; }
-    .bar {
+    .progress-circle-item { transform: rotate(-90deg); }
+    .progress-circle-frame, 
+    .progress-circle-bar { fill: none; }
+    .progress-circle-frame { stroke: #e6e6e6; }
+    .progress-circle-bar {
+      transition: all .3s linear;
       stroke: #03c75a;
       stroke-linecap: round;
     }
-    .value {
+    .progress-circle-value {
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      top: 0;
+      top:0; 
+      left:0;
+      width: 100%;
+      height: 100%;
       text-align: center;
       color: #888;
-      font-size: 16px;
-      line-height: 120px;
+      font-size: 30px;
+      font-weight: 700;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
   </style>
 </head>
 
 <body>
   <div style="width:100%; height: 200px;"></div>
-  <div class="circle_progress_wrap ui-">
-    <svg class="circle_progress" width="120" height="120" viewBox="0 0 120 120">
-      <circle class="frame" cx="60" cy="60" r="54" stroke-width="10" />
-      <circle class="bar" cx="60" cy="60" r="54" stroke-width="10" />
+
+  <div class="progress-circle" data-id="test1">
+    <svg class="progress-circle-item">
+      <circle class="progress-circle-frame" />
+      <circle class="progress-circle-bar" />
     </svg>
-    <input id="control" type="range" value="0" />
-    <strong class="value"></strong>
+    <div class="progress-circle-value">0</div>
   </div>
+
+
+
   <div style="width:100%;  height: 600px;"></div>
   <script>
-    const control = document.getElementById('control');
-    const bar = document.querySelector('.bar');
-    const value = document.querySelector('.value');
-    const RADIUS = 54;
-    const CIRCUMFERENCE = 2 * Math.PI * RADIUS;
 
-    const progress = (v) => {
-      let per = v;
-
-      if (isNaN(per)) {
-        per = v.target.valueAsNumber
-      }
-
-      const progress = per / 100;
-      const dashoffset = CIRCUMFERENCE * (1 - progress);
-
-      console.log((per / 33.33));
-
-      value.innerHTML= (per / 33.33).toFixed(0) +'초';
-      bar.style.strokeDashoffset = dashoffset;
-    }
-
-    // control.addEventListener('input', (event) => {
-    //   progress(event.target.valueAsNumber);
-    // });
-    // control.addEventListener('change', (event) => {
-    //   progress(event.target.valueAsNumber);
-    // });
-
-    control.addEventListener('input', progress);
-    control.addEventListener('change', progress);
-
-    bar.style.strokeDasharray = CIRCUMFERENCE;
-    const endTime = 300;
+  const ProgressCircle = (option) => {
+    const el_wrap = document.querySelector('.progress-circle[data-id="'+ option.id +'"]');
+    const el_item = el_wrap.querySelector('.progress-circle-item');
+    const el_bar = el_item.querySelector('.progress-circle-bar');
+    const el_frame = el_item.querySelector('.progress-circle-frame');
+    const el_value = el_wrap.querySelector('.progress-circle-value');
+    const startTime = Number(option.startTime);
+    const endTime = Number(option.endTime) - startTime;
+    const callback = option.callback;
+    const radius = Number(option.radius);
+    const storke = Number(option.storke);
+    const size = (radius + (storke / 2)) * 2;
+    const sizeHalf = size / 2;
+    const circumference = 2 * Math.PI * radius;
+    const reverse = option.reverse;
+    const delay = 0;
     let time = 0;
     let timer;
+    let second = 0;
 
-    const progressPlay = () => {
-      timer = setTimeout(() => {
-        if (time === endTime + 1) {
-          clearTimeout(timer);
-        } else {
-          progress(time / endTime * 100);
-          time = time + 1;
-          progressPlay();
-        }
-      },0)
+    //setting
+    const set = () => {
+      el_wrap.style.width = size + 'px';
+      el_wrap.style.height = size + 'px';
+      el_item.setAttribute('width', size);
+      el_item.setAttribute('height', size);
+      el_item.setAttribute('viewBox', '0 0 '+ size + ' ' + size);
+      el_frame.setAttribute('cx', sizeHalf);
+      el_frame.setAttribute('cy', sizeHalf);
+      el_frame.setAttribute('r', radius);
+      el_frame.setAttribute('stroke-width', storke);
+      el_bar.setAttribute('cx', sizeHalf);
+      el_bar.setAttribute('cy', sizeHalf);
+      el_bar.setAttribute('r', radius);
+      el_bar.setAttribute('stroke-width', storke);
+      el_bar.style.strokeDashoffset = circumference;
+      el_bar.style.strokeDasharray = circumference;
+      el_value.textContent = reverse ? option.endTime / 100 : (startTime / 100) + 1;
     }
-    progressPlay();
     
+    const act = (v) => {
+      const per = v.toFixed(0);
+      const n = Number((per / (10000 / endTime)).toFixed(0));
+      const _endTime = option.endTime / 100;
+      
+      second = second + 1;
+      
+      if (second % 100 === 1) {
+        el_value.textContent = reverse ? _endTime - n : n;
+      }
 
+      el_bar.style.strokeDashoffset = circumference * (1 - (per / 100));
+
+      if (v === 100) {
+        el_value.textContent = reverse ? 0 : _endTime;
+      }
+    }
+
+    const repeat = () => {
+      timer = setTimeout(() => {
+        if (time === endTime) {
+          clearTimeout(timer);
+          !!callback && callback();
+          act(100);
+        } else {
+          act(time / (endTime) * 100);
+          time = time + 1;
+          repeat();
+        }
+      },9);
+    };
+
+    set();
+    repeat();
+  }
+
+  ProgressCircle({
+    id: 'test1',
+    radius:50,
+    storke: 20,
+    reverse: false,
+    startTime: 0,
+    endTime: 300, //100 1초
+    callback: () => {
+      console.log('완료');
+      document.querySelector('.progress-circle[data-id="test1"]').classList.add('off');
+    }
+  });
+    
   </script>
 </body>
 
