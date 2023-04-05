@@ -9731,17 +9731,60 @@ select.inp-base {
 
 /* grid layout */
 /* gridItem($colstart, $colend, $rowstart, $rowend) */
-.gd-wrap {
+.grid-wrap {
   display: grid;
   width: 100%;
+}
+.grid-item {
+  position: relative;
+}
+
+.grid-wrap[data-grid=form] {
+  margin: 0 auto;
+  grid-template: "head body" minmax(10rem, 1fr)/13rem 1fr;
+  gap: 0.8rem;
+  -ms-grid-columns: 13rem 0.8rem 1fr;
+  -ms-grid-rows: minmax(300px, 1fr);
+}
+.grid-wrap[data-grid=form] .grid-head {
+  position: relative;
+  grid-area: head;
+}
+.grid-wrap[data-grid=form] .grid-body {
+  position: relative;
+  grid-area: body;
+  display: grid;
+  width: 100%;
+  grid-template: "a" min-content "b" minmax(4rem, 1fr) "c" min-content/1fr;
+  gap: 0.4rem;
+  -ms-grid-columns: 1fr;
+  -ms-grid-rows: 1fr 0.4rem 1fr 0.4rem 1fr;
+}
+.grid-wrap[data-grid=form] .grid-body .form-info {
+  position: relative;
+  margin: 0;
+  grid-area: a;
+}
+.grid-wrap[data-grid=form] .grid-body .form-group {
+  position: relative;
+  margin: 0;
+  grid-area: b;
+}
+.grid-wrap[data-grid=form] .grid-body .form-group ~ .form-info {
+  position: relative;
+  margin: 0;
+  grid-area: c;
+}
+
+.grid-wrap[data-grid=main] {
   min-width: 800px;
   margin: 0 auto;
   grid-template: "header header  header" 100px "nav    main    aside" minmax(300px, 1fr) "footer footer  footer" 100px/130px 1fr 100px;
-  gap: 10px;
-  -ms-grid-columns: 130px 10px 1fr 10px 100px;
-  -ms-grid-rows: 100px 10px minmax(300px, 1fr) 10px 100px;
+  gap: 0.8rem;
+  -ms-grid-columns: 130px 0.8rem 1fr 0.8rem 100px;
+  -ms-grid-rows: 100px 0.8rem minmax(300px, 1fr) 0.8rem 100px;
 }
-.gd-header {
+.grid-wrap[data-grid=main] .grid-header {
   position: relative;
   grid-column-start: 1;
   -ms-grid-column: 1;
@@ -9753,7 +9796,7 @@ select.inp-base {
   -ms-grid-row-span: 1;
   grid-area: header;
 }
-.gd-nav {
+.grid-wrap[data-grid=main] .grid-nav {
   position: relative;
   grid-column-start: 1;
   -ms-grid-column: 1;
@@ -9765,7 +9808,7 @@ select.inp-base {
   -ms-grid-row-span: 1;
   grid-area: nav;
 }
-.gd-main {
+.grid-wrap[data-grid=main] .grid-main {
   position: relative;
   grid-column-start: 3;
   -ms-grid-column: 3;
@@ -9777,7 +9820,7 @@ select.inp-base {
   -ms-grid-row-span: 1;
   grid-area: main;
 }
-.gd-aside {
+.grid-wrap[data-grid=main] .grid-aside {
   position: relative;
   grid-column-start: 5;
   -ms-grid-column: 5;
@@ -9791,7 +9834,7 @@ select.inp-base {
   align-self: start;
   -ms-grid-row-align: start;
 }
-.gd-footer {
+.grid-wrap[data-grid=main] .grid-footer {
   position: relative;
   grid-column-start: 1;
   -ms-grid-column: 1;
@@ -9803,10 +9846,7 @@ select.inp-base {
   -ms-grid-row-span: 1;
   grid-area: footer;
 }
-.gd-item {
-  position: relative;
-}
-.gd-main-wrap {
+.grid-wrap[data-grid=main] .grid-main-wrap {
   display: grid;
   width: 100%;
   margin: 0 auto;
@@ -9816,7 +9856,7 @@ select.inp-base {
   -ms-grid-columns: 160px 10px 1fr 10px 100px 10px 100px;
   -ms-grid-rows: 150px 10px minmax(150px, 1fr) 10px 150px 10px 100px;
 }
-.gd-main-wrap .gd-item.n1 {
+.grid-wrap[data-grid=main] .grid-main-wrap .grid-item.n1 {
   grid-column-start: 1;
   -ms-grid-column: 1;
   grid-column-end: 2;
@@ -9829,7 +9869,7 @@ select.inp-base {
   grid-column: 1/2;
   grid-row: 1/2;
 }
-.gd-main-wrap .gd-item.n2 {
+.grid-wrap[data-grid=main] .grid-main-wrap .grid-item.n2 {
   grid-column-start: 3;
   -ms-grid-column: 3;
   grid-column-end: 4;
@@ -9842,7 +9882,7 @@ select.inp-base {
   grid-column: 2/3;
   grid-row: 1/2;
 }
-.gd-main-wrap .gd-item.n3 {
+.grid-wrap[data-grid=main] .grid-main-wrap .grid-item.n3 {
   grid-column-start: 5;
   -ms-grid-column: 5;
   grid-column-end: 8;
@@ -9855,7 +9895,7 @@ select.inp-base {
   grid-column: 3/5;
   grid-row: 1/2;
 }
-.gd-main-wrap .gd-item.n4 {
+.grid-wrap[data-grid=main] .grid-main-wrap .grid-item.n4 {
   grid-column-start: 1;
   -ms-grid-column: 1;
   grid-column-end: 8;
@@ -9868,7 +9908,7 @@ select.inp-base {
   grid-column: 1/5;
   grid-row: 2/3;
 }
-.gd-main-wrap .gd-item.n5 {
+.grid-wrap[data-grid=main] .grid-main-wrap .grid-item.n5 {
   grid-column-start: 1;
   -ms-grid-column: 1;
   grid-column-end: 2;
@@ -9881,7 +9921,7 @@ select.inp-base {
   grid-column: 1/2;
   grid-row: 3/4;
 }
-.gd-main-wrap .gd-item.n6 {
+.grid-wrap[data-grid=main] .grid-main-wrap .grid-item.n6 {
   grid-column-start: 1;
   -ms-grid-column: 1;
   grid-column-end: 2;
@@ -9894,7 +9934,7 @@ select.inp-base {
   grid-column: 1/2;
   grid-row: 4/5;
 }
-.gd-main-wrap .gd-item.n7 {
+.grid-wrap[data-grid=main] .grid-main-wrap .grid-item.n7 {
   grid-column-start: 3;
   -ms-grid-column: 3;
   grid-column-end: 4;
@@ -9907,7 +9947,7 @@ select.inp-base {
   grid-column: 2/3;
   grid-row: 3/5;
 }
-.gd-main-wrap .gd-item.n8 {
+.grid-wrap[data-grid=main] .grid-main-wrap .grid-item.n8 {
   grid-column-start: 5;
   -ms-grid-column: 5;
   grid-column-end: 6;
@@ -9920,7 +9960,7 @@ select.inp-base {
   grid-column: 3/4;
   grid-row: 3/4;
 }
-.gd-main-wrap .gd-item.n9 {
+.grid-wrap[data-grid=main] .grid-main-wrap .grid-item.n9 {
   grid-column-start: 7;
   -ms-grid-column: 7;
   grid-column-end: 8;
@@ -9933,7 +9973,7 @@ select.inp-base {
   grid-column: 4/5;
   grid-row: 3/4;
 }
-.gd-main-wrap .gd-item.n10 {
+.grid-wrap[data-grid=main] .grid-main-wrap .grid-item.n10 {
   grid-column-start: 5;
   -ms-grid-column: 5;
   grid-column-end: 6;
@@ -9946,7 +9986,7 @@ select.inp-base {
   grid-column: 3/4;
   grid-row: 4/5;
 }
-.gd-header-wrap {
+.grid-wrap[data-grid=main] .grid-header-wrap {
   display: grid;
   width: 100%;
   margin: 0 auto;
@@ -9958,7 +9998,7 @@ select.inp-base {
   -ms-grid-columns: 100px 10px 1fr 10px minmax(min-content, max-content);
   -ms-grid-rows: minmax(min-content, max-content);
 }
-.gd-header-wrap .gd-header-logo {
+.grid-wrap[data-grid=main] .grid-header-wrap .grid-header-logo {
   grid-column-start: 1;
   -ms-grid-column: 1;
   grid-column-end: 2;
@@ -9969,7 +10009,7 @@ select.inp-base {
   -ms-grid-row-span: 1;
   grid-area: logo;
 }
-.gd-header-wrap .gd-header-gnb {
+.grid-wrap[data-grid=main] .grid-header-wrap .grid-header-gnb {
   grid-column-start: 3;
   -ms-grid-column: 3;
   grid-column-end: 4;
@@ -9982,7 +10022,7 @@ select.inp-base {
   align-self: center;
   -ms-grid-row-align: center;
 }
-.gd-header-wrap .gd-header-util {
+.grid-wrap[data-grid=main] .grid-header-wrap .grid-header-util {
   grid-column-start: 5;
   -ms-grid-column: 5;
   grid-column-end: 6;

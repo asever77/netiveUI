@@ -187,160 +187,212 @@
 
 /* grid layout */
 /* gridItem($colstart, $colend, $rowstart, $rowend) */
-.gd{
+.grid{
     &-wrap{
         display: -ms-grid;
         display: grid;
         width:100%;
-        min-width:800px;
-        margin:0 auto;
-        grid-template:
-        "header header  header" 100px
-        "nav    main    aside"  minmax(300px, 1fr)
-        "footer footer  footer" 100px
-        /130px  1fr     100px ;
-        gap:10px;
-        -ms-grid-columns: 130px 10px 1fr 10px 100px;
-        -ms-grid-rows: 100px 10px minmax(300px, 1fr) 10px 100px;
     }
-    &-header {
-        position: relative;
-        @include gridItem(1,6, 1,2);
-        grid-area: header;
+    &-item {position: relative;}
+}
+.grid-wrap[data-grid="form"]{
+    margin:0 auto;
+    grid-template:
+    "head body" minmax(10rem, 1fr)
+    /13rem  1fr;
+    gap: $gap;
+    -ms-grid-columns: 13rem $gap 1fr;
+    -ms-grid-rows: minmax(300px, 1fr);
+
+    .grid{
+        &-head{
+            position: relative;
+            grid-area: head;
+        }
+        &-body{
+            position: relative;
+            grid-area: body;
+
+            display: -ms-grid;
+            display: grid;
+            width:100%;
+
+            grid-template:
+            "a" min-content
+            "b" minmax(4rem, 1fr)
+            "c" min-content
+            /1fr;
+            gap: $gap-h;
+            -ms-grid-columns: 1fr;
+            -ms-grid-rows: 1fr $gap-h 1fr $gap-h 1fr;
+
+            .form-info{
+                position: relative;
+                margin: 0;
+                grid-area: a;
+            }
+            .form-group{
+                position: relative;
+                margin: 0;
+                grid-area: b;
+            }
+            .form-group ~ .form-info{
+                position: relative;
+                margin: 0;
+                grid-area: c;
+            }
+        }
     }
-    &-nav    {
-        position: relative;
-        @include gridItem(1,2, 3,4);
-        grid-area: nav;
-    }
-    &-main   {
-        position: relative;
-        @include gridItem(3,4, 3,4);
-        grid-area: main;
-    }
-    &-aside  {
-        position: relative;
-        @include gridItem(5,6, 3,4);
-        grid-area: aside;
-        align-self:start;
-        -ms-grid-row-align: start;
-    }
-    &-footer {
-        position: relative;
-        @include gridItem(1,6, 5,6);
-        grid-area: footer;
-    }
-    &-item{
-        position: relative;
-    }
-    &-main-wrap{
-        display: -ms-grid;
-        display: grid;
-        width:100%;
-        margin:0 auto;
+}
+.grid-wrap[data-grid="main"]{
+    min-width:800px;
+    margin:0 auto;
+    grid-template:
+    "header header  header" 100px
+    "nav    main    aside"  minmax(300px, 1fr)
+    "footer footer  footer" 100px
+    /130px  1fr     100px ;
+    gap:$gap;
+    -ms-grid-columns: 130px $gap 1fr $gap 100px;
+    -ms-grid-rows: 100px $gap minmax(300px, 1fr) $gap 100px;
+
+    .grid{
+        &-header {
+            position: relative;
+            @include gridItem(1,6, 1,2);
+            grid-area: header;
+        }
+        &-nav    {
+            position: relative;
+            @include gridItem(1,2, 3,4);
+            grid-area: nav;
+        }
+        &-main   {
+            position: relative;
+            @include gridItem(3,4, 3,4);
+            grid-area: main;
+        }
+        &-aside  {
+            position: relative;
+            @include gridItem(5,6, 3,4);
+            grid-area: aside;
+            align-self:start;
+            -ms-grid-row-align: start;
+        }
+        &-footer {
+            position: relative;
+            @include gridItem(1,6, 5,6);
+            grid-area: footer;
+        }
+        &-main-wrap{
+            display: -ms-grid;
+            display: grid;
+            width:100%;
+            margin:0 auto;
+            
+            grid-template-columns :160px 1fr 100px 100px;
+            grid-template-rows :150px minmax(150px, 1fr) 150px 100px;
+            gap:10px;
         
-        grid-template-columns :160px 1fr 100px 100px;
-        grid-template-rows :150px minmax(150px, 1fr) 150px 100px;
-        gap:10px;
-    
-        -ms-grid-columns: 160px 10px 1fr 10px 100px 10px 100px;
-        -ms-grid-rows: 150px 10px minmax(150px, 1fr) 10px 150px 10px 100px;
+            -ms-grid-columns: 160px 10px 1fr 10px 100px 10px 100px;
+            -ms-grid-rows: 150px 10px minmax(150px, 1fr) 10px 150px 10px 100px;
+            
+            .grid-item.n1 {
+                @include gridItem(1,2, 1,2); 
+                grid-area:1/1/2/2;
+                grid-column:1/2;
+                grid-row:1/2;
+            }
+            .grid-item.n2 {
+                @include gridItem(3,4, 1,2); 
+                grid-area:1/2/2/3;
+                grid-column:2/3;
+                grid-row:1/2;
+            }
+            .grid-item.n3 {
+                @include gridItem(5,8, 1,2); 
+                grid-area:1/3/2/5;
+                grid-column:3/5;
+                grid-row:1/2;
+            }
+            .grid-item.n4 {
+                @include gridItem(1,8, 3,4); 
+                grid-area:2/1/3/5;
+                grid-column:1/5;
+                grid-row:2/3;
+            }
+            .grid-item.n5 {
+                @include gridItem(1,2, 5,6); 
+                grid-area:3/1/4/2;
+                grid-column:1/2;
+                grid-row:3/4;
+            }
+            .grid-item.n6 {
+                @include gridItem(1,2, 7,8); 
+                grid-area:4/1/5/2;
+                grid-column:1/2;
+                grid-row:4/5;
+            }
+            .grid-item.n7 {
+                @include gridItem(3,4, 5,8); 
+                grid-area:3/2/5/3;
+                grid-column:2/3;
+                grid-row:3/5;
+            }
+            .grid-item.n8 {
+                @include gridItem(5,6, 5,6); 
+                grid-area:3/3/4/4;
+                grid-column:3/4;
+                grid-row:3/4;
+            }
+            .grid-item.n9 {
+                @include gridItem(7,8, 5,6); 
+                grid-area:3/4/4/5;
+                grid-column:4/5;
+                grid-row:3/4;
+            }
+            .grid-item.n10{
+                @include gridItem(5,6, 7,8); 
+                grid-area:4/3/5/4;
+                grid-column:3/4;
+                grid-row:4/5;
+            }
+        }
+        &-header-wrap {
+            display: -ms-grid;
+            display: grid;
+            width:100%;
+            margin:0 auto;
+            padding:20px;
         
-        .gd-item.n1 {
-            @include gridItem(1,2, 1,2); 
-            grid-area:1/1/2/2;
-            grid-column:1/2;
-            grid-row:1/2;
-        }
-        .gd-item.n2 {
-            @include gridItem(3,4, 1,2); 
-            grid-area:1/2/2/3;
-            grid-column:2/3;
-            grid-row:1/2;
-        }
-        .gd-item.n3 {
-            @include gridItem(5,8, 1,2); 
-            grid-area:1/3/2/5;
-            grid-column:3/5;
-            grid-row:1/2;
-        }
-        .gd-item.n4 {
-            @include gridItem(1,8, 3,4); 
-            grid-area:2/1/3/5;
-            grid-column:1/5;
-            grid-row:2/3;
-        }
-        .gd-item.n5 {
-            @include gridItem(1,2, 5,6); 
-            grid-area:3/1/4/2;
-            grid-column:1/2;
-            grid-row:3/4;
-        }
-        .gd-item.n6 {
-            @include gridItem(1,2, 7,8); 
-            grid-area:4/1/5/2;
-            grid-column:1/2;
-            grid-row:4/5;
-        }
-        .gd-item.n7 {
-            @include gridItem(3,4, 5,8); 
-            grid-area:3/2/5/3;
-            grid-column:2/3;
-            grid-row:3/5;
-        }
-        .gd-item.n8 {
-            @include gridItem(5,6, 5,6); 
-            grid-area:3/3/4/4;
-            grid-column:3/4;
-            grid-row:3/4;
-        }
-        .gd-item.n9 {
-            @include gridItem(7,8, 5,6); 
-            grid-area:3/4/4/5;
-            grid-column:4/5;
-            grid-row:3/4;
-        }
-        .gd-item.n10{
-            @include gridItem(5,6, 7,8); 
-            grid-area:4/3/5/4;
-            grid-column:3/4;
-            grid-row:4/5;
-        }
-    }
-    &-header-wrap {
-        display: -ms-grid;
-        display: grid;
-        width:100%;
-        margin:0 auto;
-        padding:20px;
-    
-        align-content: center;
-        align-items: center;
-        grid-template:
-        "logo  gnb util" auto
-        /100px 1fr auto ;
-        gap:10px;
-       
-        -ms-grid-columns: 100px 10px 1fr 10px minmax(min-content, max-content);
-        -ms-grid-rows: minmax(min-content, max-content);
-    
-        .gd-header-logo {
-            @include gridItem(1,2, 1,2);
-            grid-area: logo;
-        }
-        .gd-header-gnb {
-            @include gridItem(3,4, 1,2);
-            grid-area: gnb;
-    
-            align-self: center;
-            -ms-grid-row-align: center;
-        }
-        .gd-header-util {
-            @include gridItem(5,6, 1,2);
-            grid-area: util;
-    
-            align-self: center;
-            -ms-grid-row-align: center;
+            align-content: center;
+            align-items: center;
+            grid-template:
+            "logo  gnb util" auto
+            /100px 1fr auto ;
+            gap:10px;
+            
+            -ms-grid-columns: 100px 10px 1fr 10px minmax(min-content, max-content);
+            -ms-grid-rows: minmax(min-content, max-content);
+        
+            .grid-header-logo {
+                @include gridItem(1,2, 1,2);
+                grid-area: logo;
+            }
+            .grid-header-gnb {
+                @include gridItem(3,4, 1,2);
+                grid-area: gnb;
+        
+                align-self: center;
+                -ms-grid-row-align: center;
+            }
+            .grid-header-util {
+                @include gridItem(5,6, 1,2);
+                grid-area: util;
+        
+                align-self: center;
+                -ms-grid-row-align: center;
+            }
         }
     }
 }
