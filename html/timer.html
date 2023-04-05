@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../resources/css/main.css">
   <title>Document</title>
   <style>
     html {
@@ -25,36 +26,39 @@
     }
 
 
-    @keyframes 띠용 {
-      0% {transform: scale(1); opacity: 1;}
-      40% {transform: scale(1.4); opacity: .8}
-      50% {transform: scale(1); opacity: .7}
-      100% {transform: scale(0); opacity: 0}
-    }
-    .progress-circle.off{
-      animation-delay: .2s;
-      animation-duration: .3s;
-      animation-name: 띠용;
-      animation-iteration-count: 1;
-      animation-timing-function:ease-out; 
-      animation-fill-mode:forwards;}
-    .progress-circle {
+
+
+
+    
+    .ui-timercircle {
       position: relative;
       width: 120px;
       height: 120px;
       opacity: 1;
       transform: scale(1);
+     
     }
-    .progress-circle-item { transform: rotate(-90deg); }
-    .progress-circle-frame, 
-    .progress-circle-bar { fill: none; }
-    .progress-circle-frame { stroke: #e6e6e6; }
-    .progress-circle-bar {
+    .ui-timercircle.off{
+      animation-delay: .2s;
+      animation-duration: .3s;
+      animation-name: 띠용;
+      animation-iteration-count: 1;
+      animation-timing-function:ease-out; 
+      animation-fill-mode:forwards;
+    }
+    .ui-timercircle-item { transform: rotate(-90deg); }
+    .ui-timercircle-frame { 
+      stroke: #e6e6e6; 
+      fill: none;
+    }
+    .ui-timercircle-bar {
+      fill: none;
       transition: all .3s linear;
       stroke: #03c75a;
       stroke-linecap: round;
     }
-    .progress-circle-value {
+    .ui-timercircle.ready .ui-timercircle-bar{transition: none;}
+    .ui-timercircle-value {
       position: absolute;
       top:0; 
       left:0;
@@ -62,37 +66,54 @@
       height: 100%;
       text-align: center;
       color: #888;
-      font-size: 30px;
-      font-weight: 700;
+      font-size: 4rem;
+      font-weight: 900;
       display: flex;
       justify-content: center;
       align-items: center;
+    }
+    .ui-timercircle-value.eff{
+      animation-duration: .1s;
+      animation-name: 뾰용;
+      animation-iteration-count: 1;
+      animation-timing-function:ease-in; 
+      animation-fill-mode:forwards;
+    }
+    @keyframes 뾰용 {
+      0%   {transform: scale(0); opacity: 0;}
+      40%  {transform: scale(1); opacity: .4}
+      80%  {transform: scale(1.2); opacity: .8}
+      100% {transform: scale(1); opacity: 1}
+    }
+    @keyframes 띠용 {
+      0%   {transform-origin: 50% 50%; transform: scale(1); opacity: 1;}
+      40%  {transform-origin: 50% 50%; transform: scale(1.4); opacity: .8}
+      50%  {transform-origin: 50% 50%; transform: scale(1); opacity: .7}
+      100% {transform-origin: 50% 50%; transform: scale(0); opacity: 0}
     }
   </style>
 </head>
 
 <body>
-  <div style="width:100%; height: 200px;"></div>
+  <div style="position: relative; width:100%; height: 200px;"><guide></guide></div>
 
-  <div class="progress-circle" data-id="test1">
-    <svg class="progress-circle-item">
-      <circle class="progress-circle-frame" />
-      <circle class="progress-circle-bar" />
+  <div class="ui-timercircle" data-id="test1">
+    <svg class="ui-timercircle-item">
+      <circle class="ui-timercircle-frame" />
+      <circle class="ui-timercircle-bar" />
     </svg>
-    <div class="progress-circle-value">0</div>
+    <div class="ui-timercircle-value">0</div>
   </div>
 
-
-
-  <div style="width:100%;  height: 600px;"></div>
+  <div style="position: relative; width:100%; height: 600px;"><guide></guide></div>
   <script>
 
-  const ProgressCircle = (option) => {
-    const el_wrap = document.querySelector('.progress-circle[data-id="'+ option.id +'"]');
-    const el_item = el_wrap.querySelector('.progress-circle-item');
-    const el_bar = el_item.querySelector('.progress-circle-bar');
-    const el_frame = el_item.querySelector('.progress-circle-frame');
-    const el_value = el_wrap.querySelector('.progress-circle-value');
+  const TimerCircle = (option) => {
+    const el_wrap = document.querySelector('.ui-timercircle[data-id="'+ option.id +'"]');
+    const el_item = el_wrap.querySelector('.ui-timercircle-item');
+    const el_bar = el_item.querySelector('.ui-timercircle-bar');
+    const el_frame = el_item.querySelector('.ui-timercircle-frame');
+    const el_value = el_wrap.querySelector('.ui-timercircle-value');
     const startTime = Number(option.startTime);
     const endTime = Number(option.endTime) - startTime;
     const callback = option.callback;
@@ -106,9 +127,12 @@
     let time = 0;
     let timer;
     let second = 0;
-
+    
     //setting
     const set = () => {
+      el_wrap.classList.add('ready');
+      el_bar.removeAttribute('style');
+      el_wrap.classList.contains('off') && el_wrap.classList.remove('off');
       el_wrap.style.width = size + 'px';
       el_wrap.style.height = size + 'px';
       el_item.setAttribute('width', size);
@@ -125,6 +149,7 @@
       el_bar.style.strokeDashoffset = circumference;
       el_bar.style.strokeDasharray = circumference;
       el_value.textContent = reverse ? option.endTime / 100 : (startTime / 100) + 1;
+      
     }
     
     const act = (v) => {
@@ -133,9 +158,12 @@
       const _endTime = option.endTime / 100;
       
       second = second + 1;
-      
+
       if (second % 100 === 1) {
+        el_value.classList.add('eff');
         el_value.textContent = reverse ? _endTime - n : n;
+      } else if (second % 100 === 99) {
+        el_value.classList.remove('eff');
       }
 
       el_bar.style.strokeDashoffset = circumference * (1 - (per / 100));
@@ -147,6 +175,7 @@
 
     const repeat = () => {
       timer = setTimeout(() => {
+        
         if (time === endTime) {
           clearTimeout(timer);
           !!callback && callback();
@@ -160,19 +189,23 @@
     };
 
     set();
-    repeat();
+    setTimeout(() => {
+      el_wrap.classList.remove('ready');
+      repeat();
+    });
+    
   }
 
-  ProgressCircle({
+  TimerCircle({
     id: 'test1',
-    radius:50,
-    storke: 20,
+    radius:30,
+    storke: 10,
     reverse: false,
     startTime: 0,
     endTime: 300, //100 1초
     callback: () => {
       console.log('완료');
-      document.querySelector('.progress-circle[data-id="test1"]').classList.add('off');
+      document.querySelector('.ui-timercircle[data-id="test1"]').classList.add('off');
     }
   });
     
