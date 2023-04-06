@@ -199,18 +199,21 @@
 .grid-wrap[data-grid="form"]{
     gap: $x3;
 
+    .form-group{
+        display: flex;
+        min-height: 4rem;
+        align-items: center;
+    }
+
     .grid{
         &-item{
             width:100%;
 
             display: grid;
             grid-template:
-            "head body" minmax(10rem, 1fr)
+            "head body" minmax(4rem, min-content)
             /13rem  1fr;
             gap: $x1;
-
-            -ms-grid-columns: 13rem $x1 1fr;
-            -ms-grid-rows: minmax(10rem, 1fr);
         }
         &-head{
             position: relative;
@@ -224,20 +227,12 @@
             position: relative;
             grid-area: body;
 
-            display: -ms-grid;
-            display: grid;
+            display: flex;
+            flex-direction: column;
             width:100%;
-
-            grid-template:
-            "infoA" max-content
-            "cont" max-content
-            "infoB" max-content
-            /1fr;
             gap: $x0_5;
 
-            -ms-grid-columns: 1fr;
-            -ms-grid-rows: 1fr $x0_5 1fr $x0_5 1fr;
-
+     
             .form-info{
                 position: relative;
                 margin: 0;
@@ -248,6 +243,7 @@
                 margin: 0;
                 grid-area: cont;
                 display: flex;
+                gap: $x1; 
 
             }
             .form-cont ~ .form-info{
@@ -255,6 +251,7 @@
                 margin: 0;
                 grid-area: infoB;
             }
+            
         }
     }
 }

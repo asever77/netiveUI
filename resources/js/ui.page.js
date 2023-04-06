@@ -141,7 +141,9 @@
     netive.page.pageBulletList = () => {};
     netive.page.pageButton = () => {};
     netive.page.pageIcon = () => {};
-    netive.page.pageLayout = () => {};
+    netive.page.pageLayout = () => {
+        netive.tooltip.init();
+    };
     netive.page.pageTable = () => {};
     netive.page.pageList = () => {};
    

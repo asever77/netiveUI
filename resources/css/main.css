@@ -9742,13 +9742,16 @@ select.inp-base {
 .grid-wrap[data-grid=form] {
   gap: 2.4rem;
 }
+.grid-wrap[data-grid=form] .form-group {
+  display: flex;
+  min-height: 4rem;
+  align-items: center;
+}
 .grid-wrap[data-grid=form] .grid-item {
   width: 100%;
   display: grid;
-  grid-template: "head body" minmax(10rem, 1fr)/13rem 1fr;
+  grid-template: "head body" minmax(4rem, min-content)/13rem 1fr;
   gap: 0.8rem;
-  -ms-grid-columns: 13rem 0.8rem 1fr;
-  -ms-grid-rows: minmax(10rem, 1fr);
 }
 .grid-wrap[data-grid=form] .grid-head {
   position: relative;
@@ -9764,12 +9767,10 @@ select.inp-base {
 .grid-wrap[data-grid=form] .grid-body {
   position: relative;
   grid-area: body;
-  display: grid;
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  grid-template: "infoA" max-content "cont" max-content "infoB" max-content/1fr;
   gap: 0.4rem;
-  -ms-grid-columns: 1fr;
-  -ms-grid-rows: 1fr 0.4rem 1fr 0.4rem 1fr;
 }
 .grid-wrap[data-grid=form] .grid-body .form-info {
   position: relative;
@@ -9781,6 +9782,7 @@ select.inp-base {
   margin: 0;
   grid-area: cont;
   display: flex;
+  gap: 0.8rem;
 }
 .grid-wrap[data-grid=form] .grid-body .form-cont ~ .form-info {
   position: relative;

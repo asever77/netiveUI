@@ -742,16 +742,16 @@
 				}
 			}
  
-			el.insertAdjacentHTML('beforeend', elEnd);
-			// for (let i = tagLen - 1; i >= 0; i--) {
-			// 	const _tag = tags[i];
-			// 	const tag_name = _tag.tagName;
-			// 	if (tag_name === 'H1' || tag_name === 'H2' || tag_name === 'H3' || tag_name === 'H4' || tag_name === 'H5' || tag_name === 'H6' || tag_name === 'BUTTON' || tag_name === 'A' || tag_name === 'INPUT' || tag_name === 'TEXTAREA') {
-			// 		_tag.classList.add('ui-focusloop-end');
-			// 		_tag.setAttribute('tabindex', 0);
-			// 		break;
-			// 	}
-			// }
+			// el.insertAdjacentHTML('beforeend', elEnd);
+			for (let i = tagLen - 1; i >= 0; i--) {
+				const _tag = tags[i];
+				const tag_name = _tag.tagName;
+				if (tag_name === 'H1' || tag_name === 'H2' || tag_name === 'H3' || tag_name === 'H4' || tag_name === 'H5' || tag_name === 'H6' || tag_name === 'BUTTON' || tag_name === 'A' || tag_name === 'INPUT' || tag_name === 'TEXTAREA') {
+					_tag.classList.add('ui-focusloop-end');
+					_tag.setAttribute('tabindex', 0);
+					break;
+				}
+			}
 
 			const el_start = el.querySelector('.ui-focusloop-start');
 			const el_end = el.querySelector('.ui-focusloop-end');
@@ -5421,11 +5421,13 @@
 				const elModals = doc.querySelectorAll('.ui-modal');
 
 				if (!elModal) return false;
-
 				for (let i = 0, len = elModals.length; i < len; i++) {
 					const that = elModals[i];
 					that.classList.remove('current');
-					elBody.classList.add('scroll-no');
+					if (window.innerWidth !== document.documentElement.clientWidth) {
+						elBody.classList.add('scroll-no');
+					}
+					
 				}
 				
 				(!elModal.querySelector('.ui-modal-dim')) && elModal.insertAdjacentHTML('beforeend','<div class="ui-modal-dim"></div>');
