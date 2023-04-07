@@ -217,8 +217,10 @@
         netive.datepicker.isFooter = false;
         netive.datepicker.init();
 
-        
-
+        netive.datepicker.daySetting({
+            id: 'uiDate_1',
+            day: '2023-05-10'
+        });
        
         netive.callback.uiDate_1 = (v) => {
             console.log('callback', v);

@@ -21,32 +21,32 @@
  * 1.0.16 (23.03.14) tab keys 수정
  * 1.0.17 (23.03.23) input clear - search, data-keep인 경우 x버튼 노출 수정
  */
-((win, doc, undefined) => {
+(() => {
 
 	'use strict';
 
 	const global = 'netive';
 
-	win[global] = {};
+	window[global] = {};
 
-	const Global = win[global];
+	const Global = window[global];
 	const UA = navigator.userAgent.toLowerCase();
 	const deviceSize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360];
 	const deviceInfo = ['android', 'iphone', 'ipod', 'ipad', 'blackberry', 'windows ce', 'windows','samsung', 'lg', 'mot', 'sonyericsson', 'nokia', 'opeara mini', 'opera mobi', 'webos', 'iemobile', 'kfapwi', 'rim', 'bb10'];
 	//const filter = "win16|win32|win64|mac|macintel";
 	
 	//requestAnimationFrame
-	win.requestAFrame = (() => {
-		return win.requestAnimationFrame || win.webkitRequestAnimationFrame || win.mozRequestAnimationFrame || win.oRequestAnimationFrame ||
+	window.requestAFrame = (() => {
+		return window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame ||
 			//if all else fails, use setTimeout
 			function (callback) {
-				return win.setTimeout(callback, 1000 / 60); //shoot for 60 fp
+				return window.setTimeout(callback, 1000 / 60); //shoot for 60 fp
 			};
 	})();
-	win.cancelAFrame = (() => {
-		return win.cancelAnimationFrame || win.webkitCancelAnimationFrame || win.mozCancelAnimationFrame || win.oCancelAnimationFrame ||
+	window.cancelAFrame = (() => {
+		return window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.oCancelAnimationFrame ||
 			function (id) {
-				win.clearTimeout(id);
+				window.clearTimeout(id);
 			};
 	})();
 
@@ -65,8 +65,8 @@
 					}
 				}
 			})(),
-			width: win.innerWidth,
-			height: win.innerHeight,
+			width: window.innerWidth,
+			height: window.innerHeight,
 			breakpoint: null,
 			colClass: null,
 			ios: (/ip(ad|hone|od)/i).test(UA),
@@ -153,11 +153,11 @@
 					Global.state.scroll.y > scroll_pos ? 'up' : Global.state.scroll.y < scroll_pos ? 'down' : ''; 
 				Global.state.scroll.y = scroll_pos;
 			}
-			win.addEventListener('scroll', (e) => {
-				last_know_scroll_position = win.scrollY;
+			window.addEventListener('scroll', (e) => {
+				last_know_scroll_position = window.scrollY;
 
 				if (!ticking) {
-					win.requestAnimationFrame(() => {
+					window.requestAnimationFrame(() => {
 						doSomething(last_know_scroll_position);
 						ticking = false;
 					});
@@ -174,10 +174,10 @@
 				const browser = Global.state.browser;
 				const device = Global.state.device;
 
-				device.width = win.innerWidth;
-				device.height = win.innerHeight;
+				device.width = window.innerWidth;
+				device.height = window.innerHeight;
 
-				device.touch = device.ios || device.android || (doc.ontouchstart !== undefined && doc.ontouchstart !== null);
+				device.touch = device.ios || device.android || (document.ontouchstart !== undefined && document.ontouchstart !== null);
 				device.mobile = device.touch && (device.ios || device.android);
 				device.os = device.os ? device.os[0] : '';
 				device.os = device.os.toLowerCase();
@@ -196,7 +196,7 @@
 				const clsBrowser = browser.chrome ? 'chrome' : browser.firefox ? 'firefox' : browser.opera ? 'opera' : browser.safari ? 'safari' : browser.ie ? 'ie' + browser.ie : 'other';
 				const clsMobileSystem = device.ios ? "ios" : device.android ? "android" : 'etc';
 				const clsMobile = device.mobile ? device.app ? 'ui-a ui-m' : 'ui-m' : 'ui-d';
-				const el_html = doc.querySelector('html');
+				const el_html = document.querySelector('html');
 
 				el_html.classList.remove('col-12', 'col-8', 'col-4');
 				el_html.classList.add(device.colClass);
@@ -204,7 +204,7 @@
 				el_html.classList.add(clsMobileSystem);
 				el_html.classList.add(clsMobile);
 			
-				const w = win.innerWidth;
+				const w = window.innerWidth;
 
 				clearTimeout(timerWin);
 				timerWin = setTimeout(() => {
@@ -225,11 +225,11 @@
 					}
 				},200);
 			}
-			win.addEventListener('resize', act);
+			window.addEventListener('resize', act);
 			act();
 		},
 		pageName() {
-			const page = doc.URL.substring(doc.URL.lastIndexOf("/") + 1);
+			const page = document.URL.substring(document.URL.lastIndexOf("/") + 1);
 			const pagename = page.split('?');
 
 			return pagename[0];
@@ -242,7 +242,7 @@
 		*/
 		appendHtml(el, str, htmltag) {
 			const _htmltag = !!htmltag ? htmltag : 'div';
-			const div = doc.createElement(_htmltag);
+			const div = document.createElement(_htmltag);
 
 			div.innerHTML = str;
 
@@ -287,7 +287,7 @@
 
 		//주소의 파라미터 값 가져오기
 		para(paraname) {
-			const _tempUrl = win.location.search.substring(1);
+			const _tempUrl = window.location.search.substring(1);
 			const _tempArray = _tempUrl.split('&');
 
 			for (let i = 0, len = _tempArray.length; i < len; i++) {
@@ -301,11 +301,11 @@
 
 		//기본 선택자 설정
 		selectorType(v) {
-			let base = doc.querySelector('body');
+			let base = document.querySelector('body');
 
 			if (v !== null) {
 				if (typeof v === 'string') {
-					base = doc.querySelector(v);
+					base = document.querySelector(v);
 				} else {
 					base = v;
 				} 
@@ -358,7 +358,7 @@
 	 * in use: Global.state,
 	 */
 	Global.loading = {
-		timerShow : {},
+		timerShow : {}, 
 		timerHide : {},
 		options : {
 			selector: null,
@@ -367,13 +367,11 @@
 		},
 		show(option){
 			const opt = Object.assign({}, this.options, option);
-			//const opt = {...this.options, ...option};
-			//Global.option.join(this.options, option);
 			const selector = opt.selector; 
 			const styleClass = opt.styleClass; 
 			const message = opt.message;
-			const el = (selector !== null) ? selector : doc.querySelector('body');
-			const el_loadingHides = doc.querySelectorAll('.ui-loading:not(.visible)');
+			const el = (selector !== null) ? selector : document.querySelector('body');
+			const el_loadingHides = document.querySelectorAll('.ui-loading:not(.visible)');
 
 			for (let i = 0, len = el_loadingHides.length; i < len; i++) {
 				const that = el_loadingHides[i];
@@ -409,7 +407,7 @@
 				!is_loading && el.insertAdjacentHTML('beforeend', htmlLoading);
 				htmlLoading = null;		
 				
-				const el_loadings = doc.querySelectorAll('.ui-loading');
+				const el_loadings = document.querySelectorAll('.ui-loading');
 
 				for (let i = 0, len = el_loadings.length; i < len; i++) {
 					const that = el_loadings[i];
@@ -425,7 +423,7 @@
 		hide(){
 			clearTimeout(this.timerShow);
 			this.timerHide = setTimeout(() => {
-				const el_loadings = doc.querySelectorAll('.ui-loading');
+				const el_loadings = document.querySelectorAll('.ui-loading');
 
 				for (let i = 0, len = el_loadings.length; i < len; i++) {
 					const that = el_loadings[i];
@@ -482,7 +480,7 @@
 	
 			loading && Global.loading.show();
 
-			if (!!effect && !!doc.querySelector(effect)) {
+			if (!!effect && !!document.querySelector(effect)) {
 				area.classList.remove(effect + ' action');
 				area.classList.add(effect);
 			}
@@ -543,7 +541,7 @@
 
 	Global.scroll = {
 		options : {
-			selector: doc.querySelector('html, body'),
+			selector: document.querySelector('html, body'),
 			focus: false,
 			top: 0,
 			left:0,
@@ -553,7 +551,7 @@
 			callback: false,	
 		},
 		init() {
-			const el_areas = doc.querySelectorAll('.ui-scrollmove-btn[data-area]');
+			const el_areas = document.querySelectorAll('.ui-scrollmove-btn[data-area]');
 
 			for (let i = 0, len = el_areas.length; i < len; i++) {
 				const that = el_areas[i];
@@ -573,7 +571,7 @@
 			const add = el.dataset.add === undefined ? 0 : el.dataset.add;
 			const align = el.dataset.align === undefined ? 'default' : el.dataset.align;
 			const callback = el.dataset.callback === undefined ? false : el.dataset.callback;
-			let el_area = doc.querySelector('.ui-scrollmove[data-area="'+ area +'"]');
+			let el_area = document.querySelector('.ui-scrollmove[data-area="'+ area +'"]');
 			const item = el_area.querySelector('.ui-scrollbar-item');
 			
 			if (!!item) {
@@ -696,7 +694,7 @@
 	 */
 	Global.para = {
 		get(paraname) {
-			const _tempUrl = win.location.search.substring(1);
+			const _tempUrl = window.location.search.substring(1);
 			const _tempArray = _tempUrl.split('&');
 
 			for (let i = 0, len = _tempArray.length; i < len; i++) {
@@ -786,15 +784,15 @@
 			let dim;
 
  			if (show) {
-				const sheet = doc.querySelector('.sheet-bottom[data-id="'+opt.id+'"]');
+				const sheet = document.querySelector('.sheet-bottom[data-id="'+opt.id+'"]');
 				sheet.insertAdjacentHTML('beforeend', '<div class="sheet-dim"></div>');
 
-				dim = doc.querySelector('.sheet-dim');
+				dim = document.querySelector('.sheet-dim');
 				dim.classList.add('on');
 
 				!!callback && callback();
 			} else {
-				dim = doc.querySelector('.sheet-dim');
+				dim = document.querySelector('.sheet-dim');
 				dim.classList.remove('on');
 			}
 		},
@@ -803,12 +801,12 @@
 			const state = opt.state;
 			const callback = opt.callback;
 			const el_focus = opt.focus;
-			const el_base = doc.querySelector('#'+ id);
-			let el_sheet = doc.querySelector('[data-id*="'+id+'"]');
+			const el_base = document.querySelector('#'+ id);
+			let el_sheet = document.querySelector('[data-id*="'+id+'"]');
 
-			const scr_t = doc.documentElement.scrollTop;
-			const win_w = win.innerWidth;
-			const win_h = win.innerHeight;
+			const scr_t = document.documentElement.scrollTop;
+			const win_w = window.innerWidth;
+			const win_h = window.innerHeight;
 			const off_t = el_base.getBoundingClientRect().top;
 			const off_l = el_base.getBoundingClientRect().left;
 			const base_w = el_base.offsetWidth;
@@ -816,7 +814,7 @@
 			const is_expanded = !!el_sheet;
 			let show = !is_expanded || is_expanded === 'false';
 
-			let endfocus = opt.endfocus === false ? doc.activeElement : opt.endfocus;
+			let endfocus = opt.endfocus === false ? document.activeElement : opt.endfocus;
 
 			if (state !== undefined) {
 				show = state;
@@ -825,7 +823,7 @@
 			if (show) {
 				!!callback && callback(); 
 				
-				el_sheet = doc.querySelector('[data-id*="'+ id +'"]');
+				el_sheet = document.querySelector('[data-id*="'+ id +'"]');
 				el_sheet.classList.add('sheet-bottom');
 
 				const wrap_w = Number(el_sheet.offsetWidth.toFixed(2));
@@ -835,7 +833,7 @@
 					id: id,
 					show: true,
 					callback: () => {
-						const dim = doc.querySelector('.sheet-dim');
+						const dim = document.querySelector('.sheet-dim');
 						const dimAct = () => {
 							Global.sheets.bottom({
 								id: id,
@@ -864,7 +862,7 @@
 					!!callback && callback();
 					el_sheet.remove();
 
-					!!el_focus ? el_focus.focus() :  doc.querySelector('#'+id).focus();
+					!!el_focus ? el_focus.focus() :  document.querySelector('#'+id).focus();
 				},300);
 			}
 		}
@@ -878,7 +876,7 @@
 	 */
 	Global.scrollBar = {
 		options : {
-			scope: doc.querySelector('body'),
+			scope: document.querySelector('body'),
 			selector: false,
 			callback:false,
 			infiniteCallback:false,
@@ -887,7 +885,7 @@
 		},
 		init (option) {
 			const opt = Object.assign({}, Global.scrollBar.options, option);
-			const el_scope = !!opt.scope ? opt.scope : doc.querySelector('body');
+			const el_scope = !!opt.scope ? opt.scope : document.querySelector('body');
 			let scrollBars = el_scope.querySelectorAll('.ui-scrollbar');
 			
 			if (!!opt.infiniteCallback) {
@@ -899,7 +897,7 @@
 			const create = (scrollId) => {
 				const callback = opt.callback;
 				const infiniteCallback = opt.infiniteCallback;
-				const el_scrollbar = doc.querySelector('[data-scroll-id="' + scrollId +'"]');
+				const el_scrollbar = document.querySelector('[data-scroll-id="' + scrollId +'"]');
 				
 				let timer;
 				let prevHeightPercent = 0;
@@ -1055,7 +1053,7 @@
 				}
 				
 				const dragMoveAct = (event) => {
-					const body = doc.querySelector('body');
+					const body = document.querySelector('body');
 					const el_bar = event.target;
 					const el_scrollbar = el_bar.closest('.ui-scrollbar');
 					const el_barWrap = el_bar.closest('.ui-scrollbar-barwrap');
@@ -1063,8 +1061,8 @@
 					const itemH = Number(el_scrollbar.dataset.itemH);
 					const itemW = Number(el_scrollbar.dataset.itemW);
 					const el_barWrapRect = el_barWrap.getBoundingClientRect();
-					const off_t = el_barWrapRect.top + doc.documentElement.scrollTop;
-					const off_l = el_barWrapRect.left + doc.documentElement.scrollLeft;
+					const off_t = el_barWrapRect.top + document.documentElement.scrollTop;
+					const off_l = el_barWrapRect.left + document.documentElement.scrollLeft;
 					const w_h = el_barWrapRect.height;
 					const w_w = el_barWrapRect.width;
 					const barH = el_bar.getAttribute('data-height');
@@ -1114,12 +1112,12 @@
 					}
 					const mouseupAct = () => {
 						body.classList.remove('scrollbar-move');
-						doc.removeEventListener('mousemove', mousemoveAct);
-						doc.removeEventListener('mouseup', mouseupAct);
+						document.removeEventListener('mousemove', mousemoveAct);
+						document.removeEventListener('mouseup', mouseupAct);
 					}
 
-					doc.addEventListener('mousemove', mousemoveAct);
-					doc.addEventListener('mouseup', mouseupAct);
+					document.addEventListener('mousemove', mousemoveAct);
+					document.addEventListener('mouseup', mouseupAct);
 				}
 
 				if (el_scrollbar.dataset.ready === 'no') {
@@ -1128,10 +1126,10 @@
 					el_item.setAttribute('tabindex', 0);
 					el_scrollbar.style.height = wrapH + 'px';
 
-					const html_barwrap = doc.createElement('div');
-					const html_barwrapX = doc.createElement('div');
-					const html_button = doc.createElement('button');
-					const html_buttonX = doc.createElement('button');
+					const html_barwrap = document.createElement('div');
+					const html_barwrapX = document.createElement('div');
+					const html_button = document.createElement('button');
+					const html_buttonX = document.createElement('button');
 
 					html_barwrap.classList.add('ui-scrollbar-barwrap');
 					html_barwrap.classList.add('type-y');
@@ -1184,7 +1182,7 @@
 			}
 			
 			if (!!option && !!opt.selector) {
-				scrollBars = doc.querySelector('[data-scroll-id="'+ opt.selector +'"]');
+				scrollBars = document.querySelector('[data-scroll-id="'+ opt.selector +'"]');
 
 				const that = scrollBars;
 				let scrollId = opt.selector;
@@ -1231,7 +1229,7 @@
 			}
 		},
 		destroy(v) {
-			const el_scrollbar = doc.querySelector('[data-scroll-id="' + v +'"]');
+			const el_scrollbar = document.querySelector('[data-scroll-id="' + v +'"]');
 			const inner_scrollbars = el_scrollbar.querySelectorAll('[data-scroll-id]');
 			const act = (el) => {
 				const that = el;
@@ -1309,10 +1307,10 @@
 			(path) ? cookieset += 'path=' + path + ';' : '';
 			(domain) ? cookieset += 'domain=' + domain + ';' : '';
 
-			doc.cookie = cookieset;
+			document.cookie = cookieset;
 		},
 		get(name) {
-			const match = ( doc.cookie || ' ' ).match( new RegExp(name + ' *= *([^;]+)') );
+			const match = ( document.cookie || ' ' ).match( new RegExp(name + ' *= *([^;]+)') );
 
 			return (match) ? match[1] : null;
 		},
@@ -1366,13 +1364,13 @@
 			let left = opt.left;
 
 			if (align === 'center') {
-				left = (win.innerWidth / 2) - (width / 2);
-				top = (win.innerHeight / 2) - (height / 2);
+				left = (window.innerWidth / 2) - (width / 2);
+				top = (window.innerHeight / 2) - (height / 2);
 			}
 
 			const specs = 'width=' + width + ', height='+ height + ', left=' + left + ', top=' + top + ', toolbar=' + toolbar + ', location=' + location + ', resizable=' + resizable + ', status=' + status + ', menubar=' + menubar + ', scrollbars=' + scrollbars;
 			
-			win.open(link, name , specs);
+			window.open(link, name , specs);
 		}
 	}
 
@@ -1382,7 +1380,7 @@
 	 */
 	Global.table = {
 		// sort(opt){
-		// 	let table = doc.querySelector('#' + opt.id);
+		// 	let table = document.querySelector('#' + opt.id);
 		// 	let switchcount = 0;
 		// 	let switching = true;
 		// 	let dir = "asc";
@@ -1429,7 +1427,7 @@
 		scroll(option){
 			const opt = Object.assign({}, this.scrollOption, option);
 			const callback = opt.callback;
-			const el_wraps = doc.querySelectorAll('.ui-tablescroll');
+			const el_wraps = document.querySelectorAll('.ui-tablescroll');
 
 			for (let i = 0, len = el_wraps.length; i < len; i++) {
 				const that = el_wraps[i];
@@ -1470,7 +1468,7 @@
 	 */
 	Global.inputTime = {
 		init() {
-			const el_inps = doc.querySelectorAll('.inp-base');
+			const el_inps = document.querySelectorAll('.inp-base');
 			for (const el_inp of el_inps) {
 				el_inp.type === 'time' && this.set(el_inp);
 			}
@@ -1533,10 +1531,10 @@
 			el_view.addEventListener('click', this.show);
 		},
 		show(e){
-			const body = doc.querySelector('body');
+			const body = document.querySelector('body');
 			const that = e.currentTarget;
 			const id = that.dataset.id;
-			const inp = doc.querySelector('#' + id);
+			const inp = document.querySelector('#' + id);
 			const title = inp.title;
 			const txt_midday = Global.inputTime.middayUnit;
 			const min_time = !!inp.min ? inp.min : null;
@@ -1609,7 +1607,7 @@
 			//오전,오후
 			for (let i = 0; i < 2; i++) {
 				const group = el_midday.querySelector('.ui-time-group');
-				let btn = doc.createElement('button');
+				let btn = document.createElement('button');
 				btn.type = 'button';
 				btn.value = i;
 				btn.textContent = txt_midday[i];
@@ -1625,7 +1623,7 @@
 			//시간
 			for (let i = 1; i < hour_len + 1; i++) {
 				const group = el_hour.querySelector('.ui-time-group');
-				let btn = doc.createElement('button');
+				let btn = document.createElement('button');
 
 				btn.type = 'button';
 				btn.value = i;
@@ -1646,7 +1644,7 @@
 			for (let i = 0; i < 60; i++) {
 				if (i === 0 || i % Global.inputTime.miuntUnit === 0) {
 					const group = el_minute.querySelector('.ui-time-group');
-					let btn = doc.createElement('button');
+					let btn = document.createElement('button');
 
 					btn.type = 'button';
 					btn.value = Global.parts.add0(i);
@@ -1736,11 +1734,11 @@
 			const val_midday = Number(el_wrap.dataset.midday);
 			const val_hour = Number(el_wrap.dataset.hour);
 			const val_minute = Number(el_wrap.dataset.minute);
-			const el_view = doc.querySelector('.ui-time-view[data-id="'+id+'"]');
+			const el_view = document.querySelector('.ui-time-view[data-id="'+id+'"]');
 			const view_midday = el_view.querySelector('.ui-time-view-midday');
 			const view_hour = el_view.querySelector('.ui-time-view-hour');
 			const view_minute = el_view.querySelector('.ui-time-view-minute');
-			const el_inp = doc.querySelector('#'+id);
+			const el_inp = document.querySelector('#'+id);
 			const val_hour_24 = val_hour === 24 ? 0 : val_hour;
 
 			view_midday.textContent =  Global.inputTime.middayUnit[val_midday];
@@ -1958,10 +1956,10 @@
 						}
 					}
 					
-					doc.addEventListener('mousemove', onMouseMove);
-					doc.onmouseup = (e) => {
-						doc.removeEventListener('mousemove', onMouseMove);
-						doc.onmouseup = null;
+					document.addEventListener('mousemove', onMouseMove);
+					document.onmouseup = (e) => {
+						document.removeEventListener('mousemove', onMouseMove);
+						document.onmouseup = null;
 						getScrollTop = Math.abs(that_wrap.getBoundingClientRect().top - wrapT);
 
 						actValue(that_wrap.closest('.ui-time-wrap'));
@@ -1994,12 +1992,12 @@
 	 */
 	Global.form = {
 		init() {
-			const el_inps = doc.querySelectorAll('.inp-base');
+			const el_inps = document.querySelectorAll('.inp-base');
 			const prefix = (inp) => {
 				const wrap = inp.parentElement;
 
 				if (!wrap.querySelector('.prefix')){
-					const preFixTxt = doc.createElement('span');
+					const preFixTxt = document.createElement('span');
 					const theFirstChild = wrap.firstChild;
 					const txt = inp.dataset.prefix;
 
@@ -2016,7 +2014,7 @@
 				const wrap = inp.parentElement;
 
 				if (!wrap.querySelector('.suffix')){
-					const fixTxt = doc.createElement('span');
+					const fixTxt = document.createElement('span');
 					const txt = inp.dataset.suffix;
 
 					fixTxt.classList.add('suffix');
@@ -2099,7 +2097,7 @@
 				case 'input' :
 					if (!!isValue) {
 						if (!wrap.querySelector('.ui-clear')) {
-							const clearbutton = doc.createElement('button');
+							const clearbutton = document.createElement('button');
 							clearbutton.type = 'button';
 							clearbutton.classList.add('btn-clear');
 							clearbutton.classList.add('ui-clear');
@@ -2135,7 +2133,7 @@
 		},
 
 		fileUpload() {
-			const el_files = doc.querySelectorAll('.ui-file-inp');
+			const el_files = document.querySelectorAll('.ui-file-inp');
 			const fileTypes = [
 				"image/apng",
 				"image/bmp",
@@ -2152,10 +2150,10 @@
 			const fileDelete = (e) => {
 				const id = e.currentTarget.dataset.id;
 				
-				const list = doc.querySelector('.ui-file-list[data-id="'+ id +'"]');
+				const list = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
 				const list_ul = list.querySelector('ul');
 				const list_li = list.querySelectorAll('li');
-				const inp = doc.querySelector('#'+ id);
+				const inp = document.querySelector('#'+ id);
 				const nodes = [... list_ul.children];
 				const index = Number(nodes.indexOf(e.currentTarget.closest('li')));
 
@@ -2186,7 +2184,7 @@
 			const updateImageDisplay = (e) => {
 				const el_file = e.currentTarget;
 				const id = el_file.id;
-				const preview = doc.querySelector('.ui-file-list[data-id="'+ id +'"]');
+				const preview = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
 				const curFiles = el_file.files;
 
 				while(preview.firstChild) {
@@ -2194,12 +2192,12 @@
 				}
 
 				if(curFiles.length === 0) {
-					const para = doc.createElement('p');
+					const para = document.createElement('p');
 					para.textContent = 'No files currently selected for upload';
 					preview.appendChild(para);
 				} else {
-					const list = doc.createElement('ul');
-					const title = doc.createElement('h4');
+					const list = document.createElement('ul');
+					const title = document.createElement('h4');
 					
 					title.textContent = 'File upload list';
 					title.classList.add('a11y-hidden');
@@ -2209,9 +2207,9 @@
 					
 					for (let i = 0, len = curFiles.length; i < len; i++) {
 						const that = curFiles[i];
-						const listItem = doc.createElement('li');
-						const para = doc.createElement('p');
-						const delbutton = doc.createElement('button');
+						const listItem = document.createElement('li');
+						const para = document.createElement('p');
+						const delbutton = document.createElement('button');
 
 						delbutton.type = 'button';
 						delbutton.classList.add('ui-file-del');
@@ -2222,7 +2220,7 @@
 						para.textContent = that.name + ', ' + returnFileSize(that.size) + '.';
 
 						if(validFileType(that)) {
-							const image = doc.createElement('img');
+							const image = document.createElement('img');
 							image.src = URL.createObjectURL(that);
 
 							listItem.appendChild(image);
@@ -2246,8 +2244,8 @@
 			}
 		},
 		allCheck(opt) {
-			const el_parents = doc.querySelectorAll('[data-allcheck-parent]');
-			const el_childs = doc.querySelectorAll('[data-allcheck-child]');
+			const el_parents = document.querySelectorAll('[data-allcheck-parent]');
+			const el_childs = document.querySelectorAll('[data-allcheck-child]');
 			const opt_callback = opt.allCheckCallback;
 
 			const allCheckParent = () => {
@@ -2267,8 +2265,8 @@
 			const isAllChecked = (opt) =>{
 				const isType = opt.type;
 				const isName = opt.name;
-				const parent = doc.querySelector('[data-allcheck-parent="' + isName + '"]');
-				const childs = doc.querySelectorAll('[data-allcheck-child="' + isName + '"]');
+				const parent = document.querySelector('[data-allcheck-parent="' + isName + '"]');
+				const childs = document.querySelectorAll('[data-allcheck-child="' + isName + '"]');
 				const allChecked = parent.checked;
 				const len = childs.length;
 				let n_checked = 0;
@@ -2334,8 +2332,8 @@
 			const callback = opt.callback;
 			let current = opt.current;
 			let autoclose = opt.autoclose;
-			const el_acco = doc.querySelector('.ui-acco[data-id="' + accoId +'"]');
-			const el_wrap = doc.querySelectorAll('.ui-acco[data-id="' + accoId +'"] > .ui-acco-wrap');
+			const el_acco = document.querySelector('.ui-acco[data-id="' + accoId +'"]');
+			const el_wrap = document.querySelectorAll('.ui-acco[data-id="' + accoId +'"] > .ui-acco-wrap');
 			const len = el_wrap.length;
 			const para = Global.para.get('acco');
 
@@ -2480,7 +2478,7 @@
 			let accoId = btnId.split('Btn');
 				accoId = accoId[0];
 
-			const acco = doc.querySelector('.ui-acco[data-id="' + accoId +'"]');
+			const acco = document.querySelector('.ui-acco[data-id="' + accoId +'"]');
 			const len = Number(acco.dataset.n);
 
 			const upLeftKey = (event) => {
@@ -2523,7 +2521,7 @@
 		timer : null,
 		toggle(opt){
 			const accoId = opt.id;
-			const el_acco = doc.querySelector('.ui-acco[data-id="' + accoId +'"]');
+			const el_acco = document.querySelector('.ui-acco[data-id="' + accoId +'"]');
 			const current = opt.current === undefined ? null : opt.current;
 			const callback = opt.callback === undefined ? opt.callback : Global.accordion[accoId].callback;
 			const state = opt.state === undefined ? 'toggle' : opt.state;
@@ -2540,7 +2538,7 @@
 					let isShow = false;
 					const el = opt.el;
 					const btnID = el.getAttribute('aria-labelledby');
-					const el_btn = doc.querySelector('#' + btnID);
+					const el_btn = document.querySelector('#' + btnID);
 					const state = opt.state;
 				
 					//accordion inner
@@ -2697,7 +2695,7 @@
 	Global.rangeSlider = {
 		init(opt){
 			const id = opt.id;
-			const el_range = doc.querySelector('.ui-range[data-id="'+ id +'"]');
+			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
 			const el_inp = el_range.querySelectorAll('.ui-range-inp');
@@ -2933,14 +2931,14 @@
 		rangeFrom(opt){
 			const id = opt.id;
 			const v = opt.value;
-			const el_range = doc.querySelector('.ui-range[data-id="'+ id +'"]');
+			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			const type = !!opt.type ? opt.type : !!el_range.dataset.type ? el_range.dataset.type : null;
 			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
 			const el_left = el_range.querySelector(".ui-range-point.left");
 			const el_right = el_range.querySelector(".ui-range-point.right");
 			const el_bar = el_range.querySelector(".ui-range-bar");
-			const inp_froms = doc.querySelectorAll('[data-from="'+ id +'"]');
+			const inp_froms = document.querySelectorAll('[data-from="'+ id +'"]');
 
 			const txtArray = Global.rangeSlider[id].text;
 			const txtALen = txtArray.length;
@@ -3017,13 +3015,13 @@
 		rangeTo(opt){
 			const id = opt.id;
 			const v = opt.value;
-			const el_range = doc.querySelector('.ui-range[data-id="'+ id +'"]');
+			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
 			const el_left = el_range.querySelector(".ui-range-point.left");
 			const el_right = el_range.querySelector(".ui-range-point.right");
 			const el_bar = el_range.querySelector(".ui-range-bar");
-			const inp_tos = doc.querySelectorAll('[data-to="'+ id +'"]');
+			const inp_tos = document.querySelectorAll('[data-to="'+ id +'"]');
 			
 			let value = el_to.value;
 			let min = Number(el_from.min);
@@ -3136,8 +3134,8 @@
 		week : ['일', '월', '화', '수', '목', '금', '토', '년', '월' , '일'],
 		baseTxt: ['년','월','일'],
 		init(v){
-			const btns = doc.querySelectorAll('.ui-datepicker-btn');
-			const datepickers = doc.querySelectorAll('.ui-datepicker');
+			const btns = document.querySelectorAll('.ui-datepicker-btn');
+			const datepickers = document.querySelectorAll('.ui-datepicker');
 			Global.datepicker.week = v === undefined || v.week === undefined ? Global.datepicker.week : v.week;
 			Global.datepicker.isFooter = v === undefined || v.isFooter === undefined ? Global.datepicker.isFooter : v.isFooter;
 
@@ -3191,15 +3189,19 @@
 					const btn = dp.querySelector('.ui-datepicker-btn');
 
 					btn.addEventListener('click', act);
+					console.log(inps[0].value);
+					inps[0].addEventListener('input', () => {
+						console.log(1111);
+					})
 				}
 			}
 
 			//view
-			const views = doc.querySelectorAll('.ui-datepicker-view');
+			const views = document.querySelectorAll('.ui-datepicker-view');
 
 			for (let i = 0; i < views.length; i++) {
 				// Global.datepicker.isFooter = true;
-				const inp = doc.querySelector('#' + views[i].dataset.target);
+				const inp = document.querySelector('#' + views[i].dataset.target);
 				
 				Global.datepicker.make({
 					id: views[i].dataset.target,
@@ -3216,7 +3218,7 @@
 			}
 		},
 		destroy(opt){
-			const is_dim = !!doc.querySelector('.sheet-dim');
+			const is_dim = !!document.querySelector('.sheet-dim');
 			const callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
 			let el_dp;
 
@@ -3225,7 +3227,7 @@
 			}
 			
 			if (!opt) {
-				el_dp = doc.querySelectorAll('.datepicker');
+				el_dp = document.querySelectorAll('.datepicker');
 
 				for (let i = 0, len = el_dp.length; i < len; i++) {
 					const that = el_dp[i];
@@ -3235,14 +3237,14 @@
 					}
 				}
 			} else {
-				el_dp = doc.querySelector('.datepicker[data-id="'+ opt.id +'"]');
+				el_dp = document.querySelector('.datepicker[data-id="'+ opt.id +'"]');
 				el_dp.remove();
 			}
 
 			!!callback && callback();
 		},
 		open(id) {
-			const base = doc.querySelector('#' + id);
+			const base = document.querySelector('#' + id);
 
 			Global.sheets.bottom({
 				id: base.id,
@@ -3264,17 +3266,17 @@
 			const currentDate = opt.date;
 			let wdate = opt.date;
 			const title = opt.title;
-			const el_inp = doc.querySelector('#' + setId);
+			const el_inp = document.querySelector('#' + setId);
 			const el_uidp = el_inp.closest('.ui-datepicker');
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
 			const setDate = (opt.date === '' || opt.date === undefined) ? new Date(): opt.date;
 			let period = (opt.period === '' || opt.period === undefined) ? false : opt.period;
-			const area = (opt.area === '' || opt.area === undefined) ? doc.querySelector('body') : opt.area;
+			const area = (opt.area === '' || opt.area === undefined) ? document.querySelector('body') : opt.area;
 			const date = new Date(setDate);
 			const _viewYear = date.getFullYear();
 			const _viewMonth = date.getMonth();
-			let el_dp = doc.querySelector('.datepicker[data-id="'+setId+'"]');
+			let el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
 			const yyyymm = _viewYear + '-' + Global.parts.add0(_viewMonth + 1);
 			const callback = opt === undefined || opt.callback === undefined ? false : opt.callback;
 			let _dpHtml = '';
@@ -3335,8 +3337,8 @@
 				_dpHtml += '</section>';
 
 				area.insertAdjacentHTML('beforeend',_dpHtml);
-				//doc.querySelector('#' + setId).parentNode.insertAdjacentHTML('beforeend',_dpHtml);
-				el_dp = doc.querySelector('.datepicker[data-id="'+setId+'"]');
+				//document.querySelector('#' + setId).parentNode.insertAdjacentHTML('beforeend',_dpHtml);
+				el_dp = document.querySelector('.datepicker[data-id="'+setId+'"]');
 
 				this.dateMake({
 					setDate: date,
@@ -3374,14 +3376,14 @@
 		},
 		confirm(opt){
 			const id = opt.id;
-			const el_dp =  doc.querySelector('.datepicker[data-id="'+ id +'"]');
+			const el_dp =  document.querySelector('.datepicker[data-id="'+ id +'"]');
 			const startDay = el_dp.dataset.start;
 			const endDay = el_dp.dataset.end;
-			const el_inp = doc.getElementById(id);
+			const el_inp = document.getElementById(id);
 			const el_uidp = el_inp.closest('.ui-datepicker');	
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
-			const el_btn =  doc.querySelector('.ui-datepicker-btn[data-target="'+ id +'"]');
+			const el_btn =  document.querySelector('.ui-datepicker-btn[data-target="'+ id +'"]');
 			const isView = el_inp.dataset.view === 'true' ? true : false;
 			const isBtn = !!el_btn;
 
@@ -3750,8 +3752,8 @@
 		dateMake(opt){
 			const setDate = opt.setDate;
 			const setId = opt.setId;
-			const el_dp = doc.querySelector('.datepicker[data-id="' + setId + '"]');
-			const el_inp = doc.querySelector('#' + setId);
+			const el_dp = document.querySelector('.datepicker[data-id="' + setId + '"]');
+			const el_inp = document.querySelector('#' + setId);
 			const el_uidp = el_inp.closest('.ui-datepicker');	
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
@@ -4068,7 +4070,7 @@
 				btn.removeEventListener('click', dayClickConfirm);
 			}
 			const keyMove = (e) => {
-				const isShift = !!win.event.shiftKey;
+				const isShift = !!window.event.shiftKey;
 				const n = Number(e.currentTarget.dataset.n);
 				const keycode = e.keyCode;
 				const keys = Global.state.keys;
@@ -4140,7 +4142,7 @@
 			const n = 0;
 			const id = el_dp.dataset.id;
 			const date = new Date(el_dp.dataset.date);
-			const el_inp = doc.querySelector('#' + id);
+			const el_inp = document.querySelector('#' + id);
 			const el_uidp = el_inp.closest('.ui-datepicker');
 			const el_start = el_uidp.querySelector('[data-period="start"]');
 			const el_end = el_uidp.querySelector('[data-period="end"]');
@@ -4228,7 +4230,7 @@
 					}
 				}
 
-				const now_focus = doc.activeElement;
+				const now_focus = document.activeElement;
 				Global.datepicker.dateMake({
 					setDate: date,
 					setId: id
@@ -4239,8 +4241,8 @@
 		},
 		nextYear(event) {
 			const dpId = event.target.dataset.dpid;
-			const el_inp = doc.querySelector('#' + dpId);
-			const el_dp = doc.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_inp = document.querySelector('#' + dpId);
+			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			const el_next = el_dp.querySelector('.ui-next-y');
 			const el_prev = el_dp.querySelector('.ui-prev-y');
 			const el_next_m = el_dp.querySelector('.ui-next-m');
@@ -4291,8 +4293,8 @@
 		},
 		prevYear(event) {
 			const dpId = event.target.dataset.dpid;
-			const el_inp = doc.querySelector('#' + dpId);
-			const el_dp = doc.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_inp = document.querySelector('#' + dpId);
+			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			const el_next = el_dp.querySelector('.ui-next-y');
 			const el_prev = el_dp.querySelector('.ui-prev-y');
 			const el_next_m = el_dp.querySelector('.ui-next-m');
@@ -4342,7 +4344,7 @@
 		},
 		nextMonth(event) {
 			const dpId = event.target.dataset.dpid;
-			const el_dp = doc.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			let date = new Date(el_dp.dataset.date);
 			let year = date.getFullYear();
 			let month = date.getMonth() + 1;
@@ -4364,7 +4366,7 @@
 		},
 		prevMonth(event) {
 			const dpId = event.target.dataset.dpid;
-			const el_dp = doc.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			let date = new Date(el_dp.dataset.date);
 			let year = date.getFullYear();
 			let month = date.getMonth();
@@ -4386,7 +4388,7 @@
 		},
 		goToday(event) {
 			const dpId = event.target.dataset.dpid;
-			const el_dp = doc.querySelector('.datepicker[data-id="'+dpId+'"]');
+			const el_dp = document.querySelector('.datepicker[data-id="'+dpId+'"]');
 			const date = new Date();
 			const year = date.getFullYear();
 			const month = date.getMonth() + 1;
@@ -4397,6 +4399,21 @@
 				setDate: date,
 				setId: dpId
 			});
+		},
+		daySetting(opt) {
+			const day = opt.day;
+			const id = opt.id;
+			const datepicker_date = !!day ? day : new Date();
+			let datepicker_today;
+			
+			if (!!day) {
+					datepicker_today = day;
+			} else  {
+					datepicker_today =  datepicker_date.getFullYear() + '-' + ("0" + (1 + datepicker_date.getMonth())).slice(-2) + '-' + ("0" + datepicker_date.getDate()).slice(-2);
+			}
+			
+			document.querySelector('#' + id).value = datepicker_today;
+			Global.datepicker.init();
 		}
 	}
 
@@ -4419,8 +4436,8 @@
 			const callback = opt.callback;
 			let customscroll = opt.customscroll;
 			const id = opt.id;
-			const isId = !!id ? doc.querySelector('#' + opt.id) : false;
-			const el_uiSelects = doc.querySelectorAll('.ui-select');
+			const isId = !!id ? document.querySelector('#' + opt.id) : false;
+			const el_uiSelects = document.querySelectorAll('.ui-select');
 			const keys = Global.state.keys;
 			const isMobile = Global.state.device.mobile;
 			const isInner = opt.inner;
@@ -4452,23 +4469,23 @@
 			const labelClick = (e) => {
 				const that = e.currentTarget;
 				const idname = that.getAttribute('for');
-				const inp = doc.querySelector('#' + idname);
+				const inp = document.querySelector('#' + idname);
  
 				inp.focus();
 			}
 			const selectLeave = () => {
-				const body = doc.querySelector('body');
+				const body = document.querySelector('body');
 
 				body.dataset.selectopen = true;
 			}
 			const optBlur = (e) => {
-				//if (doc.querySelector('body').dataset.selectopen) { .. }); dim
+				//if (document.querySelector('body').dataset.selectopen) { .. }); dim
 				//optClose();
 			}
 			const openScrollMove = (el_uiselect) => {
-				const el_html = doc.querySelector('html, body');
-				const dT = Math.floor(doc.documentElement.scrollTop);
-				const wH = win.innerHeight;
+				const el_html = document.querySelector('html, body');
+				const dT = Math.floor(document.documentElement.scrollTop);
+				const wH = window.innerHeight;
 				const el_btn = el_uiselect.querySelector('.ui-select-btn');
 				const elT = el_btn.getBoundingClientRect().top;
 				const elH = el_btn.offsetHeight;
@@ -4486,20 +4503,20 @@
 			}
 			const optOpen = (btn) => {
 				const id = btn.id;
-				const el_body = doc.querySelector('body');
+				const el_body = document.querySelector('body');
 				const el_uiselect = btn.closest('.ui-select');
-				const el_wrap = doc.querySelector('.ui-select-wrap[data-id="'+ id +'"]');
+				const el_wrap = document.querySelector('.ui-select-wrap[data-id="'+ id +'"]');
 				let el_optwrap = el_wrap.querySelector('.ui-select-opts');
 				let el_opts = el_optwrap.querySelectorAll('.ui-select-opt');
 				const el_select = el_uiselect.querySelector('select');
 				const el_option = el_select.querySelectorAll('option');
 				const offtop = el_uiselect.getBoundingClientRect().top;
 				const offleft = el_uiselect.getBoundingClientRect().left;
-				const scrtop = doc.documentElement.scrollTop;
-				const scrleft = doc.documentElement.scrollLeft;
+				const scrtop = document.documentElement.scrollTop;
+				const scrleft = document.documentElement.scrollLeft;
 				let wraph = el_wrap.offsetHeight;
 				const btn_h = btn.offsetHeight;
-				const win_h = win.innerHeight;
+				const win_h = window.innerHeight;
 				const n = el_select.selectedIndex;
 				const state = !!el_uiselect.dataset.state ? el_uiselect.dataset.state : '';
 				
@@ -4602,11 +4619,11 @@
 				const n = el_select.selectedIndex;
 				selectID = el_select.id;
 
-				that.dataset.sct = doc.documentElement.scrollTop;
+				that.dataset.sct = document.documentElement.scrollTop;
 
-				doc.removeEventListener('click', Global.select.back);
+				document.removeEventListener('click', Global.select.back);
 				setTimeout(() => {
-					doc.addEventListener('click', Global.select.back);
+					document.addEventListener('click', Global.select.back);
 				},0);
 
 				setOption(that, n);
@@ -4617,9 +4634,9 @@
 				const el_wrap = el_confirm.closest('.ui-select-wrap');
 				const id_inp = el_wrap.dataset.id;
 				const id = id_inp.split('_')[0];
-				const el_select = doc.querySelector('#'+ id);
+				const el_select = document.querySelector('#'+ id);
 				const el_uiSelect = el_select.closest('.ui-select');
-				const el_body = doc.querySelector('body');
+				const el_body = document.querySelector('body');
 				const el_btn = el_uiSelect.querySelector('.ui-select-btn');
 				const callback = Global.select.data[id].callback;
 				const orgTop = el_uiSelect.dataset.orgtop;
@@ -4651,12 +4668,12 @@
 				});
 			}
 			const eventFn = () => {
-				const el_dims = doc.querySelectorAll('.dim-select');
-				const el_confirms = doc.querySelectorAll('.ui-select-confirm');
-				const el_cancels = doc.querySelectorAll('.ui-select-cancel');
-				const el_btns = doc.querySelectorAll('.ui-select-btn');
-				const el_labels = doc.querySelectorAll('.ui-select-label');
-				const el_selects = doc.querySelectorAll('.ui-select select');
+				const el_dims = document.querySelectorAll('.dim-select');
+				const el_confirms = document.querySelectorAll('.ui-select-confirm');
+				const el_cancels = document.querySelectorAll('.ui-select-cancel');
+				const el_btns = document.querySelectorAll('.ui-select-btn');
+				const el_labels = document.querySelectorAll('.ui-select-label');
+				const el_selects = document.querySelectorAll('.ui-select select');
 
 				// for (let that of el_dims) {
 				// 	that.addEventListener('click', selectClick);
@@ -4796,7 +4813,7 @@
 				el_select.classList.add('off');
 				el_select.setAttribute('aria-hidden', true)
 				// el_uiSelect.insertAdjacentHTML('beforeend', htmlOption);
-				const body = doc.querySelector('body');
+				const body = document.querySelector('body');
 				isInner ? el_uiSelect.insertAdjacentHTML('beforeend', htmlOption) : body.insertAdjacentHTML('beforeend', htmlOption);
 
 				if (selectDisabled) {
@@ -4819,7 +4836,7 @@
 				el_dim = that.querySelector('.dim');
 				el_select = that.querySelector('select');
 				selectID = el_select.id;
-				el_wrap = doc.querySelector('.ui-select-wrap[data-id="'+ selectID +'_inp"]');
+				el_wrap = document.querySelector('.ui-select-wrap[data-id="'+ selectID +'_inp"]');
 				
 				!!el_btn && el_btn.remove();
 				!!el_wrap && el_wrap.remove();
@@ -4848,14 +4865,14 @@
 
 			if(isTure.indexOf('ui-select-wrap') < 0) {
 				Global.select.hide();
-				doc.removeEventListener('click', Global.select.back);
+				document.removeEventListener('click', Global.select.back);
 			} 
 		},
 		scrollSelect (v, el){
 			const id_inp = el.dataset.id;
 			const id = id_inp.split('_')[0];
 			const _opts = el.querySelectorAll('.ui-select-opt');
-			const el_select = doc.querySelector('#' + id);
+			const el_select = document.querySelector('#' + id);
 			const el_uiSelect = el_select.closest('.ui-select');
 			const el_btn = el_uiSelect.querySelector('.ui-select-btn');
 			const opt_h = _opts[0].offsetHeight;
@@ -4920,7 +4937,7 @@
 			const _wrap = that.closest('.ui-select-wrap');
 			const id_inp = _wrap.dataset.id;
 			const id = id_inp.split('_')[0];
-			const el_select = doc.querySelector('#' + id);
+			const el_select = document.querySelector('#' + id);
 			const _uiSelect = el_select.closest('.ui-select');
 			const _btn = _uiSelect.querySelector('.ui-select-btn');
 			const idx = Global.parts.getIndex(that);
@@ -4946,7 +4963,7 @@
 			});
 		},
 		selectOver () {
-			const body = doc.querySelector('body');
+			const body = document.querySelector('body');
 
 			body.dataset.selectopen = false;
 		},
@@ -4969,10 +4986,10 @@
 			});
 		},
 		hide (){
-			const el_body = doc.querySelector('body');
-			const el_selects = doc.querySelectorAll('.ui-select');
-			const el_selectWraps = doc.querySelectorAll('.ui-select-wrap[aria-hidden="false"]');
-			const el_btns = doc.querySelectorAll('.ui-select-btn[aria-expanded="true"]');
+			const el_body = document.querySelector('body');
+			const el_selects = document.querySelectorAll('.ui-select');
+			const el_selectWraps = document.querySelectorAll('.ui-select-wrap[aria-hidden="false"]');
+			const el_btns = document.querySelectorAll('.ui-select-btn[aria-expanded="true"]');
 			let el_select;
 			let el_wrap;
 			let orgTop;
@@ -4984,7 +5001,7 @@
 				const _id = that.id;
 
 				el_select = that.closest('.ui-select');
-				el_wrap = doc.querySelector('.ui-select-wrap[data-id="'+ _id +'"]');
+				el_wrap = document.querySelector('.ui-select-wrap[data-id="'+ _id +'"]');
 				orgTop = el_select.dataset.orgtop;
 
 				that.dataset.expanded = false;
@@ -4996,22 +5013,22 @@
 				el_wrap.classList.remove('bottom');
 				el_wrap.setAttribute('aria-hidden', true);
 
-				doc.querySelector('html, body').scrollTo({
+				document.querySelector('html, body').scrollTo({
 					top: orgTop,
 					behavior: 'smooth'
 				});
 			}
 
-			doc.removeEventListener('click', Global.select.back);
+			document.removeEventListener('click', Global.select.back);
 		},
 		act (opt){
 			const id = opt.id;
-			const el_select = doc.querySelector('#' + id);
+			const el_select = document.querySelector('#' + id);
 			const el_opts = el_select.querySelectorAll('option');
 			const el_uiSelect = el_select.closest('.ui-select');
 			const el_btn = el_uiSelect.querySelector('.ui-select-btn');
 			const el_text = el_btn.querySelector('span');
-			const el_selectWrap = doc.querySelector('.ui-select-wrap[data-id="'+ id +'_inp"]');
+			const el_selectWrap = document.querySelector('.ui-select-wrap[data-id="'+ id +'_inp"]');
 			const el_btnopts = el_selectWrap.querySelectorAll('.ui-select-opt');
 			const org = opt.original === undefined ? false : opt.original;
 
@@ -5051,14 +5068,14 @@
 		data : {},
 		options: {
 			src: false,
-			area: doc.querySelector('body'),
+			area: document.querySelector('body'),
 			offset: true,
 			callback:false,
 			closeback:false,
 			ps: 'BS',
 		},
 		init(option){
-			const el_btns = doc.querySelectorAll('.ui-drop');
+			const el_btns = document.querySelectorAll('.ui-drop');
 			const opt = Object.assign({}, Global.dropdown.options, option);
 			
 			if (!!opt && !!opt.id) {
@@ -5092,7 +5109,7 @@
 			const id = that.id;
 			const opt = Global.dropdown.data[id];
 
-			that.dataset.sct = doc.documentElement.scrollTop;
+			that.dataset.sct = document.documentElement.scrollTop;
 			Global.dropdown.toggle({ 
 				id: id,
 				src: opt.src,
@@ -5116,13 +5133,13 @@
 
 			if(isTure.indexOf('ui-drop-pnl') < 0) {
 				Global.dropdown.hide();
-				doc.removeEventListener('click', Global.dropdown.back);
+				document.removeEventListener('click', Global.dropdown.back);
 			} 
 		},
 		toggle (option) {
 			const id = option.id;
-			const el_btn = doc.querySelector('#' + id);
-			let el_pnl = doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]');
+			const el_btn = document.querySelector('#' + id);
+			let el_pnl = document.querySelector('.ui-drop-pnl[data-id="'+ id +'"]');
 
 			const opt = Object.assign({}, Global.dropdown.data[id], option);
 			const ps = opt.ps;
@@ -5164,7 +5181,7 @@
 
 			//set
 			const set = () => {
-				el_pnl = doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]');
+				el_pnl = document.querySelector('.ui-drop-pnl[data-id="'+ id +'"]');
 				el_pnl.setAttribute('aria-hidden', true);
 				el_pnl.setAttribute('aria-labelledby', id);
 				el_pnl.dataset.ps = ps;
@@ -5174,12 +5191,12 @@
 			}
 			
 			const show = () => {
-				const elBody = doc.querySelector('body');
+				const elBody = document.querySelector('body');
 
 				!el_btn.closest('.ui-drop-pnl') && Global.dropdown.hide();
 
 				Global.focus.loop({
-					selector: doc.querySelector('.ui-drop-pnl[data-id="'+ id +'"]'),
+					selector: document.querySelector('.ui-drop-pnl[data-id="'+ id +'"]'),
 					callback: hide
 				});
 
@@ -5188,7 +5205,7 @@
 				el_pnl.classList.add('on');
 				el_pnl.style.marginTop = 0;
 
-				const sT = Math.floor(doc.documentElement.scrollTop);
+				const sT = Math.floor(document.documentElement.scrollTop);
 				const btn_w = Math.ceil(el_btn.offsetWidth);
 				const btn_h = Math.ceil(el_btn.offsetHeight);
 				const btn_t = Math.ceil(el_btn.getBoundingClientRect().top);
@@ -5268,14 +5285,14 @@
 				el_close.addEventListener('click', Global.dropdown.close);
 
 				//back event
-				doc.removeEventListener('click', Global.dropdown.back);
+				document.removeEventListener('click', Global.dropdown.back);
 				setTimeout(() => {
-					doc.addEventListener('click', Global.dropdown.back);
+					document.addEventListener('click', Global.dropdown.back);
 				},0);
 			}
 			const hide = () => {
 				const in_pnl = el_btn.closest('.ui-drop-pnl');
-				const elBody = doc.querySelector('body');
+				const elBody = document.querySelector('body');
 
 				(!in_pnl) && elBody.classList.remove('dropdownOpened');
 				el_btn.setAttribute('aria-expanded', false)
@@ -5311,8 +5328,8 @@
 
 			for(let drop of drops) {
 				const _id = drop.id;
-				const _btn = doc.querySelector('#'+ _id);
-				const _pnl = doc.querySelector('.ui-drop-pnl[data-id="'+ _id +'"]');
+				const _btn = document.querySelector('#'+ _id);
+				const _pnl = document.querySelector('.ui-drop-pnl[data-id="'+ _id +'"]');
 
 				_btn.setAttribute('aria-expanded', false);
 
@@ -5325,12 +5342,12 @@
 
 			that.removeEventListener('click', Global.dropdown.close);
 			Global.dropdown.toggle({ id: id });
-			doc.querySelector('#' + id).focus();
+			document.querySelector('#' + id).focus();
 		},
 		hide () {
-			const elBody = doc.querySelector('body')
-			const elDrops = doc.querySelectorAll('.ui-drop');
-			const elDropPnls = doc.querySelectorAll('.ui-drop-pnl[aria-hidden="false"]');
+			const elBody = document.querySelector('body')
+			const elDrops = document.querySelectorAll('.ui-drop');
+			const elDropPnls = document.querySelectorAll('.ui-drop-pnl[aria-hidden="false"]');
 
 			elBody.classList.remove('dropdownOpened');
 
@@ -5343,7 +5360,7 @@
 				elDropPnl.classList.remove('on');
 			}
 
-			doc.removeEventListener('click', Global.dropdown.back);
+			document.removeEventListener('click', Global.dropdown.back);
 		}
 	}	
 
@@ -5389,7 +5406,7 @@
 		},
 		show (option){
 			const opt = Object.assign({}, Global.modal.options, option);
-			const elBody = doc.querySelector('body');
+			const elBody = document.querySelector('body');
 			const type = opt.type;
 			const src = opt.src;
 			const full = opt.full;
@@ -5403,8 +5420,8 @@
 			let gap = opt.gap;
 			let id = opt.id;
 			let remove = opt.remove;
-			let endfocus = opt.endfocus === false ? doc.activeElement : opt.endfocus;
-			const scr_t = doc.documentElement.scrollTop;
+			let endfocus = opt.endfocus === false ? document.activeElement : opt.endfocus;
+			const scr_t = document.documentElement.scrollTop;
 			let timer;
 
 			//system
@@ -5417,8 +5434,8 @@
 			const sCancelCallback = opt.sCancelCallback;
 
 			const act = () => {
-				const elModal = doc.querySelector('#' + id);
-				const elModals = doc.querySelectorAll('.ui-modal');
+				const elModal = document.querySelector('#' + id);
+				const elModals = document.querySelectorAll('.ui-modal');
 
 				if (!elModal) return false;
 				for (let i = 0, len = elModals.length; i < len; i++) {
@@ -5441,10 +5458,10 @@
 				const elModalCancel = elModal.querySelector('.ui-modal-cancel');
 				const elModalConfirm = elModal.querySelector('.ui-modal-confirm');
 				const elModalClose = elModal.querySelector('.ui-modal-close');
-				const elModalOpen = doc.querySelectorAll('.ui-modal.open');
+				const elModalOpen = document.querySelectorAll('.ui-modal.open');
 				const openLen = !!elModalOpen ? elModalOpen.length : 0;
 
-				doc.querySelector('html').classList.add('is-modal');
+				document.querySelector('html').classList.add('is-modal');
 				
 				elModal.classList.remove('close');
 				elModal.classList.remove('type-full');
@@ -5522,7 +5539,7 @@
 					elModal.setAttribute('data-scroll','inner');
 					
 					elModalBody.style.height = (!height) ? '100%' : (height - (headerH + footerH)) + 'px';
-					elModalBody.style.maxHeight = win.innerHeight - (headerH + footerH + (gap * 2))  + 'px';
+					elModalBody.style.maxHeight = window.innerHeight - (headerH + footerH + (gap * 2))  + 'px';
 
 					if (full === 'true' || full === 'mobile') {
 						elModalBody.style.height =  (Global.state.device.height - (headerH + footerH)) + 'px'
@@ -5542,7 +5559,7 @@
 				Global.focus.loop({ selector: elModal });
 				elModal.classList.add('open');
 				(!!sZindex) ? elModal.style.zIndex = sZindex : '';
-				(win.innerHeight < elModalWrap.offsetHeight) ? 
+				(window.innerHeight < elModalWrap.offsetHeight) ? 
 					elModal.classList.add('is-over'):
 					elModal.classList.remove('is-over');
 
@@ -5653,7 +5670,7 @@
 						Global.modal.reset();
 					}, 200);
 				}
-				win.addEventListener('resize', winResize);
+				window.addEventListener('resize', winResize);
 
 				setTimeout(() => {
 					!!callback && callback(id);
@@ -5691,7 +5708,7 @@
 			//setting
 			if (type === 'normal') {
 				//modal
-				if (!!src && !doc.querySelector('#' + opt.id)) {
+				if (!!src && !document.querySelector('#' + opt.id)) {
 					Global.ajax.init({
 						area: elBody,
 						url: src,
@@ -5715,7 +5732,7 @@
 			
 		},
 		dimAct() {
-			const elOpens = doc.querySelectorAll('.ui-modal.open');
+			const elOpens = document.querySelectorAll('.ui-modal.open');
 			let openN = [];
 
 			for (let i = 0, len = elOpens.length; i < len; i++) {
@@ -5723,7 +5740,7 @@
 				that.dataset.n && openN.push(that.dataset.n);
 			}
 
-			const elCurrent = doc.querySelector('.ui-modal.open[data-n="'+ Math.max.apply(null, openN) +'"]');
+			const elCurrent = document.querySelector('.ui-modal.open[data-n="'+ Math.max.apply(null, openN) +'"]');
 			const currentID = elCurrent.id;
 
 			//system modal 제외
@@ -5735,7 +5752,7 @@
 			}
 		},
 		reset() {
-			const elModals = doc.querySelectorAll('.ui-modal.open.ps-center');
+			const elModals = document.querySelectorAll('.ui-modal.open.ps-center');
 
 			for (let i = 0, len = elModals.length; i < len; i++) {
 				
@@ -5743,7 +5760,7 @@
 				const elModalHead = that.querySelector('.ui-modal-header');
 				const elModalBody = that.querySelector('.ui-modal-body');
 				const elModalFoot = that.querySelector('.ui-modal-footer');
-				const h_win = win.innerHeight;
+				const h_win = window.innerHeight;
 				const h_head = !!elModalHead ? elModalHead.outerHeight : 0;
 				const h_foot = !!elModalFoot ? elModalFoot.outerHeight : 0;
 				const h = h_win - (h_head + h_foot);
@@ -5763,16 +5780,16 @@
 			const type = opt.type;
 			const remove = opt.remove;
 			const callback = opt.callback;
-			const elModal = doc.querySelector('#' + id);
-			const elBody = doc.querySelector('body');
-			const elHtml = doc.querySelector('html');
-			const elModals = doc.querySelectorAll('.ui-modal');
+			const elModal = document.querySelector('#' + id);
+			const elBody = document.querySelector('body');
+			const elHtml = document.querySelector('html');
+			const elModals = document.querySelectorAll('.ui-modal');
 
 			elModal.classList.add('close');
 			elModal.classList.remove('open')
 			elModal.classList.remove('fix-header');
 			
-			const elOpen = doc.querySelectorAll('.ui-modal.open');
+			const elOpen = document.querySelectorAll('.ui-modal.open');
 			const len = (elOpen.length > 0) ? elOpen.length : false;
 
 			let timer;
@@ -5785,7 +5802,7 @@
 			}
 
 			if (!!len) {
-				elModalPrev = doc.querySelector('.ui-modal.open.n' + (len - 1));
+				elModalPrev = document.querySelector('.ui-modal.open.n' + (len - 1));
 				!!elModalPrev && elModalPrev.classList.add('current');
 			}
 
@@ -5794,7 +5811,7 @@
 				if (!len) {
 					//단일
 					endfocus = endfocus === false ? 
-						doc.querySelector('[data-focus="'+id+'"]') : 
+						document.querySelector('[data-focus="'+id+'"]') : 
 						opt.endfocus;
 
 					//$('html').off('click.uimodaldim');
@@ -5802,7 +5819,7 @@
 				} else {
 					//여러개
 					endfocus = endfocus === false ? 
-						doc.querySelector('[data-focus="'+id+'"]') : 
+						document.querySelector('[data-focus="'+id+'"]') : 
 						opt.endfocus;
 				}
 			}
@@ -5813,7 +5830,7 @@
 			
 			const closeEnd = () => {
 				const elWrap = elModal.querySelector('.ui-modal-wrap');
-				const elOpen = doc.querySelectorAll('.ui-modal.open');
+				const elOpen = document.querySelectorAll('.ui-modal.open');
 				const len = !!elOpen ? elOpen.length : false;
 	
 				elWrap.removeAttribute('style');
@@ -5840,7 +5857,7 @@
 			// clearTimeout(timer);
 			// timer = setTimeout(function(){
 			// 	const elWrap = elModal.querySelector('.ui-modal-wrap');
-			// 	const elOpen = doc.querySelectorAll('.ui-modal.open');
+			// 	const elOpen = document.querySelectorAll('.ui-modal.open');
 			// 	const len = !!elOpen ? elOpen.length : false;
 	
 			// 	elWrap.removeAttribute('style');
@@ -5891,7 +5908,7 @@
 			const classname = opt.classname;
 			const conts = opt.conts;
 			const status = opt.status;
-			const el_body = doc.querySelector('body');
+			const el_body = document.querySelector('body');
 			let toast = '<div class="ui-toast toast '+ classname +'" aria-live="'+ status +'">'+ conts +'</div>';
 			let time = (delay === 'short') ? 2000 : 3500;
 
@@ -5911,18 +5928,18 @@
 				Global.toast.timer = setTimeout(Global.toast.hide, time);
 			}
 			
-			if (!!doc.querySelector('.ui-toast-ready')) {
+			if (!!document.querySelector('.ui-toast-ready')) {
 				clearTimeout(Global.toast.timer);
 				el_body.classList.remove('ui-toast-show');
 				el_body.classList.remove('ui-toast-ready');
-				doc.querySelector('.ui-toast').removeEventListener('transitionend', act);
-				doc.querySelector('.ui-toast').remove();
+				document.querySelector('.ui-toast').removeEventListener('transitionend', act);
+				document.querySelector('.ui-toast').remove();
 			} 
 
 			el_body.insertAdjacentHTML('beforeend', toast);
 			toast = null;
 			
-			const el_toast = doc.querySelector('.ui-toast');
+			const el_toast = document.querySelector('.ui-toast');
 			
 			el_body.classList.add('ui-toast-ready');
 
@@ -5935,8 +5952,8 @@
 			
 		},
 		hide () {
-			const el_body = doc.querySelector('body');
-			const el_toast = doc.querySelector('.ui-toast');
+			const el_body = document.querySelector('body');
+			const el_toast = document.querySelector('.ui-toast');
 			const act = (e) => {
 				const that = e.currentTarget;
 
@@ -5964,22 +5981,22 @@
 		show (e){
 			e.preventDefault();
 
-			const elBody = doc.querySelector('body');
+			const elBody = document.querySelector('body');
 			const el = e.currentTarget;
 			const elId = el.getAttribute('aria-describedby');
 			const elSrc = el.dataset.src;
 			const view = el.dataset.view;
 			const elTit = !!el.getAttribute('aria-label') ? el.getAttribute('aria-label') : el.textContent;
 			const evType = e.type;
-			let elTooltip = doc.querySelector('#' + elId);
+			let elTooltip = document.querySelector('#' + elId);
 
-			const el_events = doc.querySelectorAll('a, button');
+			const el_events = document.querySelectorAll('a, button');
 
 			//툴팁 모바일에서 클릭, 하단 노출 건 확인필요
 			const act = () => {
-				elTooltip = doc.querySelector('#' + elId);
+				elTooltip = document.querySelector('#' + elId);
 
-				const tooltips = doc.querySelectorAll('.ui-tooltip');
+				const tooltips = document.querySelectorAll('.ui-tooltip');
 				const elArrow = elTooltip.querySelector('.ui-tooltip-arrow');
 				const classToggle = evType !== 'click' ? 'add' : 'remove';
 
@@ -6014,10 +6031,10 @@
 				const elL = el.getBoundingClientRect().left;
 				const elW = el.offsetWidth;
 				const elH = el.offsetHeight;
-				const wW = win.innerWidth;
-				const wH = win.innerHeight;
-				const dT = doc.documentElement.scrollTop;
-				const dL = doc.documentElement.scrollLeft;
+				const wW = window.innerWidth;
+				const wH = window.innerHeight;
+				const dT = document.documentElement.scrollTop;
+				const dL = document.documentElement.scrollLeft;
 				const tW = Math.floor(elTooltip.offsetWidth);
 				const left = (tW / 2 > (elL - dL) + (elW / 2)) ? 10 : elL - (tW / 2) + (elW / 2);
 				wW < Math.floor(left) + tW ? elTooltip.style.right = '10px' : '';
@@ -6052,7 +6069,7 @@
 				elBody.insertAdjacentHTML('beforeend', '<div class="ui-tooltip" id="'+ elId +'" role="tooltip" aria-hidden="true"><h3 class="ui-tooltip-tit">'+ elTit +'</h3><div class="ui-tooltip-arrow"></div></div>');
 
 				Global.ajax.init({
-					area: doc.querySelector('#' + elId),
+					area: document.querySelector('#' + elId),
 					url: elSrc,
 					add: true,
 					callback: () => {
@@ -6079,9 +6096,9 @@
 			}
 		},
 		allHide () {
-			const tooltips = doc.querySelectorAll('.ui-tooltip');
-			const tooltipBtns = doc.querySelectorAll('.ui-tooltip-btn');
-			const el_events = doc.querySelectorAll('a, button');
+			const tooltips = document.querySelectorAll('.ui-tooltip');
+			const tooltipBtns = document.querySelectorAll('.ui-tooltip-btn');
+			const el_events = document.querySelectorAll('a, button');
 
 			for (let that of tooltipBtns) {
 				if (that.getAttribute('aria-describedby') !== Global.tooltip.current) {
@@ -6113,8 +6130,8 @@
 				elId = el.dataset.id;
 			} 
 
-			const elTooltip = doc.querySelector('#' + elId);
-			const elBtn = doc.querySelector('.ui-tooltip-btn[aria-describedby="'+ elId +'"]');
+			const elTooltip = document.querySelector('#' + elId);
+			const elBtn = document.querySelector('.ui-tooltip-btn[aria-describedby="'+ elId +'"]');
 			
 			if (el.dataset.view !== 'fix') {
 				elTooltip.classList.remove('hover');
@@ -6131,7 +6148,7 @@
 			el.removeEventListener('mouseleave', Global.tooltip.hide);
 		},
 		init () {
-			const el_btn = doc.querySelectorAll('.ui-tooltip-btn');
+			const el_btn = document.querySelectorAll('.ui-tooltip-btn');
 
 			for (let i = 0, len = el_btn.length; i < len; i++) {
 				const that = el_btn[i];
@@ -6147,8 +6164,8 @@
 	 */
 	Global.floating = {
 		init () {
-			const el_body = doc.body;
-			const el_items = doc.querySelectorAll('.ui-floating');
+			const el_body = document.body;
+			const el_items = document.querySelectorAll('.ui-floating');
 
 			el_body.dataset.fixheight = 0;
 
@@ -6161,7 +6178,7 @@
 				const mg = Number(that.dataset.mg === undefined || that.dataset.mg === null ? 0 : that.dataset.mg);
 				const elH = el_wrap.offsetHeight;
 				const elT = that.getBoundingClientRect().top;
-				const wH = win.innerHeight;
+				const wH = window.innerHeight;
 
 				that.style.height = elH + 'px';
 
@@ -6186,12 +6203,12 @@
 				}
 			}
 
-			win.removeEventListener('scroll', this.scrollAct);
-			win.addEventListener('scroll', this.scrollAct);
+			window.removeEventListener('scroll', this.scrollAct);
+			window.addEventListener('scroll', this.scrollAct);
 		},
 		scrollAct () {
-			const elBody = doc.body;
-			const el_items = doc.querySelectorAll('.ui-floating');
+			const elBody = document.body;
+			const el_items = document.querySelectorAll('.ui-floating');
 			
 			for (let i = 0, len = el_items.length; i < len; i++) {
 				const that = el_items[i];
@@ -6202,7 +6219,7 @@
 				const mg = Number(that.dataset.mg === undefined || that.dataset.mg === null ? 0 : that.dataset.mg);
 				const elH = el_wrap.offsetHeight;
 				const elT = that.getBoundingClientRect().top;
-				const wH = win.innerHeight;
+				const wH = window.innerHeight;
 
 				if (state === 'fix') {
 					if (ps === 'top') {
@@ -6253,7 +6270,7 @@
 			}
 		},
 		range () {
-			const el_ranges = doc.querySelectorAll('.ui-floating-range');
+			const el_ranges = document.querySelectorAll('.ui-floating-range');
 			const act = () => {
 				for (let i = 0, len = el_ranges.length; i < len; i++) {
 					const that = el_ranges[i];
@@ -6262,7 +6279,7 @@
 					const itemH = el_item.offsetHeight;
 					const wrapT = that.getBoundingClientRect().top;
 					const wrapH = that.offsetHeight;
-					const wT = win.pageYOffset;
+					const wT = window.pageYOffset;
 					let top = mg;
 
 					if (wT > (wrapT + wT - mg)) {
@@ -6276,8 +6293,8 @@
 					}
 				}
 			}
-			win.removeEventListener('scroll', act);
-			win.addEventListener('scroll', act);
+			window.removeEventListener('scroll', act);
+			window.addEventListener('scroll', act);
 		}
 	}
 
@@ -6299,7 +6316,7 @@
 			const dynamic = opt.dynamic;
 			const callback = opt.callback;
 			const align = opt.align;
-			const el_tab = doc.querySelector('.ui-tab[data-id="' + id + '"]');
+			const el_tab = document.querySelector('.ui-tab[data-id="' + id + '"]');
 
 			let current = isNaN(opt.current) ? 0 : opt.current;
 
@@ -6501,7 +6518,7 @@
 			const opt = Object.assign({}, this.options, option);
 			const id = opt.id;
 			const callback = opt.callback;
-			const el_tab = doc.querySelector('.ui-tab[data-id="' + id + '"]');
+			const el_tab = document.querySelector('.ui-tab[data-id="' + id + '"]');
 			const el_btnwrap = el_tab.querySelector('.ui-tab-btns');
 			const el_btn = el_btnwrap.querySelectorAll('.ui-tab-btn');
 			const el_pnlwrap = el_tab.querySelector('.ui-tab-pnls');
@@ -6577,14 +6594,14 @@
 			const el_area = (opt.area === undefined || opt.area === null) ? window : opt.area;
 			//Nullish coalescing operator
 			//const el_area = opt.area ?? window;
-			const el_parallax = (opt.selector === undefined || opt.selector === null) ? doc.querySelector('.ui-parallax') : opt.selector;
-			//const el_parallax = opt.selector ?? doc.querySelector('.ui-parallax');
+			const el_parallax = (opt.selector === undefined || opt.selector === null) ? document.querySelector('.ui-parallax') : opt.selector;
+			//const el_parallax = opt.selector ?? document.querySelector('.ui-parallax');
 
 			//:scope >
 			const el_wraps = el_parallax.querySelectorAll('.ui-parallax-wrap');
 			const act = () => {
 				const isWin = el_area === window;
-				const areaH = isWin ? win.innerHeight : el_area.offsetHeight;
+				const areaH = isWin ? window.innerHeight : el_area.offsetHeight;
 
 				for (let i = 0, len = el_wraps.length; i < len; i++) {
 					const that = el_wraps[i];
@@ -6935,7 +6952,7 @@
 					root = '';
 				}
 
-				const codinglist = doc.querySelector('#' + opt.id);
+				const codinglist = document.querySelector('#' + opt.id);
 
 				codinglist.innerHTML = table;
 				table = '';
@@ -6978,7 +6995,7 @@
 				info += '</div>';
 				codinglist.insertAdjacentHTML('afterbegin', info);
 				
-				const links = doc.querySelectorAll('.ui-coding-link');
+				const links = document.querySelectorAll('.ui-coding-link');
 				for (let i = 0; i < links.length; i++) {
 					links[i].addEventListener('click', (e) => {
 						const that = e.currentTarget;
@@ -6987,29 +7004,29 @@
 						sessionStorage.setItem('codinglist', parentWrap.dataset.id);
 
 						const sId = sessionStorage.getItem('codinglist');
-						if (!!doc.querySelector('.ui-codinglist tr.on')) {
-							doc.querySelector('.ui-codinglist tr.on').classList.remove('on');
+						if (!!document.querySelector('.ui-codinglist tr.on')) {
+							document.querySelector('.ui-codinglist tr.on').classList.remove('on');
 						}
-						doc.querySelector('[data-id="'+ sId +'"]').classList.add('on');
+						document.querySelector('[data-id="'+ sId +'"]').classList.add('on');
 					});
 				}
 
-				doc.querySelector('#pubWorker').addEventListener('change', (e) => {
+				document.querySelector('#pubWorker').addEventListener('change', (e) => {
 					const that = e.currentTarget;
 
 					if (that.value === '전체') {
-						doc.querySelector('.ui-codinglist').removeAttribute('data-pub');
+						document.querySelector('.ui-codinglist').removeAttribute('data-pub');
 						perSet(len, endsum, delsum);
 					} else {
-						doc.querySelector('.ui-codinglist').dataset.pub = that.value;
+						document.querySelector('.ui-codinglist').dataset.pub = that.value;
 						
 
 					}
 
-					const pubs = doc.querySelectorAll('tr[data-pub="'+ that.value+'"]');
-					const pubs_end = doc.querySelectorAll('tr[data-pub="'+ that.value+'"][data-state="완료"]');
-					const pubs_del = doc.querySelectorAll('tr[data-pub="'+ that.value+'"][data-state="제외"]');
-					const trs = doc.querySelectorAll('tr');
+					const pubs = document.querySelectorAll('tr[data-pub="'+ that.value+'"]');
+					const pubs_end = document.querySelectorAll('tr[data-pub="'+ that.value+'"][data-state="완료"]');
+					const pubs_del = document.querySelectorAll('tr[data-pub="'+ that.value+'"][data-state="제외"]');
+					const trs = document.querySelectorAll('tr');
 					trs.forEach(function(tr){
 						tr.classList.remove('worker-view');
 					});
@@ -7017,7 +7034,7 @@
 						pub.classList.add('worker-view');
 					});
 
-					doc.querySelector('.ui-codinglist-info .target').textContent = that.value;
+					document.querySelector('.ui-codinglist-info .target').textContent = that.value;
 
 					if (that.value === '전체') {
 						perSet(len, endsum, delsum);
@@ -7030,17 +7047,17 @@
 					}
 				});
 
-				doc.querySelector('#arstate').addEventListener('change', (e) => {
+				document.querySelector('#arstate').addEventListener('change', (e) => {
 					const that = e.currentTarget;
 
 					if (that.value === '전체') {
-						doc.querySelector('.ui-codinglist').removeAttribute('data-state');
+						document.querySelector('.ui-codinglist').removeAttribute('data-state');
 					} else {
-						doc.querySelector('.ui-codinglist').dataset.state = that.value;
+						document.querySelector('.ui-codinglist').dataset.state = that.value;
 					}
 
-					const pubs = doc.querySelectorAll('tr[data-state="'+ that.value+'"]');
-					const trs = doc.querySelectorAll('tr');
+					const pubs = document.querySelectorAll('tr[data-state="'+ that.value+'"]');
+					const trs = document.querySelectorAll('tr');
 
 					trs.forEach((tr) => {
 						tr.classList.remove('state-view');
@@ -7050,17 +7067,17 @@
 					});
 				});
 
-				doc.querySelector('#nameToggle').addEventListener('click', () => {
-					doc.querySelector('.ui-codinglist').classList.toggle('name-toggle-view');
+				document.querySelector('#nameToggle').addEventListener('click', () => {
+					document.querySelector('.ui-codinglist').classList.toggle('name-toggle-view');
 				});
 
-				const el_info = doc.querySelector('.ui-codinglist-info');
+				const el_info = document.querySelector('.ui-codinglist-info');
 				const el_total = el_info.querySelector('.total');
 				const el_all = el_info.querySelector('.n_all');
 				const el_per0 = el_info.querySelector('.per0');
-				const el_bar = doc.querySelector('.ui-codinglist-state .bar');
-				const srchCode = doc.querySelector('#projectListSrchCode');
-				const srchBtn = doc.querySelector('#projectListSrchBtn');
+				const el_bar = document.querySelector('.ui-codinglist-state .bar');
+				const srchCode = document.querySelector('#projectListSrchCode');
+				const srchBtn = document.querySelector('#projectListSrchBtn');
 
 				const perSet = (len, endsum, delsum) => {
 					const _len = len; 
@@ -7074,7 +7091,7 @@
 				}
 				const srchAct = () => {
 					const k = srchCode.value;
-					const el = doc.querySelector('.ui-codinglist tbody');
+					const el = document.querySelector('.ui-codinglist tbody');
 					const el_td = el.querySelectorAll('td');
 					const el_tr = el.querySelectorAll('tr');
 
@@ -7106,14 +7123,14 @@
 
 				srchBtn.addEventListener('click', srchAct);
 				srchCode.addEventListener('keyup', () => {
-					if (win.event.keyCode === 13) {
+					if (window.event.keyCode === 13) {
 						srchAct();
 					}
 				});
 			}
 
 			Global.ajax.init({
-				area: doc.querySelector('#' + opt.id),
+				area: document.querySelector('#' + opt.id),
 				url: opt.url, 
 				page: false, 
 				callback: callback 
@@ -7363,7 +7380,7 @@
 	}
 	
 
-})(window, document);
+})();
 
 
 // class ScrollBar {
@@ -7383,7 +7400,7 @@
 	// 		const id = opt.id;
 	// 		const callback = opt.callback;
 	// 		const infiniteCallback = opt.infiniteCallback;
-	// 		const el_scrollbar = doc.querySelector('[data-scroll-id="' + id +'"]');
+	// 		const el_scrollbar = document.querySelector('[data-scroll-id="' + id +'"]');
 
 	// 		let timer;
 	// 		let prevHeightPercent = 0;
@@ -7406,8 +7423,8 @@
 	// 		//++make
 	// 		const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
 	// 		const el_itemWrap = el_item.querySelector('.ui-scrollbar-wrap');
-	// 		const _display = win.getComputedStyle(el_scrollbar).display;
-	// 		const _padding = win.getComputedStyle(el_scrollbar).padding;
+	// 		const _display = window.getComputedStyle(el_scrollbar).display;
+	// 		const _padding = window.getComputedStyle(el_scrollbar).padding;
 
 	// 		el_itemWrap.style.display = _display;
 	// 		el_itemWrap.style.padding = _padding;
@@ -7435,10 +7452,10 @@
 	// 			el_item.setAttribute('tabindex', 0);
 	// 			el_scrollbar.style.height = wrapH + 'px';
 
-	// 			const html_barwrap = doc.createElement('div');
-	// 			const html_barwrapX = doc.createElement('div');
-	// 			const html_button = doc.createElement('button');
-	// 			const html_buttonX = doc.createElement('button');
+	// 			const html_barwrap = document.createElement('div');
+	// 			const html_barwrapX = document.createElement('div');
+	// 			const html_button = document.createElement('button');
+	// 			const html_buttonX = document.createElement('button');
 
 	// 			html_barwrap.classList.add('ui-scrollbar-barwrap');
 	// 			html_barwrap.classList.add('type-y');
@@ -7592,7 +7609,7 @@
 	// 		}
 			
 	// 		function dragMoveAct(event) {
-	// 			const body = doc.querySelector('body');
+	// 			const body = document.querySelector('body');
 	// 			const el_bar = event.target;
 	// 			const el_scrollbar = el_bar.closest('.ui-scrollbar');
 	// 			const el_barWrap = el_bar.closest('.ui-scrollbar-barwrap');
@@ -7600,8 +7617,8 @@
 	// 			const itemH = Number(el_scrollbar.dataset.itemH);
 	// 			const itemW = Number(el_scrollbar.dataset.itemW);
 	// 			const el_barWrapRect = el_barWrap.getBoundingClientRect();
-	// 			const off_t = el_barWrapRect.top + doc.documentElement.scrollTop;
-	// 			const off_l = el_barWrapRect.left + doc.documentElement.scrollLeft;
+	// 			const off_t = el_barWrapRect.top + document.documentElement.scrollTop;
+	// 			const off_l = el_barWrapRect.left + document.documentElement.scrollLeft;
 	// 			const w_h = el_barWrapRect.height;
 	// 			const w_w = el_barWrapRect.width;
 	// 			const barH = el_bar.getAttribute('data-height');
@@ -7610,8 +7627,8 @@
 
 	// 			body.classList.add('scrollbar-move');
 
-	// 			doc.addEventListener('mousemove', mousemoveAct);
-	// 			doc.addEventListener('mouseup', mouseupAct);
+	// 			document.addEventListener('mousemove', mousemoveAct);
+	// 			document.addEventListener('mouseup', mouseupAct);
 
 	// 			function mousemoveAct(event){
 	// 				let y_m; 
@@ -7654,14 +7671,14 @@
 	// 			}
 	// 			function mouseupAct(){
 	// 				body.classList.remove('scrollbar-move');
-	// 				doc.removeEventListener('mousemove', mousemoveAct);
-	// 				doc.removeEventListener('mouseup', mouseupAct);
+	// 				document.removeEventListener('mousemove', mousemoveAct);
+	// 				document.removeEventListener('mouseup', mouseupAct);
 	// 			}
 	// 		}
 	// 	}
 
 	// 	destroy() {
-	// 		const el_scrollbar = doc.querySelector('[data-scroll-id="' + this.id +'"]');
+	// 		const el_scrollbar = document.querySelector('[data-scroll-id="' + this.id +'"]');
 	// 		const el_barwrap = el_scrollbar.querySelectorAll('.ui-scrollbar-barwrap');
 	// 		const el_item = el_scrollbar.querySelector('.ui-scrollbar-item');
 	// 		const el_wrap = el_item.querySelector('.ui-scrollbar-wrap');
@@ -7692,7 +7709,7 @@
 	// }
 	// //uiScrollBar 실행함수 생성
 	// Global.scrollBar = (opt) => {
-	// 	let scrollBar = doc.querySelectorAll('.ui-scrollbar');
+	// 	let scrollBar = document.querySelectorAll('.ui-scrollbar');
 
 	// 	if (opt !== undefined && opt.selector !== undefined){ 
 	// 		scrollBar = opt.selector;
