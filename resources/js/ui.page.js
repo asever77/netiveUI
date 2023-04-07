@@ -143,6 +143,7 @@
     netive.page.pageIcon = () => {};
     netive.page.pageLayout = () => {
         netive.tooltip.init();
+        netive.select.init();
     };
     netive.page.pageTable = () => {};
     netive.page.pageList = () => {};

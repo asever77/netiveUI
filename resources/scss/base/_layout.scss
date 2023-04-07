@@ -196,65 +196,6 @@
     &-item {position: relative;}
 }
 
-.grid-wrap[data-grid="form"]{
-    gap: $x3;
-
-    .form-group{
-        display: flex;
-        min-height: 4rem;
-        align-items: center;
-    }
-
-    .grid{
-        &-item{
-            width:100%;
-
-            display: grid;
-            grid-template:
-            "head body" minmax(4rem, min-content)
-            /13rem  1fr;
-            gap: $x1;
-        }
-        &-head{
-            position: relative;
-            grid-area: head;
-
-            display: flex;
-            align-items: flex-start;
-            .bul-required{position: absolute; top:-1.1rem; left:0;}
-        }
-        &-body{
-            position: relative;
-            grid-area: body;
-
-            display: flex;
-            flex-direction: column;
-            width:100%;
-            gap: $x0_5;
-
-     
-            .form-info{
-                position: relative;
-                margin: 0;
-                grid-area: infoA;
-            }
-            .form-cont{
-                position: relative;
-                margin: 0;
-                grid-area: cont;
-                display: flex;
-                gap: $x1; 
-
-            }
-            .form-cont ~ .form-info{
-                position: relative;
-                margin: 0;
-                grid-area: infoB;
-            }
-            
-        }
-    }
-}
 
 .grid-wrap[data-grid="main"]{
     min-width:800px;
@@ -410,25 +351,75 @@
 }
 
 /* form layout */ 
-/* 가로형 : 기본 */
+
+.grid-wrap[data-form="base"]{
+    gap: $x3;
+
+    display: grid;
+    grid-template:
+        "col1" minmax(4rem, min-content)
+        "col1" minmax(4rem, min-content)
+        /13rem  1fr;
+    gap: $x1;
+
+    .grid{
+        &-item{
+            width:100%;
+
+            display: grid;
+            grid-template:
+            "head body" minmax(4rem, min-content)
+            /13rem  1fr;
+            gap: $x1;
+        }
+        &-head{
+            position: relative;
+            grid-area: head;
+
+            display: flex;
+            align-items: flex-start;
+
+            .bul-required {
+                position: absolute;
+                top: -0.4rem;
+                left: 0;
+            }
+        }
+        &-body{
+            position: relative;
+            grid-area: body;
+
+            display: flex;
+            flex-direction: column;
+            width:100%;
+            gap: $x0_5;
+
+     
+            .form-info{
+                position: relative;
+                margin: 0;
+                grid-area: infoA;
+            }
+            .form-cont{
+                position: relative;
+                margin: 0;
+                grid-area: cont;
+                display: flex;
+                gap: $x1; 
+
+            }
+            .form-cont ~ .form-info{
+                position: relative;
+                margin: 0;
+                grid-area: infoB;
+            }
+            
+        }
+    }
+}
 .form{
-    &-wrap{
-        position: relative;
-        display: flex;
-        flex-direction: column;
-        gap: $x2;
-    }
-    &-item {
-        position: relative;
-        display: flex;
-        align-items: flex-start;
-        gap: $x2;
-    }
-    &-item-group{
-        display: flex;
-        align-items: flex-start;
-        gap: $x2;
-    }
+    &-wrap,
+    &-body,
     &-head {
         position: relative;
         display: flex;
@@ -436,76 +427,45 @@
         justify-content: flex-start;
         align-items: flex-start;
         min-height: $x5;
-         
+        gap: $x0_5 $x1;
+    }
+    &-head {
         .bul-required {
             position: absolute !important;
             top:-.9rem;
             margin: 0 !important;
         }
-        .ui-tooltip-btn {
-            top:.6rem
-        }
+        .ui-tooltip-btn {top:.6rem}
     }
-    &-title{
+    &-item {
         position: relative;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
-        margin-top:$x1;
+        gap: $x1;
+
+        .bul-error,
+        .bul-info{margin-bottom: 0;}
     }
-    &-label{
-        position: relative;
-        margin-right:$x1;
-    }
-    &-body {
+    &-text {
         position: relative;
         display: flex;
-        flex-direction: column;
     }
-    &-group{
+}
+.input{
+    &-wrap{
         position: relative;
         display: flex;
         flex-wrap: wrap;
         justify-content: flex-start;
         gap: $x1;
-        
-        // > *:not(.form-group) {
-        //     margin-top: $x1;
-        // }
-            
-        &[data-wrap="nowrap"] {
-            flex-wrap: nowrap;
-        }
-        & + .form-info {
-            margin-top:$x1;
-        }
-        & + .form-group{margin-top: 0;} 
-        // .form-text,
-        // .form-input {
-        //     & + .form-text {
-        //         margin-right: $x0_5;
-        //         margin-left: $-x0_5;
-        //     }
-        // }
     }
-    &-input{
+    &-item{
         position: relative;
         display: flex;
         justify-content: flex-start;
         align-items: flex-start;
         flex: auto;
-    }
-    &-text{
-        position: relative;
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-    }
-    &-info {
-        position: relative;
-        margin:0 0 $x0_5 0;
-
-        & > * {margin-bottom: 0 !important;} 
     }
 }
 
@@ -514,29 +474,29 @@
 }
 
 /* 세로형 */
-[data-type="col"]{
-    gap:$x4;
+// [data-type="col"]{
+//     gap:$x4;
 
-    .form-item {
-        flex-direction: column;
-        gap:0;
-    }
-    .form-item-group{gap:$x2 $x4;}
-    .form-head{
-        min-height: 0;
-        margin-bottom: $x0_5;
-        width: 100%;
-        justify-content: space-between;
-        min-width:0;
-        max-width: 100%;
-        flex-direction: row;
-    }
-    .form-title {margin-top:0;}
-    .form-body {
-        flex: 1;
-        width: 100%;
-    }
-}
+//     .form-item {
+//         flex-direction: column;
+//         gap:0;
+//     }
+//     .form-item-group{gap:$x2 $x4;}
+//     .form-head{
+//         min-height: 0;
+//         margin-bottom: $x0_5;
+//         width: 100%;
+//         justify-content: space-between;
+//         min-width:0;
+//         max-width: 100%;
+//         flex-direction: row;
+//     }
+//     .form-title {margin-top:0;}
+//     .form-body {
+//         flex: 1;
+//         width: 100%;
+//     }
+// }
 /* 스타일 - 테이블 */
 [data-style="table"]:not([data-type="col"]) {
     background-color: $gray200;

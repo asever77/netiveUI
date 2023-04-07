@@ -9739,57 +9739,6 @@ select.inp-base {
   position: relative;
 }
 
-.grid-wrap[data-grid=form] {
-  gap: 2.4rem;
-}
-.grid-wrap[data-grid=form] .form-group {
-  display: flex;
-  min-height: 4rem;
-  align-items: center;
-}
-.grid-wrap[data-grid=form] .grid-item {
-  width: 100%;
-  display: grid;
-  grid-template: "head body" minmax(4rem, min-content)/13rem 1fr;
-  gap: 0.8rem;
-}
-.grid-wrap[data-grid=form] .grid-head {
-  position: relative;
-  grid-area: head;
-  display: flex;
-  align-items: flex-start;
-}
-.grid-wrap[data-grid=form] .grid-head .bul-required {
-  position: absolute;
-  top: -1.1rem;
-  left: 0;
-}
-.grid-wrap[data-grid=form] .grid-body {
-  position: relative;
-  grid-area: body;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 0.4rem;
-}
-.grid-wrap[data-grid=form] .grid-body .form-info {
-  position: relative;
-  margin: 0;
-  grid-area: infoA;
-}
-.grid-wrap[data-grid=form] .grid-body .form-cont {
-  position: relative;
-  margin: 0;
-  grid-area: cont;
-  display: flex;
-  gap: 0.8rem;
-}
-.grid-wrap[data-grid=form] .grid-body .form-cont ~ .form-info {
-  position: relative;
-  margin: 0;
-  grid-area: infoB;
-}
-
 .grid-wrap[data-grid=main] {
   min-width: 800px;
   margin: 0 auto;
@@ -10051,31 +10000,63 @@ select.inp-base {
 }
 
 /* form layout */
-/* 가로형 : 기본 */
-.form-wrap {
+.grid-wrap[data-form=base] {
+  gap: 2.4rem;
+  display: grid;
+  grid-template: "col1" minmax(4rem, min-content) "col1" minmax(4rem, min-content)/13rem 1fr;
+  gap: 0.8rem;
+}
+.grid-wrap[data-form=base] .grid-item {
+  width: 100%;
+  display: grid;
+  grid-template: "head body" minmax(4rem, min-content)/13rem 1fr;
+  gap: 0.8rem;
+}
+.grid-wrap[data-form=base] .grid-head {
   position: relative;
+  grid-area: head;
+  display: flex;
+  align-items: flex-start;
+}
+.grid-wrap[data-form=base] .grid-head .bul-required {
+  position: absolute;
+  top: -0.4rem;
+  left: 0;
+}
+.grid-wrap[data-form=base] .grid-body {
+  position: relative;
+  grid-area: body;
   display: flex;
   flex-direction: column;
-  gap: 1.6rem;
+  width: 100%;
+  gap: 0.4rem;
 }
-.form-item {
+.grid-wrap[data-form=base] .grid-body .form-info {
   position: relative;
-  display: flex;
-  align-items: flex-start;
-  gap: 1.6rem;
+  margin: 0;
+  grid-area: infoA;
 }
-.form-item-group {
+.grid-wrap[data-form=base] .grid-body .form-cont {
+  position: relative;
+  margin: 0;
+  grid-area: cont;
   display: flex;
-  align-items: flex-start;
-  gap: 1.6rem;
+  gap: 0.8rem;
 }
-.form-head {
+.grid-wrap[data-form=base] .grid-body .form-cont ~ .form-info {
+  position: relative;
+  margin: 0;
+  grid-area: infoB;
+}
+
+.form-wrap, .form-body, .form-head {
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
   min-height: 4rem;
+  gap: 0.4rem 0.8rem;
 }
 .form-head .bul-required {
   position: absolute !important;
@@ -10085,57 +10066,35 @@ select.inp-base {
 .form-head .ui-tooltip-btn {
   top: 0.6rem;
 }
-.form-title {
+.form-item {
   position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  margin-top: 0.8rem;
+  gap: 0.8rem;
 }
-.form-label {
-  position: relative;
-  margin-right: 0.8rem;
+.form-item .bul-error,
+.form-item .bul-info {
+  margin-bottom: 0;
 }
-.form-body {
+.form-text {
   position: relative;
   display: flex;
-  flex-direction: column;
 }
-.form-group {
+
+.input-wrap {
   position: relative;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 0.8rem;
 }
-.form-group[data-wrap=nowrap] {
-  flex-wrap: nowrap;
-}
-.form-group + .form-info {
-  margin-top: 0.8rem;
-}
-.form-group + .form-group {
-  margin-top: 0;
-}
-.form-input {
+.input-item {
   position: relative;
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
   flex: auto;
-}
-.form-text {
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-}
-.form-info {
-  position: relative;
-  margin: 0 0 0.4rem 0;
-}
-.form-info > * {
-  margin-bottom: 0 !important;
 }
 
 .form-group[data-type=주민번호] .form-input {
@@ -10143,33 +10102,6 @@ select.inp-base {
 }
 
 /* 세로형 */
-[data-type=col] {
-  gap: 3.2rem;
-}
-[data-type=col] .form-item {
-  flex-direction: column;
-  gap: 0;
-}
-[data-type=col] .form-item-group {
-  gap: 1.6rem 3.2rem;
-}
-[data-type=col] .form-head {
-  min-height: 0;
-  margin-bottom: 0.4rem;
-  width: 100%;
-  justify-content: space-between;
-  min-width: 0;
-  max-width: 100%;
-  flex-direction: row;
-}
-[data-type=col] .form-title {
-  margin-top: 0;
-}
-[data-type=col] .form-body {
-  flex: 1;
-  width: 100%;
-}
-
 /* 스타일 - 테이블 */
 [data-style=table]:not([data-type=col]) {
   background-color: var(--gray200);

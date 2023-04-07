@@ -1435,7 +1435,9 @@
 				const el_tbl = el_tblWrap.querySelector('table');
 				const cloneTable = el_tbl.cloneNode(true);
 
-				if (!el_tbl.querySelector('.ui-tablescroll-clone')) {
+				console.log(!that.querySelector('.ui-tablescroll-clone'));
+
+				if (!that.querySelector('.ui-tablescroll-clone')) {
 					that.prepend(cloneTable);
 
 					const clone_tbl = that.querySelector('table:first-child');
