@@ -1301,9 +1301,25 @@
 
 			if (term) {
 				expdate = new Date();
-				expdate.setTime( expdate.getTime() + term * 1000 * 60 * 60 * 24 ); // term 1 is a day
+				
+				let _hours = 23 - expdate.getHours();
+				let _minutes = 59 - expdate.getMinutes();
+				let _secondes = 59 - expdate.getSeconds();
+				let _milliseconds = 999 - expdate.getSeconds();
+
+				const _1d = 1000 * 60 * 60 * 24;
+				const _1d_f = (1000 * 60 * 60 * _hours) + (1000 * 60 * _minutes) + (1000 * _secondes) + _milliseconds;
+				const _1d_b = (1000 * 60 * 60 * expdate.getHours()) + (1000 * 60 * expdate.getMinutes())  + (1000 * expdate.getSeconds()) + expdate.getSeconds();
+				let _add = 0;
+
+				if (term > 1) {
+					_add = 1000 * 60 * 60 * 24 * (term - 1);
+				}
+
+				expdate.setTime(expdate.getTime() + (_1d_b + _add)); // term 1 is a day
 				cookieset += 'expires=' + expdate.toGMTString() + ';';
 			}
+
 			(path) ? cookieset += 'path=' + path + ';' : '';
 			(domain) ? cookieset += 'domain=' + domain + ';' : '';
 
@@ -1315,13 +1331,7 @@
 			return (match) ? match[1] : null;
 		},
 		del(name){
-			const expireDate = new Date();
-
-			expireDate.setDate(expireDate.getDate() + -1);
-			this.set({ 
-				name: name, 
-				term: '-1' 
-			});
+			document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 		}
 	}
 	/*------------------------------------------------*/
@@ -5434,6 +5444,7 @@
 			const sClass = opt.sClass;
 			const sConfirmCallback = opt.sConfirmCallback;
 			const sCancelCallback = opt.sCancelCallback;
+			const focusID = id + Math.random().toString(36).substr(2, 16);
 
 			const act = () => {
 				const elModal = document.querySelector('#' + id);
@@ -5492,6 +5503,7 @@
 
 				elModalBody.style.overflowY = 'auto';
 				elModalBody.id = id + '_desc';
+				elModal.dataset.focusid = focusID;
 				// let space = gap;
 
 				//[set] position
@@ -5722,7 +5734,9 @@
 				} else {
 					act();
 				}
-				endfocus.dataset.focus = id;
+				
+				endfocus.dataset.focus = focusID;
+
 			} else {
 				//system modal
 				endfocus = null;
@@ -5795,9 +5809,11 @@
 			const len = (elOpen.length > 0) ? elOpen.length : false;
 
 			let timer;
-			let endfocus = opt.endfocus ;
+			let endfocus = opt.endfocus;
 			let elModalPrev = false;
-			
+			const focusID = elModal.dataset.focusid;
+
+
 			for (let i = 0, len = elModals.length; i < len; i++) {
 				const that = elModals[i];
 				that.classList.remove('current');
@@ -5810,20 +5826,14 @@
 
 			//시스템팝업이 아닌 경우
 			if (type !== 'system') {
-				if (!len) {
-					//단일
-					endfocus = endfocus === false ? 
-						document.querySelector('[data-focus="'+id+'"]') : 
-						opt.endfocus;
+				endfocus = endfocus === false ? 
+					document.querySelector('[data-focus="'+ focusID +'"]') : 
+					opt.endfocus;
 
-					//$('html').off('click.uimodaldim');
+				//단일
+				if (!len) {
 					elHtml.classList.remove('is-modal');
-				} else {
-					//여러개
-					endfocus = endfocus === false ? 
-						document.querySelector('[data-focus="'+id+'"]') : 
-						opt.endfocus;
-				}
+				} 
 			}
 
 			Global.scroll.move({

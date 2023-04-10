@@ -195,8 +195,6 @@
     }
     &-item {position: relative;}
 }
-
-
 .grid-wrap[data-grid="main"]{
     min-width:800px;
     margin:0 auto;
@@ -351,85 +349,47 @@
 }
 
 /* form layout */ 
-
-.grid-wrap[data-form="base"]{
-    gap: $x3;
-
-    display: grid;
-    grid-template:
-        "col1" minmax(4rem, min-content)
-        "col1" minmax(4rem, min-content)
-        /13rem  1fr;
-    gap: $x1;
-
-    .grid{
-        &-item{
-            width:100%;
-
-            display: grid;
-            grid-template:
-            "head body" minmax(4rem, min-content)
-            /13rem  1fr;
-            gap: $x1;
-        }
-        &-head{
-            position: relative;
-            grid-area: head;
-
-            display: flex;
-            align-items: flex-start;
-
-            .bul-required {
-                position: absolute;
-                top: -0.4rem;
-                left: 0;
-            }
-        }
-        &-body{
-            position: relative;
-            grid-area: body;
-
-            display: flex;
-            flex-direction: column;
-            width:100%;
-            gap: $x0_5;
-
-     
-            .form-info{
-                position: relative;
-                margin: 0;
-                grid-area: infoA;
-            }
-            .form-cont{
-                position: relative;
-                margin: 0;
-                grid-area: cont;
-                display: flex;
-                gap: $x1; 
-
-            }
-            .form-cont ~ .form-info{
-                position: relative;
-                margin: 0;
-                grid-area: infoB;
-            }
-            
-        }
-    }
-}
 .form{
+    &-item-group,
+    &-wrap,
+    &-body,
+    &-head,
+    &-item,
+    &-area {
+        position: relative;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
     &-wrap,
     &-body,
     &-head {
-        position: relative;
-        display: flex;
         flex-direction: column;
-        justify-content: flex-start;
-        align-items: flex-start;
-        min-height: $x5;
-        gap: $x0_5 $x1;
     }
+
+    &-wrap {
+        gap: $x4;
+    }
+    &-item-group {
+        width: 100%;
+        gap: $x1 $x3;
+    }
+    &-item {
+        width: 100%;
+        gap: $x1;
+
+        .bul-error,
+        .bul-info{margin-bottom: 0;}
+    }
+
     &-head {
+        padding-top:$x1;
+        min-height: $x5;
+
+        .form-area{
+           min-height: auto;
+        }
         .bul-required {
             position: absolute !important;
             top:-.9rem;
@@ -437,35 +397,29 @@
         }
         .ui-tooltip-btn {top:.6rem}
     }
-    &-item {
-        position: relative;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        gap: $x1;
-
-        .bul-error,
-        .bul-info{margin-bottom: 0;}
+    &-body {
+        flex:1;
+        gap: $x0_5 $x1;
     }
-    &-text {
-        position: relative;
-        display: flex;
+    
+    &-area {
+        gap:$x1;
+        min-height: $x5;
     }
 }
 .input{
-    &-wrap{
+    &-item,
+    &-field{
         position: relative;
         display: flex;
-        flex-wrap: wrap;
         justify-content: flex-start;
-        gap: $x1;
+        align-items: center;
+    }
+    &-field{
+        gap: $x1
     }
     &-item{
-        position: relative;
-        display: flex;
-        justify-content: flex-start;
-        align-items: flex-start;
-        flex: auto;
+       min-height: $x5;
     }
 }
 

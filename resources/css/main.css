@@ -10000,63 +10000,36 @@ select.inp-base {
 }
 
 /* form layout */
-.grid-wrap[data-form=base] {
-  gap: 2.4rem;
-  display: grid;
-  grid-template: "col1" minmax(4rem, min-content) "col1" minmax(4rem, min-content)/13rem 1fr;
-  gap: 0.8rem;
-}
-.grid-wrap[data-form=base] .grid-item {
-  width: 100%;
-  display: grid;
-  grid-template: "head body" minmax(4rem, min-content)/13rem 1fr;
-  gap: 0.8rem;
-}
-.grid-wrap[data-form=base] .grid-head {
-  position: relative;
-  grid-area: head;
-  display: flex;
-  align-items: flex-start;
-}
-.grid-wrap[data-form=base] .grid-head .bul-required {
-  position: absolute;
-  top: -0.4rem;
-  left: 0;
-}
-.grid-wrap[data-form=base] .grid-body {
-  position: relative;
-  grid-area: body;
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 0.4rem;
-}
-.grid-wrap[data-form=base] .grid-body .form-info {
-  position: relative;
-  margin: 0;
-  grid-area: infoA;
-}
-.grid-wrap[data-form=base] .grid-body .form-cont {
-  position: relative;
-  margin: 0;
-  grid-area: cont;
-  display: flex;
-  gap: 0.8rem;
-}
-.grid-wrap[data-form=base] .grid-body .form-cont ~ .form-info {
-  position: relative;
-  margin: 0;
-  grid-area: infoB;
-}
-
-.form-wrap, .form-body, .form-head {
+.form-item-group, .form-wrap, .form-body, .form-head, .form-item, .form-area {
   position: relative;
   display: flex;
-  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+}
+.form-wrap, .form-body, .form-head {
+  flex-direction: column;
+}
+.form-wrap {
+  gap: 3.2rem;
+}
+.form-item-group {
+  width: 100%;
+  gap: 0.8rem 2.4rem;
+}
+.form-item {
+  width: 100%;
+  gap: 0.8rem;
+}
+.form-item .bul-error,
+.form-item .bul-info {
+  margin-bottom: 0;
+}
+.form-head {
+  padding-top: 0.8rem;
   min-height: 4rem;
-  gap: 0.4rem 0.8rem;
+}
+.form-head .form-area {
+  min-height: auto;
 }
 .form-head .bul-required {
   position: absolute !important;
@@ -10066,35 +10039,26 @@ select.inp-base {
 .form-head .ui-tooltip-btn {
   top: 0.6rem;
 }
-.form-item {
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+.form-body {
+  flex: 1;
+  gap: 0.4rem 0.8rem;
+}
+.form-area {
   gap: 0.8rem;
-}
-.form-item .bul-error,
-.form-item .bul-info {
-  margin-bottom: 0;
-}
-.form-text {
-  position: relative;
-  display: flex;
+  min-height: 4rem;
 }
 
-.input-wrap {
+.input-item, .input-field {
   position: relative;
   display: flex;
-  flex-wrap: wrap;
   justify-content: flex-start;
+  align-items: center;
+}
+.input-field {
   gap: 0.8rem;
 }
 .input-item {
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
-  flex: auto;
+  min-height: 4rem;
 }
 
 .form-group[data-type=주민번호] .form-input {
