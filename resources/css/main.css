@@ -10045,7 +10045,6 @@ select.inp-base {
 }
 .form-area {
   gap: 0.8rem;
-  min-height: 4rem;
 }
 
 .input-item, .input-field {
