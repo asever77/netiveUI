@@ -7390,8 +7390,141 @@
 			});
 		}
 	}
-	
 
+	
+	Global.scrollEvent = {
+		y: 0,
+		direction: 'down',
+		scrollScope: {},
+		isScope: false,
+		init(opt) {
+				let last_know_scroll_position = 0;
+				let ticking = false;
+
+				this.isScope = !!opt && !!opt.scope;
+				this.scrollScope = this.isScope ? opt.scope : window;
+
+				const options = {
+					root: null, 
+					rootMargin: '0px', 
+					threshold: [0, 0.5, 1]
+				}
+				const io = new IntersectionObserver((entries, observer) => {
+					entries.forEach(entry => {
+						const target = entry.target;
+						const ratio = entry.intersectionRatio;
+						let isFront = true;
+						let isBack = false;
+						console.log(ratio);
+						// if (entry.boundingClientRect.y > 0 && isFront) {
+						// 	if (entry.intersectionRatio >= 0.9) {
+						// 		target.classList.add('s2');
+						// 	}
+						// 	else if (entry.intersectionRatio >= 0.5) {
+						// 		target.classList.add('s1');
+						// 	}
+						// 	else if (entry.intersectionRatio > 0.1) {
+						// 		target.classList.add('s0');
+						// 	} 
+							
+						// 	if (entry.intersectionRatio <= 0.1) {
+						// 		target.classList.remove('s0');
+						// 		target.classList.remove('e0');
+						// 		target.classList.remove('e1');
+						// 		target.classList.remove('e2');
+						// 	}
+						// 	else if (entry.intersectionRatio <= 0.5) {
+						// 			target.classList.remove('s1');
+						// 	}
+						// 	else if (entry.intersectionRatio < 0.9) {
+						// 			target.classList.remove('s2');
+						// 	}
+						// }
+
+						// if (entry.boundingClientRect.y < 0.1) {
+						// 	if (ratio >= 0.9) {
+						// 		target.classList.add('e2');
+						// 	}
+						// 	else if (ratio >= 0.5) {
+						// 		target.classList.add('e1');
+						// 	}
+						// 	else if (ratio > 0) {
+						// 		target.classList.add('e0');
+						// 	} 
+
+						// 	if (ratio <= 0.1) {
+						// 		target.classList.remove('e0');
+						// 		target.classList.remove('s0');
+						// 		target.classList.remove('s1');
+						// 		target.classList.remove('s2');
+						// 	}
+						// 	else if (ratio <= 0.5) {
+						// 		target.classList.remove('e1');
+						// 	}
+						// 	else if (ratio < 0.9) {
+						// 		target.classList.remove('e2');
+						// 	}
+						// }
+					});
+				}, options);
+
+				const items = document.querySelectorAll('[data-parallax]');
+
+				for (let item of items) {
+					io.observe(item);
+				}
+				
+
+				const scrollScope = this.scrollScope;
+				const doSomething = (scroll_pos) => {
+						this.direction = this.y > scroll_pos ? 'up' : this.y < scroll_pos ? 'down' : '';
+						this.y = scroll_pos;
+						this.check();
+						document.querySelector('body').dataset.dir = this.direction;
+				}
+
+				// window.addEventListener('scroll', (e) => {
+				// 		last_know_scroll_position = scrollScope.scrollTop;
+
+				// 		if (!ticking) {
+				// 				window.requestAnimationFrame(() => {
+				// 						doSomething(last_know_scroll_position);
+				// 						ticking = false;
+				// 				});
+
+				// 				ticking = true;
+				// 		}
+				// });
+				// setTimeout(() => {
+				// 		this.check();
+				// }, 400);
+		},
+		check() {
+				const items = document.querySelectorAll('[data-parallax]');
+
+				for (let item of items) {
+						const item_t = item.getBoundingClientRect().top;
+						const item_h = item.offsetHeight;
+						const win_h = window.innerHeight;
+						const scroll_t = this.isScope ? this.scrollScope.scrollTop : document.documentElement.scrollTop;
+
+						((item_t + scroll_t - win_h) < scroll_t) ? item.classList.add('parallax-s-0') : item.classList.remove('parallax-s-0');
+ 
+console.log('parallax-s-1', (item_t + scroll_t), scroll_t);
+
+						((item_t + scroll_t) < scroll_t) ? item.classList.add('parallax-s-1') : item.classList.remove('parallax-s-1');
+
+						((item_t + scroll_t - win_h + item_h) < scroll_t) ? item.classList.add('parallax-e-0') : item.classList.remove('parallax-e-0');
+
+						((item_t + scroll_t + item_h) < scroll_t) ? item.classList.add('parallax-e-1') : item.classList.remove('parallax-e-1');
+						
+						
+						((item_t + scroll_t - (win_h / 2)) < scroll_t) ? item.classList.add('parallax-m-0') : item.classList.remove('parallax-m-0');
+
+						((item_t + scroll_t + (item_h / 2)) < scroll_t) ? item.classList.add('parallax-m-1') : item.classList.remove('parallax-m-1');
+				}
+		}
+	}
 })();
 
 
