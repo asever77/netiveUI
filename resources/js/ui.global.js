@@ -7409,62 +7409,117 @@
 					rootMargin: '0px', 
 					threshold: [0, 0.5, 1]
 				}
+				let nowY = null;
 				const io = new IntersectionObserver((entries, observer) => {
 					entries.forEach(entry => {
+						const bcr = entry.boundingClientRect;
+						const bcrTop = entry.boundingClientRect.top;
+						const scrTop = document.documentElement.scrollTop;
 						const target = entry.target;
 						const ratio = entry.intersectionRatio;
-						let isFront = true;
-						let isBack = false;
-						console.log(ratio);
-						// if (entry.boundingClientRect.y > 0 && isFront) {
-						// 	if (entry.intersectionRatio >= 0.9) {
-						// 		target.classList.add('s2');
-						// 	}
-						// 	else if (entry.intersectionRatio >= 0.5) {
-						// 		target.classList.add('s1');
-						// 	}
-						// 	else if (entry.intersectionRatio > 0.1) {
-						// 		target.classList.add('s0');
-						// 	} 
-							
-						// 	if (entry.intersectionRatio <= 0.1) {
-						// 		target.classList.remove('s0');
-						// 		target.classList.remove('e0');
-						// 		target.classList.remove('e1');
-						// 		target.classList.remove('e2');
-						// 	}
-						// 	else if (entry.intersectionRatio <= 0.5) {
-						// 			target.classList.remove('s1');
-						// 	}
-						// 	else if (entry.intersectionRatio < 0.9) {
-						// 			target.classList.remove('s2');
-						// 	}
-						// }
+						const state = entry.isIntersecting;
+						const isUp = nowY === null ? false : nowY < bcrTop ? true : false;
+						const isOverflow = bcr.height >= entry.rootBounds.height ? true : false;
+						const isHalfGone = ((scrTop - bcrTop) < (bcrTop + scrTop));
 
-						// if (entry.boundingClientRect.y < 0.1) {
-						// 	if (ratio >= 0.9) {
-						// 		target.classList.add('e2');
-						// 	}
-						// 	else if (ratio >= 0.5) {
-						// 		target.classList.add('e1');
-						// 	}
-						// 	else if (ratio > 0) {
-						// 		target.classList.add('e0');
-						// 	} 
+						nowY = bcrTop;
 
-						// 	if (ratio <= 0.1) {
-						// 		target.classList.remove('e0');
-						// 		target.classList.remove('s0');
-						// 		target.classList.remove('s1');
-						// 		target.classList.remove('s2');
-						// 	}
-						// 	else if (ratio <= 0.5) {
-						// 		target.classList.remove('e1');
-						// 	}
-						// 	else if (ratio < 0.9) {
-						// 		target.classList.remove('e2');
-						// 	}
-						// }
+console.log(ratio.toFixed(2));
+
+						if (isOverflow) {
+							if (!isUp) {
+								if (isHalfGone && ratio >= 0.5 && ratio < 1) {
+									target.classList.add('ui-s2');
+									target.dataset.state = 's2';
+								}
+								else if (isHalfGone && ratio > 0 && ratio < 0.5) {
+									target.classList.add('ui-s1');
+									target.dataset.state = 's1';
+								} 
+								else if (!isHalfGone && ratio <= 0) {
+									target.classList.add('ui-s4');
+									target.dataset.state = 's4';
+								}
+								else if (!isHalfGone && ratio < 0.5) {
+									target.classList.add('ui-s3');
+									target.dataset.state = 's3';
+								}
+								
+							} 
+							else {
+								if (ratio <= 0 && isHalfGone) {
+									target.classList.remove('ui-s1');
+									target.dataset.state = 's0';
+								} 
+								else if (ratio <= 0.5 && isHalfGone) {
+									target.classList.remove('ui-s2');
+									target.dataset.state = 's1';
+								} 
+								else if (ratio < 1 && ratio > 0.5 && !isHalfGone) {
+									target.classList.remove('ui-s3');
+									target.dataset.state = 's2';
+								} 
+								else if (ratio < 0.5 && ratio >= 0 && !isHalfGone) {
+									target.classList.remove('ui-s4');
+									target.dataset.state = 's3';
+								}
+								
+							}
+						} else {
+							if (!isUp) {
+								if (isHalfGone && ratio >= 0.5 && ratio < 1) {
+									target.classList.add('ui-s2');
+									target.dataset.state = 's2';
+								}
+								else if (isHalfGone && ratio > 0 && ratio < 0.5) {
+									target.classList.add('ui-s1');
+									target.dataset.state = 's1';
+								} 
+								else if (!isHalfGone && ratio <= 0) {
+									target.classList.add('ui-s6');
+									target.dataset.state = 's6';
+								}
+								else if (!isHalfGone && ratio < 0.5) {
+									target.classList.add('ui-s5');
+									target.dataset.state = 's5';
+								}
+								else if (!isHalfGone && ratio <= 1) {
+									target.classList.add('ui-s4');
+									target.dataset.state = 's4';
+								}
+								else if (isHalfGone && ratio >= 1) {
+									target.classList.add('ui-s3');
+									target.dataset.state = 's3';
+								}
+							} 
+							else {
+								if (ratio <= 0 && isHalfGone) {
+									target.classList.remove('ui-s1');
+									target.dataset.state = 's0';
+								} 
+								else if (ratio <= 0.5 && isHalfGone) {
+									target.classList.remove('ui-s2');
+									target.dataset.state = 's1';
+								} 
+								else if (ratio < 0.7 && ratio > 0.5 && !isHalfGone) {
+									target.classList.remove('ui-s5');
+									target.dataset.state = 's4';
+								} 
+								else if (ratio < 0.2 && ratio >= 0 && !isHalfGone) {
+									target.classList.remove('ui-s6');
+									target.dataset.state = 's5';
+								}
+								else if (ratio >= 1 && isHalfGone) {
+									target.classList.remove('ui-s4');
+									target.dataset.state = 's3';
+								}
+								else if (ratio <= 1 && isHalfGone) {
+									target.classList.remove('ui-s3');
+									target.dataset.state = 's2';
+								}
+							}
+						}
+						
 					});
 				}, options);
 
@@ -7473,31 +7528,6 @@
 				for (let item of items) {
 					io.observe(item);
 				}
-				
-
-				const scrollScope = this.scrollScope;
-				const doSomething = (scroll_pos) => {
-						this.direction = this.y > scroll_pos ? 'up' : this.y < scroll_pos ? 'down' : '';
-						this.y = scroll_pos;
-						this.check();
-						document.querySelector('body').dataset.dir = this.direction;
-				}
-
-				// window.addEventListener('scroll', (e) => {
-				// 		last_know_scroll_position = scrollScope.scrollTop;
-
-				// 		if (!ticking) {
-				// 				window.requestAnimationFrame(() => {
-				// 						doSomething(last_know_scroll_position);
-				// 						ticking = false;
-				// 				});
-
-				// 				ticking = true;
-				// 		}
-				// });
-				// setTimeout(() => {
-				// 		this.check();
-				// }, 400);
 		},
 		check() {
 				const items = document.querySelectorAll('[data-parallax]');

@@ -25,16 +25,48 @@
       box-sizing: border-box;
     }
     .item-wrap{position: relative;}
-    .item{position: relative; width: 100%; height: 200vh; border:2px dashed #ccc;}
-    .inner{position: absolute; top:50vh; left:50%; transform: translate(-50%,0); width: 50vw; height: 50vh; display: flex; justify-content: center; align-self: center; font-size: 15px; font-weight: 900; line-height: 1; transition: all .3s ease;}
+    .item{position: relative; width: 100%; height:50vh; border:2px dashed #ccc;}
+    .inner{ transition: all .3s ease;}
+
+    .item::before{
+      content: attr(data-state);
+      position: absolute;
+      top: -30px;
+      left: 28%;
+      transform: translate(-50%,-50%);
+      width: auto;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-self: center;
+      font-size: 30vw;
+      font-weight: 900;
+      line-height: 1;
+      opacity: .5;
+      z-index: 1;
+    }
+    .item::after{
+      content: attr(data-state);
+      position: absolute;
+      top: 106%;
+      left: 77%;
+      transform: translate(-50%,-50%);
+      width: auto;
+      height: auto;
+      display: flex;
+      justify-content: center;
+      align-self: center;
+      font-size: 30vw;
+      font-weight: 900;
+      line-height: 1;
+      opacity: .5;
+      z-index: 1;
+    }
 
     /* [data-parallax="1"].parallax-s-1 ~ .item .inner,
     [data-parallax="1"].parallax-s-1 .inner{position: fixed;} */
 
-    /* .inner{transform: translate(100vw, 0);} */
-    .parallax-e-0 .inner{transform: translate(100vw, 0);}
-    .parallax-m-1 .inner{transform: translate(100vw, 0);}
-
+  
 
     /* [data-parallax="1"].parallax-s-0 ~ .item .inner{position: fixed;} */
   </style>
@@ -45,11 +77,16 @@
 
   <div class="item-wrap">
     <div class="item" data-parallax="1">
-      <div class="inner">A</div>
+      <guide></guide>
     </div>
-    <div class="item" data-parallax="2">
-      <div class="inner" style="padding-left: 20px;">B</div>
-    </div>
+    <!-- <div class="item mt-x14" data-parallax="2">
+      <guide></guide>
+    </div> -->
+    <!-- <div class="item" data-parallax="2" style="height:50vh; background-color: lightblue;">
+      <guide></guide>
+      <div class="inner">B</div>
+    </div> -->
+    <!-- 
     <div class="item" data-parallax="3">
       <div class="inner" style="padding-left: 40px;">C</div>
     </div>
@@ -61,10 +98,9 @@
     </div>
     <div class="item" data-parallax="6">
       <div class="inner" style="padding-left: 100px;">F</div>
-    </div>
+    </div> -->
   </div>
-  <div class="item" style="background-color: #ccc;"></div>
-  <div class="item" style="background-color: #ccc;"></div>
+  <div class="item" style="background-color: #ccc; height: 1000px;"></div>
   <script defer src="../resources/js/ui.global.js"></script>
 
   <script>
