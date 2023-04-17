@@ -10905,6 +10905,20 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   left: 0;
   z-index: 1;
 }
+.tbl-base .ui-tablescroll-clone > tbody {
+  border-bottom: 2px solid var(--gray400);
+}
+.tbl-base .ui-tablescroll-clone > tbody td {
+  text-align: left;
+  padding: 0.5rem 1.5rem 0.7rem 0.5rem;
+  font-weight: 700;
+  color: var(--gray900);
+  background: var(--white);
+  border-bottom: 1px solid var(--gray300);
+}
+.tbl-base .ui-tablescroll-clone > tbody td:first-child {
+  border-left: 0;
+}
 
 /* ui-tblscroll */
 .ui-tablescroll {
@@ -12208,7 +12222,7 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
 }
 .modal.type-full .ui-modal-wrap,
 .ui-modal.type-full .ui-modal-wrap {
-  margin: 0;
+  margin: 0 !important;
   width: 100%;
   max-width: 100%;
 }

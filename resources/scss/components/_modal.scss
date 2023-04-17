@@ -152,7 +152,7 @@
     /* style - full */
     &.type-full {
         .ui-modal-wrap {
-            margin: 0;
+            margin: 0 !important;
             width: 100%;
             max-width: 100%;
         }

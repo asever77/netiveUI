@@ -56,6 +56,21 @@
         top: 0;
         left: 0;
         z-index: 1;
+        & > tbody {
+            border-bottom: 2px solid $gray400;
+
+            td {
+                text-align: left;
+                padding: $table-cell-gap;
+                font-weight: 700;
+                color: $gray900;
+                background: $white;
+                border-bottom: 1px solid $gray300;
+                &:first-child {
+                    border-left: 0;
+                }
+            }
+        }
     }
     
 }

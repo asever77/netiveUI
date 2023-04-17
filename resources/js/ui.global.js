@@ -523,22 +523,6 @@
 	 * SCROLL : 기본적인 스크롤 동작, 값
 	 * in use: Global.callback
 	 */
-	/**
-	 * intersection observer
-	 */
-	Global.io = new IntersectionObserver( (entries, observer) => {
-		entries.forEach(entry => {
-
-			console.log(entry);
-			
-			if (entry.intersectionRatio > 0) {
-				entry.target.classList.add('tada');
-			} else {
-				entry.target.classList.remove('tada');
-			}
-		});
-	});
-
 	Global.scroll = {
 		options : {
 			selector: document.querySelector('html, body'),
@@ -686,8 +670,6 @@
 		}
 	}
 
-	
-
 	/**
 	 * URL PARAMETER : 주소값의 파라미터 값
 	 * @param {string} paraname 주소창의 파라미터 값 (?parname=1)
@@ -718,39 +700,32 @@
 			}
 			
 			const el = opt.selector;
-
-			if (!!el.querySelector('.ui-modal-wrap') && !el.querySelector('.ui-modal-wrap .ui-modal-guide')) {
-				const modal_wrap = el.querySelector('.ui-modal-wrap');
-				modal_wrap.insertAdjacentHTML('beforeend','<h5 class="ui-modal-guide">모달창 마지막 위치입니다.</h5>')
-			}
-
-			const callback = opt.callback;
 			const tags = el.querySelectorAll('*');
 			const tagLen = tags.length;
 			
-			// const elEnd = '<div tabindex="0" class="ui-focusloop-end" aria-label="모달 마지막 위치입니다."></div>'
-
 			for (let i = 0; i < tagLen; i++) {
 				const _tag = tags[i];
 				const tag_name = _tag.tagName;
-				if (tag_name === 'H1' || tag_name === 'H2' || tag_name === 'H3' || tag_name === 'H4' || tag_name === 'H5' || tag_name === 'H6' || tag_name === 'BUTTON' || tag_name === 'A' || tag_name === 'INPUT' || tag_name === 'TEXTAREA') {
+				if (tag_name === 'BUTTON' || tag_name === 'A' || tag_name === 'INPUT' || tag_name === 'TEXTAREA') {
 					_tag.classList.add('ui-focusloop-start');
-					_tag.setAttribute('tabindex', 0);
 					break;
 				}
 			}
- 
-			// el.insertAdjacentHTML('beforeend', elEnd);
-			for (let i = tagLen - 1; i >= 0; i--) {
-				const _tag = tags[i];
-				const tag_name = _tag.tagName;
-				if (tag_name === 'H1' || tag_name === 'H2' || tag_name === 'H3' || tag_name === 'H4' || tag_name === 'H5' || tag_name === 'H6' || tag_name === 'BUTTON' || tag_name === 'A' || tag_name === 'INPUT' || tag_name === 'TEXTAREA') {
-					_tag.classList.add('ui-focusloop-end');
-					_tag.setAttribute('tabindex', 0);
-					break;
+			
+			if (!!el.querySelector('.ui-modal-wrap') && !el.querySelector('.ui-modal-wrap .ui-modal-guide')) {
+				const modal_wrap = el.querySelector('.ui-modal-wrap');
+				modal_wrap.insertAdjacentHTML('beforeend','<button type="button" class="ui-modal-guide ui-focusloop-end">'+ (el.querySelector('.ui-modal-tit').textContent) +' 레이어 문서 마지막 지점입니다.</button>')
+			} else {
+				for (let i = tagLen - 1; i >= 0; i--) {
+					const _tag = tags[i];
+					const tag_name = _tag.tagName;
+					if (tag_name === 'BUTTON' || tag_name === 'A' || tag_name === 'INPUT' || tag_name === 'TEXTAREA') {
+						_tag.classList.add('ui-focusloop-end');
+						break;
+					}
 				}
 			}
-
+			
 			const el_start = el.querySelector('.ui-focusloop-start');
 			const el_end = el.querySelector('.ui-focusloop-end');
 			const keyStart = (e) => {
@@ -766,7 +741,6 @@
 				}
 			}
 
-			el.setAttribute('tabindex', 0);
 			el.focus();
 			el_start.addEventListener('keydown', keyStart);
 			el_end.addEventListener('keydown', keyEnd);
@@ -1249,6 +1223,8 @@
 				that.classList.remove('view-x');
 				that.classList.remove('view-scrollbar');
 				that.style.overflow = 'auto';
+
+				console.log(that);
 				
 				el_barwrap.forEach((userItem) => {
 					that.removeChild(userItem);
@@ -1259,7 +1235,7 @@
 					that.innerHTML = wrapHtml;
 				}
 				
-				// that.removeAttribute('data-scroll-id');
+				that.removeAttribute('data-scroll-id');
 				that.removeAttribute('data-item-w');
 				that.removeAttribute('data-item-h');
 				that.removeAttribute('data-wrap-w');
@@ -1445,16 +1421,15 @@
 				const el_tbl = el_tblWrap.querySelector('table');
 				const cloneTable = el_tbl.cloneNode(true);
 
-				console.log(!that.querySelector('.ui-tablescroll-clone'));
-
 				if (!that.querySelector('.ui-tablescroll-clone')) {
 					that.prepend(cloneTable);
 
 					const clone_tbl = that.querySelector('table:first-child');
 					const clone_ths = clone_tbl.querySelectorAll('th');
 					const clone_caption = clone_tbl.querySelector('caption');
+					const clone_thead = clone_tbl.querySelector('thead');
 					const clone_tbodys = clone_tbl.querySelectorAll('tbody');
-
+					let clone_td = '<tbody>';
 					clone_caption.remove();
 
 					for (let i = 0, len = clone_tbodys.length; i < len; i++) {
@@ -1463,10 +1438,13 @@
 
 					clone_tbl.classList.add('ui-tablescroll-clone');
 					clone_tbl.setAttribute('aria-hidden', true);
-
 					for (let i = 0, len = clone_ths.length; i < len; i++) {
 						clone_ths[i].setAttribute('aria-hidden', true);
+						clone_td += '<td>'+ clone_ths[i].textContent +'</td>';
 					}
+					clone_td += '</tbody>';
+					clone_thead.remove();
+					clone_tbl.insertAdjacentHTML('beforeend',clone_td);
 				}
 			}
 
@@ -2113,7 +2091,7 @@
 							clearbutton.type = 'button';
 							clearbutton.classList.add('btn-clear');
 							clearbutton.classList.add('ui-clear');
-							clearbutton.setAttribute('aria-label', 'Clear '+ title);
+							clearbutton.setAttribute('aria-label', title + ' 값 삭제');
 							// clearbutton.dataset.id = id;
 							
 							wrap.appendChild(clearbutton);
@@ -2375,14 +2353,13 @@
 
 			el_acco.dataset.n = len;
 
-			
-
 			//panel의 aria, 높이값, 이벤트 등 기본 설정 & 전체열림일 경우 panel 설정
 			for (let i = 0; i < len; i++) {
 				const that = el_wrap[i];
 				const el_tit = that.querySelector('.ui-acco-tit');
 				const el_pnl = that.querySelector('.ui-acco-pnl');
 				const el_btn = el_tit.querySelector('.ui-acco-btn');
+				const el_hide = el_btn.querySelector('.hide');
 				const el_pnl_wrap = that.querySelector('.ui-acco-pnl-wrap');
 				
 				that.dataset.n = i;
@@ -2391,6 +2368,7 @@
 				el_btn.id = accoId + 'Btn' + i;
 				el_btn.dataset.selected = false;
 				el_btn.setAttribute('aria-expanded', false);
+				!!el_hide ? el_hide.textContent = '열기' : '';
 				el_btn.removeAttribute('data-order');
 				el_btn.dataset.n = i;
 
@@ -2403,7 +2381,7 @@
 					if (accoId === el_pnl_wrap.closest('.ui-acco').dataset.id) {
 						el_pnl.dataset.height = el_pnl_wrap.offsetHeight;
 					}
-					
+
 					el_pnl.classList.add('off');
 					el_pnl.setAttribute('aria-hidden', true);
 					el_pnl.dataset.n = i;
@@ -2415,6 +2393,7 @@
 						// el_pnl.style.height = 'auto';
 						el_btn.dataset.selected = true;
 						el_btn.setAttribute('aria-expanded', true);
+						!!el_hide ? el_hide.textContent = '닫기' : '';
 						el_pnl.setAttribute('aria-hidden', false);
 					}
 				}
@@ -2438,6 +2417,7 @@
 				const _tit = this_wrap.querySelector('.ui-acco-tit');
 				const _btn = _tit.querySelector('.ui-acco-btn');
 				const _pnl = this_wrap.querySelector('.ui-acco-pnl');
+				const _el_hide = _btn.querySelector('.hide');
 
 				//direct children 
 				if (accoId === this_wrap.closest('.ui-acco').dataset.id && !!_pnl) {
@@ -2448,6 +2428,7 @@
 					_pnl.setAttribute('aria-hidden', false);
 					_btn.dataset.selected = true;
 					_pnl.style.height = _pnl.offsetHeight + 'px';
+					!!_el_hide ? _el_hide.textContent = '닫기' : '';
 				} 
 			}
 			
@@ -2551,6 +2532,7 @@
 					const el = opt.el;
 					const btnID = el.getAttribute('aria-labelledby');
 					const el_btn = document.querySelector('#' + btnID);
+					const el_hide = el_btn.querySelector('.hide');
 					const state = opt.state;
 				
 					//accordion inner
@@ -2560,7 +2542,10 @@
 
 					el_btn.dataset.selected = isHide;
 					el_btn.setAttribute('aria-expanded', isHide);
-					
+					if (el_hide) {
+						isHide ? el_hide.textContent = '닫기' : el_hide.textContent = '열기';
+					}
+					 
 					//show 동작
 					const show = () => {
 						isShow = true;
@@ -2569,6 +2554,9 @@
 						el.setAttribute('aria-hidden', false);
 						el.classList.remove('off');
 						el.style.height = el_child.offsetHeight + 'px';
+						if (el_hide) {
+							el_hide.textContent = '닫기';
+						}
 					}
 
 					//hide 동작
@@ -2577,6 +2565,9 @@
 						el_btn.setAttribute('aria-expanded', false);
 						el_btn.dataset.selected = false;
 						el.style.height = 0;
+						if (el_hide) {
+							el_hide.textContent = '열기';
+						}
 					}
 					//end 동작
 					const end = () => {
@@ -2606,6 +2597,7 @@
 						const _tit = that.querySelector('.ui-acco-tit');
 						const _btn = _tit.querySelector('.ui-acco-btn');
 						const _pnl = that.querySelector('.ui-acco-pnl');
+						const _el_hide = _btn.querySelector('.hide');
 
 						//direct children 
 						if (accoId === that.closest('.ui-acco').dataset.id) {
@@ -2615,7 +2607,9 @@
 									_btn.dataset.selected = false;
 									_btn.setAttribute('aria-expanded', false);
 									_pnl.setAttribute('aria-hidden', true);
-									
+									if (_el_hide) {
+										_el_hide.textContent = '열기';
+									}
 									toggleSlide({
 										el: _pnl, 
 										state: 'hide'
@@ -2626,7 +2620,9 @@
 									_btn.dataset.selected = isHide;
 									_btn.setAttribute('aria-expanded', isHide);
 									_pnl.setAttribute('aria-hidden', !isHide);
-
+									if (_el_hide) {
+										isHide ? _el_hide.textContent = '닫기' : _el_hide.textContent = '열기';
+									}
 									toggleSlide({
 										el: _pnl, 
 										state: !isHide ? 'show' : 'hide'
@@ -2738,11 +2734,19 @@
 			if (!!tickmark) {
 				html += '<div class="ui-range-marks" id="'+ id +'_tickmarks">';
 				const len = tickmark.length;
-
+				
 				for (let i = 0; i < len; i++) {
 					const n = (max - min) / (len - 1);
+					let isSame = '';
 
-					html += '<button class="ui-range-btn" data-id="'+ id +'" type="button" data-value="'+ (n * i + min) +'">'+ tickmark[i] +'</button>';
+					if (!!el_from) {
+						isSame = Number(el_from.value) === (n * i + min) ? '선택됨' : '';
+					}
+					if (!!el_to && isSame === '') {
+						isSame = Number(el_to.value) === (n * i + min) ? '선택됨' : '';
+					}
+
+					html += '<button class="ui-range-btn" data-id="'+ id +'" type="button" data-value="'+ (n * i + min) +'">'+ tickmark[i] +'<span class="a11y-hidden">'+ isSame +'</span></button>';
 				}
 
 				html += '</div>';
@@ -2767,9 +2771,7 @@
 				for (let btn of btns) {
 					btn.addEventListener('click', Global.rangeSlider.clcikRange);
 				}
-	
 			}
-			
 
 			if (el_from && el_to) {
 				//range
@@ -2951,7 +2953,7 @@
 			const el_right = el_range.querySelector(".ui-range-point.right");
 			const el_bar = el_range.querySelector(".ui-range-bar");
 			const inp_froms = document.querySelectorAll('[data-from="'+ id +'"]');
-
+			const el_marks = el_range.querySelector('.ui-range-marks');
 			const txtArray = Global.rangeSlider[id].text;
 			const txtALen = txtArray.length;
 			
@@ -3010,7 +3012,6 @@
 					} else {
 						that.textContent = from_value;
 					}
-				
 				}
 			}
 
@@ -3021,6 +3022,22 @@
 					el_range.classList.add('same');
 				} else {
 					el_range.classList.remove('same')
+				}
+			}
+			if (el_marks) {
+				const el_marks_items = el_marks.querySelectorAll('.ui-range-btn');
+
+				for (let item of el_marks_items) {
+					const _v = Number(item.dataset.value);
+					if (!item.dataset.to || item.dataset.to === 'false') {
+						item.querySelector('.a11y-hidden').textContent = '';
+					}
+					item.dataset.from = false;
+					if (from_value == _v) {
+						item.dataset.from = true;
+						item.querySelector('.a11y-hidden').textContent = '선택됨';
+						break;
+					}
 				}
 			}
 		},
@@ -3034,7 +3051,7 @@
 			const el_right = el_range.querySelector(".ui-range-point.right");
 			const el_bar = el_range.querySelector(".ui-range-bar");
 			const inp_tos = document.querySelectorAll('[data-to="'+ id +'"]');
-			
+			const el_marks = el_range.querySelector('.ui-range-marks');
 			let value = el_to.value;
 			let min = Number(el_from.min);
 			let max = Number(el_from.max);
@@ -3092,6 +3109,22 @@
 					el_range.classList.add('same');
 				} else {
 					el_range.classList.remove('same')
+				}
+			}
+			if (el_marks) {
+				const el_marks_items = el_marks.querySelectorAll('.ui-range-btn');
+
+				for (let item of el_marks_items) {
+					const _v = Number(item.dataset.value);
+					if (!item.dataset.from || item.dataset.from === 'false') {
+						item.querySelector('.a11y-hidden').textContent = '';
+					}
+					item.dataset.to = false;
+					if (Number(el_to.value) == _v) {
+						item.dataset.to = true;
+						item.querySelector('.a11y-hidden').textContent = '선택됨';
+						break;
+					}
 				}
 			}
 		}
@@ -3201,10 +3234,6 @@
 					const btn = dp.querySelector('.ui-datepicker-btn');
 
 					btn.addEventListener('click', act);
-					console.log(inps[0].value);
-					inps[0].addEventListener('input', () => {
-						console.log(1111);
-					})
 				}
 			}
 
@@ -4039,7 +4068,8 @@
 				_dpHtml += '<td class="'+ _class +'">';
 
 				if (date !== '') {
-					_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.parts.add0(viewMonth + 1)+'-'+ Global.parts.add0(date)+ '" data-holiday='+ (isPublicHoliday || _disabled || (!isHoliday && Global.callback[setId].subDay) ? 'true' : 'false') +' aria-label="'+ viewYear +'년 '+ (viewMonth + 1) +'월 '+ date + '일 ' + week[(i+7) % 7] + '요일 '+ (!!specialdayName ? specialdayName : Global.callback[setId].subDay ? '대체휴일' : '') +'" '+ (isHoliyday && (isPublicHoliday || isHoliday || Global.callback[setId].subDay) ? 'disabled' : '') +'>';
+					console.log(_day, _day === ' selected-start');
+					_dpHtml += '<button type="button" class="datepicker-day '+ _day +'" data-date="'+ viewYear +'-'+ Global.parts.add0(viewMonth + 1)+'-'+ Global.parts.add0(date)+ '" data-holiday='+ (isPublicHoliday || _disabled || (!isHoliday && Global.callback[setId].subDay) ? 'true' : 'false') +' aria-label="'+ (_day === 'today' ? '오늘날짜 ' : _day === ' selected-start' ? '선택된 날짜 ' :'') + viewYear +'년 '+ (viewMonth + 1) +'월 '+ date + '일 ' + week[(i+7) % 7] + '요일 '+ (!!specialdayName ? specialdayName : Global.callback[setId].subDay ? '대체휴일' : '') +'" '+ (isHoliyday && (isPublicHoliday || isHoliday || Global.callback[setId].subDay) ? 'disabled' : '') +'>';
 				}
 
 				(!isHoliday && Global.callback[setId].subDay) ? Global.callback[setId].subDay = false : '';
@@ -5496,10 +5526,7 @@
 				elModal.setAttribute('aria-describedby', id + '_desc');
 				elModal.setAttribute('role', 'dialog');
 
-				if (!!elModalTit) {
-					elModalTit.setAttribute('tabindex', 0);
-					elModalTit.id = id + '_label';
-				} 
+				(!!elModalTit) ? elModalTit.id = id + '_label' : '';
 
 				elModalBody.style.overflowY = 'auto';
 				elModalBody.id = id + '_desc';
@@ -5570,14 +5597,13 @@
 				
 				//clearTimeout(timer);
 				//timer = setTimeout(function(){
+				elModal.setAttribute('tabindex', 0);
 				Global.focus.loop({ selector: elModal });
 				elModal.classList.add('open');
 				(!!sZindex) ? elModal.style.zIndex = sZindex : '';
 				(window.innerHeight < elModalWrap.offsetHeight) ? 
 					elModal.classList.add('is-over'):
 					elModal.classList.remove('is-over');
-
-				!!elModalTit && elModalTit.focus();
 
 				//dim event
 				elModalDim.addEventListener('click', Global.modal.dimAct);
@@ -5597,65 +5623,67 @@
 
 				// 드래그 닫기 추가 --
 				const elDrag = elModal.querySelector('.ui-modal-drag');
-				const elDragWrap = elDrag.closest('.ui-modal');
-				const elDragPs = elDragWrap.dataset.ps;
-
 				if (!!elDrag) {
-					let sX = 0;
-					let sY = 0;
-					let mX = 0;
-					let mY = 0;
-					let el_draghead = null;
-					let m_n = 0;
-					let m_wrap = null;
-					let el_ThisModal = null;
+					const elDragWrap = elDrag.closest('.ui-modal');
+					const elDragPs = elDragWrap.dataset.ps;
 
-					const eventEnd = (e) => {
-						if (Math.abs(m_n) > 40) {
-							Global.modal.hide({ 
-								id: el_ThisModal.id, 
-								remove: remove,
-								callbackClose: callbackClose
-							});
-							elDrag.removeEventListener('touchstart', eventStart);
-						} else {
-							if(m_wrap) {
-								elDragPs === 'bottom' || elDragPs === 'top' ?
-								m_wrap.style.transform = 'translateY(0px)' : 
-								m_wrap.style.marginTop = '0';
+					if (!!elDrag) {
+						let sX = 0;
+						let sY = 0;
+						let mX = 0;
+						let mY = 0;
+						let el_draghead = null;
+						let m_n = 0;
+						let m_wrap = null;
+						let el_ThisModal = null;
+
+						const eventEnd = (e) => {
+							if (Math.abs(m_n) > 40) {
+								Global.modal.hide({ 
+									id: el_ThisModal.id, 
+									remove: remove,
+									callbackClose: callbackClose
+								});
+								elDrag.removeEventListener('touchstart', eventStart);
+							} else {
+								if(m_wrap) {
+									elDragPs === 'bottom' || elDragPs === 'top' ?
+									m_wrap.style.transform = 'translateY(0px)' : 
+									m_wrap.style.marginTop = '0';
+								}
+							}
+							
+							document.removeEventListener('touchmove', eventMove);
+							document.removeEventListener('touchend', eventEnd);
+						}
+						const eventMove = (e) => {
+							m_wrap = el_draghead.closest('.ui-modal-wrap');
+							mX = e.changedTouches[0].clientX;
+							mY = e.changedTouches[0].clientY;
+							m_n = (sY - mY) > 0 ? 0 : (sY - mY);
+							m_n = (m_n * -1);
+							
+							if (elDragPs === 'top') {
+								m_n = (sY - mY) < 0 ? 0 : (sY - mY);
+								m_n = (m_n * -1);
+								m_wrap.style.transform = 'translateY('+ m_n +'px)'; 
+							} else {
+								elDragPs === 'bottom' ?
+								m_wrap.style.transform = 'translateY('+ m_n +'px)' : 
+								m_wrap.style.marginTop = m_n +'px';
 							}
 						}
-						
-						document.removeEventListener('touchmove', eventMove);
-						document.removeEventListener('touchend', eventEnd);
-					}
-					const eventMove = (e) => {
-						m_wrap = el_draghead.closest('.ui-modal-wrap');
-						mX = e.changedTouches[0].clientX;
-						mY = e.changedTouches[0].clientY;
-						m_n = (sY - mY) > 0 ? 0 : (sY - mY);
-						m_n = (m_n * -1);
-						
-						if (elDragPs === 'top') {
-							m_n = (sY - mY) < 0 ? 0 : (sY - mY);
-							m_n = (m_n * -1);
-							m_wrap.style.transform = 'translateY('+ m_n +'px)'; 
-						} else {
-							elDragPs === 'bottom' ?
-							m_wrap.style.transform = 'translateY('+ m_n +'px)' : 
-							m_wrap.style.marginTop = m_n +'px';
-						}
-					}
-					const eventStart = (e) => {
-						el_draghead = e.currentTarget;
-						el_ThisModal = el_draghead.closest('.ui-modal');
-						sX = e.changedTouches[0].clientX;
-						sY = e.changedTouches[0].clientY;
+						const eventStart = (e) => {
+							el_draghead = e.currentTarget;
+							el_ThisModal = el_draghead.closest('.ui-modal');
+							sX = e.changedTouches[0].clientX;
+							sY = e.changedTouches[0].clientY;
 
-						document.addEventListener('touchmove', eventMove);
-						document.addEventListener('touchend', eventEnd);
+							document.addEventListener('touchmove', eventMove);
+							document.addEventListener('touchend', eventEnd);
+						}
+						elDrag.addEventListener('touchstart', eventStart);
 					}
-					elDrag.addEventListener('touchstart', eventStart);
 				}
 				//-- 드래그 닫기 추가
 
@@ -6398,7 +6426,7 @@
 
 				if (!dynamic) {
 					el_pnl.setAttribute('role','tabpanel');
-					el_pnl.setAttribute('tabindex','0');
+					// el_pnl.setAttribute('tabindex','0');
 
 					if (!el_pnl.dataset.tab) {
 						el_pnl.dataset.tab = i;
@@ -6408,7 +6436,7 @@
 					} 
 				} else {
 					el_pnls[0].setAttribute('role','tabpanel');
-					el_pnls[0].setAttribute('tabindex','0');
+					// el_pnls[0].setAttribute('tabindex','0');
 					el_pnls[0].dataset.tab = current;
 					el_pnls[0].id = id + '_pnl';
 				}
@@ -7935,16 +7963,3 @@ console.log('parallax-s-1', (item_t + scroll_t), scroll_t);
 	// 	}
 	// }
 
-	
-	/**
-	* intersection observer
-	Global.io = new IntersectionObserver(function (entries) {
-		entries.forEach(function (entry) {
-			if (entry.intersectionRatio > 0) {
-				entry.target.classList.add('tada');
-			} else {
-				entry.target.classList.remove('tada');
-			}
-		});
-	});
-	*/
