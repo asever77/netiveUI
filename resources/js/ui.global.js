@@ -2833,10 +2833,10 @@
 				el_inp[0].max = max;
 				el_inp[1].min = min;
 				el_inp[1].max = max;
-				if (!!Global.state.device.mobile) {
-					el_inp[0].setAttribute('aria-hidden', true);
-					el_inp[1].setAttribute('aria-hidden', true);
-				}
+				// if (!!Global.state.device.mobile) {
+				// 	el_inp[0].setAttribute('aria-hidden', true);
+				// 	el_inp[1].setAttribute('aria-hidden', true);
+				// }
 			} else {
 				//single
 				Global.rangeSlider.rangeFrom({
