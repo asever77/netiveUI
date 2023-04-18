@@ -2752,7 +2752,7 @@
 			html += '</div>';
 
 			if (!!tickmark) {
-				html += '<div class="ui-range-marks" id="'+ id +'_tickmarks" aria-hidden="true">';
+				html += '<div class="ui-range-marks" id="'+ id +'_tickmarks_from" data-from="true">';
 				const len = tickmark.length;
 				
 				for (let i = 0; i < len; i++) {
@@ -2762,13 +2762,29 @@
 					if (!!el_from) {
 						isSame = Number(el_from.value) === (n * i + min) ? '선택됨' : '';
 					}
-					if (!!el_to && isSame === '') {
-						isSame = Number(el_to.value) === (n * i + min) ? '선택됨' : '';
-					}
 
-					html += '<button tabindex="-1" class="ui-range-btn" data-id="'+ id +'" type="button" data-value="'+ (n * i + min) +'">'+ tickmark[i] +'<span class="a11y-hidden">'+ isSame +'</span></button>';
+					(!!el_to) ? 
+					html += '<button class="ui-range-btn" data-id="'+ id +'" type="button" data-value="'+ (n * i + min) +'"><span class="a11y-hidden">'+ title +' 최소 </span><span>'+ tickmark[i] +'</span><span class="a11y-hidden state">'+ isSame +'</span></button>':
+					html += '<button class="ui-range-btn" data-id="'+ id +'" type="button" data-value="'+ (n * i + min) +'"><span class="a11y-hidden">'+ title +' </span><span>'+ tickmark[i] +'</span><span class="a11y-hidden state">'+ isSame +'</span></button>';
 				}
 
+				html += '</div>';
+
+				if (!!el_to) {
+					html += '<div class="ui-range-marks" id="'+ id +'_tickmarks_to" data-to="true">';
+				
+					for (let i = 0; i < len; i++) {
+						const n = (max - min) / (len - 1);
+						let isSame = '';
+
+						if (!!el_to && isSame === '') {
+							isSame = Number(el_to.value) === (n * i + min) ? '선택됨' : '';
+						}
+
+						html += '<button class="ui-range-btn" data-id="'+ id +'" type="button" data-value="'+ (n * i + min) +'"><span class="a11y-hidden">'+ title +' 최대 </span><span>'+ tickmark[i] +'</span><span class="a11y-hidden state">'+ isSame +'</span></button>'
+					}
+				}
+				
 				html += '</div>';
 			}
 
@@ -2778,7 +2794,7 @@
 			const el_from_btn = el_range.querySelector('.ui-range-point.left');
 			const el_to_btn = el_range.querySelector('.ui-range-point.right');
 			const eventName = !!Global.state.browser.ie ? 'click' : 'input';
-			const marks = el_range.querySelector('.ui-range-marks');
+			const marks = el_range.querySelectorAll('.ui-range-marks');
 
 			el_from_btn.dataset.range = 'from';
 			el_to_btn ? el_to_btn.dataset.range = 'to' : '';
@@ -2786,10 +2802,12 @@
 			el_range.dataset.to = '0';
 
 			if (!!marks) {
-				const btns = marks.querySelectorAll('.ui-range-btn');
+				for (let mark of marks) {
+					const btns = mark.querySelectorAll('.ui-range-btn');
 
-				for (let btn of btns) {
-					btn.addEventListener('click', Global.rangeSlider.clcikRange);
+					for (let btn of btns) {
+						btn.addEventListener('click', Global.rangeSlider.clcikRange);
+					}
 				}
 			}
 
@@ -2818,7 +2836,6 @@
 				
 				//point - mouseover event
 				if (!Global.state.device.mobile) {
-					
 					el_to_btn.addEventListener('mouseover', Global.rangeSlider.inputFocus);
 					el_from_btn.addEventListener('mouseover', Global.rangeSlider.inputFocus);
 				} else {
@@ -2833,10 +2850,13 @@
 				el_inp[0].max = max;
 				el_inp[1].min = min;
 				el_inp[1].max = max;
-				// if (!!Global.state.device.mobile) {
-				// 	el_inp[0].setAttribute('aria-hidden', true);
-				// 	el_inp[1].setAttribute('aria-hidden', true);
-				// }
+				if (!!Global.state.device.mobile) {
+					el_inp[0].setAttribute('aria-hidden', true);
+					el_inp[1].setAttribute('aria-hidden', true);
+				} else {
+					el_inp[0].setAttribute('tabindex', -1);
+					el_inp[1].setAttribute('tabindex', -1);
+				}
 			} else {
 				//single
 				Global.rangeSlider.rangeFrom({
@@ -2860,8 +2880,12 @@
 				el_inp[0].max = max;
 				if (!!Global.state.device.mobile) {
 					el_inp[0].setAttribute('aria-hidden', true);
+				} else {
+					el_inp[0].setAttribute('tabindex', -1);
 				}
 			}
+			el_from.classList.add('on');
+			!!el_to && el_to.classList.remove('on');
 		},
 		clcikRange(e){
 			const btn = e.currentTarget;
@@ -2869,45 +2893,61 @@
 			const value = Number(btn.dataset.value);
 			const btn_text = btn.textContent;
 			const range = btn.closest('.ui-range');
+			const marks = btn.closest('.ui-range-marks');
+			const isFrom = marks.dataset.from;
 			const type = range.dataset.type;
 			const to = Number(range.dataset.to);
 			const from = Number(range.dataset.from);
 			const rg = range.querySelector('.ui-range-inp.on').dataset.range;
 
-			if (type === 'single') {
+			if (!!isFrom) {
 				Global.rangeSlider.rangeFrom({
 					id : id,
 					value : value
 				});
 			} else {
-				if (value === to && rg !== 'to') {
-					Global.rangeSlider.rangeFrom({
-						id : id,
-						value : value
-					});
-				} else if (value === from && rg !== 'from') {
-					Global.rangeSlider.rangeTo({
-						id : id,
-						value : value
-					});
-				} else {
-					if ((((to - from) / 2) + from) > value) {
-						Global.rangeSlider.rangeFrom({
-							id : id,
-							value : value
-						});
-					} else {
-						Global.rangeSlider.rangeTo({
-							id : id,
-							value : value
-						});
-					}
-				}
+				Global.rangeSlider.rangeTo({
+					id : id,
+					value : value
+				});
 			}
+			
+
+
+			// if (type === 'single') {
+			// 	Global.rangeSlider.rangeFrom({
+			// 		id : id,
+			// 		value : value
+			// 	});
+			// } else {
+			// 	if (value === to && rg !== 'to') {
+			// 		Global.rangeSlider.rangeFrom({
+			// 			id : id,
+			// 			value : value
+			// 		});
+			// 	} else if (value === from && rg !== 'from') {
+			// 		Global.rangeSlider.rangeTo({
+			// 			id : id,
+			// 			value : value
+			// 		});
+			// 	} else {
+			// 		if ((((to - from) / 2) + from) > value) {
+			// 			Global.rangeSlider.rangeFrom({
+			// 				id : id,
+			// 				value : value
+			// 			});
+			// 		} else {
+			// 			Global.rangeSlider.rangeTo({
+			// 				id : id,
+			// 				value : value
+			// 			});
+			// 		}
+			// 	}
+			// }
 		},
 		touchFocus(e) {
 			const point = e.currentTarget
-			const toForm = point.dataset.range;
+			const toFrom = point.dataset.range;
 			const eType = e.type;
 			const point_parent = point.parentNode;
 			const uirange = point.closest('.ui-range');
@@ -2916,7 +2956,7 @@
 			const el_point_to = point_parent.querySelector('.ui-range-point[data-range="to"]');
 			const el_point_from = point_parent.querySelector('.ui-range-point[data-range="from"]');
 
-			if (toForm === 'to') {
+			if (toFrom === 'to') {
 				el_point_to.classList.add('on');
 				el_point_from.classList.remove('on');
 				el_to.classList.add('on');
@@ -2933,7 +2973,7 @@
 		},
 		inputFocus(e) {
 			const point = e.currentTarget
-			const toForm = point.dataset.range;
+			const toFrom = point.dataset.range;
 			const eType = e.type;
 			const point_parent = point.parentNode;
 			const uirange = point.closest('.ui-range');
@@ -2941,10 +2981,9 @@
 			const el_from = uirange.querySelector('.ui-range-inp[data-range="from"]');
 			const el_point_to = point_parent.querySelector('.ui-range-point[data-range="to"]');
 			const el_point_from = point_parent.querySelector('.ui-range-point[data-range="from"]');
-
 			point.removeEventListener('mouseover', Global.rangeSlider.inputFocus);
-
-			if (toForm === 'to') {
+		
+			if (toFrom === 'to') {
 				el_to.classList.add('on');
 				el_from.classList.remove('on');
 				el_to.focus();
@@ -2983,7 +3022,8 @@
 			const el_right = el_range.querySelector(".ui-range-point.right");
 			const el_bar = el_range.querySelector(".ui-range-bar");
 			const inp_froms = document.querySelectorAll('[data-from="'+ id +'"]');
-			const el_marks = el_range.querySelector('.ui-range-marks');
+			const el_marks = el_range.querySelector('#' + id + '_tickmarks_from');
+			const el_marks_to = el_range.querySelector('#' + id + '_tickmarks_to');
 			const txtArray = Global.rangeSlider[id].text;
 			const txtALen = txtArray.length;
 			let percent;
@@ -2993,7 +3033,7 @@
 			if (v !== undefined) {
 				el_from.value = v;
 			}
-			
+
 			let from_value = +el_from.value;
 
 			if (type !== 'single') {
@@ -3044,8 +3084,8 @@
 				}
 			}
 
-			el_range.dataset.from = from_value;
-			
+			// el_range.dataset.from = from_value;
+			el_range.setAttribute('data-from', from_value);	
 			if (!!el_to) {
 				if (el_to.value === el_from.value) {
 					el_range.classList.add('same');
@@ -3053,19 +3093,51 @@
 					el_range.classList.remove('same')
 				}
 			}
+
 			if (el_marks) {
 				const el_marks_items = el_marks.querySelectorAll('.ui-range-btn');
 
 				for (let item of el_marks_items) {
 					const _v = Number(item.dataset.value);
-					if (!item.dataset.to || item.dataset.to === 'false') {
-						item.querySelector('.a11y-hidden').textContent = '';
-					}
+
+					// if (!item.dataset.to || item.dataset.to === 'false') {
+					// 	item.querySelector('.state').textContent = '';
+					// }
 					item.dataset.from = false;
+					item.disabled = false;
+					item.removeAttribute('tabindex');
+					item.removeAttribute('role');
+
 					if (from_value == _v) {
 						item.dataset.from = true;
-						item.querySelector('.a11y-hidden').textContent = '선택됨';
-						break;
+						item.querySelector('.state').textContent = '선택됨';
+					} else if (!!el_to && el_to.value < _v) {
+						item.disabled = true;
+						item.setAttribute('tabindex', -1);
+						item.setAttribute('role', 'none');
+					}
+				}
+				if (!!el_to) {
+					const el_marks_items = el_marks_to.querySelectorAll('.ui-range-btn');
+
+					for (let item of el_marks_items) {
+						const _v = Number(item.dataset.value);
+						// if (!item.dataset.from || item.dataset.from === 'false') {
+						// 	item.querySelector('.state').textContent = '';
+						// } 
+
+						item.disabled = false;
+						item.dataset.to = false;
+						item.removeAttribute('tabindex');
+						item.removeAttribute('role');
+						if (Number(el_to.value) == _v) {
+							item.dataset.to = true;
+							item.querySelector('.state').textContent = '선택됨';
+						} else if (el_from.value > _v) {
+							item.disabled = true;
+							item.setAttribute('tabindex', -1);
+							item.setAttribute('role', 'none');
+						}
 					}
 				}
 			}
@@ -3083,7 +3155,8 @@
 			const el_right = el_range.querySelector(".ui-range-point.right");
 			const el_bar = el_range.querySelector(".ui-range-bar");
 			const inp_tos = document.querySelectorAll('[data-to="'+ id +'"]');
-			const el_marks = el_range.querySelector('.ui-range-marks');
+			const el_marks = el_range.querySelector('#' + id + '_tickmarks_to');
+			const el_marks_from = el_range.querySelector('#' + id + '_tickmarks_from');
 			let value = el_to.value;
 			let min = Number(el_from.min);
 			let max = Number(el_from.max);
@@ -3134,8 +3207,9 @@
 				}
 			}
 
-			el_range.dataset.to = el_to.value;
-			
+			// el_range.dataset.to = el_to.value;
+			el_range.setAttribute('data-to', el_to.value);
+
 			if (!!el_from) {
 				if (el_to.value === el_from.value) {
 					el_range.classList.add('same');
@@ -3148,14 +3222,46 @@
 
 				for (let item of el_marks_items) {
 					const _v = Number(item.dataset.value);
-					if (!item.dataset.from || item.dataset.from === 'false') {
-						item.querySelector('.a11y-hidden').textContent = '';
-					}
+					// if (!item.dataset.from || item.dataset.from === 'false') {
+					// 	item.querySelector('.state').textContent = '';
+					// } 
+
+					item.disabled = false;
 					item.dataset.to = false;
+					item.removeAttribute('tabindex');
+					item.removeAttribute('role');
+
 					if (Number(el_to.value) == _v) {
 						item.dataset.to = true;
-						item.querySelector('.a11y-hidden').textContent = '선택됨';
-						break;
+						item.querySelector('.state').textContent = '선택됨';
+					} else if (el_from.value > _v) {
+						item.disabled = true;
+						item.setAttribute('tabindex', -1);
+						item.setAttribute('role', 'none');
+					}
+				}
+				if (!!el_from) {
+					const el_marks_items = el_marks_from.querySelectorAll('.ui-range-btn');
+
+					for (let item of el_marks_items) {
+						const _v = Number(item.dataset.value);
+
+						// if (!item.dataset.to || item.dataset.to === 'false') {
+						// 	item.querySelector('.state').textContent = '';
+						// }
+						item.dataset.from = false;
+						item.disabled = false;
+						item.removeAttribute('tabindex');
+						item.removeAttribute('role');
+						
+						if (el_from.value == _v) {
+							item.dataset.from = true;
+							item.querySelector('.state').textContent = '선택됨';
+						} else if (!!el_to && el_to.value < _v) {
+							item.disabled = true;
+							item.setAttribute('tabindex', -1);
+							item.setAttribute('role', 'none');
+						}
 					}
 				}
 			}
