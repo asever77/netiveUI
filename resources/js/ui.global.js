@@ -2703,6 +2703,8 @@
 	Global.rangeSlider = {
 		init(opt){
 			const id = opt.id;
+			const values = opt.value;
+			const title = opt.title ? opt.title : '';
 			const el_range = document.querySelector('.ui-range[data-id="'+ id +'"]');
 			const el_from = el_range.querySelector('.ui-range-inp[data-range="from"]');
 			const el_to = el_range.querySelector('.ui-range-inp[data-range="to"]');
@@ -2717,6 +2719,24 @@
 			Global.rangeSlider[id] = {
 				id: id,
 				text: isText,
+				tickmark: tickmark,
+				title: title
+			}
+			
+			el_from.value = values[0];
+			el_from.min = min;
+			el_from.max = max;
+			el_from.step = step;
+			
+			if (!!el_to) {
+				el_from.setAttribute('aria-label', title + ' 최소 ' + isText[el_from.value]);
+				el_to.value = values[1];
+				el_to.min = min;
+				el_to.max = max;
+				el_to.step = step;
+				el_to.setAttribute('aria-label', title + ' 최대 ' + isText[el_to.value]);
+			} else {
+				el_from.setAttribute('aria-label',title + ' ' + isText[el_from.value]);
 			}
 
 			!!track && track.remove();
@@ -2732,7 +2752,7 @@
 			html += '</div>';
 
 			if (!!tickmark) {
-				html += '<div class="ui-range-marks" id="'+ id +'_tickmarks">';
+				html += '<div class="ui-range-marks" id="'+ id +'_tickmarks" aria-hidden="true">';
 				const len = tickmark.length;
 				
 				for (let i = 0; i < len; i++) {
@@ -2746,7 +2766,7 @@
 						isSame = Number(el_to.value) === (n * i + min) ? '선택됨' : '';
 					}
 
-					html += '<button class="ui-range-btn" data-id="'+ id +'" type="button" data-value="'+ (n * i + min) +'">'+ tickmark[i] +'<span class="a11y-hidden">'+ isSame +'</span></button>';
+					html += '<button tabindex="-1" class="ui-range-btn" data-id="'+ id +'" type="button" data-value="'+ (n * i + min) +'">'+ tickmark[i] +'<span class="a11y-hidden">'+ isSame +'</span></button>';
 				}
 
 				html += '</div>';
@@ -2775,15 +2795,25 @@
 
 			if (el_from && el_to) {
 				//range
-				Global.rangeSlider.rangeFrom({id: id});
-				Global.rangeSlider.rangeTo({id: id});
+				Global.rangeSlider.rangeFrom({
+					id: id,
+					value: values[0]
+				});
+				Global.rangeSlider.rangeTo({
+					id: id,
+					value: values[1]
+				});
 
 				//input - click input event
 				el_from.addEventListener(eventName, () => {
-					Global.rangeSlider.rangeFrom({id: id});
+					Global.rangeSlider.rangeFrom({
+						id: id
+					});
 				});
 				el_to.addEventListener(eventName, () => {
-					Global.rangeSlider.rangeTo({id: id});
+					Global.rangeSlider.rangeTo({
+						id: id
+					});
 				});
 				
 				//point - mouseover event
@@ -2956,7 +2986,6 @@
 			const el_marks = el_range.querySelector('.ui-range-marks');
 			const txtArray = Global.rangeSlider[id].text;
 			const txtALen = txtArray.length;
-			
 			let percent;
 			let min = Number(el_from.min);
 			let max = Number(el_from.max);
@@ -2964,9 +2993,9 @@
 			if (v !== undefined) {
 				el_from.value = v;
 			}
-
-			let from_value = +el_from.value;
 			
+			let from_value = +el_from.value;
+
 			if (type !== 'single') {
 				if (+el_to.value - from_value < 0) {
 					from_value = +el_to.value - 0;
@@ -3040,6 +3069,9 @@
 					}
 				}
 			}
+			!!el_to ?
+				el_from.setAttribute('aria-label', Global.rangeSlider[id].title + ' 최소 ' + txtArray[el_from.value]):
+				el_from.setAttribute('aria-label', Global.rangeSlider[id].title + ' ' + txtArray[el_from.value]);
 		},
 		rangeTo(opt){
 			const id = opt.id;
@@ -3069,7 +3101,7 @@
 				to_value = +el_from.value + 0;
 				el_to.value = to_value;
 			}
-
+			
 			let percent = ((to_value - +min) / (+max - +min)) * 100;
 
 			el_right.classList.add('on');
@@ -3127,6 +3159,7 @@
 					}
 				}
 			}
+			el_to.setAttribute('aria-label', Global.rangeSlider[id].title + ' 최대 ' + txtArray[el_to.value]);
 		}
 	}
 
