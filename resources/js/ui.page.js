@@ -246,35 +246,39 @@
     netive.page.pageRange = () => {
         netive.rangeSlider.init({
             id: 'range1',
-            step: 500,
-            min:1000,
-            max:5000,
+            step: 1,
+            min: 0,
+            max: 8,
+            value: [0,5],
+            title: '위험도',
             text: ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'l8', 'lv9'],
-            tickmark: ['1000', '2000', '3000', '4000', '5000'],
+            tickmark: ['lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'l8', 'lv9'],
         });
     
         netive.rangeSlider.init({
             id: 'range2',
-            text: ['1단계', '2단계', '3단계', '4단계'],
-            min:1,
-            max:4,
             step: 1,
+            min:0,
+            max:3,
+            value: [1],
+            title: '위험도',
+            text: ['1단계', '2단계', '3단계', '4단계'],
             tickmark: ['1단계', '2단계', '3단계', '4단계']
         });
     
-        netive.rangeSlider.init({
-            id: 'range3',
-        });
+        // netive.rangeSlider.init({
+        //     id: 'range3',
+        // });
     
-        netive.rangeSlider.init({
-            id: 'range4',
-            step: 1000,
-        });
+        // netive.rangeSlider.init({
+        //     id: 'range4',
+        //     step: 1000,
+        // });
 
-         netive.rangeSlider.init({
-            id: 'range22',
-            step: 10,
-        });
+        //  netive.rangeSlider.init({
+        //     id: 'range22',
+        //     step: 10,
+        // });
     }
     netive.page.pageFileUpload = function(){
         netive.form.fileUpload(); 

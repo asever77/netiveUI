@@ -38,6 +38,7 @@
     
     &.same {
         .ui-range-point {pointer-events:none !important;}
+        .ui-range-inp.on{z-index: 11;}
     }
     &-inp {
         width: 100%;
@@ -57,7 +58,9 @@
         -webkit-appearance: none;
 
         &:focus ~ .ui-range-track{outline: 1px solid #000;}
-        &.on { pointer-events: all; z-index: 9;}
+        &.on { 
+            pointer-events: all; z-index: 9;
+        }
         &::-webkit-slider-thumb {
             pointer-events: all;
             /* appearance, background-color는 지워도 됨 */
@@ -153,7 +156,13 @@
         position: relative;
         text-align: center;
         padding-top:$x1;
-
+        margin-top:$x1;
+        
+        &:disabled {
+            pointer-events: none;
+            &::before,
+            span {display: none;}
+        }
         &::before{
             content:"";
             display:block;
@@ -167,12 +176,16 @@
         }
     }
     &-marks {
-        position: relative;
-        width: 100%;
         position: absolute;
+        width: 100%;
         display: flex;
         justify-content: space-between;
-        top:100%;
+        height: 0;
 
+        // &[data-to] {
+        //     display: none;
+        // }
     }
 }
+.ui-range-inp.on[data-range="from"] ~ .ui-range-marks[data-from="true"]{z-index: 1;}
+.ui-range-inp.on[data-range="to"] ~ .ui-range-marks[data-to="true"]{z-index: 1;}
