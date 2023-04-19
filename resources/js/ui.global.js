@@ -57,6 +57,7 @@
 	 * in use: Global.state,
 	 */
 	Global.state = {
+		isSystemModal: false,
 		device: {
 			info: (() => {
 				for (let i = 0, len = deviceInfo.length; i < len; i++) {
@@ -695,11 +696,13 @@
 	 */
 	Global.focus = {
 		loop(opt) {
-			if (opt === undefined) {
+			const el = opt.selector;
+
+			if (opt === undefined || Global.state.device.mobile) {
+				el.focus();
 				return false;
 			}
-			
-			const el = opt.selector;
+
 			const tags = el.querySelectorAll('*');
 			const tagLen = tags.length;
 			
@@ -711,10 +714,9 @@
 					break;
 				}
 			}
-			
-			if (!!el.querySelector('.ui-modal-wrap') && !el.querySelector('.ui-modal-wrap .ui-modal-guide')) {
+			if (!!el.querySelector('.ui-modal-wrap') && !el.querySelector('.ui-modal-wrap .ui-modal-guide') && !el.getAttribute('aria-live')) {
 				const modal_wrap = el.querySelector('.ui-modal-wrap');
-				modal_wrap.insertAdjacentHTML('beforeend','<button type="button" class="ui-modal-guide ui-focusloop-end">'+ (el.querySelector('.ui-modal-tit').textContent) +' 레이어 문서 마지막 지점입니다.</button>')
+				modal_wrap.insertAdjacentHTML('beforeend','<button type="button" class="ui-modal-guide ui-focusloop-end">'+ (el.querySelector('.ui-modal-tit') && el.querySelector('.ui-modal-tit').textContent) +' 레이어 문서 마지막 지점입니다.</button>')
 			} else {
 				for (let i = tagLen - 1; i >= 0; i--) {
 					const _tag = tags[i];
@@ -740,8 +742,8 @@
 					el_start.focus();
 				}
 			}
-
-			el.focus();
+			(!el.getAttribute('aria-live')) ? el.focus() : el_start.focus();
+			
 			el_start.addEventListener('keydown', keyStart);
 			el_end.addEventListener('keydown', keyEnd);
 		}
@@ -1425,10 +1427,11 @@
 					that.prepend(cloneTable);
 
 					const clone_tbl = that.querySelector('table:first-child');
-					const clone_ths = clone_tbl.querySelectorAll('th');
-					const clone_caption = clone_tbl.querySelector('caption');
 					const clone_thead = clone_tbl.querySelector('thead');
+					const clone_ths = clone_thead.querySelectorAll('th');
+					const clone_caption = clone_tbl.querySelector('caption');
 					const clone_tbodys = clone_tbl.querySelectorAll('tbody');
+					
 					let clone_td = '<tbody>';
 					clone_caption.remove();
 
@@ -2094,7 +2097,7 @@
 							clearbutton.setAttribute('aria-label', title + ' 값 삭제');
 							// clearbutton.dataset.id = id;
 							
-							wrap.appendChild(clearbutton);
+							inp.after(clearbutton);
 
 							const btn = wrap.querySelector('.ui-clear');
 							const w = btn.offsetWidth + w_suffix;
@@ -2754,6 +2757,13 @@
 
 			el_range.insertAdjacentHTML('beforeend', html);
 			html = '';
+
+			if (!el_to) {
+				html = '<strong class="a11y-hidden">'+ el_from.value +'</strong>';
+			} else {
+				html = '<strong class="a11y-hidden">'+ el_from.value +'부터 '+ el_to.value +'까지</strong>';
+			}
+			el_range.insertAdjacentHTML('beforeend', html);
 
 			const el_from_btn = el_range.querySelector('.ui-range-point.left');
 			const el_to_btn = el_range.querySelector('.ui-range-point.right');
@@ -5771,6 +5781,7 @@
 				remove = true;
 				id = 'uiSystemModal';
 				makeSystemModal();
+				Global.state.isSystemModal = true;
 			}
 
 			
@@ -5918,6 +5929,7 @@
 			// },210);
 		}, 
 		hideSystem () {
+			Global.state.isSystemModal = false;
 			Global.modal.hide({ 
 				id: 'uiSystemModal', 
 				type: 'system', 
@@ -6126,7 +6138,7 @@
 					const isClose = elTooltip.querySelector('.ui-tooltip-close');
 					
 					if (!isTit) {
-						elTooltip.insertAdjacentHTML('afterbegin', '<h3 class="ui-tooltip-tit">'+ elTit +'</h3>');
+						elTooltip.insertAdjacentHTML('beforeend', '<h3 class="ui-tooltip-tit">'+ elTit +'</h3>');
 					}
 					if (!isClose) {
 						elTooltip.insertAdjacentHTML('afterbegin', '<button type="button" class="ui-tooltip-close" data-id="'+ elId +'" aria-label="'+ elTit +' 닫기"></button>');
