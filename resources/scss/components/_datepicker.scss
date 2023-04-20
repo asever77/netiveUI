@@ -57,10 +57,10 @@
     }
 
     .inp-base{
-        padding-right:$x4;
         line-height: 4rem;
+        height: 4rem;
         text-align: left;
-
+        padding-right: 4rem;
         &::after {
             content: 'date_range';
     
@@ -79,16 +79,16 @@
         border: 0;
         padding: 0;
         text-align: left;
-        width: 100%;
-        height: 100%;
+        width: 3rem;
+        height: 3rem;
         position: absolute;
-        top: 0;
-        left: 0;
+        top: .5rem;
+        right: .5rem;
         z-index: 1;
         background-color: transparent;
         display: flex;
         align-items: center;
-        
+        background-color: red;
         &:focus,
         &:hover {outline:0;}
         &:focus .inp-base,
@@ -105,6 +105,8 @@
         }
 
         .datepicker-date{
+           border-left: 0 !important;
+            >* {display: none;}
             > * + *:not(.a11y-hidden){
                 &::before{
                     content:"-"

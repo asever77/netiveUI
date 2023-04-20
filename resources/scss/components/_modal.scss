@@ -192,6 +192,22 @@
             &.ps-bottom .ui-modal-wrap {@include modalEffect($eff:slideUpOut);}
         }
     }
+    .ui-modal-last:focus{bottom:$x1; opacity: 1; pointer-events: initial;}
+    .ui-modal-last{
+        position: absolute;
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        bottom:0;
+        left:50%;
+        transform: translate(-50%, 0);
+        background-color: #000;
+        opacity: 0;
+        pointer-events: none;
+        transition: all .2s ease-in;
+        user-select:none;
+
+    }
 }
 //ui-modal device mobile
 .ui-m {

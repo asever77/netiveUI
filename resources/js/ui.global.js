@@ -698,8 +698,7 @@
 		loop(opt) {
 			const el = opt.selector;
 
-			if (opt === undefined || Global.state.device.mobile) {
-				el.focus();
+			if (opt === undefined ) {
 				return false;
 			}
 
@@ -714,10 +713,12 @@
 					break;
 				}
 			}
-			if (!!el.querySelector('.ui-modal-wrap') && !el.querySelector('.ui-modal-wrap .ui-modal-guide') && !el.getAttribute('aria-live')) {
+
+			if (!!el.querySelector('.ui-modal-wrap') && !el.querySelector('.ui-modal-wrap .ui-modal-last') && !el.getAttribute('aria-live')) {
 				const modal_wrap = el.querySelector('.ui-modal-wrap');
-				modal_wrap.insertAdjacentHTML('beforeend','<button type="button" class="ui-modal-guide ui-focusloop-end">'+ (el.querySelector('.ui-modal-tit') && el.querySelector('.ui-modal-tit').textContent) +' 레이어 문서 마지막 지점입니다.</button>')
-			} else {
+				const last = '<button type="button" class="ui-modal-last ui-focusloop-end ui-modal-close" aria-label="'+ (el.querySelector('.ui-modal-tit') && el.querySelector('.ui-modal-tit').textContent) +' 레이어 문서 마지막 지점입니다. 모달 창 닫기"></button>'
+				modal_wrap.insertAdjacentHTML('beforeend', last);
+			} else if (!el.querySelector('.ui-focusloop-end')) {
 				for (let i = tagLen - 1; i >= 0; i--) {
 					const _tag = tags[i];
 					const tag_name = _tag.tagName;
@@ -730,6 +731,7 @@
 			
 			const el_start = el.querySelector('.ui-focusloop-start');
 			const el_end = el.querySelector('.ui-focusloop-end');
+
 			const keyStart = (e) => {
 				if (e.shiftKey && e.keyCode == 9) {
 					e.preventDefault();
@@ -742,7 +744,9 @@
 					el_start.focus();
 				}
 			}
-			(!el.getAttribute('aria-live')) ? el.focus() : el_start.focus();
+
+			el_start.focus();
+			// (!el.getAttribute('aria-live')) ? el.focus() : el_start.focus();
 			
 			el_start.addEventListener('keydown', keyStart);
 			el_end.addEventListener('keydown', keyEnd);
@@ -2714,6 +2718,7 @@
 			const el_inp = el_range.querySelectorAll('.ui-range-inp');
 			const isText = !!opt.text ? opt.text : false;
 			const track = el_range.querySelector('.ui-range-track');
+			const isMarks = el_range.querySelectorAll('.ui-range-marks');
 			const step = !!opt.step ? opt.step : 1;
 			const min = !!opt.min ? opt.min : Number(el_inp[0].min);
 			const max = !!opt.max ? opt.max : Number(el_inp[0].max);
@@ -2743,6 +2748,11 @@
 			}
 
 			!!track && track.remove();
+			if (!!isMarks) {
+				for (const isMark of isMarks) {
+					isMark.remove();
+				}
+			} 
 
 			let html = '<div class="ui-range-track">';
 			html += '<div class="ui-range-bar"></div>';
@@ -2753,7 +2763,6 @@
 			}
 			
 			html += '</div>';
-
 			if (!!tickmark) {
 				html += '<div class="ui-range-marks" id="'+ id +'_tickmarks_from" data-from="true">';
 				const len = tickmark.length;
@@ -2789,16 +2798,17 @@
 				}
 				
 				html += '</div>';
+
 			}
 
 			el_range.insertAdjacentHTML('beforeend', html);
 			html = '';
 
-			if (!el_to) {
-				html = '<strong class="a11y-hidden">'+ el_from.value +'</strong>';
-			} else {
-				html = '<strong class="a11y-hidden">'+ el_from.value +'부터 '+ el_to.value +'까지</strong>';
-			}
+			// if (!el_to) {
+			// 	html = '<strong class="a11y-hidden">'+ el_from.value +'</strong>';
+			// } else {
+			// 	html = '<strong class="a11y-hidden">'+ el_from.value +'부터 '+ el_to.value +'까지</strong>';
+			// }
 			el_range.insertAdjacentHTML('beforeend', html);
 
 			const el_from_btn = el_range.querySelector('.ui-range-point.left');
@@ -3110,9 +3120,9 @@
 				for (let item of el_marks_items) {
 					const _v = Number(item.dataset.value);
 
-					// if (!item.dataset.to || item.dataset.to === 'false') {
-					// 	item.querySelector('.state').textContent = '';
-					// }
+					if (!item.dataset.to || item.dataset.to === 'false') {
+						item.querySelector('.state').textContent = '';
+					}
 					item.dataset.from = false;
 					item.disabled = false;
 					item.removeAttribute('tabindex');
@@ -3132,9 +3142,10 @@
 
 					for (let item of el_marks_items) {
 						const _v = Number(item.dataset.value);
-						// if (!item.dataset.from || item.dataset.from === 'false') {
-						// 	item.querySelector('.state').textContent = '';
-						// } 
+
+						if (!item.dataset.from || item.dataset.from === 'false') {
+							item.querySelector('.state').textContent = '';
+						} 
 
 						item.disabled = false;
 						item.dataset.to = false;
@@ -3232,9 +3243,10 @@
 
 				for (let item of el_marks_items) {
 					const _v = Number(item.dataset.value);
-					// if (!item.dataset.from || item.dataset.from === 'false') {
-					// 	item.querySelector('.state').textContent = '';
-					// } 
+
+					if (!item.dataset.from || item.dataset.from === 'false') {
+						item.querySelector('.state').textContent = '';
+					} 
 
 					item.disabled = false;
 					item.dataset.to = false;
@@ -3256,9 +3268,10 @@
 					for (let item of el_marks_items) {
 						const _v = Number(item.dataset.value);
 
-						// if (!item.dataset.to || item.dataset.to === 'false') {
-						// 	item.querySelector('.state').textContent = '';
-						// }
+						if (!item.dataset.to || item.dataset.to === 'false') {
+							item.querySelector('.state').textContent = '';
+						}
+						
 						item.dataset.from = false;
 						item.disabled = false;
 						item.removeAttribute('tabindex');
@@ -3352,32 +3365,31 @@
 
 					!Global.callback[id] ? Global.callback[id] = () => {} : '';
 
-					let html = '<button type="button" class="ui-datepicker-btn" data-target="'+ id +'">';
-					html += '<span class="datepicker-date inp-base">';
-					html += '<span class="datepicker-date-yyyy">'+ v0[0] +'</span>';
-					html += '<span class="datepicker-date-mm">'+ v0[1] +'</span>';
-					html += '<span class="datepicker-date-dd">'+ v0[2] +'</span>';
-					html += '<span class="a11y-hidden">선택</span>'; 
-					html += '</span>'; 
-
+					let html = '<button type="button" class="ui-datepicker-btn" data-target="'+ id +'" aria-label="달력 보기" tabindex="-1"></button>';
+					// html += '<span class="datepicker-date">';
+					// html += '<span class="datepicker-date-yyyy">'+ v0[0] +'</span>';
+					// html += '<span class="datepicker-date-mm">'+ v0[1] +'</span>';
+					// html += '<span class="datepicker-date-dd">'+ v0[2] +'</span>';
+					// html += '<span class="a11y-hidden">선택</span>'; 
+					// html += '</span>'; 
+					dp.insertAdjacentHTML('beforeend', html);
 					if (inps.length > 1) {	
 						let v1 = inps[1].value.split('-');
 						(!inps[1].value) ? v1 = Global.datepicker.baseTxt : '';
-						html += '<span class="form-text">~</span>';
-						html += '<span class="datepicker-date inp-base">';
-						html += '<span class="datepicker-date-yyyy">'+ v1[0] +'</span>';
-						html += '<span class="datepicker-date-mm">'+ v1[1] +'</span>';
-						html += '<span class="datepicker-date-dd">'+ v1[2] +'</span>';
-						html += '<span class="a11y-hidden">선택</span>'; 
-						html += '</span>'; 
+						// html += '<span class="form-text">~</span>';
+						// html += '<span class="datepicker-date">';
+						// html += '<span class="datepicker-date-yyyy">'+ v1[0] +'</span>';
+						// html += '<span class="datepicker-date-mm">'+ v1[1] +'</span>';
+						// html += '<span class="datepicker-date-dd">'+ v1[2] +'</span>';
+						// html += '<span class="a11y-hidden">선택</span>'; 
+						// html += '</span>'; 
 
-						inps[1].setAttribute('tabindex', -1);
-						inps[1].setAttribute('aria-hidden', true);
+						// inps[1].setAttribute('tabindex', -1);
+						// inps[1].setAttribute('aria-hidden', true);
+						inps[1].removeAttribute('readonly');
 					}
-					html += '</button>'; 
-
-					inps[0].setAttribute('tabindex', -1);
-					dp.insertAdjacentHTML('beforeend', html);
+					inps[0].removeAttribute('readonly');
+					// inps[0].setAttribute('tabindex', -1);
 					html = '';
 
 					const btn = dp.querySelector('.ui-datepicker-btn');
@@ -3589,9 +3601,9 @@
 
 			const _startDay = startDay.split('-');
 			
-			s_yy[0].textContent = !!startDay ? _startDay[0] : Global.datepicker.baseTxt[0];
-			s_mm[0].textContent = !!startDay ? _startDay[1] : Global.datepicker.baseTxt[1];
-			s_dd[0].textContent = !!startDay ? _startDay[2] : Global.datepicker.baseTxt[2];
+			// s_yy[0].textContent = !!startDay ? _startDay[0] : Global.datepicker.baseTxt[0];
+			// s_mm[0].textContent = !!startDay ? _startDay[1] : Global.datepicker.baseTxt[1];
+			// s_dd[0].textContent = !!startDay ? _startDay[2] : Global.datepicker.baseTxt[2];
 			
 
 			!!callback && callback();
@@ -3601,9 +3613,9 @@
 				value_callback.push(endDay);
 				const _endDay = endDay.split('-');
 				
-				s_yy[1].textContent = !!endDay ? _endDay[0] : Global.datepicker.baseTxt[0];
-				s_mm[1].textContent = !!endDay ? _endDay[1] : Global.datepicker.baseTxt[1];
-				s_dd[1].textContent = !!endDay ? _endDay[2] : Global.datepicker.baseTxt[2];
+				// s_yy[1].textContent = !!endDay ? _endDay[0] : Global.datepicker.baseTxt[0];
+				// s_mm[1].textContent = !!endDay ? _endDay[1] : Global.datepicker.baseTxt[1];
+				// s_dd[1].textContent = !!endDay ? _endDay[2] : Global.datepicker.baseTxt[2];
 			}
 
 			!!Global.callback[id] && Global.callback[id](value_callback);
@@ -5762,7 +5774,7 @@
 					const elThis = e.currentTarget;
 					const elThisModal = elThis.closest('.ui-modal');
 
-					elModalClose.removeEventListener('click', closeAct);
+					!!elModalClose && elModalClose.removeEventListener('click', closeAct);
 					Global.modal.hide({ 
 						id: elThisModal.id, 
 						remove: remove,
@@ -5835,9 +5847,12 @@
 					}
 				}
 				//-- 드래그 닫기 추가
-
+				const lastClose =  elModal.querySelector('.ui-modal-last');
 				if (!!elModalClose) {
 					elModalClose.addEventListener('click', closeAct);
+				}
+				if (!!lastClose) {
+					lastClose.addEventListener('click', closeAct);
 				}
 
 				//systyem modal confirm & cancel callback
@@ -6043,6 +6058,8 @@
 			}
 
 			elModal.addEventListener('animationend', closeEnd);
+
+			callbackClose && callbackClose();
 
 			// clearTimeout(timer);
 			// timer = setTimeout(function(){

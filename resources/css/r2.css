@@ -1,0 +1,117 @@
+.ui-range { width:100%; height:6px; padding:0 0; display:flex; flex-direction:column; justify-content:flex-start; align-items:center; position:relative; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none; }
+.ui-range:after { content:''; position:absolute; top:0; left:0;  right:0; z-index:2; height:6px; background:url(/kosef/pcWeb/resources/images/bg_fundslider.png) no-repeat -5px 0; background-size:979px auto;  }
+.ui-range[data-type=single] .ui-range-track { z-index: 10; }
+.ui-range[data-type=single] .ui-range-bar { right:auto; }
+.ui-range[data-type=single] .ui-range-point::before { content:"code" !important; }
+.ui-range[data-orient=vertical] { transform-origin:5rem 5rem; transform:rotate(-90deg); margin-left:6rem;}
+.ui-range[data-orient=vertical] .ui-range-point { justify-content:center; }
+.ui-range[data-orient=vertical] .ui-range-txt { display:none; top:2.4rem; left:2rem; transform:rotate(90deg); transform-origin:0 0; }
+.ui-range .ui-range-inp { width:100%; top:0; left:0; position:absolute; border:none; z-index:10; -webkit-appearance:none; -moz-appearance:none; appearance:none; opacity:0; padding:0; margin:0; height:2rem; border:1px solid red; cursor:pointer; }
+.ui-range .ui-range-inp:focus ~ .ui-range-track { outline:1px solid #000; }
+.ui-range .ui-range-inp::-webkit-slider-thumb { pointer-events:all; -webkit-appearance:none; appearance:none; background-color:red; width:2rem; height:2rem; margin-top:0rem; }
+.ui-range .ui-range-inp[data-range=from]:focus ~ .ui-range-track .left.ui-range-point { outline:2px solid #000; pointer-events:none; }
+.ui-range .ui-range-inp[data-range=to]:focus ~ .ui-range-track .right.ui-range-point { outline:2px solid #000; pointer-events:none; }
+.ui-range .ui-range-track { position:relative; width:100%; height:6px; pointer-events:none; z-index:12; }
+.ui-range .ui-range-bar { position:absolute; pointer-events:none; top:0; bottom:0; left:0; right:0; border-radius:0.5rem; background:#fff url(/kosef/pcWeb/resources/images/bg_fundtrack01.png) no-repeat 0 0; background-size:979px auto; }
+.ui-range .ui-range-point { position:absolute; top:50%; width:20px; height:20px; border-radius:50%; border:3px solid #fff; background-color:#1E66F2; pointer-events: none; z-index:13; cursor:pointer; box-shadow:0px 4px 4px rgba(0, 0, 0, 0.1); z-index:20;  }
+.ui-range .ui-range-point:hover { pointer-events:none; }
+.ui-range .ui-range-point.left { left:0; transform:translate(-10px, -50%); }
+.ui-range .ui-range-point.left:after,
+.ui-range .ui-range-point.right:after { content:''; display:block; position:absolute; top:2px; left:2px; width:10px; height:10px; background:url(/kosef/pcWeb/resources/images/common/ico_comm.svg) no-repeat -400px 0;   } 
+.ui-range .ui-range-point.right:after { transform:rotate(180deg); }
+.ui-range .ui-range-point.right { right:0; transform:translate(10px, -50%); }
+.ui-range .ui-range-txt { position:absolute; top:-1.8rem; left:50%; text-align:center; font-size:12px; pointer-events:none; white-space: nowrap; transform: translate(-50%, 0);}
+.ui-range .ui-range-marks { position:absolute; display:block; width:100%; padding:0 10px; height:20px; top:25px; }
+.ui-range .ui-range-btn { position:absolute; top:0; font-size:14px; font-weight:600; padding:0; text-align:center; pointer-events: none; }
+
+.ui-range.same .ui-range-point { pointer-events: none !important; }
+.ui-range-inp { width: 100%; top: 0.5rem; left: 0; position: absolute; border: none; z-index: 10; -moz-appearance: none; appearance: none; opacity: 0; padding: 0; margin: 0; height: 2rem; cursor: pointer; background-color: transparent; pointer-events: none; -webkit-appearance: none; }
+.ui-range-inp:focus ~ .ui-range-track { outline: 1px solid #000; }
+.ui-range-inp.on { pointer-events: all; z-index: 9; }
+.ui-range-inp::-webkit-slider-thumb { pointer-events: all; /* appearance, background-color는 지워도 됨 */ appearance: none; background-color: transparent; box-shadow: none; width: 2rem; height: 2rem; margin-top: 0rem; z-index: 13; cursor: pointer; -webkit-appearance: none; }
+.ui-range-inp[data-range=from]:focus ~ .ui-range-track .left.ui-range-point, 
+.ui-range-inp[data-range=to]:focus ~ .ui-range-track .right.ui-range-point {  box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); pointer-events: none; }
+.ui-range-track { position: relative; width: 100%; height: 0.6rem; border-radius: 0.3rem; /* background-color: #BDBDBD; */ pointer-events: none; z-index: 12; }
+.ui-range-bar { position: absolute; pointer-events: none; top: 0; bottom: 0; left: 0; right: 0; border-radius: 0.5rem; background-color: #6B38FB; }
+.ui-range-point { position: absolute; top: 50%; display: flex; justify-content: center; align-self: center; width: 2rem; height: 2rem; border-radius: 50%; background-color: #6B38FB; pointer-events: none;  z-index: 13; cursor: pointer; }
+.ui-range-point.on { z-index: 14; box-shadow: 0 0 4px rgba(0, 0, 0, 0.5); }     
+.ui-range-point.left { left: 0; transform: translate(-1rem, -50%); }  
+.ui-range-point.right {  right: 0;   transform: translate(1rem, -50%); }      
+.ui-range-txt { position: absolute;  top: -1.8rem; text-align: center; font-size: 1.2rem; pointer-events: none; }
+.ui-range-btn { display: flex; justify-content: center; font-size: 1.2rem; width: 2rem; padding: 0; position: relative; text-align: center; padding-top: 0.8rem; }
+.ui-range-btn::before { content: ""; display: block; width: 1px; height: 0.4rem; background-color: var(--black); left: 50%; position: absolute; transform: translate(-50%, 0);top: 0; }
+.ui-range-marks { position: relative; width: 100%; position: absolute; display: flex; justify-content: space-between; top: 100%; }
+
+.range-return .ui-range:after { background-image:url(/kosef/pcWeb/resources/images/bg_fundslider2.png);}
+.range-return .ui-range .ui-range-bar { background-image:url(/kosef/pcWeb/resources/images/bg_fundtrack02.png);}
+
+/* .range-risk .ui-range-btn { width:100px; }
+.range-risk .ui-range-btn:after { content:''; display:block; position:absolute; top:-25px; left:50%; margin-left:-2px; width:4px; height:6px; background:#fff; }
+.range-risk .ui-range-btn[data-value='0'] { left:-5px; color:#003975; }
+.range-risk .ui-range-btn[data-value='0']:after, 
+.range-risk .ui-range-btn:last-child:after { display:none; }
+.range-risk .ui-range-btn[data-value='1'] { left:calc(20% - 50px); text-align:center; color:#1E66F2; }
+.range-risk .ui-range-btn[data-value='2'] { left:calc(40% - 50px); text-align:center; color:#58B84A; }
+.range-risk .ui-range-btn[data-value='3'] { left:calc(60% - 50px); text-align:center; color:#E9B63E; }
+.range-risk .ui-range-btn[data-value='4'] { left:calc(80% - 50px); text-align:center; color:#F46931; }
+.range-risk .ui-range-btn[data-value='5'] { right:0px; color:#1E66F2; } */
+
+.range-return .ui-range-btn[data-value='0'] { left:0; color:#003975; }
+.range-return .ui-range-btn[data-value='1'] { left:calc(16.666% - 50px); width:100px; color:#003975; }
+.range-return .ui-range-btn[data-value='2'] { left:calc(33.333% - 50px); width:100px; color:#003975; }
+.range-return .ui-range-btn[data-value='3'] { left:calc(50% - 50px); width:100px; color:#003975; }
+.range-return .ui-range-btn[data-value='4'] { left:calc(66.666% - 50px); width:100px; color:#F2303C; }
+.range-return .ui-range-btn[data-value='5'] { left:calc(83.333% - 50px); width:100px; color:#F2303C; }
+.range-return .ui-range-btn[data-value='6'] { right:0; color:#F2303C; }
+
+.range-return .ui-range .ui-range-btn { color:#1E66F2; width:60px;}
+.range-return .ui-range .ui-range-btn[data-value='0'] { left:0; width:60px; }
+.range-return .ui-range .ui-range-btn[data-value='1'] { left:calc(16.666% - 30px);  }
+.range-return .ui-range .ui-range-btn[data-value='2'] { left:calc(33.333% - 30px);  }
+.range-return .ui-range .ui-range-btn[data-value='3'] { left:calc(50% - 30px); color:#222;  }
+.range-return .ui-range .ui-range-btn[data-value='4'] { left:calc(66.666% - 30px); color:#EC008C; }
+.range-return .ui-range .ui-range-btn[data-value='5'] { left:calc(83.333% - 30px); color:#EC008C; }
+.range-return .ui-range .ui-range-btn[data-value='6'] { right:0; color:#EC008C; }
+
+.range-return .ui-range[data-from='0'] .ui-range-point.left,
+.range-return .ui-range[data-to='0'] .ui-range-point.right { background-color:#1E66F2; } 
+
+.range-return .ui-range[data-from='3'] .ui-range-point.left,
+.range-return .ui-range[data-to='3'] .ui-range-point.right { background-color:#222; } 
+.range-return .ui-range[data-from='4'] .ui-range-point.left,
+.range-return .ui-range[data-to='4'] .ui-range-point.right { background-color:#EC008C; } 
+.range-return .ui-range[data-from='5'] .ui-range-point.left,
+.range-return .ui-range[data-to='5'] .ui-range-point.right, 
+.range-return .ui-range[data-from='6'] .ui-range-point.left,
+.range-return .ui-range[data-to='6'] .ui-range-point.right { background-color:#EC008C; } 
+
+.range-risk .ui-range[data-from='0'] .ui-range-point.left,
+.range-risk .ui-range[data-to='0'] .ui-range-point.right { background-color:#F2303C; }  
+.range-risk .ui-range[data-from='1'] .ui-range-point.left,
+.range-risk .ui-range[data-to='1'] .ui-range-point.right { background-color:#F46931; }  
+.range-risk .ui-range[data-to='2'] .ui-range-point.right,  
+.range-risk .ui-range[data-from='2'] .ui-range-point.left { background-color:#E9B63E; }  
+.range-risk .ui-range[data-from='3'] .ui-range-point.left,
+.range-risk .ui-range[data-to='3'] .ui-range-point.right { background-color:#58B84A; }  
+.range-risk .ui-range[data-from='4'] .ui-range-point.left,
+.range-risk .ui-range[data-to='4'] .ui-range-point.right { background-color:#1E66F2; }  
+.range-risk .ui-range[data-from='5'] .ui-range-point.left,
+.range-risk .ui-range[data-to='5'] .ui-range-point.right { background-color:#003975; }  
+
+.range-risk .ui-range-btn { width:100px; }
+.range-risk .ui-range-btn[data-value='0'] { left:0; color:#F2303C; }
+.range-risk .ui-range-btn[data-value='1'] { left:calc(20% - 50px); text-align:center; color:#F46931; }
+.range-risk .ui-range-btn[data-value='2'] { left:calc(40% - 50px); text-align:center; color:#E9B63E; }
+.range-risk .ui-range-btn[data-value='3'] { left:calc(60% - 50px); text-align:center; color:#58B84A; }
+.range-risk .ui-range-btn[data-value='4'] { left:calc(80% - 50px); text-align:center; color:#1E66F2; }
+.range-risk .ui-range-btn[data-value='5'] { right:0px; color:#003975; }
+.range-risk .ui-range[data-from='1'] .ui-range-bar { background-position-x:-196px; }
+.range-risk .ui-range[data-from='2'] .ui-range-bar { background-position-x:-392px; }
+.range-risk .ui-range[data-from='3'] .ui-range-bar { background-position-x:-588px; }
+.range-risk .ui-range[data-from='4'] .ui-range-bar { background-position-x:-784px; }
+.range-risk .ui-range[data-from='5'] .ui-range-bar { background-position-x:-980px; }
+
+
+.ui-range .ui-range-txt { display:none; }
+.ui-range .ui-range-btn,
+.ui-range .ui-range-marks option { position:absolute; top:0; font-size:14px; font-weight:600; padding:0; line-height:18px; text-align:center; white-space:normal;}

@@ -11506,9 +11506,10 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   color: var(--gray900);
 }
 .ui-datepicker .inp-base {
-  padding-right: 3.2rem;
   line-height: 4rem;
+  height: 4rem;
   text-align: left;
+  padding-right: 4rem;
 }
 .ui-datepicker .inp-base::after {
   content: "date_range";
@@ -11525,15 +11526,16 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   border: 0;
   padding: 0;
   text-align: left;
-  width: 100%;
-  height: 100%;
+  width: 3rem;
+  height: 3rem;
   position: absolute;
-  top: 0;
-  left: 0;
+  top: 0.5rem;
+  right: 0.5rem;
   z-index: 1;
   background-color: transparent;
   display: flex;
   align-items: center;
+  background-color: red;
 }
 .ui-datepicker-btn:focus, .ui-datepicker-btn:hover {
   outline: 0;
@@ -11548,6 +11550,12 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   border: 0;
   background: transparent;
   color: #666;
+}
+.ui-datepicker-btn .datepicker-date {
+  border-left: 0 !important;
+}
+.ui-datepicker-btn .datepicker-date > * {
+  display: none;
 }
 .ui-datepicker-btn .datepicker-date > * + *:not(.a11y-hidden)::before {
   content: "-";
@@ -12339,6 +12347,29 @@ dl[class*=bul-] > div > dt, dl[class*=bul-] > dt {
   animation-iteration-count: 1;
   animation-timing-function: linear;
   animation-fill-mode: forwards;
+}
+.modal .ui-modal-last:focus,
+.ui-modal .ui-modal-last:focus {
+  bottom: 0.8rem;
+  opacity: 1;
+  pointer-events: initial;
+}
+.modal .ui-modal-last,
+.ui-modal .ui-modal-last {
+  position: absolute;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  bottom: 0;
+  left: 50%;
+  transform: translate(-50%, 0);
+  background-color: #000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.2s ease-in;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
 }
 
 .ui-m .scroll-no {
