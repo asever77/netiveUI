@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <div class="tab" data-tab="tab_A">
+        <div class="tab-btns">
+            <button type="button" class="tab-btn" data-tab="tab1">탭A1</button>
+            <button type="button" class="tab-btn" data-tab="tab2">탭A2</button>
+        </div>
+       
+        <div class="tab-pnl" data-pnl="tab1">
+            A 11111111
+        </div>
+        <div class="tab-pnl" data-pnl="tab2">
+            A 222222222
+        </div>
+    </div>
+
+    <div class="tab" data-tab="tab_B">
+        <div class="tab-btns">
+            <button type="button" class="tab-btn" data-tab="tab1">탭B1</button>
+            <button type="button" class="tab-btn" data-tab="tab2">탭B2</button>
+        </div>
+       
+        <div class="tab-pnl" data-pnl="tab1">
+            B 11111111
+        </div>
+        <div class="tab-pnl" data-pnl="tab2">
+            B 222222222
+        </div>
+    </div>
+    
+
+    <script>
+    (() => {
+        'use strict';
+
+        const global = 'Test';
+        window[global] = {};
+        const Global = window[global];
+
+        class Tab {
+            constructor(opt) {
+                this.tab = document.querySelector('.tab[data-tab="'+ opt.tab +'"]');
+                this.color = opt.color;
+            }
+
+            init() {
+                console.log(this.tab);
+                const btns = this.tab.querySelectorAll('.tab-btn');
+
+                for (let btn of btns) {
+                    btn.addEventListener('click', this.toggle.bind(this));
+                }
+            }
+            toggle(event) {
+                console.log('toggle:', this, event && event.currentTarget);
+            }
+        }
+
+        Test.tabA = new Tab({
+            tab: 'tab_A',
+            color: 'red'
+        });
+        Test.tabB = new Tab({
+            tab: 'tab_B',
+            color: 'blue'
+        });
+
+        Test.tabA.init();
+        Test.tabB.init();
+    })();
+        
+
+    </script>
+</body>
+</html>
