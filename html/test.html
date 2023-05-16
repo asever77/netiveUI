@@ -16,6 +16,8 @@
 html, body{margin: 0;}
 html{font-size: 62.5%}
 *{box-sizing: border-box;}
+body{overflow: hidden; min-height: 100%; position: relative;}
+
 :root {
     --vh: 100%;
   /* iOS 11.2 이상 */
@@ -121,6 +123,7 @@ html{font-size: 62.5%}
   display: flex;
   flex-direction: column;
   -webkit-overflow-scrolling: touch; 
+  -webkit-box-orient: vertical;
 }
 .kbhc-wrap .kbhc-header {
   position: relative;
