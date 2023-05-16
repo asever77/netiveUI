@@ -119,7 +119,6 @@ body{overflow: hidden; min-height: 100%; position: relative;}
   position: relative;
   height: calc(var(--vh, 1vh) * 100);
   overflow: hidden;
-  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
   display: flex;
   flex-direction: column;
   -webkit-overflow-scrolling: touch; 
@@ -127,7 +126,7 @@ body{overflow: hidden; min-height: 100%; position: relative;}
 }
 .kbhc-wrap .kbhc-header {
   position: relative;
-  min-height: 5.6rem;
+  padding-top: env(safe-area-inset-top); env(safe-area-inset-right)  env(safe-area-inset-left);
   background-color: blue;
 }
 .kbhc-wrap .kbhc-main {
@@ -138,18 +137,10 @@ body{overflow: hidden; min-height: 100%; position: relative;}
 }
 .kbhc-wrap .kbhc-footer {
   position: relative;
-  min-height: 5.6rem;
+    padding-bottom: env(safe-area-inset-bottom); env(safe-area-inset-right)  env(safe-area-inset-left);
   background-color: red;
 }
 
-.kbhc-wrap:before {
-  content: "";
-  position: relative;
-  display: block;
-  width: 100%;
-  background-color: gold;
-  height: env(safe-area-inset-top);
-}
 
 .fix{position: fixed; }
 
@@ -465,11 +456,12 @@ stit {
     -->
     <div class="kbhc-wrap">
         <header class="kbhc-header">
-            <div style="color:#fff; height: 3rem; border: 1px solid green;">test</div>
-            <div class="fix" style="width:3rem; height:4rem; background-color: #000; top:0; right:0"></div>
+            <div style="min-height: 5.6rem; width:100%; background-color: #212121;">
+                <div style="color:#fff; height: 3rem; border: 1px solid green;">test</div>
+                <div class="fix" style="width:3rem; height:4rem; background-color: #000; top:0; right:0"></div>
+            </div>
         </header>
         <main class="kbhc-main">
-            
             <wrap class="content scrollBox">
                 <tit>Title Module</tit>
                 <stit>기본</stit>
@@ -564,7 +556,7 @@ stit {
             </wrap>
         </main>
         <footer class="kbhc-footer">
-            <div style="color:#fff; height: 5rem; border: 1px solid green;">test</div>
+            <div style="color:#fff; min-height: 5rem; border: 1px solid green; background-color: orange;">test</div>
         </footer>
     </div>
    
