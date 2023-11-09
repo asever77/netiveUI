@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="google" content="notranslate">
+
+	<title>Netive UI Development Group</title>
+
+	<link rel="apple-touch-icon" href="../resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="../resources/img/common/ico_favicon.ico"> 
+	<link rel="canonical" href="https://asever77.github.io/netiveUI/html/">
+
+	<link rel="stylesheet" href="../assets/css/main.css">
+
+	
+
+</head>
+<body class="">
+	<div class="mdl-wrap">
+        <header class="mdl-header">
+
+        </header>
+
+        <div class="mdl-body">
+            <aside class="mdl-aside"></aside>
+            <main class="mdl-main">
+
+                <button type="button" class="mdl-btn" data-toggle-object="a" data-callback="toggle_a" style="width: 20rem; height:8rem; border: .1rem solid black;">
+                    <span>버튼</span>
+                </button>
+                <div data-toggle-target="a"></div>
+
+             
+            </main>
+        </div>
+       
+        <footer class="mdl-footer"></footer>
+    </div>
+
+    <script src="../assets/js/ui.global.js"></script>
+    <script type="module">
+        import Toggle from '../assets/js/components/toggle.js';
+
+        UI.exe.test = new Toggle();
+        UI.callback.toggle_a = (result) => {
+            console.log('callback', result);
+        }
+    </script>
+</body>
+</html>

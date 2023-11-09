@@ -8,7 +8,8 @@
         }
     ],
     "liveSassCompile.settings.includeItems": [
-        "/resources/scss/main.scss"
+        "/resources/scss/main.scss",
+        "/assets/scss/main.scss"
     ],
 
     "liveServer.settings.donotVerifyTags": true,

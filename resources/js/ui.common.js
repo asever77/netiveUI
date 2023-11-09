@@ -67,6 +67,7 @@
       selection: { link: '../html/components/selection.html' },
       toast: { link: '../html/components/toast.html' },
      
+      count: { link: '../html/components/count.html' },
       scrollMove: { link: '../html/components/scrollMove.html' },
       countNumber: { link: '../html/components/countNumber.html' },
       layout: { link: '../html/contents/layout.html' },
