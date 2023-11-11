@@ -35,21 +35,34 @@
                 </button>
                 <div data-toggle-target="a"></div>
 
-             
+                <div class="mdl-count" data-id="report1"></div>
             </main>
         </div>
        
         <footer class="mdl-footer"></footer>
     </div>
 
-    <script src="../assets/js/ui.global.js"></script>
+    <!-- <script src="../assets/js/ui.global.js"></script> -->
     <script type="module">
+        import Global from '../assets/js/components/global.js';
         import Toggle from '../assets/js/components/toggle.js';
+        import CountSlide from '../assets/js/components/countSlide.js';
+
 
         UI.exe.test = new Toggle();
         UI.callback.toggle_a = (result) => {
             console.log('callback', result);
         }
+
+
+        UI.exe.reportCount1 = new CountSlide({
+            id :'report1',
+            value: 8
+        });
+
+        UI.exe.reportCount1.act();
+
+        
     </script>
 </body>
 </html>

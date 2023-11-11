@@ -1,0 +1,29 @@
+.mdl-count{
+    $ft-size:6rem;
+    $h:8rem;
+
+    display: flex;
+    height: $h;
+    overflow: hidden;
+
+    &-item{
+        height: $h;
+        overflow: hidden;
+    }
+    &-num{
+        display: flex;
+        flex-direction: column;
+
+        span{
+            display: flex;
+            width: 100%;
+            height: $h;
+            justify-content: center;
+            align-items: center;
+
+            font-size: $ft-size;
+            font-weight: 700;
+
+        }
+    }
+}
