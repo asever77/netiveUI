@@ -6,7 +6,6 @@ if (!window[global]) {
 const Global = window[global];
 
 const UA = navigator.userAgent.toLowerCase();
-const deviceSize = [1920, 1600, 1440, 1280, 1024, 960, 840, 720, 600, 480, 400, 360];
 const deviceInfo = ['android', 'iphone', 'ipod', 'ipad', 'blackberry', 'windows ce', 'windows','samsung', 'lg', 'mot', 'sonyericsson', 'nokia', 'opeara mini', 'opera mobi', 'webos', 'iemobile', 'kfapwi', 'rim', 'bb10'];
 
 Global.data = {};
@@ -24,8 +23,6 @@ Global.state = {
         })(),
         width: window.innerWidth,
         height: window.innerHeight,
-        breakpoint: null,
-        colClass: null,
         ios: (/ip(ad|hone|od)/i).test(UA),
         android: (/android/i).test(UA),
         app: UA.indexOf('appname') > -1 ? true : false,
@@ -88,9 +85,8 @@ Global.parts = {
         });
     },
     resizeState() {
-        let timerWin;
-
         const act = () => {
+            const el_html = document.querySelector('html');
             const browser = Global.state.browser;
             const device = Global.state.device;
 
@@ -102,8 +98,8 @@ Global.parts = {
             device.os = device.os ? device.os[0] : '';
             device.os = device.os.toLowerCase();
 
-            device.breakpoint = device.width >= deviceSize[5] ? true : false;
-            device.colClass = device.width >= deviceSize[5] ? 'col-12' : device.width > deviceSize[8] ? 'col-8' : 'col-4';
+            device.breakpoint = device.width >= Global.state.breakPoint[0] ? true : false;
+            device.col = device.width >= Global.state.breakPoint[1] ? '12' : device.width > Global.state.breakPoint[0] ? '8' : '4';
 
             if (browser.ie) {
                 browser.ie = browser.ie = parseInt( browser.ie[1] || browser.ie[2] );
@@ -112,38 +108,11 @@ Global.parts = {
             } else {
                 browser.ie = false;
             }
-            
-            const clsBrowser = browser.chrome ? 'chrome' : browser.firefox ? 'firefox' : browser.opera ? 'opera' : browser.safari ? 'safari' : browser.ie ? 'ie' + browser.ie : 'other';
-            const clsMobileSystem = device.ios ? "ios" : device.android ? "android" : 'etc';
-            const clsMobile = device.mobile ? device.app ? 'ui-a ui-m' : 'ui-m' : 'ui-d';
-            const el_html = document.querySelector('html');
 
-            el_html.classList.remove('col-12', 'col-8', 'col-4');
-            el_html.classList.add(device.colClass);
-            el_html.classList.add(clsBrowser);
-            el_html.classList.add(clsMobileSystem);
-            el_html.classList.add(clsMobile);
-        
-            const w = window.innerWidth;
-
-            // clearTimeout(timerWin);
-            // timerWin = setTimeout(() => {
-            //     el_html.classList.remove('size-tablet');
-            //     el_html.classList.remove('size-desktop');
-            //     el_html.classList.remove('size-mobile');
-            //     el_html.classList.remove('size-desktop');
-
-            //     if (w < Global.state.breakPoint[0]) {
-            //         Global.state.browser.size = 'mobile';
-            //         el_html.classList.add('size-mobile');
-            //     } else if (w < Global.state.breakPoint[1]) {
-            //         Global.state.browser.size = 'tablet';
-            //         el_html.classList.add('size-tablet');
-            //     } else {
-            //         Global.state.browser.sizee = 'desktop';
-            //         el_html.classList.add('size-desktop');
-            //     }
-            // },200);
+            el_html.dataset.col = device.col;
+            el_html.dataset.browser = browser.chrome ? 'chrome' : browser.firefox ? 'firefox' : browser.opera ? 'opera' : browser.safari ? 'safari' : browser.ie ? 'ie' + browser.ie : 'other';
+            el_html.dataset.platform = device.ios ? "ios" : device.android ? "android" : 'window';
+            el_html.dataset.device = device.mobile ? device.app ? 'app' : 'mobile' : 'desktop';
         }
         window.addEventListener('resize', act);
         act();

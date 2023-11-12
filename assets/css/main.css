@@ -27,15 +27,11 @@
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 10px;
 }
 
-html.size-mobile {
-  font-size: 2.2vw;
-}
-
-html.size-tablet {
-  font-size: 1vw;
+html, body {
+  padding: 0;
 }
 
 /* See https://hankchizljaw.com/wrote/a-modern-css-reset/ */
@@ -226,40 +222,76 @@ legend,
   box-shadow: none !important;
 }
 
-guide {
-  opacity: 0.3;
-  display: block;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  border: 0.1rem dashed tomato;
+/* GRID guide */
+guide-grid {
+  display: none;
+  position: fixed;
+  z-index: 9999;
   pointer-events: none;
-  z-index: 1000;
-}
-guide::after, guide::before {
-  content: "";
-  position: absolute;
-  display: block;
-}
-guide::after {
-  width: 100%;
-  height: 0.1rem;
-  border-top: 0.1rem dashed tomato;
-  top: 50%;
-  left: 0;
-}
-guide::before {
-  width: 0.1rem;
-  height: 100%;
-  border-left: 0.1rem dashed tomato;
-  left: 50%;
   top: 0;
+  left: 0;
+  width: 100%;
+  max-width: 119rem;
+  height: 100%;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+guide-grid.on {
+  display: flex;
+}
+guide-grid div {
+  flex: 1;
+  height: 100%;
+  background: rgba(155, 155, 255, 0.1);
+}
+guide-grid div + div {
+  margin-left: 2.4rem;
 }
 
-guide2 {
-  opacity: 0.8;
+[data-material]::before {
+  content: attr(data-material);
+  font-family: "Material Icons";
+}
+
+[data-col="4"] guide-grid {
+  max-width: calc(100% - 4rem);
+  width: 100%;
+  padding: 0 0.8rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+[data-col="4"] guide-grid div:nth-child(4) ~ div {
+  display: none;
+}
+[data-col="4"] guide-grid div + div {
+  margin-left: 1.6rem;
+}
+
+[data-col="8"] guide-grid {
+  max-width: calc(100% - 14.4rem);
+  padding: 0 0.8rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+[data-col="8"] guide-grid div:nth-child(8) ~ div {
+  display: none;
+}
+[data-col="8"] guide-grid div + div {
+  margin-left: 1.6rem;
+}
+
+[data-col="12"] guide-grid {
+  max-width: 93.6rem;
+  padding: 0 0.8rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+}
+[data-col="12"] guide-grid div + div {
+  margin-left: 0.8rem;
+}
+
+guide-box {
+  opacity: 0.3;
   display: block;
   position: absolute;
   top: 0;
@@ -269,22 +301,21 @@ guide2 {
   border: 0.1rem dotted rgb(57, 248, 98);
   background-color: rgba(77, 255, 71, 0.1);
   pointer-events: none;
-  z-index: 999;
-  margin: 0 !important;
+  z-index: 1000;
 }
-guide2::after, guide2::before {
+guide-box::after, guide-box::before {
   content: "";
   position: absolute;
   display: block;
 }
-guide2::after {
+guide-box::after {
   width: 100%;
   height: 0.1rem;
   border-top: 0.1rem dotted rgb(57, 248, 98);
   top: 50%;
   left: 0;
 }
-guide2::before {
+guide-box::before {
   width: 0.1rem;
   height: 100%;
   border-left: 0.1rem dotted rgb(57, 248, 98);
@@ -8039,69 +8070,6 @@ hr {
   border: 0.1rem solid rgb(180, 180, 180);
 }
 
-/* GRID guide */
-.base-grid {
-  display: none;
-  position: fixed;
-  z-index: 9999;
-  pointer-events: none;
-  top: 0;
-  left: 0;
-  width: 100%;
-  max-width: 119rem;
-  height: 100%;
-  justify-content: space-between;
-  padding: 0 2rem;
-}
-.base-grid.on {
-  display: flex;
-}
-.base-grid div {
-  flex: 1;
-  height: 100%;
-  background: rgba(155, 155, 255, 0.1);
-}
-.base-grid div + div {
-  margin-left: 2.4rem;
-}
-
-.col-4 .base-grid {
-  max-width: calc(100% - 4rem);
-  width: 100%;
-  padding: 0 0.8rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-}
-.col-4 .base-grid div:nth-child(4) ~ div {
-  display: none;
-}
-.col-4 .base-grid div + div {
-  margin-left: 1.6rem;
-}
-
-.col-8 .base-grid {
-  max-width: calc(100% - 14.4rem);
-  padding: 0 0.8rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-}
-.col-8 .base-grid div:nth-child(8) ~ div {
-  display: none;
-}
-.col-8 .base-grid div + div {
-  margin-left: 1.6rem;
-}
-
-.col-12 .base-grid {
-  max-width: 93.6rem;
-  padding: 0 0.8rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-}
-.col-12 .base-grid div + div {
-  margin-left: 0.8rem;
-}
-
 /*
 내부 스크롤에 관성 및 바운스 적용하기
 overflow:auto;
@@ -8443,6 +8411,73 @@ overflow:auto;
   src: url("../fonts/RobotoMono-Bold.woff") format("woff");
   unicode-range: U+0030-0039;
 }
+.base-wrap {
+  position: relative;
+  width: 100%;
+}
+.base-body {
+  padding: 0 7.2rem;
+  position: relative;
+  z-index: 1;
+}
+.base-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  width: 100%;
+  z-index: 2;
+}
+.base-header-wrap {
+  position: relative;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 1.6rem;
+  transition: padding 0.2s ease-in;
+}
+.base-header-logo {
+  width: 4rem;
+  height: 4rem;
+  background: url("data:image/svg+xml,%3Csvg version='1.0' xmlns='http://www.w3.org/2000/svg' width='42px' height='43px' viewBox='0 0 42 43' preserveAspectRatio='xMidYMid meet'%3E%3Ctitle%3ENetive UI%3C/title%3E%3Cg transform='translate(0,43) scale(0.1,-0.1)' fill='%23000000' stroke='none'%3E%3Cpath d='M138 410 c-45 -13 -87 -49 -110 -93 -19 -36 -23 -62 -26 -175 l-4 -132 71 0 71 0 0 115 c0 110 1 117 25 140 27 28 52 31 81 11 16 -12 20 -31 24 -138 l5 -123 68 -3 67 -3 0 128 c0 103 -4 136 -19 169 -40 87 -154 134 -253 104z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E") no-repeat 50% 50%/2.4rem;
+}
+.base-header .mdl-group {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.8rem;
+  justify-content: center;
+}
+.base-header[data-toggle-state=true] .base-nav {
+  transform: translateX(0);
+}
+.base-header[data-toggle-state=true] .base-header-wrap {
+  padding-left: calc(40vw + 1.6rem);
+}
+.base-header[data-toggle-state=true] [data-toggle-object=nav]::before {
+  content: "arrow_back";
+}
+.base-main {
+  padding-top: 16rem;
+}
+.base-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 40vw;
+  height: 100%;
+  padding: 2.4rem;
+  background-color: #fff;
+  z-index: 10;
+  border-right: 1px solid #ccc;
+  transform: translateX(-40vw);
+  transition: transform 0.2s ease-in;
+}
+
+@media (max-width: 374px) {
+  html {
+    font-size: 2.68vw;
+  }
+}
 .mdl-count {
   display: flex;
   height: 8rem;
@@ -8464,4 +8499,20 @@ overflow:auto;
   align-items: center;
   font-size: 6rem;
   font-weight: 700;
+}
+
+.mdl-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.mdl-button[data-style=nav] {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background-color: #131313;
+  color: #fff;
+  font-size: 2.6rem;
+  font-weight: 500;
 }/*# sourceMappingURL=main.css.map */

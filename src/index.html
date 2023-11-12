@@ -17,18 +17,43 @@
 
 	<link rel="stylesheet" href="../assets/css/main.css">
 
-	
-
 </head>
-<body class="">
-	<div class="mdl-wrap">
-        <header class="mdl-header">
-
+<body>
+	<div class="base-wrap">
+        <header class="base-header" data-toggle-target="nav">
+            <div class="base-header-wrap">
+                <div class="mdl-group">
+                    <div class="base-header-logo" data-img="logo">
+                        <span class="a11y-hidden">netive</span>
+                    </div>
+                    <button type="button" class="mdl-button" data-style="nav" data-toggle-object="nav" data-callback="toggle_nav" data-material="arrow_forward" aria-label="menu"></button>
+                </div>
+                <div class="mdl-group">
+                    <button type="button" class="mdl-button" data-style="nav" data-material="light" aria-label="menu"></button>
+                    <button type="button" class="mdl-button" data-style="nav" data-material="grid_on" aria-label="menu"></button>
+                </div>
+            </div>
+            <nav class="base-nav">
+                <h2>memu</h2>
+                <ul>
+                    <li>
+                        <button type="button">
+                            <span>Count Slide</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button">
+                            <span>Introduction</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
         </header>
 
-        <div class="mdl-body">
-            <aside class="mdl-aside"></aside>
-            <main class="mdl-main">
+        <div class="base-body">
+            <aside class="base-aside"></aside>
+            <main class="base-main" style="height: 200vh;">
+                <h1>Netive</h1>
 
                 <button type="button" class="mdl-btn" data-toggle-object="a" data-callback="toggle_a" style="width: 20rem; height:8rem; border: .1rem solid black;">
                     <span>버튼</span>
@@ -39,7 +64,7 @@
             </main>
         </div>
        
-        <footer class="mdl-footer"></footer>
+        <footer class="base-footer"></footer>
     </div>
 
     <!-- <script src="../assets/js/ui.global.js"></script> -->
@@ -50,6 +75,18 @@
 
 
         UI.exe.test = new Toggle();
+        UI.callback.toggle_nav = (result) => {
+            console.log('callback nav: ', result.state);
+            const btn = document.querySelector('[data-toggle-object="'+ result.name +'"]');
+
+            if (result.state === 'true') {
+                btn.dataset.meterial = 'arrow_forward';
+            } else {
+                btn.dataset.meterial = 'arrow_back';
+            }
+            
+        }
+
         UI.callback.toggle_a = (result) => {
             console.log('callback', result);
         }
@@ -57,7 +94,7 @@
 
         UI.exe.reportCount1 = new CountSlide({
             id :'report1',
-            value: 8
+            value: 4876
         });
 
         UI.exe.reportCount1.act();
