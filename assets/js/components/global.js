@@ -63,6 +63,7 @@ Global.state = {
 };
 Global.parts = {
     scroll(){
+        const el_html = document.querySelector('html');
         let last_know_scroll_position = 0;
         let ticking = false;
 
@@ -70,6 +71,7 @@ Global.parts = {
             Global.state.scroll.direction = 
                 Global.state.scroll.y > scroll_pos ? 'up' : Global.state.scroll.y < scroll_pos ? 'down' : ''; 
             Global.state.scroll.y = scroll_pos;
+            el_html.dataset.direction = Global.state.scroll.direction;
         }
         window.addEventListener('scroll', (e) => {
             last_know_scroll_position = window.scrollY;
@@ -167,8 +169,5 @@ Global.parts = {
 };
 Global.parts.resizeState();
 Global.parts.scroll();
-
-
-
 
 export default {Global}; 

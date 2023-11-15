@@ -55,26 +55,67 @@
             <main class="base-main" style="height: 200vh;">
                 <h1>Netive</h1>
 
-                <button type="button" class="mdl-btn" data-toggle-object="a" data-callback="toggle_a" style="width: 20rem; height:8rem; border: .1rem solid black;">
+                <h2>toggle js</h2>
+                <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
                     <span>버튼</span>
                 </button>
-                <div data-toggle-target="a"></div>
+                <div data-toggle-target="a" class="test"></div>
 
+                <h2>count slide js</h2>
                 <div class="mdl-count" data-id="report1"></div>
+
+                <h2>modal js</h2>
+                <button type="button" class="mdl-button" data-toggle-object="b" data-callback="toggle_b">
+                    <span>modal</span>
+                </button>
+                <button type="button" class="mdl-button" data-toggle-object="b" data-callback="toggle_b">
+                    <span>modal</span>
+                </button>
             </main>
         </div>
        
         <footer class="base-footer"></footer>
     </div>
 
-    <!-- <script src="../assets/js/ui.global.js"></script> -->
+    <section class="mdl-modal" data-id="modal1" data-state="">
+        <div class="mdl-modal-wrap">
+            <div class="mdl-modal-header">
+                <h1>제목</h1>
+                <button type="button" class="mdl-modal-close" 
+                 aria-label="닫기"></button>
+            </div>
+            <div class="mdl-modal-body" style="height: 100vh;">
+                내용<div style="height: 100vh;"></div>내용 끝
+            </div>
+            <div class="mdl-modal-footer">
+                <button type="button" class="mdl-button" data-toggle-object="c">
+                    <span>확인</span>
+                </button>
+            </div>
+        </div>
+        <div class="mdl-modal-dim"></div>
+    </section>
+
     <script type="module">
         import Global from '../assets/js/components/global.js';
         import Toggle from '../assets/js/components/toggle.js';
         import CountSlide from '../assets/js/components/countSlide.js';
+        import Modal from '../assets/js/components/modal.js';
 
+        // 실행
+        UI.exe.countSlide = new CountSlide({
+            id :'report1',
+            value: 4876
+        });
+        UI.exe.modal_1 = new Modal({
+            id :'modal1',
+        });
 
         UI.exe.test = new Toggle();
+        UI.exe.countSlide.act();
+        
+
+        // Toggle Callback
         UI.callback.toggle_nav = (result) => {
             console.log('callback nav: ', result.state);
             const btn = document.querySelector('[data-toggle-object="'+ result.name +'"]');
@@ -84,22 +125,13 @@
             } else {
                 btn.dataset.meterial = 'arrow_back';
             }
-            
         }
-
         UI.callback.toggle_a = (result) => {
             console.log('callback', result);
         }
-
-
-        UI.exe.reportCount1 = new CountSlide({
-            id :'report1',
-            value: 4876
-        });
-
-        UI.exe.reportCount1.act();
-
-        
+        UI.callback.toggle_b = (result) => {
+            UI.exe.modal_1.show();
+        }
     </script>
 </body>
 </html>
