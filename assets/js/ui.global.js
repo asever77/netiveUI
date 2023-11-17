@@ -67,5 +67,23 @@ Global.parts = {
         let parts = n.toString().split(".");
 
         return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
+    },
+    include(opt) {
+        const selector = document.querySelector('[data-id="'+ opt.id +'"]');
+        const src = opt.src;
+        const type = !opt.type ? 'html' : opt.type;
+        const insert = !!opt.insert ? opt.insert : false;
+
+        if (!!selector && !!src && type === 'html') {
+            fetch(src).then(response => response.text()).then(data => {
+                if (insert) {
+                    selector.insertAdjacentHTML('afterbegin', data);
+                } else {
+                    selector.innerHTML = data;
+                }
+                
+                (!!selector.dataset.title && !!selector.querySelector('.ocr-header-tit')) && selector.querySelector('.ocr-header-tit').setAttribute('aria-label', selector.dataset.title);
+            });
+        }  
     }
 };

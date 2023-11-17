@@ -248,6 +248,17 @@ guide-grid div + div {
   margin-left: 2.4rem;
 }
 
+code {
+  padding: 1.6rem;
+  background-color: #222;
+  color: #f2f2f2;
+  font-size: 1.2rem;
+  margin: 1.6rem 0 0.8rem;
+  display: block;
+  border-radius: 0.8rem;
+  overflow: auto;
+}
+
 [data-material]::before {
   content: attr(data-material);
   font-family: "Material Icons";
@@ -8411,6 +8422,18 @@ overflow:auto;
   src: url("../fonts/RobotoMono-Bold.woff") format("woff");
   unicode-range: U+0030-0039;
 }
+[data-h="1"] {
+  font-size: 5.6rem;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+[data-h="2"] {
+  font-size: 3.2rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
 html[data-modal=show] body {
   overflow: hidden;
 }
@@ -8418,6 +8441,13 @@ html[data-modal=show] body {
 .base-wrap {
   position: relative;
   width: 100%;
+}
+.base-sec {
+  position: relative;
+  width: 100%;
+}
+.base-sec + .base-sec {
+  margin-top: 6.4rem;
 }
 .base-body {
   padding: 0 7.2rem;
@@ -8464,7 +8494,7 @@ html[data-modal=show] body {
   content: "arrow_back";
 }
 .base-main {
-  padding-top: 16rem;
+  padding: 16rem 0 8rem;
 }
 .base-nav {
   position: fixed;
@@ -8526,8 +8556,9 @@ html[data-modal=show] body {
   font-size: 2.6rem;
   font-weight: 500;
 }
-.mdl-button[data-toggle-state=true] {
-  background-color: #f1f1f1;
+.mdl-button:focus {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
 }
 
 .test {
@@ -8536,7 +8567,7 @@ html[data-modal=show] body {
   border: 0.1rem dashed black;
 }
 .test[data-toggle-state=true] {
-  background-color: orange;
+  background-color: tomato;
 }
 
 .mdl-modal {

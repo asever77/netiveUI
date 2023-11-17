@@ -18,7 +18,7 @@ export default class ToggleUI {
         const el_target = document.querySelector('[data-toggle-target="'+ is_name +'"]');
 
         let data_state = el_object.dataset.toggleState;
-        let is_state = data_state !== 'true' ? 'true' : '';
+        let is_state = data_state !== 'true' ? 'true' : 'false';
        
         el_object.dataset.toggleState = is_state;
         !!el_target ? el_target.dataset.toggleState = is_state : '';

@@ -11,6 +11,12 @@ html{
         position: relative;
         width: 100%;
     }
+    &-sec {
+        position: relative;
+        width: 100%;
+
+        & + .base-sec {margin-top: $x8;}
+    }
 
     &-body {
         padding: 0 $x9;
@@ -58,7 +64,7 @@ html{
     }
     
     &-main {
-        padding-top: 16rem;
+        padding: $x20 0 $x10;
     }
 
     &-nav{

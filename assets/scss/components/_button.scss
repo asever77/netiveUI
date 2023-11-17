@@ -21,8 +21,9 @@
         font-weight: 500;
     }
 
-    &[data-toggle-state="true"] {
-        background-color: #f1f1f1;
+    &:focus {
+        text-decoration: underline;
+        text-underline-offset: .3rem;
     }
 }
 
@@ -32,6 +33,6 @@
     border: .1rem dashed black;
 
     &[data-toggle-state="true"] {
-        background-color: orange;
+        background-color: tomato;
     }
 }

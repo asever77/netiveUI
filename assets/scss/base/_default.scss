@@ -24,6 +24,17 @@ guide-grid {
     div + div {margin-left: 2.4rem;}
 }
 
+code {
+    padding: $x2;
+    background-color: #222;
+    color: #f2f2f2;
+    font-size: 1.2rem;
+    margin: $x2 0 $x1;
+    display: block;
+    border-radius: $x1;
+    overflow: auto;
+}
+
 [data-material] {
     &::before {
         content:attr(data-material);
