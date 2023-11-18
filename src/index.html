@@ -14,8 +14,7 @@
 	<link rel="apple-touch-icon" href="../resources/img/common/ico_app.png" >
 	<link rel="shortcut icon" href="../resources/img/common/ico_favicon.ico"> 
 	<link rel="canonical" href="https://asever77.github.io/netiveUI/html/">
-
-	<link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
 
 </head>
 <body>
@@ -23,9 +22,11 @@
         <header class="base-header" data-toggle-target="nav">
             <div class="base-header-wrap">
                 <div class="mdl-group">
-                    <div class="base-header-logo" data-img="logo">
-                        <span class="a11y-hidden">netive</span>
-                    </div>
+                    <button type="button" class="mdl-button" data-style="weather" aria-label="today weather" data-callback="toggle_weather">
+                        <span class="icon">globe_asia</span>
+                        <span class="temperature">0</span>
+                    </button>
+                    <!-- <div class="today-weather" data-material="format_underlined"></div> -->
                     <button type="button" class="mdl-button" data-style="nav" data-toggle-object="nav" data-callback="toggle_nav" data-material="arrow_forward" aria-label="menu"></button>
                 </div>
                 <div class="mdl-group">
@@ -60,6 +61,8 @@
                     <p>기본적인 토글 이벤트 관련 모듈로 data-toggle-object="{name}", data-toggle-target="{name}"로 연결되어 data-toggle-state="{true | false}" 상태값 변경</p>
                     <code>
 <pre>
+import Toggle from '../assets/js/components/toggle.js';
+
 UI.exe.toggle = new Toggle();
 UI.callback.callbackname = (result) => {
     console.log('callback', result);
@@ -77,6 +80,8 @@ UI.callback.callbackname = (result) => {
                     <p>숫자 텍스트를 회전하는 슬롯머신 효과로 표현</p>
                     <code>
 <pre>
+import CountSlide from '../assets/js/components/countSlide.js';
+
 UI.exe.countSlide = new CountSlide({
     id :'report1',
     value: 4876
@@ -114,6 +119,8 @@ UI.exe.countSlide.act();
     &lt;div class="mdl-modal-dim"&gt;&lt;/div&gt;
 &lt;/section&gt;
 
+import Modal from '../assets/js/components/modal.js';
+
 UI.exe.modal_1 = new Modal({
     id :'modal1',
 });
@@ -133,10 +140,17 @@ UI.exe.modal_1.hide();
                     <p>Excel 문서 기준으로 json파일을 생성하여 자동 생성</p>
                     <code>
 <pre>
- 
+엑셀파일 : https://docs.google.com/spreadsheets/d/1BU8pciPxmsYYurepc1ixQt9bQI7Fi5PQJYpmyPmdALo/edit?usp=sharing
+
+import IABoard from '../assets/js/components/IABoard.js';
+
+UI.exe.IABoard = new IABoard({
+    id: 'projectlist',
+    url: '/assets/files/codinglist.json'
+});
 </pre>
                     </code>
-                    <div class="ui-codinglist" id="projectlist"></div>
+                    <div class="mdl-codinglist" id="projectlist" style="overflow-y: auto; height: 40vh;"></div>
                 </section>
                 
             </main>
@@ -171,7 +185,7 @@ UI.exe.modal_1.hide();
         import Toggle from '../assets/js/components/toggle.js';
         import CountSlide from '../assets/js/components/countSlide.js';
         import Modal from '../assets/js/components/modal.js';
-        // import IABoard from '../assets/js/components/IABoard.js';
+        import IABoard from '../assets/js/components/IABoard.js';
 
         // 공통
         UI.exe.toggle = new Toggle();
@@ -184,10 +198,10 @@ UI.exe.modal_1.hide();
         UI.exe.modal_1 = new Modal({
             id :'modal1',
         });
-        // UI.exe.IABoard = new IABoard({
-        //     id: 'projectlist',
-        //     url: '/assets/files/codinglist.json'
-        // });
+        UI.exe.IABoard = new IABoard({
+            id: 'projectlist',
+            url: '/assets/files/codinglist.json'
+        });
         
        
 
@@ -204,6 +218,7 @@ UI.exe.modal_1.hide();
         }
         UI.callback.toggle_a = (result) => {
             console.log('callback', result);
+            navigator.geolocation.getCurrentPosition(UI.weather.success, UI.weather.fail);
         }
         UI.callback.toggle_b = (result) => {
             UI.exe.modal_1.show();
@@ -211,6 +226,10 @@ UI.exe.modal_1.hide();
         UI.callback.toggle_c = (result) => {
             UI.exe.countSlide.act();
         }
+        UI.callback.toggle_weather = () => {
+            navigator.geolocation.getCurrentPosition(UI.weather.success, UI.weather.fail);
+        }
+       
     </script>
 </body>
 </html>

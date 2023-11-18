@@ -261,7 +261,6 @@ code {
 
 [data-material]::before {
   content: attr(data-material);
-  font-family: "Material Icons";
 }
 
 [data-col="4"] guide-grid {
@@ -8095,112 +8094,18 @@ overflow:auto;
 /*
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300&family=Roboto:wght@100;300;400;500;700;900&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Noto+Sans+KR:100,300,400,500,700,900&subset=korean'); 
-@import url('https://fonts.googleapis.com/css?family=Material+Icons|Material+Icons+Outlined|Material+Icons+Two+Tone|Material+Icons+Round|Material+Icons+Sharp');
 */
-/* google material icons */
-@font-face {
-  font-family: "Material Icons";
-  font-style: normal;
-  font-weight: 400;
-  src: url(../fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2) format("woff2");
-}
 /* fallback */
 @font-face {
-  font-family: "Material Icons Outlined";
+  font-family: "Material Symbols Outlined";
   font-style: normal;
-  font-weight: 400;
-  src: url(../fonts/gok-H7zzDkdnRel8-DQ6KAXJ69wP1tGnf4ZGhUce.woff2) format("woff2");
+  font-weight: 100 700;
+  src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v151/kJEhBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oFsI.woff2) format("woff2");
 }
-/* fallback */
-@font-face {
-  font-family: "Material Icons Round";
+[data-material]::before,
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
   font-style: normal;
-  font-weight: 400;
-  src: url(../fonts/LDItaoyNOAY6Uewc665JcIzCKsKc_M9flwmP.woff2) format("woff2");
-}
-/* fallback */
-@font-face {
-  font-family: "Material Icons Sharp";
-  font-style: normal;
-  font-weight: 400;
-  src: url(../fonts/oPWQ_lt5nv4pWNJpghLP75WiFR4kLh3kvmvR.woff2) format("woff2");
-}
-/* fallback */
-@font-face {
-  font-family: "Material Icons Two Tone";
-  font-style: normal;
-  font-weight: 400;
-  src: url(../fonts/hESh6WRmNCxEqUmNyh3JDeGxjVVyMg4tHGctNCu0.woff2) format("woff2");
-}
-.material-icons {
-  font-family: "Material Icons";
-  font-weight: normal;
-  font-style: normal;
-  font-size: 2.2rem;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-feature-settings: "liga";
-  -webkit-font-smoothing: antialiased;
-}
-
-.material-icons-outlined {
-  font-family: "Material Icons Outlined";
-  font-weight: normal;
-  font-style: normal;
-  font-size: 2.2rem;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-feature-settings: "liga";
-  -webkit-font-smoothing: antialiased;
-}
-
-.material-icons-round {
-  font-family: "Material Icons Round";
-  font-weight: normal;
-  font-style: normal;
-  font-size: 2.2rem;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-feature-settings: "liga";
-  -webkit-font-smoothing: antialiased;
-}
-
-.material-icons-sharp {
-  font-family: "Material Icons Sharp";
-  font-weight: normal;
-  font-style: normal;
-  font-size: 2.2rem;
-  line-height: 1;
-  letter-spacing: normal;
-  text-transform: none;
-  display: inline-block;
-  white-space: nowrap;
-  word-wrap: normal;
-  direction: ltr;
-  -webkit-font-feature-settings: "liga";
-  -webkit-font-smoothing: antialiased;
-}
-
-.material-icons-two-tone {
-  font-family: "Material Icons Two Tone";
-  font-weight: normal;
-  font-style: normal;
-  font-size: 2.2rem;
   line-height: 1;
   letter-spacing: normal;
   text-transform: none;
@@ -8476,7 +8381,10 @@ html[data-modal=show] body {
 .base-header-logo {
   width: 4rem;
   height: 4rem;
-  background: url("data:image/svg+xml,%3Csvg version='1.0' xmlns='http://www.w3.org/2000/svg' width='42px' height='43px' viewBox='0 0 42 43' preserveAspectRatio='xMidYMid meet'%3E%3Ctitle%3ENetive UI%3C/title%3E%3Cg transform='translate(0,43) scale(0.1,-0.1)' fill='%23000000' stroke='none'%3E%3Cpath d='M138 410 c-45 -13 -87 -49 -110 -93 -19 -36 -23 -62 -26 -175 l-4 -132 71 0 71 0 0 115 c0 110 1 117 25 140 27 28 52 31 81 11 16 -12 20 -31 24 -138 l5 -123 68 -3 67 -3 0 128 c0 103 -4 136 -19 169 -40 87 -154 134 -253 104z'%3E%3C/path%3E%3C/g%3E%3C/svg%3E") no-repeat 50% 50%/2.4rem;
+  font-size: 3rem;
+  font-weight: 700;
+  text-align: center;
+  transform: rotate(180deg);
 }
 .base-header .mdl-group {
   display: flex;
@@ -8555,6 +8463,35 @@ html[data-modal=show] body {
   color: #fff;
   font-size: 2.6rem;
   font-weight: 500;
+}
+.mdl-button[data-style=nav]:focus {
+  text-decoration: none;
+}
+.mdl-button[data-style=weather] {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  color: #131313;
+  border: 0;
+  font-size: 2.8rem;
+  font-weight: 700;
+  position: relative;
+}
+.mdl-button[data-style=weather]:focus {
+  text-decoration: none;
+}
+.mdl-button[data-style=weather] .icon {
+  font-family: "Material Symbols Outlined";
+  font-weight: 700;
+}
+.mdl-button[data-style=weather] .temperature {
+  position: absolute;
+  bottom: -1.8rem;
+  width: 100%;
+  display: block;
+  text-align: center;
+  font-size: 1.3rem;
+  color: #000;
 }
 .mdl-button:focus {
   text-decoration: underline;
@@ -8698,4 +8635,198 @@ html[data-modal=show] body {
     opacity: 0;
     transform: translate(0, 8rem);
   }
+}
+.mdl-codinglist {
+  width: 100%;
+  padding: 0 1rem;
+}
+.mdl-codinglist[data-state] tbody tr.srch-hidden, .mdl-codinglist[data-pub] tbody tr.srch-hidden {
+  display: none !important;
+}
+.mdl-codinglist[data-state] tbody tr, .mdl-codinglist[data-pub] tbody tr {
+  display: none;
+}
+.mdl-codinglist[data-pub] tbody tr.worker-view {
+  display: table-row;
+}
+.mdl-codinglist[data-state] tbody tr.state-view {
+  display: table-row;
+}
+.mdl-codinglist[data-state][data-pub] tbody tr.state-view, .mdl-codinglist[data-state][data-pub] tbody tr.worker-view {
+  display: none;
+}
+.mdl-codinglist[data-state][data-pub] tbody tr.worker-view.state-view {
+  display: table-row;
+}
+.mdl-codinglist select,
+.mdl-codinglist input,
+.mdl-codinglist button {
+  height: 4rem;
+  padding: 0.8rem 1.6rem;
+  border: 0.1rem solid var(--gray_90);
+  background-color: #fff;
+}
+.mdl-codinglist .srch-area {
+  display: flex;
+}
+.mdl-codinglist .btn-outlined {
+  margin-left: 0.4rem;
+}
+.mdl-codinglist .srch-hidden {
+  display: none;
+}
+.mdl-codinglist .sch_warn .state span,
+.mdl-codinglist .sch_warn .state:before {
+  color: #f44336 !important;
+}
+.mdl-codinglist .state span {
+  display: inline-block;
+  vertical-align: middle;
+  color: var(--gray_90);
+}
+.mdl-codinglist .state span::before {
+  content: "panorama_fish_eye";
+  font-family: "Material Symbols Outlined";
+  display: inline-block;
+  vertical-align: middle;
+  margin-right: 0.3rem;
+  margin-top: -0.2rem;
+  font-weight: 900;
+  font-size: 1rem;
+  line-height: 1;
+  color: var(--gray_90);
+}
+.mdl-codinglist [data-state=제외] td {
+  background-color: var(--gray_10);
+}
+.mdl-codinglist [data-state=제외] td:not(.d) * {
+  text-decoration-line: line-through;
+  pointer-events: none;
+  color: var(--gray_20) !important;
+}
+.mdl-codinglist [data-state=제외] .state span {
+  color: var(--gray_80);
+}
+.mdl-codinglist [data-state=제외] .state span::before {
+  content: "remove_circle_outline";
+  color: var(--gray_30);
+}
+.mdl-codinglist [data-state=완료] .state span {
+  color: var(--sub);
+}
+.mdl-codinglist [data-state=완료] .state span::before {
+  content: "check_circle_outline";
+  color: var(--sub);
+}
+.mdl-codinglist table {
+  table-layout: auto;
+}
+.mdl-codinglist thead th {
+  background-color: var(--gray_20);
+}
+.mdl-codinglist tbody tr.on {
+  outline: 0.1rem dashed #3a3a3a;
+  transform: scale(1.002);
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+.mdl-codinglist tbody tr:hover {
+  outline: 0.1rem solid #3a3a3a;
+}
+.mdl-codinglist tbody tr td {
+  line-height: 1.1;
+  vertical-align: top;
+  transition: padding 0.2s ease-in;
+}
+.mdl-codinglist th, .mdl-codinglist td {
+  border: 0.1rem solid var(--gray_20);
+  font-size: 1.1rem;
+  font-weight: 500;
+  padding: 0.4rem;
+  white-space: nowrap;
+}
+.mdl-codinglist .d1, .mdl-codinglist .d2, .mdl-codinglist .d3, .mdl-codinglist .d4, .mdl-codinglist .d5, .mdl-codinglist .d6, .mdl-codinglist .d7, .mdl-codinglist .d8 {
+  color: var(--gray_30);
+}
+.mdl-codinglist .d2, .mdl-codinglist .d3, .mdl-codinglist .d4, .mdl-codinglist .d5, .mdl-codinglist .d6, .mdl-codinglist .d7, .mdl-codinglist .d8 {
+  white-space: normal;
+}
+.mdl-codinglist .c1 .d1, .mdl-codinglist .c2 .d2, .mdl-codinglist .c3 .d3, .mdl-codinglist .c4 .d4, .mdl-codinglist .c5 .d5, .mdl-codinglist .c6 .d6, .mdl-codinglist .c7 .d7, .mdl-codinglist .c8 .d8 {
+  color: var(--gray_90);
+}
+.mdl-codinglist .today-mod .date,
+.mdl-codinglist .today-mod .mod {
+  color: red !important;
+}
+.mdl-codinglist .today-mod td.state::after {
+  content: "수정";
+  display: inline-block;
+  background-color: tomato;
+  color: #fff;
+  margin: -2px 0 0 -20px;
+  vertical-align: middle;
+}
+.mdl-codinglist .today-mod td {
+  background-color: rgb(253, 234, 234);
+}
+.mdl-codinglist .name-tg {
+  display: none;
+}
+.mdl-codinglist.name-toggle-view .btn-base[data-material]::before {
+  content: "first_page";
+}
+.mdl-codinglist.name-toggle-view tr .name-tg {
+  display: table-cell;
+}
+.mdl-codinglist.name-toggle-view tr td.name-tg {
+  background-color: var(--gray_100);
+}
+.mdl-codinglist-header {
+  position: sticky;
+  z-index: 3;
+  top: 0;
+  padding: 0.8rem 0;
+  background-color: #fff;
+}
+.mdl-codinglist-state {
+  position: relative;
+  top: 0;
+  padding: 0.8rem 1.6rem;
+  overflow: hidden;
+  border-radius: 0.4rem;
+  z-index: 3;
+  background: #424242;
+  color: #FAFAFA;
+  font-size: 1.2rem;
+  border: 1px solid #4dcbe3;
+}
+.mdl-codinglist-state dt {
+  font-weight: 600;
+  font-size: 1.2rem;
+  color: #4dcbe3;
+}
+.mdl-codinglist-state .bar {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  z-index: 1;
+  height: 100%;
+  background-color: #6200ee;
+  box-shadow: 0 0 3rem rgba(74, 238, 0, 0.5);
+  transition: all 0.3s ease-out;
+}
+.mdl-codinglist-state dl {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  z-index: 2;
+}
+.mdl-codinglist-state ul {
+  display: flex;
+}
+.mdl-codinglist-state li {
+  flex: 1 auto;
+  margin-left: 1.6rem;
 }/*# sourceMappingURL=main.css.map */

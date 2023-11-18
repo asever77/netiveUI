@@ -167,7 +167,133 @@ Global.parts = {
     },
 
 };
+Global.weather = {
+    success(position) {
+        console.log(position);
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        Global.weather.get({
+            lat: latitude, 
+            lon: longitude
+        });
+    },
+    fail() {
+        alert("좌표를 받아올 수 없음");
+    },
+    get(opt) {
+        const API_KEY = '65045c3fea36143336ff03f3bae04eb9';
+        const lat = opt.lat; 
+        const lon = opt.lon;
+        const city = opt.city;
+        const _data = !city ?  `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=kr` : `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric&lang=kr`;
+        fetch(_data).then((response) => {
+            return response.json();
+        }).then((json) => {
+            const temperature = json.main.temp;
+            const place = json.name;
+            const description = json.weather[0].description;
+            const icon_name = json.weather[0].icon;
+            let icon;
+            let dayNight;
+
+            switch (icon_name) {
+                case '01d': 
+                    dayNight = 'day';
+                    icon = 'clear_day';
+                    break;
+                case '01n': 
+                    dayNight = 'night';
+                    icon = 'clear_night';
+                    break;
+
+                case '02d': 
+                    dayNight = 'day';
+                    icon = 'partly_cloudy_day'
+                    break;
+                case '02n': 
+                    dayNight = 'night';
+                    icon = 'partly_cloudy_night';
+                    break;
+
+                case '03d': 
+                    dayNight = 'day';
+                    icon = 'cloud'
+                    break;
+                case '03n': 
+                    dayNight = 'night';
+                    icon = 'cloud';
+                    break;
+
+                case '04d': 
+                    dayNight = 'day';
+                    icon = 'cloud'
+                    break;
+                case '04n': 
+                    dayNight = 'night';
+                    icon = 'cloud';
+                    break;
+
+                case '09d': 
+                    dayNight = 'day';
+                    icon = 'rainy'
+                    break;
+                case '09n': 
+                    dayNight = 'night';
+                    icon = 'rainy';
+                    break;
+
+                case '10d': 
+                    dayNight = 'day';
+                    icon = 'rainy'
+                    break;
+                case '10n': 
+                    dayNight = 'night';
+                    icon = 'rainy';
+                    break;
+
+                case '11d': 
+                    dayNight = 'day';
+                    icon = 'thunderstorm'
+                    break;
+                case '11n': 
+                    dayNight = 'night';
+                    icon = 'thunderstorm';
+                    break;
+
+                case '13d': 
+                    dayNight = 'day';
+                    icon = 'weather_snowy'
+                    break;
+                case '13n': 
+                    dayNight = 'night';
+                    icon = 'weather_snowy';
+                    break;
+
+                case '50d': 
+                    dayNight = 'day';
+                    icon = 'foggy'
+                    break;
+                case '50n': 
+                    dayNight = 'night';
+                    icon = 'foggy';
+                    break;
+            }
+
+            console.log(dayNight, icon);
+            document.querySelector('[data-style="weather"] .icon').textContent = icon;
+            document.querySelector('[data-style="weather"] .temperature').textContent = temperature + '°';
+        });
+
+    }
+}
 Global.parts.resizeState();
 Global.parts.scroll();
+Global.weather.get({ city:'Seoul' });
+
+
+
+
+
+
 
 export default {Global}; 

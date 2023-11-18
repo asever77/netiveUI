@@ -16,9 +16,35 @@
         border-radius: 50%;
         background-color: #131313;
         color: #fff;
-
         font-size: 2.6rem;
         font-weight: 500;
+
+        &:focus {text-decoration: none;}
+    }
+    &[data-style="weather"] {
+        width: 4rem;
+        height: 4rem;
+        border-radius: 50%;
+        color: #131313;
+        border:0;
+        font-size: 2.8rem;
+        font-weight: 700;
+        position: relative;
+        
+        &:focus {text-decoration: none;}
+        .icon {
+            font-family: 'Material Symbols Outlined';
+            font-weight: 700;
+        }
+        .temperature{
+            position: absolute;
+            bottom: -1.8rem;
+            width: 100%;
+            display: block;
+            text-align: center;
+            font-size: 1.3rem;
+            color: #000;
+        }
     }
 
     &:focus {

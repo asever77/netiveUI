@@ -46,7 +46,11 @@ html{
         &-logo {
             width: 4rem;
             height: 4rem;
-            background: url($svg_logo) no-repeat 50% 50% / 2.4rem;
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            transform: rotate(180deg);
+            // background: url($svg_logo) no-repeat 50% 50% / 2.4rem;
         }
 
         .mdl-group {
