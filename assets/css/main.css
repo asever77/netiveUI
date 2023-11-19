@@ -250,13 +250,14 @@ guide-grid div + div {
 
 code {
   padding: 1.6rem;
-  background-color: #222;
-  color: #f2f2f2;
-  font-size: 1.2rem;
+  background-color: #f7f4f3;
+  color: #222;
+  font-size: 1.4rem;
   margin: 1.6rem 0 0.8rem;
   display: block;
   border-radius: 0.8rem;
   overflow: auto;
+  font-family: Consolas, Lucida Console, Menlo, Monaco, monospace;
 }
 
 [data-material]::before {

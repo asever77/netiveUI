@@ -26,13 +26,14 @@ guide-grid {
 
 code {
     padding: $x2;
-    background-color: #222;
-    color: #f2f2f2;
-    font-size: 1.2rem;
+    background-color: #f7f4f3;
+    color: #222;
+    font-size: 1.4rem;
     margin: $x2 0 $x1;
     display: block;
     border-radius: $x1;
     overflow: auto;
+    font-family: Consolas,Lucida Console,Menlo,Monaco,monospace;
 }
 
 [data-material] {
