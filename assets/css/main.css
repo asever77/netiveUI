@@ -8397,7 +8397,7 @@ html[data-modal=show] body {
   transform: translateX(0);
 }
 .base-header[data-toggle-state=true] .base-header-wrap {
-  padding-left: calc(40vw + 1.6rem);
+  padding-left: 21.6rem;
 }
 .base-header[data-toggle-state=true] [data-toggle-object=nav]::before {
   content: "arrow_back";
@@ -8409,14 +8409,15 @@ html[data-modal=show] body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 40vw;
+  width: 20rem;
   height: 100%;
   padding: 2.4rem;
   background-color: #fff;
   z-index: 10;
   border-right: 1px solid #ccc;
-  transform: translateX(-40vw);
+  transform: translateX(-20rem);
   transition: transform 0.2s ease-in;
+  overflow-x: hidden;
 }
 
 @media (max-width: 374px) {

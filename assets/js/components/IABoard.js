@@ -247,7 +247,7 @@ export default class IABoard {
             const arstate = Array.from(new Set(ctg_state));
             for (let i = 0; i < arstate.length; i++) {
                 if (i === 0) {
-                    info += '<option value="전체">All State</option>';
+                    info += '<option value="전체">전체</option>';
                 } else {
                     info += '<option value="'+ arstate[i] +'">'+ arstate[i] +'</option>';
                 }
@@ -259,7 +259,7 @@ export default class IABoard {
             const pubworker = Array.from(new Set(ctg_pub));
             for (let i = 0; i < pubworker.length; i++) {
                 if (i === 0) {
-                    info += '<option value="전체">All Worker</option>';
+                    info += '<option value="전체">모든 작업자</option>';
                 } else {
                     info += '<option value="'+ pubworker[i] +'">'+ pubworker[i] +'</option>';
                 }

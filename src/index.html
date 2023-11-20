@@ -22,7 +22,7 @@
         <header class="base-header" data-toggle-target="nav">
             <div class="base-header-wrap">
                 <div class="mdl-group">
-                    <button type="button" class="mdl-button" data-style="weather" aria-label="today weather" data-callback="toggle_weather">
+                    <button type="button" class="mdl-button" data-style="weather" aria-label="today weather" data-toggle-object="weather" data-callback="toggle_weather">
                         <span class="icon">globe_asia</span>
                         <span class="temperature">0</span>
                     </button>
@@ -54,31 +54,28 @@
         <div class="base-body">
             <aside class="base-aside"></aside>
             <main class="base-main" aria-labelledby="primary-heading">
-                <h1 data-h="1" id="primary-heading">Netive</h1>
+                <h1 data-h="1" id="primary-heading">Javascript Module</h1>
 
                 <section class="base-sec" aria-labelledby="toggle">
                     <h2 data-h="2" id="toggle">toggle js</h2>
                     <p>기본적인 토글 이벤트 관련 모듈로 data-toggle-object="{name}", data-toggle-target="{name}"로 연결되어 data-toggle-state="{true | false}" 상태값 변경</p>
-                    
 <pre>
-    <span></span>
-    <code>
-        &lt;button type="button" data-toggle-object="a" data-callback="toggle_a"&gt;
-            &lt;span&gt;버튼&lt;/span&gt;
-        &lt;/button&gt;  
-        &lt;div data-toggle-target="a"&gt;&lt;/div&gt;
+<code>
+    &lt;button type="button" data-toggle-object="a" data-callback="toggle_a"&gt;
+        &lt;span&gt;버튼&lt;/span&gt;
+    &lt;/button&gt;  
+    &lt;div data-toggle-target="a"&gt;&lt;/div&gt;
 
-        &lt;script type="module"&gt;
-            import Toggle from '../assets/js/components/toggle.js';
+    &lt;script type="module"&gt;
+        import Toggle from '../assets/js/components/toggle.js';
 
-            UI.exe.toggle = new Toggle();
-            UI.callback.callbackname = (result) => {
-                console.log('callback', result);
-            }
-        &lt;/script&gt;
-    </code>
+        UI.exe.toggle = new Toggle();
+        UI.callback.callbackname = (result) => {
+            console.log('callback', result);
+        }
+    &lt;/script&gt;
+</code>
 </pre>
-                    </code>
                     <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
                         <span>버튼</span>
                     </button>
@@ -228,7 +225,7 @@ UI.exe.IABoard = new IABoard({
         }
         UI.callback.toggle_a = (result) => {
             console.log('callback', result);
-            navigator.geolocation.getCurrentPosition(UI.weather.success, UI.weather.fail);
+           
         }
         UI.callback.toggle_b = (result) => {
             UI.exe.modal_1.show();
@@ -237,6 +234,7 @@ UI.exe.IABoard = new IABoard({
             UI.exe.countSlide.act();
         }
         UI.callback.toggle_weather = () => {
+            console.log('weather');
             navigator.geolocation.getCurrentPosition(UI.weather.success, UI.weather.fail);
         }
        
