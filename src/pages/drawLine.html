@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="google" content="notranslate">
+
+	<title>Netive UI Development Group</title>
+
+	<link rel="apple-touch-icon" href="../resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="../resources/img/common/ico_favicon.ico"> 
+	<link rel="canonical" href="https://asever77.github.io/netiveUI/html/">
+    <link rel="stylesheet" href="../../assets/css/main.css">
+
+    <style>
+        .ui-draw {margin: 0 0;position: relative;width: 50rem; height: 50rem; margin: 0 auto;}.ui-draw svg {width: 100%;height: 100%;position: absolute;top: 0;left: 0;pointer-events: none;}.ui-draw line {stroke: red;stroke-width: 4;stroke-linecap: round;pointer-events: none;}.ui-draw-dot {position: absolute;width: 2rem;height: 2rem;outline: .1rem solid red; border-radius: 50%; text-align: center; font-size: 1.1rem; display: flex; justify-content: center; align-items: center;}.ui-draw-dot[data-complete="true"],.ui-draw-dot[data-state="none"] {pointer-events: none;}
+        .n1 {top: 1rem;left: 1rem}
+        .n2 {top: 4rem;left: 1rem}
+        .n3 {top: 7rem;left: 1rem}
+
+        .n4 {top: 1rem;right: 1rem}
+        .n5 {top: 4rem;right: 1rem}
+        .n6 {top: 7rem;right: 1rem;}
+    </style>
+</head>
+<body data-id="body">
+	<div class="base-wrap">
+        <header class="base-header" data-toggle-target="nav" data-id="header"></header>
+        <div class="base-body">
+            <aside class="base-aside"></aside>
+            <main class="base-main" data-id="main">
+                <h1 data-h="1" id="primary-heading">Draw Line</h1>
+<pre>
+    <code>
+     &lt;div class="ui-draw" data-id="test"&gt;
+         &lt;button type="button" class="ui-draw-dot" data-name="1"&gt;1 &lt;/button&gt;
+         &lt;button type="button" class="ui-draw-dot" data-name="1"&gt;1 &lt;/button&gt;
+     &lt;/div&gt;
+
+    &lt;script type="module"&gt;
+        import DrawLine from '../../assets/js/components/drawLine.js';
+
+        UI.exe.drawline = new DrawLine({
+            id: 'test',
+            answer: 3,
+            callback: (v) => {
+                console.log(v);
+            }
+        });
+    &lt;/script"&gt;
+    </code>
+</pre>
+                <div class="ui-draw" data-id="test">
+                    <button type="button" class="ui-draw-dot n1" data-name="1">1</button>
+                    <button type="button" class="ui-draw-dot n2" data-name="2">2</button>
+                    <button type="button" class="ui-draw-dot n3" data-name="3">3</button>
+                    <button type="button" class="ui-draw-dot n4" data-name="1">1</button>
+                    <button type="button" class="ui-draw-dot n5" data-name="2">2</button>
+                    <button type="button" class="ui-draw-dot n6" data-name="3">3</button>
+                </div>
+            </main>
+        </div>
+        <footer class="base-footer"></footer>
+    </div>
+
+    <script src="../../assets/js/ui.global.js"></script>
+    <script type="module">
+        import Toggle from '../../assets/js/components/toggle.js';
+        import DrawLine from '../../assets/js/components/drawLine.js';
+        
+        //current page script
+        const page = () => {
+            //EXE
+            UI.exe.toggle = new Toggle();
+            UI.exe.drawline = new DrawLine({
+                id: 'test',
+                answer: 3,
+                callback: (v) => {
+                    console.log(v);
+                }
+            });
+        }
+
+        //include page
+        UI.parts.include({
+            id: 'header',
+            src: '../layout/header.html',
+            type: 'HTML',
+            insert: true,
+            callback: page
+        });
+   </script>
+</body>
+</html>

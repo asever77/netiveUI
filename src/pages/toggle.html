@@ -14,7 +14,7 @@
 	<link rel="apple-touch-icon" href="../resources/img/common/ico_app.png" >
 	<link rel="shortcut icon" href="../resources/img/common/ico_favicon.ico"> 
 	<link rel="canonical" href="https://asever77.github.io/netiveUI/html/">
-    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../../assets/css/main.css">
 
 </head>
 <body data-id="body">
@@ -23,17 +23,14 @@
         <div class="base-body">
             <aside class="base-aside"></aside>
             <main class="base-main" data-id="main">
-                <h1 data-h="1" id="primary-heading">Javascript Module</h1>
-
-                <section class="base-sec" aria-labelledby="toggle">
-                    <h2 data-h="2" id="toggle">toggle js</h2>
-                    <p>기본적인 토글 이벤트 관련 모듈로 data-toggle-object="{name}", data-toggle-target="{name}"로 연결되어 data-toggle-state="{true | false}" 상태값 변경</p>
+                <h1 data-h="1" id="primary-heading">Toggle Event</h1>
+                <p>기본적인 토글 이벤트 관련 모듈로 data-toggle-object="{name}", data-toggle-target="{name}"로 연결되어 data-toggle-state="{true | false}" 상태값 변경</p>
 <pre>
     <code>
-    &lt;button type="button" data-toggle-object="a" data-callback="toggle_a"&gt;
+    &lt;button type="button" data-toggle-object="a" data-callback="toggle_a" data-toggle-state="<span>false</span>"&gt;
         &lt;span&gt;버튼&lt;/span&gt;
     &lt;/button&gt;  
-    &lt;div data-toggle-target="a"&gt;&lt;/div&gt;
+    &lt;div data-toggle-target="a" data-toggle-state="<span>false</span>"&gt;&lt;/div&gt;
 
     &lt;script type="module"&gt;
         import Toggle from '../assets/js/components/toggle.js';
@@ -45,46 +42,38 @@
     &lt;/script&gt;
     </code>
 </pre>
-                    <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
-                        <span>버튼</span>
-                    </button>
-                    <div data-toggle-target="a" class="test" style="margin-top: .8rem; width: 100%;"></div>
-                </section>
+                <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
+                    <span>버튼</span>
+                </button>
+                <div data-toggle-target="a" class="test" style="margin-top: .8rem; width: 100%;"></div>
             </main>
         </div>
         <footer class="base-footer"></footer>
     </div>
 
-    <script src="../assets/js/ui.global.js"></script>
+    <script src="../../assets/js/ui.global.js"></script>
     <script type="module">
-        import Toggle from '../assets/js/components/toggle.js';
-
-        //page script
+        import Toggle from '../../assets/js/components/toggle.js';
+        
+        //current page script
         const page = () => {
             //EXE
             UI.exe.toggle = new Toggle();
 
             //CALLBACK
-            UI.callback.toggle_weather = () => {
-                navigator.geolocation.getCurrentPosition(UI.weather.success, UI.weather.fail);
-            }
-            UI.callback.toggle_nav = (result) => {
-                const btn = document.querySelector('[data-toggle-object="'+ result.name +'"]');
-
-                if (result.state === 'true') {
-                    btn.dataset.meterial = 'arrow_forward';
-                } else {
-                    btn.dataset.meterial = 'arrow_back';
-                }
-            }
             UI.callback.toggle_a = (result) => {
                 console.log('callback', result);
+                const spans = document.querySelectorAll('code span');
+                for (let item of spans) {
+                    item.textContent = result.state;
+                }
             }
         }
 
+        //include page
         UI.parts.include({
             id: 'header',
-            src: './layout/header.html',
+            src: '../layout/header.html',
             type: 'HTML',
             insert: true,
             callback: page

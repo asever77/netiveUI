@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="google" content="notranslate">
+
+	<title>Netive UI Development Group</title>
+
+	<link rel="apple-touch-icon" href="../resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="../resources/img/common/ico_favicon.ico"> 
+	<link rel="canonical" href="https://asever77.github.io/netiveUI/html/">
+    <link rel="stylesheet" href="../assets/css/main.css">
+
+</head>
+<body>
+	<div class="base-wrap">
+        <header class="base-header" data-toggle-target="nav">
+            <div class="base-header-wrap">
+                <div class="mdl-group">
+                    <button type="button" class="mdl-button" data-style="weather" aria-label="today weather" data-toggle-object="weather" data-callback="toggle_weather">
+                        <span class="icon">globe_asia</span>
+                        <span class="temperature">0</span>
+                    </button>
+                    <!-- <div class="today-weather" data-material="format_underlined"></div> -->
+                    <button type="button" class="mdl-button" data-style="nav" data-toggle-object="nav" data-callback="toggle_nav" data-material="arrow_forward" aria-label="menu"></button>
+                </div>
+                <div class="mdl-group">
+                    <button type="button" class="mdl-button" data-style="nav" data-material="light" aria-label="menu"></button>
+                    <button type="button" class="mdl-button" data-style="nav" data-material="grid_on" aria-label="menu"></button>
+                </div>
+            </div>
+            <nav class="base-nav" aria-labelledby="primary-navigation">
+                <h2 id="primary-navigation">주 탐색창</h2>
+                <ul>
+                    <li>
+                        <button type="button">
+                            <span>Count Slide</span>
+                        </button>
+                    </li>
+                    <li>
+                        <button type="button">
+                            <span>Introduction</span>
+                        </button>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="base-body">
+            <aside class="base-aside"></aside>
+            <main class="base-main" aria-labelledby="primary-heading">
+                <h1 data-h="1" id="primary-heading">Javascript Module</h1>
+
+                <section class="base-sec" aria-labelledby="toggle">
+                    <h2 data-h="2" id="toggle">toggle js</h2>
+                    <p>기본적인 토글 이벤트 관련 모듈로 data-toggle-object="{name}", data-toggle-target="{name}"로 연결되어 data-toggle-state="{true | false}" 상태값 변경</p>
+<pre>
+<code>
+    &lt;button type="button" data-toggle-object="a" data-callback="toggle_a"&gt;
+        &lt;span&gt;버튼&lt;/span&gt;
+    &lt;/button&gt;  
+    &lt;div data-toggle-target="a"&gt;&lt;/div&gt;
+
+    &lt;script type="module"&gt;
+        import Toggle from '../assets/js/components/toggle.js';
+
+        UI.exe.toggle = new Toggle();
+        UI.callback.callbackname = (result) => {
+            console.log('callback', result);
+        }
+    &lt;/script&gt;
+</code>
+</pre>
+                    <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
+                        <span>버튼</span>
+                    </button>
+                    <div data-toggle-target="a" class="test" style="margin-top: .8rem; width: 100%;"></div>
+                </section>
+                
+                <section class="base-sec" aria-labelledby="count">
+                    <h2 data-h="2" id="count">count slide js</h2>
+                    <p>숫자 텍스트를 회전하는 슬롯머신 효과로 표현</p>
+                    <code>
+<pre>
+import CountSlide from '../assets/js/components/countSlide.js';
+
+UI.exe.countSlide = new CountSlide({
+    id :'report1',
+    value: 4876
+});
+UI.exe.countSlide.act();
+</pre>
+                    </code>
+                    <div class="mdl-count" data-id="report1"></div>
+                    <button type="button" class="mdl-button" data-toggle-object="c" data-callback="toggle_c">
+                        <span>실행</span>
+                    </button>
+                </section>
+                
+                <section class="base-sec" aria-labelledby="modal">
+                    <h2 data-h="2" id="modal">modal js</h2>
+                    <p>기본 모달레이어 팝업 모듈</p>
+                    <code>
+<pre>
+&lt;section class="mdl-modal" data-id="modal1" data-state=""&gt;
+    &lt;div class="mdl-modal-wrap"&gt;
+        &lt;div class="mdl-modal-header"&gt;
+            &lt;h1&gt;제목...&lt;/h1&gt;
+            &lt;button type="button" class="mdl-modal-close" 
+                aria-label="닫기"&gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div class="mdl-modal-body" style="height: 100vh;"&gt;
+            내용...
+        &lt;/div&gt;
+        &lt;div class="mdl-modal-footer"&gt;
+            &lt;button type="button" class="mdl-button" data-toggle-object="c"&gt;
+                &lt;span&gt;확인&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="mdl-modal-dim"&gt;&lt;/div&gt;
+&lt;/section&gt;
+
+import Modal from '../assets/js/components/modal.js';
+
+UI.exe.modal_1 = new Modal({
+    id :'modal1',
+});
+UI.exe.modal_1.show();
+UI.exe.modal_1.hide();
+</pre>
+                    </code>
+                    <button type="button" class="mdl-button" data-toggle-object="b" data-callback="toggle_b">
+                        <span>modal</span>
+                    </button>
+                 
+                </section>
+
+
+                <section class="base-sec" aria-labelledby="count">
+                    <h2 data-h="2" id="count">IA Board js (json, excel)</h2>
+                    <p>Excel 문서 기준으로 json파일을 생성하여 자동 생성</p>
+                    <code>
+<pre>
+엑셀파일 : https://docs.google.com/spreadsheets/d/1BU8pciPxmsYYurepc1ixQt9bQI7Fi5PQJYpmyPmdALo/edit?usp=sharing
+
+import IABoard from '../assets/js/components/IABoard.js';
+
+UI.exe.IABoard = new IABoard({
+    id: 'projectlist',
+    url: '/assets/files/codinglist.json'
+});
+</pre>
+                    </code>
+                    <div class="mdl-codinglist" id="projectlist" style="overflow-y: auto; height: 40vh;"></div>
+                </section>
+                
+            </main>
+        </div>
+       
+        <footer class="base-footer"></footer>
+    </div>
+
+    <!-- Modal layer -->
+    <section class="mdl-modal" data-id="modal1" data-state="">
+        <div class="mdl-modal-wrap">
+            <div class="mdl-modal-header">
+                <h1>제목</h1>
+                <button type="button" class="mdl-modal-close" 
+                 aria-label="닫기"></button>
+            </div>
+            <div class="mdl-modal-body" style="height: 100vh;">
+                내용<div style="height: 100vh;"></div>내용 끝
+            </div>
+            <div class="mdl-modal-footer">
+                <button type="button" class="mdl-button" data-toggle-object="c">
+                    <span>확인</span>
+                </button>
+            </div>
+        </div>
+        <div class="mdl-modal-dim"></div>
+    </section>
+
+    <script src="../assets/js/ui.global.js"></script>
+    <script type="module">
+        // import {global, init} from '../assets/js/components/global.js';
+        import Toggle from '../assets/js/components/toggle.js';
+        import CountSlide from '../assets/js/components/countSlide.js';
+        import Modal from '../assets/js/components/modal.js';
+        import IABoard from '../assets/js/components/IABoard.js';
+
+        // 공통
+        UI.exe.toggle = new Toggle();
+
+        // 개별
+        UI.exe.countSlide = new CountSlide({
+            id :'report1',
+            value: 4876
+        });
+        UI.exe.modal_1 = new Modal({
+            id :'modal1',
+        });
+        UI.exe.IABoard = new IABoard({
+            id: 'projectlist',
+            url: '../assets/files/codinglist.json'
+        });
+        
+       
+
+        // Callback
+        UI.callback.toggle_nav = (result) => {
+            console.log('callback nav: ', result.state);
+            const btn = document.querySelector('[data-toggle-object="'+ result.name +'"]');
+
+            if (result.state === 'true') {
+                btn.dataset.meterial = 'arrow_forward';
+            } else {
+                btn.dataset.meterial = 'arrow_back';
+            }
+        }
+        UI.callback.toggle_a = (result) => {
+            console.log('callback', result);
+           
+        }
+        UI.callback.toggle_b = (result) => {
+            UI.exe.modal_1.show();
+        }
+        UI.callback.toggle_c = (result) => {
+            UI.exe.countSlide.act();
+        }
+        UI.callback.toggle_weather = () => {
+            console.log('weather');
+            navigator.geolocation.getCurrentPosition(UI.weather.success, UI.weather.fail);
+        }
+       
+    </script>
+</body>
+</html>

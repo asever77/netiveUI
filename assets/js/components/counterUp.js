@@ -5,7 +5,7 @@
  * value: 12345 //number
  */
 
-export default class CountSlide {
+class CounterUpSlot {
     constructor(opt) {
         this.id = opt.id;
         this.el = document.querySelector('.mdl-count[data-id="'+ this.id +'"]');
@@ -65,3 +65,5 @@ export default class CountSlide {
         act();
     }
 }
+
+export {CounterUpSlot}; 

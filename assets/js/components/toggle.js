@@ -5,6 +5,7 @@ export default class ToggleUI {
     }
     init() {
         for (let item of this.objects) {
+            item.removeEventListener('click', this.actClick);
             item.addEventListener('click', this.actClick);
             // item.addEventListener('mouseover', this.act);
             // item.addEventListener('mouseleave', this.act);
