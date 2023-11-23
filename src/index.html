@@ -23,9 +23,7 @@
         <header class="base-header" data-id="header"></header>
         <div class="base-body">
             <aside class="base-aside"></aside>
-            <main class="base-main" data-id="main">
-                 
-            </main>
+            <main class="base-main" data-id="main"></main>
         </div>
         <footer class="base-footer"></footer>
     </div>
@@ -81,12 +79,19 @@
                         _script.type = 'module';
                         _script.src = _href + '.js?v=' + Date.now();
 
-                        let _link = document.createElement('stu;e');
+                        let _link = document.createElement('link');
                         _link.dataset.usage = 'page';
                         _link.rel = 'stylesheet';
                         _link.href = _href + '.css?v=' + Date.now();
-                       
-                        document.body.appendChild(_script);
+
+                        const doesFileExist = (urlToFile, v) => {
+                            const xhr = new XMLHttpRequest();
+                            xhr.open('HEAD', urlToFile, false);
+                            xhr.send();
+                            (xhr.status === "200") && document.body.appendChild(v);
+                        }
+                        doesFileExist(_href + '.css', _link);
+                        doesFileExist(_href + '.js', _script);
                     }
                 });
             }
