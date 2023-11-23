@@ -1,0 +1,44 @@
+
+
+<style>
+    .ui-draw {margin: 0 0;position: relative;width: 50rem; height: 50rem; margin: 0 auto;}.ui-draw svg {width: 100%;height: 100%;position: absolute;top: 0;left: 0;pointer-events: none;}.ui-draw line {stroke: red;stroke-width: 4;stroke-linecap: round;pointer-events: none;}.ui-draw-dot {position: absolute;width: 2rem;height: 2rem;outline: .1rem solid red; border-radius: 50%; text-align: center; font-size: 1.1rem; display: flex; justify-content: center; align-items: center;}.ui-draw-dot[data-complete="true"],.ui-draw-dot[data-state="none"] {pointer-events: none;}
+    .n1 {top: 1rem;left: 1rem}
+    .n2 {top: 4rem;left: 1rem}
+    .n3 {top: 7rem;left: 1rem}
+
+    .n4 {top: 1rem;right: 1rem}
+    .n5 {top: 4rem;right: 1rem}
+    .n6 {top: 7rem;right: 1rem;}
+</style>
+
+<div class="base-main-wrap">
+    <h1 data-h="1" id="primary-heading">Draw Line</h1>
+<pre>
+    <code>
+     &lt;div class="ui-draw" data-id="test"&gt;
+         &lt;button type="button" class="ui-draw-dot" data-name="1"&gt;1 &lt;/button&gt;
+         &lt;button type="button" class="ui-draw-dot" data-name="1"&gt;1 &lt;/button&gt;
+     &lt;/div&gt;
+
+    &lt;script type="module"&gt;
+        import DrawLine from '../../assets/js/components/drawLine.js';
+
+        UI.exe.drawline = new DrawLine({
+            id: 'test',
+            answer: 3,
+            callback: (v) => {
+                console.log(v);
+            }
+        });
+    &lt;/script"&gt;
+    </code>
+</pre>
+    <div class="ui-draw" data-id="test">
+        <button type="button" class="ui-draw-dot n1" data-name="1">1</button>
+        <button type="button" class="ui-draw-dot n2" data-name="2">2</button>
+        <button type="button" class="ui-draw-dot n3" data-name="3">3</button>
+        <button type="button" class="ui-draw-dot n4" data-name="1">1</button>
+        <button type="button" class="ui-draw-dot n5" data-name="2">2</button>
+        <button type="button" class="ui-draw-dot n6" data-name="3">3</button>
+    </div>
+</div>

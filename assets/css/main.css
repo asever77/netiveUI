@@ -107,8 +107,11 @@ body {
 }
 
 /* Remove list styles on ul, ol elements with a class attribute */
-ul[class],
-ol[class] {
+ul,
+ol,
+li {
+  padding: 0;
+  margin: 0;
   list-style: none;
 }
 
@@ -8423,10 +8426,15 @@ body[data-toggle-state=true] .base-body {
   padding: 2.4rem;
   background-color: #fff;
   z-index: 10;
-  border-right: 1px solid #ccc;
   transform: translateX(-20rem);
   transition: transform 0.2s ease-in;
   overflow-x: hidden;
+}
+.base-nav h3 {
+  margin: 0 0 0.8rem;
+}
+.base-nav ul {
+  margin: 0 0 3.2rem;
 }
 
 @media (max-width: 374px) {

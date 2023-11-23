@@ -8,7 +8,7 @@ export default class Modal {
         this.modal_wrap;
 
         if (this.src) {
-            this.make();
+            this.made();
         } else {
             this.modal = document.querySelector('.mdl-modal[data-id="'+ this.id +'"]');
             this.btn_close = this.modal.querySelector('.mdl-modal-close');
@@ -16,7 +16,7 @@ export default class Modal {
             this.init()
         }
     }
-    make() {
+    made() {
         UI.parts.include({
             id: 'body',
             src: this.src + '.html',

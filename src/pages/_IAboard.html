@@ -1,0 +1,19 @@
+<div class="base-main-wrap">
+    <h1 data-h="1" id="primary-heading">IA Board js (json, excel)</h1>
+    <p>Excel 문서 기준으로 json파일을 생성하여 자동 생성</p>
+<pre>
+    <code>
+    &lt;div class="mdl-codinglist" id="projectlist"&gt;&lt;/div&gt;
+    
+    &lt;script type="module"&gt;
+        import IABoard from '../assets/js/components/IABoard.js';
+        
+        UI.exe.IABoard = new IABoard({
+            id: 'projectlist',
+            url: '/assets/files/codinglist.json'
+        });
+    &lt;/script&gt;
+    </code>
+</pre>
+    <div class="mdl-codinglist" id="projectlist"></div>
+</div>
