@@ -51,7 +51,7 @@
 
             const act_page = (e) => {
                 //초기화
-                const js_usages = document.querySelectorAll('script[data-usage]');
+                const js_usages = document.querySelectorAll('[data-usage]');
                 const el_modals = document.querySelectorAll('.mdl-modal');
                 
                 if (js_usages) for (let item of js_usages) item.remove();
@@ -84,14 +84,17 @@
                         _link.rel = 'stylesheet';
                         _link.href = _href + '.css?v=' + Date.now();
 
+
                         const doesFileExist = (urlToFile, v) => {
                             const xhr = new XMLHttpRequest();
                             xhr.open('HEAD', urlToFile, false);
                             xhr.send();
-                            (xhr.status === "200") && document.body.appendChild(v);
+                            console.log(xhr.status);
+                            (xhr.status === 200) && document.body.appendChild(v);
                         }
-                        doesFileExist(_href + '.css', _link);
+                        
                         doesFileExist(_href + '.js', _script);
+                        doesFileExist(_href + '.css', _link);
                     }
                 });
             }
