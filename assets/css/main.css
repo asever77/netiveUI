@@ -8344,6 +8344,19 @@ html[data-modal=show] body {
   overflow: hidden;
 }
 
+body[data-toggle-state=true] .base-nav {
+  transform: translateX(0);
+}
+body[data-toggle-state=true] .base-header-wrap {
+  padding-left: 21.6rem;
+}
+body[data-toggle-state=true] [data-toggle-object=nav]::before {
+  content: "arrow_back";
+}
+body[data-toggle-state=true] .base-body {
+  padding-left: 27.2rem;
+}
+
 .base-wrap {
   position: relative;
   width: 100%;
@@ -8359,6 +8372,11 @@ html[data-modal=show] body {
   padding: 0 7.2rem;
   position: relative;
   z-index: 1;
+  transition: padding 0.3s ease-in;
+}
+.base-main {
+  max-width: 90rem;
+  margin: 0 auto;
 }
 .base-header {
   position: fixed;
@@ -8392,15 +8410,6 @@ html[data-modal=show] body {
   flex-direction: column-reverse;
   gap: 0.8rem;
   justify-content: center;
-}
-.base-header[data-toggle-state=true] .base-nav {
-  transform: translateX(0);
-}
-.base-header[data-toggle-state=true] .base-header-wrap {
-  padding-left: 21.6rem;
-}
-.base-header[data-toggle-state=true] [data-toggle-object=nav]::before {
-  content: "arrow_back";
 }
 .base-main {
   padding: 16rem 0 8rem;

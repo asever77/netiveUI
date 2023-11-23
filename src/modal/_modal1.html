@@ -1,0 +1,25 @@
+<!-- Modal layer -->
+<section class="mdl-modal" data-id="modal1" data-state="">
+    <div class="mdl-modal-wrap">
+        <div class="mdl-modal-header">
+            <h1>제목</h1>
+            <button type="button" class="mdl-modal-close" 
+                aria-label="닫기"></button>
+        </div>
+        <div class="mdl-modal-body" style="height: 100vh;">
+            내용<div style="height: 100vh;">
+                <button type="button" class="mdl-button" data-toggle-object="modal1_a" data-callback="modal1_a">
+                    <span>버튼</span>
+                </button>
+                <div data-toggle-target="modal1_a" class="test" style="margin-top: .8rem; width: 100%;"></div>
+
+            </div>내용 끝
+        </div>
+        <div class="mdl-modal-footer">
+            <button type="button" class="mdl-button" data-toggle-object="c">
+                <span>확인</span>
+            </button>
+        </div>
+    </div>
+    <div class="mdl-modal-dim"></div>
+</section>

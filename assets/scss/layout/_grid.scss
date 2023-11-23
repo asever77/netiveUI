@@ -6,7 +6,14 @@ html{
         body {overflow: hidden;}
     }
 }
-
+body {
+    &[data-toggle-state="true"] {
+        .base-nav{transform: translateX(0);}
+        .base-header-wrap {padding-left: calc($nav_width + $x2);}
+        [data-toggle-object="nav"]::before {content: 'arrow_back';}
+        .base-body{padding-left:calc(7.2rem + $nav_width)}
+    }
+}
 .base {
     &-wrap {
         position: relative;
@@ -23,6 +30,11 @@ html{
         padding: 0 $x9;
         position: relative;
         z-index: 1;
+        transition: padding .3s ease-in;
+    }
+    &-main {
+        max-width: 90rem;
+        margin: 0 auto;
     }
 
     &-header {
@@ -59,12 +71,6 @@ html{
             flex-direction: column-reverse;
             gap: $x1;
             justify-content: center;
-        }
-
-        &[data-toggle-state="true"] {
-            .base-nav{transform: translateX(0);}
-            .base-header-wrap {padding-left: calc($nav_width + $x2);}
-            [data-toggle-object="nav"]::before {content: 'arrow_back';}
         }
     }
     

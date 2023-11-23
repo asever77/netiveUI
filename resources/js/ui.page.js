@@ -615,3 +615,14 @@
         });
     }
 })(window, document);
+setTimeout(()=> {
+	if (!document.querySelector('.capture-style')) {
+		const href = window.location.href;
+		const isCapture = href.split('?capture');
+		let a = href.split(':');
+		if (a[1] === '//localhost' || isCapture.length > 1) {
+			console.log(document.body);
+			document.body.classList.add('capture-style');
+		}
+	}
+},500);

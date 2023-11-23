@@ -189,6 +189,7 @@
             if (!!selector && !!src) {
                 switch (type) {
                     case 'HTML' :
+                        console.log('src', src);
                         fetch(src).then(response => response.text()).then(data => {
                             if (insert) {
                                 selector.insertAdjacentHTML('afterbegin', data);

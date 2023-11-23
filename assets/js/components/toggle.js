@@ -1,6 +1,7 @@
 export default class ToggleUI {
     constructor(opt) {
-        this.objects = document.querySelectorAll('[data-toggle-object]');
+        this.scope = !!opt ? opt.scope : false;
+        this.objects = this.scope ? this.scope.querySelectorAll('[data-toggle-object]') : document.querySelectorAll('[data-toggle-object]');
         this.init();
     }
     init() {
