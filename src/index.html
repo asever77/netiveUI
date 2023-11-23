@@ -80,6 +80,11 @@
                         _script.dataset.usage = 'page';
                         _script.type = 'module';
                         _script.src = _href + '.js?v=' + Date.now();
+
+                        let _link = document.createElement('stu;e');
+                        _link.dataset.usage = 'page';
+                        _link.rel = 'stylesheet';
+                        _link.href = _href + '.css?v=' + Date.now();
                        
                         document.body.appendChild(_script);
                     }
