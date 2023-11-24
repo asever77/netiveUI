@@ -132,17 +132,29 @@
         add0(x) {
             return Number(x) < 10 ? '0' + x : x;
         },
-        para(paraname) {
-            const _tempUrl = window.location.search.substring(1);
-            const _tempArray = _tempUrl.split('&');
+        paraGet(paraname) {
+            const _tempUrl = window.location.href;
+            let _tempArray = _tempUrl.split(paraname + '=');
 
-            for (let i = 0, len = _tempArray.length; i < len; i++) {
-                const that = _tempArray[i].split('=');
-
-                if (that[0] === paraname) {
-                    return that[1];
-                }
+            if (_tempArray.length > 1) {
+                _tempArray = _tempArray[1];
+                _tempArray = _tempArray.split('&');
+                _tempArray = _tempArray[0];
             }
+
+            return _tempArray;
+        },
+        paraSet(paraname) {
+            const _tempUrl = window.location.href;
+            let _tempArray = _tempUrl.split(paraname + '=');
+
+            if (_tempArray.length > 1) {
+                _tempArray = _tempArray[1];
+                _tempArray = _tempArray.split('&');
+                _tempArray = _tempArray[0];
+            }
+
+            return _tempArray;
         },
         RAF(start, end, startTime, duration){
             const _start = start;

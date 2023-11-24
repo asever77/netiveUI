@@ -48,6 +48,7 @@
 
             const el_nav = document.querySelector('.base-nav');
             const el_nav_btns = el_nav.querySelectorAll('button');
+            const paraPageName = UI.parts.paraGet('page');
 
             const act_page = (e) => {
                 //초기화
@@ -94,15 +95,18 @@
                         
                         doesFileExist(_href + '.js', _script);
                         doesFileExist(_href + '.css', _link);
+
+                        let pageName = _href.split('/');
+                        pageName = pageName[pageName.length - 1];
+
+                        // UI.parts.paraSet('page', pageName);
                     }
                 });
             }
 
-            for (let item of el_nav_btns) {
-                item.addEventListener('click', act_page)
-            }
-            act_page('./pages/toggle');
+            for (let item of el_nav_btns) item.addEventListener('click', act_page);
 
+            (paraPageName !== '') ? act_page('./pages/' + paraPageName) : act_page('./pages/toggle');
         } else {
             console.log(response_header.status);
         }

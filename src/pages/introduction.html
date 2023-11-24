@@ -1,0 +1,123 @@
+<div class="base-main-wrap">
+    <h1 data-h="1" id="primary-heading">Guide Line</h1>
+    <h2 data-h="2">index.html</h2>
+    <pre>
+        <code>
+            &lt;!doctype html&gt;
+                &lt;html lang="ko"&gt;
+                &lt;head&gt;
+                    &lt;meta charset="utf-8"&gt;
+                    &lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;
+                    &lt;meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no"&gt;
+                    &lt;meta name="apple-mobile-web-app-capable" content="yes"&gt;
+                    &lt;meta name="apple-mobile-web-app-status-bar-style" content="black"&gt;
+                    &lt;meta name="mobile-web-app-capable" content="yes"&gt;
+                    &lt;meta name="google" content="notranslate"&gt;
+                
+                    &lt;title&gt;Netive UI Development Group&lt;/title&gt;
+                
+                    &lt;link rel="apple-touch-icon" href="../resources/img/common/ico_app.png" &gt;
+                    &lt;link rel="shortcut icon" href="../resources/img/common/ico_favicon.ico"&gt; 
+                    &lt;link rel="canonical" href="https://asever77.github.io/netiveUI/html/"&gt;
+                    &lt;link rel="stylesheet" href="../assets/css/main.css"&gt;
+                
+                &lt;/head&gt;
+                &lt;body data-id="body" data-toggle-target="nav"&gt;
+                
+                    &lt;div class="base-wrap"&gt;
+                        &lt;header class="base-header" data-id="header"&gt;&lt;/header&gt;
+                        &lt;div class="base-body"&gt;
+                            &lt;aside class="base-aside"&gt;&lt;/aside&gt;
+                            &lt;main class="base-main" data-id="main"&gt;&lt;/main&gt;
+                        &lt;/div&gt;
+                        &lt;footer class="base-footer"&gt;&lt;/footer&gt;
+                    &lt;/div&gt;
+                
+                
+                    &lt;script src="../assets/js/ui.global.js"&gt;&lt;/script&gt;
+                    &lt;script type="module"&gt;
+                        import Toggle from '../assets/js/components/toggle.js';
+                        
+                        const el_header = document.querySelector('[data-id="header"]');
+                        const response_header = await fetch('./layout/header.html');
+                
+                        if (response_header.ok) {
+                            //공통부분 로드
+                            const html_page = await response_header.text();
+                            el_header.insertAdjacentHTML('afterbegin', html_page);
+                            
+                            //공통부분 실행
+                            UI.exe.toggle = new Toggle({
+                                scope: document.querySelector('[data-id="header"]')
+                            });
+                
+                            const el_nav = document.querySelector('.base-nav');
+                            const el_nav_btns = el_nav.querySelectorAll('button');
+                
+                            const act_page = (e) => {
+                                //초기화
+                                const js_usages = document.querySelectorAll('[data-usage]');
+                                const el_modals = document.querySelectorAll('.mdl-modal');
+                                
+                                if (js_usages) for (let item of js_usages) item.remove();
+                                if (el_modals) for (let item of el_modals) item.remove();
+                
+                                //페이지로드
+                                let _this;
+                                let _href;
+                
+                                if (e.currentTarget) {
+                                    _this = e.currentTarget;
+                                    _href = _this.dataset.href;
+                                } else {
+                                    _href = e;
+                                }
+                
+                                UI.parts.include({
+                                    id: 'main',
+                                    src: _href + '.html',
+                                    type: 'HTML',
+                                    insert: false,
+                                    callback: () => {
+                                        let _script = document.createElement('script');
+                                        _script.dataset.usage = 'page';
+                                        _script.type = 'module';
+                                        _script.src = _href + '.js?v=' + Date.now();
+                
+                                        let _link = document.createElement('link');
+                                        _link.dataset.usage = 'page';
+                                        _link.rel = 'stylesheet';
+                                        _link.href = _href + '.css?v=' + Date.now();
+                
+                                        const doesFileExist = (urlToFile, v) => {
+                                            const xhr = new XMLHttpRequest();
+                
+                                            xhr.open('HEAD', urlToFile, false);
+                                            xhr.send();
+                                            (xhr.status === 200) && document.body.appendChild(v);
+                                        }
+                                        
+                                        doesFileExist(_href + '.js', _script);
+                                        doesFileExist(_href + '.css', _link);
+                                    }
+                                });
+                            }
+                
+                            for (let item of el_nav_btns) {
+                                item.addEventListener('click', act_page)
+                            }
+                            act_page('./pages/toggle');
+                
+                        } else {
+                            console.log(response_header.status);
+                        }
+                    &lt;/script&gt;
+                &lt;/body&gt;
+            &lt;/html&gt;
+            
+        </code>
+    </pre>
+    <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
+        <span>modal</span>
+    </button>
+</div>
