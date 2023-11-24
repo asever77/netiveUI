@@ -106,7 +106,7 @@
 
             for (let item of el_nav_btns) item.addEventListener('click', act_page);
 
-            (paraPageName !== '') ? act_page('./pages/' + paraPageName) : act_page('./pages/toggle');
+            act_page('./pages/toggle');
         } else {
             console.log(response_header.status);
         }
