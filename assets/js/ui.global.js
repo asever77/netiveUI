@@ -189,14 +189,13 @@
             if (!!selector && !!src) {
                 switch (type) {
                     case 'HTML' :
-                        console.log('src', src);
                         fetch(src)
                         .then(response => response.text())
-                        .then(data => {
+                        .then(result => {
                             if (insert) {
-                                selector.insertAdjacentHTML('afterbegin', data);
+                                selector.insertAdjacentHTML('afterbegin', result);
                             } else {
-                                selector.innerHTML = data;
+                                selector.innerHTML = result;
                             }
                         }).then(() => {
                             !!callback && callback();

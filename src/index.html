@@ -84,12 +84,11 @@
                         _link.rel = 'stylesheet';
                         _link.href = _href + '.css?v=' + Date.now();
 
-
                         const doesFileExist = (urlToFile, v) => {
                             const xhr = new XMLHttpRequest();
+
                             xhr.open('HEAD', urlToFile, false);
                             xhr.send();
-                            console.log(xhr.status);
                             (xhr.status === 200) && document.body.appendChild(v);
                         }
                         
