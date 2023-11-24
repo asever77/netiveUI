@@ -8,7 +8,7 @@ UI.exe.toggle = new Toggle({
 });
 UI.exe.modal_1 = new Modal({
     id :'modal1',
-    src: './modal/_modal1'
+    src: './modal/modal1'
 });
     
 

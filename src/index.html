@@ -34,7 +34,7 @@
         import Toggle from '../assets/js/components/toggle.js';
         
         const el_header = document.querySelector('[data-id="header"]');
-        const response_header = await fetch('./layout/_header.html');
+        const response_header = await fetch('./layout/header.html');
 
         if (response_header.ok) {
             //공통부분 로드
@@ -102,7 +102,7 @@
             for (let item of el_nav_btns) {
                 item.addEventListener('click', act_page)
             }
-            act_page('./pages/_toggle');
+            act_page('./pages/toggle');
 
         } else {
             console.log(response_header.status);
