@@ -1,0 +1,31 @@
+.principle-4 {
+    margin-top: 3.2rem;
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.principle-4 > div{
+    width: calc(25% - 6rem);
+    margin: 0 3rem;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+}
+.principle-4 dt{
+    display: flex;
+    padding: 2rem;
+    width: 15rem;
+    height: 15rem;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    border:0.2rem solid #555;
+    background-color: #cacaca;
+    font-weight: 700;
+    font-size: 2.6rem;
+    line-height: 1.2;
+    margin-bottom: 1.6rem;
+}

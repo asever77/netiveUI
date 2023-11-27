@@ -10,11 +10,18 @@ UI.exe.modal_1 = new Modal({
     id :'modal1',
     src: './modal/modal1'
 });
-    
+UI.exe.modal_2 = new Modal({
+    id :'modal2',
+    src: './modal/modal2'
+});
+        
 
 //CALLBACK
 UI.callback.toggle_a = (result) => {
     console.log('callback', result);
     UI.exe.modal_1.show();
 }
-
+UI.callback.toggle_b = (result) => {
+    console.log('callback', result);
+    UI.exe.modal_2.show();
+}

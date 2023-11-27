@@ -1,25 +1,30 @@
 <div class="base-main-wrap">
     <h1 data-h="1" id="primary-heading">Toggle Event</h1>
     <p>기본적인 토글 이벤트 관련 모듈로 data-toggle-object="{name}", data-toggle-target="{name}"로 연결되어 data-toggle-state="{true | false}" 상태값 변경</p>
-    <pre>
-        <code>
-        &lt;button type="button" data-toggle-object="a" data-callback="toggle_a" data-toggle-state="<span>false</span>"&gt;
-            &lt;span&gt;버튼&lt;/span&gt;
-        &lt;/button&gt;  
-        &lt;div data-toggle-target="a" data-toggle-state="<span>false</span>"&gt;&lt;/div&gt;
 
-        &lt;script type="module"&gt;
-            import Toggle from '../assets/js/components/toggle.js';
+    <box>
+        <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
+            <span>버튼</span>
+        </button>
+        <div data-toggle-target="a" class="test" style="margin-top: .8rem; width: 100%;"></div>
+    </box>
+   
+    <pre><code>
+    <comment>//HTML</comment>
+    &lt;button type="button" data-toggle-object="a" data-callback="toggle_a" data-toggle-state="<span>false</span>"&gt;
+        &lt;span&gt;버튼&lt;/span&gt;
+    &lt;/button&gt;  
+    &lt;div data-toggle-target="a" data-toggle-state="<span>false</span>"&gt;&lt;/div&gt;
+    
+    <comment>//Javascript</comment>
+    &lt;script type="module"&gt;
+        import Toggle from '../assets/js/components/toggle.js';
 
-            UI.exe.toggle = new Toggle();
-            UI.callback.callbackname = (result) => {
-                console.log('callback', result);
-            }
-        &lt;/script&gt;
-        </code>
-    </pre>
-    <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
-        <span>버튼</span>
-    </button>
-    <div data-toggle-target="a" class="test" style="margin-top: .8rem; width: 100%;"></div>
+        UI.exe.toggle = new Toggle();
+        UI.callback.callbackname = (result) => {
+            console.log('callback', result);
+        }
+    &lt;/script&gt;
+    </code></pre>
+    
 </div>

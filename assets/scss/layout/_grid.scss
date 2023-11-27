@@ -3,7 +3,10 @@ $nav_width: 20rem;
 
 html{
     &[data-modal="show"] {
-        body {overflow: hidden;}
+        body {
+            overflow: hidden;
+            padding-right:1.7rem;
+        }
     }
 }
 body {

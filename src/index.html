@@ -36,6 +36,17 @@
         const el_header = document.querySelector('[data-id="header"]');
         const response_header = await fetch('./layout/header.html');
 
+        //page 설정
+        let pageName = window.location.href.split('page=');
+        
+        if (pageName.length > 1) {
+            pageName = pageName[1].split('&')
+            pageName = './pages/' + pageName[0];
+        } else {
+            pageName = './pages/introduction';
+        }
+        
+        //header
         if (response_header.ok) {
             //공통부분 로드
             const html_page = await response_header.text();
@@ -49,7 +60,6 @@
             const el_nav = document.querySelector('.base-nav');
             const el_nav_btns = el_nav.querySelectorAll('button');
             const paraPageName = UI.parts.paraGet('page');
-
             const act_page = (e) => {
                 //초기화
                 const js_usages = document.querySelectorAll('[data-usage]');
@@ -99,14 +109,14 @@
                         let pageName = _href.split('/');
                         pageName = pageName[pageName.length - 1];
 
-                        // UI.parts.paraSet('page', pageName);
+                        UI.parts.paraSet('page', pageName);
                     }
                 });
             }
 
             for (let item of el_nav_btns) item.addEventListener('click', act_page);
 
-            act_page('./pages/toggle');
+            act_page(pageName);
         } else {
             console.log(response_header.status);
         }

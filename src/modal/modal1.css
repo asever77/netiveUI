@@ -1,0 +1,6 @@
+@charset "utf-8";
+
+[data-id="modal1"] .mdl-modal-wrap{
+    width: 100%;
+    max-width: 80rem;
+}

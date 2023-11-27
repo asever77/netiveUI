@@ -9,6 +9,9 @@
     justify-content: center;
     display: none;
     overflow-y: auto;
+    padding: $x3;
+
+    &[data-modal-current="false"] .mdl-modal-dim{opacity: 0;}
 
     &[data-state="show"] {
         display: flex;
@@ -89,9 +92,30 @@
     &-close{
         position: absolute;
         top:0; right:0;
-        border: .1rem solid #000;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         width: 3rem;
         height: 3rem;
+        font-size: 3rem;
+    }
+    &-last {
+        width: 3rem;
+        height: 3rem;
+        position: fixed;
+        bottom: -4rem; 
+        left:50%;
+        margin-left: -1.5rem;
+        background-color: #000;
+        color:#fff;
+        border-radius: 50%;
+        transition: bottom .2s ease-in, opacity .2s ease;
+        opacity: 0;
+
+        &:focus {
+            bottom:$x1;
+            opacity: 1;
+        }
     }
 }
 

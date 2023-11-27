@@ -52,13 +52,3 @@
         text-underline-offset: .3rem;
     }
 }
-
-.test {
-    width:5rem;
-    height: 5rem;
-    border: .1rem dashed black;
-
-    &[data-toggle-state="true"] {
-        background-color: tomato;
-    }
-}

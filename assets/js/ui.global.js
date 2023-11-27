@@ -144,17 +144,17 @@
 
             return _tempArray;
         },
-        paraSet(paraname) {
+        paraSet(key, value) {
             const _tempUrl = window.location.href;
-            let _tempArray = _tempUrl.split(paraname + '=');
+            let _tempArray = _tempUrl.split(key + '=');
 
             if (_tempArray.length > 1) {
-                _tempArray = _tempArray[1];
-                _tempArray = _tempArray.split('&');
-                _tempArray = _tempArray[0];
+                _tempArray = _tempArray[0] + key + '=' + value;
+            } else {
+                _tempArray = _tempUrl + '?' + key + '=' + value;
             }
 
-            return _tempArray;
+            history.pushState(null, null, _tempArray);
         },
         RAF(start, end, startTime, duration){
             const _start = start;
