@@ -6,17 +6,67 @@ export default class Modal {
         this.modal;
         this.btn_close;
         this.modal_wrap;
+        this.ok;
+        this.cancel;
         this.last;
         this.focus;
+        this.type = !opt.type ? 'modal' : opt.type; 
 
-        if (this.src) {
+        this.title = opt.title;
+        this.content = opt.content;
+        this.btn = opt.button;
+
+        if (this.type === 'system') {
+            //script coding
+            this.madeSystem();
+        } else if (this.src) {
+            //fetch load
             this.made();
         } else {
+            //hard coding
             this.modal = document.querySelector('.mdl-modal[data-id="'+ this.id +'"]');
             this.btn_close = this.modal.querySelector('.mdl-modal-close');
             this.modal_wrap = this.modal.querySelector('.mdl-modal-wrap');
             this.init()
         }
+    }
+    madeSystem() {
+        //alert & confirm
+        let html = '';
+        html += '<section class="mdl-modal" data-id="'+ this.id +'" data-type="alert" data-state="" >';
+        html += '<div class="mdl-modal-wrap">';
+        html += '    <div class="mdl-modal-body">';
+        if (!!this.title) {
+        html += '        <h1 class="mdl-modal-tit">'+ this.title +'</h1>';
+        }
+        html += this.content;
+        html += '        <div class="mdl-btn-wrap">';
+        if (this.btn.length === 2) {
+        html += '            <button type="button" class="mdl-btn" data-state="cancel" data-style="primary-gray">';
+        html += '                <span>'+ this.btn[1].text +'</span>';
+        html += '            </button>';
+        } 
+        html += '            <button type="button" class="mdl-btn" data-state="ok" data-style="primary">';
+        html += '                <span>'+ this.btn[0].text +'</span>';
+        html += '            </button>';
+        html += '        </div>';
+        html += '    </div>';
+        html += '</div>';
+        html += '<div class="mdl-modal-dim"></div>';
+        html += '</section>';
+
+        document.querySelector('body').insertAdjacentHTML('beforeend', html);
+        
+        html = null;
+        this.modal = document.querySelector('.mdl-modal[data-id="'+ this.id +'"]');
+        this.modal_wrap = this.modal.querySelector('.mdl-modal-wrap');
+        this.ok = this.modal.querySelector('.mdl-btn[data-state="ok"]');
+        this.cancel = this.modal.querySelector('.mdl-btn[data-state="cancel"]');
+
+        this.ok && this.ok.addEventListener('click', this.btn[0].callback);
+        this.cancel && this.cancel.addEventListener('click', this.btn[1].callback);
+
+        this.init();
     }
     made() {
         UI.parts.include({
@@ -73,12 +123,12 @@ export default class Modal {
             }
         }
 
-        this.btn_close.removeEventListener('click', this.hide);
-        this.btn_close.addEventListener('click', this.hide);
-        this.last.removeEventListener('click', this.hide);
-        this.last.addEventListener('click', this.hide);
-        this.btn_close.addEventListener('keydown', keyStart);
-        this.last.addEventListener('keydown', keyEnd);
+        this.btn_close && this.btn_close.removeEventListener('click', this.hide);
+        this.btn_close && this.btn_close.addEventListener('click', this.hide);
+        this.last && this.last.removeEventListener('click', this.hide);
+        this.last && this.last.addEventListener('click', this.hide);
+        this.btn_close && this.btn_close.addEventListener('keydown', keyStart);
+        this.last && this.last.addEventListener('keydown', keyEnd);
     }
     show = () =>  {
         const _zindex = 100;
@@ -97,7 +147,8 @@ export default class Modal {
         this.html.dataset.modalN = !this.html.dataset.modalN ? 1 : Number(this.html.dataset.modalN) + 1;
         this.modal.style.zIndex = Number(_zindex) + Number(this.html.dataset.modalN);
         this.modal.dataset.modalN = this.html.dataset.modalN;
-        this.btn_close.focus();
+
+        this.btn_close && this.btn_close.focus();
        
     }
     hidden = () => {

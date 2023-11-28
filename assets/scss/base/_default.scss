@@ -24,13 +24,14 @@ guide-grid {
     div + div {margin-left: 2.4rem;}
 }
 box {
-    display: block;
+    display: flex;
     position: relative;
     width: 100%;
     border:.1rem solid var(--gray_80);
     padding: $x3;
     border-radius: $x1;
     margin: $x2 0;
+    gap: $x1;
 }
 comment{
     display: inline-block;

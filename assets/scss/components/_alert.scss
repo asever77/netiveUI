@@ -1,0 +1,128 @@
+.mdl-alert{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+
+    &[data-modal-current="false"] .mdl-modal-dim{opacity: 0;}
+
+    &[data-state="show"] {display: flex;}
+    &[data-state="hide"] {
+        display: flex;
+    
+        .mdl-alert-dim {
+            animation-name: dim_hide;
+            animation-delay: .1s;
+            animation-duration: .2s;
+            animation-iteration-count: 1;
+            animation-fill-mode: backwards;
+        }
+        .mdl-alert-wrap {
+            animation-name: modal_hide;
+            animation-delay: .1s;
+            animation-duration: .2s;
+            animation-iteration-count: 1;
+            animation-fill-mode: backwards;
+        }
+    }
+
+    &-dim {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        z-index: 0;
+        background-color: rgba(0,0,0,0.8);
+
+        animation-name: dim_show;
+        animation-delay: .1s;
+        animation-duration: .3s;
+        animation-iteration-count: 1;
+        animation-fill-mode: backwards;
+    }
+
+    &-wrap{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        padding: $x3;
+        min-width: 30rem;
+        background-color: #fff;
+        border-radius: $x2;
+        box-shadow: 0 $x1 $x2 rgba(0,0,0,0.4);
+        z-index: 1;
+
+        animation-name: modal_show;
+        animation-delay: .1s;
+        animation-duration: .4s;
+        animation-iteration-count: 1;
+        animation-fill-mode: backwards;
+    }
+    &-header {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+    &-body {
+        position: relative;
+        width: 100%;
+        padding:$x2 0;
+        max-height: calc(100vh - 20rem);
+        overflow-y: auto;
+    }
+    &-footer {
+        position: relative;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: $x1;
+
+        button {flex:1;}
+    }
+    &-close{
+        position: absolute;
+        top:0; right:0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 3rem;
+        height: 3rem;
+        font-size: 3rem;
+    }
+    &-last {
+        width: 3rem;
+        height: 3rem;
+        position: fixed;
+        bottom: -4rem; 
+        left:50%;
+        margin-left: -1.5rem;
+        background-color: #000;
+        color:#fff;
+        border-radius: 50%;
+        transition: bottom .2s ease-in, opacity .2s ease;
+        opacity: 0;
+
+        &:focus {
+            bottom:$x1;
+            opacity: 1;
+        }
+    }
+}
+
+@keyframes dim_show {
+    0% {opacity: 0; }
+    100% {opacity: 1;}
+}
+@keyframes modal_show {
+    0% {opacity: 0; transform: translate(0, 8rem);}
+    100% {opacity: 1; transform: translate(0, 0);}
+}
+@keyframes dim_hide {
+    0% {opacity: 1; }
+    100% {opacity: 0;}
+}
+@keyframes modal_hide {
+    0% {opacity: 1; transform: translate(0, 0);}
+    100% {opacity: 0; transform: translate(0, 8rem);}
+}
