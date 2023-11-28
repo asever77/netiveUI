@@ -8526,6 +8526,7 @@ body[data-toggle-state=true] .base-body {
   border: 0.1rem solid #222;
   padding: 0.8rem 1.6rem;
   border-radius: 0.8rem;
+  text-decoration: none;
 }
 .mdl-button[data-style=nav] {
   width: 4rem;
