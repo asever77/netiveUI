@@ -32,6 +32,7 @@
             <div data-target="c">
                 c
             </div>
+            <div style="height: 40vh;"></div>
         </div>
     </div>
     <script>
@@ -59,7 +60,7 @@
                     const __top = item.getBoundingClientRect().top;
                     const n = (item, __top - (_this.getBoundingClientRect().top - st) );
 
-                    if (n < st) {
+                    if (n <= st) {
                         const _b = document.querySelector('.btns button[data-obj].on');
                         const b = document.querySelector('.btns button[data-obj="'+ item.dataset.target +'"]');
                         console.log(b)
