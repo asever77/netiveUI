@@ -39,6 +39,8 @@
          document.addEventListener('DOMContentLoaded', () => {
             const _wrap = document.querySelector('.wrap');
             const btns = document.querySelectorAll('.btns button');
+            const _wrap = document.querySelector('.wrap');
+
             const act = (e) => {
                 const _this = e.currentTarget;
                 const _name = _this.dataset.obj;
@@ -74,6 +76,8 @@
             for(let item of btns) {
                 item.addEventListener('click', act);
             }
+            _wrap.addEventListener('scroll', actScroll);
+
             _wrap.addEventListener('scroll', actScroll);
 
          });

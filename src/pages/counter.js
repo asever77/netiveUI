@@ -10,7 +10,10 @@ UI.exe.toggle = new Toggle({
 
 UI.exe.countSlide = new CounterUpSlot({
     id :'report1',
-    value: 9876543210
+    value: 9876543210,
+    callback: () => {
+        console.log('end ㅎㅎㅎ');
+    }
 });
 
 //CALLBACK
