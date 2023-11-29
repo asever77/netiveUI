@@ -25,6 +25,7 @@ guide-grid {
 }
 box {
     display: flex;
+    flex-wrap: wrap;
     position: relative;
     width: 100%;
     border:.1rem solid var(--gray_80);

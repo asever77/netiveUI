@@ -1,0 +1,71 @@
+<div class="base-main-wrap">
+    <h1 data-h="1">Tab</h1>
+    <p></p>
+
+    <box>
+        <div class="mdl-tab" data-tab-id="tab1">
+            <div class="mdl-tab-wrap">
+                <button type="button" class="mdl-tab-btn" data-tab="a">
+                    <span>탭 1</span>
+                </button>
+                <button type="button" class="mdl-tab-btn" data-tab="b">
+                    <span>탭 2</span>
+                </button>
+                <button type="button" class="mdl-tab-btn" data-tab="c">
+                    <span>탭 3</span>
+                </button>
+            </div>
+        </div>
+        <div class="mdl-tab-pnl" data-tab-id="tab1">
+            <section class="mdl-tab-item" data-tab="a">
+                <h2 data-n="2">탭 1</h2>
+                <p>tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로내용을 tab으로 내용을 tab으로 내용을 </p>
+            </section>
+            <section class="mdl-tab-item" data-tab="b">
+                <h2 data-n="2">탭 2</h2>
+                <p>tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 내용을 </p>
+                <p>tab으로 내용을 tab으로 내용을 tab으로 로 내용을 tab으로 내용을 </p>
+                <p>tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 내용을 tab으로 tab으로 내용을 </p>
+                <p>tab으로 내용tab으로 내용을 tab으로 내용을 </p>
+            </section>
+            <section class="mdl-tab-item" data-tab="c">
+                <h2 data-n="2">탭 3</h2>
+                <p>tab으로 내용을 tab으로 내용을 tab으로로 내용을 tab으로 내용을 </p>
+                <p>tab으로 내용을 tab으로 내용을 tab으로 내용을 t로 내용을 tab으로 내용을 </p>
+            </section>
+        </div>
+        
+    </box>
+   
+    <pre><code>
+    <comment>//HTML</comment>
+    &lt;div class="mdl-tab" data-tab-id="tab1"&gt;
+        &lt;div class="mdl-tab-wrap"&gt;
+            &lt;button type="button" class="mdl-tab-btn" data-tab="a"&gt;
+                &lt;span&gt;탭 1&lt;/span&gt;
+            &lt;/button&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="mdl-tab-pnl" data-tab-id="tab1"&gt;
+        &lt;section class="mdl-tab-item" data-tab="a"&gt;
+            &lt;h2 data-n="2"&gt;탭 1&lt;/h2&gt;
+            내용...
+        &lt;/section&gt;
+    &lt;/div&gt;
+    
+    
+    <comment>//Javascript</comment>
+    &lt;script type="module"&gt;
+        import Tab from '../../assets/js/components/tab.js';
+
+        UI.exe.tab = new Tab({
+            id: 'tab1',
+            current: 'a',
+            callback: (v) => {
+                console.log(v);
+            }
+        });
+    &lt;/script&gt;
+    </code></pre>
+    
+</div>

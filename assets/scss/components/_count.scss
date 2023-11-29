@@ -7,7 +7,9 @@
     display: flex;
     height: $h;
     overflow: hidden;
-
+    font-size: $ft-size;
+    font-weight: 700;
+    
     &-item{
         height: $h;
         overflow: hidden;

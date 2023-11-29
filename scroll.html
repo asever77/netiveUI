@@ -10,6 +10,8 @@
        [data-target="a"]{width: 100%; height: 80vh; background-color: gold;}
        [data-target="b"]{width: 100%; height: 100vh; background-color: pink;}
        [data-target="c"]{width: 100%; height: 40vh; background-color: yellowgreen;}
+
+       .btn.on{background-color: red;}
     </style>
 </head>
 <body>
@@ -35,11 +37,13 @@
          document.addEventListener('DOMContentLoaded', () => {
 
             const btns = document.querySelectorAll('.btns button');
+            const _wrap = document.querySelector('.wrap');
+
             const act = (e) => {
                 const _this = e.currentTarget;
                 const _name = _this.dataset.obj;
                 const _target = document.querySelector('[data-target="'+ _name +'"]');
-                const _wrap = document.querySelector('.wrap');
+               
                 const _wrap_top =  _wrap.getBoundingClientRect().top;
                 const _target_top = _target.getBoundingClientRect().top;
 
@@ -48,9 +52,30 @@
                     behavior: 'smooth'  
                 });
             }
+            const actScroll = (e) => {
+                const _this = e.currentTarget;
+                const st = _this.scrollTop;
+                const targets = _this.querySelectorAll('[data-target]');
+                const btn_on = document.querySelector('[data-obj].on');
+                
+
+                for (let item of targets) {
+                    const it = Math.round(item.getBoundingClientRect().top);
+                    const obj_current = document.querySelector('[data-obj="'+ item.dataset.target +'"]');
+                    
+                    if (it - (_this.getBoundingClientRect().top - st) <= st) {
+                        btn_on && btn_on.classList.remove('on');
+                        obj_current.classList.add('on');
+                    }
+                }
+
+            }
+
             for(let item of btns) {
                 item.addEventListener('click', act);
             }
+
+            _wrap.addEventListener('scroll', actScroll);
 
          });
     </script>

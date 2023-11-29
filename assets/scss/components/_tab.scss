@@ -1,0 +1,29 @@
+.mdl-tab {
+    position: relative;
+    width: 100%;
+    display: flex;
+
+    &-wrap {
+        display: flex;
+        gap: $x1;
+    }
+
+    &-btn {
+        border: .1rem solid #555;
+        padding: $x1 $x2;
+        border-radius: $x1;
+
+        &[data-selected="true"] {
+            background-color: #000;
+            color:#fff;
+        }
+    }
+
+    &-item {
+        display: none;
+
+        &[data-selected="true"] {
+            display: block;
+        }
+    }
+}
