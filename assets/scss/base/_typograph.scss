@@ -11,5 +11,16 @@
     line-height: 1.5;
     margin-bottom: $x2;
 }
-
+[data-h="3"] {
+    font-size: $x3;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: $x2;
+}
+[data-h="4"] {
+    font-size: $x1_5;
+    font-weight: 700;
+    line-height: 1.5;
+    margin-bottom: $x2;
+}
 p + p{margin-top: $x2;}

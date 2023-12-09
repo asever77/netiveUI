@@ -1,0 +1,128 @@
+<div class="base-main-wrap">
+    <h1 data-h="1">Accordion</h1>
+
+    <box>
+        <dl class="mdl-acco" data-id="acco1">
+            <div class="mdl-acco-item">
+                <dt class="mdl-acco-head">
+                    <div class="mdl-acco-head-wrap">
+                        <strong class="mdl-acco-tit">title 1</strong>
+                        <a href="#link" class="mdl-acco-link">
+                            <span>외부링크</span>
+                        </a>
+                    </div>
+                    <button type="button" class="mdl-acco-btn" aria-label="title open"></button>
+                </dt>
+                <dd class="mdl-acco-body">
+                    <div class="mdl-acco-wrap">
+                        
+                        <dl class="mdl-acco" data-id="acco2">
+                            <div class="mdl-acco-item">
+                                <dt class="mdl-acco-head">
+                                    <div class="mdl-acco-head-wrap">
+                                        <strong class="mdl-acco-tit">title 1</strong>
+                                        <a href="#link" class="mdl-acco-link">
+                                            <span>외부링크</span>
+                                        </a>
+                                    </div>
+                                    <button type="button" class="mdl-acco-btn" aria-label="title open"></button>
+                                </dt>
+                                <dd class="mdl-acco-body">
+                                    <div class="mdl-acco-wrap">
+                                        ...
+                                    </div>
+                                </dd>
+                            </div>
+                        </dl>
+
+                    </div>
+                </dd>
+            </div>
+<!-- 주석 -->
+            <div class="mdl-acco-item">
+                <dt class="mdl-acco-head">
+                    <div class="mdl-acco-head-wrap">
+                        <strong class="mdl-acco-tit">title 2 - link</strong>
+                    </div>
+                    <a href="#link2" class="mdl-acco-btn" aria-label="title link"></a>
+                </dt>
+            </div>
+
+            <div class="mdl-acco-item">
+                <dt class="mdl-acco-head">
+                    <div class="mdl-acco-head-wrap">
+                        <strong class="mdl-acco-tit">title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 title 3 </strong>
+                    </div>
+                    <button type="button" class="mdl-acco-btn" aria-label="title open"></button>
+                </dt>
+                <dd class="mdl-acco-body">
+                    <div class="mdl-acco-wrap">
+                        ...
+                    </div>
+                </dd>
+            </div>
+
+            <div class="mdl-acco-item">
+                <dt class="mdl-acco-head">
+                    <div class="mdl-acco-head-wrap">
+                         <strong class="mdl-acco-tit">title 4</strong>
+                        <span class="mdl-form">
+                            <input type="checkbox" id="check1">
+                            <label for="check1" class="mdl-selection" data-type="checkbox">
+                                checkBox
+                            </label>
+                        </span>
+                        
+                    </div>
+                    <button type="button" class="mdl-acco-btn" aria-label="title open"></button>
+                </dt>
+                <dd class="mdl-acco-body">
+                    <div class="mdl-acco-wrap">
+                        ...
+                    </div>
+                </dd>
+            </div>
+        </dl>
+    </box>
+   
+    <pre><code>
+    <comment>//HTML</comment>
+    &lt;dl class="mdl-acco" data-id="acco1"&gt;
+        &lt;div class="mdl-acco-item"&gt;
+            &lt;dt class="mdl-acco-head"&gt;
+                &lt;div class="mdl-acco-wrap"&gt;
+                    &lt;strong class="mdl-acco-tit"&gt;title 1&lt;/strong&gt;
+                    &lt;a href="#link" class="mdl-acco-link"&gt;
+                        &lt;span&gt;외부링크&lt;/span&gt;
+                    &lt;/a&gt;
+                &lt;/div&gt;
+                &lt;button type="button" class="mdl-acco-btn" aria-label="title open"&gt;&lt;/button&gt;
+            &lt;/dt&gt;
+            &lt;dd class="mdl-acco-body"&gt;
+                &lt;div class="mdl-acco-wrap"&gt;
+                    ...
+                &lt;/div&gt;
+            &lt;/dd&gt;
+        &lt;/div&gt;
+    &lt;/dl&gt;
+
+    <comment>//Javascript</comment>
+    &lt;script type="module"&gt;
+        import Accordion from '../../assets/js/components/accordion.js';
+
+        UI.exe.accordion = new Accordion({
+            id :'acco1',
+            current: 0, // number, null
+            callback: (v) => {
+                console.log(v.id, v.current);
+            }
+        });
+
+        UI.exe.accordion.show(0);
+        UI.exe.accordion.hide(0);
+        UI.exe.accordion.allShow();
+        UI.exe.accordion.allHide();
+    &lt;/script&gt;
+    </code></pre>
+    
+</div>

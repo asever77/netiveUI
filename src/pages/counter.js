@@ -1,5 +1,5 @@
 import Toggle from '../../assets/js/components/toggle.js';
-import { CounterUpSlot } from '../../assets/js/components/counterUp.js';
+import { CounterUpSlot, CounterUpSlotLive } from '../../assets/js/components/counterUp.js';
 
 //current page script
 
@@ -10,9 +10,16 @@ UI.exe.toggle = new Toggle({
 
 UI.exe.countSlide = new CounterUpSlot({
     id :'report1',
-    value: 9876543210,
+    value: 98765.43210,
     callback: () => {
         console.log('end ㅎㅎㅎ');
+    }
+});
+UI.exe.countSlide2 = new CounterUpSlotLive({
+    id :'report2',
+    value: 10.5,
+    callback: () => {
+        console.log('end');
     }
 });
 
@@ -20,4 +27,12 @@ UI.exe.countSlide = new CounterUpSlot({
 UI.callback.toggle_a = (result) => {
     console.log('callback', result);
     UI.exe.countSlide.act();
+}
+UI.callback.toggle_b = (result) => {
+    // console.log('callback', result);
+    UI.exe.countSlide2.add(1.22);
+}
+UI.callback.toggle_c = (result) => {
+    // console.log('callback', result);
+    UI.exe.countSlide2.add(-1.7);
 }

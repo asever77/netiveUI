@@ -8,7 +8,12 @@ html,body {padding: 0;}
 /* Box sizing rules */
 *,
 *::before,
-*::after {box-sizing: border-box;}
+*::after {
+    box-sizing: border-box;
+    color: inherit;
+    font: inherit;
+    hyphens : auto
+}
 
 /* Remove default padding */
 ul[class],
@@ -55,6 +60,7 @@ summary {
 
 /* Set core body defaults */
 body {
+    background-color: $gray-0;
     font-family: 'Base', sans-serif;
     color: $gray-100;
     font-size: 1.6rem;

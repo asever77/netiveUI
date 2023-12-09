@@ -14,8 +14,8 @@
         border-radius: $x1;
 
         &[data-selected="true"] {
-            background-color: #000;
-            color:#fff;
+            background-color: $gray-100;
+            color:$gray-0;
         }
     }
 

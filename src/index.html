@@ -28,7 +28,6 @@
         <footer class="base-footer"></footer>
     </div>
 
-
     <script src="../assets/js/ui.global.js"></script>
     <script type="module">
         import Toggle from '../assets/js/components/toggle.js';
@@ -37,14 +36,8 @@
         const response_header = await fetch('./layout/header.html');
 
         //page 설정
-        let pageName = window.location.href.split('page=');
-        
-        if (pageName.length > 1) {
-            pageName = pageName[1].split('&')
-            pageName = './pages/' + pageName[0];
-        } else {
-            pageName = './pages/introduction';
-        }
+        let pageName = UI.parts.paraGet('page');
+        pageName = (!!pageName) ? './pages/' + pageName : './pages/introduction';
         
         //header
         if (response_header.ok) {
@@ -60,6 +53,7 @@
             const el_nav = document.querySelector('.base-nav');
             const el_nav_btns = el_nav.querySelectorAll('button');
             const paraPageName = UI.parts.paraGet('page');
+       
             const act_page = (e) => {
                 //초기화
                 const js_usages = document.querySelectorAll('[data-usage]');

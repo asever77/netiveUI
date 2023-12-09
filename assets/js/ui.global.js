@@ -140,6 +140,10 @@
                 _tempArray = _tempArray[1];
                 _tempArray = _tempArray.split('&');
                 _tempArray = _tempArray[0];
+                _tempArray = _tempArray.split('#');
+                _tempArray = _tempArray[0];
+
+                console.log(_tempArray);
             }
 
             return _tempArray;
@@ -174,14 +178,14 @@
             }
         },
         getIndex(ele) {
-            let _i = 0;
+			let _i = 0;
+			
+			while((ele = ele.previousSibling) != null) {
+               (ele.nodeType === 1) && _i++;				
+			}
 
-            while((ele = ele.previousSibling) != null ) {
-                _i++;
-            }
-
-            return _i;
-        },
+			return _i;
+		},
         /**
          * include
          * @param {string} opt.id 
@@ -403,6 +407,17 @@
             btn.dataset.meterial = 'arrow_forward';
         } else {
             btn.dataset.meterial = 'arrow_back';
+        }
+    }
+    Global.callback.toggle_darkmode = (result) => {
+        console.log('toggle_darkmode', result);
+        const btn = document.querySelector('[data-toggle-object="'+ result.name +'"]');
+        const html = document.querySelector('html');
+        console.log(html, result.state)
+        if (result.state === 'true') {
+            html.classList.add('dark');
+        } else {
+            html.classList.remove('dark');
         }
     }
 })();

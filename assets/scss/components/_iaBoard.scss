@@ -16,7 +16,7 @@
     
     select,
     input,
-    button {height: 4rem; padding: $x1 $x2; border: .1rem solid var(--gray_90); background-color: #fff;}
+    button {height: 4rem; padding: $x1 $x2; border: .1rem solid var(--gray_90); background-color: $gray-0;}
     .srch-area{display: flex;}
     .btn-outlined{margin-left:.4rem;}
     .srch-hidden { display:none;}
@@ -104,7 +104,7 @@
     .c1 .d1,.c2 .d2,.c3 .d3,.c4 .d4,.c5 .d5,.c6 .d6,.c7 .d7,.c8 .d8 { color:var(--gray_90);}
     .today-mod .date,
     .today-mod .mod{color: red!important;}
-    .today-mod td.state::after{content: "수정"; display: inline-block; background-color: tomato; color:#fff; margin:-2px 0 0 -20px; vertical-align:middle;}
+    .today-mod td.state::after{content: "수정"; display: inline-block; background-color: tomato; color:$gray-0; margin:-2px 0 0 -20px; vertical-align:middle;}
     .today-mod td{background-color: rgb(253, 234, 234);}
     .name-tg{display: none;}
 
@@ -121,7 +121,7 @@
         z-index: 3;
         top:0;
         padding:$x1 0;
-        background-color: #fff;
+        background-color: $gray-0;
     }
     &-state {
         position: relative;

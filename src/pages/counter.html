@@ -1,11 +1,16 @@
 <div class="base-main-wrap">
     <h1 data-h="1">Counter up</h1>
-    <h2 data-h="2" id="count">effect : slot machine</h2>
+    
+    <h2 data-h="2" id="count">Live</h2>
     <box>
-        <div class="mdl-count" data-id="report1"></div>
-        <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
-            <span>실행</span>
+        
+        <button type="button" class="mdl-button" data-toggle-object="b" data-callback="toggle_b">
+            <span>+ 실행</span>
         </button>
+        <button type="button" class="mdl-button" data-toggle-object="c" data-callback="toggle_c">
+            <span>- 실행</span>
+        </button>
+        <div class="mdl-count" data-id="report2"></div>
     </box>
     <pre>
     <code>
@@ -22,4 +27,30 @@
     &lt;/script"&gt;
     </code>
     </pre>
+
+    <h2 data-h="2" id="count">effect : slot machine</h2>
+    <box>
+        <div class="mdl-count" data-id="report1"></div>
+        <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
+            <span>실행</span>
+        </button>
+        
+    </box>
+    <pre>
+    <code>
+    &lt;div class="mdl-count" data-id="report1"&gt;&lt;/div&gt;
+
+    &lt;script type="module"&gt;
+        import { CounterUpSlot } from '../../assets/js/components/counterUp.js';
+
+        UI.exe.countSlide = new CountSlide({
+            id :'report1',
+            value: 9876543210
+        });
+        UI.exe.countSlide.act();
+    &lt;/script"&gt;
+    </code>
+    </pre>
+
+    
 </div>

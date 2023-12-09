@@ -335,8 +335,8 @@
 
 		getIndex(ele) {
 			let _i = 0;
-
 			while((ele = ele.previousSibling) != null ) {
+				console.log( typeof ele);
 				_i++;
 			}
 
