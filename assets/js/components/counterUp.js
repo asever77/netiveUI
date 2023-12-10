@@ -6,16 +6,14 @@
  *  @param {() => {}} opt.callback 모션 완료 후 실행.
  */
 
-class CounterUpSlot {
+class CounterUpSlotResult {
     constructor(opt) {
         this.id = opt.id;
         this.callback = opt.callback;
         this.value = opt.value;
-
         this.el = document.querySelector('.mdl-count[data-id="'+ this.id +'"]');
         this.items;
         this.h = this.el.offsetHeight;
-       
         this.init();
     }
     init() {
@@ -81,7 +79,7 @@ class CounterUpSlotLive {
         this.id = opt.id;
         this.callback = opt.callback;
         this.value = opt.value;
-        this.valuePrev;
+        this.valuePrev = this.value;
         this.el = document.querySelector('.mdl-count[data-id="'+ this.id +'"]');
         this.items;
         this.h = this.el.offsetHeight;
@@ -90,20 +88,66 @@ class CounterUpSlotLive {
     }
 
     init() {
-        const n = UI.parts.comma(this.value);
+        let n = UI.parts.comma(Math.abs(this.value));
+        let m = UI.parts.comma(Math.abs(this.valuePrev));
+        let str_n = n.split('.');
+        let str_m = m.split('.');
+        let n_pos = str_n[0];
+        let m_pos = str_m[0];
+        let n_dec = str_n[1];
+        let m_dec = str_m[1];
+
+        //음수,양수 
+        if (this.value < 0 && this.el.dataset.minus !== 'true') {
+            this.el.dataset.minus = 'true';
+        } else if (this.value > 0 && this.el.dataset.minus === 'true') {
+            this.el.dataset.minus = 'false';
+        }
+        
+        if (n_pos.length > m_pos.length) {
+            for (let i = 0; i < n_pos.length - m_pos.length; i++) {
+                str_m[0] = '0' + str_m[0];
+            }
+        } else if (n_pos.length < m_pos.length) {
+            for (let i = 0; i < m_pos.length - n_pos.length; i++) {
+                str_m[0] = str_m[0].substring(1);
+            }
+        }
+
+        if (!!n_dec) {
+            (!m_dec) ? m_dec = '0' : '';
+            if (n_dec.length > m_dec.length) {
+                for (let i = 0; i < n_dec.length - m_dec.length; i++) {
+                    str_m[1] = str_m[1] + '0';
+                }
+            }
+            if (m_dec.length > n_dec.length ) {
+                for (let i = 0; i < m_dec.length - n_dec.length; i++) {
+                    str_m[1] = str_m[1].slice(0,-1);
+                }
+            }
+
+            m = str_m[0] + '.' + str_m[1];
+        } else {
+            m = str_m[0];
+        }
+        
         const len = n.length;
         const html_comma = '<span style="height:'+ this.h + 'px">';
         let html_item = '';
         
         for (let i = 0; i < len; i++) {
             let _n = (Number(n.substr(i, 1))) + 9;
+            let _m = (Number(m.substr(i, 1))) + 9;
+            
             _n = _n > 9 ? 9 - (_n - 9) : _n;
+            _m = _m > 9 ? 9 - (_m - 9) : _m;
 
             if (isNaN(_n)) {
                 html_item += '<span class="mdl-count-item" data-n="'+ n.substr(i, 1) +'" style="height:'+ this.h + 'px"><span class="mdl-count-num">';
                 html_item += html_comma + n.substr(i, 1) + '</span>';
             } else {
-                html_item += '<span class="mdl-count-item" data-n="'+ Number(n.substr(i, 1)) +'"><span class="mdl-count-num" style="transform: translateY(-'+ ((this.h / 10) * _n) +'rem); transition: transform 0.6s cubic-bezier(.21,-0.04,.66,1.21);">';
+                html_item += '<span class="mdl-count-item" data-n="'+ Number(n.substr(i, 1)) +'"><span class="mdl-count-num" style="transform: translateY(-'+ ((this.h / 10) * _m) +'rem); transition: transform 0.6s cubic-bezier(.21,-0.04,.66,1.21);">';
                 html_item += this.html_number;
             }
             html_item += '</span></span>';
@@ -113,62 +157,29 @@ class CounterUpSlotLive {
         this.el.insertAdjacentHTML('beforeend', html_item);
         this.items = this.el.querySelectorAll('.mdl-count-item[data-n]');
 
+        setTimeout(() => {
+            for (let i = 0; i < len; i++) {
+                let _n = (Number(n.substr(i, 1))) + 9;
+                 _n = _n > 9 ? 9 - (_n - 9) : _n;
+
+                if (!isNaN(_n)) {
+                    this.items[i] ? this.items[i].querySelector('.mdl-count-num').style.transform = 'translateY(-'+ ((this.h / 10) * _n) +'rem)' : '';
+                }
+            }
+        }, 0);
+
         html_item = null;
     }
     add(v) {
         this.valuePrev = this.value;
         this.value = this.value * 1000 + v * 1000;
         this.value = this.value / 1000;
-        const str_current = String(Math.abs(this.value));
-        const str_prev = String(Math.abs(this.valuePrev));
-        const newCurrent = Array.from(str_current);
-        const newPrev = Array.from(str_prev);
-        
-        console.log(this.valuePrev, this.value)
-
-        if (newCurrent.length > newPrev.length) {
-            let html_item = '';
-
-            for (let i = 0, len = newCurrent.length - newPrev.length; i < len; i++) {
-                let _m = Number(newCurrent[i]) + 9;
-                _m = _m > 9 ? 9 - (_m - 9) : _m;
-
-                html_item += '<span class="mdl-count-item" data-n="'+ _m +'"><span class="mdl-count-num" style="transform: translateY(-'+ ((this.h / 10) * 9) +'rem); transition: transform 0.6s cubic-bezier(.21,-0.04,.66,1.21);">' + this.html_number + '</span></span>';
-            }
-            this.el.insertAdjacentHTML('afterbegin', html_item);
-        }
-
         this.items = this.el.querySelectorAll('.mdl-count-item[data-n]');
 
-        if (this.value < 0 && !this.el.dataset.minus) {
-            this.el.dataset.minus = 'true';
-        } else if (this.value > 0 && this.el.dataset.minus === 'true') {
-            this.el.dataset.minus = 'false';
-        }
+        for (const item of this.items) { item.remove(); }
 
-   
-
-        setTimeout(() => {
-            for (let i = newCurrent.length - 1, j = newPrev.length - 1, k = this.items.length - 1; i >= 0 || j >= 0 || k >= 0; i--, j--, k--) {
-                console.log(i,j,k, this.el.dataset.minus);
-                (i < 0 ) && this.items[0].remove();
-
-                console.log(newCurrent[i] );
-
-                if (!isNaN(newCurrent[i])) {
-                    let _n = Number(newCurrent[i]) + 9;
-                    _n = _n > 9 ? 9 - (_n - 9) : _n;
-
-
-
-                    this.items[k] ? this.items[k].querySelector('.mdl-count-num').style.transform = 'translateY(-'+ ((this.h / 10) * _n) +'rem)' : '';
-                }
-                
-            }
-        },0);
-        
+        this.init();
     }
 }
 
-
-export {CounterUpSlot, CounterUpSlotLive}; 
+export {CounterUpSlotResult, CounterUpSlotLive}; 

@@ -37,7 +37,8 @@
 
         //page 설정
         let pageName = UI.parts.paraGet('page');
-        pageName = (!!pageName) ? './pages/' + pageName : './pages/introduction';
+
+        pageName = (!!pageName[1]) ? './pages/' + pageName : './pages/introduction/introduction';
         
         //header
         if (response_header.ok) {
@@ -103,7 +104,7 @@
                         let pageName = _href.split('/');
                         pageName = pageName[pageName.length - 1];
 
-                        UI.parts.paraSet('page', pageName);
+                        UI.parts.paraSet('page', pageName +'/'+ pageName);
                     }
                 });
             }

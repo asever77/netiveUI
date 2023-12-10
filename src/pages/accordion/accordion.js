@@ -1,5 +1,5 @@
-import Toggle from '../../assets/js/components/toggle.js';
-import Accordion from '../../assets/js/components/accordion.js';
+import Toggle from '../../../assets/js/components/toggle.js';
+import Accordion from '../../../assets/js/components/accordion.js';
 
 //current page script
 

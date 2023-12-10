@@ -1,6 +1,6 @@
 @charset "utf-8";
 
-[data-id="modal2"] .mdl-modal-wrap{
+[data-id="modal2"] .mdl-layer-wrap{
     width: 100%;
     max-width: 60rem;
     background-color: aqua;

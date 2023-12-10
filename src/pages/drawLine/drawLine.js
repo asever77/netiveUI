@@ -1,5 +1,5 @@
-import Toggle from '../../assets/js/components/toggle.js';
-import DrawLine from '../../assets/js/components/drawLine.js';
+import Toggle from '../../../assets/js/components/toggle.js';
+import DrawLine from '../../../assets/js/components/drawLine.js';
         
 //EXE
 UI.exe.toggle = new Toggle({

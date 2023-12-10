@@ -1,4 +1,4 @@
-import Toggle from '../../assets/js/components/toggle.js';
+import Toggle from '../../../assets/js/components/toggle.js';
 
 //EXE
 UI.exe.toggle = new Toggle({

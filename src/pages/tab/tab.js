@@ -1,4 +1,4 @@
-import Tab from '../../assets/js/components/tab.js';
+import Tab from '../../../assets/js/components/tab.js';
 
 UI.exe.tab = new Tab({
     id: 'tab1',

@@ -1,5 +1,5 @@
-import Toggle from '../../assets/js/components/toggle.js';
-import IABoard from '../../assets/js/components/IABoard.js';      
+import Toggle from '../../../assets/js/components/toggle.js';
+import IABoard from '../../../assets/js/components/IABoard.js';      
   
 //EXE
 UI.exe.toggle = new Toggle({
