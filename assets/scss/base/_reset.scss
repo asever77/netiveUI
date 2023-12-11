@@ -1,9 +1,8 @@
 @charset "utf-8";
 
 html {font-size: 10px;}
-
-
 html,body {padding: 0;}
+
 /* See https://hankchizljaw.com/wrote/a-modern-css-reset/ */
 /* Box sizing rules */
 *,
@@ -69,13 +68,11 @@ body {
     -webkit-text-size-adjust: none;
     -moz-osx-font-smoothing: grayscale;
     -webkit-overflow-scrolling: touch;
-
-    // -webkit-user-select: none;
-	// -khtml-user-select: none;
-	// -moz-user-select: none;
-	// -ms-user-select: none;
-	// user-select: none;
-
+    -webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
     -webkit-tap-highlight-color: transparent;
     min-height: 100vh;

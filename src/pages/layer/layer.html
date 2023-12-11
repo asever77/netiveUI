@@ -1,6 +1,6 @@
 <div class="base-main-wrap">
     <h1 data-h="1">Layer Contents</h1>
-    
+    <h2 data-h="2">Modal Layer</h2>
     <box>
         <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
             <span>modal</span>
@@ -8,16 +8,8 @@
         <button type="button" class="mdl-button" data-toggle-object="b" data-callback="toggle_b">
             <span>modal2</span>
         </button>
-        <button type="button" class="mdl-button" data-toggle-object="c" data-callback="toggle_c">
-            <span>alert</span>
-        </button>
-        <button type="button" class="mdl-button" data-toggle-object="d" data-callback="toggle_d" data-dropdown="dropdown1">
-            <span>dropdown</span>
-        </button>
     </box>
-    
-    <pre>
-    <code>
+    <pre><code>
     &lt;section class="mdl-layer" data-id="modal1" data-type="modal"&gt;
         &lt;div class="mdl-layer-wrap"&gt;
             &lt;div class="mdl-layer-header"&gt;
@@ -38,19 +30,51 @@
     &lt;/section&gt;
     
     &lt;script type="module"&gt;
-        import Modal from '../assets/js/components/modal.js';
+        import Layer from '../assets/js/components/layer.js';
         
         // Modal Layer
-        UI.exe.modal_1 = new Modal({
+        UI.exe.modal_1 = new Layer({
             id :'modal1',
             type: 'modal',
             src: './modal/modal1'
         });
         UI.exe.modal_1.show();
         UI.exe.modal_1.hide();
+    &lt;/script&gt;
+    </code></pre>
 
+
+    <h2 data-h="2">System Layer</h2>
+    <box>
+        <button type="button" class="mdl-button" data-toggle-object="c" data-callback="toggle_c">
+            <span>alert</span>
+        </button>
+    </box>
+    <pre><code>
+    &lt;section class="mdl-layer" data-id="alert1" data-type="alert" data-state="show" data-layer-current="true" data-layer-n="1" style="z-index: 101;"&gt;
+        &lt;div class="mdl-layer-wrap"&gt;
+            &lt;div class="mdl-layer-body"&gt;
+                &lt;h1 class="mdl-layer-tit"&gt;{{ title }}&lt;/h1&gt;
+                &lt;div&gt;{{ content }}&lt;/div&gt;
+                
+                &lt;div class="mdl-btn-wrap"&gt;
+                    &lt;button type="button" class="mdl-btn" data-state="cancel" data-style="primary-gray"&gt;
+                        &lt;span&gt;{{ button[1].text }}&lt;/span&gt;
+                    &lt;/button&gt;
+                    &lt;button type="button" class="mdl-btn" data-state="ok" data-style="primary"&gt; 
+                        &lt;span&gt;{{ button[0].text }}&lt;/span&gt;
+                    &lt;/button&gt; 
+                &lt;/div&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="mdl-layer-dim"&gt;&lt;/div&gt;
+    &lt;/section&gt;
+    
+    &lt;script type="module"&gt;
+        import Layer from '../assets/js/components/layer.js';
+        
         // System Layer
-        UI.exe.alert_1 = new Modal({
+        UI.exe.alert_1 = new Layer({
             id :'alert1',
             type: 'system',
             title: 'alert title',
@@ -62,9 +86,40 @@
         });
         UI.exe.alert_1.show();
         UI.exe.alert_1.hide();
+    &lt;/script&gt;
+    </code></pre>
 
-        // Dropdown Layer
-        UI.exe.dropdown1 = new Modal({
+    <h2 data-h="2">Dropdown Layer</h2>
+    <box>
+        <button type="button" class="mdl-button" data-toggle-object="d" data-callback="toggle_d" data-dropdown="dropdown1">
+            <span>dropdown</span>
+        </button>
+    </box>
+    <pre><code>
+    &lt;section class="mdl-layer" data-id="dropdown1" data-type="dropdown"&gt;
+        &lt;div class="mdl-layer-wrap"&gt;
+            &lt;div class="mdl-layer-header"&gt;
+                &lt;h1&gt;제목...&lt;/h1&gt;
+                &lt;button type="button" class="mdl-layer-close" 
+                    aria-label="닫기"&gt;&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div class="mdl-layer-body" style="height: 100vh;"&gt;
+                내용...
+            &lt;/div&gt;
+            &lt;div class="mdl-layer-footer"&gt;
+                &lt;button type="button" class="mdl-button" data-toggle-object="c"&gt;
+                    &lt;span&gt;확인&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div class="mdl-layer-dim"&gt;&lt;/div&gt;
+    &lt;/section&gt;
+    
+    &lt;script type="module"&gt;
+        import Layer from '../assets/js/components/layer.js';
+        
+        // dropdown Layer
+        UI.exe.dropdown1 = new Layer({
             id :'dropdown1',
             type: 'dropdown',
             ps : 'BL',
@@ -73,7 +128,7 @@
         UI.exe.dropdown1.show();
         UI.exe.dropdown1.hide();
     &lt;/script&gt;
-    </code>
-    </pre>
+    </code></pre>
+    
     
 </div>

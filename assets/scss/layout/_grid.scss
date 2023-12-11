@@ -1,5 +1,14 @@
 @charset "utf-8";
 $nav_width: 20rem;
+html {
+    overflow: hidden;
+}
+
+[data-pagescroll] {
+    position: relative;
+    overflow: auto;
+    height: 100vh;
+}
 
 html{
     &[data-modal="show"] {
@@ -96,6 +105,9 @@ body {
 
         h3 {margin:0 0 $x1;}
         ul {margin:0 0 $x4;}
+
+        li {margin: $x1 0;}
+        button {color: $gray-70;}
     }
 }
 

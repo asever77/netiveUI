@@ -118,6 +118,9 @@ body {
   -webkit-text-size-adjust: none;
   -moz-osx-font-smoothing: grayscale;
   -webkit-overflow-scrolling: touch;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   -webkit-tap-highlight-color: transparent;
   min-height: 100vh;
@@ -282,6 +285,7 @@ box {
   border-radius: 0.8rem;
   margin: 1.6rem 0;
   gap: 0.8rem;
+  align-items: center;
 }
 
 comment {
@@ -294,7 +298,7 @@ code {
   background-color: #f7f4f3;
   color: #222;
   font-size: 1.4rem;
-  margin: 1.6rem 0 0.8rem;
+  margin: 0;
   display: block;
   border-radius: 0.8rem;
   overflow: auto;
@@ -8402,7 +8406,7 @@ overflow:auto;
 [data-h="1"] {
   font-size: 8rem;
   font-weight: 100;
-  text-transform: uppercase;
+  text-transform: capitalize;
   line-height: 1.5;
   margin-bottom: 3.2rem;
 }
@@ -8562,11 +8566,11 @@ input:disabled + .mdl-selection[data-type=switch] {
 
 /* input text */
 select,
-.ui-select-btn,
-.inp-base {
+.mdl-select-btn {
   position: relative;
-  display: inline-block;
-  vertical-align: top;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
   border: 1px solid var(--gray_30);
   background-color: var(--gray_0);
@@ -8577,6 +8581,28 @@ select,
   margin: 0;
   color: var(--gray_90);
   font-size: 1.6rem;
+  z-index: 1;
+}
+select:hover,
+.mdl-select-btn:hover {
+  border: 0.1rem solid var(--gray_100);
+}
+
+.mdl-select {
+  position: relative;
+}
+.mdl-select select {
+  position: relative;
+  width: auto;
+  z-index: 0;
+}
+.mdl-select select:focus + .mdl-select-btn {
+  border: 0.1rem solid var(--gray_100);
+}
+.mdl-select-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .inp-base:focus {
@@ -8643,6 +8669,16 @@ select.inp-base {
   padding: 0 0.8rem;
   z-index: 1;
   transform: translate(0, -50%);
+}
+
+html {
+  overflow: hidden;
+}
+
+[data-pagescroll] {
+  position: relative;
+  overflow: auto;
+  height: 100vh;
 }
 
 html[data-modal=show] body {
@@ -8737,6 +8773,12 @@ body[data-toggle-state=true] .base-body {
 }
 .base-nav ul {
   margin: 0 0 3.2rem;
+}
+.base-nav li {
+  margin: 0.8rem 0;
+}
+.base-nav button {
+  color: var(--gray_70);
 }
 
 @media (max-width: 374px) {
@@ -9045,20 +9087,6 @@ body[data-toggle-state=true] .base-body {
 .mdl-layer[data-state=hide] {
   display: flex;
 }
-.mdl-layer[data-state=hide] .mdl-layer-dim {
-  animation-name: dim_hide;
-  animation-delay: 0.1s;
-  animation-duration: 0.2s;
-  animation-iteration-count: 1;
-  animation-fill-mode: backwards;
-}
-.mdl-layer[data-state=hide] .mdl-layer-wrap {
-  animation-name: modal_hide;
-  animation-delay: 0.1s;
-  animation-duration: 0.2s;
-  animation-iteration-count: 1;
-  animation-fill-mode: backwards;
-}
 .mdl-layer-dim {
   position: absolute;
   width: 100%;
@@ -9081,11 +9109,6 @@ body[data-toggle-state=true] .base-body {
   border-radius: 1.6rem;
   box-shadow: 0 0.8rem 1.6rem rgba(0, 0, 0, 0.4);
   z-index: 1;
-  animation-name: modal_show;
-  animation-delay: 0.1s;
-  animation-duration: 0.4s;
-  animation-iteration-count: 1;
-  animation-fill-mode: backwards;
 }
 .mdl-layer-header {
   position: relative;
@@ -9139,12 +9162,109 @@ body[data-toggle-state=true] .base-body {
   bottom: 0.8rem;
   opacity: 1;
 }
+.mdl-layer[data-type=alert] .mdl-layer-wrap, .mdl-layer[data-type=modal] .mdl-layer-wrap {
+  animation-name: modal_show;
+  animation-delay: 0.1s;
+  animation-duration: 0.4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+}
+.mdl-layer[data-type=alert][data-state=hide] .mdl-layer-dim, .mdl-layer[data-type=modal][data-state=hide] .mdl-layer-dim {
+  animation-name: dim_hide;
+  animation-delay: 0.1s;
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+}
+.mdl-layer[data-type=alert][data-state=hide] .mdl-layer-wrap, .mdl-layer[data-type=modal][data-state=hide] .mdl-layer-wrap {
+  animation-name: modal_hide;
+  animation-delay: 0.1s;
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+}
 .mdl-layer[data-type=dropdown] {
   position: absolute;
   width: auto;
   height: auto;
   padding: 0;
   overflow: visible;
+}
+.mdl-layer[data-type=dropdown] .mdl-layer-wrap {
+  animation-name: dropdown_show;
+  animation-delay: 0.1s;
+  animation-duration: 0.4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+}
+.mdl-layer[data-type=dropdown][data-state=hide] .mdl-layer-wrap {
+  animation-name: dropdown_hide;
+  animation-delay: 0.1s;
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+}
+.mdl-layer[data-type=select] {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 0;
+  overflow: visible;
+}
+.mdl-layer[data-type=select] .mdl-layer-header {
+  display: none;
+}
+.mdl-layer[data-type=select] .mdl-layer-wrap {
+  padding: 0.8rem 0;
+  min-width: 0;
+  max-height: 13.6rem;
+  overflow-y: auto;
+  border-radius: 0.8rem;
+}
+.mdl-layer[data-type=select] .mdl-layer-wrap:hover :checked + .mdl-select-option {
+  background-color: transparent;
+}
+.mdl-layer[data-type=select] .mdl-layer-body {
+  margin: 0;
+  padding: 0;
+}
+.mdl-layer[data-type=select] :checked + .mdl-select-option {
+  background-color: var(--gray_20);
+}
+.mdl-layer[data-type=select] :checked + .mdl-select-option span {
+  font-weight: 700;
+}
+.mdl-layer[data-type=select] .mdl-select-option {
+  display: flex;
+  min-height: 3.2rem;
+  padding: 0 1.6rem;
+  align-items: center;
+}
+.mdl-layer[data-type=select] .mdl-select-option:active, .mdl-layer[data-type=select] .mdl-select-option:hover {
+  background-color: var(--gray_20) !important;
+}
+.mdl-layer[data-type=select] .mdl-select-option::before {
+  display: none;
+}
+.mdl-layer[data-type=select] .mdl-select-option span {
+  font-size: 1.4rem;
+}
+.mdl-layer[data-type=select] .mdl-layer-dim {
+  display: none;
+}
+.mdl-layer[data-type=select] .mdl-layer-wrap {
+  animation-name: select_show;
+  animation-delay: 0.1s;
+  animation-duration: 0.4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+}
+.mdl-layer[data-type=select][data-state=hide] .mdl-layer-wrap {
+  animation-name: select_hide;
+  animation-delay: 0.1s;
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
 }
 
 @keyframes dim_show {
@@ -9181,6 +9301,46 @@ body[data-toggle-state=true] .base-body {
   100% {
     opacity: 0;
     transform: translate(0, 4rem);
+  }
+}
+@keyframes dropdown_show {
+  0% {
+    opacity: 0;
+    transform: translate(0, 1rem);
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+}
+@keyframes dropdown_hide {
+  0% {
+    opacity: 1;
+    transform: translate(0, 0);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(0, 1rem);
+  }
+}
+@keyframes select_show {
+  0% {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+@keyframes select_hide {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.9);
   }
 }
 .mdl-tab {
