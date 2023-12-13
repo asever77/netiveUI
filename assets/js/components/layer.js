@@ -25,6 +25,7 @@ export default class Layer {
         this.select;
         this.isFocus = false;
         this.timer;
+        this.select_btn;
         this.callback = opt.callback;
 
         if (this.type === 'system') {
@@ -62,11 +63,11 @@ export default class Layer {
         const select = this.select.querySelector('select');
         const options = select.querySelectorAll('option');
 
-        let html = '<button type="button" class="mdl-select-btn" data-select-id="'+  this.id+'_select" value="'+ select.value +'" tabindex="-1"><span>'+ select.querySelector('[selected]').text +'</span></button>';
+        let html = '<button type="button" class="mdl-select-btn" data-select-id="'+  this.id+'_select" value="'+ select.value +'" tabindex="-1" role="combobox" aria-haspopup="listbox" aria-expanded="false"><span>'+ select.querySelector('[selected]').text +'</span></button>';
         this.select.insertAdjacentHTML('beforeend', html);
 
         html = null;
-        html += '<section class="mdl-layer" data-id="'+ this.id +'_select" data-type="select">';
+        html += '<section class="mdl-layer" data-id="'+ this.id +'_select" data-type="select" role="listbox">';
         html += '<div class="mdl-layer-wrap">';
         html += '   <div class="mdl-layer-header">';
         html += '       <h2>'+ select.title +'</h2>';
@@ -78,7 +79,7 @@ export default class Layer {
         for (let i = 0, len = options.length; i < len; i++) {
             html += '<li>';
             html += '<input type="radio" id="'+ this.id +'_r'+ i +'" value="'+ options[i].value +'"  name="'+ this.id +'_r" '+ ((options[i].selected) && 'checked') +'>';
-            html += '<label for="'+ this.id +'_r'+ i +'" class="mdl-select-option" data-type="radio" data-value="'+ options[i].value +'"><span>'+ options[i].text +'</span></label></li>';
+            html += '<label for="'+ this.id +'_r'+ i +'" class="mdl-select-option" data-type="radio" data-value="'+ options[i].value +'" role="option"><span>'+ options[i].text +'</span></label></li>';
         }
 
         html += '       </ul>';
@@ -93,14 +94,15 @@ export default class Layer {
         this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'_select"]');
         this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
         this.btn_close = this.modal.querySelector('.mdl-layer-close');
+        this.select_btn = this.select.querySelector('.mdl-select-btn');
 
         select.addEventListener('change', (e) => {
             let _this = e.currentTarget;
-            this.select.querySelector('.mdl-select-btn span').textContent = _this.querySelector('option:checked').textContent;
-            this.select.querySelector('.mdl-select-btn').value = _this.value;
+            this.select_btn.querySelector('span').textContent = _this.querySelector('option:checked').textContent;
+            this.select_btn.value = _this.value;
         });
-
-        this.select.querySelector('.mdl-select-btn').addEventListener('click', this.show);
+        
+        this.select_btn.addEventListener('click', this.show);
         this.init();
     }
     madeSystem() {
@@ -230,20 +232,17 @@ export default class Layer {
             value: _this.dataset.value
         });
     }
-    show = () =>  {
+    show = (e) =>  {
         const _zindex = 100;
         const _prev = document.querySelector('[data-layer-current="true"]');
-        let btn = document.querySelector('[data-dropdown="'+ this.id +'"]');
-
-        this.type === 'select' ? btn = document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'_select"]'): '';
+        let btn = (this.type === 'select') ? document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'_select"]'): document.querySelector('[data-dropdown="'+ this.id +'"]');
 
         _prev ? _prev.dataset.layerCurrent = 'false' : '';
-
         this.modal.dataset.layerCurrent = 'true';
         this.modal || this.src && this.make();
         this.modal.dataset.state = 'show';
 
-        //dropdown, select
+        //dropdown & select
         if (this.type === 'dropdown' || this.type === 'select') {
             const ps_info = {
                 m_width: this.modal.offsetWidth,
@@ -261,24 +260,24 @@ export default class Layer {
 
             switch(this.ps){
                 case 'TL': 
-                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) / 10 + 'rem';
-                    _left = ((ps_info.left - ps_info.sc_left)) / 10 + 'rem';
+                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) + 'px';
+                    _left = ((ps_info.left - ps_info.sc_left)) + 'px';
                     break;
                 case 'TC': 
                 break;
                 case 'TR': 
                 break;
                 case 'BL': 
-                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) / 10 + 'rem';
-                    _left = ((ps_info.left - ps_info.sc_left)) / 10 + 'rem';
+                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) + 'px';
+                    _left = ((ps_info.left - ps_info.sc_left)) + 'px';
                     break;
                 case 'BC': 
-                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) / 10 + 'rem';
-                    _left = ((ps_info.left - ps_info.sc_left) + (ps_info.width / 2) - (ps_info.m_width / 2)) / 10 + 'rem';
+                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) + 'px';
+                    _left = ((ps_info.left - ps_info.sc_left) + (ps_info.width / 2) - (ps_info.m_width / 2)) + 'px';
                     break;
                 case 'BR': 
-                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) / 10 + 'rem';
-                    _left = ((ps_info.left - ps_info.sc_left) - (ps_info.m_width - ps_info.width)) / 10 + 'rem';
+                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) + 'px';
+                    _left = ((ps_info.left - ps_info.sc_left) - (ps_info.m_width - ps_info.width)) + 'px';
                     break;
 
                 case 'LT': 
@@ -306,14 +305,16 @@ export default class Layer {
         this.html.dataset.layerN = !this.html.dataset.layerN ? 1 : Number(this.html.dataset.layerN) + 1;
         this.modal.style.zIndex = Number(_zindex) + Number(this.html.dataset.layerN);
         this.modal.dataset.layerN = this.html.dataset.layerN;
-
         this.btn_close && this.btn_close.focus();
 
+        // select layer
         if (this.type === 'select') {
             const el_options = this.modal.querySelectorAll('.mdl-select-option');
             const el_inputs = this.modal.querySelectorAll('input');
             const el_options_checked = this.modal.querySelector('input:checked');
 
+            this.select_btn.setAttribute('aria-expanded', true);
+            this.select_btn.removeEventListener('click', this.show);
             el_options_checked.focus();
 
             for (let i = 0, len = el_options.length; i < len; i++) {
@@ -323,7 +324,18 @@ export default class Layer {
                 el_options[i].addEventListener('focusout', this.keyCheck);
                 el_inputs[i].addEventListener('focusin', this.foucsOutCheck);
             }
+
+            setTimeout(() => {
+                this.html.addEventListener('click', this.backClick);
+            },0);
         }
+    }
+    backClick = (e) => {
+        //mouse click, touch 인 경우만 실행. ''값은 방향키로 이동 시
+        if (e.pointerType !== '') {
+            e.srcElement.querySelector('.mdl-layer[role="listbox]') ?? this.hide();
+        }
+        
     }
     foucsOutCheck = () => {
         clearTimeout(this.timer);
@@ -349,6 +361,8 @@ export default class Layer {
         this.modal.dataset.state = 'hidden';
         this.html.dataset.modal = 'hidden';
 
+        this.select_btn && this.select_btn.setAttribute('aria-expanded', false);
+
         this.focus.focus();
         this.html.dataset.layerN = Number(this.html.dataset.layerN) - 1;
         if (Number(this.html.dataset.layerN) !== 0) {
@@ -361,6 +375,8 @@ export default class Layer {
         }
     }
     hide = () => {
+        this.select_btn && this.select_btn.addEventListener('click', this.show);
+        this.html.removeEventListener('click', this.backClick);
         this.modal.dataset.state = 'hide';
         this.modal_wrap.addEventListener('animationend', this.hidden);
     }

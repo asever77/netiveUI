@@ -147,7 +147,7 @@ class CounterUpSlotLive {
                 html_item += '<span class="mdl-count-item" data-n="'+ n.substr(i, 1) +'" style="height:'+ this.h + 'px"><span class="mdl-count-num">';
                 html_item += html_comma + n.substr(i, 1) + '</span>';
             } else {
-                html_item += '<span class="mdl-count-item" data-n="'+ Number(n.substr(i, 1)) +'"><span class="mdl-count-num" style="transform: translateY(-'+ ((this.h / 10) * _m) +'rem); transition: transform 0.6s cubic-bezier(.21,-0.04,.66,1.21);">';
+                html_item += '<span class="mdl-count-item" data-n="'+ Number(n.substr(i, 1)) +'"><span class="mdl-count-num" style="transform: translateY(-'+ ((this.h) * _m) +'px); transition: transform 0.6s cubic-bezier(.21,-0.04,.66,1.21);">';
                 html_item += this.html_number;
             }
             html_item += '</span></span>';
@@ -163,7 +163,7 @@ class CounterUpSlotLive {
                  _n = _n > 9 ? 9 - (_n - 9) : _n;
 
                 if (!isNaN(_n)) {
-                    this.items[i] ? this.items[i].querySelector('.mdl-count-num').style.transform = 'translateY(-'+ ((this.h / 10) * _n) +'rem)' : '';
+                    this.items[i] ? this.items[i].querySelector('.mdl-count-num').style.transform = 'translateY(-'+ ((this.h) * _n) +'px)' : '';
                 }
             }
         }, 0);

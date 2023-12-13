@@ -8574,7 +8574,7 @@ select,
   width: 100%;
   border: 1px solid var(--gray_30);
   background-color: var(--gray_0);
-  border-radius: 0;
+  border-radius: 0.8rem;
   height: 4rem;
   padding: 0 1rem;
   outline: 0;
@@ -8586,6 +8586,23 @@ select,
 select:hover,
 .mdl-select-btn:hover {
   border: 0.1rem solid var(--gray_100);
+}
+select[aria-expanded=true]::after,
+.mdl-select-btn[aria-expanded=true]::after {
+  content: "expand_less";
+}
+select::after,
+.mdl-select-btn::after {
+  content: "expand_more";
+  font-family: "Material Symbols Outlined";
+  position: absolute;
+  right: 0.8rem;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.6rem;
+  font-weight: 700;
+  display: block;
+  color: var(--gray_90);
 }
 
 .mdl-select {

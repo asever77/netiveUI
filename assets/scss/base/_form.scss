@@ -132,7 +132,7 @@ select,
     width: 100%;
     border: 1px solid $gray-30;
     background-color: $gray-0;
-    border-radius: 0;
+    border-radius: $x1;
     height: 4rem;
     padding: 0 1rem;
     outline: 0;
@@ -143,6 +143,21 @@ select,
 
     &:hover {
         border: .1rem solid $gray-100;
+    }
+    &[aria-expanded="true"]::after {
+        content: "expand_less";
+    }
+    &::after {
+        content: "expand_more";
+        font-family: 'Material Symbols Outlined';
+        position: absolute;
+        right:$x1;
+        top: 50%;
+        transform:translateY(-50%);
+        font-size: 1.6rem;
+        font-weight: 700;
+        display: block;
+        color:$gray-90;
     }
 }
 .mdl-select {
