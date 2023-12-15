@@ -8,16 +8,12 @@
     align-items: center;
     justify-content: center;
     display: none;
-    overflow-y: auto;
+    overflow: hidden;
     padding: $x3;
 
     &[data-layer-current="false"] .mdl-layer-dim{opacity: 0;}
-    &[data-state="show"] {
-        display: flex;
-    }
-    &[data-state="hide"] {
-        display: flex;
-    }
+    &[data-state="show"] {display: flex;}
+    &[data-state="hide"] {display: flex;}
 
     &-dim {
         position: absolute;
@@ -42,8 +38,6 @@
         border-radius: $x2;
         box-shadow: 0 $x1 $x2 rgba(0,0,0,0.4);
         z-index: 1;
-
-        
     }
     &-header {
         position: relative;
@@ -99,7 +93,6 @@
 
     &[data-type="alert"],
     &[data-type="modal"] {
-
         .mdl-layer-wrap {
             animation-name: modal_show;
             animation-delay: .1s;
@@ -119,6 +112,37 @@
                 animation-name: modal_hide;
                 animation-delay: .1s;
                 animation-duration: .2s;
+                animation-iteration-count: 1;
+                animation-fill-mode: backwards;
+            }
+        }
+    }
+    &[data-type="bottom"] {
+        padding:0;
+        align-items: flex-end;
+
+        .mdl-layer-wrap {
+            width: 100%;
+            border-bottom-left-radius: 0;
+            border-bottom-right-radius: 0;
+            animation-name: bottom_show;
+            animation-delay: .1s;
+            animation-duration: .3s;
+            animation-iteration-count: 1;
+            animation-fill-mode: backwards;
+        }
+        &[data-state="hide"] {
+            .mdl-layer-dim {
+                animation-name: dim_hide;
+                animation-delay: .1s;
+                animation-duration: .3s;
+                animation-iteration-count: 1;
+                animation-fill-mode: backwards;
+            }
+            .mdl-layer-wrap {
+                animation-name: bottom_hide;
+                animation-delay: .1s;
+                animation-duration: .3s;
                 animation-iteration-count: 1;
                 animation-fill-mode: backwards;
             }
@@ -212,18 +236,29 @@
     0% {opacity: 0; }
     100% {opacity: 1;}
 }
-@keyframes modal_show {
-    0% {opacity: 0; transform: translate(0, 4rem);}
-    100% {opacity: 1; transform: translate(0, 0);}
-}
 @keyframes dim_hide {
     0% {opacity: 1; }
     100% {opacity: 0;}
+}
+
+@keyframes bottom_show {
+    0% {opacity: 0; transform: translate(0, 50vh);}
+    100% {opacity: 1; transform: translate(0, 0);}
+}
+@keyframes bottom_hide {
+    0% {opacity: 1; transform: translate(0, 0);}
+    100% {opacity: 0; transform: translate(0, 50vh);}
+}
+
+@keyframes modal_show {
+    0% {opacity: 0; transform: translate(0, 4rem);}
+    100% {opacity: 1; transform: translate(0, 0);}
 }
 @keyframes modal_hide {
     0% {opacity: 1; transform: translate(0, 0);}
     100% {opacity: 0; transform: translate(0, 4rem);}
 }
+
 @keyframes dropdown_show {
     0% {opacity: 0; transform: translate(0, 1rem);}
     100% {opacity: 1; transform: translate(0, 0);}
@@ -232,6 +267,7 @@
     0% {opacity: 1; transform: translate(0, 0);}
     100% {opacity: 0; transform: translate(0, 1rem);}
 }
+
 @keyframes select_show {
     0% {opacity: 0; transform: scale(0.9);}
     100% {opacity: 1; transform: scale(1);}

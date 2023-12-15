@@ -50,6 +50,9 @@ export default class Layer {
                 case 'modal' :
                     this.modal.dataset.type = 'modal';
                     break;
+                case 'bottom' :
+                    this.modal.dataset.type = 'bottom';
+                    break;
                 case 'dropdown' :
                     this.modal.dataset.type = 'dropdown';
                     break;
@@ -237,10 +240,7 @@ export default class Layer {
         const _prev = document.querySelector('[data-layer-current="true"]');
         let btn = (this.type === 'select') ? document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'_select"]'): document.querySelector('[data-dropdown="'+ this.id +'"]');
 
-        _prev ? _prev.dataset.layerCurrent = 'false' : '';
-        this.modal.dataset.layerCurrent = 'true';
-        this.modal || this.src && this.make();
-        this.modal.dataset.state = 'show';
+       
 
         //dropdown & select
         if (this.type === 'dropdown' || this.type === 'select') {
@@ -301,6 +301,11 @@ export default class Layer {
             this.html.dataset.modal = 'show';
         }
 
+        _prev ? _prev.dataset.layerCurrent = 'false' : '';
+        this.modal.dataset.layerCurrent = 'true';
+        this.modal || this.src && this.make();
+        this.modal.dataset.state = 'show';
+        
         this.focus = document.activeElement;
         this.html.dataset.layerN = !this.html.dataset.layerN ? 1 : Number(this.html.dataset.layerN) + 1;
         this.modal.style.zIndex = Number(_zindex) + Number(this.html.dataset.layerN);
@@ -375,6 +380,7 @@ export default class Layer {
         }
     }
     hide = () => {
+        console.log('hide');
         this.select_btn && this.select_btn.addEventListener('click', this.show);
         this.html.removeEventListener('click', this.backClick);
         this.modal.dataset.state = 'hide';
