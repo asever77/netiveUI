@@ -9328,7 +9328,7 @@ body[data-toggle-state=true] .base-body {
 @keyframes bottom_show {
   0% {
     opacity: 0;
-    transform: translate(0, 50vh);
+    transform: translate(0, 14rem);
   }
   100% {
     opacity: 1;
@@ -9342,7 +9342,7 @@ body[data-toggle-state=true] .base-body {
   }
   100% {
     opacity: 0;
-    transform: translate(0, 50vh);
+    transform: translate(0, 14rem);
   }
 }
 @keyframes modal_show {

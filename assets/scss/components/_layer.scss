@@ -242,12 +242,12 @@
 }
 
 @keyframes bottom_show {
-    0% {opacity: 0; transform: translate(0, 50vh);}
+    0% {opacity: 0; transform: translate(0, 14rem);}
     100% {opacity: 1; transform: translate(0, 0);}
 }
 @keyframes bottom_hide {
     0% {opacity: 1; transform: translate(0, 0);}
-    100% {opacity: 0; transform: translate(0, 50vh);}
+    100% {opacity: 0; transform: translate(0, 14rem);}
 }
 
 @keyframes modal_show {
