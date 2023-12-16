@@ -43,13 +43,13 @@ export default class Accordion {
             current: UI.parts.getIndex(this.acco_item)
         });
         this.acco_item.dataset.expanded = 'true';
-        this.acco_body.style.height = (this.h/10) + 'rem';
+        this.acco_body.style.height = (this.h) + 'px';
         this.acco_body.addEventListener('transitionend', this.showEnd);
     }
     actHide() {
         this.acco_wrap = this.acco_body.children[0];
         this.h = this.acco_wrap.offsetHeight;
-        this.acco_body.style.height = (this.h/10) + 'rem';
+        this.acco_body.style.height = (this.h) + 'px';
         this.acco_body.removeEventListener('transitionend', this.showEnd);
        
         setTimeout(() => {
@@ -82,7 +82,7 @@ export default class Accordion {
         
         this.acco_wrap = this.acco_body.children[0];
         this.h = this.acco_wrap.offsetHeight;
-        this.acco_body.style.height = (this.h/10) + 'rem';
+        this.acco_body.style.height = (this.h) + 'px';
         this.acco_body.removeEventListener('transitionend', this.showEnd);
        
         setTimeout(() => {

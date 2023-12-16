@@ -18,18 +18,29 @@ export default class Layer {
         this.focus;
         this.type = !opt.type ? 'modal' : opt.type; 
         this.ps = opt.ps ?? 'BL';
-
         this.title = opt.title;
         this.content = opt.content;
         this.btn = opt.button;
+        this.pageScroll = document.querySelector('[data-pagescroll]') ?? document.querySelector('html');
+        this.select;
+        this.isFocus = false;
+        this.timer;
+        this.select_btn;
+        this.callback = opt.callback;
 
         if (this.type === 'system') {
             //script coding
             this.madeSystem();
-        } else if (this.src) {
+        } 
+        else if (this.type === 'select') {
+            //fetch load
+            this.madeSelect();
+        } 
+        else if (this.src) {
             //fetch load
             this.made();
-        } else {
+        } 
+        else {
             //hard coding
             this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'"]');
             this.btn_close = this.modal.querySelector('.mdl-layer-close');
@@ -39,6 +50,9 @@ export default class Layer {
                 case 'modal' :
                     this.modal.dataset.type = 'modal';
                     break;
+                case 'bottom' :
+                    this.modal.dataset.type = 'bottom';
+                    break;
                 case 'dropdown' :
                     this.modal.dataset.type = 'dropdown';
                     break;
@@ -47,16 +61,63 @@ export default class Layer {
             this.init();
         }
     }
+    madeSelect() {
+        this.select = document.querySelector('.mdl-select[data-id="'+ this.id +'"]');
+        const select = this.select.querySelector('select');
+        const options = select.querySelectorAll('option');
+
+        let html = '<button type="button" class="mdl-select-btn" data-select-id="'+  this.id+'_select" value="'+ select.value +'" tabindex="-1" role="combobox" aria-haspopup="listbox" aria-expanded="false"><span>'+ select.querySelector('[selected]').text +'</span></button>';
+        this.select.insertAdjacentHTML('beforeend', html);
+
+        html = null;
+        html += '<section class="mdl-layer" data-id="'+ this.id +'_select" data-type="select" role="listbox">';
+        html += '<div class="mdl-layer-wrap">';
+        html += '   <div class="mdl-layer-header">';
+        html += '       <h2>'+ select.title +'</h2>';
+        html += '       <button type="button" class="mdl-layer-close" data-material="close"  aria-label="닫기"></button>';
+        html += '   </div>';
+        html += '    <div class="mdl-layer-body">';
+        html += '       <ul class="mdl-select-wrap">';
+
+        for (let i = 0, len = options.length; i < len; i++) {
+            html += '<li>';
+            html += '<input type="radio" id="'+ this.id +'_r'+ i +'" value="'+ options[i].value +'"  name="'+ this.id +'_r" '+ ((options[i].selected) && 'checked') +'>';
+            html += '<label for="'+ this.id +'_r'+ i +'" class="mdl-select-option" data-type="radio" data-value="'+ options[i].value +'" role="option"><span>'+ options[i].text +'</span></label></li>';
+        }
+
+        html += '       </ul>';
+        html += '   </div>';
+        html += '</div>';
+        html += '<div class="mdl-layer-dim"></div>';
+        html += '</section>';
+
+        document.querySelector('body').insertAdjacentHTML('beforeend', html);
+        
+        html = null;
+        this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'_select"]');
+        this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
+        this.btn_close = this.modal.querySelector('.mdl-layer-close');
+        this.select_btn = this.select.querySelector('.mdl-select-btn');
+
+        select.addEventListener('change', (e) => {
+            let _this = e.currentTarget;
+            this.select_btn.querySelector('span').textContent = _this.querySelector('option:checked').textContent;
+            this.select_btn.value = _this.value;
+        });
+        
+        this.select_btn.addEventListener('click', this.show);
+        this.init();
+    }
     madeSystem() {
         //alert & confirm
         let html = '';
-        html += '<section class="mdl-layer" data-id="'+ this.id +'" data-type="alert" data-state="" >';
+        html += '<section class="mdl-layer" data-id="'+ this.id +'" data-type="alert">';
         html += '<div class="mdl-layer-wrap">';
         html += '    <div class="mdl-layer-body">';
         if (!!this.title) {
         html += '        <h1 class="mdl-layer-tit">'+ this.title +'</h1>';
         }
-        html += this.content;
+        html += '        <div>'+ this.content +'</div>';
         html += '        <div class="mdl-btn-wrap">';
         if (this.btn.length === 2) {
         html += '            <button type="button" class="mdl-btn" data-state="cancel" data-style="primary-gray">';
@@ -157,54 +218,66 @@ export default class Layer {
         this.btn_close && this.btn_close.addEventListener('keydown', keyStart);
         this.last && this.last.addEventListener('keydown', keyEnd);
     }
-    show = () =>  {
+    actSelected = (e) => {
+        let _this = e.currentTarget;
+       
+        if (_this.type === 'radio') {
+            _this = this.modal.querySelector('.mdl-select-option[for="'+ _this.id +'"]');
+        }
+        this.select.querySelector('.mdl-select-btn span').textContent = _this.textContent;
+        this.select.querySelector('.mdl-select-btn').value = _this.dataset.value;
+        this.select.querySelector('select option[value="'+ _this.dataset.value +'"]').selected = true;
+       
+        e.type !== 'keyup' && this.hide();
+
+        this.callback && this.callback({
+            text:  _this.textContent,
+            value: _this.dataset.value
+        });
+    }
+    show = (e) =>  {
         const _zindex = 100;
         const _prev = document.querySelector('[data-layer-current="true"]');
-        const _body = document.querySelector('html');
-        const btn_dropdown = document.querySelector('[data-dropdown="'+ this.id +'"]');
-        _prev ? _prev.dataset.layerCurrent = 'false' : '';
+        let btn = (this.type === 'select') ? document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'_select"]'): document.querySelector('[data-dropdown="'+ this.id +'"]');
 
-        this.modal.dataset.layerCurrent = 'true';
-        this.modal || this.src && this.make();
-        this.modal.dataset.state = 'show';
+       
 
-        if (this.type === 'dropdown') {
-            const btn_dropdown_info = {
+        //dropdown & select
+        if (this.type === 'dropdown' || this.type === 'select') {
+            const ps_info = {
                 m_width: this.modal.offsetWidth,
                 m_height: this.modal.offsetHeight,
-                height: btn_dropdown.offsetHeight,
-                width: btn_dropdown.offsetWidth,
-                top: btn_dropdown.getBoundingClientRect().top,
-                left: btn_dropdown.getBoundingClientRect().left,
-                sc_top: _body.scrollTop,
-                sc_left: _body.scrollLeft,
+                height: btn.offsetHeight,
+                width: btn.offsetWidth,
+                top: btn.getBoundingClientRect().top,
+                left: btn.getBoundingClientRect().left,
+                sc_top: this.pageScroll.scrollTop,
+                sc_left: this.pageScroll.scrollLeft,
             }
             let _top, _left;
 
             !this.ps ? this.ps = 'BL' : '';
 
-            console.log(btn_dropdown_info);
-
             switch(this.ps){
                 case 'TL': 
-                    _top = ((btn_dropdown_info.top - btn_dropdown_info.sc_top) + btn_dropdown_info.height) / 10 + 'rem';
-                    _left = ((btn_dropdown_info.left - btn_dropdown_info.sc_left)) / 10 + 'rem';
+                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) + 'px';
+                    _left = ((ps_info.left - ps_info.sc_left)) + 'px';
                     break;
                 case 'TC': 
                 break;
                 case 'TR': 
                 break;
                 case 'BL': 
-                    _top = ((btn_dropdown_info.top - btn_dropdown_info.sc_top) + btn_dropdown_info.height) / 10 + 'rem';
-                    _left = ((btn_dropdown_info.left - btn_dropdown_info.sc_left)) / 10 + 'rem';
+                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) + 'px';
+                    _left = ((ps_info.left - ps_info.sc_left)) + 'px';
                     break;
                 case 'BC': 
-                    _top = ((btn_dropdown_info.top - btn_dropdown_info.sc_top) + btn_dropdown_info.height) / 10 + 'rem';
-                    _left = ((btn_dropdown_info.left - btn_dropdown_info.sc_left) + (btn_dropdown_info.width / 2) - (btn_dropdown_info.m_width / 2)) / 10 + 'rem';
+                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) + 'px';
+                    _left = ((ps_info.left - ps_info.sc_left) + (ps_info.width / 2) - (ps_info.m_width / 2)) + 'px';
                     break;
                 case 'BR': 
-                    _top = ((btn_dropdown_info.top - btn_dropdown_info.sc_top) + btn_dropdown_info.height) / 10 + 'rem';
-                    _left = ((btn_dropdown_info.left - btn_dropdown_info.sc_left) - (btn_dropdown_info.m_width - btn_dropdown_info.width)) / 10 + 'rem';
+                    _top = ((ps_info.top + ps_info.sc_top) + ps_info.height) + 'px';
+                    _left = ((ps_info.left - ps_info.sc_left) - (ps_info.m_width - ps_info.width)) + 'px';
                     break;
 
                 case 'LT': 
@@ -224,17 +297,64 @@ export default class Layer {
             this.modal.style.top = _top;
             this.modal.style.left = _left;
         } else {
+            //overflow:hidden
             this.html.dataset.modal = 'show';
         }
 
+        _prev ? _prev.dataset.layerCurrent = 'false' : '';
+        this.modal.dataset.layerCurrent = 'true';
+        this.modal || this.src && this.make();
+        this.modal.dataset.state = 'show';
+        
         this.focus = document.activeElement;
-
         this.html.dataset.layerN = !this.html.dataset.layerN ? 1 : Number(this.html.dataset.layerN) + 1;
         this.modal.style.zIndex = Number(_zindex) + Number(this.html.dataset.layerN);
         this.modal.dataset.layerN = this.html.dataset.layerN;
-
         this.btn_close && this.btn_close.focus();
 
+        // select layer
+        if (this.type === 'select') {
+            const el_options = this.modal.querySelectorAll('.mdl-select-option');
+            const el_inputs = this.modal.querySelectorAll('input');
+            const el_options_checked = this.modal.querySelector('input:checked');
+
+            this.select_btn.setAttribute('aria-expanded', true);
+            this.select_btn.removeEventListener('click', this.show);
+            el_options_checked.focus();
+
+            for (let i = 0, len = el_options.length; i < len; i++) {
+                el_options[i].addEventListener('click', this.actSelected);
+                el_inputs[i].addEventListener('keydown', this.keyCheck);
+                el_inputs[i].addEventListener('keyup', this.keyCheck);
+                el_options[i].addEventListener('focusout', this.keyCheck);
+                el_inputs[i].addEventListener('focusin', this.foucsOutCheck);
+            }
+
+            setTimeout(() => {
+                this.html.addEventListener('click', this.backClick);
+            },0);
+        }
+    }
+    backClick = (e) => {
+        //mouse click, touch 인 경우만 실행. ''값은 방향키로 이동 시
+        if (e.pointerType !== '') {
+            e.srcElement.querySelector('.mdl-layer[role="listbox]') ?? this.hide();
+        }
+        
+    }
+    foucsOutCheck = () => {
+        clearTimeout(this.timer);
+    }
+    keyCheck = (e) => {
+        switch (e.keyCode) {
+            case 13 : e.type === 'keydown' && this.actSelected(e);
+                break;
+            case 38 :
+            case 40 : e.type === 'keyup' && this.actSelected(e);
+                    break;
+            default : e.type === 'keydown' ? this.timer = setTimeout(this.hide, 300) : '';
+                break;
+        }
     }
     hidden = () => {
         const _prev = document.querySelector('[data-layer-current="true"]');
@@ -245,6 +365,8 @@ export default class Layer {
         this.modal_wrap.removeEventListener('animationend', this.hidden);
         this.modal.dataset.state = 'hidden';
         this.html.dataset.modal = 'hidden';
+
+        this.select_btn && this.select_btn.setAttribute('aria-expanded', false);
 
         this.focus.focus();
         this.html.dataset.layerN = Number(this.html.dataset.layerN) - 1;
@@ -258,6 +380,9 @@ export default class Layer {
         }
     }
     hide = () => {
+        console.log('hide');
+        this.select_btn && this.select_btn.addEventListener('click', this.show);
+        this.html.removeEventListener('click', this.backClick);
         this.modal.dataset.state = 'hide';
         this.modal_wrap.addEventListener('animationend', this.hidden);
     }

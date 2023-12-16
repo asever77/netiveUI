@@ -1,9 +1,8 @@
-import Toggle from '../../../assets/js/components/toggle.js';
 import Layer from '../../../assets/js/components/layer.js';
-import Select from '../../../assets/js/components/select.js';
 
-UI.exe.select1 = new Select({
+UI.exe.select1 = new Layer({
     id: 'select1',
+    type: 'select',
     callback: (v) => {
         console.log(v);
     }

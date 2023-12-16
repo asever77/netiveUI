@@ -26,6 +26,11 @@ UI.exe.modal_2 = new Layer({
     type: 'modal',
     src: './modal/modal2'
 });
+UI.exe.bottom_1 = new Layer({
+    id :'bottom1',
+    type: 'bottom',
+    src: './modal/bottom1'
+});
 
 UI.exe.alert_1 = new Layer({
     id :'alert1',
@@ -41,7 +46,7 @@ UI.exe.alert_1 = new Layer({
 UI.exe.dropdown1 = new Layer({
     id :'dropdown1',
     type: 'dropdown',
-    ps : 'BR', //bottom Left
+    ps : 'BL', //bottom Left
     src: './dropdown/dropdown1'
 });
 
@@ -61,7 +66,10 @@ UI.callback.toggle_c = (result) => {
 }
 UI.callback.toggle_d = (result) => {
     console.log('callback', result);
-    result.state === 'true' ?
-    UI.exe.dropdown1.show():
-    UI.exe.dropdown1.hide();
+    UI.exe.dropdown1.show();
+}
+
+UI.callback.toggle_e = (result) => {
+    console.log('callback bottom sheet', result);
+    UI.exe.bottom_1.show();
 }
