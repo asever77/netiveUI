@@ -8738,6 +8738,9 @@ body[data-toggle-state=true] .base-body {
 .base-nav ul {
   margin: 0 0 3.2rem;
 }
+.base-nav li {
+  margin-top: 0.8rem;
+}
 
 @media (max-width: 374px) {
   html {
