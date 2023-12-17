@@ -34,6 +34,7 @@ export default class Layer {
         } 
         else if (this.type === 'select') {
             //fetch load
+            this.resetSelect();
             this.madeSelect();
         } 
         else if (this.src) {
@@ -61,6 +62,17 @@ export default class Layer {
             this.init();
         }
     }
+    resetSelect() {
+        this.selectBtns = document.querySelectorAll('.mdl-select-btn');
+        this.selectLayers = document.querySelectorAll('.mdl-layer[data-type="select"]');
+
+        for (let item of this.selectLayers) {
+            item.remove();
+        }
+        for (let item of this.selectBtns) {
+            item.remove();
+        }
+    }
     madeSelect() {
         this.select = document.querySelector('.mdl-select[data-id="'+ this.id +'"]');
         const select = this.select.querySelector('select');
@@ -80,6 +92,8 @@ export default class Layer {
         html += '       <ul class="mdl-select-wrap">';
 
         for (let i = 0, len = options.length; i < len; i++) {
+            console.log(options[i].value, options[i].selected);
+
             html += '<li>';
             html += '<input type="radio" id="'+ this.id +'_r'+ i +'" value="'+ options[i].value +'"  name="'+ this.id +'_r" '+ ((options[i].selected) && 'checked') +'>';
             html += '<label for="'+ this.id +'_r'+ i +'" class="mdl-select-option" data-type="radio" data-value="'+ options[i].value +'" role="option"><span>'+ options[i].text +'</span></label></li>';
@@ -316,11 +330,17 @@ export default class Layer {
         if (this.type === 'select') {
             const el_options = this.modal.querySelectorAll('.mdl-select-option');
             const el_inputs = this.modal.querySelectorAll('input');
+
+            console.log(el_inputs);
+
             const el_options_checked = this.modal.querySelector('input:checked');
 
             this.select_btn.setAttribute('aria-expanded', true);
             this.select_btn.removeEventListener('click', this.show);
-            el_options_checked.focus();
+
+            console.log(el_options_checked);
+
+            el_options_checked && el_options_checked.focus();
 
             for (let i = 0, len = el_options.length; i < len; i++) {
                 el_options[i].addEventListener('click', this.actSelected);
@@ -358,6 +378,8 @@ export default class Layer {
     }
     hidden = () => {
         const _prev = document.querySelector('[data-layer-current="true"]');
+
+console.log(_prev);
 
         _prev.dataset.layerCurrent = 'false';
         // this.modal.dataset.layerCurrent = 'true';

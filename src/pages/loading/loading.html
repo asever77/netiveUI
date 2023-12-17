@@ -1,0 +1,26 @@
+<div class="base-main-wrap">
+    <h1 data-h="1">Loading</h1>
+
+    <box>
+        <button type="button" class="mdl-button" onclick="
+            UI.loading.show({ 
+                styleClass:'clock', 
+                message:'<button type=\'button\' onclick=\'UI.loading.hide();\'>loading close</button>' 
+            });
+        "><span>Clock</span></button>
+        <button type="button" class="mdl-button" onclick="
+            UI.loading.show({ 
+                styleClass:'orbit', 
+                message:'<button type=\'button\' onclick=\'UI.loading.hide();\'>loading close</button>' 
+            });
+        "><span>Orbit</span></button>
+    </box>
+   
+    <pre><code>
+    UI.loading.show({ 
+        styleClass:'clock', //'orbit'
+        message:'' 
+    });
+    </code></pre>
+
+</div>

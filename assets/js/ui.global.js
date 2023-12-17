@@ -342,53 +342,87 @@
 
         }
     }
-    Global.alert = {
-        init(opt) {
-            const id = opt.id;
-            const title = opt.title;
-            const content = opt.content;
-            const btn = opt.button;
-    
-            let html = '';
-            html += '<section class="mdl-modal" data-id="'+ id +'" data-type="modal" aria-hidden="true">';
-            html += '<div class="mdl-modal-wrap">';
-            html += '    <div class="mdl-modal-body">';
-    
-            if (!!title) {
-            html += '        <h1 class="mdl-modal-tit">'+ title +'</h1>';
-            }
-            
-            html += content;
-            html += '        <div class="mdl-btn-wrap">';
-    
-            if (btn.length === 2) {
-            html += '            <button type="button" class="mdl-btn" data-state="cancel" data-style="primary-gray">';
-            html += '                <span>'+ btn[1].text +'</span>';
-            html += '            </button>';
-            } 
-            
-            html += '            <button type="button" class="mdl-btn" data-state="ok" data-style="primary">';
-            html += '                <span>'+ btn[0].text +'</span>';
-            html += '            </button>';
-            
-            html += '        </div>';
-            html += '    </div>';
-            html += '</div>';
-            html += '</section>';
-    
-            document.querySelector('body').insertAdjacentHTML('beforeend', html);
-    
-            html = null;
-    
-            if (!!btn[0]) {
-                document.querySelector('.mdl-modal[data-id="'+ id +'"] .mdl-btn[data-state="ok"]').addEventListener('click', btn[0].callback);
-            } 
-            if (!!btn[1]) {
-                document.querySelector('.mdl-modal[data-id="'+ id +'"] .mdl-btn[data-state="cancel"]').addEventListener('click', btn[1].callback);
-            } 
-        }
-    }
+    Global.loading = {
+		timerShow : {}, 
+		timerHide : {},
+		options : {
+			selector: null,
+			message : null,
+			styleClass : 'orbit' //time
+		},
+		show(option){
+			const opt = Object.assign({}, this.options, option);
+			const selector = opt.selector; 
+			const styleClass = opt.styleClass; 
+			const message = opt.message;
+			const el = (selector !== null) ? selector : document.querySelector('body');
+			const el_loadingHides = document.querySelectorAll('.mdl-loading:not(.visible)');
 
+			for (let i = 0, len = el_loadingHides.length; i < len; i++) {
+				const that = el_loadingHides[i];
+
+				that.remove();
+			}
+
+			let htmlLoading = '';
+
+			(selector === null) ?
+				htmlLoading += '<div class="mdl-loading '+ styleClass +'">':
+				htmlLoading += '<div class="mdl-loading type-area '+ styleClass +'">';
+
+			htmlLoading += '<div class="mdl-loading-wrap">';
+
+			(message !== null) ?
+				htmlLoading += '<strong class="mdl-loading-message"><span>'+ message +'</span></strong>':
+				htmlLoading += '';
+
+			htmlLoading += '</div>';
+			htmlLoading += '</div>';
+
+			const showLoading = () => {
+				const el_child = el.childNodes;
+				let is_loading = false;
+
+				for (let i = 0; i < el_child.length; i++) {
+					if (el_child[i].nodeName === 'DIV' && el_child[i].classList.contains('mdl-loading')) {
+						is_loading = true;
+					}
+				}
+
+				!is_loading && el.insertAdjacentHTML('beforeend', htmlLoading);
+				htmlLoading = null;		
+				
+				const el_loadings = document.querySelectorAll('.mdl-loading');
+
+				for (let i = 0, len = el_loadings.length; i < len; i++) {
+					const that = el_loadings[i];
+
+					that.classList.add('visible');
+					that.classList.remove('close');
+				}
+			}
+			clearTimeout(this.timerShow);
+			clearTimeout(this.timerHide);
+			this.timerShow = setTimeout(showLoading, 300);
+		},
+		hide(){
+			clearTimeout(this.timerShow);
+			this.timerHide = setTimeout(() => {
+				const el_loadings = document.querySelectorAll('.mdl-loading');
+
+				for (let i = 0, len = el_loadings.length; i < len; i++) {
+					const that = el_loadings[i];
+
+					that.classList.add('close');
+					setTimeout(() => {
+						that.classList.remove('visible')
+						that.remove();
+					},300);
+				}
+			},300);
+		}
+	}
+   
     //common exe
     Global.parts.resizeState();
     Global.parts.scroll();
