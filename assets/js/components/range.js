@@ -77,7 +77,7 @@ export default class Range {
 
             this.el_range.insertAdjacentHTML('beforeend', html_tickmarks_from);
 
-            html_track += '<div class="mdl-range-bar" style="left:'+ vleft +'%;"></div>';
+            html_track += '<div class="mdl-range-bar" style="width:'+ vleft +'%;"></div>';
             html_track += '<span class="left mdl-range-point on" data-range="from" aria-hidden="true" style="left: '+ vleft +'%;"><em class="mdl-range-txt" data-from="'+ this.st_id +'">'+ this.ar_text[this.ar_value[0]] +'</em></span>';
         }
 
@@ -114,15 +114,17 @@ export default class Range {
                 this.el_pointer_to.style.right = vright + '%';
                 this.el_pointer_to.querySelector('.mdl-range-txt').textContent = this.ar_text[this.el_to.value];
             }
+            this.el_bar.style.left = vleft + '%';
+            this.el_bar.style.right = vright + '%';
         } else {
             vleft = (this.el_from.value / this.nu_max) * 100;
             this.el_pointer_from.style.left = vleft + '%';
             this.el_pointer_from.querySelector('.mdl-range-txt').textContent = this.ar_text[this.el_from.value];
+            this.el_bar.style.width = vleft + '%';
         }
        
         
-        this.el_bar.style.left = vleft + '%';
-        this.el_bar.style.right = vright + '%';
+        
     
     }
 }
