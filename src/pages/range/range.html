@@ -2,7 +2,8 @@
     <h1 data-h="1">Range</h1>
 
     <box>
-        <input data-range="from" type="range" min="0" max="100" value="0" style="width: 100%;" list="tickmarks"/>
+        <input data-range="from" type="range" min="0" max="100" step="1" value="0" list="tickmarks"/>
+
         <datalist id="tickmarks">
             <option value="0" label="0"></option>
             <option value="25" label="25"></option>
@@ -13,10 +14,11 @@
     </box>
     <box>
         <div class="mdl-range" data-id="range1">
-            <input class="mdl-range-inp" data-range="from" type="range" aria-label=""/>
-            <input class="mdl-range-inp" data-range="to" type="range" aria-label="" />
+            <input class="mdl-range-inp" data-range="from" type="range" />
+            <input class="mdl-range-inp" data-range="to" type="range" />
         </div>
-
+    </box>
+    <box>
         <div class="mdl-range" data-id="range2" data-type="single">
             <input class="mdl-range-inp" data-range="from" type="range"  id="range2" list="range2_tickmarks" />
         </div>
