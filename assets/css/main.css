@@ -9977,7 +9977,7 @@ body[data-toggle-state=true] .base-body {
   margin-top: 0.8rem;
 }
 .mdl-range-btn:disabled {
-  pointer-events: none;
+  pointer-events: all !important;
 }
 .mdl-range-btn:disabled::before,
 .mdl-range-btn:disabled span {

@@ -40,6 +40,7 @@ export default class Range {
         this.el_from.max = this.nu_max;
         this.el_from.value = this.ar_value[0];
         this.el_from.classList.add('on');
+        this.el_from.setAttribute('list', this.st_id + '_from');
         
         let html_track = '<div class="mdl-range-track">';
         let html_tickmarks_from = '';
@@ -51,6 +52,7 @@ export default class Range {
             this.el_to.min = this.nu_min;
             this.el_to.max = this.nu_max;
             this.el_to.value = this.ar_value[1];
+            this.el_to.setAttribute('list', this.st_id + '_to');
 
             html_tickmarks_from += '<div class="mdl-range-marks" id="'+ this.st_id +'_tickmarks_from" data-from="true">';
             html_tickmarks_to += '<div class="mdl-range-marks" id="'+ this.st_id +'_tickmarks_to" data-to="true">';
@@ -58,15 +60,15 @@ export default class Range {
             for (let i = 0, len = this.ar_tickmark.length; i < len; i++) {
 
                 if (i > this.ar_value[1]) {
-                    html_tickmarks_from += '<button class="mdl-range-btn" data-id="'+ this.st_id +'" type="button" data-value="'+ i +'" disabled><span>'+ this.ar_tickmark[i] +'</span></button>';
+                    html_tickmarks_from += '<button class="mdl-range-btn" type="button" data-id="' + this.st_id + '_from" data-value="'+ i +'" disabled><span>'+ this.ar_tickmark[i] +'</span></button>';
                 } else {
-                    html_tickmarks_from += '<button class="mdl-range-btn" data-id="'+ this.st_id +'" type="button" data-value="'+ i +'"><span>'+ this.ar_tickmark[i] +'</span></button>';
+                    html_tickmarks_from += '<button class="mdl-range-btn" type="button" data-id="' + this.st_id + '_from" data-value="'+ i +'"><span>'+ this.ar_tickmark[i] +'</span></button>';
                 }
 
                 if (i < this.ar_value[0]) {
-                    html_tickmarks_to += '<button class="mdl-range-btn" data-id="'+ this.st_id +'" type="button" data-value="'+ i +'" disabled><span>'+ this.ar_tickmark[i] +'</span></button>';
+                    html_tickmarks_to += '<button class="mdl-range-btn" type="button" data-id="' + this.st_id + '_to" data-value="'+ i +'" disabled><span>'+ this.ar_tickmark[i] +'</span></button>';
                 } else {
-                    html_tickmarks_to += '<button class="mdl-range-btn" data-id="'+ this.st_id +'" type="button" data-value="'+ i +'"><span>'+ this.ar_tickmark[i] +'</span></button>';
+                    html_tickmarks_to += '<button class="mdl-range-btn" type="button" data-id="' + this.st_id + '_to" data-value="'+ i +'"><span>'+ this.ar_tickmark[i] +'</span></button>';
                 }
                 
             }
@@ -106,7 +108,7 @@ export default class Range {
         this.isMark_from = this.el_range.querySelector('.mdl-range-marks[data-from="true"]');
         this.isMark_to = this.el_range.querySelector('.mdl-range-marks[data-to="true"]');
 
-        const tickmark_btns = this.isMark_from.querySelectorAll('.mdl-range-btn');
+        const tickmark_btns = this.el_range.querySelectorAll('.mdl-range-btn');
 
         for (let item of tickmark_btns) {
             item.addEventListener('click', this.actClick);
@@ -121,6 +123,7 @@ export default class Range {
 
         for (let i = 0, len = this.ar_tickmark.length; i < len; i++) {
             console.log(this.ar_value[1], this.ar_value[0])
+            
             if (i >= this.ar_value[0]) {
                 to_btns[i].disabled = false;
             } else {
@@ -136,8 +139,26 @@ export default class Range {
     }
     actClick = (e) => {
         const _this = e.currentTarget;
+        const _inp = this.el_range.querySelector('.mdl-range-inp[list="'+ _this.dataset.id +'"]');
+        const isFrom = _this.closest('.mdl-range-marks[data-from]');
+        console.log(this.el_pointer_from,this.el_pointer_to,this.el_bar);
 
-        console.log(_this.dataset.value);
+        _inp.value = _this.dataset.value;
+        let vleft = (_this.dataset.value / this.nu_max) * 100;
+        let vright;
+
+        console.log(!isFrom);
+
+        if (!isFrom) {
+            vright = 100 - ((_this.dataset.value / this.nu_max) * 100);
+            this.el_pointer_to.style.right = vright + '%';
+            this.el_bar.style.right = vright + '%';
+        } else {
+            this.el_pointer_from.style.left = vleft + '%';
+            this.el_bar.style.left = vleft + '%';
+        }
+
+        tickmarks();
     }
     act = (e) => {       
         const _this = e.target;
