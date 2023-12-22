@@ -25,10 +25,30 @@
     </box>
    
     <pre><code>
-    UI.loading.show({ 
-        styleClass:'clock', //'orbit'
-        message:'' 
-    });
+    <comment>//HTML</comment>
+    &lt;div class="mdl-range" data-id="range1"&gt;
+        &lt;input class="mdl-range-inp" data-range="from" type="range" /&gt;
+        &lt;input class="mdl-range-inp" data-range="to" type="range" /&gt;
+    &lt;/div&gt;
+    
+    <comment>//Javascript</comment>
+    &lt;script type="module"&gt;
+        import Range from '../../../assets/js/components/range.js';
+
+        UI.exe.range1 = new Range({
+            id: 'range1',
+            step: 1,
+            min: 0,
+            max: 10,
+            value: [3, 7],
+            title: '위험도',
+            text: ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '10'],
+            tickmark: ['lv0', 'lv1', 'lv2', 'lv3', 'lv4', 'lv5', 'lv6', 'lv7', 'l8', 'lv9', 'lv10'],
+            callback: (v) => {
+                console.log(v);
+            }
+        });
+    &lt;/script&gt;
     </code></pre>
 
 </div>

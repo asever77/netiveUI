@@ -16,6 +16,11 @@
 	-ms-user-select: none;
 	user-select: none;
 
+    &:hover {
+        .mdl-range-track {
+            background-color: #e3e3e3;
+        }
+    }
     &[data-type="single"]  {
         .mdl-range-bar {right: auto;}
         .mdl-range-point::before {content: "code" !important;}
@@ -57,10 +62,7 @@
         pointer-events: none;
         -webkit-appearance: none;
 
-        outline:1px solid red;
-        opacity: 1;
-
-        &:focus ~ .mdl-range-track{outline: 1px solid #000;}
+        &:focus ~ .mdl-range-track{ background-color: #e3e3e3;}
         &.on { 
             pointer-events: all; z-index: 9;
         }
@@ -76,8 +78,6 @@
             z-index: 13;
             cursor: pointer;
             -webkit-appearance: none;
-            
-            background-color:  red;
         }
         &[data-range="from"]:focus ~ .mdl-range-track .left.mdl-range-point,
         &[data-range="to"]:focus ~ .mdl-range-track .right.mdl-range-point {
@@ -93,6 +93,7 @@
         background-color: #BDBDBD;
         pointer-events: none;
         z-index: 12;
+        transition: background-color .14s ease-in;
     }
     &-bar {
         position: absolute;
@@ -165,8 +166,8 @@
         
         &:disabled {
             pointer-events:all !important;
-            &::before,
-            span {display: none;}
+            // &::before,
+            // span {display: none;}
         }
         &::before{
             content:"";

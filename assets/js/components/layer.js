@@ -8,7 +8,28 @@ export default class Layer {
     constructor(opt) {
         this.id = opt.id;
         this.src = opt.src;
+
+        this.type = !opt.type ? 'modal' : opt.type; 
+        this.classname  = opt.classname ? opt.classname : '',
+        this.callback = opt.callback;
+
+        //system 
+        this.ps = opt.ps ?? 'BL';
+        this.title = opt.title;
+        this.btn = opt.button;
+
+        //toast
+        this.delay = opt.delay ? opt.delay : 'short', 
+        this.delaytime = this.delay === 'short' ? 2000 : 3500; //short[2s] | long[3.5s]
+        this.status = opt.status ? opt.status : 'off', 
+        //assertive[중요도 높은 경우] | polite[중요도가 낮은 경우] | off[default]
+        this.auto = opt.auto ? opt.auto : true,
+
+        //system & toast
+        this.content = opt.content;
+
         this.html = document.querySelector('html');
+        this.el_body = document.querySelector('body');
         this.modal;
         this.btn_close;
         this.modal_wrap;
@@ -16,21 +37,21 @@ export default class Layer {
         this.cancel;
         this.last;
         this.focus;
-        this.type = !opt.type ? 'modal' : opt.type; 
-        this.ps = opt.ps ?? 'BL';
-        this.title = opt.title;
-        this.content = opt.content;
-        this.btn = opt.button;
         this.pageScroll = document.querySelector('[data-pagescroll]') ?? document.querySelector('html');
         this.select;
-        this.isFocus = false;
-        this.timer;
         this.select_btn;
-        this.callback = opt.callback;
+
+        this.isFocus = false;
+
+        this.timer;
 
         if (this.type === 'system') {
             //script coding
             this.madeSystem();
+        } 
+        else if (this.type === 'toast') {
+            //fetch load
+            this.madeToast();
         } 
         else if (this.type === 'select') {
             //fetch load
@@ -120,6 +141,22 @@ export default class Layer {
         });
         
         this.select_btn.addEventListener('click', this.show);
+        this.init();
+    }
+    madeToast() {
+        let html = '';
+        html = '<div class="mdl-layer '+ this.classname +'" data-id="'+ this.id +'" data-type="toast" aria-live="'+ this.status +'">';
+        html += '   <div class="mdl-layer-wrap">';
+        html += '       <div class="mdl-layer-body">' + this.content + '</div>';
+        !this.auto ? 
+        html += '       <button type="button" class="mdl-layer-close" data-material="close" aria-label="닫기"></button>' : '';
+        html += '   </div>';
+        html += '</div>';
+
+        this.el_body.insertAdjacentHTML('beforeend', html);
+        this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'"]');
+        this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
+
         this.init();
     }
     madeSystem() {
@@ -250,11 +287,17 @@ export default class Layer {
         });
     }
     show = (e) =>  {
+        if (this.type === 'toast') {
+            if (this.modal.dataset.state === 'show') {
+                console.log('열려있음');
+                return false;
+            }
+            console.log('toast show: ' , this.modal);
+        }
+
         const _zindex = 100;
         const _prev = document.querySelector('[data-layer-current="true"]');
         let btn = (this.type === 'select') ? document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'_select"]'): document.querySelector('[data-dropdown="'+ this.id +'"]');
-
-       
 
         //dropdown & select
         if (this.type === 'dropdown' || this.type === 'select') {
@@ -310,7 +353,9 @@ export default class Layer {
 
             this.modal.style.top = _top;
             this.modal.style.left = _left;
-        } else {
+        } 
+        
+        else {
             //overflow:hidden
             this.html.dataset.modal = 'show';
         }
@@ -319,11 +364,14 @@ export default class Layer {
         this.modal.dataset.layerCurrent = 'true';
         this.modal || this.src && this.make();
         this.modal.dataset.state = 'show';
-        
+        console.log(this.html.dataset.layerN);
         this.focus = document.activeElement;
-        this.html.dataset.layerN = !this.html.dataset.layerN ? 1 : Number(this.html.dataset.layerN) + 1;
-        this.modal.style.zIndex = Number(_zindex) + Number(this.html.dataset.layerN);
-        this.modal.dataset.layerN = this.html.dataset.layerN;
+
+        if (this.type !== 'toast') {
+            this.html.dataset.layerN = !this.html.dataset.layerN ? 1 : Number(this.html.dataset.layerN) + 1;
+            this.modal.style.zIndex = Number(_zindex) + Number(this.html.dataset.layerN);
+            this.modal.dataset.layerN = this.html.dataset.layerN;
+        }
         this.btn_close && this.btn_close.focus();
 
         // select layer
@@ -354,6 +402,12 @@ export default class Layer {
                 this.html.addEventListener('click', this.backClick);
             },0);
         }
+        else if (this.type === 'toast' && this.auto) {
+            this.timer = setTimeout(()=> {
+                this.hide();
+            }, this.delaytime);
+        }
+       
     }
     backClick = (e) => {
         //mouse click, touch 인 경우만 실행. ''값은 방향키로 이동 시
@@ -378,10 +432,9 @@ export default class Layer {
     }
     hidden = () => {
         const _prev = document.querySelector('[data-layer-current="true"]');
-
-console.log(_prev);
-
-        _prev.dataset.layerCurrent = 'false';
+        if (this.type !== 'toast') {
+            _prev.dataset.layerCurrent = 'false';
+        }
         // this.modal.dataset.layerCurrent = 'true';
 
         this.modal_wrap.removeEventListener('animationend', this.hidden);
@@ -389,12 +442,12 @@ console.log(_prev);
         this.html.dataset.modal = 'hidden';
 
         this.select_btn && this.select_btn.setAttribute('aria-expanded', false);
-
         this.focus.focus();
-        this.html.dataset.layerN = Number(this.html.dataset.layerN) - 1;
-        if (Number(this.html.dataset.layerN) !== 0) {
-            let a = document.querySelector('.mdl-layer[data-layer-n="'+ this.html.dataset.layerN +'"]');
-            a.dataset.layerCurrent = 'true';
+       
+        if (this.type !== 'toast') {
+            if (Number(this.html.dataset.layerN) !== 0) {
+                document.querySelector('.mdl-layer[data-layer-n="'+ this.html.dataset.layerN +'"]').dataset.layerCurrent = 'true';
+            }
         }
         
         if (this.src) {
@@ -403,6 +456,11 @@ console.log(_prev);
     }
     hide = () => {
         console.log('hide');
+        clearTimeout(this.timer);
+        if (this.type !== 'toast') {
+            this.html.dataset.layerN = Number(this.html.dataset.layerN) - 1;
+        }
+        
         this.select_btn && this.select_btn.addEventListener('click', this.show);
         this.html.removeEventListener('click', this.backClick);
         this.modal.dataset.state = 'hide';

@@ -293,6 +293,11 @@ comment {
   color: #999;
 }
 
+pt {
+  display: inline-block;
+  color: #ec3604;
+}
+
 code {
   padding: 1.6rem;
   background-color: #f7f4f3;
@@ -9308,6 +9313,52 @@ body[data-toggle-state=true] .base-body {
   animation-iteration-count: 1;
   animation-fill-mode: backwards;
 }
+.mdl-layer[data-type=toast] {
+  position: fixed;
+  width: 100%;
+  height: 0;
+  padding: 0;
+  overflow: visible;
+  bottom: 0;
+  top: auto;
+}
+.mdl-layer[data-type=toast] .mdl-layer-header {
+  display: none;
+}
+.mdl-layer[data-type=toast] .mdl-layer-wrap {
+  background-color: var(--gray_100);
+  color: var(--gray_0);
+  padding: 1.6rem;
+  min-width: 0;
+  border-radius: 0.8rem;
+  position: absolute;
+  bottom: 0;
+  transform: translate(0, 20vh);
+}
+.mdl-layer[data-type=toast] .mdl-layer-body {
+  margin: 0;
+  padding: 0;
+}
+.mdl-layer[data-type=toast] .mdl-layer-dim {
+  display: none;
+}
+.mdl-layer[data-type=toast][data-layer-current=true][data-state=hide] .mdl-layer-wrap {
+  transform: translate(0, -1.2rem);
+}
+.mdl-layer[data-type=toast][data-state=show] .mdl-layer-wrap {
+  animation-name: toast_show;
+  animation-delay: 0.1s;
+  animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
+.mdl-layer[data-type=toast][data-state=hide] .mdl-layer-wrap {
+  animation-name: toast_hide;
+  animation-delay: 0.1s;
+  animation-duration: 0.3s;
+  animation-iteration-count: 1;
+  animation-fill-mode: forwards;
+}
 
 @keyframes dim_show {
   0% {
@@ -9403,6 +9454,22 @@ body[data-toggle-state=true] .base-body {
   100% {
     opacity: 0;
     transform: scale(0.9);
+  }
+}
+@keyframes toast_show {
+  0% {
+    transform: translate(0, 20vh);
+  }
+  100% {
+    transform: translate(0, -1.2rem);
+  }
+}
+@keyframes toast_hide {
+  0% {
+    transform: translate(0, -1.2rem);
+  }
+  100% {
+    transform: translate(0, 20vh);
   }
 }
 .mdl-tab {
@@ -9826,6 +9893,9 @@ body[data-toggle-state=true] .base-body {
   -moz-user-select: none;
   user-select: none;
 }
+.mdl-range:hover .mdl-range-track {
+  background-color: #e3e3e3;
+}
 .mdl-range[data-type=single] .mdl-range-bar {
   right: auto;
 }
@@ -9872,11 +9942,9 @@ body[data-toggle-state=true] .base-body {
   background-color: transparent;
   pointer-events: none;
   -webkit-appearance: none;
-  outline: 1px solid red;
-  opacity: 1;
 }
 .mdl-range-inp:focus ~ .mdl-range-track {
-  outline: 1px solid #000;
+  background-color: #e3e3e3;
 }
 .mdl-range-inp.on {
   pointer-events: all;
@@ -9894,7 +9962,6 @@ body[data-toggle-state=true] .base-body {
   z-index: 13;
   cursor: pointer;
   -webkit-appearance: none;
-  background-color: red;
 }
 .mdl-range-inp[data-range=from]:focus ~ .mdl-range-track .left.mdl-range-point, .mdl-range-inp[data-range=to]:focus ~ .mdl-range-track .right.mdl-range-point {
   box-shadow: 0 0 4px rgba(0, 0, 0, 0.5);
@@ -9908,6 +9975,7 @@ body[data-toggle-state=true] .base-body {
   background-color: #BDBDBD;
   pointer-events: none;
   z-index: 12;
+  transition: background-color 0.14s ease-in;
 }
 .mdl-range-bar {
   position: absolute;
@@ -9978,10 +10046,6 @@ body[data-toggle-state=true] .base-body {
 }
 .mdl-range-btn:disabled {
   pointer-events: all !important;
-}
-.mdl-range-btn:disabled::before,
-.mdl-range-btn:disabled span {
-  display: none;
 }
 .mdl-range-btn::before {
   content: "";

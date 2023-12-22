@@ -9,40 +9,6 @@
             <span>modal2</span>
         </button>
     </box>
-    <pre><code>
-    &lt;section class="mdl-layer" data-id="modal1" data-type="modal"&gt;
-        &lt;div class="mdl-layer-wrap"&gt;
-            &lt;div class="mdl-layer-header"&gt;
-                &lt;h1&gt;제목...&lt;/h1&gt;
-                &lt;button type="button" class="mdl-layer-close" 
-                    aria-label="닫기"&gt;&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div class="mdl-layer-body" style="height: 100vh;"&gt;
-                내용...
-            &lt;/div&gt;
-            &lt;div class="mdl-layer-footer"&gt;
-                &lt;button type="button" class="mdl-button" data-toggle-object="c"&gt;
-                    &lt;span&gt;확인&lt;/span&gt;
-                &lt;/button&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class="mdl-layer-dim"&gt;&lt;/div&gt;
-    &lt;/section&gt;
-    
-    &lt;script type="module"&gt;
-        import Layer from '../assets/js/components/layer.js';
-        
-        // Modal Layer
-        UI.exe.modal_1 = new Layer({
-            id :'modal1',
-            type: 'modal',
-            src: './modal/modal1'
-        });
-        UI.exe.modal_1.show();
-        UI.exe.modal_1.hide();
-    &lt;/script&gt;
-    </code></pre>
-
 
     <h2 data-h="2">Bottom Sheet Layer</h2>
     <box>
@@ -51,6 +17,83 @@
         </button>
     </box>
 
+    <pre><code>
+    &lt;section <pt>class="mdl-layer" data-id="modal1" data-type="{{modal | bottom}}"</pt>&gt;
+        &lt;div <pt>class="mdl-layer-wrap"</pt>&gt;
+            &lt;div <pt>class="mdl-layer-header"</pt>&gt;
+                &lt;h1&gt;제목...&lt;/h1&gt;
+                &lt;button type="button" <pt>class="mdl-layer-close"</pt> aria-label="닫기"&gt;&lt;/button&gt;
+            &lt;/div&gt;
+            &lt;div <pt>class="mdl-layer-body"</pt> style="height: 100vh;"&gt;
+                내용...
+            &lt;/div&gt;
+            &lt;div <pt>class="mdl-layer-footer"</pt>&gt;
+                &lt;button type="button" class="mdl-button" data-toggle-object="c"&gt;
+                    &lt;span&gt;확인&lt;/span&gt;
+                &lt;/button&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div <pt>class="mdl-layer-dim"</pt>&gt;&lt;/div&gt;
+    &lt;/section&gt;
+    
+    &lt;script type="module"&gt;
+        import Layer from '../assets/js/components/layer.js';
+        
+        <comment>// Modal Layer</comment>
+        UI.exe.modal_1 = new Layer({
+            id :'modal1',
+            type: 'modal',
+            src: './modal/modal1'
+        });
+        UI.exe.modal_1.show();
+        UI.exe.modal_1.hide();
+
+        <comment>// Bottom Sheet Layer</comment>
+        UI.exe.bottom_1 = new Layer({
+            id :'bottom1',
+            type: 'bottom',
+            src: './modal/bottom1'
+        });
+        UI.exe.bottom_1.show();
+        UI.exe.bottom_1.hide();
+    &lt;/script&gt;
+    </code></pre>
+
+    <h2 data-h="2">Toast Layer</h2>
+    <box>
+        <button type="button" class="mdl-button" data-toggle-object="f" data-callback="toggle_f">
+            <span>toast show</span>
+        </button>
+        <button type="button" class="mdl-button" data-toggle-object="g" data-callback="toggle_g">
+            <span>toast hide</span>
+        </button>
+    </box>
+    <pre><code>
+    //자동생성
+    &lt;div class="mdl-layer " data-id="toast1" data-type="toast" aria-live="off" data-layer-current="true" data-state="show" data-layer-n="1" style="z-index: 101;"&gt;
+        &lt;div class="mdl-layer-wrap"&gt;
+            &lt;div class="mdl-layer-body"&gt;저장이 완료되었습니다.&lt;/div&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+    
+    &lt;script type="module"&gt;
+        import Layer from '../assets/js/components/layer.js';
+        
+        // System Layer
+        UI.exe.alert_1 = new Layer({
+            id :'alert1',
+            type: 'system',
+            title: 'alert title',
+            content: '안녕하세요 저장이 완료되었습니다.',
+            button: [
+                {text: '확인', callback: alertCallbackOk},
+                {text: '취소', callback: alertCallbackCancel}
+            ]
+        });
+        UI.exe.alert_1.show();
+        UI.exe.alert_1.hide();
+    &lt;/script&gt;
+    </code></pre>
 
     <h2 data-h="2">System Layer</h2>
     <box>
@@ -59,6 +102,7 @@
         </button>
     </box>
     <pre><code>
+    //자동생성
     &lt;section class="mdl-layer" data-id="alert1" data-type="alert" data-state="show" data-layer-current="true" data-layer-n="1" style="z-index: 101;"&gt;
         &lt;div class="mdl-layer-wrap"&gt;
             &lt;div class="mdl-layer-body"&gt;

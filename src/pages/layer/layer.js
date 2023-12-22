@@ -42,6 +42,12 @@ UI.exe.alert_1 = new Layer({
         {text: '취소', callback: alertCallbackCancel}
     ]
 });
+UI.exe.toast_1 = new Layer({
+    id :'toast1',
+    type: 'toast',
+    content: '안녕하세요<br> 저장이 완료되었습니다.'
+});
+
 
 UI.exe.dropdown1 = new Layer({
     id :'dropdown1',
@@ -51,7 +57,7 @@ UI.exe.dropdown1 = new Layer({
 });
 
 
-//CALLBACK
+//modal
 UI.callback.toggle_a = (result) => {
     console.log('callback', result);
     UI.exe.modal_1.show();
@@ -60,16 +66,31 @@ UI.callback.toggle_b = (result) => {
     console.log('callback', result);
     UI.exe.modal_2.show();
 }
+
+//system
 UI.callback.toggle_c = (result) => {
     console.log('callback', result);
     UI.exe.alert_1.show();
 }
+
+//drop down
 UI.callback.toggle_d = (result) => {
     console.log('callback', result);
     UI.exe.dropdown1.show();
 }
 
+//bottom sheet
 UI.callback.toggle_e = (result) => {
     console.log('callback bottom sheet', result);
     UI.exe.bottom_1.show();
+}
+
+//toast
+UI.callback.toggle_f = (result) => {
+    console.log('callback', result);
+    UI.exe.toast_1.show();
+}
+UI.callback.toggle_g = (result) => {
+    console.log('callback', result);
+    UI.exe.toast_1.hide();
 }
