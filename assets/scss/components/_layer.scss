@@ -172,6 +172,46 @@
             }
         }
     }
+    &[data-type="tooltip"] {
+        position: absolute;
+        width: auto;
+        height: auto;
+        padding: 0;
+        overflow: visible;
+       
+        .mdl-layer-wrap {
+            padding:$x1 0;
+            min-width: 0;
+            max-height: calc(12rem + $x2);
+            overflow-y: auto;
+            border-radius: $x1;
+
+            &:hover :checked + .mdl-select-option {
+                background-color: transparent;
+            }
+        }
+        .mdl-layer-body {
+            margin: 0;
+            padding: 0;
+        }
+        .mdl-layer-dim{display: none;}
+        .mdl-layer-wrap {
+            animation-name: select_show;
+            animation-delay: .1s;
+            animation-duration: .4s;
+            animation-iteration-count: 1;
+            animation-fill-mode: backwards;
+        }
+        &[data-state="hide"] {
+            .mdl-layer-wrap {
+                animation-name: select_hide;
+                animation-delay: .1s;
+                animation-duration: .2s;
+                animation-iteration-count: 1;
+                animation-fill-mode: backwards;
+            }
+        }
+    }
     &[data-type="select"] {
         position: absolute;
         width: auto;

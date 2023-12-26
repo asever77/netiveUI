@@ -9251,6 +9251,44 @@ body[data-toggle-state=true] .base-body {
   animation-iteration-count: 1;
   animation-fill-mode: backwards;
 }
+.mdl-layer[data-type=tooltip] {
+  position: absolute;
+  width: auto;
+  height: auto;
+  padding: 0;
+  overflow: visible;
+}
+.mdl-layer[data-type=tooltip] .mdl-layer-wrap {
+  padding: 0.8rem 0;
+  min-width: 0;
+  max-height: 13.6rem;
+  overflow-y: auto;
+  border-radius: 0.8rem;
+}
+.mdl-layer[data-type=tooltip] .mdl-layer-wrap:hover :checked + .mdl-select-option {
+  background-color: transparent;
+}
+.mdl-layer[data-type=tooltip] .mdl-layer-body {
+  margin: 0;
+  padding: 0;
+}
+.mdl-layer[data-type=tooltip] .mdl-layer-dim {
+  display: none;
+}
+.mdl-layer[data-type=tooltip] .mdl-layer-wrap {
+  animation-name: select_show;
+  animation-delay: 0.1s;
+  animation-duration: 0.4s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+}
+.mdl-layer[data-type=tooltip][data-state=hide] .mdl-layer-wrap {
+  animation-name: select_hide;
+  animation-delay: 0.1s;
+  animation-duration: 0.2s;
+  animation-iteration-count: 1;
+  animation-fill-mode: backwards;
+}
 .mdl-layer[data-type=select] {
   position: absolute;
   width: auto;

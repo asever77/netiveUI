@@ -41,6 +41,9 @@ export default class Layer {
         this.select;
         this.select_btn;
 
+        //tooltip
+        this.el_tooltip_btns;
+
         this.isFocus = false;
 
         this.timer;
@@ -57,6 +60,10 @@ export default class Layer {
             //fetch load
             this.resetSelect();
             this.madeSelect();
+        } 
+        else if (this.type === 'tooltip') {
+            //fetch load
+            this.tooltip();
         } 
         else if (this.src) {
             //fetch load
@@ -247,6 +254,14 @@ export default class Layer {
             }
         });
     }
+    tooltip() {
+        this.el_tooltip_btns = document.querySelectorAll('[data-tooltip]');
+
+        for (let item of this.el_tooltip_btns) {
+            item.addEventListener('mouseover', this.actTooltipShow);
+            item.addEventListener('mouseleave', this.actTooltipHide);
+        }
+    }
     init() {
         //focus loop
         const keyStart = (e) => {
@@ -268,6 +283,27 @@ export default class Layer {
         this.last && this.last.addEventListener('click', this.hide);
         this.btn_close && this.btn_close.addEventListener('keydown', keyStart);
         this.last && this.last.addEventListener('keydown', keyEnd);
+
+        this.type === 'tooltip' && this.show();
+    }
+    actTooltipShow = (e) => {
+        const _this = e.currentTarget;
+        this.src = _this.dataset.tooltip;
+        this.id = _this.getAttribute('aria-describedby');
+        this.made();
+        console.log(e);
+    }
+    actTooltipHide = (e) => {
+        const _this = e.currentTarget;
+        const _id = _this.getAttribute('aria-describedby');
+        const _files = document.querySelectorAll('[data-usage="'+ _id +'"]');
+        const _tooltip = document.querySelector('#'+ _id );
+
+        for (let item of _files) {
+            item.remove();
+        }
+        this.hide();
+        console.log(e);
     }
     actSelected = (e) => {
         let _this = e.currentTarget;
@@ -297,10 +333,16 @@ export default class Layer {
 
         const _zindex = 100;
         const _prev = document.querySelector('[data-layer-current="true"]');
-        let btn = (this.type === 'select') ? document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'_select"]'): document.querySelector('[data-dropdown="'+ this.id +'"]');
+        let btn = (this.type === 'select') ? 
+        document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'_select"]') : 
+        document.querySelector('[data-dropdown="'+ this.id +'"]');
+
+        (this.type === 'tooltip') ? btn = document.querySelector('.mdl-tooltip[aria-describedby="'+ this.id +'"]') : '';
+
+        console.log(btn, this.id );
 
         //dropdown & select
-        if (this.type === 'dropdown' || this.type === 'select') {
+        if (this.type === 'dropdown' || this.type === 'select' || this.type === 'tooltip') {
             const ps_info = {
                 m_width: this.modal.offsetWidth,
                 m_height: this.modal.offsetHeight,
