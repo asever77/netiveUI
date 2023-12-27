@@ -1,189 +1,171 @@
 <div class="base-main-wrap">
     <h1 data-h="1">Layer Contents</h1>
-    <h2 data-h="2">Modal Layer</h2>
-    <box>
-        <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
-            <span>modal</span>
-        </button>
-        <button type="button" class="mdl-button" data-toggle-object="b" data-callback="toggle_b">
-            <span>modal2</span>
-        </button>
-    </box>
-
-    <h2 data-h="2">Bottom Sheet Layer</h2>
-    <box>
-        <button type="button" class="mdl-button" data-toggle-object="e" data-callback="toggle_e">
-            <span>bottom sheet</span>
-        </button>
-    </box>
-
-    <pre><code>
-    &lt;section <pt>class="mdl-layer" data-id="modal1" data-type="{{modal | bottom}}"</pt>&gt;
-        &lt;div <pt>class="mdl-layer-wrap"</pt>&gt;
-            &lt;div <pt>class="mdl-layer-header"</pt>&gt;
-                &lt;h1&gt;제목...&lt;/h1&gt;
-                &lt;button type="button" <pt>class="mdl-layer-close"</pt> aria-label="닫기"&gt;&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div <pt>class="mdl-layer-body"</pt> style="height: 100vh;"&gt;
-                내용...
-            &lt;/div&gt;
-            &lt;div <pt>class="mdl-layer-footer"</pt>&gt;
-                &lt;button type="button" class="mdl-button" data-toggle-object="c"&gt;
-                    &lt;span&gt;확인&lt;/span&gt;
-                &lt;/button&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div <pt>class="mdl-layer-dim"</pt>&gt;&lt;/div&gt;
-    &lt;/section&gt;
+    <p>
+        <b>z축</b>의 위치로 구분되는 레이어 콘텐츠입니다.<br> 
+        사용자에게 선택 행동을 요구하는 modal, alert, bottomsheet, dropdown 콘텐츠와<br> 일시적인 알림, 간단한 정보제공을 하는 toast, tooltip 콘텐츠로 분류합니다.
+    </p>
     
-    &lt;script type="module"&gt;
-        import Layer from '../assets/js/components/layer.js';
-        
-        <comment>// Modal Layer</comment>
-        UI.exe.modal_1 = new Layer({
-            id :'modal1',
-            type: 'modal',
-            src: './modal/modal1'
-        });
-        UI.exe.modal_1.show();
-        UI.exe.modal_1.hide();
-
-        <comment>// Bottom Sheet Layer</comment>
-        UI.exe.bottom_1 = new Layer({
-            id :'bottom1',
-            type: 'bottom',
-            src: './modal/bottom1'
-        });
-        UI.exe.bottom_1.show();
-        UI.exe.bottom_1.hide();
-    &lt;/script&gt;
-    </code></pre>
-
-    <h2 data-h="2">Toast Layer</h2>
-    <box>
-        <button type="button" class="mdl-button" data-toggle-object="f" data-callback="toggle_f">
-            <span>toast show</span>
-        </button>
-        <button type="button" class="mdl-button" data-toggle-object="g" data-callback="toggle_g">
-            <span>toast hide</span>
-        </button>
-    </box>
-    <pre><code>
-    //자동생성
-    &lt;div class="mdl-layer " data-id="toast1" data-type="toast" aria-live="off" data-layer-current="true" data-state="show" data-layer-n="1" style="z-index: 101;"&gt;
-        &lt;div class="mdl-layer-wrap"&gt;
-            &lt;div class="mdl-layer-body"&gt;저장이 완료되었습니다.&lt;/div&gt;
+    <!-- Modal & Bottomsheet & Dropdown Layer -->
+    <section class="base-sec">
+        <h2 data-h="2">Modal & Bottomsheet & Dropdown Layer</h2>
+        <box>
+            <button type="button" class="mdl-button" data-toggle-object="a" data-callback="toggle_a">
+                <span>modal</span>
+            </button>
+            <button type="button" class="mdl-button" data-toggle-object="b" data-callback="toggle_b">
+                <span>modal2</span>
+            </button>
+            <button type="button" class="mdl-button" data-toggle-object="e" data-callback="toggle_e">
+                <span>bottom sheet</span>
+            </button>
+            <button type="button" class="mdl-button" data-toggle-object="d" data-callback="toggle_d" data-dropdown="dropdown1">
+                <span>dropdown</span>
+            </button>
+        </box>
+<pre><code>
+&lt;section <pt>class="mdl-layer" data-id="<ip>{{ name }}</ip>" data-type="<ip>{{ modal | bottom | drowdown }}</ip>"</pt>&gt;
+    &lt;div <pt>class="mdl-layer-wrap"</pt>&gt;
+        &lt;div <pt>class="mdl-layer-header"</pt>&gt;
+            &lt;h1&gt;제목...&lt;/h1&gt;
+            &lt;button type="button" <pt>class="mdl-layer-close"</pt> aria-label="닫기"&gt;&lt;/button&gt;
+        &lt;/div&gt;
+        &lt;div <pt>class="mdl-layer-body"</pt> style="height: 100vh;"&gt;
+            내용...
+        &lt;/div&gt;
+        &lt;div <pt>class="mdl-layer-footer"</pt>&gt;
+            &lt;button type="button" class="mdl-button" data-toggle-object="c"&gt;
+                &lt;span&gt;확인&lt;/span&gt;
+            &lt;/button&gt;
         &lt;/div&gt;
     &lt;/div&gt;
-    
-    &lt;script type="module"&gt;
-        import Layer from '../assets/js/components/layer.js';
-        
-        // System Layer
-        UI.exe.alert_1 = new Layer({
-            id :'alert1',
-            type: 'system',
-            title: 'alert title',
-            content: '안녕하세요 저장이 완료되었습니다.',
-            button: [
-                {text: '확인', callback: alertCallbackOk},
-                {text: '취소', callback: alertCallbackCancel}
-            ]
-        });
-        UI.exe.alert_1.show();
-        UI.exe.alert_1.hide();
-    &lt;/script&gt;
-    </code></pre>
+    &lt;div <pt>class="mdl-layer-dim"</pt>&gt;&lt;/div&gt;
+&lt;/section&gt;
 
-    <h2 data-h="2">System Layer</h2>
-    <box>
-        <button type="button" class="mdl-button" data-toggle-object="c" data-callback="toggle_c">
-            <span>alert</span>
-        </button>
-    </box>
-    <pre><code>
-    //자동생성
-    &lt;section class="mdl-layer" data-id="alert1" data-type="alert" data-state="show" data-layer-current="true" data-layer-n="1" style="z-index: 101;"&gt;
-        &lt;div class="mdl-layer-wrap"&gt;
-            &lt;div class="mdl-layer-body"&gt;
-                &lt;h1 class="mdl-layer-tit"&gt;{{ title }}&lt;/h1&gt;
-                &lt;div&gt;{{ content }}&lt;/div&gt;
-                
-                &lt;div class="mdl-btn-wrap"&gt;
-                    &lt;button type="button" class="mdl-btn" data-state="cancel" data-style="primary-gray"&gt;
-                        &lt;span&gt;{{ button[1].text }}&lt;/span&gt;
-                    &lt;/button&gt;
-                    &lt;button type="button" class="mdl-btn" data-state="ok" data-style="primary"&gt; 
-                        &lt;span&gt;{{ button[0].text }}&lt;/span&gt;
-                    &lt;/button&gt; 
-                &lt;/div&gt;
-            &lt;/div&gt;
-        &lt;/div&gt;
-        &lt;div class="mdl-layer-dim"&gt;&lt;/div&gt;
-    &lt;/section&gt;
+&lt;script type="module"&gt;
+    import Layer from '../assets/js/components/layer.js';
     
-    &lt;script type="module"&gt;
-        import Layer from '../assets/js/components/layer.js';
-        
-        // System Layer
-        UI.exe.alert_1 = new Layer({
-            id :'alert1',
-            type: 'system',
-            title: 'alert title',
-            content: '안녕하세요 저장이 완료되었습니다.',
-            button: [
-                {text: '확인', callback: alertCallbackOk},
-                {text: '취소', callback: alertCallbackCancel}
-            ]
-        });
-        UI.exe.alert_1.show();
-        UI.exe.alert_1.hide();
-    &lt;/script&gt;
-    </code></pre>
+    <comment>// Modal Layer</comment>
+    UI.exe.modal_1 = new Layer({
+        id :'<ip>{{ name }}</ip>',
+        type: 'modal',
+        src: '<ip>{{ ./route/filename }}</ip>'
+    });
+    UI.exe.modal_1.show();
+    UI.exe.modal_1.hide();
 
-    <h2 data-h="2">Dropdown Layer</h2>
-    <box>
-        <button type="button" class="mdl-button" data-toggle-object="d" data-callback="toggle_d" data-dropdown="dropdown1">
-            <span>dropdown</span>
-        </button>
-    </box>
-    <pre><code>
-    &lt;section class="mdl-layer" data-id="dropdown1" data-type="dropdown"&gt;
-        &lt;div class="mdl-layer-wrap"&gt;
-            &lt;div class="mdl-layer-header"&gt;
-                &lt;h1&gt;제목...&lt;/h1&gt;
-                &lt;button type="button" class="mdl-layer-close" 
-                    aria-label="닫기"&gt;&lt;/button&gt;
-            &lt;/div&gt;
-            &lt;div class="mdl-layer-body" style="height: 100vh;"&gt;
-                내용...
-            &lt;/div&gt;
-            &lt;div class="mdl-layer-footer"&gt;
-                &lt;button type="button" class="mdl-button" data-toggle-object="c"&gt;
-                    &lt;span&gt;확인&lt;/span&gt;
+    <comment>// Bottom Sheet Layer</comment>
+    UI.exe.bottom_1 = new Layer({
+        id :'<ip>{{ name }}</ip>',
+        type: 'bottom',
+        src: '<ip>{{ ./route/filename }}</ip>'
+    });
+    UI.exe.bottom_1.show();
+    UI.exe.bottom_1.hide();
+
+    <comment>// dropdown Layer</comment>
+    UI.exe.dropdown1 = new Layer({
+        id :'<ip>{{ name }}</ip>',
+        type: 'dropdown',
+        ps : 'BL',
+        src: '<ip>{{ ./route/filename }}</ip>'
+    });
+    UI.exe.dropdown1.show();
+    UI.exe.dropdown1.hide();
+&lt;/script&gt;
+</code></pre>
+    </section>
+    <!-- //Modal & Bottomsheet & Dropdown Layer -->
+
+
+    <!-- System Layer -->
+    <section class="base-sec">
+        <h2 data-h="2">System Layer</h2>
+        <box>
+            <button type="button" class="mdl-button" data-toggle-object="c" data-callback="toggle_c">
+                <span>alert</span>
+            </button>
+        </box>
+<pre><code>
+//자동생성
+&lt;section class="mdl-layer" data-id="alert1" data-type="alert" data-state="show" data-layer-current="true" data-layer-n="1" style="z-index: 101;"&gt;
+    &lt;div class="mdl-layer-wrap"&gt;
+        &lt;div class="mdl-layer-body"&gt;
+            &lt;h1 class="mdl-layer-tit"&gt;{{ title }}&lt;/h1&gt;
+            &lt;div&gt;{{ content }}&lt;/div&gt;
+            &lt;div class="mdl-btn-wrap"&gt;
+                &lt;button type="button" class="mdl-btn" data-state="cancel" data-style="primary-gray"&gt;
+                    &lt;span&gt;{{ button[1].text }}&lt;/span&gt;
                 &lt;/button&gt;
+                &lt;button type="button" class="mdl-btn" data-state="ok" data-style="primary"&gt; 
+                    &lt;span&gt;{{ button[0].text }}&lt;/span&gt;
+                &lt;/button&gt; 
             &lt;/div&gt;
         &lt;/div&gt;
-        &lt;div class="mdl-layer-dim"&gt;&lt;/div&gt;
-    &lt;/section&gt;
+    &lt;/div&gt;
+    &lt;div class="mdl-layer-dim"&gt;&lt;/div&gt;
+&lt;/section&gt;
+
+&lt;script type="module"&gt;
+    import Layer from '../assets/js/components/layer.js';
     
-    &lt;script type="module"&gt;
-        import Layer from '../assets/js/components/layer.js';
-        
-        // dropdown Layer
-        UI.exe.dropdown1 = new Layer({
-            id :'dropdown1',
-            type: 'dropdown',
-            ps : 'BL',
-            src: './dropdown/dropdown1'
-        });
-        UI.exe.dropdown1.show();
-        UI.exe.dropdown1.hide();
-    &lt;/script&gt;
-    </code></pre>
+    // System Layer
+    UI.exe.alert_1 = new Layer({
+        id :'alert1',
+        type: 'system',
+        title: 'alert title',
+        content: '안녕하세요 저장이 완료되었습니다.',
+        button: [
+            {text: '확인', callback: alertCallbackOk},
+            {text: '취소', callback: alertCallbackCancel}
+        ]
+    });
+    UI.exe.alert_1.show();
+    UI.exe.alert_1.hide();
+&lt;/script&gt;
+</code></pre>
+    </section>
+    <!-- //System Layer -->
+
+    <!-- Toast Layer -->
+    <section class="base-sec">
+        <h2 data-h="2">Toast Layer</h2>
+        <box>
+            <button type="button" class="mdl-button" data-toggle-object="f" data-callback="toggle_f">
+                <span>toast show</span>
+            </button>
+            <button type="button" class="mdl-button" data-toggle-object="g" data-callback="toggle_g">
+                <span>toast hide</span>
+            </button>
+        </box>
+<pre><code>
+//자동생성
+&lt;div class="mdl-layer " data-id="toast1" data-type="toast" aria-live="off" data-layer-current="true" data-state="show" data-layer-n="1" style="z-index: 101;"&gt;
+    &lt;div class="mdl-layer-wrap"&gt;
+        &lt;div class="mdl-layer-body"&gt;저장이 완료되었습니다.&lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script type="module"&gt;
+    import Layer from '../assets/js/components/layer.js';
     
-    <h2 data-h="2">Tooltip Layer</h2>
-    <box>
-        툴팁의 내용은 <a href="#tt1" class="mdl-tooltip" aria-describedby="tt1" aria-label="여기에 간략한 내용" data-tooltip="./tooltip/tooltip_1">여기에</a> 올리면 툴팁이 나와요. 그리고 <a href="#tt2" class="mdl-tooltip" aria-describedby="tt2" aria-label="여기에 간략한 내용" data-tooltip="./tooltip/tooltip_2">요기는</a> 다른 내용의 툴팁이에요
-    </box>
+    // System Layer
+    UI.exe.toast_1 = new Layer({
+        id :'{{toast1}}',
+        type: 'toast',
+        content: '{{안녕하세요<br> 저장이 완료되었습니다.}}'
+    });
+    UI.exe.toast_1.show();
+    UI.exe.toast_1.hide();
+&lt;/script&gt;
+</code></pre>
+    </section>
+    <!-- //Toast Layer -->
+    
+    <section class="base-sec">
+        <h2 data-h="2">Tooltip Layer</h2>
+        <p></p>
+        <box>
+            툴팁의 내용은 <a href="#tt1" class="mdl-tooltip" aria-describedby="tt1" aria-label="여기에 간략한 내용" data-tooltip="./tooltip/tooltip_1">여기에</a> 올리면 툴팁이 나와요. 그리고 <a href="#tt2" class="mdl-tooltip" aria-describedby="tt2" aria-label="여기에 간략한 내용" data-tooltip="./tooltip/tooltip_2">요기는</a> 다른 내용의 툴팁이에요
+        </box>
+    </section>
 </div>

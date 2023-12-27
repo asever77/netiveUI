@@ -48,46 +48,48 @@ export default class Layer {
 
         this.timer;
 
-        if (this.type === 'system') {
-            //script coding
+        switch (this.type) {
+            case 'system':
             this.madeSystem();
-        } 
-        else if (this.type === 'toast') {
-            //fetch load
+            break;
+
+            case 'toast':
             this.madeToast();
-        } 
-        else if (this.type === 'select') {
-            //fetch load
+            break;
+
+            case 'select':
             this.resetSelect();
             this.madeSelect();
-        } 
-        else if (this.type === 'tooltip') {
-            //fetch load
+            break;
+
+            case 'tooltip':
             this.tooltip();
-        } 
-        else if (this.src) {
-            //fetch load
-            this.made();
-        } 
-        else {
-            //hard coding
-            this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'"]');
-            this.btn_close = this.modal.querySelector('.mdl-layer-close');
-            this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
+            break;
 
-            switch(this.type) {
-                case 'modal' :
-                    this.modal.dataset.type = 'modal';
-                    break;
-                case 'bottom' :
-                    this.modal.dataset.type = 'bottom';
-                    break;
-                case 'dropdown' :
-                    this.modal.dataset.type = 'dropdown';
-                    break;
-            }
+            default: // modal, bottom, dropdown
+                if (this.src) {
+                    this.made();
+                }
+                else {
+                    this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'"]');
+                    this.btn_close = this.modal.querySelector('.mdl-layer-close');
+                    this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
 
-            this.init();
+                    switch(this.type) {
+                        case 'modal' :
+                            this.modal.dataset.type = 'modal';
+                            break;
+                        case 'bottom' :
+                            this.modal.dataset.type = 'bottom';
+                            break;
+                        case 'dropdown' :
+                            this.modal.dataset.type = 'dropdown';
+                            break;
+                    }
+        
+                    this.init();
+                }
+            break;
         }
     }
     resetSelect() {
@@ -243,11 +245,24 @@ export default class Layer {
 
                 switch(this.type) {
                     case 'modal' :
-                        this.modal.dataset.type = 'modal';
-                        break;
+                    this.modal.dataset.type = 'modal';
+                    break;
+
                     case 'dropdown' :
-                        this.modal.dataset.type = 'dropdown';
-                        break;
+                    this.modal.dataset.type = 'dropdown';
+                    break;
+
+                    case 'tooltip' :
+                    this.modal.dataset.type = 'tooltip';
+                    break;
+
+                    case 'select' :
+                    this.modal.dataset.type = 'select';
+                    break;
+
+                    case 'toast' :
+                    this.modal.dataset.type = 'toast';
+                    break;
                 }
 
                 this.init();
@@ -286,12 +301,14 @@ export default class Layer {
 
         this.type === 'tooltip' && this.show();
     }
+    actToastShow = (e) => {
+        this.madeToast();
+    }
     actTooltipShow = (e) => {
         const _this = e.currentTarget;
         this.src = _this.dataset.tooltip;
         this.id = _this.getAttribute('aria-describedby');
         this.made();
-        console.log(e);
     }
     actTooltipHide = (e) => {
         const _this = e.currentTarget;
@@ -302,8 +319,7 @@ export default class Layer {
         for (let item of _files) {
             item.remove();
         }
-        this.hide();
-        console.log(e);
+        _tooltip.remove();
     }
     actSelected = (e) => {
         let _this = e.currentTarget;
@@ -333,15 +349,15 @@ export default class Layer {
 
         const _zindex = 100;
         const _prev = document.querySelector('[data-layer-current="true"]');
-        let btn = (this.type === 'select') ? 
-        document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'_select"]') : 
-        document.querySelector('[data-dropdown="'+ this.id +'"]');
+        let btn = false;
 
+        (this.type === 'select') ? btn = document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'_select"]') : '';
+        (this.type === 'dropdown') ? btn = document.querySelector('[data-dropdown="'+ this.id +'"]') : '';
         (this.type === 'tooltip') ? btn = document.querySelector('.mdl-tooltip[aria-describedby="'+ this.id +'"]') : '';
 
         console.log(btn, this.id );
 
-        //dropdown & select
+        //object position : dropdown & select & tooltip
         if (this.type === 'dropdown' || this.type === 'select' || this.type === 'tooltip') {
             const ps_info = {
                 m_width: this.modal.offsetWidth,
@@ -396,39 +412,34 @@ export default class Layer {
             this.modal.style.top = _top;
             this.modal.style.left = _left;
         } 
-        
         else {
-            //overflow:hidden
             this.html.dataset.modal = 'show';
         }
 
         _prev ? _prev.dataset.layerCurrent = 'false' : '';
         this.modal.dataset.layerCurrent = 'true';
-        this.modal || this.src && this.make();
+        this.modal || this.src && this.made();
         this.modal.dataset.state = 'show';
-        console.log(this.html.dataset.layerN);
         this.focus = document.activeElement;
 
-        if (this.type !== 'toast') {
+        // toast, tooltip 자동 생성 자동 hidden 제외
+        if (this.type !== 'toast' && this.type !== 'tooltip') {
             this.html.dataset.layerN = !this.html.dataset.layerN ? 1 : Number(this.html.dataset.layerN) + 1;
             this.modal.style.zIndex = Number(_zindex) + Number(this.html.dataset.layerN);
             this.modal.dataset.layerN = this.html.dataset.layerN;
         }
+
         this.btn_close && this.btn_close.focus();
+        console.log(this.html.dataset.layerN);
 
         // select layer
         if (this.type === 'select') {
             const el_options = this.modal.querySelectorAll('.mdl-select-option');
             const el_inputs = this.modal.querySelectorAll('input');
-
-            console.log(el_inputs);
-
             const el_options_checked = this.modal.querySelector('input:checked');
 
             this.select_btn.setAttribute('aria-expanded', true);
             this.select_btn.removeEventListener('click', this.show);
-
-            console.log(el_options_checked);
 
             el_options_checked && el_options_checked.focus();
 
@@ -474,7 +485,7 @@ export default class Layer {
     }
     hidden = () => {
         const _prev = document.querySelector('[data-layer-current="true"]');
-        if (this.type !== 'toast') {
+        if (this.type !== 'toast' && this.type !== 'tooltip') {
             _prev.dataset.layerCurrent = 'false';
         }
         // this.modal.dataset.layerCurrent = 'true';
@@ -486,20 +497,23 @@ export default class Layer {
         this.select_btn && this.select_btn.setAttribute('aria-expanded', false);
         this.focus.focus();
        
-        if (this.type !== 'toast') {
+        if (this.type !== 'toast' && this.type !== 'tooltip') {
+            console.log(Number(this.html.dataset.layerN));
             if (Number(this.html.dataset.layerN) !== 0) {
                 document.querySelector('.mdl-layer[data-layer-n="'+ this.html.dataset.layerN +'"]').dataset.layerCurrent = 'true';
             }
         }
         
-        if (this.src) {
-            // this.modal.remove();
+        if (this.type === 'tooltip') {
+            console.log('tooltip', this.modal);
+            this.modal.remove();
         }
     }
     hide = () => {
-        console.log('hide');
         clearTimeout(this.timer);
-        if (this.type !== 'toast') {
+        if (this.type !== 'toast' && this.type !== 'tooltip') {
+
+            console.log('hide', Number(this.html.dataset.layerN));
             this.html.dataset.layerN = Number(this.html.dataset.layerN) - 1;
         }
         

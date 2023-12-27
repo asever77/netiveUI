@@ -59,9 +59,11 @@
                 //초기화
                 const js_usages = document.querySelectorAll('[data-usage]');
                 const el_modals = document.querySelectorAll('.mdl-modal');
+                const el_layers = document.querySelectorAll('.mdl-layer');
                 
                 if (js_usages) for (let item of js_usages) item.remove();
                 if (el_modals) for (let item of el_modals) item.remove();
+                if (el_layers) for (let item of el_layers) item.remove();
 
                 //페이지로드
                 let _this;
@@ -95,7 +97,15 @@
 
                             xhr.open('HEAD', urlToFile, false);
                             xhr.send();
-                            (xhr.status === 200) && document.body.appendChild(v);
+                            if (xhr.status === 200) {
+                                console.log(v.tagName)
+                                if (v.tagName === 'LINK') {
+                                    document.head.appendChild(v);
+                                } else {
+                                    document.body.appendChild(v);
+                                }
+                               
+                            } 
                         }
                         
                         doesFileExist(_href + '.js', _script);

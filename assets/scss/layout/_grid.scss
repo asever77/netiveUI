@@ -34,8 +34,7 @@ body {
     &-sec {
         position: relative;
         width: 100%;
-
-        & + .base-sec {margin-top: $x8;}
+        margin-top: $x8;
     }
 
     &-body {
@@ -47,6 +46,11 @@ body {
     &-main {
         max-width: 90rem;
         margin: 0 auto;
+        padding: $x20 0 $x10;
+
+        &-wrap {
+            position: relative;
+        }
     }
 
     &-header {
@@ -86,10 +90,6 @@ body {
         }
     }
     
-    &-main {
-        padding: $x20 0 $x10;
-    }
-
     &-nav{
         position: fixed;
         top: 0;

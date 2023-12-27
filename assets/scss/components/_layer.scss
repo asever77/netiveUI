@@ -91,6 +91,7 @@
         }
     }
 
+    //type
     &[data-type="alert"],
     &[data-type="modal"] {
         .mdl-layer-wrap {
@@ -178,39 +179,24 @@
         height: auto;
         padding: 0;
         overflow: visible;
-       
+        
+        
         .mdl-layer-wrap {
-            padding:$x1 0;
-            min-width: 0;
-            max-height: calc(12rem + $x2);
-            overflow-y: auto;
+            padding:$x2;
             border-radius: $x1;
-
-            &:hover :checked + .mdl-select-option {
-                background-color: transparent;
-            }
+        }
+        .mdl-layer-header{
+            font-size: 1.3rem;
+            font-weight: 700;
         }
         .mdl-layer-body {
             margin: 0;
             padding: 0;
+            font-size: 1.2rem;
         }
+        .mdl-layer-close,
         .mdl-layer-dim{display: none;}
-        .mdl-layer-wrap {
-            animation-name: select_show;
-            animation-delay: .1s;
-            animation-duration: .4s;
-            animation-iteration-count: 1;
-            animation-fill-mode: backwards;
-        }
-        &[data-state="hide"] {
-            .mdl-layer-wrap {
-                animation-name: select_hide;
-                animation-delay: .1s;
-                animation-duration: .2s;
-                animation-iteration-count: 1;
-                animation-fill-mode: backwards;
-            }
-        }
+        &[data-state="hide"] .mdl-layer-wrap {display: none; }
     }
     &[data-type="select"] {
         position: absolute;
@@ -323,7 +309,7 @@
     }
 }
 
-
+//animation
 @keyframes dim_show {
     0% {opacity: 0; }
     100% {opacity: 1;}

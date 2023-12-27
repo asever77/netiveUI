@@ -8,6 +8,6 @@ UI.exe.toggle = new Toggle({
 
 //CALLBACK
 UI.callback.modal1_a = (result) => {
-    console.log('callback', result);
+    console.log('modal1_a', result);
     UI.exe.modal_2.show();
 }
