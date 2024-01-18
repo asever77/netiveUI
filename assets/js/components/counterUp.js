@@ -84,6 +84,7 @@ class CounterUpSlotLive {
         this.items;
         this.h = this.el.offsetHeight;
         this.html_number = '<span>9</span><span>8</span><span>7</span><span>6</span><span>5</span><span>4</span><span>3</span><span>2</span><span>1</span><span>0</span>';
+        this.prev_n = 0;
         this.init();
     }
 
@@ -136,13 +137,16 @@ class CounterUpSlotLive {
         const html_comma = '<span style="height:'+ this.h + 'px">';
         let html_item = '';
         
+        console.log(len);
+
         for (let i = 0; i < len; i++) {
+            
             let _n = (Number(n.substr(i, 1))) + 9;
             let _m = (Number(m.substr(i, 1))) + 9;
             
             _n = _n > 9 ? 9 - (_n - 9) : _n;
             _m = _m > 9 ? 9 - (_m - 9) : _m;
-
+           
             if (isNaN(_n)) {
                 html_item += '<span class="mdl-count-item" data-n="'+ n.substr(i, 1) +'" style="height:'+ this.h + 'px"><span class="mdl-count-num">';
                 html_item += html_comma + n.substr(i, 1) + '</span>';
@@ -175,9 +179,13 @@ class CounterUpSlotLive {
         this.value = this.value * 1000 + v * 1000;
         this.value = this.value / 1000;
         this.items = this.el.querySelectorAll('.mdl-count-item[data-n]');
-
-        for (const item of this.items) { item.remove(); }
-
+        this.prev_n = '';
+        for (const item of this.items) { 
+            
+            this.prev_n =  this.prev_n + item.dataset.n
+            item.remove(); 
+        }
+        console.log(this.prev_n)
         this.init();
     }
 }

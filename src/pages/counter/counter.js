@@ -31,9 +31,9 @@ UI.callback.toggle_a = (result) => {
 
 UI.callback.toggle_b = (result) => {
     console.log('callback', result);
-    UI.exe.counterUpLive.add(12.37);
+    UI.exe.counterUpLive.add(0.01);
 }
 UI.callback.toggle_c = (result) => {
     console.log('callback', result);
-    UI.exe.counterUpLive.add(-12.34);
+    UI.exe.counterUpLive.add(-0.01);
 }
