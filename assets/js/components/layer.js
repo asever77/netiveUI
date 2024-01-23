@@ -45,7 +45,6 @@ export default class Layer {
         this.el_tooltip_btns;
 
         this.isFocus = false;
-
         this.timer;
 
         switch (this.type) {
@@ -111,7 +110,7 @@ export default class Layer {
         let html = '<button type="button" class="mdl-select-btn" data-select-id="'+  this.id+'_select" value="'+ select.value +'" tabindex="-1" role="combobox" aria-haspopup="listbox" aria-expanded="false"><span>'+ select.querySelector('[selected]').text +'</span></button>';
         this.select.insertAdjacentHTML('beforeend', html);
 
-        html = null;
+        html = '';
         html += '<section class="mdl-layer" data-id="'+ this.id +'_select" data-type="select" role="listbox">';
         html += '<div class="mdl-layer-wrap">';
         html += '   <div class="mdl-layer-header">';
@@ -137,7 +136,7 @@ export default class Layer {
 
         document.querySelector('body').insertAdjacentHTML('beforeend', html);
         
-        html = null;
+        html = '';
         this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'_select"]');
         this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
         this.btn_close = this.modal.querySelector('.mdl-layer-close');

@@ -65,6 +65,7 @@ const obj = {
 
 ### Mustache(:수염) 이중 중괄호 문법
 - 식별자나 경로에만 국한되지 않습니다. 유효한 JavaScript 표현식을 사용할 수 있음
+- 텍스트 삽입에만 사용
 ```
 {{ ... }}
 ```
@@ -127,8 +128,10 @@ https://developer.mozilla.org/ko/docs/Web/JavaScript/Reference/Operators/Destruc
 2. 호스트 객체 - 자바스크립트 실행 환경에서 추가로 제공하는 객체
 3. 사용자 정의 객체 - 사용자가 직접 정의한 객체
 
-
-
+# 속성바이딩
+속성을 동적값에 바인딩 v-bind (디레티브)
+디렉티브
+- v-test
 
 
 
