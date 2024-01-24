@@ -18,8 +18,13 @@ export default class Picker {
       this.quarterCount = this.options.count / 4;
       this.a = this.options.sensitivity * 10; // 롤링 감속
       this.minV = Math.sqrt(1 / this.a); // 최소 초기 속도
+
+      this.value = this.options.value;
+
+      console.log('value', this.value)
+
       this.selected = this.source[0];
-  
+     
       this.exceedA = 10; // 감속 초과 
       this.moveT = 0; // 스크롤 tick
       this.moving = false;
@@ -74,6 +79,10 @@ export default class Picker {
       document.addEventListener('mouseup', this.events.touchend);
       if (this.source.length) {
         this.value = this.value !== null ? this.value : this.source[0].value;
+
+
+console.log( this.value)
+        
         this.select(this.value);
       }
     }
@@ -148,14 +157,14 @@ export default class Picker {
       }
   
       let template = `
-        <div class="select-wrap">
-          <ul class="select-options" style="transform: translate3d(0, 0, ${-this.radius}px) rotateX(0deg);">
+        <div class="mdl-picker-wrap">
+          <ul class="mdl-picker-options" style="transform: translate3d(0, 0, ${-this.radius}px) rotateX(0deg);">
             {{circleListHTML}}
-            <!-- <li class="select-option">a0</li> -->
+            <!-- <li class="mdl-picker-option">a0</li> -->
           </ul>
-          <div class="highlight">
-            <ul class="highlight-list">
-              <!-- <li class="highlight-item"></li> -->
+          <div class="mdl-picker-highlight">
+            <ul class="mdl-picker-highlight-list">
+              <!-- <li class="mdl-picker-highlight-item"></li> -->
               {{highListHTML}}
             </ul>
           </div>
@@ -176,7 +185,7 @@ export default class Picker {
       // 반지름 HTML
       let circleListHTML = '';
       for (let i = 0; i < source.length; i++) {
-        circleListHTML += `<li class="select-option"
+        circleListHTML += `<li class="mdl-picker-option"
                       style="
                         top: ${this.itemHeight * -0.5}px;
                         height: ${this.itemHeight}px;
@@ -190,7 +199,7 @@ export default class Picker {
       // 중간에 강조 표시 HTML
       let highListHTML = '';
       for (let i = 0; i < source.length; i++) {
-        highListHTML += `<li class="highlight-item" style="height: ${this.itemHeight}px;">
+        highListHTML += `<li class="mdl-picker-highlight-item" style="height: ${this.itemHeight}px;">
                           ${source[i].text}
                         </li>`
       }
@@ -201,7 +210,7 @@ export default class Picker {
         // 링 머리와 꼬리
         for (let i = 0; i < this.quarterCount; i++) {
           // 머리
-          circleListHTML = `<li class="select-option"
+          circleListHTML = `<li class="mdl-picker-option"
                         style="
                           top: ${this.itemHeight * -0.5}px;
                           height: ${this.itemHeight}px;
@@ -211,7 +220,7 @@ export default class Picker {
                         data-index="${-i - 1}"
                         >${source[sourceLength - i - 1].text}</li>` + circleListHTML;
           // 꼬리
-          circleListHTML += `<li class="select-option"
+          circleListHTML += `<li class="mdl-picker-option"
                         style="
                           top: ${this.itemHeight * -0.5}px;
                           height: ${this.itemHeight}px;
@@ -223,22 +232,22 @@ export default class Picker {
         }
   
         // 머리와 꼬리 강조하기
-        highListHTML = `<li class="highlight-item" style="height: ${this.itemHeight}px;">
+        highListHTML = `<li class="mdl-picker-highlight-item" style="height: ${this.itemHeight}px;">
                             ${source[sourceLength - 1].text}
                         </li>` + highListHTML;
-        highListHTML += `<li class="highlight-item" style="height: ${this.itemHeight}px;">${source[0].text}</li>`
+        highListHTML += `<li class="mdl-picker-highlight-item" style="height: ${this.itemHeight}px;">${source[0].text}</li>`
       }
   
       this.elems.el.innerHTML = template
                                   .replace('{{circleListHTML}}', circleListHTML)
                                   .replace('{{highListHTML}}', highListHTML);
-      this.elems.circleList = this.elems.el.querySelector('.select-options');
-      this.elems.circleItems = this.elems.el.querySelectorAll('.select-option');
+      this.elems.circleList = this.elems.el.querySelector('.mdl-picker-options');
+      this.elems.circleItems = this.elems.el.querySelectorAll('.mdl-picker-option');
   
   
-      this.elems.highlight = this.elems.el.querySelector('.highlight');
-      this.elems.highlightList = this.elems.el.querySelector('.highlight-list');
-      this.elems.highlightitems = this.elems.el.querySelectorAll('.highlight-item');
+      this.elems.highlight = this.elems.el.querySelector('.mdl-picker-highlight');
+      this.elems.highlightList = this.elems.el.querySelector('.mdl-picker-highlight-list');
+      this.elems.highlightitems = this.elems.el.querySelectorAll('.mdl-picker-highlight-item');
   
       if (this.type === 'infinite') {
         this.elems.highlightList.style.top = -this.itemHeight + 'px';

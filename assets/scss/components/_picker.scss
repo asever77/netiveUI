@@ -1,13 +1,12 @@
 
-.select-wrap {
+.mdl-picker-wrap {
     position: relative;
-    // top: 200px;
     height: 100%;
     // perspective: 1200px;
     text-align: center;
     overflow: hidden;
-    font-size: 20px;
-    color: #ddd;
+    font-size: 2rem;
+    color: #000;
 
     &:before,
     &:after {
@@ -21,15 +20,15 @@
 
     &:before {
         top: 0;
-        background-image: linear-gradient(to bottom, rgba(1, 1, 1, 0.5), rgba(1, 1, 1, 0));
+        background-image: linear-gradient(to bottom, rgba(255,255,255, 1), rgba(255,255,255, 0));
     }
 
     &:after {
         bottom: 0;
-        background-image: linear-gradient(to top, rgba(1, 1, 1, 0.5), rgba(1, 1, 1, 0));
+        background-image: linear-gradient(to top, rgba(255,255,255, 1), rgba(255,255,255, 0));
     }
 
-    .select-options {
+    .mdl-picker-options {
         position: absolute;
         top: 50%;
         left: 0;
@@ -38,22 +37,22 @@
         transform-style: preserve-3d;
         margin: 0 auto;
         display: block;
-        transform: translateZ(-150px) rotateX(0deg);
+        transform: translateZ(-15rem) rotateX(0deg);
         -webkit-font-smoothing: subpixel-antialiased;
         color: #666;
 
-        .select-option {
+        .mdl-picker-option {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 50px;
+            height: 5rem;
 
             -webkit-font-smoothing: subpixel-antialiased;
 
             @for $i from 1 through 100 {
                 &:nth-child(#{$i}) {
-                    transform: rotateX(-18deg * ($i - 1)) translateZ(150px);
+                    transform: rotateX(-18deg * ($i - 1)) translateZ(15rem);
                 }
             }
         }
@@ -61,19 +60,19 @@
 }
 
 
-.highlight {
+.mdl-picker-highlight {
     position: absolute;
     top: 50%;
     transform: translate(0, -50%);
     width: 100%;
-    background-color: #000;
-    border-top: 1px solid #333;
-    border-bottom: 1px solid #333;
-    font-size: 24px;
+    background-color: #fff;
+    border-top: .1rem solid #333;
+    border-bottom: .1rem solid #333;
+    font-size: 2.4rem;
     overflow: hidden;
 }
 
-.highlight-list {
+.mdl-picker-highlight-list {
     // display: none;
     position: absolute;
     width: 100%;
@@ -81,28 +80,21 @@
 
 
 /* date */
-.date-selector {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    perspective: 2000px;
+.mdl-picker {
+    position: relative;
+    perspective: 0;
     display: flex;
     align-items: stretch;
     justify-content: space-between;
+    width: 100%;
+    height: 30rem;
 
-    width: 600px;
-    height: 300px;
-
-    >div {
-        flex: 1;
-    }
-
-    .select-wrap {
-        font-size: 18px;
+    .mdl-picker-wrap {
+        flex:1;
+        font-size: 1.8rem;
     }
 
     .highlight {
-        font-size: 20px;
+        font-size: 2rem;
     }
 }

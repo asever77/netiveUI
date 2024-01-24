@@ -1,0 +1,10 @@
+box{
+    display: flex;
+    flex-direction: row;
+
+   
+}
+.mdl-picker{
+    width: auto;
+    flex:1;
+}
