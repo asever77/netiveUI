@@ -422,6 +422,153 @@
 			},300);
 		}
 	}
+
+    Global.scrollEvent = {
+		options : {
+			selector: document.querySelector('html, body'),
+			focus: false,
+			top: 0,
+			left:0,
+			add: 0,
+			align: 'default',
+			effect:'smooth', //'auto'
+			callback: false,	
+		},
+		init() {
+			const el_areas = document.querySelectorAll('.ui-scrollmove-btn[data-area]');
+
+			for (let i = 0, len = el_areas.length; i < len; i++) {
+				const that = el_areas[i];
+
+				that.removeEventListener('click', this.act);
+				that.addEventListener('click', this.act);
+			}
+			// for (let that of el_areas) {
+			// 	that.removeEventListener('click', this.act);
+			// 	that.addEventListener('click', this.act);
+			// }
+		},
+		act(e) {
+			const el = e.currentTarget;
+			const area = el.dataset.area;
+			const name = el.dataset.name;
+			const add = el.dataset.add === undefined ? 0 : el.dataset.add;
+			const align = el.dataset.align === undefined ? 'default' : el.dataset.align;
+			const callback = el.dataset.callback === undefined ? false : el.dataset.callback;
+			let el_area = document.querySelector('.ui-scrollmove[data-area="'+ area +'"]');
+			const item = el_area.querySelector('.ui-scrollbar-item');
+			
+			if (!!item) {
+				el_area = el_area.querySelector('.ui-scrollbar-item');
+			}
+
+			const el_item = el_area.querySelector('.ui-scrollmove-item[data-name="'+ name +'"]');
+			
+			let top = (el_area.getBoundingClientRect().top - el_item.getBoundingClientRect().top) - el_area.scrollTop;
+			let left = (el_area.getBoundingClientRect().left - el_item.getBoundingClientRect().left) - el_area.scrollLeft;
+
+			if (align === 'center') {
+				top = top - (el_item.offsetHeight / 2);
+				left = left - (el_item.offsetWidth / 2);
+			}
+
+			Global.scroll.move({
+				top: top,
+				left: left,
+				add: add,
+				selector: el_area,
+				align: align,
+				focus: el_item,
+				callback: callback
+			});
+		},
+		move(option) {
+			const opt = Object.assign({}, this.options, option);
+			//const opt = {...this.options, ...option};
+			const top = opt.top;
+			const left = opt.left;
+			const callback = opt.callback;
+			const align = opt.align;
+			const add = opt.add;
+			const focus = opt.focus;
+			const effect = opt.effect;
+			let selector = opt.selector;
+			const item = selector.querySelector('.ui-scrollbar-item');
+			const isCustomScroll = selector.classList.contains('ui-scrollbar');
+
+			if (!!item && !!isCustomScroll) {
+				selector = selector.querySelector('.ui-scrollbar-item');
+			}
+
+			switch (align) {
+				case 'center':
+					selector.scrollTo({
+						top: Math.abs(top) - (selector.offsetHeight / 2) + add,
+						left: Math.abs(left) - (selector.offsetWidth / 2) + add,
+						behavior: effect
+					});
+					break;
+				
+				case 'default':
+				default :
+					selector.scrollTo({
+						top: Math.abs(top) + add,
+						left: Math.abs(left) + add,
+						behavior: effect
+					});
+			}
+			this.checkEnd({
+				selector : selector,
+				nowTop : selector.scrollTop, 
+				nowLeft : selector.scrollLeft,
+				align : align,
+				callback : callback,
+				focus : focus
+			});
+		},
+		checkEndTimer : {},
+		checkEnd(opt) {
+			const el_selector = opt.selector;
+			const align = opt.align
+			const focus = opt.focus
+			const callback = opt.callback
+			
+			let nowTop = opt.nowTop;
+			let nowLeft = opt.nowLeft;
+
+			Global.scrollEvent.checkEndTimer = setTimeout(() => {
+				//스크롤 현재 진행 여부 판단
+				if (nowTop === el_selector.scrollTop && nowLeft === el_selector.scrollLeft) {
+					clearTimeout(Global.scrollEvent.checkEndTimer);
+					//포커스가 위치할 엘리먼트를 지정하였다면 실행
+ 					if (!!focus ) {
+						focus.setAttribute('tabindex', 0);
+						focus.focus();
+					}
+					//스크롤 이동후 콜백함수 실행
+					if (!!callback) {
+						if (typeof callback === 'string') {
+							Global.callback[callback]();
+						} else {
+							callback();
+						}
+					}
+				} else {
+					nowTop = el_selector.scrollTop;
+					nowLeft = el_selector.scrollLeft;
+
+					Global.scrollEvent.checkEnd({
+						selector: el_selector,
+						nowTop: nowTop,
+						nowLeft: nowLeft,
+						align: align,
+						callback: callback,
+						focus: focus
+					});
+				}
+			},100);
+		}
+	}
    
     //common exe
     Global.parts.resizeState();

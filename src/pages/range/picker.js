@@ -1,11 +1,20 @@
-export default class Picker {
+const easing = {
+    easeOutCubic: function(pos) {
+      return (Math.pow((pos-1), 3) +1);
+    },
+    easeOutQuart: function(pos) {
+      return -(Math.pow((pos-1), 4) -1);
+    },
+  };
+  
+  class IosSelector {
     constructor(options) {
       let defaults = {
         el: '', // dom 
-        type: 'infinite', // infinite ，normal   
-        count: 20, // 옵션 개수는 4의 배수로 설정되어야 합니다.
-        sensitivity: 0.8,  
-        source: [], // {value: xx, text: xx}
+        type: 'infinite', // infinite 无限滚动，normal 非无限 
+        count: 20, // 圆环规格，圆环上选项个数，必须设置 4 的倍数
+        sensitivity: 0.8, // 灵敏度
+        source: [], // 选项 {value: xx, text: xx}
         value: null,
         onChange: null
       };
@@ -16,12 +25,12 @@ export default class Picker {
   
       this.halfCount = this.options.count / 2;
       this.quarterCount = this.options.count / 4;
-      this.a = this.options.sensitivity * 10; // 롤링 감속
-      this.minV = Math.sqrt(1 / this.a); // 최소 초기 속도
+      this.a = this.options.sensitivity * 10; // 滚动减速度
+      this.minV = Math.sqrt(1 / this.a); // 最小初速度
       this.selected = this.source[0];
   
-      this.exceedA = 10; // 감속 초과 
-      this.moveT = 0; // 스크롤 tick
+      this.exceedA = 10; // 超出减速 
+      this.moveT = 0; // 滚动 tick
       this.moving = false;
   
       this.elems = {
@@ -39,11 +48,11 @@ export default class Picker {
         touchend: null
       };
   
-      this.itemHeight = this.elems.el.offsetHeight * 3 / this.options.count; // 각 항목의 높이
-      this.itemAngle = 360 / this.options.count; // 각 항목 간의 회전 정도
-      this.radius = this.itemHeight / Math.tan(this.itemAngle * Math.PI / 180); // 링 반경 
+      this.itemHeight = this.elems.el.offsetHeight * 3 / this.options.count; // 每项高度
+      this.itemAngle = 360 / this.options.count; // 每项之间旋转度数
+      this.radius = this.itemHeight / Math.tan(this.itemAngle * Math.PI / 180); // 圆环半径 
   
-      this.scroll = 0; // 단위는 항목의 높이(도)입니다.
+      this.scroll = 0; // 单位为一个 item 的高度（度数）
       this._init();
     }
   
@@ -98,7 +107,7 @@ export default class Picker {
       let scrollAdd = (touchData.startY - eventY) / this.itemHeight;
       let moveToScroll = scrollAdd + this.scroll;
   
-      // 무한 스크롤이 아닌 경우 범위를 벗어나면 스크롤이 어려워집니다.
+      // 非无限滚动时，超出范围使滚动变得困难
       if (this.type === 'normal') {
         if (moveToScroll < 0) {
           moveToScroll *= 0.3;
@@ -128,7 +137,7 @@ export default class Picker {
         let startY = touchData.yArr[touchData.yArr.length - 2][0];
         let endY = touchData.yArr[touchData.yArr.length - 1][0];
   
-        // 계산 속도
+        // 计算速度
         v = ((startY - endY) / this.itemHeight) * 1000 / (endTime - startTime);
         let sign = v > 0 ? 1 : -1;
   
@@ -173,7 +182,7 @@ export default class Picker {
       this.source = source;
       let sourceLength = source.length;
   
-      // 반지름 HTML
+      // 圆环 HTML
       let circleListHTML = '';
       for (let i = 0; i < source.length; i++) {
         circleListHTML += `<li class="select-option"
@@ -187,7 +196,7 @@ export default class Picker {
                       >${source[i].text}</li>`
       }
   
-      // 중간에 강조 표시 HTML
+      // 中间高亮 HTML
       let highListHTML = '';
       for (let i = 0; i < source.length; i++) {
         highListHTML += `<li class="highlight-item" style="height: ${this.itemHeight}px;">
@@ -198,9 +207,9 @@ export default class Picker {
   
       if (this.options.type === 'infinite') {
   
-        // 링 머리와 꼬리
+        // 圆环头尾
         for (let i = 0; i < this.quarterCount; i++) {
-          // 머리
+          // 头
           circleListHTML = `<li class="select-option"
                         style="
                           top: ${this.itemHeight * -0.5}px;
@@ -210,7 +219,7 @@ export default class Picker {
                         "
                         data-index="${-i - 1}"
                         >${source[sourceLength - i - 1].text}</li>` + circleListHTML;
-          // 꼬리
+          // 尾
           circleListHTML += `<li class="select-option"
                         style="
                           top: ${this.itemHeight * -0.5}px;
@@ -222,7 +231,7 @@ export default class Picker {
                         >${source[i].text}</li>`;
         }
   
-        // 머리와 꼬리 강조하기
+        // 高亮头尾
         highListHTML = `<li class="highlight-item" style="height: ${this.itemHeight}px;">
                             ${source[sourceLength - 1].text}
                         </li>` + highListHTML;
@@ -250,7 +259,7 @@ export default class Picker {
     }
   
     /**
-     * 오른쪽 scroll 取模，eg source.length = 5 scroll = 6.1 
+     * 对 scroll 取模，eg source.length = 5 scroll = 6.1 
      * 取模之后 normalizedScroll = 1.1
      * @param {init} scroll 
      * @return 取模之后的 normalizedScroll
@@ -347,18 +356,8 @@ export default class Picker {
       
       this._selectByScroll(this.scroll);
     }
-    
+  
     _animateToScroll(initScroll, finalScroll, t, easingName = 'easeOutQuart') {
-
-        const easing = {
-        easeOutCubic: function(pos) {
-            return (Math.pow((pos-1), 3) +1);
-        },
-        easeOutQuart: function(pos) {
-            return -(Math.pow((pos-1), 4) -1);
-        },
-        };
-        
       if (initScroll === finalScroll || t === 0) {
         this._moveTo(initScroll);
         return;
@@ -444,4 +443,136 @@ export default class Picker {
     }
   }
   
+  
+  // date logic
+  
+  
+  function getYears() {
+      let currentYear = new Date().getFullYear();
+      let years = [];
+  
+      for (let i = currentYear - 20; i < currentYear + 20; i++) {
+          years.push({
+              value: i,
+              text: i + '年'
+          });
+      }
+      return years;
+  }
+  
+  function getMonths(year) {
+      let months = [];
+      for (let i = 1; i <= 12; i++) {
+          months.push({
+              value: i,
+              text: i + '月'
+          });
+      }
+      return months;
+  }
+  
+  function getDays(year, month) {
+      let dayCount = new Date(year,month,0).getDate(); 
+      let days = [];
+  
+      for (let i = 1; i <= dayCount; i++) {
+          days.push({
+              value: i,
+              text: i + '日'
+          });
+      }
+  
+      return days; 
+  }
+  
+  let currentYear = new Date().getFullYear();
+  let currentMonth = 1;
+  let currentDay = 1;
+  
+  let yearSelector;
+  let monthSelector;
+  let daySelector;
+  
+  let yearSource = getYears();
+  let monthSource = getMonths();
+  let daySource = getDays(currentYear, currentMonth);
+  
+  yearSelector = new IosSelector({
+      el: '#year1',
+      type: 'infinite',
+      source: yearSource,
+      count: 20,
+      onChange: (selected) => {
+          currentYear = selected.value;
+          daySource = getDays(currentYear, currentMonth);
+          daySelector.updateSource(daySource);
+          console.log(yearSelector.value, monthSelector.value, daySelector.value);
+      }
+  });
+  
+//   monthSelector = new IosSelector({
+//       el: '#month1',
+//       type: 'infinite',
+//       source: monthSource,
+//       count: 20,
+//       onChange: (selected) => {
+//           currentMonth = selected.value;
+          
+//           daySource = getDays(currentYear, currentMonth);
+//           daySelector.updateSource(daySource);
+//           console.log(yearSelector.value, monthSelector.value, daySelector.value);
+//       }
+//   });
+  
+//   daySelector = new IosSelector({
+//       el: '#day1',
+//       type: 'infinite',
+//       source: [],
+//       count: 20,
+//       onChange: (selected) => {
+//           currentDay = selected.value;
+//           console.log(yearSelector.value, monthSelector.value, daySelector.value);
+//       }
+//   });
+  
+  
+  let now = new Date();
+  
+  
+  setTimeout(function() {
+    yearSelector.select(now.getFullYear());
+    monthSelector.select(now.getMonth() + 1);
+    daySelector.select(now.getDate()); 
+  });
+  
+  
+  // // time
+  // let hours = new Array(24).fill(1).map((v, i) => {
+  //   return { value: i + 1, text: i + 1}
+  // });
+  // let minutes = new Array(60).fill(1).forEach((v, i) => {
+  //   return { value: i + 1, text: i + 1}
+  // });
+  
+  // let hourSelector = new IosSelector({
+  // 	el: '#hour',
+  // 	type: 'normal',
+  // 	source: hours,
+  // 	count: 20,
+  // 	onChange: (selected) => {
+  // 		currentDay = selected.value;
+  // 		console.log(yearSelector.value, monthSelector.value, daySelector.value);
+  // 	}
+  // });
+  
+  // let minuteSelector = new IosSelector({
+  // 	el: '#minute',
+  // 	type: 'normal',
+  // 	source: minutes,
+  // 	count: 20,
+  // 	onChange: (selected) => {
+  // 		currentDay = selected.value;
+  // 		console.log(yearSelector.value, monthSelector.value, daySelector.value);
+  // 	}
+  // });
   
