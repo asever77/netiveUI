@@ -68,7 +68,7 @@ UI.exe.midDay = new Picker({
 const getHour = () => {
     let hour = [];
 
-    for (let i = 1; i < 25; i++) {
+    for (let i = 1; i < 13; i++) {
         hour.push({
             value: i,
             text: i < 10 ? '0' + i : i
@@ -86,13 +86,13 @@ UI.exe.hourPicker = new Picker({
     onChange: (selected) => {
         console.log(selected);
 
-        if (selected.value < 12 || selected.value === 24) {
-            UI.exe.midDay.value = 0;
-            UI.exe.midDay._init();
-        } else {
-            UI.exe.midDay.value = 1;
-            UI.exe.midDay._init();
-        }
+        // if (selected.value < 12 || selected.value === 24) {
+        //     UI.exe.midDay.value = 0;
+        //     UI.exe.midDay._init();
+        // } else {
+        //     UI.exe.midDay.value = 1;
+        //     UI.exe.midDay._init();
+        // }
     }
 });
 
