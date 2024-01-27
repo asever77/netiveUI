@@ -1,0 +1,52 @@
+.ui-drag {
+    margin: 0 0;
+    position: relative;
+    width: 100%;
+    height: 26rem;
+    margin: 0 auto;
+    border: .1rem dashed silver;
+
+    svg {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        top: 0;
+        left: 0;
+        pointer-events: none;
+    }
+
+    &[data-state="check"] {
+        line[data-answer="false"] {stroke:red;}
+        line[data-answer="true"] {stroke:blue;}
+    }
+
+    line {
+        stroke: black;
+        stroke-width: 4;
+        stroke-linecap: round;
+        pointer-events: none;
+    }
+    
+    &-dot {
+        position: absolute;
+        width: 4rem;
+        height: 4rem;
+        outline: .2rem solid black;
+        border-radius: 50%;
+        text-align: center;
+        font-size: 1.4rem;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        &[data-complete="true"],
+        &[data-state="none"] {
+            pointer-events: none;
+        }
+    }
+
+    
+
+    
+}
+

@@ -1,0 +1,40 @@
+<div class="base-main-wrap">
+    <h1 data-h="1">Drag Drop</h1>
+    <box>
+        <div class="ui-drag" data-id="test" data-type="">
+            <div class="ui-drag-drop d1" data-name="1" data-clone="true">1</div>
+            <div class="ui-drag-drop d2" data-name="2">2</div>
+            <div class="ui-drag-drop d3" data-name="3">3</div>
+
+            <div class="ui-drag-area a1" data-name="1" data-limit="5"></div>
+            <div class="ui-drag-area a2" data-name="2"></div>
+            <div class="ui-drag-area a3" data-name="3"></div>
+        </div>
+        <div>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragline.complete()">정답</button>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragline.reset()">리셋</button>
+        </div>
+        
+    </box>
+<pre>
+    <code>
+     &lt;div class="ui-drag" data-id="test"&gt;
+         &lt;button type="button" class="ui-drag-dot" data-name="1"&gt;1 &lt;/button&gt;
+         &lt;button type="button" class="ui-drag-dot" data-name="1"&gt;1 &lt;/button&gt;
+     &lt;/div&gt;
+
+    &lt;script type="module"&gt;
+        import dragline from '../../assets/js/components/dragline.js';
+
+        UI.exe.dragline = new dragline({
+            id: 'test',
+            answer: 3,
+            callback: (v) => {
+                console.log(v);
+            }
+        });
+    &lt;/script"&gt;
+    </code>
+</pre>
+    
+</div>

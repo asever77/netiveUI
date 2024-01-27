@@ -219,6 +219,30 @@
                         break;
                 }   
             }  
+        },
+        resizObserver(opt) {
+            let timer = null;
+            let w = null;
+            let h = null;
+            const observer = new ResizeObserver(entries => {
+                for (let entry of entries) {
+                    const {width, height} = entry.contentRect;
+                    w === null ? w = width : '';
+                    h === null ? h = height : '';
+                    
+                    !!timer && clearTimeout(timer);
+                    // timer = setTimeout(() => {
+                    //     console.log(width, height);
+                        opt.callback({
+                            width: width,
+                            height: height,
+                            resize: [w === width ? false : true, h === height ? false : true] 
+                        });
+                    // }, 50);
+                }
+            });
+
+            observer.observe(opt.el);
         }	
     };
     Global.weather = {

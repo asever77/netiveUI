@@ -17,7 +17,7 @@
             margin: 0;
         }
 
-        .ui-draw {
+        .ui-drag {
 
             margin: 0 0;
 
@@ -31,7 +31,7 @@
 
         }
 
-        .ui-draw svg {
+        .ui-drag svg {
 
             width: 100%;
 
@@ -47,7 +47,7 @@
 
         }
 
-        .ui-draw line {
+        .ui-drag line {
 
             stroke: red;
 
@@ -59,7 +59,7 @@
 
         }
 
-        .ui-draw-dot {
+        .ui-drag-dot {
 
             position: absolute;
 
@@ -71,9 +71,9 @@
 
         }
 
-        .ui-draw-dot[data-complete="true"],
+        .ui-drag-dot[data-complete="true"],
 
-        .ui-draw-dot[data-state="none"] {
+        .ui-drag-dot[data-state="none"] {
 
             pointer-events: none;
 
@@ -114,37 +114,37 @@
 
 <body>
 
-    <div class="ui-draw" data-id="test">
+    <div class="ui-drag" data-id="test">
 
-        <div class="ui-draw-dot n1" data-name="1"></div>
+        <div class="ui-drag-dot n1" data-name="1"></div>
 
-        <div class="ui-draw-dot n2" data-name="2"></div>
+        <div class="ui-drag-dot n2" data-name="2"></div>
 
-        <div class="ui-draw-dot n3" data-name="1"></div>
+        <div class="ui-drag-dot n3" data-name="1"></div>
 
-        <div class="ui-draw-dot n4" data-name="2"></div>
+        <div class="ui-drag-dot n4" data-name="2"></div>
 
-        <div class="ui-draw-dot n5" data-name="3"></div>
+        <div class="ui-drag-dot n5" data-name="3"></div>
 
-        <div class="ui-draw-dot n6" data-name="3"></div>
+        <div class="ui-drag-dot n6" data-name="3"></div>
 
     </div>
 
     <div style="height: 100px;"></div>
 
-    <div class="ui-draw" data-id="test2">
+    <div class="ui-drag" data-id="test2">
 
-        <div class="ui-draw-dot n1" data-name="1"></div>
+        <div class="ui-drag-dot n1" data-name="1"></div>
 
-        <div class="ui-draw-dot n2" data-name="2"></div>
+        <div class="ui-drag-dot n2" data-name="2"></div>
 
-        <div class="ui-draw-dot n3" data-name="1"></div>
+        <div class="ui-drag-dot n3" data-name="1"></div>
 
-        <div class="ui-draw-dot n4" data-name="2"></div>
+        <div class="ui-drag-dot n4" data-name="2"></div>
 
-        <div class="ui-draw-dot n5" data-name="3"></div>
+        <div class="ui-drag-dot n5" data-name="3"></div>
 
-        <div class="ui-draw-dot n6" data-name="3"></div>
+        <div class="ui-drag-dot n6" data-name="3"></div>
 
     </div>
 
@@ -153,7 +153,7 @@
     <script>
 
         
-        const drawline = new DrawLine({
+        const dragline = new dragline({
 
             id: 'test',
 
@@ -169,7 +169,7 @@
 
 
 
-        const drawline2 = new DrawLine({
+        const dragline2 = new dragline({
 
             id: 'test2',
 

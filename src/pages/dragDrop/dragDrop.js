@@ -1,14 +1,17 @@
 import Toggle from '../../../assets/js/components/toggle.js';
-import DrawLine from '../../../assets/js/components/drawLine.js';
+import DragDrop from '../../../assets/js/components/dragDrop.js';
         
 //EXE
 UI.exe.toggle = new Toggle({
     scope: document.querySelector('[data-id="main"]')
 });
-UI.exe.drawline = new DrawLine({
+UI.exe.dragdrop = new DragDrop({
     id: 'test',
     answer: 3,
     callback: (v) => {
-        console.log(v);
+        console.log('callback', v);
+    }, 
+    callbackComplete: (v) => {
+        console.log('callbackComplete', v);
     }
 });
