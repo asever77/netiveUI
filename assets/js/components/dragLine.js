@@ -169,7 +169,9 @@ export default class DragLine {
 
         for (let item of this.dots) {
             item.addEventListener('mousedown', actStart);
-            item.addEventListener('touchstart', actStart);
+            item.addEventListener('touchstart', actStart, {
+                passive: true
+            });
         }
     }
     

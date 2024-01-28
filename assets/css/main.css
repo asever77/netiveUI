@@ -10679,4 +10679,20 @@ body[data-toggle-state=true] .base-body {
 }
 .ui-drag-dot[data-complete=true], .ui-drag-dot[data-state=none] {
   pointer-events: none;
+}
+.ui-drag-area {
+  position: absolute;
+  width: 10rem;
+  height: 10rem;
+}
+.ui-drag-drop {
+  position: absolute;
+  width: 2rem;
+  height: 2rem;
+  border: 0.1rem solid black;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }/*# sourceMappingURL=main.css.map */

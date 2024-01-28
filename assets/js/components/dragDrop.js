@@ -18,6 +18,7 @@ export default class DrawDrop {
 
     init() {
         const actStart = (e) => {
+            e.preventDefault();
             const _this = e.currentTarget;
             const _name = _this.dataset.name;
 
@@ -29,7 +30,9 @@ export default class DrawDrop {
          
         for (let item of this.drops) {
             item.addEventListener('mousedown', actStart);
-            item.addEventListener('touchstart', actStart);
+            item.addEventListener('touchstart', actStart, {
+                passive: true
+            });
         }
     }
     
