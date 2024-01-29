@@ -2,18 +2,38 @@
     <h1 data-h="1">Drag Drop</h1>
     <box>
         <div class="ui-drag" data-id="test" data-type="">
-            <div class="ui-drag-area a1" data-name="1" data-limit="5" data-re></div>
-            <div class="ui-drag-area a2" data-name="2" data-limit="1"></div>
-            <div class="ui-drag-area a3" data-name="3" data-limit="2"></div>
+            <div class="ui-drag-area a1" data-name="1" data-limit="5" data-move="true"></div>
+            <div class="ui-drag-area a2" data-name="2" data-limit="1" data-move="true"></div>
+            <div class="ui-drag-area a3" data-name="3" data-limit="2" data-move="true"></div>
 
-            <div class="ui-drag-drop d1" data-name="1" data-clone="true">1</div>
+            <div class="ui-drag-drop d1" data-name="1" data-copy="true">1</div>
             <div class="ui-drag-drop d2" data-name="2">2</div>
-            <div class="ui-drag-drop d3" data-name="3" data-clone="true">3</div>
+            <div class="ui-drag-drop d3" data-name="3" data-copy="true">3</div>
         </div>
-        <div>
+        <!-- <div>
             <button type="button" class="mdl-button" onclick="UI.exe.dragline.complete()">정답</button>
             <button type="button" class="mdl-button" onclick="UI.exe.dragline.reset()">리셋</button>
+        </div> -->
+        
+    </box>
+
+
+    <box>
+        <div class="ui-drag quiz" data-id="test2" data-type="">
+            <div class="ui-drag-area a1" data-name="1" data-limit="1" data-move="true"></div>
+            <div class="ui-drag-area a2" data-name="2" data-limit="1" data-move="true"></div>
+            <div class="ui-drag-area a3" data-name="3" data-limit="1" data-move="true"></div>
+            <div class="ui-drag-area a4" data-name="4" data-limit="1" data-move="true"></div>
+
+            <div class="ui-drag-drop d1" data-name="1">1</div>
+            <div class="ui-drag-drop d2" data-name="2">2</div>
+            <div class="ui-drag-drop d3" data-name="3">3</div>
+            <div class="ui-drag-drop d4" data-name="4">4</div>
         </div>
+        <!-- <div>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragline.complete()">정답</button>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragline.reset()">리셋</button>
+        </div> -->
         
     </box>
 <pre>

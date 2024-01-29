@@ -15,3 +15,14 @@ UI.exe.dragdrop = new DragDrop({
         console.log('callbackComplete', v);
     }
 });
+
+
+UI.exe.dragdrop2 = new DragDrop({
+    id: 'test2',
+    callback: (v) => {
+        console.log('callback', v);
+    }, 
+    callbackComplete: (v) => {
+        console.log('callbackComplete', v);
+    }
+});

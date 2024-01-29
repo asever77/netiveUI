@@ -9,9 +9,16 @@
 .ui-drag-drop.d3{width:30px; height: 40px; top:150px; left:160px;}
 
 .ui-drag-area.a2 {display: flex; justify-content: center; align-items: center; gap: 1rem;}
-.ui-drag-area.a2 .ui-drag-drop{position:relative; top:0; left:0; transform: translate(0, 0) !important;}
+.ui-drag-area.a2 .ui-drag-drop{position:relative; top:0 !important; left:0 !important; transform: translate(0, 0) !important;}
 .ui-drag-area.a3 {display: flex; justify-content: center; align-items: center; gap: 1rem;}
-.ui-drag-area.a3 .ui-drag-drop{position:relative; top:0; left:0; transform: translate(0, 0) !important;}
+.ui-drag-area.a3 .ui-drag-drop{position:relative; top:0 !important; left:0 !important; transform: translate(0, 0) !important;}
 
 
-
+.ui-drag.quiz{display: flex; justify-content: space-between; align-items: flex-start;}
+.ui-drag.quiz .ui-drag-area{position: relative; width: 15rem; height: 10rem; top:0; left:0; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center; gap: 1rem;}
+.ui-drag.quiz .ui-drag-area .ui-drag-drop{position:relative; top:0 !important; left:0 !important; transform: translate(0, 0) !important;}
+.ui-drag.quiz .ui-drag-drop{width: 15rem; height: 10rem;}
+.ui-drag.quiz .ui-drag-drop.d1{top:15rem; left:0%}
+.ui-drag.quiz .ui-drag-drop.d2{top:15rem; left:25%}
+.ui-drag.quiz .ui-drag-drop.d3{top:15rem; left:50%}
+.ui-drag.quiz .ui-drag-drop.d4{top:15rem; left:75%}
