@@ -1,12 +1,17 @@
 
 
 .ui-drag-area.a1{top:0; left:0;background: #f1f1f1;}
-.ui-drag-area.a2{top:0; left:13rem;background: #f1f1f1;}
+.ui-drag-area.a2{top:20px; left:13rem;background: #f1f1f1;}
 .ui-drag-area.a3{top:0; left:26rem;background: #f1f1f1;}
 
 .ui-drag-drop.d1{width:30px; height: 20px; top:150px; left:0;}
-.ui-drag-drop.d2{width:60px; height: 20px; top:150px; left:50px;}
+.ui-drag-drop.d2{width:100px; height: 100px; top:150px; left:50px;}
 .ui-drag-drop.d3{width:30px; height: 40px; top:150px; left:160px;}
+
+.ui-drag-area.a2 {display: flex; justify-content: center; align-items: center; gap: 1rem;}
+.ui-drag-area.a2 .ui-drag-drop{position:relative; top:0; left:0; transform: translate(0, 0) !important;}
+.ui-drag-area.a3 {display: flex; justify-content: center; align-items: center; gap: 1rem;}
+.ui-drag-area.a3 .ui-drag-drop{position:relative; top:0; left:0; transform: translate(0, 0) !important;}
 
 
 

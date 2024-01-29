@@ -116,25 +116,38 @@ export default class DrawDrop {
                     const is_y = this.array_area[i].rangeY[0] < e_y && this.array_area[i].rangeY[1] > e_y;
                     
                     if (is_x && is_y) {
-                        console.log('범위 안에');
+                        console.log('범위 안에',this.wrap_t,this.array_area[i].top );
                         is_range = true;
                         is_name = this.array_area[i].name;
+                        m_y = m_y - (this.array_area[i].top - this.wrap_t);
+                        m_x = m_x - (this.array_area[i].left - this.wrap_l);
                         break;
                     } else {
                         console.log('범위 밖에')
                         is_range = false;
-                       
                     }
-                    
                 }
 
-                console.log(is_range)
                 if (is_range) {
-                    console.log(is_name);
                     const current_area = _wrap.querySelector('.ui-drag-area[data-name="'+ is_name +'"]');
-                    console.log(current_area, _clone)
-                    // current_area.insertAdjacentElement('beforeend', _clone);
-                    // el_clone.remove();
+                    const limit = Number(current_area.dataset.limit);
+                    const current_area_drops = current_area.querySelectorAll('.ui-drag-drop');
+                    const n = current_area_drops.length;
+                    console.log(limit, n); 
+                    const area_in_clone = _clone;
+                    _clone.remove();
+                    
+
+                    if (limit === n) {
+                        _this.classList.remove('disabled');
+                    } else {
+
+                       
+
+                        area_in_clone.style.transform = 'translate('+ m_x +'px, '+ m_y +'px)';
+                        current_area.insertAdjacentElement('beforeend', area_in_clone);
+                    }
+
                 } else {
                     _clone.remove();
                     _this.classList.remove('disabled');
@@ -155,7 +168,7 @@ export default class DrawDrop {
                 // el_line.setAttribute('x2', _x - this.wrap_l);
                 // el_line.setAttribute('y2', _y - this.wrap_t);
                 
-                _clone.style.transform = 'translate('+ m_x +'px, '+ m_y +'px)'
+                _clone.style.transform = 'translate('+ m_x +'px, '+ m_y +'px)';
             }
 
             //event
