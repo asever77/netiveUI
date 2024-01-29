@@ -7,7 +7,6 @@ UI.exe.toggle = new Toggle({
 });
 UI.exe.dragdrop = new DragDrop({
     id: 'test',
-    answer: 3,
     callback: (v) => {
         console.log('callback', v);
     }, 

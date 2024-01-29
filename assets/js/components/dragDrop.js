@@ -1,6 +1,8 @@
 export default class DrawDrop {
     constructor(opt) {
         this.id = opt.id;
+        this.callback = opt.callback;
+        this.callbackComplete = opt.callbackComplete;
         this.doc = document.documentElement;
         this.wrap = document.querySelector('.ui-drag[data-id="' + this.id + '"]');
 
@@ -61,6 +63,7 @@ export default class DrawDrop {
             }
         });
 
+        //clone drag
         const actStartClone = (e) => {
             const el_this = e.currentTarget;
             const el_clone = el_this.cloneNode(true);
@@ -123,8 +126,7 @@ export default class DrawDrop {
                     el_clone.remove();
 
                     if (limit !== n) {
-                        console.log(data_name, is_name)
-
+                        
                         area_in_clone.style.transform = 'translate('+ m_x +'px, '+ m_y +'px)';
 
                         current_area.insertAdjacentElement('beforeend', area_in_clone);
@@ -167,6 +169,7 @@ export default class DrawDrop {
             this.doc.addEventListener('touchend', actEnd);
         }
 
+        //original drag
         const actStart = (e) => {
             const el_this = e.currentTarget;
             const el_wrap = el_this.parentNode;
@@ -201,7 +204,7 @@ export default class DrawDrop {
                 const e_y = _y  ;
                 let is_range;
                 let is_name;
-                console.log(e_y)
+         
                 for (let i = 0, len = this.array_area.length; i < len; i++ ) {
                     const is_x = this.array_area[i].rangeX[0] - this.win_x < e_x && this.array_area[i].rangeX[1] - this.win_x > e_x;
                     const is_y = this.array_area[i].rangeY[0] - this.win_y < e_y && this.array_area[i].rangeY[1] - this.win_y > e_y;
