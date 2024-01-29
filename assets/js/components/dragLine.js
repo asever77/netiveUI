@@ -71,6 +71,7 @@ export default class DragLine {
             const dot_name = el_dot.dataset.name;
             const dot_w = el_dot.offsetWidth / 2;
             const dot_h = el_dot.offsetHeight / 2;
+            const el_type = el_dot.dataset.type;
             const s_x = !!e.clientX ? e.clientX : e.targetTouches[0].clientX;
             const s_y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
 
@@ -97,14 +98,14 @@ export default class DragLine {
 
                 for (let item of this.dots) {
                     item.dataset.state = '';
-
+                    const _type = item.dataset.type;
                     const dot2_info = item.getBoundingClientRect();
                     const i_x = Number(item.dataset.x);
                     const i_y = Number(item.dataset.y);
                     const if_x = (v_x <= i_x + dot_w && v_x + (dot_w * 2) >= i_x + dot_w);
                     const if_y = (v_y >= i_y - dot_h && v_y <= i_y - dot_h + (dot_h * 2));
 
-                    if (if_x && if_y) {
+                    if (if_x && if_y && el_type !== _type) {
                         // if (item.dataset.name === dot_name) {
                             
                             el_dot.dataset.complete = true;
