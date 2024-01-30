@@ -6,8 +6,8 @@ export default class DrawDrop {
         this.callbackComplete = opt.callbackComplete;
         this.doc = document.documentElement;
         this.wrap = document.querySelector('.mdl-drag[data-drag-id="' + this.id + '"]');
-        this.drops = this.wrap.querySelectorAll('.mdl-drag-drop');
-        this.areas = this.wrap.querySelectorAll('.mdl-drag-area');
+        this.drops = this.wrap.querySelectorAll('.mdl-drag-drop[data-drag-name]');
+        this.areas = this.wrap.querySelectorAll('.mdl-drag-area[data-drag-name]');
         this.array_area = [];
         this.el_scroll = document.querySelector('[data-pagescroll]');
         
@@ -358,7 +358,7 @@ export default class DrawDrop {
             this.answer[i].state = false;
         }
         for (let item of this.areas) {
-            const drops = item.querySelectorAll('.mdl-drag-drop');
+            const drops = item.querySelectorAll('.mdl-drag-drop[data-drag-name]');
 
             for (let drop of drops) {
                 drop.remove();

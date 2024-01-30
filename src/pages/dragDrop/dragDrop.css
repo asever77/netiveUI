@@ -12,7 +12,7 @@
 .mdl-drag.test .mdl-drag-area.a2 {display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap;}
 .mdl-drag.test .mdl-drag-area.a3 .mdl-drag-drop[data-drag-state="complete"],
 .mdl-drag.test .mdl-drag-area.a2 .mdl-drag-drop[data-drag-state="complete"]{transform: translate(0, 0) !important; position: relative;}
-
+.mdl-drag.test[data-state="complete"] .mdl-drag-area .mdl-drag-drop[data-drag-state] {opacity: 0;}
 
 
 .mdl-drag.quiz{display: flex; justify-content: space-between; align-items: flex-start; height: 30rem;}
