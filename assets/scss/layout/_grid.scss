@@ -9,6 +9,14 @@ html {
     overflow: auto;
     height: 100vh;
 }
+[data-device="desktop"] [data-pagescroll="hidden"] {
+    overflow: hidden;
+    padding-right: 8px;
+}
+
+[data-pagescroll="hidden"] {
+    overflow: hidden;
+}
 
 html{
     &[data-modal="show"] {

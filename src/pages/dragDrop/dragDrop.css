@@ -1,25 +1,27 @@
 
-.ui-drag{display: flex; justify-content: space-between; align-items: flex-start;}
-.ui-drag .ui-drag-area{position: relative;}
-.ui-drag-area.a1 {width:20rem; background: #f1f1f1;}
-.ui-drag-area.a2 {width:20rem; background: #f1f1f1;}
-.ui-drag-area.a3 {width:20rem; background: #f1f1f1;}
+.mdl-drag.test{display: flex; justify-content: space-between; align-items: flex-start;}
+.mdl-drag.test .mdl-drag-area{position: relative;}
+.mdl-drag.test .mdl-drag-area.a1 {width:20rem; height: 20rem; background: #f1f1f1;}
+.mdl-drag.test .mdl-drag-area.a2 {width:20rem; height: 20rem; background: #f1f1f1;}
+.mdl-drag.test .mdl-drag-area.a3 {width:20rem; height: 20rem; background: #f1f1f1;}
+.mdl-drag.test .mdl-drag-drop.d1 {width:30px; height: 20px;transform: translate(0, 21rem);}
+.mdl-drag.test .mdl-drag-drop.d2 {width:30px; height: 20px;transform: translate(5rem, 21rem);}
+.mdl-drag.test .mdl-drag-drop.d3 {width:30px; height: 40px;transform: translate(16rem, 21rem);}
 
-.ui-drag-drop.d1 {width:30px; height: 20px; top:150px; left:0;}
-.ui-drag-drop.d2 {width:30px; height: 20px; top:150px; left:50px;}
-.ui-drag-drop.d3 {width:30px; height: 40px; top:150px; left:160px;}
-
-.ui-drag-area.a3,
-.ui-drag-area.a2 {display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap;}
-.ui-drag-area.a3 .ui-drag-drop,
-.ui-drag-area.a2 .ui-drag-drop{position:relative; top:0 !important; left:0 !important; transform: translate(0, 0) !important;}
+.mdl-drag.test .mdl-drag-area.a3,
+.mdl-drag.test .mdl-drag-area.a2 {display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: wrap;}
+.mdl-drag.test .mdl-drag-area.a3 .mdl-drag-drop[data-drag-state="complete"],
+.mdl-drag.test .mdl-drag-area.a2 .mdl-drag-drop[data-drag-state="complete"]{transform: translate(0, 0) !important; position: relative;}
 
 
-.ui-drag.quiz{display: flex; justify-content: space-between; align-items: flex-start;}
-.ui-drag.quiz .ui-drag-area{position: relative; width: 15rem; height: 10rem; top:0; left:0; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center; gap: 1rem;}
-.ui-drag.quiz .ui-drag-area .ui-drag-drop{position:relative; top:0 !important; left:0 !important; transform: translate(0, 0) !important;}
-.ui-drag.quiz .ui-drag-drop{width: 15rem; height: 10rem;}
-.ui-drag.quiz .ui-drag-drop.d1{top:15rem; left:0%}
-.ui-drag.quiz .ui-drag-drop.d2{top:15rem; left:25%}
-.ui-drag.quiz .ui-drag-drop.d3{top:15rem; left:50%}
-.ui-drag.quiz .ui-drag-drop.d4{top:15rem; left:75%}
+
+.mdl-drag.quiz{display: flex; justify-content: space-between; align-items: flex-start; height: 30rem;}
+
+.mdl-drag.quiz .mdl-drag-area{position: relative; width: 15rem; height: 10rem; top:0; left:0; background-color: #f1f1f1; display: flex; justify-content: center; align-items: center; gap: 1rem;}
+.mdl-drag.quiz .mdl-drag-area .mdl-drag-drop[data-drag-state="complete"]{position:relative; transform: translate(0, 0) !important;}
+
+.mdl-drag.quiz .mdl-drag-drop{width: 15rem; height: 10rem;}
+.mdl-drag.quiz .mdl-drag-drop.d1{transform: translate(0, 20rem);}
+.mdl-drag.quiz .mdl-drag-drop.d2{transform: translate(20rem, 20rem);}
+.mdl-drag.quiz .mdl-drag-drop.d3{transform: translate(40rem, 20rem);}
+.mdl-drag.quiz .mdl-drag-drop.d4{transform: translate(60rem, 20rem);}

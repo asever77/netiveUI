@@ -8706,6 +8706,15 @@ html {
   height: 100vh;
 }
 
+[data-device=desktop] [data-pagescroll=hidden] {
+  overflow: hidden;
+  padding-right: 8px;
+}
+
+[data-pagescroll=hidden] {
+  overflow: hidden;
+}
+
 html[data-modal=show] body {
   overflow: hidden;
 }
@@ -10637,7 +10646,7 @@ body[data-toggle-state=true] .base-body {
   align-items: center;
 }
 
-.ui-drag {
+.mdl-drag {
   margin: 0 0;
   position: relative;
   width: 100%;
@@ -10645,7 +10654,7 @@ body[data-toggle-state=true] .base-body {
   margin: 0 auto;
   outline: 0.1rem dashed silver;
 }
-.ui-drag svg {
+.mdl-drag svg {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -10653,19 +10662,19 @@ body[data-toggle-state=true] .base-body {
   left: 0;
   pointer-events: none;
 }
-.ui-drag[data-state=check] line[data-answer=false] {
+.mdl-drag[data-state=check] line[data-answer=false] {
   stroke: red;
 }
-.ui-drag[data-state=check] line[data-answer=true] {
+.mdl-drag[data-state=check] line[data-answer=true] {
   stroke: blue;
 }
-.ui-drag line {
+.mdl-drag line {
   stroke: black;
   stroke-width: 4;
   stroke-linecap: round;
   pointer-events: none;
 }
-.ui-drag-dot {
+.mdl-drag-dot {
   position: absolute;
   width: 4rem;
   height: 4rem;
@@ -10677,15 +10686,15 @@ body[data-toggle-state=true] .base-body {
   justify-content: center;
   align-items: center;
 }
-.ui-drag-dot[data-complete=true], .ui-drag-dot[data-state=none] {
+.mdl-drag-dot[data-complete=true], .mdl-drag-dot[data-state=none] {
   pointer-events: none;
 }
-.ui-drag-area {
+.mdl-drag-area {
   position: absolute;
   width: 10rem;
   height: 10rem;
 }
-.ui-drag-drop {
+.mdl-drag-drop {
   position: absolute;
   width: 2rem;
   height: 2rem;
@@ -10696,4 +10705,26 @@ body[data-toggle-state=true] .base-body {
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+.mdl-drag-drop.active {
+  box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.3);
+}
+.mdl-drag-answer {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  pointer-events: none;
+}
+.mdl-drag-answer .mdl-drag-drop {
+  position: relative;
+  transform: translate(0, 0) !important;
+}
+.mdl-drag[data-state=complete] .mdl-drag-answer {
+  display: flex;
 }/*# sourceMappingURL=main.css.map */
