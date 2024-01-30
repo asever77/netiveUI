@@ -128,7 +128,7 @@ export default class DrawDrop {
                     const current_area = el_wrap.querySelector('.mdl-drag-area[data-drag-name="'+ is_name +'"]');
                     const limit = Number(current_area.dataset.dragLimit);
                     const is_move = current_area.dataset.dragMove;
-                    const current_area_drops = current_area.querySelectorAll('.mdl-drag-drop');
+                    const current_area_drops = current_area.querySelectorAll('.mdl-drag-drop[data-drag-name]');
                     const n = current_area_drops.length;
                     const area_in_clone = el_this;
                     
@@ -271,11 +271,11 @@ export default class DrawDrop {
                     const current_area = el_wrap.querySelector('.mdl-drag-area[data-drag-name="'+ is_name +'"]');
                     const limit = Number(current_area.dataset.dragLimit);
                     const is_move = current_area.dataset.dragMove;
-                    const current_area_drops = current_area.querySelectorAll('.mdl-drag-drop');
+                    const current_area_drops = current_area.querySelectorAll('.mdl-drag-drop[data-drag-name]');
                     const n = current_area_drops.length;
                     const area_in_clone = el_clone;
                     el_clone.remove();
-
+console.log(limit,n);
                     if (limit === n) {
                         el_this.classList.remove('disabled');
                     } else {
@@ -300,7 +300,7 @@ export default class DrawDrop {
                         });
                     }
 
-                    const area_drops = current_area.querySelectorAll('.mdl-drag-drop');
+                    const area_drops = current_area.querySelectorAll('.mdl-drag-drop[data-drag-name]');
 
                     if (is_move === 'true') {
                         for (let item of area_drops) {
