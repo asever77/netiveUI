@@ -79,11 +79,11 @@
         answer: [
             { 
                 name: 1,            <comment>// drop-area, drop-drop의 data-drag-name </comment>
-                sum: 3,             <comment>// drop-area 에 들어가는 정답 갯수</comment>
-                limit: 5,           <comment>// drop-area 안에 들어갈 수 있는 최대 갯수</comment>
+                sum: 3,             <comment>// drop-area 에 들어가는 정답 갯수, 1 ~ n</comment>
+                limit: 5,           <comment>// drop-area 안에 들어갈 수 있는 최대 갯수,  1 ~ n</comment>
                 move: true,         <comment>// true 재선택 가능</comment>
-                align: 'center',    <comment>// drop-area의 flex인 경우 필수 추가</comment>
-                copy: true,         <comment>// drop-drop 무한사용</comment>
+                align: 'center',    <comment>// drop-area의 display속성이 flex인 경우 필수 추가</comment>
+                copy: true,         <comment>// drop-drop 요소 무한사용</comment>
                 state: false        <comment>// 현재 정답 상태</comment>
             },
         ],
@@ -100,7 +100,7 @@
     UI.exe.dragdrop.check();    <comment>// 정답 체크 data-state={{ true / false }}</comment>
     UI.exe.dragdrop.complete(); <comment>// 정해진 정답 확인</comment>
     UI.exe.dragdrop.reset();    <comment>// 초기화</comment>
-&lt;/script"&gt;
+&lt;/script&gt;
 
 <comment>CSS</comment>
 .mdl-drag-area[data-state="true"]           <comment>// 정답인 경우</comment>
