@@ -155,14 +155,14 @@ export default class DrawDrop {
                     if (limit !== n ) {
                         act();
                     } else {
-                        
                         if (area_name !== is_name) {
-
                             if (limit === 1) {
                                 const __name = current_area.querySelector('.mdl-drag-drop[data-drag-name]').dataset.dragName;
                                 current_area.querySelector('.mdl-drag-drop[data-drag-name]').remove();
                                 const __drop =  el_wrap.querySelector('.mdl-drag-drop[data-drag-name="'+ __name +'"]');
                                 __drop.classList.remove('disabled');
+                                this.complete_n = this.complete_n - 1;
+                                this.complete_n < 0 ?  this.complete_n = 0 : '';
                                 act();
                             } else {
                                 this.complete_n = this.complete_n - 1;
@@ -173,9 +173,6 @@ export default class DrawDrop {
                                 (data_name === is_name) ? this.answer_n = this.answer_n + 1 : this.answer_n = this.answer_n - 1;
                                 this.answer_n < 0 ?  this.answer_n = 0 : '';
                             }
-
-
-                            
                         }
                     }
                    
@@ -319,6 +316,8 @@ export default class DrawDrop {
                             const __drop =  el_wrap.querySelector('.mdl-drag-drop[data-drag-name="'+ __name +'"]');
                             __drop.classList.remove('disabled');
                             act();
+                            this.complete_n = this.complete_n - 1;
+                            this.complete_n < 0 ?  this.complete_n = 0 : '';
                         } else {
                             el_this.classList.remove('disabled');
                         }
@@ -340,6 +339,7 @@ export default class DrawDrop {
                     el_clone.remove();
                     el_this.classList.remove('disabled');
                 }
+                console.log(' this.complete_n', this.complete_n, this.answer_len, this.answer_n);
 
                 (this.complete_n === this.answer_len) && this.completeCallback();
 
