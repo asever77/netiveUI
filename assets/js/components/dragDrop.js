@@ -132,14 +132,8 @@ export default class DrawDrop {
                     const current_area_drops = current_area.querySelectorAll('.mdl-drag-drop[data-drag-name]');
                     const n = current_area_drops.length;
                     const area_in_clone = el_this;
-                    
-                    if (area_name !== is_name) {
-                        el_this.remove();
-                    } else {
-                       area_in_clone.dataset.dragState = 'complete';
-                    }
 
-                    if (limit !== n ) {
+                    const act = () => {
                         area_in_clone.dataset.dragState = 'complete';
                         area_in_clone.style.transform = 'translate('+ m_x +'px, '+ m_y +'px)';
                         current_area.insertAdjacentElement('beforeend', area_in_clone);
@@ -150,20 +144,41 @@ export default class DrawDrop {
                             name: data_name,
                             state: (data_name === is_name)
                         });
-                    } else {
-                        if (area_name !== is_name) {
-                            this.complete_n = this.complete_n - 1;
-                            this.complete_n < 0 ?  this.complete_n = 0 : '';
-                            console.log(data_name);
-                            el_wrap.querySelector('.mdl-drag-drop.disabled[data-drag-name="'+ data_name +'"]').classList.remove('disabled');
+                    }
 
-                            (data_name === is_name) ? this.answer_n = this.answer_n + 1 : this.answer_n = this.answer_n - 1;
-                            this.answer_n < 0 ?  this.answer_n = 0 : '';
+                    if (area_name !== is_name) {
+                        el_this.remove();
+                    } else {
+                       area_in_clone.dataset.dragState = 'complete';
+                    }
+
+                    if (limit !== n ) {
+                        act();
+                    } else {
+                        
+                        if (area_name !== is_name) {
+
+                            if (limit === 1) {
+                                const __name = current_area.querySelector('.mdl-drag-drop[data-drag-name]').dataset.dragName;
+                                current_area.querySelector('.mdl-drag-drop[data-drag-name]').remove();
+                                const __drop =  el_wrap.querySelector('.mdl-drag-drop[data-drag-name="'+ __name +'"]');
+                                __drop.classList.remove('disabled');
+                                act();
+                            } else {
+                                this.complete_n = this.complete_n - 1;
+                                this.complete_n < 0 ?  this.complete_n = 0 : '';
+                                console.log(data_name);
+                                el_wrap.querySelector('.mdl-drag-drop.disabled[data-drag-name="'+ data_name +'"]').classList.remove('disabled');
+
+                                (data_name === is_name) ? this.answer_n = this.answer_n + 1 : this.answer_n = this.answer_n - 1;
+                                this.answer_n < 0 ?  this.answer_n = 0 : '';
+                            }
+
+
+                            
                         }
-                       
                     }
                    
-
                     el_this.addEventListener('mousedown', actStartClone);
                     el_this.addEventListener('touchstart', actStartClone, { passive: true });
                     
@@ -277,10 +292,7 @@ export default class DrawDrop {
                     const area_in_clone = el_clone;
                     el_clone.remove();
                     
-                    if (limit === n) {
-                        if (limit === 1)
-                        el_this.classList.remove('disabled');
-                    } else {
+                    const act = () => {
                         area_in_clone.style.transform = 'translate('+ m_x +'px, '+ m_y +'px)';
                         area_in_clone.dataset.dragState = 'complete';
                         current_area.insertAdjacentElement('beforeend', area_in_clone);
@@ -298,6 +310,20 @@ export default class DrawDrop {
                             state: (data_name === is_name),
                             answer: this.answer
                         });
+                    }
+
+                    if (limit === n) {
+                        if (limit === 1) {
+                            const __name = current_area.querySelector('.mdl-drag-drop[data-drag-name]').dataset.dragName;
+                            current_area.querySelector('.mdl-drag-drop[data-drag-name]').remove();
+                            const __drop =  el_wrap.querySelector('.mdl-drag-drop[data-drag-name="'+ __name +'"]');
+                            __drop.classList.remove('disabled');
+                            act();
+                        } else {
+                            el_this.classList.remove('disabled');
+                        }
+                    } else {
+                        act();
                     }
 
                     const area_drops = current_area.querySelectorAll('.mdl-drag-drop[data-drag-name]');
