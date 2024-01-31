@@ -359,7 +359,7 @@ console.log(limit,n);
         }
         for (let item of this.areas) {
             const drops = item.querySelectorAll('.mdl-drag-drop[data-drag-name]');
-            item.dataset.state = '';
+            item.removeAttribute('data-state');
             for (let drop of drops) {
                 drop.remove();
             }
@@ -367,8 +367,7 @@ console.log(limit,n);
         for (let item of this.drops) {
             item.classList.remove('disabled');
         }
-
-        this.wrap.dataset.state="";
+        this.wrap.removeAttribute('data-state');
         this.complete_n = 0;
         this.answer_n = 0;
     }
