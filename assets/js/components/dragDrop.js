@@ -294,7 +294,6 @@ export default class DrawDrop {
                         }
 
                         this.callback && this.callback({
-                            sum: this.answer_len,
                             name: data_name,
                             state: (data_name === is_name),
                             answer: this.answer
