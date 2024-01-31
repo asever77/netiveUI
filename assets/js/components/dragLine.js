@@ -2,9 +2,9 @@ export default class DragLine {
     constructor(opt) {
         this.id = opt.id;
         this.doc = document.documentElement;
-        this.wrap = document.querySelector('.mdl-drag[data-id="' + this.id + '"]');
+        this.wrap = document.querySelector('.mdl-drag[data-drag-id="' + this.id + '"]');
         this.dots = this.wrap.querySelectorAll('.mdl-drag-dot');
-        this.heads = this.wrap.querySelectorAll('.mdl-drag-dot[data-type="head"]');
+        this.heads = this.wrap.querySelectorAll('.mdl-drag-dot[data-drag-type="head"]');
         this.wrap_t = this.wrap.getBoundingClientRect().top;
         this.wrap_l = this.wrap.getBoundingClientRect().left;
         this.wrap_w = this.wrap.offsetWidth;
@@ -68,10 +68,10 @@ export default class DragLine {
             const el_line = this.svg.querySelector('line[data-state="ing"]');
             const el_dot = e.currentTarget;
             const dot_info = el_dot.getBoundingClientRect();
-            const dot_name = el_dot.dataset.name;
+            const dot_name = el_dot.dataset.dragName;
             const dot_w = el_dot.offsetWidth / 2;
             const dot_h = el_dot.offsetHeight / 2;
-            const el_type = el_dot.dataset.type;
+            const el_type = el_dot.dataset.dragType;
             const s_x = !!e.clientX ? e.clientX : e.targetTouches[0].clientX;
             const s_y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
 
@@ -98,7 +98,7 @@ export default class DragLine {
 
                 for (let item of this.dots) {
                     item.dataset.state = '';
-                    const _type = item.dataset.type;
+                    const _type = item.dataset.dragType;
                     const dot2_info = item.getBoundingClientRect();
                     const i_x = Number(item.dataset.x);
                     const i_y = Number(item.dataset.y);
@@ -106,7 +106,7 @@ export default class DragLine {
                     const if_y = (v_y >= i_y - dot_h && v_y <= i_y - dot_h + (dot_h * 2));
 
                     if (if_x && if_y && el_type !== _type) {
-                        // if (item.dataset.name === dot_name) {
+                        // if (item.dataset.dragName === dot_name) {
                             
                             el_dot.dataset.complete = true;
                             item.dataset.complete = true;
@@ -115,7 +115,7 @@ export default class DragLine {
                             el_line.setAttribute('x2', dot2_info.left + dot_w - this.wrap_l);
                             el_line.setAttribute('y2', dot2_info.top + dot_h - this.wrap_t);
 
-                            if (item.dataset.name === dot_name) {
+                            if (item.dataset.dragName === dot_name) {
                                 el_line.dataset.answer = true;
                                 is_answer = true;
                                 this.answer_n = this.answer_n + 1;
@@ -211,8 +211,8 @@ export default class DragLine {
         this.reset();
         for (let i = 0; i < this.n; i++) {
             const _head = this.dots[i];
-            const _name = _head.dataset.name;
-            const _body = this.wrap.querySelector('.mdl-drag-dot[data-type="body"][data-name="'+ _name +'"]');
+            const _name = _head.dataset.dragName;
+            const _body = this.wrap.querySelector('.mdl-drag-dot[data-drag-type="body"][data-drag-name="'+ _name +'"]');
 
             this.svg.insertAdjacentHTML('beforeend', '<line x1="'+ _head.dataset.x +'" x2="'+ _body.dataset.x +'" y1="'+ _head.dataset.y +'" y2="'+ _body.dataset.y +'" data-state="complete"></line>');
         }

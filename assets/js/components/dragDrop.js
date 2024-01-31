@@ -28,7 +28,9 @@ export default class DrawDrop {
             this.wrap_rect = this.wrap.getBoundingClientRect();
             this.wrap_t = this.wrap_rect.top;
             this.wrap_l = this.wrap_rect.left;
-
+            this.array_area = [];
+            this.areas = this.wrap.querySelectorAll('.mdl-drag-area[data-drag-name]');
+            
             for (let i = 0, len = this.answer_len; i < len; i++) {
                 const _area = this.wrap.querySelector('.mdl-drag-area[data-drag-name="'+  this.answer[i].name +'"]');
                 const _drop = this.wrap.querySelector('.mdl-drag-drop[data-drag-name="'+  this.answer[i].name +'"]');
@@ -55,6 +57,7 @@ export default class DrawDrop {
                     rangeY: [rect.top, rect.top + rect.height],
                 });
             }
+            console.log(this.array_area);
         }
         set();    
 
