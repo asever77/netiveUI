@@ -10716,6 +10716,7 @@ body[data-toggle-state=true] .base-body {
 }
 .mdl-drag-drop.active {
   box-shadow: 0 0.4rem 0.8rem rgba(0, 0, 0, 0.3);
+  z-index: 10;
 }
 .mdl-drag-answer {
   display: none;

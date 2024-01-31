@@ -276,8 +276,9 @@ export default class DrawDrop {
                     const n = current_area_drops.length;
                     const area_in_clone = el_clone;
                     el_clone.remove();
-console.log(limit,n);
+                    
                     if (limit === n) {
+                        if (limit === 1)
                         el_this.classList.remove('disabled');
                     } else {
                         area_in_clone.style.transform = 'translate('+ m_x +'px, '+ m_y +'px)';
@@ -294,7 +295,6 @@ console.log(limit,n);
 
                         this.callback && this.callback({
                             sum: this.answer_len,
-                            value: 'value',
                             name: data_name,
                             state: (data_name === is_name),
                             answer: this.answer
