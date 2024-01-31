@@ -19,6 +19,7 @@ export default class DrawDrop {
         this.win_x = this.el_scroll ? this.el_scroll.scrollLeft : window.scrollX;
         this.complete_n = 0;
         this.answer_n = 0;
+        this.answer_len = this.answer.length;
         this.init();
     }
 
@@ -27,7 +28,7 @@ export default class DrawDrop {
             this.wrap_t = this.wrap.getBoundingClientRect().top;
             this.wrap_l = this.wrap.getBoundingClientRect().left;
 
-            for (let i = 0, len = this.answer.length; i < len; i++) {
+            for (let i = 0, len = this.answer_len; i < len; i++) {
                 const _area = this.wrap.querySelector('.mdl-drag-area[data-drag-name="'+  this.answer[i].name +'"]');
                 const _drop = this.wrap.querySelector('.mdl-drag-drop[data-drag-name="'+  this.answer[i].name +'"]');
                 
@@ -144,7 +145,7 @@ export default class DrawDrop {
                         current_area.insertAdjacentElement('beforeend', area_in_clone);
 
                         this.callback && this.callback({
-                            sum: this.answer.length,
+                            sum: this.answer_len,
                             value: 'value',
                             name: data_name,
                             state: (data_name === is_name)
@@ -181,7 +182,7 @@ export default class DrawDrop {
                     }
                 }
 
-                console.log(' this.complete_n', this.complete_n, this.answer.length, this.answer_n);
+                console.log(' this.complete_n', this.complete_n, this.answer_len, this.answer_n);
 
                 this.doc.removeEventListener('mousemove', actMove);
                 this.doc.removeEventListener('mouseup', actEnd);
@@ -285,14 +286,14 @@ console.log(limit,n);
                         this.complete_n = this.complete_n + 1;
                         (data_name === is_name) ? this.answer_n = this.answer_n + 1 : '';
 
-                        for (let i = 0; i < this.answer.length; i++) {
+                        for (let i = 0; i < this.answer_len; i++) {
                             if (this.answer[i].name.toString() === data_name) {
                                 this.answer[i].state = (data_name === is_name);
                             }
                         }
 
                         this.callback && this.callback({
-                            sum: this.answer.length,
+                            sum: this.answer_len,
                             value: 'value',
                             name: data_name,
                             state: (data_name === is_name),
@@ -315,7 +316,7 @@ console.log(limit,n);
                     el_this.classList.remove('disabled');
                 }
 
-                (this.complete_n === this.answer.length) && this.completeCallback();
+                (this.complete_n === this.answer_len) && this.completeCallback();
 
                 this.doc.removeEventListener('mousemove', actMove);
                 this.doc.removeEventListener('mouseup', actEnd);
@@ -345,21 +346,20 @@ console.log(limit,n);
     }
 
     completeCallback() {
-
         this.callbackComplete && this.callbackComplete({
-            sum: this.answer.length,
+            sum: this.answer_len,
             value: this.answer_n,
             state: this.answer_len === this.answer_n ? true : false,
             answer: this.answer
         });
     }
     reset() {
-        for (let i = 0, len = this.answer.length; i < len; i++) {
+        for (let i = 0, len = this.answer_len; i < len; i++) {
             this.answer[i].state = false;
         }
         for (let item of this.areas) {
             const drops = item.querySelectorAll('.mdl-drag-drop[data-drag-name]');
-
+            item.dataset.state = '';
             for (let drop of drops) {
                 drop.remove();
             }
@@ -373,7 +373,37 @@ console.log(limit,n);
         this.answer_n = 0;
     }
     check() {
+        for (let i = 0;  i < this.answer_len; i++) {
+            const name = this.answer[i].name;
+            const el_area = this.wrap.querySelector('.mdl-drag-area[data-drag-name="'+ name +'"]');
+            const el_drops = el_area.querySelectorAll('.mdl-drag-drop[data-drag-name]');
+            const sum = this.answer[i].sum;
+            let n = 0;
+            let is_state = false;
 
+            if (el_drops) {
+                if (sum !== el_drops.length) {
+                    is_state = false;
+                    this.answer[i].state = false;
+                } else {
+                    for (let item of el_drops) {
+                        if (item.dataset.dragName === name.toString()) {
+                            is_state = true;
+                            this.answer[i].state = true;
+                        } else {
+                            is_state = false;
+                            this.answer[i].state = false;
+                        } 
+    
+                        n = n + 1;
+                        if (n === sum) break;
+                    }
+                }
+
+                el_area.dataset.state = is_state;
+            }
+
+        }
     }
     complete() {
         this.reset();
@@ -387,9 +417,8 @@ console.log(limit,n);
             el_clone.dataset.dragState = 'complete';
             area.insertAdjacentElement('beforeend', el_clone);
 
-            this.complete_n = this.answer.length;
-            this.answer_n = this.answer.length;
+            this.complete_n = this.answer_len;
+            this.answer_n = this.answer_len;
         }
-
     }
 }

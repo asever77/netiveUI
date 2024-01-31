@@ -25,3 +25,5 @@
 .mdl-drag.quiz .mdl-drag-drop.d2{transform: translate(20rem, 20rem);}
 .mdl-drag.quiz .mdl-drag-drop.d3{transform: translate(40rem, 20rem);}
 .mdl-drag.quiz .mdl-drag-drop.d4{transform: translate(60rem, 20rem);}
+.mdl-drag.quiz .mdl-drag-area[data-state="true"]{outline: .3rem solid blue;}
+.mdl-drag.quiz .mdl-drag-area[data-state="false"]{outline: .3rem solid red;}

@@ -1,5 +1,5 @@
 <div class="base-main-wrap">
-    <h1 data-h="1">Drag Drop</h1>
+    <h1 data-h="1">Drag and Drop</h1>
     <box>
         <h2 data-h="2">1 : 1</h1>
         <div class="mdl-drag quiz" data-drag-id="test2" data-drag-type="">
@@ -13,11 +13,11 @@
             <div class="mdl-drag-drop d3" data-drag-name="3">3</div>
             <div class="mdl-drag-drop d4" data-drag-name="4">4</div>
         </div>
-        <div>
-            <button type="button" class="mdl-button" onclick="UI.exe.dragdrop2.complete()">정답</button>
+        <div class="mdl-button-area">
+            <button type="button" class="mdl-button" onclick="UI.exe.dragdrop2.check()">정답 체크</button>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragdrop2.complete()">정답 확인</button>
             <button type="button" class="mdl-button" onclick="UI.exe.dragdrop2.reset()">리셋</button>
         </div>
-        
     </box>
     
     <box>
@@ -46,7 +46,8 @@
             <div class="mdl-drag-drop d2" data-drag-name="2">2</div>
             <div class="mdl-drag-drop d3" data-drag-name="3">3</div>
         </div>
-        <div>
+        <div class="mdl-button-area">
+            <button type="button" class="mdl-button" onclick="UI.exe.dragdrop.check()">정답 체크</button>
             <button type="button" class="mdl-button" onclick="UI.exe.dragdrop.complete()">정답</button>
             <button type="button" class="mdl-button" onclick="UI.exe.dragdrop.reset()">리셋</button>
         </div>

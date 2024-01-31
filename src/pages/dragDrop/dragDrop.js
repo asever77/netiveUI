@@ -32,9 +32,9 @@ UI.exe.dragdrop2 = new DragDrop({
     callback: (v) => {
         console.log('callback', v);
 
-        const area = document.querySelector('[data-drag-id="test2"] .mdl-drag-area[data-drag-name="'+ v.name +'"]');
+        // const area = document.querySelector('[data-drag-id="test2"] .mdl-drag-area[data-drag-name="'+ v.name +'"]');
 
-        area.classList.add('answer-on');
+        // area.classList.add('answer-on');
 
     }, 
     callbackComplete: (v) => {

@@ -8867,6 +8867,14 @@ body[data-toggle-state=true] .base-body {
   font-size: 1.3rem;
   color: var(--gray_100);
 }
+.mdl-button-area {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 1.6rem;
+}
 .mdl-button:focus {
   text-decoration: underline;
   text-underline-offset: 0.3rem;
