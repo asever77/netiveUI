@@ -12,8 +12,8 @@ export default class DrawDrop {
         this.el_scroll = document.querySelector('[data-pagescroll]');
         
         this.wrap_rect = this.wrap.getBoundingClientRect();
-        this.wrap_t = this.wrap.getBoundingClientRect().top;
-        this.wrap_l = this.wrap.getBoundingClientRect().left;
+        this.wrap_t = this.wrap_rect.top;
+        this.wrap_l = this.wrap_rect.left;
 
         this.win_y = this.el_scroll ? this.el_scroll.scrollTop : window.scrollY;
         this.win_x = this.el_scroll ? this.el_scroll.scrollLeft : window.scrollX;
@@ -25,8 +25,9 @@ export default class DrawDrop {
 
     init() {
         const set = () => {
-            this.wrap_t = this.wrap.getBoundingClientRect().top;
-            this.wrap_l = this.wrap.getBoundingClientRect().left;
+            this.wrap_rect = this.wrap.getBoundingClientRect();
+            this.wrap_t = this.wrap_rect.top;
+            this.wrap_l = this.wrap_rect.left;
 
             for (let i = 0, len = this.answer_len; i < len; i++) {
                 const _area = this.wrap.querySelector('.mdl-drag-area[data-drag-name="'+  this.answer[i].name +'"]');
@@ -64,6 +65,14 @@ export default class DrawDrop {
             }
         });
 
+        const calc = (v, w) => {
+            let n = this[v];
+            n = (w === '-') ? n - 1 : (w === '+') ? n + 1 : n;
+            (n < 0) ? n = 0 : '';
+            this[v] = n;
+            // return v = n; 
+        }
+
         //clone drag
         const actStartClone = (e) => {
             const el_this = e.currentTarget;
@@ -72,15 +81,15 @@ export default class DrawDrop {
             const data_name = el_this.dataset.dragName;
             const area_name = el_this_area.dataset.dragName;
 
-            el_this.dataset.dragState = '';
+            el_this.removeAttribute('data-drag-state');
             el_this.classList.add('active');
             this.el_scroll.dataset.pagescroll = 'hidden';
 
             this.win_y = this.el_scroll ? this.el_scroll.scrollTop : window.scrollY;
             this.win_x = this.el_scroll ? this.el_scroll.scrollLeft : window.scrollX;
-            this.wrap_t = this.wrap.getBoundingClientRect().top + this.win_y;
-            this.wrap_l = this.wrap.getBoundingClientRect().left + this.win_x;
-            // this.area = document.querySelector('.mdl-drag-area[data-dtag-name="'+ data_name +'"]');
+            this.wrap_rect = this.wrap.getBoundingClientRect();
+            this.wrap_t = this.wrap_rect.top + this.win_y;
+            this.wrap_l = this.wrap_rect.left + this.win_x;
 
             const rect_this = el_this.getBoundingClientRect();
             const rect_area = el_this_area.getBoundingClientRect();
@@ -128,7 +137,6 @@ export default class DrawDrop {
                 if (is_range) {
                     const current_area = el_wrap.querySelector('.mdl-drag-area[data-drag-name="'+ is_name +'"]');
                     const limit = Number(current_area.dataset.dragLimit);
-                    const is_move = current_area.dataset.dragMove;
                     const current_area_drops = current_area.querySelectorAll('.mdl-drag-drop[data-drag-name]');
                     const n = current_area_drops.length;
                     const area_in_clone = el_this;
@@ -146,11 +154,8 @@ export default class DrawDrop {
                         });
                     }
 
-                    if (area_name !== is_name) {
-                        el_this.remove();
-                    } else {
-                       area_in_clone.dataset.dragState = 'complete';
-                    }
+                    (area_name !== is_name) ? 
+                    el_this.remove() : area_in_clone.dataset.dragState = 'complete';
 
                     if (limit !== n ) {
                         act();
@@ -161,17 +166,13 @@ export default class DrawDrop {
                                 current_area.querySelector('.mdl-drag-drop[data-drag-name]').remove();
                                 const __drop =  el_wrap.querySelector('.mdl-drag-drop[data-drag-name="'+ __name +'"]');
                                 __drop.classList.remove('disabled');
-                                this.complete_n = this.complete_n - 1;
-                                this.complete_n < 0 ?  this.complete_n = 0 : '';
+                                calc('complete_n', '-');
                                 act();
                             } else {
-                                this.complete_n = this.complete_n - 1;
-                                this.complete_n < 0 ?  this.complete_n = 0 : '';
-                                console.log(data_name);
+                                calc('complete_n', '-');
                                 el_wrap.querySelector('.mdl-drag-drop.disabled[data-drag-name="'+ data_name +'"]').classList.remove('disabled');
 
-                                (data_name === is_name) ? this.answer_n = this.answer_n + 1 : this.answer_n = this.answer_n - 1;
-                                this.answer_n < 0 ?  this.answer_n = 0 : '';
+                                (data_name === is_name) ?  calc('answer_n', '+') : calc('answer_n', '-');
                             }
                         }
                     }
@@ -180,10 +181,8 @@ export default class DrawDrop {
                     el_this.addEventListener('touchstart', actStartClone, { passive: true });
                     
                 } else {
-                    this.complete_n = this.complete_n - 1;
-                    this.complete_n < 0 ?  this.complete_n = 0 : '';
-                    this.answer_n = this.answer_n  - 1;
-                    this.answer_n < 0 ?  this.answer_n = 0 : '';
+                    calc('complete_n', '-');
+                    calc('answer_n', '-');
 
                     el_this.remove();
 
@@ -193,8 +192,6 @@ export default class DrawDrop {
                         item2.classList.remove('disabled');
                     }
                 }
-
-                console.log(' this.complete_n', this.complete_n, this.answer_len, this.answer_n);
 
                 this.doc.removeEventListener('mousemove', actMove);
                 this.doc.removeEventListener('mouseup', actEnd);
@@ -227,11 +224,9 @@ export default class DrawDrop {
         const actStart = (e) => {
             const el_this = e.currentTarget;
             const el_wrap = el_this.parentNode;
-
             const el_clone = el_this.cloneNode(true);
             const data_copy = el_this.dataset.dragCopy;
             const data_name = el_this.dataset.dragName;
-            const data_type = el_this.dataset.dragType;
             const rect_this = el_this.getBoundingClientRect();
 
             this.el_scroll.dataset.pagescroll = 'hidden';
@@ -244,8 +239,9 @@ export default class DrawDrop {
            
             this.win_y = this.el_scroll ? this.el_scroll.scrollTop : window.scrollY;
             this.win_x = this.el_scroll ? this.el_scroll.scrollLeft : window.scrollX;
-            this.wrap_t = this.wrap.getBoundingClientRect().top + this.win_y;
-            this.wrap_l = this.wrap.getBoundingClientRect().left + this.win_x;
+            this.wrap_rect = this.wrap.getBoundingClientRect();
+            this.wrap_t = this.wrap_rect.top + this.win_y;
+            this.wrap_l = this.wrap_rect.left + this.win_x;
 
             // this.area = document.querySelector('.mdl-drag-area[data-drag-name="'+ data_name +'"]');
 
@@ -293,8 +289,8 @@ export default class DrawDrop {
                         area_in_clone.style.transform = 'translate('+ m_x +'px, '+ m_y +'px)';
                         area_in_clone.dataset.dragState = 'complete';
                         current_area.insertAdjacentElement('beforeend', area_in_clone);
-                        this.complete_n = this.complete_n + 1;
-                        (data_name === is_name) ? this.answer_n = this.answer_n + 1 : '';
+                        calc('complete_n', '+');
+                        (data_name === is_name) ? calc('answer_n', '+') : '';
 
                         for (let i = 0; i < this.answer_len; i++) {
                             if (this.answer[i].name.toString() === data_name) {
@@ -316,8 +312,7 @@ export default class DrawDrop {
                             const __drop =  el_wrap.querySelector('.mdl-drag-drop[data-drag-name="'+ __name +'"]');
                             __drop.classList.remove('disabled');
                             act();
-                            this.complete_n = this.complete_n - 1;
-                            this.complete_n < 0 ?  this.complete_n = 0 : '';
+                            calc('complete_n', '-');
                         } else {
                             el_this.classList.remove('disabled');
                         }
