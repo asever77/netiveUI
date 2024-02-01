@@ -429,6 +429,7 @@ export default class Layer {
         }
 
         this.btn_close && this.btn_close.focus();
+        
         console.log(this.html.dataset.layerN);
 
         // select layer

@@ -1,190 +1,22 @@
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
     <meta charset="UTF-8">
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Document</title>
-
-
-
-    <style>
-        body {
-            margin: 0;
-        }
-
-        .ui-drag {
-
-            margin: 0 0;
-
-            position: relative;
-
-            width: 500px;
-
-            height: 500px;
-
-            background-color: #f2f2f2;
-
-        }
-
-        .ui-drag svg {
-
-            width: 100%;
-
-            height: 100%;
-
-            position: absolute;
-
-            top: 0;
-
-            left: 0;
-
-            pointer-events: none;
-
-        }
-
-        .ui-drag line {
-
-            stroke: red;
-
-            stroke-width: 4;
-
-            stroke-linecap: round;
-
-            pointer-events: none;
-
-        }
-
-        .ui-drag-dot {
-
-            position: absolute;
-
-            width: 20px;
-
-            height: 20px;
-
-            outline: 1px solid red;
-
-        }
-
-        .ui-drag-dot[data-complete="true"],
-
-        .ui-drag-dot[data-state="none"] {
-
-            pointer-events: none;
-
-        }
-
-        .n1 {
-            top: 100px;
-            left: 50px
-        }
-
-        .n2 {
-            top: 300px;
-            left: 50px
-        }
-
-        .n4 {
-            top: 100px;
-            left: 400px
-        }
-
-        .n3 {
-            top: 300px;
-            left: 400px
-        }
-
-        .n5 {
-            top: 420px;
-            left: 150px
-        }
-
-        .n6 {
-            top: 470px;
-            left: 400px
-        }
-    </style>
-
 </head>
-
 <body>
-
-    <div class="ui-drag" data-id="test">
-
-        <div class="ui-drag-dot n1" data-name="1"></div>
-
-        <div class="ui-drag-dot n2" data-name="2"></div>
-
-        <div class="ui-drag-dot n3" data-name="1"></div>
-
-        <div class="ui-drag-dot n4" data-name="2"></div>
-
-        <div class="ui-drag-dot n5" data-name="3"></div>
-
-        <div class="ui-drag-dot n6" data-name="3"></div>
-
-    </div>
-
-    <div style="height: 100px;"></div>
-
-    <div class="ui-drag" data-id="test2">
-
-        <div class="ui-drag-dot n1" data-name="1"></div>
-
-        <div class="ui-drag-dot n2" data-name="2"></div>
-
-        <div class="ui-drag-dot n3" data-name="1"></div>
-
-        <div class="ui-drag-dot n4" data-name="2"></div>
-
-        <div class="ui-drag-dot n5" data-name="3"></div>
-
-        <div class="ui-drag-dot n6" data-name="3"></div>
-
-    </div>
-
-
-
     <script>
-
-        
-        const dragline = new dragline({
-
-            id: 'test',
-
-            answer: 3,
-
-            callback: (v) => {
-
-                console.log(v);
-
+        function factorial(n, total = 1) {
+            if (n === 1) {
+                return total;
             }
 
-        })
+            console.log(n, total);
 
-
-
-        const dragline2 = new dragline({
-
-            id: 'test2',
-
-            answer: 3,
-
-            callback: (v) => {
-
-                console.log(v);
-
-            }
-
-        })
-
+            return factorial(n-1, n * total);
+        }
+        console.log( factorial(3) );
     </script>
-
 </body>
-
 </html>

@@ -30,7 +30,7 @@ export default class DrawDrop {
             this.wrap_l = this.wrap_rect.left;
             this.array_area = [];
             this.areas = this.wrap.querySelectorAll('.mdl-drag-area[data-drag-name]');
-            
+
             for (let i = 0, len = this.answer_len; i < len; i++) {
                 const _area = this.wrap.querySelector('.mdl-drag-area[data-drag-name="'+  this.answer[i].name +'"]');
                 const _drop = this.wrap.querySelector('.mdl-drag-drop[data-drag-name="'+  this.answer[i].name +'"]');
@@ -73,7 +73,6 @@ export default class DrawDrop {
             n = (w === '-') ? n - 1 : (w === '+') ? n + 1 : n;
             (n < 0) ? n = 0 : '';
             this[v] = n;
-            // return v = n; 
         }
 
         //clone drag
