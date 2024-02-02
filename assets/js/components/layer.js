@@ -6,9 +6,30 @@
 
 export default class Layer {
     constructor(opt) {
+        let defaults = {
+			type: 'modal', // 
+			classname: '',
+
+            //system
+            ps: 'BL',
+
+            //toast
+            delay: 'short', // short[2s] | long[3.5s]
+            status: 'off',  //assertive[중요도 높은 경우] | polite[중요도가 낮은 경우] | off[default]
+            auto: true,
+		};
+
+        this.opt = Object.assign({}, defaults, opt);
+        this.el = {
+            html: document.querySelector('html'),
+            body: document.querySelector('body'),
+            pageScroll: document.querySelector('[data-pagescroll]') ?? document.querySelector('html'),
+            modal: null,
+            btn_close: null,
+        }
+
         this.id = opt.id;
         this.src = opt.src;
-
         this.type = !opt.type ? 'modal' : opt.type; 
         this.classname  = opt.classname ? opt.classname : '',
         this.callback = opt.callback;
@@ -47,34 +68,36 @@ export default class Layer {
         this.isFocus = false;
         this.timer;
 
-        switch (this.type) {
+        switch (this.opt.type) {
             case 'system':
-            this.madeSystem();
-            break;
+                this.madeSystem();
+                break;
 
             case 'toast':
-            this.madeToast();
-            break;
+                this.madeToast();
+                break;
 
             case 'select':
-            this.resetSelect();
-            this.madeSelect();
-            break;
+                this.resetSelect();
+                this.madeSelect();
+                break;
 
             case 'tooltip':
-            this.tooltip();
-            break;
+                this.tooltip();
+                break;
 
             default: // modal, bottom, dropdown
-                if (this.src) {
-                    this.made();
+                if (this.opt.src) {
+                    this.setFetch();
                 }
                 else {
-                    this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'"]');
+                    this.el.modal = document.querySelector('.mdl-layer[data-id="'+ this.opt.id +'"]');
+
+                    this.modal = document.querySelector('.mdl-layer[data-id="'+ this.opt.id +'"]');
                     this.btn_close = this.modal.querySelector('.mdl-layer-close');
                     this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
 
-                    switch(this.type) {
+                    switch(this.opt.type) {
                         case 'modal' :
                             this.modal.dataset.type = 'modal';
                             break;
@@ -205,15 +228,15 @@ export default class Layer {
 
         this.init();
     }
-    made() {
+    setFetch() {
         UI.parts.include({
             id: 'body',
-            src: this.src + '.html',
+            src: this.opt.src + '.html',
             type: 'HTML',
             insert: true,
             callback: () => {
-                const css_usage_modal = document.querySelector('link[data-usage="'+ this.id +'"]');
-                const js_usage_modal = document.querySelector('script[data-usage="'+ this.id +'"]');
+                const el_link = document.querySelector('link[data-usage="'+ this.id +'"]');
+                const el_script = document.querySelector('script[data-usage="'+ this.id +'"]');
                 
                 let _script = document.createElement('script');
                 _script.dataset.usage = this.id;
@@ -230,8 +253,8 @@ export default class Layer {
                 _btn.setAttribute('aria-lable', '마지막 구간입니다. 클릭하시면 닫힙니다.');
                 _btn.classList.add('mdl-layer-last');
 
-                css_usage_modal && css_usage_modal.remove();
-                js_usage_modal && js_usage_modal.remove();
+                el_link && el_link.remove();
+                el_script && el_script.remove();
                 document.body.appendChild(_script);
                 document.head.appendChild(_link);
 
@@ -307,7 +330,7 @@ export default class Layer {
         const _this = e.currentTarget;
         this.src = _this.dataset.tooltip;
         this.id = _this.getAttribute('aria-describedby');
-        this.made();
+        this.setFetch();
     }
     actTooltipHide = (e) => {
         const _this = e.currentTarget;
@@ -417,7 +440,7 @@ export default class Layer {
 
         _prev ? _prev.dataset.layerCurrent = 'false' : '';
         this.modal.dataset.layerCurrent = 'true';
-        this.modal || this.src && this.made();
+        this.modal || this.src && this.setFetch();
         this.modal.dataset.state = 'show';
         this.focus = document.activeElement;
 

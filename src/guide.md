@@ -3,15 +3,18 @@
 
 ## variable naming
 - el_{{ name }}   : element selector 
+
 - data_{{ name }} : data 속성 값
+- opt_{{ name }}  : option값
 - is_{{ name }}   : 상태값 true / false (있냐 없냐)
-- html_{{ name }} : html생성
-- evt_{{ name }}  : event 관련 
+
 - val_{{ name }}  : 결과값
-- ary_{{ name }}  : array 타입 정보
-- call_{{ name }} : callback 
-- num_{{ name }}  : 숫자관련 정보
+
 - obj_{{ name }}  : 객체 타입 정보
+- ary_{{ name }}  : array 타입 정보
+
+- crtE_
+- html_{{ name }} : html생성
 - cls_{{ name }}  : class관련
 - type_{{ name }} :
 
