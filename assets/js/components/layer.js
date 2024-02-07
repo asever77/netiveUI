@@ -25,7 +25,9 @@ export default class Layer {
             body: document.querySelector('body'),
             pageScroll: document.querySelector('[data-pagescroll]') ?? document.querySelector('html'),
             modal: null,
+            modal_wrap: null,
             btn_close: null,
+            last_layer: null,
         }
 
         this.id = opt.id;
@@ -257,6 +259,12 @@ export default class Layer {
                 el_script && el_script.remove();
                 document.body.appendChild(_script);
                 document.head.appendChild(_link);
+
+                this.el.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'"]');
+                this.el.btn_close = this.el.modal.querySelector('.mdl-layer-close');
+                this.el.modal_wrap = this.el.modal.querySelector('.mdl-layer-wrap');
+                // this.el.modal_wrap.appendChild(_btn);
+                this.el.last_layer = this.el.modal.querySelector('.mdl-layer-last');
 
                 this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'"]');
                 this.btn_close = this.modal.querySelector('.mdl-layer-close');
