@@ -1,24 +1,24 @@
-.mdl-readline-item {
+.mdl-textline-item {
     position: relative;
     text-align: justify;
 }
 
-.mdl-readline-item p {
+.mdl-textline-item p {
     position: relative;
     z-index: 1;
 }
 
-.mdl-readline-s {
+.mdl-textline-s {
     display: inline-block;
     position: relative;
 }
 
-.mdl-readline-e {
+.mdl-textline-e {
     display: inline-block;
     position: relative;
 }
 
-.mdl-readline-back {
+.mdl-textline-back {
     position: absolute;
     z-index: 0;
     width: 100%;
@@ -27,7 +27,7 @@
     left: 0;
 }
 
-.mdl-readline-line {
+.mdl-textline-line {
     border-bottom: 5px solid greenyellow;
     transform: translateY(-5px);
     width: 0%;
@@ -39,7 +39,7 @@
     animation-play-state: paused;
 }
 
-.mdl-readline .mdl-readline-line[data-state="complete"] {
+.mdl-textline .mdl-textline-line[data-state="complete"] {
     width: 100%;
     animation-play-state: running;
 }
