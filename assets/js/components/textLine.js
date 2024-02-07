@@ -3,7 +3,7 @@ export default class TextLine {
         this.id = opt.id;
         this.el_wrap = document.querySelector('.mdl-textline[data-id="'+ opt.id +'"]');
         this.el_items = this.el_wrap.querySelectorAll('.mdl-textline-item');
-        this.speed = '1000';
+        this.duration = opt.duration;
         this.lines = null;
         this.current_item - null;
         
@@ -29,8 +29,7 @@ export default class TextLine {
             let html = ''
             html += '<div class="mdl-textline-back">';
             
-            const aniDuration = 'animation-duration: ' + this.speed + 'ms';
-            let cssTrainstion = 'transition: width ' + this.speed + 'ms linear';
+            const aniDuration = 'animation-duration: ' + this.duration + 'ms';
 
             for (let i = 0, len = (rect.height / lineH); i < len; i++) {
                 if (i !== (rect.height / lineH) - 1) {
