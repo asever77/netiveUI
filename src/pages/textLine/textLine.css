@@ -1,0 +1,55 @@
+.mdl-textline-item {
+    position: relative;
+    text-align: justify;
+}
+
+.mdl-textline-item p {
+    position: relative;
+    z-index: 1;
+}
+
+.mdl-textline-s {
+    display: inline-block;
+    position: relative;
+}
+
+.mdl-textline-e {
+    display: inline-block;
+    position: relative;
+}
+
+.mdl-textline-back {
+    position: absolute;
+    z-index: 0;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.mdl-textline-line {
+    border-bottom: 5px solid greenyellow;
+    transform: translateY(-5px);
+    width: 0%;
+    animation-name: linedrow;
+    animation-direction:normal;
+    animation-timing-function:linear;
+    animation-iteration-count:1;
+    animation-fill-mode:forwards;
+    animation-play-state: paused;
+}
+
+.mdl-textline .mdl-textline-line[data-state="complete"] {
+    width: 100%;
+    animation-play-state: running;
+}
+
+@keyframes linedrow {
+    0% {
+        width: 0%;
+    }
+
+    100% {
+        width: 100%;
+    }
+}

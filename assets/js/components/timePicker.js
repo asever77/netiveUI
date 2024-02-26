@@ -153,12 +153,15 @@ export default class TimeSelect {
 		el_midday.removeEventListener('touchstart', this.action);
 		el_hour.removeEventListener('touchstart', this.action);
 		el_minute.removeEventListener('touchstart', this.action);
+
 		el_midday.addEventListener('touchstart', this.action);
 		el_hour.addEventListener('touchstart', this.action);
 		el_minute.addEventListener('touchstart', this.action);
+
 		el_midday.addEventListener('mousedown', this.action);
 		el_hour.addEventListener('mousedown', this.action);
 		el_minute.addEventListener('mousedown', this.action);
+
 		el_midday.addEventListener('wheel', this.action);
 		el_hour.addEventListener('wheel', this.action);
 		el_minute.addEventListener('wheel', this.action);
@@ -269,7 +272,6 @@ export default class TimeSelect {
 					btns[i].dataset.selected = true;
 				} 
 			}
-
 		}
 		const scrollSelect = (v, el) => {
 			const btn = el.querySelectorAll('button');

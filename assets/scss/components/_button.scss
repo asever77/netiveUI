@@ -49,6 +49,14 @@
         }
     }
 
+    &-area {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap:$x1;
+        padding: $x2;
+    }
     &:focus {
         text-decoration: underline;
         text-underline-offset: .3rem;

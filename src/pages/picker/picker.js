@@ -8,7 +8,7 @@ function getYears() {
     for (let i = currentYear - 20; i < currentYear + 20; i++) {
         years.push({
             value: i,
-            text: i + '年'
+            text: i + '년'
         });
     }
     return years;
@@ -43,26 +43,81 @@ let currentYear = new Date().getFullYear();
 let currentMonth = 1;
 let currentDay = 1;
 
-let yearSelector;
 let monthSelector;
 let daySelector;
 
 let yearSource = getYears();
 let monthSource = getMonths();
 let daySource = getDays(currentYear, currentMonth);
+console.log(yearSource)
 
-yearSelector = new Picker({
-      el: '#year1',
-      type: 'infinite',
-      source: yearSource,
-      count: 20,
-      onChange: (selected) => {
-          currentYear = selected.value;
-          daySource = getDays(currentYear, currentMonth);
-          daySelector.updateSource(daySource);
-          console.log(yearSelector.value, monthSelector.value, daySelector.value);
-      }
-  });
+
+UI.exe.midDay = new Picker({
+    el: '#midDay',
+    type: 'normal', // normal
+    source:  [
+        {value:0, text: '오전'},
+        {value:1, text: '오후'},
+    ],
+    count: 20,
+    onChange: (selected) => {
+        console.log(selected);
+    }
+});
+
+const getHour = () => {
+    let hour = [];
+
+    for (let i = 1; i < 13; i++) {
+        hour.push({
+            value: i,
+            text: i < 10 ? '0' + i : i
+        });
+    }
+    return hour;
+}
+console.log(getHour());
+UI.exe.hourPicker = new Picker({
+    el: '#hour',
+    type: 'infinite', // normal
+    source: getHour(),
+    count: 20,
+    value: 5,
+    onChange: (selected) => {
+        console.log(selected);
+
+        // if (selected.value < 12 || selected.value === 24) {
+        //     UI.exe.midDay.value = 0;
+        //     UI.exe.midDay._init();
+        // } else {
+        //     UI.exe.midDay.value = 1;
+        //     UI.exe.midDay._init();
+        // }
+    }
+});
+
+const getMinute = () => {
+    let minute = [];
+
+    for (let i = 0; i < 60; i++) {
+        minute.push({
+            value: i,
+            text: (i < 10) ? '0' + i : i
+        });
+    }
+    return minute;
+}
+UI.exe.minutePicker = new Picker({
+    el: '#minute',
+    type: 'infinite', // normal
+    source: getMinute(),
+    count: 20,
+    value: 0,
+    onChange: (selected) => {
+        console.log(selected);
+    }
+});
+
   
 //   monthSelector = new Picker({
 //       el: '#month1',
@@ -90,14 +145,14 @@ yearSelector = new Picker({
 //   });
   
   
-  let now = new Date();
-  
-  
-  setTimeout(function() {
-    yearSelector.select(now.getFullYear());
-    monthSelector.select(now.getMonth() + 1);
-    daySelector.select(now.getDate()); 
-  });
+let now = new Date();
+
+
+setTimeout(function() {
+    // yearSelector.select(now.getFullYear());
+    // monthSelector.select(now.getMonth() + 1);
+    // daySelector.select(now.getDate()); 
+});
   
   
   // // time

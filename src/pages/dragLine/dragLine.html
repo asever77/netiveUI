@@ -1,0 +1,91 @@
+<div class="base-main-wrap">
+    <h1 data-h="1">Drag Line</h1>
+    <box>
+        <div class="mdl-drag" data-drag-id="test">
+            <button type="button" class="mdl-drag-dot n1" data-drag-name="1" data-drag-type="head">1</button>
+            <button type="button" class="mdl-drag-dot n2" data-drag-name="2" data-drag-type="head">2</button>
+            <button type="button" class="mdl-drag-dot n3" data-drag-name="3" data-drag-type="head">3</button>
+
+            <button type="button" class="mdl-drag-dot n4" data-drag-name="3" data-drag-type="body">3</button>
+            <button type="button" class="mdl-drag-dot n5" data-drag-name="2" data-drag-type="body">2</button>
+            <button type="button" class="mdl-drag-dot n6" data-drag-name="1" data-drag-type="body">1</button>
+        </div>
+        <div class="mdl-button-area">
+            <button type="button" class="mdl-button" onclick="UI.exe.dragline.check()">정답 체크</button>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragline.complete()">정답 확인</button>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragline.reset()">정답 리셋</button>
+        </div>
+    </box>
+<pre>
+<code>
+&lt;div class="mdl-drag" data-drag-id="{{ id name }}"&gt;
+    &lt;button type="button" class="mdl-drag-dot" data-drag-name="1" data-drag-type="head"&gt;1 &lt;/button&gt;
+    &lt;button type="button" class="mdl-drag-dot" data-drag-name="1" data-drag-type="body"&gt;1 &lt;/button&gt;
+&lt;/div&gt;
+
+&lt;script type="module"&gt;
+    import dragline from '../../assets/js/components/dragline.js';
+
+    UI.exe.dragline = new dragline({
+        id: 'test',
+        answer: 3,
+        callback: (v) => {
+            console.log(v);
+        }
+    });
+&lt;/script"&gt;
+
+
+
+&lt;div class="mdl-drag" data-drag-id="{{ id name }}"&gt;
+    &lt;div class="mdl-drag-area" data-drag-name="1"&gt;
+
+        <comment>//선택요소 : 1:1이 아닌경우나 특정 상태의 답이 필요한 경우 사용</comment>
+        &lt;div class="mdl-drag-answer"&gt;&lt;/div&gt;
+
+    &lt;/div&gt;  
+    &lt;div class="mdl-drag-drop" data-drag-name="1"&gt;1&lt;/div&gt;
+&lt;/div&gt;
+
+<comment>Javascript</comment>
+&lt;script type="module"&gt;
+    import DragDrop from '../../../assets/js/components/dragDrop.js';
+
+    UI.exe.dragline = new dragline({
+        id: '{{ data-drag-id }}', 
+        answer: [
+            { 
+                name: 1,            <comment>// drop-area, drop-drop의 data-drag-name </comment>
+                sum: 3,             <comment>// drop-area 에 들어가는 정답 갯수, 1 ~ n</comment>
+                limit: 5,           <comment>// drop-area 안에 들어갈 수 있는 최대 갯수,  1 ~ n</comment>
+                move: true,         <comment>// true 재선택 가능</comment>
+                align: 'center',    <comment>// drop-area의 display속성이 flex인 경우 필수 추가</comment>
+                copy: true,         <comment>// drop-drop 요소 무한사용</comment>
+                state: false        <comment>// 현재 정답 상태</comment>
+            },
+        ],
+        callback: (v) => {
+            console.log('callback', v);
+            <comment>// drop-area 영역에 성공할때마다 해당 개별 콜백</comment>
+        }, 
+        callbackComplete: (v) => {
+            console.log('callbackComplete', v);
+            <comment>// 모든 정답처리 완료 시 실행</comment>
+        }
+    });
+
+    UI.exe.dragdrop.check();    <comment>// 정답 체크 data-state={{ true / false }}</comment>
+    UI.exe.dragdrop.complete(); <comment>// 정해진 정답 확인</comment>
+    UI.exe.dragdrop.reset();    <comment>// 초기화</comment>
+&lt;/script&gt;
+
+<comment>CSS</comment>
+.mdl-drag-area[data-state="true"]           <comment>// 정답인 경우</comment>
+.mdl-drag-area[data-state="false"]          <comment>// 오답인 경우</comment>
+.mdl-drag-drop[data-drag-state="complete"]  <comment>// 개별 드래그 완료 시</comment>
+.mdl-drag[data-state="complete"]            <comment>// 모든 드래그 완료 시</comment>
+
+</code>
+</pre>
+    
+</div>
