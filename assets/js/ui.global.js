@@ -16,6 +16,7 @@
     Global.data = {};
     Global.exe = {};
     Global.callback = {};
+
     Global.state = {
         isSystemModal: false,
         device: {
@@ -446,8 +447,7 @@
 			},300);
 		}
 	}
-
-    Global.scrollEvent = {
+    Global.scroll = {
 		options : {
 			selector: document.querySelector('html, body'),
 			focus: false,
@@ -523,12 +523,12 @@
 			if (!!item && !!isCustomScroll) {
 				selector = selector.querySelector('.ui-scrollbar-item');
 			}
-
+			
 			switch (align) {
 				case 'center':
 					selector.scrollTo({
 						top: Math.abs(top) - (selector.offsetHeight / 2) + add,
-						left: Math.abs(left) - (selector.offsetWidth / 2) + add,
+						left: Math.abs(left) - (selector.offsetWidth / 2) - add,
 						behavior: effect
 					});
 					break;
@@ -560,10 +560,10 @@
 			let nowTop = opt.nowTop;
 			let nowLeft = opt.nowLeft;
 
-			Global.scrollEvent.checkEndTimer = setTimeout(() => {
+			Global.scroll.checkEndTimer = setTimeout(() => {
 				//스크롤 현재 진행 여부 판단
 				if (nowTop === el_selector.scrollTop && nowLeft === el_selector.scrollLeft) {
-					clearTimeout(Global.scrollEvent.checkEndTimer);
+					clearTimeout(Global.scroll.checkEndTimer);
 					//포커스가 위치할 엘리먼트를 지정하였다면 실행
  					if (!!focus ) {
 						focus.setAttribute('tabindex', 0);
@@ -581,7 +581,7 @@
 					nowTop = el_selector.scrollTop;
 					nowLeft = el_selector.scrollLeft;
 
-					Global.scrollEvent.checkEnd({
+					Global.scroll.checkEnd({
 						selector: el_selector,
 						nowTop: nowTop,
 						nowLeft: nowLeft,
@@ -593,7 +593,7 @@
 			},100);
 		}
 	}
-   
+
     //common exe
     Global.parts.resizeState();
     Global.parts.scroll();
