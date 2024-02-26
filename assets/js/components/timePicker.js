@@ -116,19 +116,19 @@ export default class TimeSelect {
 		}
 
 		this.hUnit = el_hour.querySelectorAll('button')[0].offsetHeight;
-		UI.scrollEvent.move({ 
+		UI.scroll.move({ 
 			top: Number(this.hUnit * (isPM ? 1 : 0)), 
 			selector: el_midday, 
 			effect: 'auto', 
 			align: 'default' 
 		});
-		UI.scrollEvent.move({ 
+		UI.scroll.move({ 
 			top: Number(this.hUnit * (hour - 1)), 
 			selector: el_hour, 
 			effect: 'auto', 
 			align: 'default' 
 		});
-		UI.scrollEvent.move({ 
+		UI.scroll.move({ 
 			top: Number(this.hUnit * Number(minute / this.miuntUnit)), 
 			selector: el_minute, 
 			effect: 'auto', 
@@ -212,19 +212,19 @@ export default class TimeSelect {
 		this.el_time.dataset.minuteMin = Number(_time_min[1]);
 		this.el_time.dataset.minuteMax = Number(_time_max[1]);
 
-		UI.scrollEvent.move({ 
+		UI.scroll.move({ 
 			top: Number(this.hUnit * n_midday), 
 			selector: el_midday, 
 			effect: 'auto', 
 			align: 'default' 
 		});
-		UI.scrollEvent.move({ 
+		UI.scroll.move({ 
 			top: Number(this.hUnit * n_hour), 
 			selector: el_hour, 
 			effect: 'auto', 
 			align: 'default' 
 		});
-		UI.scrollEvent.move({ 
+		UI.scroll.move({ 
 			top: Number(this.hUnit * n_minute), 
 			selector: el_minute, 
 			effect: 'auto', 
@@ -340,7 +340,7 @@ export default class TimeSelect {
 					}
 
 					el_hour_button[n_hour - 1].dataset.selected = true;
-					UI.scrollEvent.move({ 
+					UI.scroll.move({ 
 						top: Number(this.hUnit * (n_hour - 1)), 
 						selector: el_hour
 					});
@@ -364,7 +364,7 @@ export default class TimeSelect {
 						el_midday_button[1].dataset.selected = false;
 					}
 					
-					UI.scrollEvent.move({ 
+					UI.scroll.move({ 
 						top: Number(this.hUnit * isPM), 
 						selector: el_midday
 					});

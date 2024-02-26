@@ -2,6 +2,7 @@
     position: relative;
     width: 100%;
     display: flex;
+    overflow-x: auto;
 
     &-wrap {
         display: flex;
@@ -12,6 +13,7 @@
         border: .1rem solid #555;
         padding: $x1 $x2;
         border-radius: $x1;
+        white-space: nowrap;
 
         &[data-selected="true"] {
             background-color: $gray-100;

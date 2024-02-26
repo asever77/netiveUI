@@ -16,13 +16,30 @@ export default class Tab {
         }
 
         !!sessionStorage.getItem(this.id) ? 
-        this.selected(sessionStorage.getItem(this.id)) : (this.current === false) ? 
-        this.selected(his.tab_btns[0].dataset.tab) : this.selected(this.current);
+        this.selected(sessionStorage.getItem(this.id)) : 
+        (this.current === false) ? 
+            this.selected(this.tab_btns[0].dataset.tab) : 
+            this.selected(this.current);
+    }
+    ps = (e) => {
+        const _this = e;
+        const _wrap = _this.closest('.mdl-tab'); 
+        const _rect = _this.getBoundingClientRect();   
+        
+        console.log(_rect.left + _wrap.scrollLeft,_rect.width )
+        
+        UI.scroll.move({ 
+            selector: _wrap, 
+            left: _rect.left + _wrap.scrollLeft - (_rect.width ), 
+            add : 0,
+            align: 'center' 
+        });
     }
     act = (e) => {
         const _this = e.currentTarget;
         const tab = _this.dataset.tab;
         this.selected(tab);
+        this.ps(_this);
     }
     selected(tab) {
         const btn = this.tab.querySelector('.mdl-tab-btn[data-tab="'+ tab +'"]');
@@ -34,6 +51,8 @@ export default class Tab {
 
         _selected ? _selected.dataset.selected = false : '';
         _selected_pnl ? _selected_pnl.dataset.selected = false : '';
+
+        this.ps(btn);
         this.callback && this.callback({
             id: this.id,
             current: tab
