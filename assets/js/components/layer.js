@@ -6,7 +6,7 @@
 
 export default class Layer {
     constructor(opt) {
-        let defaults = {
+        const defaults = {
 			type: 'modal', // 
 			classname: '',
 
@@ -80,8 +80,10 @@ export default class Layer {
                 break;
 
             case 'select':
-                this.resetSelect();
-                this.madeSelect();
+                 if (!!document.querySelector('[data-id="'+ this.id +'"]')) {
+                    this.resetSelect();
+                    this.madeSelect();
+                }
                 break;
 
             case 'tooltip':
@@ -117,15 +119,11 @@ export default class Layer {
         }
     }
     resetSelect() {
-        this.selectBtns = document.querySelectorAll('.mdl-select-btn');
-        this.selectLayers = document.querySelectorAll('.mdl-layer[data-type="select"]');
+        this.selectBtn = document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'"]');
+        this.selectLayer = document.querySelector('.mdl-layer[data-type="select"][data-select-id="'+ this.id +'"]');
 
-        for (let item of this.selectLayers) {
-            item.remove();
-        }
-        for (let item of this.selectBtns) {
-            item.remove();
-        }
+        this.selectBtn && this.selectBtn.remove();
+        this.selectLayer && this.selectLayer.remove();
     }
     madeSelect() {
         this.select = document.querySelector('.mdl-select[data-id="'+ this.id +'"]');
