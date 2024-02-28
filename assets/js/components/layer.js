@@ -463,6 +463,8 @@ export default class Layer {
 
         // select layer
         if (this.type === 'select') {
+            document.querySelector('.mdl-layer[data-id="'+ this.select_btn.dataset.selectId +'"]').style.width = (this.select_btn.offsetWidth / 10) + 'rem';
+            
             const el_options = this.modal.querySelectorAll('.mdl-select-option');
             const el_inputs = this.modal.querySelectorAll('input');
             const el_options_checked = this.modal.querySelector('input:checked');
@@ -489,7 +491,8 @@ export default class Layer {
                 this.hide();
             }, this.delaytime);
         }
-       
+        
+        this.callback && this.callback();
     }
     backClick = (e) => {
         //mouse click, touch 인 경우만 실행. ''값은 방향키로 이동 시

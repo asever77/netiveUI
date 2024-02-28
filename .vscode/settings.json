@@ -18,5 +18,5 @@
     "editor.wordWrap": "on",
     "git.autofetch": true,
     "git.ignoreRebaseWarning": true,
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5502
 }
