@@ -1,6 +1,6 @@
 import Toggle from '../../../assets/js/components/toggle.js';
 
-//EXE
+// //EXE
 UI.exe.toggle = new Toggle({
     scope: document.querySelector('[data-id="main"]')
 });

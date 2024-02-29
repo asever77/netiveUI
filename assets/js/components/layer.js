@@ -80,10 +80,10 @@ export default class Layer {
                 break;
 
             case 'select':
-                 if (!!document.querySelector('[data-id="'+ this.id +'"]')) {
+                if (!!document.querySelector('[data-id="'+ this.id +'"]')) {
                     this.resetSelect();
                     this.madeSelect();
-                }
+                } 
                 break;
 
             case 'tooltip':
@@ -96,7 +96,6 @@ export default class Layer {
                 }
                 else {
                     this.el.modal = document.querySelector('.mdl-layer[data-id="'+ this.opt.id +'"]');
-
                     this.modal = document.querySelector('.mdl-layer[data-id="'+ this.opt.id +'"]');
                     this.btn_close = this.modal.querySelector('.mdl-layer-close');
                     this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
@@ -115,7 +114,7 @@ export default class Layer {
         
                     this.init();
                 }
-            break;
+                break;
         }
     }
     resetSelect() {
@@ -130,36 +129,42 @@ export default class Layer {
         const select = this.select.querySelector('select');
         const options = select.querySelectorAll('option');
 
-        let html = '<button type="button" class="mdl-select-btn" data-select-id="'+  this.id+'_select" value="'+ select.value +'" tabindex="-1" role="combobox" aria-haspopup="listbox" aria-expanded="false"><span>'+ select.querySelector('[selected]').text +'</span></button>';
-        this.select.insertAdjacentHTML('beforeend', html);
+        let html_select_button = `
+        <button type="button" class="mdl-select-btn" data-select-id="${ this.id }_select" value="${ select.value }" tabindex="-1" role="combobox" aria-haspopup="listbox" aria-expanded="false">
+            <span>${ select.querySelector('[selected]').text }</span>
+        </button>`;
+        this.select.insertAdjacentHTML('beforeend', html_select_button);
+        html_select_button = null;
 
-        html = '';
-        html += '<section class="mdl-layer" data-id="'+ this.id +'_select" data-type="select" role="listbox">';
-        html += '<div class="mdl-layer-wrap">';
-        html += '   <div class="mdl-layer-header">';
-        html += '       <h2>'+ select.title +'</h2>';
-        html += '       <button type="button" class="mdl-layer-close" data-material="close"  aria-label="닫기"></button>';
-        html += '   </div>';
-        html += '    <div class="mdl-layer-body">';
-        html += '       <ul class="mdl-select-wrap">';
+        let html_select = `
+        <section class="mdl-layer" data-id="${ this.id }_select" data-type="select" role="listbox">
+            <div class="mdl-layer-wrap">
+                <div class="mdl-layer-header">
+                    <h2>${ select.title }</h2>
+                    <button type="button" class="mdl-layer-close" data-material="close"  aria-label="닫기"></button>
+                </div>
+                <div class="mdl-layer-body">
+                    <ul class="mdl-select-wrap">`;
 
         for (let i = 0, len = options.length; i < len; i++) {
-            console.log(options[i].value, options[i].selected);
-
-            html += '<li>';
-            html += '<input type="radio" id="'+ this.id +'_r'+ i +'" value="'+ options[i].value +'"  name="'+ this.id +'_r" '+ ((options[i].selected) && 'checked') +'>';
-            html += '<label for="'+ this.id +'_r'+ i +'" class="mdl-select-option" data-type="radio" data-value="'+ options[i].value +'" role="option"><span>'+ options[i].text +'</span></label></li>';
+            html_select += `
+            <li>
+                <input type="radio" id="${ this.id }_r${ i }" value="${ options[i].value }"  name="${ this.id }_r" ${ ((options[i].selected) && 'checked') }>
+                <label for="${ this.id }_r${ i }" class="mdl-select-option" data-type="radio" data-value="${ options[i].value }" role="option">
+                    <span>${ options[i].text }</span>
+                </label>
+            </li>`;
         }
 
-        html += '       </ul>';
-        html += '   </div>';
-        html += '</div>';
-        html += '<div class="mdl-layer-dim"></div>';
-        html += '</section>';
+        html_select += `
+                    </ul>
+                </div>
+            </div>
+            <div class="mdl-layer-dim"></div>
+        </section>`;  
+        document.querySelector('body').insertAdjacentHTML('beforeend', html_select);
+        html_select = null;
 
-        document.querySelector('body').insertAdjacentHTML('beforeend', html);
-        
-        html = '';
         this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'_select"]');
         this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
         this.btn_close = this.modal.querySelector('.mdl-layer-close');
@@ -175,16 +180,15 @@ export default class Layer {
         this.init();
     }
     madeToast() {
-        let html = '';
-        html = '<div class="mdl-layer '+ this.classname +'" data-id="'+ this.id +'" data-type="toast" aria-live="'+ this.status +'">';
-        html += '   <div class="mdl-layer-wrap">';
-        html += '       <div class="mdl-layer-body">' + this.content + '</div>';
-        !this.auto ? 
-        html += '       <button type="button" class="mdl-layer-close" data-material="close" aria-label="닫기"></button>' : '';
-        html += '   </div>';
-        html += '</div>';
+        let html_toast = `
+        <div class="mdl-layer ${ this.classname }" data-id="${ this.id }" data-type="toast" aria-live="${ this.status }">
+            <div class="mdl-layer-wrap">
+                <div class="mdl-layer-body">${ this.content }</div>
+                ${ !this.auto ? '<button type="button" class="mdl-layer-close" data-material="close" aria-label="닫기"></button>' : ''}
+            </div>
+        </div>`;
+        this.el_body.insertAdjacentHTML('beforeend', html_toast);
 
-        this.el_body.insertAdjacentHTML('beforeend', html);
         this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'"]');
         this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
 
@@ -192,37 +196,29 @@ export default class Layer {
     }
     madeSystem() {
         //alert & confirm
-        let html = '';
-        html += '<section class="mdl-layer" data-id="'+ this.id +'" data-type="alert">';
-        html += '<div class="mdl-layer-wrap">';
-        html += '    <div class="mdl-layer-body">';
-        if (!!this.title) {
-        html += '        <h1 class="mdl-layer-tit">'+ this.title +'</h1>';
-        }
-        html += '        <div>'+ this.content +'</div>';
-        html += '        <div class="mdl-btn-wrap">';
-        if (this.btn.length === 2) {
-        html += '            <button type="button" class="mdl-btn" data-state="cancel" data-style="primary-gray">';
-        html += '                <span>'+ this.btn[1].text +'</span>';
-        html += '            </button>';
-        } 
-        html += '            <button type="button" class="mdl-btn" data-state="ok" data-style="primary">';
-        html += '                <span>'+ this.btn[0].text +'</span>';
-        html += '            </button>';
-        html += '        </div>';
-        html += '    </div>';
-        html += '</div>';
-        html += '<div class="mdl-layer-dim"></div>';
-        html += '</section>';
+        let html_system = `
+        <section class="mdl-layer" data-id="${ this.id }" data-type="alert">
+            <div class="mdl-layer-wrap">
+                <div class="mdl-layer-body">
+                    ${(!!this.title) ? `<h1 class="mdl-layer-tit">${ this.title }</h1>` : ''}
+                    <div>${ this.content }</div>
+                    <div class="mdl-button-wrap">
+                        ${(this.btn.length === 2) ? `<button type="button" class="mdl-button" data-state="cancel" data-style="primary-gray"><span>${ this.btn[1].text }</span></button>` : ''}
+                        <button type="button" class="mdl-button" data-state="ok" data-style="primary">
+                            <span>${ this.btn[0].text }</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="mdl-layer-dim"></div>
+        </section>`;
+        document.querySelector('body').insertAdjacentHTML('beforeend', html_system);
+        html_system = null;
 
-        document.querySelector('body').insertAdjacentHTML('beforeend', html);
-        
-        html = null;
         this.modal = document.querySelector('.mdl-layer[data-id="'+ this.id +'"]');
         this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
-        this.ok = this.modal.querySelector('.mdl-btn[data-state="ok"]');
-        this.cancel = this.modal.querySelector('.mdl-btn[data-state="cancel"]');
-
+        this.ok = this.modal.querySelector('.mdl-button[data-state="ok"]');
+        this.cancel = this.modal.querySelector('.mdl-button[data-state="cancel"]');
         this.ok && this.ok.addEventListener('click', this.btn[0].callback);
         this.cancel && this.cancel.addEventListener('click', this.btn[1].callback);
 
@@ -241,12 +237,12 @@ export default class Layer {
                 let _script = document.createElement('script');
                 _script.dataset.usage = this.id;
                 _script.type = 'module';
-                _script.src = this.src + '.js?v=' + Date.now();
+                _script.src = this.opt.src + '.js?v=' + Date.now();
 
                 let _link = document.createElement('link');
                 _link.dataset.usage = this.id;
                 _link.rel = 'stylesheet';
-                _link.href = this.src + '.css?v=' + Date.now();
+                _link.href = this.opt.src + '.css?v=' + Date.now();
 
                 let _btn = document.createElement('button');
                 _btn.type = 'button';
@@ -334,7 +330,7 @@ export default class Layer {
     }
     actTooltipShow = (e) => {
         const _this = e.currentTarget;
-        this.src = _this.dataset.tooltip;
+        this.opt.src = _this.dataset.tooltip;
         this.id = _this.getAttribute('aria-describedby');
         this.setFetch();
     }
@@ -382,8 +378,6 @@ export default class Layer {
         (this.type === 'select') ? btn = document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'_select"]') : '';
         (this.type === 'dropdown') ? btn = document.querySelector('[data-dropdown="'+ this.id +'"]') : '';
         (this.type === 'tooltip') ? btn = document.querySelector('.mdl-tooltip[aria-describedby="'+ this.id +'"]') : '';
-
-        console.log(btn, this.id );
 
         //object position : dropdown & select & tooltip
         if (this.type === 'dropdown' || this.type === 'select' || this.type === 'tooltip') {
@@ -459,8 +453,6 @@ export default class Layer {
 
         this.btn_close && this.btn_close.focus();
         
-        console.log(this.html.dataset.layerN);
-
         // select layer
         if (this.type === 'select') {
             document.querySelector('.mdl-layer[data-id="'+ this.select_btn.dataset.selectId +'"]').style.width = (this.select_btn.offsetWidth / 10) + 'rem';
@@ -544,9 +536,13 @@ export default class Layer {
     hide = () => {
         clearTimeout(this.timer);
         if (this.type !== 'toast' && this.type !== 'tooltip') {
-
-            console.log('hide', Number(this.html.dataset.layerN));
             this.html.dataset.layerN = Number(this.html.dataset.layerN) - 1;
+        } else if (this.type === 'toast') {
+            const _state = document.querySelector('.mdl-layer[data-id="'+ this.id +'"]').dataset.state;
+
+            if (_state !== 'show') {
+                return false;
+            }
         }
         
         this.select_btn && this.select_btn.addEventListener('click', this.show);

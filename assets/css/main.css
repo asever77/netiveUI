@@ -10771,4 +10771,72 @@ body[data-toggle-state=true] .base-body {
 }
 .mdl-drag[data-state=complete] .mdl-drag-answer {
   display: flex;
+}
+
+/* ui file */
+.mdl-file {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.8rem;
+}
+.mdl-file input:active + .mdl-button,
+.mdl-file input:hover + .mdl-button,
+.mdl-file input:focus + .mdl-button {
+  border: 1px solid #616161;
+  background: #FAFAFA;
+}
+.mdl-file-inp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  direction: ltr;
+  cursor: pointer;
+  z-index: 1;
+}
+.mdl-file-list {
+  position: relative;
+  min-height: 4rem;
+  margin-top: 0;
+  display: none;
+}
+.mdl-file-list.on {
+  display: block;
+}
+.mdl-file-list ul {
+  padding: 0;
+  margin: 0;
+}
+.mdl-file-list li {
+  position: relative;
+  padding: 0.8rem 3.2rem 0 0;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  border-bottom: 1px solid #EEEEEE;
+}
+.mdl-file-list img {
+  height: 3rem;
+  margin-right: 0.5rem;
+}
+.mdl-file-list .mdl-file-del {
+  position: absolute;
+  right: 0.5rem;
+  top: 1rem;
+  line-height: 1;
+}
+.mdl-file-list .mdl-file-del::after {
+  content: "clear";
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  font-family: "Material Symbols Outlined";
+  font-feature-settings: "liga";
+  font-weight: 600;
+  font-size: 2rem;
 }/*# sourceMappingURL=main.css.map */

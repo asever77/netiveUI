@@ -5,11 +5,15 @@ export default class ToggleUI {
         this.init();
     }
     init() {
+        console.log(this.objects);
         for (let item of this.objects) {
-            item.removeEventListener('click', this.actClick);
-            item.addEventListener('click', this.actClick);
-            // item.addEventListener('mouseover', this.act);
-            // item.addEventListener('mouseleave', this.act);
+            if (item.dataset.event !== 'on') {
+                item.dataset.event = 'on';
+                item.removeEventListener('click', this.actClick);
+                item.addEventListener('click', this.actClick);
+                // item.addEventListener('mouseover', this.act);
+                // item.addEventListener('mouseleave', this.act);
+            }
         }
     }
     actClick = (e) => {

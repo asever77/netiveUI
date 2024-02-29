@@ -256,7 +256,6 @@ export default class TimeSelect {
 		let getScrollTop = 0;
 		let currentN = 0;
 		let actEnd;
-
 		let midday_n;
 
 		const selectedInit = (v, el) => {
@@ -271,6 +270,29 @@ export default class TimeSelect {
 				if (val === btns[i].value) {
 					btns[i].dataset.selected = true;
 				} 
+			}
+			if (type_time === 'hour') {
+				if (val < 12) {
+					isPM = 0;
+					el_midday_button[0].dataset.selected = true;
+					el_midday_button[1].dataset.selected = false;
+				} else if (val > 11 && val < 24) {
+					isPM = 1;
+					el_midday_button[1].dataset.selected = true;
+					el_midday_button[0].dataset.selected = false;
+				} else if (val > 23 ) {
+					isPM = 0;
+					el_midday_button[0].dataset.selected = true;
+					el_midday_button[1].dataset.selected = false;
+				}
+				
+				UI.scroll.move({ 
+					top: Number(this.hUnit * isPM), 
+					selector: el_midday
+				});
+				
+				el_wrap.dataset.hour = currentN + 1;
+				el_wrap.dataset.midday = isPM;
 			}
 		}
 		const scrollSelect = (v, el) => {
@@ -350,31 +372,7 @@ export default class TimeSelect {
 					el_wrap.dataset.midday = isPM;
 					el_wrap.dataset.hour = n_hour;
 					break;
-
-				case 'hour':
-					if (currentN + 1 < 12) {
-						isPM = 0;
-						el_midday_button[0].dataset.selected = true;
-						el_midday_button[1].dataset.selected = false;
-					} else if (currentN + 1 > 11 && currentN + 1 < 24) {
-						isPM = 1;
-						el_midday_button[1].dataset.selected = true;
-						el_midday_button[0].dataset.selected = false;
-					} else if (currentN + 1 > 23 ) {
-						isPM = 0;
-						el_midday_button[0].dataset.selected = true;
-						el_midday_button[1].dataset.selected = false;
-					}
-					
-					UI.scroll.move({ 
-						top: Number(this.hUnit * isPM), 
-						selector: el_midday
-					});
-					
-					el_wrap.dataset.hour = currentN + 1;
-					el_wrap.dataset.midday = isPM;
-					break;
-					
+				
 				case 'minute':
 					el_wrap.dataset.minute = UI.parts.add0(currentN * unit);
 					break;
@@ -402,7 +400,7 @@ export default class TimeSelect {
 					that.removeEventListener('touchmove', actMove);
 					that.removeEventListener('touchend', actEnd);
 					that.removeEventListener('touchcancel', actEnd);
-				},180);
+				},20);
 			} 
 			touchMoving && scrollCompare();
 		}
@@ -459,7 +457,6 @@ export default class TimeSelect {
 				
 				const onMouseMove = (e) => {
 					const tm = e.pageY - tn;
-
 					that.scrollTo(0, tn + ts - tm);
 
 					for (let btn of btns) {

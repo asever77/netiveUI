@@ -28,7 +28,7 @@
         <footer class="base-footer"></footer>
     </div>
 
-    <script src="../assets/js/ui.global.js"></script>
+    <script type="module" src="../assets/js/ui.global.js"></script>
     <script type="module">
         import Toggle from '../assets/js/components/toggle.js';
         
@@ -47,7 +47,7 @@
             el_header.insertAdjacentHTML('afterbegin', html_page);
             
             //공통부분 실행
-            UI.exe.toggle = new Toggle({
+            UI.exe.toggleHeader = new Toggle({
                 scope: document.querySelector('[data-id="header"]')
             });
 
@@ -116,6 +116,10 @@
                         pageName = pageName[pageName.length - 1];
 
                         UI.parts.paraSet('page', pageName +'/'+ pageName);
+
+                        UI.exe.toggleMain = new Toggle({
+                            scope: document.querySelector('[data-id="main"]')
+                        });
                     }
                 });
             }
