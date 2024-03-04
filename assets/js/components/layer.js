@@ -81,7 +81,7 @@ export default class Layer {
 
             case 'select':
                 if (!!document.querySelector('[data-id="'+ this.id +'"]')) {
-                    this.resetSelect();
+                    this.removeSelect();
                     this.madeSelect();
                 } 
                 break;
@@ -117,17 +117,46 @@ export default class Layer {
                 break;
         }
     }
-    resetSelect() {
+    removeSelect() {
         this.selectBtn = document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'"]');
-        this.selectLayer = document.querySelector('.mdl-layer[data-type="select"][data-select-id="'+ this.id +'"]');
-
+        this.selectLayer = document.querySelector('.mdl-layer[data-type="select"][data-id="'+ this.id +'_select"]');
         this.selectBtn && this.selectBtn.remove();
         this.selectLayer && this.selectLayer.remove();
+    }
+    resetSelect() {
+        this.selectLayer = document.querySelector('.mdl-layer[data-id="'+ this.id +'_select"]');
+        const layerBody = this.selectLayer.querySelector('.mdl-layer-body');
+        const optionWrap = layerBody.querySelector('.mdl-select-wrap');
+       
+        optionWrap.remove();
+        let html_option = `
+        <ul class="mdl-select-wrap">
+            ${ this.madeOption() }
+        </ul>`;
+        layerBody.insertAdjacentHTML('beforeend', html_option);
+        html_option = null;
+    }
+    madeOption() {
+        this.select = document.querySelector('.mdl-select[data-id="'+ this.id +'"]');
+        const select = this.select.querySelector('select');
+        const options = select.querySelectorAll('option');
+
+        let html_option = '';
+        for (let i = 0, len = options.length; i < len; i++) {
+            html_option += `
+            <li>
+                <input type="radio" id="${ this.id }_r${ i }" value="${ options[i].value }"  name="${ this.id }_r" ${ ((options[i].selected) && 'checked') }>
+                <label for="${ this.id }_r${ i }" class="mdl-select-option" data-type="radio" data-value="${ options[i].value }" role="option">
+                    <span>${ options[i].text }</span>
+                </label>
+            </li>`;
+        }
+
+        return html_option;
     }
     madeSelect() {
         this.select = document.querySelector('.mdl-select[data-id="'+ this.id +'"]');
         const select = this.select.querySelector('select');
-        const options = select.querySelectorAll('option');
 
         let html_select_button = `
         <button type="button" class="mdl-select-btn" data-select-id="${ this.id }_select" value="${ select.value }" tabindex="-1" role="combobox" aria-haspopup="listbox" aria-expanded="false">
@@ -144,19 +173,8 @@ export default class Layer {
                     <button type="button" class="mdl-layer-close" data-material="close"  aria-label="닫기"></button>
                 </div>
                 <div class="mdl-layer-body">
-                    <ul class="mdl-select-wrap">`;
-
-        for (let i = 0, len = options.length; i < len; i++) {
-            html_select += `
-            <li>
-                <input type="radio" id="${ this.id }_r${ i }" value="${ options[i].value }"  name="${ this.id }_r" ${ ((options[i].selected) && 'checked') }>
-                <label for="${ this.id }_r${ i }" class="mdl-select-option" data-type="radio" data-value="${ options[i].value }" role="option">
-                    <span>${ options[i].text }</span>
-                </label>
-            </li>`;
-        }
-
-        html_select += `
+                    <ul class="mdl-select-wrap">
+                        ${ this.madeOption() }
                     </ul>
                 </div>
             </div>
