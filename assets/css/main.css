@@ -10839,4 +10839,16 @@ body[data-toggle-state=true] .base-body {
   font-feature-settings: "liga";
   font-weight: 600;
   font-size: 2rem;
+}
+
+.mdl-datepicker {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.mdl-datepicker-btn {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+  background-color: #222;
 }/*# sourceMappingURL=main.css.map */
