@@ -8845,6 +8845,10 @@ body[data-toggle-state=true] .base-body {
 .base-nav button {
   color: var(--gray_70);
 }
+.base-nav button span {
+  display: block;
+  text-align: left;
+}
 
 @media (max-width: 374px) {
   html {
