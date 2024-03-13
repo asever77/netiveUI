@@ -456,14 +456,17 @@ export default class Layer {
             this.html.dataset.modal = 'show';
         }
 
-        _prev ? _prev.dataset.layerCurrent = 'false' : '';
-        this.modal.dataset.layerCurrent = 'true';
+        if (this.type !== 'toast' && this.type !== 'tooltip' && this.type !== 'select') {
+            _prev ? _prev.dataset.layerCurrent = 'false' : '';
+            this.modal.dataset.layerCurrent = 'true';
+        }
+
         this.modal || this.src && this.setFetch();
         this.modal.dataset.state = 'show';
         this.focus = document.activeElement;
 
         // toast, tooltip 자동 생성 자동 hidden 제외
-        if (this.type !== 'toast' && this.type !== 'tooltip') {
+        if (this.type !== 'toast' && this.type !== 'tooltip' && this.type !== 'select') {
             this.html.dataset.layerN = !this.html.dataset.layerN ? 1 : Number(this.html.dataset.layerN) + 1;
             this.modal.style.zIndex = Number(_zindex) + Number(this.html.dataset.layerN);
             this.modal.dataset.layerN = this.html.dataset.layerN;
@@ -539,7 +542,7 @@ export default class Layer {
         this.select_btn && this.select_btn.setAttribute('aria-expanded', false);
         this.focus.focus();
        
-        if (this.type !== 'toast' && this.type !== 'tooltip') {
+        if (this.type !== 'toast' && this.type !== 'tooltip' && this.type !== 'select') {
             console.log(Number(this.html.dataset.layerN));
             if (Number(this.html.dataset.layerN) !== 0) {
                 document.querySelector('.mdl-layer[data-layer-n="'+ this.html.dataset.layerN +'"]').dataset.layerCurrent = 'true';
@@ -553,7 +556,7 @@ export default class Layer {
     }
     hide = () => {
         clearTimeout(this.timer);
-        if (this.type !== 'toast' && this.type !== 'tooltip') {
+        if (this.type !== 'toast' && this.type !== 'tooltip' && this.type !== 'select') {
             this.html.dataset.layerN = Number(this.html.dataset.layerN) - 1;
         } else if (this.type === 'toast') {
             const _state = document.querySelector('.mdl-layer[data-id="'+ this.id +'"]').dataset.state;
