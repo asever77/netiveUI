@@ -8,6 +8,12 @@ UI.exe.addSelectTest = () => {
     document.querySelector('#add').insertAdjacentHTML('beforebegin', html);
     UI.form.setSelect();
 }
+UI.exe.addOptionTest = () => {
+    const html = '<option value="2">추가옵션</option>';
+
+    document.querySelector('#select1').insertAdjacentHTML('beforeend', html);
+    UI.exe.select1.resetSelect();
+}
 
 // UI.exe.select1 = new Layer({
 //     id: 'select1',
