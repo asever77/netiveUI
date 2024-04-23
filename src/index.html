@@ -36,6 +36,7 @@
         const response_header = await fetch('./layout/header.html');
 
         //page 설정
+        console.log(UI)
         let pageName = UI.parts.paraGet('page');
         pageName = (!pageName) ?  './pages/introduction/introduction' : './pages/' + pageName ;
         

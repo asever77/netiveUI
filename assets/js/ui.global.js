@@ -1,4 +1,4 @@
-import Layer from '../../../assets/js/components/layer.js';
+import Layer from './components/layer.js';
 
 (() => {
 
