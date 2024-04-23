@@ -145,10 +145,10 @@ import Layer from '../../../assets/js/components/layer.js';
                 _tempArray = _tempArray[0];
                 _tempArray = _tempArray.split('#');
                 _tempArray = _tempArray[0];
-
-                console.log(_tempArray);
+            } else {
+                _tempArray = null
             }
-
+			
             return _tempArray;
         },
         paraSet(key, value) {
