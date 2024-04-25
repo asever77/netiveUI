@@ -2,14 +2,16 @@ export default class DragLine {
     constructor(opt) {
         this.id = opt.id;
         this.doc = document.documentElement;
-        this.wrap = document.querySelector('.mdl-drag[data-drag-id="' + this.id + '"]');
-        this.dots = this.wrap.querySelectorAll('.mdl-drag-dot');
-        this.heads = this.wrap.querySelectorAll('.mdl-drag-dot[data-drag-type="head"]');
+        this.wrap = document.querySelector('[data-drag-id="' + this.id + '"]');
+        this.items = this.wrap.querySelectorAll('[data-drag-object], [data-drag-target]');
+        this.objects = this.wrap.querySelectorAll('[data-drag-object]');
+
         this.wrap_t = this.wrap.getBoundingClientRect().top;
         this.wrap_l = this.wrap.getBoundingClientRect().left;
         this.wrap_w = this.wrap.offsetWidth;
         this.wrap_h = this.wrap.offsetHeight;
-        this.n = this.heads.length;
+
+        this.n = this.objects.length;
         this.svg = null;
         this.answer_len = opt.answer;
         this.callback = opt.callback;
@@ -32,19 +34,17 @@ export default class DragLine {
             this.wrap_w = this.wrap.offsetWidth;
             this.wrap_h = this.wrap.offsetHeight;
             
-            for (let item of this.dots) {
-                const _dot_info = item.getBoundingClientRect();
-                const _dot_w = item.offsetWidth / 2;
-                const _dot_h = item.offsetHeight / 2;
+            for (let item of this.items) {
+                const rect_item = item.getBoundingClientRect();
+                const item_w = item.offsetWidth / 2;
+                const item_h = item.offsetHeight / 2;
 
-                item.dataset.x = (_dot_info.left + _dot_w - this.wrap_l);
-                item.dataset.y = (_dot_info.top + _dot_h - this.wrap_t);
+                item.dataset.x = (rect_item.left + item_w - this.wrap_l);
+                item.dataset.y = (rect_item.top + item_h - this.wrap_t);
             }
         }
         set();    
-
         // window.addEventListener('resize', set);
-
         UI.parts.resizObserver({
             el: this.wrap,
             callback: (v) => {
@@ -60,75 +60,75 @@ export default class DragLine {
             this.wrap_w = this.wrap.offsetWidth;
             this.wrap_h = this.wrap.offsetHeight;
 
-            // document.querySelector('[data-pagescroll]').style.overflow = 'hidden';
-
             const win_y = window.scrollY;
             const win_x = window.scrollX;
             
             const el_line = this.svg.querySelector('line[data-state="ing"]');
-            const el_dot = e.currentTarget;
-            const dot_info = el_dot.getBoundingClientRect();
-            const dot_name = el_dot.dataset.dragName;
-            const dot_w = el_dot.offsetWidth / 2;
-            const dot_h = el_dot.offsetHeight / 2;
-            const el_type = el_dot.dataset.dragType;
+            const el_item = e.currentTarget;
+            const rect_item = el_item.getBoundingClientRect();
+             
+            const is_object = el_item.dataset.dragObject ? true : false;
+            const value = is_object ? el_item.dataset.dragObject : el_item.dataset.dragTarget;
+            
+            const item_w = el_item.offsetWidth / 2;
+            const item_h = el_item.offsetHeight / 2;
             const s_x = !!e.clientX ? e.clientX : e.targetTouches[0].clientX;
             const s_y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
 
             let _x;
             let _y;
+            const x_value = rect_item.left + item_w - this.wrap_l;
+            const y_value = rect_item.top + item_h - this.wrap_t;
 
-            el_line.setAttribute('x1', dot_info.left + dot_w - this.wrap_l);
-            el_line.setAttribute('y1', dot_info.top + dot_h - this.wrap_t);
-            el_line.setAttribute('x2', dot_info.left + dot_w - this.wrap_l);
-            el_line.setAttribute('y2', dot_info.top + dot_h - this.wrap_t);
+            el_line.setAttribute('x1', x_value);
+            el_line.setAttribute('y1', y_value);
+            el_line.setAttribute('x2', x_value);
+            el_line.setAttribute('y2', y_value);
 
-            for (let item of this.dots) {
+            for (let item of this.items) {
                 item.dataset.state = 'none';
             }
 
             const actEnd = (e) => {
                 const v_x = _x  - this.wrap_l;
                 const v_y = _y  - this.wrap_t;
-                el_line.dataset.state = 'complete';
                 let is_complete = false;
                 let is_answer = false;
 
-                // document.querySelector('[data-pagescroll]').style.overflow = 'auto';
+                el_line.dataset.state = 'complete';
 
-                for (let item of this.dots) {
+                for (let item of this.items) {
                     item.dataset.state = '';
-                    const _type = item.dataset.dragType;
-                    const dot2_info = item.getBoundingClientRect();
+
+                    const _is_object = item.dataset.dragObject ? true : false;
+                    item.dataset.dragName
+                    const _value = _is_object ? item.dataset.dragObject : item.dataset.dragTarget;
+                    const _rect_item = item.getBoundingClientRect();
                     const i_x = Number(item.dataset.x);
                     const i_y = Number(item.dataset.y);
-                    const if_x = (v_x <= i_x + dot_w && v_x + (dot_w * 2) >= i_x + dot_w);
-                    const if_y = (v_y >= i_y - dot_h && v_y <= i_y - dot_h + (dot_h * 2));
+                    const if_x = (v_x <= i_x + item_w && v_x + (item_w * 2) >= i_x + item_w);
+                    const if_y = (v_y >= i_y - item_h && v_y <= i_y - item_h + (item_h * 2));
 
-                    if (if_x && if_y && el_type !== _type) {
-                        // if (item.dataset.dragName === dot_name) {
+                    if (if_x && if_y && is_object !== _is_object) {
                             
-                            el_dot.dataset.complete = true;
-                            item.dataset.complete = true;
-                            this.complete_n = this.complete_n + 1;
+                        el_item.dataset.complete = true;
+                        item.dataset.complete = true;
+                        this.complete_n = this.complete_n + 1;
 
-                            el_line.setAttribute('x2', dot2_info.left + dot_w - this.wrap_l);
-                            el_line.setAttribute('y2', dot2_info.top + dot_h - this.wrap_t);
+                        el_line.setAttribute('x2', _rect_item.left + item_w - this.wrap_l);
+                        el_line.setAttribute('y2', _rect_item.top + item_h - this.wrap_t);
 
-                            if (item.dataset.dragName === dot_name) {
-                                el_line.dataset.answer = true;
-                                is_answer = true;
-                                this.answer_n = this.answer_n + 1;
-                            } else {
-                                el_line.dataset.answer = false;
-                                is_answer = false;
-                            }
+                        if (_value === value) {
+                            el_line.dataset.answer = true;
+                            is_answer = true;
+                            this.answer_n = this.answer_n + 1;
+                        } else {
+                            el_line.dataset.answer = false;
+                            is_answer = false;
+                        }
 
-                            is_complete = true;
-                            break;
-                        // } else if (!is_complete) {
-                        //     el_line.remove();
-                        // }
+                        is_complete = true;
+                        break;
                     }
                 }
 
@@ -136,7 +136,7 @@ export default class DragLine {
                     el_line.remove();
                 }
 
-                for (let item of this.dots) {
+                for (let item of this.items) {
                     item.dataset.state = '';
                 }
 
@@ -147,7 +147,7 @@ export default class DragLine {
                 this.callback({
                     sum: this.answer_len,
                     value: this.answer_n,
-                    name: dot_name,
+                    name: value,
                     state: is_answer
                 });
                 this.complete_n === this.n && this.completeCallback();
@@ -168,7 +168,7 @@ export default class DragLine {
             this.doc.addEventListener('touchend', actEnd);
         }
 
-        for (let item of this.dots) {
+        for (let item of this.items) {
             item.addEventListener('mousedown', actStart);
             item.addEventListener('touchstart', actStart, {
                 passive: true
@@ -185,7 +185,7 @@ export default class DragLine {
     }
 
     reset() {
-        for (let item of this.dots) {
+        for (let item of this.items) {
             item.removeAttribute('data-state');
             item.removeAttribute('data-complete');
         }
@@ -210,11 +210,12 @@ export default class DragLine {
     complete() {
         this.reset();
         for (let i = 0; i < this.n; i++) {
-            const _head = this.dots[i];
-            const _name = _head.dataset.dragName;
-            const _body = this.wrap.querySelector('.mdl-drag-dot[data-drag-type="body"][data-drag-name="'+ _name +'"]');
+            const el_object = this.items[i];
 
-            this.svg.insertAdjacentHTML('beforeend', '<line x1="'+ _head.dataset.x +'" x2="'+ _body.dataset.x +'" y1="'+ _head.dataset.y +'" y2="'+ _body.dataset.y +'" data-state="complete"></line>');
+            const value = el_object.dataset.dragObject;
+            const el_target = this.wrap.querySelector('[data-drag-target="'+ value +'"]');
+
+            this.svg.insertAdjacentHTML('beforeend', '<line x1="'+ el_object.dataset.x +'" x2="'+ el_target.dataset.x +'" y1="'+ el_object.dataset.y +'" y2="'+ el_target.dataset.y +'" data-state="complete"></line>');
         }
         this.answer_n = this.answer_len;
         this.wrap.dataset.state="complete";

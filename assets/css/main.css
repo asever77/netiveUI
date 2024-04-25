@@ -9309,6 +9309,9 @@ body[data-toggle-state=true] .base-body {
   animation-iteration-count: 1;
   animation-fill-mode: backwards;
 }
+.mdl-layer[data-type=dropdown] .mdl-layer-dim {
+  display: none;
+}
 .mdl-layer[data-type=tooltip] {
   position: absolute;
   width: auto;
@@ -10721,7 +10724,7 @@ body[data-toggle-state=true] .base-body {
   stroke-linecap: round;
   pointer-events: none;
 }
-.mdl-drag-dot {
+.mdl-drag-item {
   position: absolute;
   width: 4rem;
   height: 4rem;
@@ -10733,7 +10736,10 @@ body[data-toggle-state=true] .base-body {
   justify-content: center;
   align-items: center;
 }
-.mdl-drag-dot[data-complete=true], .mdl-drag-dot[data-state=none] {
+.mdl-drag-item[data-complete=true] {
+  pointer-events: none;
+}
+.mdl-drag-item[data-state=none] {
   pointer-events: none;
 }
 .mdl-drag-area {

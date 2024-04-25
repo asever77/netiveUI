@@ -7,7 +7,7 @@ UI.exe.toggle = new Toggle({
 });
 UI.exe.dragline = new DragLine({
     id: 'test',
-    answer: 3,
+    answer: 3, //정답 총 갯수
     callback: (v) => {
         console.log('callback', v);
     }, 
