@@ -7,14 +7,17 @@ UI.exe.toggle = new Toggle({
 });
 UI.exe.dragline = new DragLine({
     id: 'test',
-    answer: 3, //정답 총 갯수
+    answer: 3,
     callback: (v) => {
+        //개별 이벤트 완료 시
         console.log('callback', v);
     }, 
     callbackComplete: (v) => {
+        //전체 이벤트 완료 시
         console.log('callbackComplete', v);
     },
     callbackCheck: (v) => {
+        //체크 이벤트 실행 시
         console.log('callbackCheck', v);
     }
 });

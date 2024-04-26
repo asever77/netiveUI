@@ -14,13 +14,12 @@ export default class DragLine {
         this.n = this.objects.length;
         this.svg = null;
         this.answer_len = opt.answer;
-        this.callback = opt.callback;
-        this.callbackComplete = opt.callbackComplete;
-        this.callbackCheck = opt.callbackCheck;
         this.answer_n = 0;
         this.complete_n = 0;
 
-        // this.init();
+        this.callback = opt.callback;
+        this.callbackComplete = opt.callbackComplete;
+        this.callbackCheck = opt.callbackCheck;
     }
 
     init() {
@@ -43,12 +42,11 @@ export default class DragLine {
                 item.dataset.y = (rect_item.top + item_h - this.wrap_t);
             }
         }
-        set();    
-        // window.addEventListener('resize', set);
+        set();
+
         UI.parts.resizObserver({
             el: this.wrap,
             callback: (v) => {
-                console.log(v);
                 v.resize[0] && set();
             }
         });
@@ -60,36 +58,24 @@ export default class DragLine {
             this.wrap_w = this.wrap.offsetWidth;
             this.wrap_h = this.wrap.offsetHeight;
 
-            const win_y = window.scrollY;
-            const win_x = window.scrollX;
-            
             const el_line = this.svg.querySelector('line[data-state="ing"]');
             const el_item = e.currentTarget;
             const rect_item = el_item.getBoundingClientRect();
-             
             const is_object = el_item.dataset.dragObject ? true : false;
             const value = is_object ? el_item.dataset.dragObject : el_item.dataset.dragTarget;
-            
             const item_w = el_item.offsetWidth / 2;
             const item_h = el_item.offsetHeight / 2;
-            const s_x = !!e.clientX ? e.clientX : e.targetTouches[0].clientX;
-            const s_y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
-
-            let _x;
-            let _y;
             const x_value = rect_item.left + item_w - this.wrap_l;
             const y_value = rect_item.top + item_h - this.wrap_t;
+            let _x;
+            let _y;
 
             el_line.setAttribute('x1', x_value);
             el_line.setAttribute('y1', y_value);
             el_line.setAttribute('x2', x_value);
             el_line.setAttribute('y2', y_value);
 
-            for (let item of this.items) {
-                item.dataset.state = 'none';
-            }
-
-            const actEnd = (e) => {
+            const actEnd = () => {
                 const v_x = _x  - this.wrap_l;
                 const v_y = _y  - this.wrap_t;
                 let is_complete = false;
@@ -98,8 +84,7 @@ export default class DragLine {
                 el_line.dataset.state = 'complete';
 
                 for (let item of this.items) {
-                    item.dataset.state = '';
-
+                    // item.dataset.state = '';
                     const _is_object = item.dataset.dragObject ? true : false;
                     item.dataset.dragName
                     const _value = _is_object ? item.dataset.dragObject : item.dataset.dragTarget;
@@ -110,7 +95,6 @@ export default class DragLine {
                     const if_y = (v_y >= i_y - item_h && v_y <= i_y - item_h + (item_h * 2));
 
                     if (if_x && if_y && is_object !== _is_object) {
-                            
                         el_item.dataset.complete = true;
                         item.dataset.complete = true;
                         this.complete_n = this.complete_n + 1;
@@ -132,36 +116,27 @@ export default class DragLine {
                     }
                 }
 
-                if (!is_complete) {
-                    el_line.remove();
-                }
-
-                for (let item of this.items) {
-                    item.dataset.state = '';
-                }
+                (!is_complete) && el_line.remove();
 
                 this.doc.removeEventListener('mousemove', actMove);
                 this.doc.removeEventListener('mouseup', actEnd);
                 this.doc.removeEventListener('touchmove', actMove);
                 this.doc.removeEventListener('touchend', actEnd);
                 this.callback({
-                    sum: this.answer_len,
-                    value: this.answer_n,
-                    name: value,
-                    state: is_answer
+                    /*전체정답갯수*/answer_all_sum: this.answer_len,
+                    /*현재정답갯수*/answer_current_sum: this.answer_n,
+                    /*선택한정답  */answer_current: value,
+                    /*정오답상태  */answer_state: is_answer
                 });
                 this.complete_n === this.n && this.completeCallback();
             }
-
             const actMove = (e) => {
                 _x = !!e.clientX ? e.clientX : e.targetTouches[0].clientX;
                 _y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
-
                 el_line.setAttribute('x2', _x - this.wrap_l);
                 el_line.setAttribute('y2', _y - this.wrap_t);
             }
 
-            //event
             this.doc.addEventListener('mousemove', actMove);
             this.doc.addEventListener('mouseup', actEnd);
             this.doc.addEventListener('touchmove', actMove);
@@ -175,15 +150,15 @@ export default class DragLine {
             });
         }
     }
-    
     completeCallback() {
         this.callbackComplete && this.callbackComplete({
-            sum: this.answer_len,
-            value: this.answer_n,
-            state: this.answer_len === this.answer_n ? true : false
+            /*전체정답갯수  */answer_all_sum: this.answer_len,
+            /*현재정답갯수  */answer_current_sum: this.answer_n,
+            /*전체정오답상태*/answer_all_state: this.answer_len === this.answer_n ? true : false
         });
     }
 
+    //초기화 실행
     reset() {
         for (let item of this.items) {
             item.removeAttribute('data-state');
@@ -199,14 +174,16 @@ export default class DragLine {
         this.complete_n = 0;
         this.answer_n = 0;
     }
+    //정오답체크
     check() {
         this.wrap.dataset.state="check";
         this.callbackCheck && this.callbackCheck({
-            sum: this.answer_len,
-            value: this.answer_n,
-            state: this.answer_len === this.answer_n ? true : false
+            /*전체정답갯수  */answer_all_sum: this.answer_len,
+            /*현재정답갯수  */answer_current_sum: this.answer_n,
+            /*전체정오답상태*/answer_all_state: this.answer_len === this.answer_n ? true : false
         });
     }
+    //정답확인
     complete() {
         this.reset();
         for (let i = 0; i < this.n; i++) {

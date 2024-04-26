@@ -5,7 +5,7 @@ export default class DrawDrop {
         this.callback = opt.callback;
         this.callbackComplete = opt.callbackComplete;
         this.doc = document.documentElement;
-        this.wrap = document.querySelector('.mdl-drag[data-drag-id="' + this.id + '"]');
+        this.wrap = document.querySelector('[data-drag-id="' + this.id + '"]');
         this.drops = this.wrap.querySelectorAll('.mdl-drag-drop[data-drag-name]');
         this.areas = this.wrap.querySelectorAll('.mdl-drag-area[data-drag-name]');
         this.array_area = [];
