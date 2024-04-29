@@ -36,7 +36,7 @@
     </box>
 <pre>
 <code>
-&lt;div data-line-id="{{ id name }}"&gt;
+&lt;div data-line-id="{{ id name }}" data-line-type="{{ 'multiple' | 'single' }}"&gt;
     &lt;button type="button" data-line-object="1"&gt;1&lt;/button&gt;
     &lt;button type="button" data-line-target="1"&gt;1&lt;/button&gt;
 &lt;/div&gt;
@@ -45,8 +45,8 @@
     import DragLine from '../../assets/js/components/dragLine.js';
 
     UI.exe.dragline = new DragLine({
-        id: 'test',
-        answer: 3,
+        id: 'test', //data-line-id
+        answer: 3,  //정답갯수
         callback: (v) => {
             console.log('callback', v);
         }, 
