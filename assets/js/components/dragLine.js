@@ -2,9 +2,10 @@ export default class DragLine {
     constructor(opt) {
         this.id = opt.id;
         this.doc = document.documentElement;
-        this.wrap = document.querySelector('[data-drag-id="' + this.id + '"]');
-        this.items = this.wrap.querySelectorAll('[data-drag-object], [data-drag-target]');
-        this.objects = this.wrap.querySelectorAll('[data-drag-object]');
+        this.wrap = document.querySelector('[data-line-id="' + this.id + '"]');
+        this.items = this.wrap.querySelectorAll('[data-line-object], [data-line-target]');
+        this.objects = this.wrap.querySelectorAll('[data-line-object]');
+        this.type = this.wrap.dataset.lineType ? this.wrap.dataset.lineType : 'single' ;
 
         this.wrap_t = this.wrap.getBoundingClientRect().top;
         this.wrap_l = this.wrap.getBoundingClientRect().left;
@@ -32,12 +33,13 @@ export default class DragLine {
             this.wrap_l = this.wrap.getBoundingClientRect().left;
             this.wrap_w = this.wrap.offsetWidth;
             this.wrap_h = this.wrap.offsetHeight;
-            
-            for (let item of this.items) {
+
+            for (const [index, item] of this.items.entries()) {
                 const rect_item = item.getBoundingClientRect();
                 const item_w = item.offsetWidth / 2;
                 const item_h = item.offsetHeight / 2;
 
+                item.dataset.name = index;
                 item.dataset.x = (rect_item.left + item_w - this.wrap_l);
                 item.dataset.y = (rect_item.top + item_h - this.wrap_t);
             }
@@ -61,8 +63,9 @@ export default class DragLine {
             const el_line = this.svg.querySelector('line[data-state="ing"]');
             const el_item = e.currentTarget;
             const rect_item = el_item.getBoundingClientRect();
-            const is_object = el_item.dataset.dragObject ? true : false;
-            const value = is_object ? el_item.dataset.dragObject : el_item.dataset.dragTarget;
+            const is_object = el_item.dataset.lineObject ? true : false;
+            const data_name = el_item.dataset.name;
+            const value = is_object ? el_item.dataset.lineObject : el_item.dataset.lineTarget;
             const item_w = el_item.offsetWidth / 2;
             const item_h = el_item.offsetHeight / 2;
             const x_value = rect_item.left + item_w - this.wrap_l;
@@ -83,36 +86,79 @@ export default class DragLine {
 
                 el_line.dataset.state = 'complete';
 
+                console.log(this.items);
+
                 for (let item of this.items) {
                     // item.dataset.state = '';
-                    const _is_object = item.dataset.dragObject ? true : false;
-                    item.dataset.dragName
-                    const _value = _is_object ? item.dataset.dragObject : item.dataset.dragTarget;
+                    const _is_object = item.dataset.lineObject ? true : false;
+
+                    //완료된아이템여부 확인
+                    const _is_complete = item.dataset.complete;
+                    const _value = _is_object ? item.dataset.lineObject : item.dataset.lineTarget;
                     const _rect_item = item.getBoundingClientRect();
                     const i_x = Number(item.dataset.x);
                     const i_y = Number(item.dataset.y);
                     const if_x = (v_x <= i_x + item_w && v_x + (item_w * 2) >= i_x + item_w);
                     const if_y = (v_y >= i_y - item_h && v_y <= i_y - item_h + (item_h * 2));
+                    let is_selected = false;
+                    let connect_array;
+                    //1:1규칙용
+                    //특정영역안에 있고, 같은 분류가 아니며, 완료되지않은 아이템
+                    const if_compete = this.type === 'single' ? 
+                    (if_x && if_y && is_object !== _is_object && !_is_complete) :
+                    (if_x && if_y && is_object !== _is_object);
+                    
+                    //1:n인 경우 이미 연결된 아이템 제외
+                    if (this.type === 'multiple' && item.dataset.connect) {
+                        connect_array = item.dataset.connect.split(',');
 
-                    if (if_x && if_y && is_object !== _is_object) {
+                        for (let i = 0; i < connect_array.length; i++) {
+                            if (data_name === connect_array[i]) {
+                                is_selected = true;
+                                break;
+                            }
+                        }
+                    }
+                    
+                    //연결성공
+                    if (if_compete && !is_selected) {
+                        //연결된 아이템 완료상태
                         el_item.dataset.complete = true;
                         item.dataset.complete = true;
+                        //완료갯수
                         this.complete_n = this.complete_n + 1;
-
+                        //아이템 연결된 정보
+                        (!item.dataset.connect) ? 
+                            item.dataset.connect = el_item.dataset.name :
+                            item.dataset.connect = item.dataset.connect + ',' + el_item.dataset.name;
+                        //최종 라인종료 위치
                         el_line.setAttribute('x2', _rect_item.left + item_w - this.wrap_l);
                         el_line.setAttribute('y2', _rect_item.top + item_h - this.wrap_t);
-
-                        if (_value === value) {
-                            el_line.dataset.answer = true;
-                            is_answer = true;
-                            this.answer_n = this.answer_n + 1;
-                        } else {
-                            el_line.dataset.answer = false;
-                            is_answer = false;
+                        //정오답적용
+                        const v1 = value.split(',');
+                        const v2 = _value.split(',');
+                        const is_OX = (v) => {
+                            if (v) {
+                                el_line.dataset.answer = true;
+                                is_answer = true;
+                                this.answer_n = this.answer_n + 1;
+                            } else {
+                                el_line.dataset.answer = false;
+                                is_answer = false;
+                                this.type === 'multiple' ? this.answer_n = this.answer_n - 1 : '';
+                            }
                         }
+                        (this.type === 'multiple') ?
+                            //multiple인 경우 정오답
+                            is_OX(v1.filter(x => v2.includes(x)).length > 0):
+                            //single인 경우 정오답
+                            is_OX(value === _value);
 
                         is_complete = true;
+
                         break;
+                    } else {
+                        console.log('실패');
                     }
                 }
 
@@ -163,6 +209,7 @@ export default class DragLine {
         for (let item of this.items) {
             item.removeAttribute('data-state');
             item.removeAttribute('data-complete');
+            item.removeAttribute('data-connect');
         }
 
         if (!!this.svg.lastChild) {
@@ -188,11 +235,18 @@ export default class DragLine {
         this.reset();
         for (let i = 0; i < this.n; i++) {
             const el_object = this.items[i];
+            const value = el_object.dataset.lineObject;
+            console.log(value);
+            if (value !== 'null') {
+                const _v = value.split(',');
+                console.log(_v);
+                for (let j = 0; j < _v.length; j++) {
+                    
+                    const el_target = this.wrap.querySelector('[data-line-target="'+ _v[j] +'"]');
 
-            const value = el_object.dataset.dragObject;
-            const el_target = this.wrap.querySelector('[data-drag-target="'+ value +'"]');
-
-            this.svg.insertAdjacentHTML('beforeend', '<line x1="'+ el_object.dataset.x +'" x2="'+ el_target.dataset.x +'" y1="'+ el_object.dataset.y +'" y2="'+ el_target.dataset.y +'" data-state="complete"></line>');
+                    this.svg.insertAdjacentHTML('beforeend', '<line x1="'+ el_object.dataset.x +'" x2="'+ el_target.dataset.x +'" y1="'+ el_object.dataset.y +'" y2="'+ el_target.dataset.y +'" data-state="complete"></line>');
+                }
+            }
         }
         this.answer_n = this.answer_len;
         this.wrap.dataset.state="complete";

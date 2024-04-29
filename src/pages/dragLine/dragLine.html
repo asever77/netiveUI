@@ -1,14 +1,15 @@
 <div class="base-main-wrap">
     <h1 data-h="1">Drag Line</h1>
+    <h2 data-h="2">1:1</h2>
     <box>
-        <div class="mdl-drag" data-drag-id="test">
-            <button type="button" class="mdl-drag-item n1" data-drag-object="1">1</button>
-            <button type="button" class="mdl-drag-item n2" data-drag-object="2">2</button>
-            <button type="button" class="mdl-drag-item n3" data-drag-object="3">3</button>
+        <div class="mdl-drag" data-line-id="test">
+            <button type="button" class="mdl-drag-item n1" data-line-object="1">1</button>
+            <button type="button" class="mdl-drag-item n2" data-line-object="2">2</button>
+            <button type="button" class="mdl-drag-item n3" data-line-object="3">3</button>
 
-            <button type="button" class="mdl-drag-item n4" data-drag-target="3">3</button>
-            <button type="button" class="mdl-drag-item n5" data-drag-target="2">2</button>
-            <button type="button" class="mdl-drag-item n6" data-drag-target="1">1</button>
+            <button type="button" class="mdl-drag-item n4" data-line-target="3">3</button>
+            <button type="button" class="mdl-drag-item n5" data-line-target="2">2</button>
+            <button type="button" class="mdl-drag-item n6" data-line-target="1">1</button>
         </div>
         <div class="mdl-button-area">
             <button type="button" class="mdl-button" onclick="UI.exe.dragline.check()">정답 체크</button>
@@ -16,11 +17,28 @@
             <button type="button" class="mdl-button" onclick="UI.exe.dragline.reset()">정답 리셋</button>
         </div>
     </box>
+    <h2 data-h="2">1:n</h2>
+    <box>
+        <div class="mdl-drag" data-line-id="test2" data-line-type="multiple">
+            <button type="button" class="mdl-drag-item n1" data-line-object="1,2">1,2</button>
+            <button type="button" class="mdl-drag-item n2" data-line-object="2,3">2,3</button>
+            <button type="button" class="mdl-drag-item n3" data-line-object="null">null</button>
+
+            <button type="button" class="mdl-drag-item n4" data-line-target="3">3</button>
+            <button type="button" class="mdl-drag-item n5" data-line-target="2">2</button>
+            <button type="button" class="mdl-drag-item n6" data-line-target="1">1</button>
+        </div>
+        <div class="mdl-button-area">
+            <button type="button" class="mdl-button" onclick="UI.exe.dragline2.check()">정답 체크</button>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragline2.complete()">정답 확인</button>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragline2.reset()">정답 리셋</button>
+        </div>
+    </box>
 <pre>
 <code>
-&lt;div data-drag-id="{{ id name }}"&gt;
-    &lt;button type="button" data-drag-object="1"&gt;1&lt;/button&gt;
-    &lt;button type="button" data-drag-target="1"&gt;1&lt;/button&gt;
+&lt;div data-line-id="{{ id name }}"&gt;
+    &lt;button type="button" data-line-object="1"&gt;1&lt;/button&gt;
+    &lt;button type="button" data-line-target="1"&gt;1&lt;/button&gt;
 &lt;/div&gt;
 
 &lt;script type="module"&gt;

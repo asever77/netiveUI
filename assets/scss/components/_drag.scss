@@ -1,6 +1,5 @@
-[data-drag-id] {
+[data-line-id] {
     position: relative;
-
     svg {
         width: 100%;
         height: 100%;
@@ -16,9 +15,19 @@
         line[data-answer="false"] {stroke:red;}
         line[data-answer="true"] {stroke:blue;}
     }
-
-    [data-drag-object],
-    [data-drag-target] {
+    &[data-line-type="multiple"] {
+        [data-line-object],
+        [data-line-target] {
+            &[data-complete="true"] {
+                pointer-events:inherit;
+            }
+            &[data-state="none"] {
+                pointer-events: none;
+            }
+        }
+    }
+    [data-line-object],
+    [data-line-target] {
         &[data-complete="true"] {
             pointer-events: none;
         }
