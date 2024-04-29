@@ -40,6 +40,21 @@
     }
 }
 
+[data-drag-id] {
+    [data-drag-target] {
+        &[data-drag-state="dragover"] {
+            outline: 1px solid #000;
+        }
+    }
+    [data-drag-object] {
+        &[data-drag-state="dragging"] {
+            opacity: 0.1;
+        }
+    }
+}
+
+
+
 .mdl-drag {
     margin: 0 0;
     width: 100%;
