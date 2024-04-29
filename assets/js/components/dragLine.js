@@ -86,8 +86,6 @@ export default class DragLine {
 
                 el_line.dataset.state = 'complete';
 
-                console.log(this.items);
-
                 for (let item of this.items) {
                     // item.dataset.state = '';
                     const _is_object = item.dataset.lineObject ? true : false;
