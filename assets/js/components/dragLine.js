@@ -2,13 +2,13 @@ export default class DragLine {
     constructor(opt) {
         this.id = opt.id;
         this.doc = document.documentElement;
-        this.wrap = document.querySelector('[data-line-id="' + this.id + '"]');
-        this.items = this.wrap.querySelectorAll('[data-line-object], [data-line-target]');
+        this.wrap = document.querySelector(`[data-line-id="${this.id}"]`);
+        this.items = this.wrap.querySelectorAll(`[data-line-object], [data-line-target]`);
         this.objects = this.wrap.querySelectorAll('[data-line-object]');
         this.type = this.wrap.dataset.lineType ? this.wrap.dataset.lineType : 'single' ;
-
-        this.wrap_t = this.wrap.getBoundingClientRect().top;
-        this.wrap_l = this.wrap.getBoundingClientRect().left;
+        const rect = this.wrap.getBoundingClientRect();
+        this.wrap_t = rect.top;
+        this.wrap_l = rect.left;
         this.wrap_w = this.wrap.offsetWidth;
         this.wrap_h = this.wrap.offsetHeight;
 
@@ -17,6 +17,7 @@ export default class DragLine {
         this.answer_len = opt.answer;
         this.answer_n = 0;
         this.complete_n = 0;
+        this.history = [];
 
         this.callback = opt.callback;
         this.callbackComplete = opt.callbackComplete;
@@ -24,13 +25,14 @@ export default class DragLine {
     }
 
     init() {
-        this.wrap.insertAdjacentHTML('beforeend', '<svg></svg>');
+        this.wrap.insertAdjacentHTML('beforeend', `<svg></svg>`);
         this.svg = this.wrap.querySelector('svg');
 
         const set = () => {
             this.reset();
-            this.wrap_t = this.wrap.getBoundingClientRect().top;
-            this.wrap_l = this.wrap.getBoundingClientRect().left;
+            const rect = this.wrap.getBoundingClientRect();
+            this.wrap_t = rect.top;
+            this.wrap_l = rect.left;
             this.wrap_w = this.wrap.offsetWidth;
             this.wrap_h = this.wrap.offsetHeight;
 
@@ -54,7 +56,7 @@ export default class DragLine {
         });
 
         const actStart = (e) => {
-            this.wrap.querySelector('svg').insertAdjacentHTML('beforeend', '<line x1="0" x2="0" y1="0" y2="0" data-state="ing"></line>');
+            this.wrap.querySelector('svg').insertAdjacentHTML('beforeend', `<line x1="0" x2="0" y1="0" y2="0" data-state="ing"></line>`);
             this.wrap_t = this.wrap.getBoundingClientRect().top;
             this.wrap_l = this.wrap.getBoundingClientRect().left;
             this.wrap_w = this.wrap.offsetWidth;
@@ -154,6 +156,16 @@ export default class DragLine {
 
                         is_complete = true;
 
+                        (el_item.dataset.lineObject) ?
+                            this.history.push({
+                                ['key_' + el_item.dataset.name] : el_item.dataset.lineObject, 
+                                ['key_' + item.dataset.name] : item.dataset.lineTarget, 
+                            }) :
+                            this.history.push({
+                                ['key_' + item.dataset.name] : item.dataset.lineObject, 
+                                ['key_' + el_item.dataset.name] : el_item.dataset.lineTarget, 
+                            });
+                        console.log('history',this.history)
                         break;
                     } else {
                         console.log('실패');
@@ -170,13 +182,14 @@ export default class DragLine {
                     /*전체정답갯수*/answer_all_sum: this.answer_len,
                     /*현재정답갯수*/answer_current_sum: this.answer_n,
                     /*선택한정답  */answer_current: value,
-                    /*정오답상태  */answer_state: is_answer
+                    /*정오답상태  */answer_state: is_answer,
+                    /*히스토리    */answer_history: this.history,
                 });
-                this.complete_n === this.n && this.completeCallback();
+                //this.complete_n === this.n && this.completeCallback();
             }
             const actMove = (e) => {
-                _x = !!e.clientX ? e.clientX : e.targetTouches[0].clientX;
-                _y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
+                _x = e.clientX ? e.clientX : e.targetTouches[0].clientX;
+                _y = e.clientY ? e.clientY : e.targetTouches[0].clientY;
                 el_line.setAttribute('x2', _x - this.wrap_l);
                 el_line.setAttribute('y2', _y - this.wrap_t);
             }
@@ -198,7 +211,8 @@ export default class DragLine {
         this.callbackComplete && this.callbackComplete({
             /*전체정답갯수  */answer_all_sum: this.answer_len,
             /*현재정답갯수  */answer_current_sum: this.answer_n,
-            /*전체정오답상태*/answer_all_state: this.answer_len === this.answer_n ? true : false
+            /*전체정오답상태*/answer_all_state: this.answer_len === this.answer_n ? true : false,
+            /*히스토리     */answer_history: this.history,
         });
     }
 
@@ -210,7 +224,7 @@ export default class DragLine {
             item.removeAttribute('data-connect');
         }
 
-        if (!!this.svg.lastChild) {
+        if (this.svg.lastChild) {
             while (this.svg.lastChild) {
                 this.svg.removeChild(this.svg.lastChild);
             }
@@ -225,7 +239,8 @@ export default class DragLine {
         this.callbackCheck && this.callbackCheck({
             /*전체정답갯수  */answer_all_sum: this.answer_len,
             /*현재정답갯수  */answer_current_sum: this.answer_n,
-            /*전체정오답상태*/answer_all_state: this.answer_len === this.answer_n ? true : false
+            /*전체정오답상태*/answer_all_state: this.answer_len === this.answer_n ? true : false,
+            /*히스토리     */answer_history: this.history,
         });
     }
     //정답확인
@@ -234,10 +249,8 @@ export default class DragLine {
         for (let i = 0; i < this.n; i++) {
             const el_object = this.items[i];
             const value = el_object.dataset.lineObject;
-            console.log(value);
             if (value !== 'null') {
                 const _v = value.split(',');
-                console.log(_v);
                 for (let j = 0; j < _v.length; j++) {
                     
                     const el_target = this.wrap.querySelector('[data-line-target="'+ _v[j] +'"]');
