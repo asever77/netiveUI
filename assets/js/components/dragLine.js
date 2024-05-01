@@ -41,17 +41,18 @@ export default class DragLine {
                 item.dataset.y = (_dot_info.top + _dot_h - this.wrap_t);
             }
         }
-        set();    
 
-        // window.addEventListener('resize', set);
-
-        UI.parts.resizObserver({
-            el: this.wrap,
-            callback: (v) => {
-                console.log(v);
-                v.resize[0] && set();
-            }
+        // UI.parts.resizObserver({
+        //     el: this.wrap,
+        //     callback: (v) => {
+        //         console.log(v);
+        //         v.resize[0] && set();
+        //     }
+        // });
+        const resizeObserver = new ResizeObserver(() => {
+            set();
         });
+        resizeObserver.observe(this.wrap);
 
         const actStart = (e) => {
             this.wrap.querySelector('svg').insertAdjacentHTML('beforeend', '<line x1="0" x2="0" y1="0" y2="0" data-state="ing"></line>');
