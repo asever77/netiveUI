@@ -11,26 +11,52 @@ export default class Tab {
         this.init();
     }
     init() {
+        // if (!!para) {
+        //     if (para.split('+').length > 1) {
+        //         //2 or more : tab=exeAcco1*2+exeAcco2*3
+        //         paras = para.split('+');
+
+        //         for (let j = 0; j < paras.length; j++ ) {
+        //             paraname = paras[j].split('*');
+        //             opt.id === paraname[0] ? current = Number(paraname[1]) : '';
+        //         }
+        //     } else {
+        //         //only one : tab=1
+        //         if (para.split('*').length > 1) {
+        //             paraname = para.split('*');
+        //             opt.id === paraname[0] ? current = Number(paraname[1]) : '';
+        //         } else {
+        //             current = Number(para);
+        //         }
+        //     }
+        // }
+
+
+        let para = UI.parts.paraGet(this.id);
+
+        if (!!para && typeof para === 'string') {
+            this.current = para
+        }
+
         for (let item of this.tab_btns) {
             item.addEventListener('click', this.act);
         }
 
-        !!sessionStorage.getItem(this.id) ? 
-        this.selected(sessionStorage.getItem(this.id)) : 
-        (this.current === false) ? 
-            this.selected(this.tab_btns[0].dataset.tab) : 
+        if (this.current === false) {
+            !!sessionStorage.getItem(this.id) ? this.selected(sessionStorage.getItem(this.id)) :  this.selected(this.tab_btns[0].dataset.tab);
+        } else {
             this.selected(this.current);
+        }
     }
     ps = (e) => {
         const _this = e;
         const _wrap = _this.closest('.mdl-tab'); 
+        const _rect_wrap = _wrap.getBoundingClientRect();  
         const _rect = _this.getBoundingClientRect();   
-        
-        console.log(_rect.left + _wrap.scrollLeft,_rect.width )
         
         UI.scroll.move({ 
             selector: _wrap, 
-            left: _rect.left + _wrap.scrollLeft - (_rect.width ), 
+            left: (_rect.left - _rect_wrap.left) + _wrap.scrollLeft + (_rect.width / 2), 
             add : 0,
             align: 'center' 
         });

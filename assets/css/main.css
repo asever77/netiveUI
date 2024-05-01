@@ -8845,6 +8845,10 @@ body[data-toggle-state=true] .base-body {
 .base-nav button {
   color: var(--gray_70);
 }
+.base-nav button span {
+  display: block;
+  text-align: left;
+}
 
 @media (max-width: 374px) {
   html {
@@ -9304,6 +9308,9 @@ body[data-toggle-state=true] .base-body {
   animation-duration: 0.2s;
   animation-iteration-count: 1;
   animation-fill-mode: backwards;
+}
+.mdl-layer[data-type=dropdown] .mdl-layer-dim {
+  display: none;
 }
 .mdl-layer[data-type=tooltip] {
   position: absolute;
@@ -10689,15 +10696,10 @@ body[data-toggle-state=true] .base-body {
   align-items: center;
 }
 
-.mdl-drag {
-  margin: 0 0;
+[data-line-id] {
   position: relative;
-  width: 100%;
-  height: 26rem;
-  margin: 0 auto;
-  outline: 0.1rem dashed silver;
 }
-.mdl-drag svg {
+[data-line-id] svg {
   width: 100%;
   height: 100%;
   position: absolute;
@@ -10705,19 +10707,51 @@ body[data-toggle-state=true] .base-body {
   left: 0;
   pointer-events: none;
 }
-.mdl-drag[data-state=check] line[data-answer=false] {
+[data-line-id] line {
+  pointer-events: none;
+}
+[data-line-id][data-state=check] line[data-answer=false] {
   stroke: red;
 }
-.mdl-drag[data-state=check] line[data-answer=true] {
+[data-line-id][data-state=check] line[data-answer=true] {
   stroke: blue;
+}
+[data-line-id][data-line-type=multiple] [data-line-object][data-complete=true],
+[data-line-id][data-line-type=multiple] [data-line-target][data-complete=true] {
+  pointer-events: inherit;
+}
+[data-line-id][data-line-type=multiple] [data-line-object][data-state=none],
+[data-line-id][data-line-type=multiple] [data-line-target][data-state=none] {
+  pointer-events: none;
+}
+[data-line-id] [data-line-object][data-complete=true],
+[data-line-id] [data-line-target][data-complete=true] {
+  pointer-events: none;
+}
+[data-line-id] [data-line-object][data-state=none],
+[data-line-id] [data-line-target][data-state=none] {
+  pointer-events: none;
+}
+[data-drag-id] [data-drag-target][data-drag-state=dragover] {
+  outline: 1px solid #000;
+}
+[data-drag-id] [data-drag-object][data-drag-state=dragging] {
+  opacity: 0.1;
+}
+
+.mdl-drag {
+  margin: 0 0;
+  width: 100%;
+  height: 26rem;
+  margin: 0 auto;
+  outline: 0.1rem dashed silver;
 }
 .mdl-drag line {
   stroke: black;
   stroke-width: 4;
   stroke-linecap: round;
-  pointer-events: none;
 }
-.mdl-drag-dot {
+.mdl-drag-item {
   position: absolute;
   width: 4rem;
   height: 4rem;
@@ -10728,9 +10762,6 @@ body[data-toggle-state=true] .base-body {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.mdl-drag-dot[data-complete=true], .mdl-drag-dot[data-state=none] {
-  pointer-events: none;
 }
 .mdl-drag-area {
   position: absolute;
@@ -10771,4 +10802,84 @@ body[data-toggle-state=true] .base-body {
 }
 .mdl-drag[data-state=complete] .mdl-drag-answer {
   display: flex;
+}
+
+/* ui file */
+.mdl-file {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 0.8rem;
+}
+.mdl-file input:active + .mdl-button,
+.mdl-file input:hover + .mdl-button,
+.mdl-file input:focus + .mdl-button {
+  border: 1px solid #616161;
+  background: #FAFAFA;
+}
+.mdl-file-inp {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: 0;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  direction: ltr;
+  cursor: pointer;
+  z-index: 1;
+}
+.mdl-file-list {
+  position: relative;
+  min-height: 4rem;
+  margin-top: 0;
+  display: none;
+}
+.mdl-file-list.on {
+  display: block;
+}
+.mdl-file-list ul {
+  padding: 0;
+  margin: 0;
+}
+.mdl-file-list li {
+  position: relative;
+  padding: 0.8rem 3.2rem 0 0;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  border-bottom: 1px solid #EEEEEE;
+}
+.mdl-file-list img {
+  height: 3rem;
+  margin-right: 0.5rem;
+}
+.mdl-file-list .mdl-file-del {
+  position: absolute;
+  right: 0.5rem;
+  top: 1rem;
+  line-height: 1;
+}
+.mdl-file-list .mdl-file-del::after {
+  content: "clear";
+  display: block;
+  width: 2rem;
+  height: 2rem;
+  font-family: "Material Symbols Outlined";
+  font-feature-settings: "liga";
+  font-weight: 600;
+  font-size: 2rem;
+}
+
+.mdl-datepicker {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.mdl-datepicker-btn {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+  background-color: #222;
 }/*# sourceMappingURL=main.css.map */

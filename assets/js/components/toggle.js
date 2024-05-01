@@ -6,10 +6,11 @@ export default class ToggleUI {
     }
     init() {
         for (let item of this.objects) {
-            item.removeEventListener('click', this.actClick);
-            item.addEventListener('click', this.actClick);
-            // item.addEventListener('mouseover', this.act);
-            // item.addEventListener('mouseleave', this.act);
+            if (item.dataset.event !== 'on') {
+                item.dataset.event = 'on';
+                item.removeEventListener('click', this.actClick);
+                item.addEventListener('click', this.actClick);
+            }
         }
     }
     actClick = (e) => {
@@ -17,12 +18,16 @@ export default class ToggleUI {
         const el_object = e.currentTarget;
         const callbackName = el_object.dataset.callback;
         const is_name = el_object.dataset.toggleObject;
+        const el_objects = document.querySelectorAll('[data-toggle-object="'+ is_name +'"]');
         const el_target = document.querySelector('[data-toggle-target="'+ is_name +'"]');
 
         let data_state = el_object.dataset.toggleState;
         let is_state = data_state !== 'true' ? 'true' : 'false';
-       
-        el_object.dataset.toggleState = is_state;
+        
+        for(let item of el_objects) {
+            item.dataset.toggleState = is_state;
+        }
+        // el_object.dataset.toggleState = is_state;
         !!el_target ? el_target.dataset.toggleState = is_state : '';
               
         !!callbackName && UI.callback[callbackName]({
@@ -32,7 +37,6 @@ export default class ToggleUI {
         });
     }
     actHover = (e) => {
-        console.log(e);
         const el_object = e.currentTarget;
         const callbackName = el_object.dataset.callback;
         const is_name = el_object.dataset.toggleObject;

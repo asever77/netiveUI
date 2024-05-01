@@ -1,3 +1,5 @@
+import Layer from './components/layer.js';
+
 (() => {
 
     'use strict';
@@ -143,10 +145,10 @@
                 _tempArray = _tempArray[0];
                 _tempArray = _tempArray.split('#');
                 _tempArray = _tempArray[0];
-
-                console.log(_tempArray);
+            } else {
+                _tempArray = null
             }
-
+			
             return _tempArray;
         },
         paraSet(key, value) {
@@ -736,7 +738,7 @@
 		},
 
 		fileUpload() {
-			const el_files = document.querySelectorAll('.ui-file-inp');
+			const el_files = document.querySelectorAll('.mdl-file-inp');
 			const fileTypes = [
 				"image/apng",
 				"image/bmp",
@@ -753,7 +755,7 @@
 			const fileDelete = (e) => {
 				const id = e.currentTarget.dataset.id;
 				
-				const list = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
+				const list = document.querySelector('.mdl-file-list[data-id="'+ id +'"]');
 				const list_ul = list.querySelector('ul');
 				const list_li = list.querySelectorAll('li');
 				const inp = document.querySelector('#'+ id);
@@ -787,7 +789,7 @@
 			const updateImageDisplay = (e) => {
 				const el_file = e.currentTarget;
 				const id = el_file.id;
-				const preview = document.querySelector('.ui-file-list[data-id="'+ id +'"]');
+				const preview = document.querySelector('.mdl-file-list[data-id="'+ id +'"]');
 				const curFiles = el_file.files;
 
 				while(preview.firstChild) {
@@ -815,7 +817,7 @@
 						const delbutton = document.createElement('button');
 
 						delbutton.type = 'button';
-						delbutton.classList.add('ui-file-del');
+						delbutton.classList.add('mdl-file-del');
 						delbutton.title = '파일 삭제';
 						delbutton.dataset.id = id;
 						delbutton.dataset.n = i;
@@ -913,8 +915,33 @@
 
 				el_childs[i].dataset.apply = '1';
 			}
-		}
+		},
+		setSelect() {
+			const selects = document.querySelectorAll('.mdl-select');
+			let n = 0;
+			for (let item of selects) {
+				if (!!item.dataset.id) {
+					const _id = item.dataset.id;
+					if (!UI.exe[_id]) {
+						UI.exe[_id] = new Layer({
+							id:  _id,
+							type: 'select'
+						});
+					}
+				} else {
+					const _id = 'select_' + Date.now() + n;
+					n = n + 1;
+					item.dataset.id = _id;
+				
+					UI.exe[_id] = new Layer({
+						id: _id,
+						type: 'select'
+					});
+				}
+			}
+		},
 	}
+	
 
     //common exe
     Global.parts.resizeState();
@@ -947,4 +974,7 @@
             html.classList.remove('dark');
         }
     }
+
+	
 })();
+
