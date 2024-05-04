@@ -27,21 +27,17 @@
         line[data-answer="false"] {
             stroke: red;
         }
-
         line[data-answer="true"] {
             stroke: #72C559;
         }
-
     }
 
     &[data-line-type="multiple"] {
-
         [data-line-object],
         [data-line-target] {
             &[data-complete="true"] {
                 pointer-events: inherit;
             }
-
             &[data-state="none"] {
                 pointer-events: none;
             }
