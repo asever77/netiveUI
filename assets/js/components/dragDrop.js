@@ -5,9 +5,9 @@ export default class DrawDrop {
         this.callback = opt.callback;
         this.callbackComplete = opt.callbackComplete;
         this.doc = document.documentElement;
-        this.wrap = document.querySelector('[data-drag-id="' + this.id + '"]');
-        this.drops = this.wrap.querySelectorAll('[data-drag-object]');
-        this.areas = this.wrap.querySelectorAll('[data-drag-target]');
+        this.wrap = document.querySelector('.mdl-drag[data-drag-id="' + this.id + '"]');
+        this.drops = this.wrap.querySelectorAll('.mdl-drag-drop[data-drag-name]');
+        this.areas = this.wrap.querySelectorAll('.mdl-drag-area[data-drag-name]');
         this.array_area = [];
         this.el_scroll = document.querySelector('[data-pagescroll]');
         
@@ -29,12 +29,11 @@ export default class DrawDrop {
             this.wrap_t = this.wrap_rect.top;
             this.wrap_l = this.wrap_rect.left;
             this.array_area = [];
-            this.array_area_object = [];
-            this.areas = this.wrap.querySelectorAll('[data-drag-target]');
-
+            this.areas = this.wrap.querySelectorAll('.mdl-drag-area[data-drag-name]');
+            
             for (let i = 0, len = this.answer_len; i < len; i++) {
-                const _area = this.wrap.querySelector('[data-drag-target="'+  this.answer[i].name +'"]');
-                const _drop = this.wrap.querySelector('[data-drag-object="'+  this.answer[i].name +'"]');
+                const _area = this.wrap.querySelector('.mdl-drag-area[data-drag-name="'+  this.answer[i].name +'"]');
+                const _drop = this.wrap.querySelector('.mdl-drag-drop[data-drag-name="'+  this.answer[i].name +'"]');
                 
                 this.answer[i].sum ? _area.dataset.dragSum = this.answer[i].sum : '';
                 this.answer[i].move ? _area.dataset.dragMove = this.answer[i].move : '';
@@ -47,22 +46,7 @@ export default class DrawDrop {
                 const rect = item.getBoundingClientRect();
 
                 this.array_area.push({
-                    name : item.dataset.dragTarget,
-                    width: rect.width,
-                    height: rect.height,
-                    top: rect.top,
-                    left: rect.left,
-                    x: rect.x,
-                    y: rect.y,
-                    rangeX: [rect.left, rect.left + rect.width],
-                    rangeY: [rect.top, rect.top + rect.height],
-                });
-            }
-            for (let item of this.drops) {
-                const rect = item.getBoundingClientRect();
-
-                this.array_area_object.push({
-                    name : item.dataset.dragObject,
+                    name : item.dataset.dragName,
                     width: rect.width,
                     height: rect.height,
                     top: rect.top,
@@ -74,7 +58,6 @@ export default class DrawDrop {
                 });
             }
             console.log(this.array_area);
-            console.log(this.array_area_object);
         }
         set();    
 
@@ -90,13 +73,14 @@ export default class DrawDrop {
             n = (w === '-') ? n - 1 : (w === '+') ? n + 1 : n;
             (n < 0) ? n = 0 : '';
             this[v] = n;
+            // return v = n; 
         }
 
         //clone drag
         const actStartClone = (e) => {
             const el_this = e.currentTarget;
-            const el_this_area = el_this.closest('[data-drag-target]');
-            const el_wrap = el_this.closest('[data-drag-id]');
+            const el_this_area = el_this.closest('.mdl-drag-area');
+            const el_wrap = el_this.closest('.mdl-drag');
             const data_name = el_this.dataset.dragName;
             const area_name = el_this_area.dataset.dragName;
 
@@ -154,9 +138,9 @@ export default class DrawDrop {
                 }
 
                 if (is_range) {
-                    const current_area = el_wrap.querySelector('[data-drag-target="'+ is_name +'"]');
+                    const current_area = el_wrap.querySelector('.mdl-drag-area[data-drag-name="'+ is_name +'"]');
                     const limit = Number(current_area.dataset.dragLimit);
-                    const current_area_drops = current_area.querySelectorAll('[data-drag-object]');
+                    const current_area_drops = current_area.querySelectorAll('.mdl-drag-drop[data-drag-name]');
                     const n = current_area_drops.length;
                     const area_in_clone = el_this;
 
@@ -181,15 +165,15 @@ export default class DrawDrop {
                     } else {
                         if (area_name !== is_name) {
                             if (limit === 1) {
-                                const __name = current_area.querySelector('[data-drag-object]').dataset.dragObject;
-                                current_area.querySelector('[data-drag-object]').remove();
-                                const __drop =  el_wrap.querySelector('[data-drag-object="'+ __name +'"]');
+                                const __name = current_area.querySelector('.mdl-drag-drop[data-drag-name]').dataset.dragName;
+                                current_area.querySelector('.mdl-drag-drop[data-drag-name]').remove();
+                                const __drop =  el_wrap.querySelector('.mdl-drag-drop[data-drag-name="'+ __name +'"]');
                                 __drop.classList.remove('disabled');
                                 calc('complete_n', '-');
                                 act();
                             } else {
                                 calc('complete_n', '-');
-                                el_wrap.querySelector('.disabled[data-drag-target="'+ data_name +'"]').classList.remove('disabled');
+                                el_wrap.querySelector('.mdl-drag-drop.disabled[data-drag-name="'+ data_name +'"]').classList.remove('disabled');
 
                                 (data_name === is_name) ?  calc('answer_n', '+') : calc('answer_n', '-');
                             }
@@ -205,7 +189,7 @@ export default class DrawDrop {
 
                     el_this.remove();
 
-                    const _disabled_drops = el_wrap.querySelectorAll('.disabled[data-drag-target="'+ data_name +'"]');
+                    const _disabled_drops = el_wrap.querySelectorAll('.mdl-drag-drop.disabled[data-drag-name="'+ data_name +'"]');
 
                     for (let item2 of _disabled_drops) {
                         item2.classList.remove('disabled');
@@ -245,7 +229,7 @@ export default class DrawDrop {
             const el_wrap = el_this.parentNode;
             const el_clone = el_this.cloneNode(true);
             const data_copy = el_this.dataset.dragCopy;
-            const data_name = el_this.dataset.dragObject;
+            const data_name = el_this.dataset.dragName;
             const rect_this = el_this.getBoundingClientRect();
 
             this.el_scroll.dataset.pagescroll = 'hidden';
@@ -279,8 +263,7 @@ export default class DrawDrop {
 
                 this.el_scroll.dataset.pagescroll = 'auto';
                 el_clone.classList.remove('active');
-                let is_area = 'target';
-
+         
                 for (let i = 0, len = this.array_area.length; i < len; i++ ) {
                     const is_x = this.array_area[i].rangeX[0] - this.win_x < e_x && this.array_area[i].rangeX[1] - this.win_x > e_x;
                     const is_y = this.array_area[i].rangeY[0] - this.win_y < e_y && this.array_area[i].rangeY[1] - this.win_y > e_y;
@@ -290,37 +273,17 @@ export default class DrawDrop {
                         is_name = this.array_area[i].name;
                         m_y = m_y - (this.array_area[i].top - this.wrap_t);
                         m_x = m_x - (this.array_area[i].left - this.wrap_l);
-                        is_area = 'target';
                         break;
                     } else {
                         is_range = false;
                     }
-                }
-                for (let i = 0, len = this.array_area_object.length; i < len; i++ ) {
-                    const is_x = this.array_area_object[i].rangeX[0] - this.win_x < e_x && this.array_area_object[i].rangeX[1] - this.win_x > e_x;
-                    const is_y = this.array_area_object[i].rangeY[0] - this.win_y < e_y && this.array_area_object[i].rangeY[1] - this.win_y > e_y;
-                    
-                    if (is_x && is_y) {
-                        is_range = true;
-                        is_name = this.array_area_object[i].name;
-                        m_y = m_y - (this.array_area_object[i].top - this.wrap_t);
-                        m_x = m_x - (this.array_area_object[i].left - this.wrap_l);
-                        is_area = 'object';
-                        console.log(i)
-
-                        break;
-                    } else {
-                        is_range = false;
-                    }
-
-                    
                 }
 
                 if (is_range) {
-                    const current_area = is_area === 'target' ? el_wrap.querySelector('[data-drag-target="'+ is_name +'"]') : el_wrap.querySelector('[data-drag-object="'+ is_name +'"]');
+                    const current_area = el_wrap.querySelector('.mdl-drag-area[data-drag-name="'+ is_name +'"]');
                     const limit = Number(current_area.dataset.dragLimit);
                     const is_move = current_area.dataset.dragMove;
-                    const current_area_drops = current_area.querySelectorAll('[data-drag-object]');
+                    const current_area_drops = current_area.querySelectorAll('.mdl-drag-drop[data-drag-name]');
                     const n = current_area_drops.length;
                     const area_in_clone = el_clone;
                     el_clone.remove();
@@ -347,9 +310,9 @@ export default class DrawDrop {
 
                     if (limit === n) {
                         if (limit === 1) {
-                            const __name = current_area.querySelector('[data-drag-object]').dataset.dragObject;
-                            current_area.querySelector('[data-drag-object]').remove();
-                            const __drop =  el_wrap.querySelector('[data-drag-object="'+ __name +'"]');
+                            const __name = current_area.querySelector('.mdl-drag-drop[data-drag-name]').dataset.dragName;
+                            current_area.querySelector('.mdl-drag-drop[data-drag-name]').remove();
+                            const __drop =  el_wrap.querySelector('.mdl-drag-drop[data-drag-name="'+ __name +'"]');
                             __drop.classList.remove('disabled');
                             act();
                             calc('complete_n', '-');
@@ -360,7 +323,7 @@ export default class DrawDrop {
                         act();
                     }
 
-                    const area_drops = current_area.querySelectorAll('[data-drag-object]');
+                    const area_drops = current_area.querySelectorAll('.mdl-drag-drop[data-drag-name]');
 
                     if (is_move === 'true') {
                         for (let item of area_drops) {
@@ -418,7 +381,7 @@ export default class DrawDrop {
             this.answer[i].state = false;
         }
         for (let item of this.areas) {
-            const drops = item.querySelectorAll('[data-drag-object]');
+            const drops = item.querySelectorAll('.mdl-drag-drop[data-drag-name]');
             item.removeAttribute('data-state');
             for (let drop of drops) {
                 drop.remove();
@@ -434,8 +397,8 @@ export default class DrawDrop {
     check() {
         for (let i = 0;  i < this.answer_len; i++) {
             const name = this.answer[i].name;
-            const el_area = this.wrap.querySelector('[data-drag-target="'+ name +'"]');
-            const el_drops = el_area.querySelectorAll('[data-drag-object]');
+            const el_area = this.wrap.querySelector('.mdl-drag-area[data-drag-name="'+ name +'"]');
+            const el_drops = el_area.querySelectorAll('.mdl-drag-drop[data-drag-name]');
             const sum = this.answer[i].sum;
             let n = 0;
             let is_state = false;
@@ -446,7 +409,7 @@ export default class DrawDrop {
                     this.answer[i].state = false;
                 } else {
                     for (let item of el_drops) {
-                        if (item.dataset.dragObject === name.toString()) {
+                        if (item.dataset.dragName === name.toString()) {
                             is_state = true;
                             this.answer[i].state = true;
                         } else {
@@ -467,8 +430,8 @@ export default class DrawDrop {
     complete() {
         this.reset();
         for (let item of this.drops) {
-            const name = item.dataset.dragObject;
-            const area = this.wrap.querySelector('[data-drag-target="'+ name +'"]');
+            const name = item.dataset.dragName;
+            const area = this.wrap.querySelector('.mdl-drag-area[data-drag-name="'+ name +'"]');
             const el_clone = item.cloneNode(true);
 
             item.classList.add('disabled');

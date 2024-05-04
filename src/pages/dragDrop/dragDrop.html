@@ -4,24 +4,15 @@
     <h2 data-h="2">1 : 1</h1>
     <box>
         <div class="mdl-drag quiz" data-drag-id="test2">
-            <div class="mdl-drag-area a2" data-drag-target="2"> <p>1개제한, 2번 1개 정답</p></div>  
-            <div class="mdl-drag-area a1" data-drag-target="1"> <p>1개제한, 1번 1개 정답</p></div>  
-            <div class="mdl-drag-area a3" data-drag-target="3"> <p>1개제한, 3번 1개 정답</p></div>
-            <div class="mdl-drag-area a4" data-drag-target="4"> <p>1개제한, 4번 1개 정답</p></div>
+            <div class="mdl-drag-area a2" data-drag-name="2"> <p>1개제한, 2번 1개 정답</p></div>  
+            <div class="mdl-drag-area a1" data-drag-name="1"> <p>1개제한, 1번 1개 정답</p></div>  
+            <div class="mdl-drag-area a3" data-drag-name="3"> <p>1개제한, 3번 1개 정답</p></div>
+            <div class="mdl-drag-area a4" data-drag-name="4"> <p>1개제한, 4번 1개 정답</p></div>
             
-            <div class="mdl-drag-drop d1" data-drag-wrap>
-                <div class="mdl-drag-drop" data-drag-object="1">1</div>
-            </div>
-            <div class="mdl-drag-drop d2" data-drag-wrap>
-                <div class="mdl-drag-drop" data-drag-object="2">2</div>
-            </div>
-            <div class="mdl-drag-drop d3" data-drag-wrap>
-                <div class="mdl-drag-drop" data-drag-object="3">3</div>
-            </div>
-            <div class="mdl-drag-drop d4" data-drag-wrap>
-                <div class="mdl-drag-drop" data-drag-object="4">4</div>
-            </div>
-  
+            <div class="mdl-drag-drop d1" data-drag-name="1">1</div>
+            <div class="mdl-drag-drop d2" data-drag-name="2">2</div>
+            <div class="mdl-drag-drop d3" data-drag-name="3">3</div>
+            <div class="mdl-drag-drop d4" data-drag-name="4">4</div>
         </div>
         <div class="mdl-button-area">
             <button type="button" class="mdl-button" onclick="UI.exe.dragdrop2.check()">정답 체크</button>
@@ -33,33 +24,32 @@
     <h2 data-h="2">1 : n</h1>
     <box>
         <div class="mdl-drag test" data-drag-id="test">
-            <div class="mdl-drag-area a1" data-drag-target="1">
+            <div class="mdl-drag-area a1" data-drag-name="1">
                 <p>5개제한, 1번 3개 정답</p>
-                <div class="mdl-drag-answer" data-drag-answer>
+                <div class="mdl-drag-answer">
                     <div class="mdl-drag-drop d1">1</div>
                     <div class="mdl-drag-drop d1">1</div>
                     <div class="mdl-drag-drop d1">1</div>
                 </div>
             </div>
-            <div class="mdl-drag-area a2" data-drag-target="2">
+            <div class="mdl-drag-area a2" data-drag-name="2">
                 <p>1개제한, 2번 1개 정답</p>
-                <div class="mdl-drag-answer" data-drag-answer>
+                <div class="mdl-drag-answer">
                     <div class="mdl-drag-drop d2">2</div>
                 </div>
             </div>
-            <div class="mdl-drag-area a3" data-drag-target="3">
+            <div class="mdl-drag-area a3" data-drag-name="3">
                 <p>무제한, 3번 2개 정답</p>
-                <div class="mdl-drag-answer" data-drag-answer>
+                <div class="mdl-drag-answer">
                     <div class="mdl-drag-drop d3">3</div>
                     <div class="mdl-drag-drop d3">3</div>
                 </div>
             </div>
 
-            <div class="mdl-drag-drop d1" data-drag-object="1">1</div>
-            <div class="mdl-drag-drop d2" data-drag-object="2">2</div>
-            <div class="mdl-drag-drop d3" data-drag-object="3">3</div>
+            <div class="mdl-drag-drop d1" data-drag-name="1">1</div>
+            <div class="mdl-drag-drop d2" data-drag-name="2">2</div>
+            <div class="mdl-drag-drop d3" data-drag-name="3">3</div>
         </div>
-
         <div class="mdl-button-area">
             <button type="button" class="mdl-button" onclick="UI.exe.dragdrop.check()">정답 체크</button>
             <button type="button" class="mdl-button" onclick="UI.exe.dragdrop.complete()">정답</button>
@@ -71,20 +61,20 @@
 <code>
 <comment>HTML</comment>
 &lt;div class="mdl-drag" data-drag-id="{{ id name }}"&gt;
-    &lt;div class="mdl-drag-area"&gt;
+    &lt;div class="mdl-drag-area" data-drag-name="1"&gt;
 
         <comment>//선택요소 : 1:1이 아닌경우나 특정 상태의 답이 필요한 경우 사용</comment>
         &lt;div class="mdl-drag-answer"&gt;&lt;/div&gt;
 
     &lt;/div&gt;  
-    &lt;div class="mdl-drag-drop"&gt;1&lt;/div&gt;
+    &lt;div class="mdl-drag-drop" data-drag-name="1"&gt;1&lt;/div&gt;
 &lt;/div&gt;
 
 <comment>Javascript</comment>
 &lt;script type="module"&gt;
     import DragDrop from '../../../assets/js/components/dragDrop.js';
 
-    UI.exe.dragdrop = new DragDrop({
+    UI.exe.dragline = new dragline({
         id: '{{ data-drag-id }}', 
         answer: [
             { 

@@ -1,31 +1,48 @@
+[data-line-id="test"] {
+    height: 54rem;
 
+    [data-line-col="1"] {
+        left: 10rem;
+    }
 
-.n1 {
-    top: 1rem;
-    left: 1rem
+    [data-line-col="2"] {
+        left: 42.5rem;
+    }
+
+    [data-line-col="3"] {
+        left: 75rem;
+    }
+
+    [data-line-row="1"] {
+        top: 20rem;
+    }
+
+    [data-line-row="2"] {
+        top: 29rem;
+    }
 }
 
-.n2 {
-    top: 10rem;
-    left: 1rem
-}
+[data-line-id="test2"] {
+    height: 54rem;
 
-.n3 {
-    top: 20rem;
-    left: 1rem
-}
+    [data-line-col="1"] {
+        left: 20rem;
+    }
 
-.n4 {
-    top: 1rem;
-    right: 1rem
-}
+    [data-line-col="2"] {
+        left: 52.5rem;
+    }
 
-.n5 {
-    top: 10rem;
-    right: 1rem
-}
+    [data-line-row="1"] {
+        top: 7rem;
+    }
 
-.n6 {
-    top: 20rem;
-    right: 1rem;
+    [data-line-row="2"] {
+        top: 19rem;
+    }
+
+    [data-line-row="3"] {
+        top: 31rem;
+    }
+
 }

@@ -2,14 +2,58 @@
     <h1 data-h="1">Drag Line</h1>
     <h2 data-h="2">1:1</h2>
     <box>
-        <div class="mdl-drag" data-line-id="test">
-            <button type="button" class="mdl-drag-item n1" data-line-object="1">1</button>
-            <button type="button" class="mdl-drag-item n2" data-line-object="2">2</button>
-            <button type="button" class="mdl-drag-item n3" data-line-object="3">3</button>
+        <div data-line-id="test">
+            <div data-line-col="1" data-line-row="1">
+                <button data-line-object="1" type="button" aria-label="line object 1"></button>
+                <div data-ps="top">
+                    <p>
+                        드래그라인 <br />
+                        텍스트입니다.
+                    </p>
+                </div>
+            </div>
+            <div data-line-col="2" data-line-row="1">
+                <button data-line-object="2" type="button" aria-label="line object 2"></button>
+                <div data-ps="top">
+                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
+                </div>
+            </div>
+            <div data-line-col="3" data-line-row="1">
+                <button data-line-object="3" type="button" aria-label="line object 3"></button>
+                <div data-ps="top">
+                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
+                    <p>
+                        드래그라인 <br />
+                        텍스트입니다.
+                    </p>
+                </div>
+            </div>
 
-            <button type="button" class="mdl-drag-item n4" data-line-target="3">3</button>
-            <button type="button" class="mdl-drag-item n5" data-line-target="2">2</button>
-            <button type="button" class="mdl-drag-item n6" data-line-target="1">1</button>
+            <div data-line-col="1" data-line-row="2">
+                <button data-line-target="1" type="button" aria-label="line target 1"></button>
+                <div data-ps="bottom">
+                    <p>
+                        드래그라인 <br />
+                        텍스트입니다.
+                    </p>
+                </div>
+            </div>
+            <div data-line-col="2" data-line-row="2">
+                <button data-line-target="2" type="button" aria-label="line target 2"></button>
+                <div data-ps="bottom">
+                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
+                </div>
+            </div>
+            <div data-line-col="3" data-line-row="2">
+                <button data-line-target="3" type="button" aria-label="line target 3"></button>
+                <div data-ps="bottom">
+                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
+                    <p>
+                        드래그라인 <br />
+                        텍스트입니다.
+                    </p>
+                </div>
+            </div>
         </div>
         <div class="mdl-button-area">
             <button type="button" class="mdl-button" onclick="UI.exe.dragline.check()">정답 체크</button>
@@ -19,14 +63,55 @@
     </box>
     <h2 data-h="2">1:n</h2>
     <box>
-        <div class="mdl-drag" data-line-id="test2" data-line-type="multiple">
-            <button type="button" class="mdl-drag-item n1" data-line-object="1,2">1,2</button>
-            <button type="button" class="mdl-drag-item n2" data-line-object="2,3">2,3</button>
-            <button type="button" class="mdl-drag-item n3" data-line-object="null">null</button>
+        <div data-line-id="test2" data-line-type="multiple">
+            <div data-line-col="1" data-line-row="1">
+                <button data-line-object="1,2" type="button" aria-label="line object 1"></button>
+                <div data-ps="left">
+                    <p>드래그라인 텍스트입니다.</p>
+                </div>
+            </div>
+            <div data-line-col="1" data-line-row="2">
+                <button data-line-object="2,3" type="button" aria-label="line object 2"></button>
+                <div data-ps="left">
+                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
+                </div>
+            </div>
+            <div data-line-col="1" data-line-row="3">
+                <button data-line-object="3,1" type="button" aria-label="line object 3"></button>
+                <div data-ps="left-s">
+                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
+                    <p>
+                        드래그라인 <br />
+                        텍스트입니다.
+                    </p>
+                </div>
+            </div>
 
-            <button type="button" class="mdl-drag-item n4" data-line-target="3">3</button>
-            <button type="button" class="mdl-drag-item n5" data-line-target="2">2</button>
-            <button type="button" class="mdl-drag-item n6" data-line-target="1">1</button>
+            <div data-line-col="2" data-line-row="1">
+                <button data-line-target="1" type="button" aria-label="line target 1"></button>
+                <div data-ps="right">
+                    <p>
+                        드래그라인 <br />
+                        텍스트입니다.
+                    </p>
+                </div>
+            </div>
+            <div data-line-col="2" data-line-row="2">
+                <button data-line-target="2" type="button" aria-label="line target 2"></button>
+                <div data-ps="right">
+                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
+                </div>
+            </div>
+            <div data-line-col="2" data-line-row="3">
+                <button data-line-target="3" type="button" aria-label="line target 3"></button>
+                <div data-ps="right-s">
+                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
+                    <p>
+                        드래그라인 <br />
+                        텍스트입니다.
+                    </p>
+                </div>
+            </div>
         </div>
         <div class="mdl-button-area">
             <button type="button" class="mdl-button" onclick="UI.exe.dragline2.check()">정답 체크</button>
@@ -34,7 +119,7 @@
             <button type="button" class="mdl-button" onclick="UI.exe.dragline2.reset()">정답 리셋</button>
         </div>
     </box>
-<pre>
+    <pre>
 <code>
 &lt;div data-line-id="{{ id name }}" data-line-type="{{ 'multiple' | 'single' }}"&gt;
     &lt;button type="button" data-line-object="1"&gt;1&lt;/button&gt;
@@ -63,5 +148,5 @@
 &lt;/script"&gt;
 </code>
 </pre>
-    
+
 </div>
