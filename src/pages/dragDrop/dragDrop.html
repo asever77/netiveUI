@@ -3,16 +3,22 @@
 
     <h2 data-h="2">1 : 1</h1>
     <box>
-        <div class="mdl-drag quiz" data-drag-id="test2">
-            <div class="mdl-drag-area a2" data-drag-name="2"> <p>1개제한, 2번 1개 정답</p></div>  
-            <div class="mdl-drag-area a1" data-drag-name="1"> <p>1개제한, 1번 1개 정답</p></div>  
-            <div class="mdl-drag-area a3" data-drag-name="3"> <p>1개제한, 3번 1개 정답</p></div>
-            <div class="mdl-drag-area a4" data-drag-name="4"> <p>1개제한, 4번 1개 정답</p></div>
+        <div data-drag-id="test2">
+            <div data-drag-area="col4">
+                <div data-drag-target="1" data-limit="1" data-sort="full"></div>  
+                <div data-drag-target="2" data-limit="1" data-sort="full"></div>  
+                <div data-drag-target="3" data-limit="1" data-sort="full"></div>  
+                <div data-drag-target="4" data-limit="1" data-sort="full"></div>  
+            </div>
             
-            <div class="mdl-drag-drop d1" data-drag-name="1">1</div>
-            <div class="mdl-drag-drop d2" data-drag-name="2">2</div>
-            <div class="mdl-drag-drop d3" data-drag-name="3">3</div>
-            <div class="mdl-drag-drop d4" data-drag-name="4">4</div>
+            
+            <div data-drag-box="col2">
+                <div data-drag-object="1">입력장치</div>
+                <div data-drag-object="2">출력장치</div>
+                <div data-drag-object="3">기억장치</div>
+                <div data-drag-object="4">중앙 처리 장치</div>
+            </div>
+            
         </div>
         <div class="mdl-button-area">
             <button type="button" class="mdl-button" onclick="UI.exe.dragdrop2.check()">정답 체크</button>
@@ -23,36 +29,64 @@
 
     <h2 data-h="2">1 : n</h1>
     <box>
-        <div class="mdl-drag test" data-drag-id="test">
-            <div class="mdl-drag-area a1" data-drag-name="1">
-                <p>5개제한, 1번 3개 정답</p>
-                <div class="mdl-drag-answer">
-                    <div class="mdl-drag-drop d1">1</div>
-                    <div class="mdl-drag-drop d1">1</div>
-                    <div class="mdl-drag-drop d1">1</div>
-                </div>
+        <div data-drag-id="test3">
+            <div data-drag-area="col1">
+                <div data-drag-target="1,2" data-limit="2" data-sort="left"></div>  
             </div>
-            <div class="mdl-drag-area a2" data-drag-name="2">
-                <p>1개제한, 2번 1개 정답</p>
-                <div class="mdl-drag-answer">
-                    <div class="mdl-drag-drop d2">2</div>
-                </div>
+            
+            <div data-drag-box="col3">
+                <div data-drag-object="1">입력장치</div>
+                <div data-drag-object="2">출력장치</div>
+                <div data-drag-object="3">기억장치</div>
+                <div data-drag-object="4">중앙 처리 장치</div>
             </div>
-            <div class="mdl-drag-area a3" data-drag-name="3">
-                <p>무제한, 3번 2개 정답</p>
-                <div class="mdl-drag-answer">
-                    <div class="mdl-drag-drop d3">3</div>
-                    <div class="mdl-drag-drop d3">3</div>
-                </div>
-            </div>
-
-            <div class="mdl-drag-drop d1" data-drag-name="1">1</div>
-            <div class="mdl-drag-drop d2" data-drag-name="2">2</div>
-            <div class="mdl-drag-drop d3" data-drag-name="3">3</div>
+            
         </div>
         <div class="mdl-button-area">
-            <button type="button" class="mdl-button" onclick="UI.exe.dragdrop.check()">정답 체크</button>
-            <button type="button" class="mdl-button" onclick="UI.exe.dragdrop.complete()">정답</button>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragdrop3.check()">정답 체크</button>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragdrop3.complete()">정답 확인</button>
+            <button type="button" class="mdl-button" onclick="UI.exe.dragdrop3.reset()">리셋</button>
+        </div>
+    </box>
+
+    <h2 data-h="2">순서바꾸기</h1>
+        <box>
+            <div data-drag-id="test4">
+                <div data-drag-area="col4">
+                    <div data-drag-target="1" data-limit="1" data-sort="full">
+                        <div data-drag-object="4">입력장치</div>
+                    </div>  
+                    <div data-drag-target="2" data-limit="1" data-sort="full">
+                        <div data-drag-object="3">출력장치</div>
+                    </div>  
+                    <div data-drag-target="3" data-limit="1" data-sort="full">
+                        <div data-drag-object="2">기억장치</div>
+                    </div>  
+                    <div data-drag-target="4" data-limit="1" data-sort="full">
+                        <div data-drag-object="1">중앙 처리 장치</div>
+                    </div>  
+                </div>
+            </div>
+            <div class="mdl-button-area">
+                <button type="button" class="mdl-button" onclick="UI.exe.dragdrop2.check()">정답 체크</button>
+                <button type="button" class="mdl-button" onclick="UI.exe.dragdrop2.complete()">정답 확인</button>
+                <button type="button" class="mdl-button" onclick="UI.exe.dragdrop2.reset()">리셋</button>
+            </div>
+        </box>
+
+    <h2 data-h="2">free</h1>
+    <box>
+        <div data-drag-id="test" class="test">
+            <div data-drag-area="col1">
+                <div data-drag-target="1" data-limit="100" data-sort="free"></div>  
+            </div>
+            <div data-drag-box="free">
+                <div data-drag-object="1" data-copy="true">1</div>
+                <div data-drag-object="1" data-copy="true">2</div>
+                <div data-drag-object="1" data-copy="true">3</div>
+            </div>
+        </div>
+        <div class="mdl-button-area">
             <button type="button" class="mdl-button" onclick="UI.exe.dragdrop.reset()">리셋</button>
         </div>
         
@@ -82,7 +116,6 @@
                 sum: 3,             <comment>// drop-area 에 들어가는 정답 갯수, 1 ~ n</comment>
                 limit: 5,           <comment>// drop-area 안에 들어갈 수 있는 최대 갯수,  1 ~ n</comment>
                 move: true,         <comment>// true 재선택 가능</comment>
-                align: 'center',    <comment>// drop-area의 display속성이 flex인 경우 필수 추가</comment>
                 copy: true,         <comment>// drop-drop 요소 무한사용</comment>
                 state: false        <comment>// 현재 정답 상태</comment>
             },
