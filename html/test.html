@@ -11,650 +11,186 @@
     <meta name="mobile-web-app-capable" content="yes">
 
     <title>Guide - title</title>
-    <!-- 기존 css -->
-    <!-- 신규 css -->
     <style>
-        html,
-        body {
-            margin: 0;
+        .img-wrap {
+            
         }
-
-        html {
-            font-size: 62.5%
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            overflow: hidden;
-            min-height: 100%;
+        [data-zoom] {
             position: relative;
-        }
+            width: 200px;
 
-        :root {
-            --vh: 100%;
-            /* iOS 11.2 이상 */
-            --sat: env(safe-area-inset-top);
-            --sar: env(safe-area-inset-right);
-            --sab: env(safe-area-inset-bottom);
-            --sal: env(safe-area-inset-left);
-            --basic: #FFD700;
-            --sub: #FF612D;
-            --maingra1: #FFE600;
-            --maingra2: #FFD300;
-            --subgra1: #ffdc60;
-            --subgra2: #ffc805;
-            --subgra3: #ffa800;
-            --subgra4: #ff9900;
-            --tpoint: #000000;
-            --text: #444444;
-            --gray: #666666;
-            --gray2: #777777;
-            --lightgray: #999999;
-            --red: #E14868;
-            --yellow: #F6D300;
-            --orange: #ff612d;
-            --green: #25C38F;
-            --blue: #4698FC;
-            --bggray0: #e1e1e1;
-            --bggray: #f7f7f7;
-            --bggray2: #e5e5e5;
-            --bggray3: #eeeeee;
-            --bggray4: #d7d7d7;
-            --bggray5: #EEEEEE;
-            --bgyellow: #fff8d9;
-            --linegray: #cccccc;
-            --linelightgray: #d7d7d7;
-            --lineyellow: #ffed94;
-            /*그래프 컬러*/
-            --graph01: #f23500;
-            --graph02: #bd2459;
-            --graph03: #ff9500;
-            --graph04: #ffc40e;
-            --graph05: #ffdd85;
-            --gray900: #212121;
-            --gray800: #424242;
-            --gray700: #616161;
-            --gray600: #757575;
-            --gray500: #9E9E9E;
-            --gray400: #BDBDBD;
-            --gray300: #E0E0E0;
-            --gray200: #EEEEEE;
-            --gray100: #F5F5F5;
-            --gray50: #FAFAFA;
-            --black: #000000;
-            --white: #FFFFFF;
-            --primary: #6B38FB;
-            --primary-hover: #6B38FB;
-            --primary-focus: #6B38FB;
-            --primary-press: #6B38FB;
-            --secondary: #bec5d1;
-            --secondary-hover: #bec5d1;
-            --secondary-focus: #bec5d1;
-            --secondary-press: #bec5d1;
-            --tertiary: #f8fc06;
-            --tertiary-hover: #f8fc06;
-            --tertiary-focus: #f8fc06;
-            --tertiary-press: #f8fc06;
-            --error: #f44336;
-            --success: #3182f6;
-            --link: #6296df;
-        }
+            img {
+                display: block;
+                object-fit:cover;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
 
-        :root.dark {
-            --gray900: #FAFAFA;
-            --gray800: #F5F5F5;
-            --gray700: #EEEEEE;
-            --gray600: #E0E0E0;
-            --gray500: #BDBDBD;
-            --gray400: #9E9E9E;
-            --gray300: #757575;
-            --gray200: #616161;
-            --gray100: #424242;
-            --gray50: #212121;
-            --black: #ffffff;
-            --white: #000;
-            --primary: hsl(51deg 100% 49%);
-            --primary-hover: hsl(51deg 100% 40%);
-            --primary-focus: hsl(51deg 100% 40%);
-            --primary-press: hsl(51deg 100% 20%);
-            --secondary: hsl(71deg, 74%, 67%);
-            --secondary-hover: hsl(71deg, 74%, 60%);
-            --secondary-focus: hsl(71deg, 74%, 60%);
-            --secondary-press: hsl(71deg, 74%, 50%);
-            --tertiary: #ffc0f6;
-            --error: #f44336;
-            --success: #3182f6;
-            --link: #6296df;
+            }
         }
-
-        .kbhc-wrap {
-            position: relative;
-            height: calc(var(--vh, 1vh) * 100);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            -webkit-overflow-scrolling: touch;
-            -webkit-box-orient: vertical;
-        }
-
-        .kbhc-wrap .kbhc-header {
-            position: relative;
-            padding: env(safe-area-inset-top) env(safe-area-inset-right) 0 env(safe-area-inset-left);
-            background-color: blue;
-        }
-
-        .kbhc-wrap .kbhc-main {
-            position: relative;
+        [data-zoom-area] {
+            width: 100%;
+            height: 100%;
             background-color: #fff;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            border-radius: 1rem;
+            overflow: hidden;
         }
-
-        .kbhc-wrap .kbhc-footer {
-            position: relative;
-            padding: 0 env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
-            background-color: red;
-        }
-
-
-        .fix {
+       
+       
+        [data-zoom="true"] {
             position: fixed;
-        }
-
-
-
-        guide {
-            opacity: 0.3;
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 1px dashed tomato !important;
-            background-color: rgba(238, 238, 238, 0.2);
-            pointer-events: none;
-            z-index: 1000;
-        }
-
-        guide::after,
-        guide::before {
-            content: "";
-            position: absolute;
-            display: block;
-        }
-
-        guide::after {
-            width: 100%;
-            height: 1px;
-            border-top: 1px dashed tomato;
-            top: 50%;
-            left: 0;
-        }
-
-        guide::before {
-            width: 1px;
-            height: 100%;
-            border-left: 1px dashed tomato;
-            left: 50%;
-            top: 0;
-        }
-
-        guide2 {
-            opacity: 0.8;
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 1px dotted rgb(57, 248, 98) !important;
-            background-color: rgba(77, 255, 71, 0.1);
-            pointer-events: none;
-            z-index: 999;
-            margin: 0 !important;
-        }
-
-        guide2::after,
-        guide2::before {
-            content: "";
-            position: absolute;
-            display: block;
-        }
-
-        guide2::after {
-            width: 100%;
-            height: 1px;
-            border-top: 1px dotted rgb(57, 248, 98);
-            top: 50%;
-            left: 0;
-        }
-
-        guide2::before {
-            width: 1px;
-            height: 100%;
-            border-left: 1px dotted rgb(57, 248, 98);
-            left: 50%;
-            top: 0;
-        }
-
-        box {
             display: flex;
-            flex-direction: column;
-            width: 100%;
-            padding: 20px;
-            background: #fff;
-            background-image: radial-gradient(rgba(204, 204, 204, 0.2) 1px, transparent 0), radial-gradient(rgba(204, 204, 204, 0.2) 1px, transparent 0);
-            background-position: -5px 0;
-            background-size: 10px 10px;
-        }
-
-        wrap {
-            display: flex;
-            width: 100%;
-            padding: 2.4rem;
-            align-items: flex-start;
-            gap: 0.8rem;
-            flex-direction: column;
-        }
-
-        tit {
-            display: flex;
-            padding: 0.8rem 0 2.4rem;
-            font-size: 2.4rem;
-            color: #000;
-        }
-
-        stit {
-            display: flex;
-            padding: 1.6rem 0 0;
-            font-size: 1.8rem;
-            font-weight: 600;
-            color: #000;
-        }
-
-        .kbhc-subject {
-            position: relative;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .kbhc-subject-group {
-            position: relative;
-            display: flex;
-            align-items: flex-start;
-            flex-direction: column;
-        }
-
-        .kbhc-subject-em {
-            display: block;
-            position: relative;
-            font-family: "KBDisplay";
-            font-size: 1.3rem;
-            font-weight: 500;
-            margin-bottom: 0.8rem;
-            color: #444;
-        }
-
-        .kbhc-subject-tit {
-            display: block;
-            position: relative;
-            font-family: "KBDisplay";
-            font-size: 2.2rem;
-            font-weight: 700;
-            line-height: 2.8rem;
-            letter-spacing: -0.06rem;
-            color: #000;
-        }
-
-        .kbhc-subject-txt {
-            display: block;
-            position: relative;
-            font-family: "KBDisplay";
-            font-size: 1.6rem;
-            font-weight: 300;
-            line-height: 2.2rem;
-            letter-spacing: -0.06rem;
-            color: #777;
-            margin-top: 0.8rem;
-        }
-
-        .kbhc-subject[data-align=left] .kbhc-subject-em,
-        .kbhc-subject[data-align=left] .kbhc-subject-tit,
-        .kbhc-subject[data-align=left] .kbhc-subject-txt {
-            text-align: left;
-        }
-
-        .kbhc-subject[data-align=center] .kbhc-subject-em,
-        .kbhc-subject[data-align=center] .kbhc-subject-tit,
-        .kbhc-subject[data-align=center] .kbhc-subject-txt {
-            text-align: center;
-        }
-
-        .kbhc-subject[data-align=right] .kbhc-subject-em,
-        .kbhc-subject[data-align=right] .kbhc-subject-tit,
-        .kbhc-subject[data-align=right] .kbhc-subject-txt {
-            text-align: right;
-        }
-
-        .kbhc-subject[data-color=dark] .kbhc-subject-em {
-            color: #444;
-        }
-
-        .kbhc-subject[data-color=dark] .kbhc-subject-tit {
-            color: #000;
-        }
-
-        .kbhc-subject[data-color=dark] .kbhc-subject-txt {
-            color: #777;
-        }
-
-        .kbhc-subject[data-color=light] .kbhc-subject-em {
-            color: #ccc;
-        }
-
-        .kbhc-subject[data-color=light] .kbhc-subject-tit {
-            color: #fff;
-        }
-
-        .kbhc-subject[data-color=light] .kbhc-subject-txt {
-            color: #fff;
-        }
-
-        .kbhc-box {
-            display: flex;
-            width: 100%;
-            border-radius: 2.4rem;
-            padding: 2.4rem;
-            background-color: #FFF;
-            text-align: left;
-            height: 18.4rem;
-        }
-
-        .kbhc-box[data-type=round] {
-            border-radius: 2.4rem;
-        }
-
-        .kbhc-box[data-bg=square] {
-            border-radius: 0;
-        }
-
-        .kbhc-box[data-color=light] {
-            background-color: #FFF;
-        }
-
-        .kbhc-box[data-color=dark] {
-            background-color: #000;
-        }
-
-        .kbhc-box[data-txt=lt] {
-            text-align: left;
-        }
-
-        .kbhc-box[data-txt=center] {
-            text-align: center;
-        }
-
-        .kbhc-box[data-txt=rt] {
-            text-align: right;
-        }
-
-        .kbhc-btn {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
             justify-content: center;
-            padding: 0 2rem;
-            min-width: 4rem;
-            height: 4rem;
-            font-size: 1.4rem;
-            text-decoration: none;
-            font-weight: 400;
-            line-height: 1;
-            vertical-align: top;
-            border-radius: 0.3rem;
-            border: 0.1rem solid #444;
-            background-color: #fff;
-            color: #444;
-            z-index: 0;
-        }
+            align-items: center;
+            background-color: rgba(0,0,0,0.6);
+            top:0; left:0;
+            z-index: 10;
+            width: 100%;
+            height: 100%;
 
-        .kbhc-btn.hover>span,
-        .kbhc-btn:hover>span,
-        .kbhc-btn.focus>span,
-        .kbhc-btn:focus>span {
-            text-decoration: underline;
-        }
+            .zoom-control {
+                .btn-zoom-plus,
+                .btn-zoom-minus {
+                    display: flex;
+                }
+            }
+            [data-zoom-area] {
+                position: relative;
+                width: 50rem;
+                height: 30rem;
+                
+                overflow: auto;
 
-        .kbhc-btn>span {
-            flex: 0 auto;
-            display: block;
-            text-align: center;
-            line-height: 1;
-        }
+                -ms-overflow-style: none;
+                scrollbar-width: none; 
 
-        .kbhc-btn.hover,
-        .kbhc-btn:hover {
-            background-color: #f2f2f2;
+                img {
+                    position: absolute;
+                    width: auto;
+                    height: auto;
+                    left:50%;
+                    top:50%;
+                    transform: translate(-50%, -50%);
+                }
+            }
+            [data-zoom-area]::-webkit-scrollbar {
+                display: none;
+            }
         }
+        .zoom-control{
+            position: absolute;
+            bottom: 1rem;
+            right: 1rem;
+            display: flex;
+            gap:.8rem;
 
-        .kbhc-btn.focus,
-        .kbhc-btn:focus {
-            background-color: #f2f2f2;
+            button {
+                width: 2rem;
+                height: 2rem;
+                border-radius: 50%;
+                background-color:#000 ;
+                border:0;
+                color: #fff;
+                display: flex;
+                align-items:center;
+                justify-content: center;
+            }
+            .btn-zoom-plus,
+            .btn-zoom-minus {
+                display: none;
+            }
         }
-
-        .kbhc-btn.active,
-        .kbhc-btn:active {
-            background-color: #f2f2f2;
-        }
-
-        .kbhc-btn[data-color=primary] {
-            background: var(--basic);
-            border: 0;
-            color: #fff;
-        }
-
-        .kbhc-btn[data-color=secondary] {
-            background: var(--sub);
-            border: 0;
-            color: #fff;
-        }
-
-        .kbhc-btn[data-color=gray] {
-            background: var(--gray);
-            border: 0;
-            color: #fff;
-        }
-
-        .kbhc-btn[data-size=large] {
-            height: 5rem;
-            font-size: 1.8rem;
-            min-width: 5rem;
-        }
-
-        .kbhc-btn[data-size=large][data-icon]::before {
-            width: 3rem;
-            height: 3rem;
-        }
-
-        .kbhc-btn[data-size=medium] {
-            height: 4rem;
-            font-size: 1.4rem;
-            min-width: 4rem;
-        }
-
-        .kbhc-btn[data-size=medium][data-icon]::before {
-            width: 2rem;
-            height: 2rem;
-        }
-
-        .kbhc-btn[data-size=small] {
-            height: 2.6rem;
-            font-size: 1.2rem;
-            min-width: 2.6rem;
-        }
-
-        .kbhc-btn[data-size=small][data-icon-e]::before,
-        .kbhc-btn[data-size=small][data-icon]::before {
-            width: 1.6rem;
-            height: 1.6rem;
-        }
-
-        .kbhc-btn[data-shape=square] {
-            border-radius: 0;
-        }
-
-        .kbhc-btn[data-shape=round] {
-            border-radius: 1.6rem;
-        }
-
-        .kbhc-btn[data-type=a] {
-            background: transparent !important;
-            border: 0 !important;
-        }
-
-        /*# sourceMappingURL=main.css.map */
     </style>
 </head>
 
-<body style="background-color: #25C38F;">
-
-    <!-- 
-        * 첫 옵션값은 기본값
-        data-color  : dark | light | ...
-        data-style   : ...
-        data-align  : left | center | right
-    -->
-    <div class="kbhc-wrap">
-        <header class="kbhc-header">
-            <div style="min-height: 5.6rem; width:100%; background-color: #212121;">
-                <div style="color:#fff; height: 3rem; border: 1px solid green;">test</div>
-                <div class="fix" style="width:3rem; height:4rem; background-color: #000; top:0; right:0"></div>
+<body>
+    <div style="width: 400px; height: 400px; overflow: auto; border: 1px dashed #ccc;">
+        <div class="img-wrap" data-zoom="false">
+            <div data-zoom-area="1">
+                <img src="./test.jpg" alt="">
+                
             </div>
-        </header>
-        <main class="kbhc-main">
-            <wrap class="content scrollBox">
-                <tit>Title Module</tit>
-                <stit>기본</stit>
-                <box>
-                    <div class="kbhc-subject" data-align="left">
-                        <guide></guide>
-                        <div class="kbhc-subject-group">
-                            <em class="kbhc-subject-em">
-                                <guide2></guide2>이달의 오케어 미션
-                            </em>
-                            <h1 class="kbhc-subject-tit">
-                                <guide2></guide2>치아 관리하고 <br>봄처럼 환하게 웃자
-                            </h1>
-                            <p class="kbhc-subject-txt">
-                                <guide2></guide2>내가 보는 나와 타인이 보는 <br>나의 모습은 같을까요?
-                            </p>
-                        </div>
-                        <div class="kbhc-subject-group">
-                            <button type="button" class="kbhc-btn" data-icon="collect">
-                                <guide2></guide2>
-                                <span>모아보기</span>
-                            </button>
-                        </div>
-                    </div>
-                </box>
-
-                <stit>기본2</stit>
-                <box style="background-color: #222;">
-                    <div class="kbhc-subject" data-color="light">
-                        <div class="kbhc-subject-group">
-                            <em class="kbhc-subject-em">이달의 오케어 미션</em>
-                            <h1 class="kbhc-subject-tit">치아 관리하고 <br>봄처럼 환하게 웃자</h1>
-                            <p class="kbhc-subject-txt">내가 보는 나와 타인이 보는 <br>나의 모습은 같을까요?</p>
-                        </div>
-                        <div class="kbhc-subject-group">
-                            <a href="">모아보기</a>
-                        </div>
-                    </div>
-                </box>
-
-                <stit>기본3</stit>
-                <box style="background-color: #222;">
-                    <div class="kbhc-subject" data-color="light">
-                        <div class="kbhc-subject-group">
-                            <em class="kbhc-subject-em">이달의 오케어 미션</em>
-                            <h1 class="kbhc-subject-tit">치아 관리하고 <br>봄처럼 환하게 웃자</h1>
-                            <p class="kbhc-subject-txt">내가 보는 나와 타인이 보는 <br>나의 모습은 같을까요?</p>
-                        </div>
-                        <div class="kbhc-subject-group">
-                            <a href="">모아보기</a>
-                        </div>
-                    </div>
-                </box>
-
-                <stit>기본4</stit>
-                <box style="background-color: #222;">
-                    <div class="kbhc-subject" data-color="light">
-                        <div class="kbhc-subject-group">
-                            <em class="kbhc-subject-em">이달의 오케어 미션</em>
-                            <h1 class="kbhc-subject-tit">치아 관리하고 <br>봄처럼 환하게 웃자</h1>
-                            <p class="kbhc-subject-txt">내가 보는 나와 타인이 보는 <br>나의 모습은 같을까요?</p>
-                        </div>
-                        <div class="kbhc-subject-group">
-                            <a href="">모아보기</a>
-                        </div>
-                    </div>
-                </box>
-
-                <stit>기본5</stit>
-                <box style="background-color: #222;">
-                    <div class="kbhc-subject" data-color="light">
-                        <div class="kbhc-subject-group">
-                            <em class="kbhc-subject-em">이달의 오케어 미션</em>
-                            <h1 class="kbhc-subject-tit">치아 관리하고 <br>봄처럼 환하게 웃자</h1>
-                            <p class="kbhc-subject-txt">내가 보는 나와 타인이 보는 <br>나의 모습은 같을까요?</p>
-                        </div>
-                        <div class="kbhc-subject-group">
-                            <a href="">모아보기</a>
-                        </div>
-                    </div>
-                </box>
-
-
-                <stit>기본</stit>
-                <box style="background-color: #222;">
-                    <div class="kbhc-subject" data-color="light">
-                        <div class="kbhc-subject-group">
-                            <em class="kbhc-subject-em">이달의 오케어 미션</em>
-                            <h1 class="kbhc-subject-tit">치아 관리하고 <br>봄처럼 환하게 웃자</h1>
-                            <p class="kbhc-subject-txt">내가 보는 나와 타인이 보는 <br>나의 모습은 같을까요?</p>
-                        </div>
-                        <div class="kbhc-subject-group">
-                            <a href="">모아보기</a>
-                        </div>
-                    </div>
-                </box>
-
-            </wrap>
-        </main>
-        <footer class="kbhc-footer">
-            <div style="color:#fff; min-height: 5rem; border: 1px solid green; background-color: orange;">test</div>
-        </footer>
+            <div class="zoom-control">
+                <button type="button" aria-label="이미지 창열기" class="btn-zoom-open">></button>
+                <button type="button" aria-label="이미지 확대" class="btn-zoom-plus">+</button>
+                <button type="button" aria-label="이미지 축소" class="btn-zoom-minus">-</button>
+            </div>
+        </div>
     </div>
 
-
     <script>
-        const vh = window.innerHeight * 0.01;
+        const btn = document.querySelector('.btn-zoom-open');
+        const zoomView = (e) => {
+            const _this = e.currentTarget;
+            const _wrap = _this.closest('[data-zoom]');
+            const _clone = _wrap.cloneNode(true);
+            _clone.dataset.zoom="true";
+            document.querySelector('body').insertAdjacentElement('beforeend', _clone);
+             
+            const el_clone = document.querySelector('[data-zoom="true"]');
+            const btn_plus = el_clone.querySelector('.btn-zoom-plus');
+            const el_area = el_clone.querySelector('[data-zoom-area]');
+            const el_img = el_area.querySelector('img');
+            btn_plus.addEventListener('click', () => {
+                const el_value = el_clone.querySelector('[data-zoom-area]');
+                el_value.dataset.zoomArea = Number(el_value.dataset.zoomArea) + 0.1;
+                console.log(el_value.querySelector('img'));
+                el_value.querySelector('img').style.zoom = el_value.dataset.zoomArea;
+            });
+            const btn_minus = el_clone.querySelector('.btn-zoom-minus');
+            btn_minus.addEventListener('click', () => {
+                const el_value = el_clone.querySelector('[data-zoom-area]');
+                el_value.dataset.zoomArea = Number(el_value.dataset.zoomArea) - 0.1;
+                console.log(el_value.querySelector('img'));
+                el_value.querySelector('img').style.zoom = el_value.dataset.zoomArea;
+            });
 
-        document.documentElement.style.setProperty("--vh", `${vh}px`);
+            let base_x = 0;
+            let base_y = 0;
+            const actStart = (e) => {
+                const body = document.querySelector('body');
+                const el_this = e.currentTarget;
+                const s_y = el_area.scrollTop;
+                const s_x = el_area.scrollLeft;
+                const area_rect = el_area.getBoundingClientRect();
+                const area_t = area_rect.top + s_y;
+                const area_l = area_rect.left + s_x;
 
-        window.addEventListener("resize", () => {
-            const vh = window.innerHeight * 0.01;
-            document.documentElement.style.setProperty("--vh", `${vh}px`);
-        });
+                let start_x = !!e.clientX ? e.clientX : e.targetTouches[0].clientX;
+                let start_y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
+                let move_x = 0;
+                let move_y = 0;   
+                const actMove = (e) => {
+                    move_x = !!e.clientX ? e.clientX : e.targetTouches[0].clientX;
+                    move_y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
+
+                    console.log(start_x, start_y)
+                    console.log(move_x, move_y)
+                    console.log('___________');
+
+                    el_img.style.transform = `translate(calc(-50% + ${move_x - start_x}px + ${base_x}px), calc(-50% + ${move_y - start_y}px + ${base_y}px))`;
+                }
+                const actEnd = (e) => {
+                    base_x = move_x - start_x + base_x;
+                    base_y = move_y - start_y + base_y;
+                    body.removeEventListener('mousemove',actMove);
+                    body.removeEventListener('mouseup',actEnd);
+                    body.removeEventListener('touchmove',actMove);
+                    body.removeEventListener('touchend',actEnd);
+                }
+
+                body.addEventListener('mousemove',actMove);
+                body.addEventListener('mouseup',actEnd);
+                body.addEventListener('touchmove',actMove);
+                body.addEventListener('touchend',actEnd);
+            }
+            el_area.addEventListener('mousedown',actStart);
+            el_area.addEventListener('touchstart',actStart);
+        }
+        btn.addEventListener('click', zoomView);
+
+       
     </script>
-
-
 </body>
 
 </html>

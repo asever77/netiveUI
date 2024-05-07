@@ -9,3 +9,9 @@
         
     }
 }
+
+[data-drag-id="test4"] {
+    [data-drag-area] {
+        flex-direction: column;
+    }
+}
