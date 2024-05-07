@@ -25,6 +25,11 @@
                 width: 100%;
                 height: 100%;
                 pointer-events: none;
+                -ms-user-select: none; 
+                -moz-user-select: -moz-none;
+                -khtml-user-select: none;
+                -webkit-user-select: none;
+                user-select: none;
 
             }
         }
@@ -49,6 +54,7 @@
             height: 100%;
 
             .zoom-control {
+                .btn-zoom-init,
                 .btn-zoom-plus,
                 .btn-zoom-minus {
                     display: flex;
@@ -95,6 +101,7 @@
                 align-items:center;
                 justify-content: center;
             }
+            .btn-zoom-init,
             .btn-zoom-plus,
             .btn-zoom-minus {
                 display: none;
@@ -112,41 +119,62 @@
             </div>
             <div class="zoom-control">
                 <button type="button" aria-label="이미지 창열기" class="btn-zoom-open">></button>
-                <button type="button" aria-label="이미지 확대" class="btn-zoom-plus">+</button>
-                <button type="button" aria-label="이미지 축소" class="btn-zoom-minus">-</button>
+                <button type="button" data-zoom-state="plus" aria-label="이미지 확대" class="btn-zoom-plus">+</button>
+                <button type="button" data-zoom-state="minus" aria-label="이미지 축소" class="btn-zoom-minus">-</button>
+                <button type="button" data-zoom-state="init" aria-label="이미지 원본" class="btn-zoom-init">@</button>
             </div>
         </div>
     </div>
 
     <script>
-        const btn = document.querySelector('.btn-zoom-open');
+        const zoomBtns = document.querySelectorAll('.btn-zoom-open');
         const zoomView = (e) => {
+            let base_x = 0;
+            let base_y = 0;
+            let timer = null;
+
             const _this = e.currentTarget;
             const _wrap = _this.closest('[data-zoom]');
             const _clone = _wrap.cloneNode(true);
             _clone.dataset.zoom="true";
             document.querySelector('body').insertAdjacentElement('beforeend', _clone);
              
+            
             const el_clone = document.querySelector('[data-zoom="true"]');
+            const el_btn = el_clone.querySelector('.btn-zoom-open');
             const btn_plus = el_clone.querySelector('.btn-zoom-plus');
+            const btn_minus = el_clone.querySelector('.btn-zoom-minus');
+            const btn_init = el_clone.querySelector('.btn-zoom-init');
             const el_area = el_clone.querySelector('[data-zoom-area]');
             const el_img = el_area.querySelector('img');
-            btn_plus.addEventListener('click', () => {
-                const el_value = el_clone.querySelector('[data-zoom-area]');
-                el_value.dataset.zoomArea = Number(el_value.dataset.zoomArea) + 0.1;
-                console.log(el_value.querySelector('img'));
-                el_value.querySelector('img').style.zoom = el_value.dataset.zoomArea;
-            });
-            const btn_minus = el_clone.querySelector('.btn-zoom-minus');
-            btn_minus.addEventListener('click', () => {
-                const el_value = el_clone.querySelector('[data-zoom-area]');
-                el_value.dataset.zoomArea = Number(el_value.dataset.zoomArea) - 0.1;
-                console.log(el_value.querySelector('img'));
-                el_value.querySelector('img').style.zoom = el_value.dataset.zoomArea;
-            });
 
-            let base_x = 0;
-            let base_y = 0;
+            el_btn.addEventListener('click', () => {
+                _clone.remove()
+            });
+            
+            const actZoom = (e) => {
+                const _btn = e.currentTarget;
+                const state = _btn.dataset.zoomState;
+                switch (state) {
+                    case 'plus' : el_area.dataset.zoomArea = Number(el_area.dataset.zoomArea) + 0.1;
+                    break;
+                    case 'minus' : el_area.dataset.zoomArea = Number(el_area.dataset.zoomArea) - 0.1;
+                    break;
+                    case 'init' : 
+                        el_area.dataset.zoomArea = 1;
+                        el_img.style.zoom = 1;
+                        el_img.style.transform = `translate(-50%, -50%)`;
+                        base_x = 0;
+                        base_y = 0;
+                    break;
+                }
+                el_area.dataset.zoomArea = Number(el_area.dataset.zoomArea) < 1 ? 1 : Number(el_area.dataset.zoomArea) > 2 ? 2 : el_area.dataset.zoomArea;
+                el_img.style.zoom = el_area.dataset.zoomArea;
+            }
+            btn_plus.addEventListener('click', actZoom);
+            btn_minus.addEventListener('click', actZoom);
+            btn_init.addEventListener('click', actZoom);
+            
             const actStart = (e) => {
                 const body = document.querySelector('body');
                 const el_this = e.currentTarget;
@@ -160,7 +188,10 @@
                 let start_y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
                 let move_x = 0;
                 let move_y = 0;   
+
+                console.log(base_x,base_y)
                 const actMove = (e) => {
+                    clearTimeout(timer);
                     move_x = !!e.clientX ? e.clientX : e.targetTouches[0].clientX;
                     move_y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
 
@@ -169,6 +200,8 @@
                     console.log('___________');
 
                     el_img.style.transform = `translate(calc(-50% + ${move_x - start_x}px + ${base_x}px), calc(-50% + ${move_y - start_y}px + ${base_y}px))`;
+                    body.addEventListener('mouseup',actEnd);
+                    body.addEventListener('touchend',actEnd);
                 }
                 const actEnd = (e) => {
                     base_x = move_x - start_x + base_x;
@@ -178,16 +211,19 @@
                     body.removeEventListener('touchmove',actMove);
                     body.removeEventListener('touchend',actEnd);
                 }
-
                 body.addEventListener('mousemove',actMove);
-                body.addEventListener('mouseup',actEnd);
                 body.addEventListener('touchmove',actMove);
-                body.addEventListener('touchend',actEnd);
+                timer = setTimeout(() => {
+                    body.removeEventListener('mousemove',actMove);
+                    body.removeEventListener('touchmove',actMove);
+                },100);
             }
             el_area.addEventListener('mousedown',actStart);
             el_area.addEventListener('touchstart',actStart);
         }
-        btn.addEventListener('click', zoomView);
+        for (let item of zoomBtns) {
+            item.addEventListener('click', zoomView);
+        }
 
        
     </script>
