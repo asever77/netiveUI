@@ -24,7 +24,7 @@ UI.exe.dragdrop2 = new DragDrop({
         // area.classList.add('answer-on');
     }, 
     callbackComplete: (v) => {
-        console.log('callbackComplete', v.answer);
+        console.log('callbackComplete', v);
     }
 });
 
@@ -36,19 +36,18 @@ UI.exe.dragdrop3 = new DragDrop({
         // area.classList.add('answer-on');
     }, 
     callbackComplete: (v) => {
-        console.log('callbackComplete', v.answer);
+        console.log('callbackComplete', v);
     }
 });
 
 UI.exe.dragdrop4 = new DragDrop({
     id: 'test4',
-    type: 'order',
     callback: (v) => {
         console.log('callback', v);
         // const area = document.querySelector('[data-drag-id="test2"] .mdl-drag-area[data-drag-name="'+ v.name +'"]');
         // area.classList.add('answer-on');
     }, 
     callbackComplete: (v) => {
-        console.log('callbackComplete', v.answer);
+        console.log('callbackComplete', v);
     }
 });

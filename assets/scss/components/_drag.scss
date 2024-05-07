@@ -176,8 +176,15 @@
     display: flex;
     gap:2rem;
     flex-direction: column;
-
     
+    &[data-type="order"] {
+        flex-direction: column;
+        [data-drag-object] {
+            position: absolute;
+            top:0;
+            left:0;
+        }
+    }
     [data-drag-target] {
         position: relative;
         background-color: #F9F9FA;
@@ -233,48 +240,48 @@
         padding:0 2rem;
         box-shadow: 0 .4rem 1.6rem rgba(71, 73, 77, 0.24);
         cursor: pointer;
-
+        &.ready {
+            outline: 1px solid black;
+        }
         &.active {
             z-index: 10;
         }
+        &.disabled {
+            pointer-events: none !important;
+            cursor: default !important;
+            opacity: 0.2 !important;
+            box-shadow: none !important;
+        }
     }
-
-    [data-drag-box] {
+    [data-drag-item] {
         position: relative;
-        background-color: #F9F9FA;
-        width: 100%;
-        display: flex;
-        gap:1.6rem;
-        flex-wrap: wrap;
-        padding: 2.4rem;
-        border-radius: 1rem;
     }
-    [data-drag-box="col2"] {
-        [data-drag-object] {
-            width: calc(50% - 0.8rem);
-        }
-    }
-    [data-drag-box="col3"] {
-        [data-drag-object] {
-            width: calc((100% / 3) - (0.8rem * 1) - (1px * 3));
-        }
-    }
-
-    [data-drag-area] {
+    [data-drag-group] {
+        position: relative;
         width: 100%;
         display: flex;
         gap:1.6rem;
         flex-wrap: wrap;
 
-    }
-    [data-drag-area="col4"] {
-        [data-drag-target] {
-            width: calc((100% / 4) - (0.8rem * 1) - (1px * 4));
+        &[data-col="col1"] {
+            [data-drag-target] {
+                width: 100%;
+            }
         }
-    }
-    [data-drag-area="col1"] {
-        [data-drag-target] {
-            width: 100%;
+        &[data-col="col2"] {
+            [data-drag-item] {
+                width: calc(50% - 0.8rem);
+            }
+        }
+        &[data-col="col3"] {
+            [data-drag-item] {
+                width: calc((100% / 3) - (0.8rem * 1) - (1px * 3));
+            }
+        }
+        &[data-col="col4"] {
+            [data-drag-target] {
+                width: calc((100% / 4) - (0.8rem * 1) - (1px * 4));
+            }
         }
     }
 
@@ -312,4 +319,5 @@
     &[data-state="complete"] [data-drag-answer] {
         display: flex;
     }
+    
 }

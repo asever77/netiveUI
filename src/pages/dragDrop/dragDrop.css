@@ -1,4 +1,4 @@
-.test[data-drag-id="test"] {
+[data-drag-id="test"] {
     height: auto;
     [data-drag-target] {
         height: 30rem;
@@ -8,4 +8,12 @@
         height: 5rem;
         
     }
+}
+[data-drag-id="test4"] [data-drag-group="object"] {
+    flex-direction: column;
+}
+[data-drag-group="object"] {
+    background-color: #F9F9FA;
+    padding: 2.4rem;
+    border-radius: 1rem;
 }
