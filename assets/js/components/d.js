@@ -14,8 +14,7 @@ export default class DrawDrop {
   
       this.array_target = [];
       this.array_items = [];
-      this.el_scroll = document.querySelector('body');
-      // this.el_scroll = document.querySelector('.innerContsScroll');
+      this.el_scroll = document.querySelector('.innerContsScroll');
   
       this.wrap_rect = this.wrap.getBoundingClientRect();
       this.wrap_t = this.wrap_rect.top;
