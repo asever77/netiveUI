@@ -325,14 +325,21 @@ export default class DrawDrop {
         let _y = this.isTouch ? e.targetTouches[0].clientY : e.clientY;
         let m_y;
         let m_x;
+        
   
         m_y =
           _y + this.win_y - (rect_item.top + this.win_y) - rect_this.height / 2;
         m_x =
           _x + this.win_x - (rect_item.left + this.win_x) - rect_this.width / 2;
+
+        const s_x = m_x;
+        const y_x = m_y;
+
+        console.log('S', _x, m_x);
   
         el_clone.style.transform = `translate(${m_x}px, ${m_y}px)`;
         el_clone.style.maxWidth = rect_this.width + 'px';
+
   
         const actEnd = () => {
           const e_x = m_x + rect_item.left + this.win_x + rect_this.width / 2;
@@ -492,11 +499,13 @@ export default class DrawDrop {
         const actMove = e => {
           _x = !!e.clientX ? e.clientX : e.targetTouches[0].clientX;
           _y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
-          m_y =
-            _y + this.win_y - (rect_item.top + this.win_y) - rect_this.height / 2;
-          m_x =
-            _x + this.win_x - (rect_item.left + this.win_x) - rect_this.width / 2;
+
+          m_y = _y + this.win_y - (rect_item.top + this.win_y) - rect_this.height / 2;
+          m_x = _x + this.win_x - (rect_item.left + this.win_x) - rect_this.width / 2;
   
+
+           
+
           el_clone.style.transform = 'translate(' + m_x + 'px, ' + m_y + 'px)';
         };
   
