@@ -1,57 +1,51 @@
 <div class="base-main-wrap">
     <h1 data-h="1">Drag Line</h1>
     <h2 data-h="2">1:1</h2>
+   
     <box>
         <div data-line-id="test">
-            <div data-line-col="1" data-line-row="1">
-                <button data-line-object="1" type="button" aria-label="line object 1"></button>
-                <div data-ps="top">
-                    <p>
-                        드래그라인 <br />
-                        텍스트입니다.
-                    </p>
+            <div data-flex="column">
+                <div data-line-group="object">
+                    <div data-line-item>
+                        <button data-line-object="1" type="button" aria-label="응용 소프트웨어1" data-label="응용 소프트웨어1"></button>
+                        <div data-ps="top">
+                            응용 소프트웨어
+                        </div>
+                    </div>
+                    <div data-line-item>
+                        <button data-line-object="2" type="button" aria-label="응용 소프트웨어2" data-label="응용 소프트웨어2"></button>
+                        <div data-ps="top">
+                            <img src="../../../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
+                        </div>
+                    </div>
+                    <div data-line-item>
+                        <button data-line-object="3" type="button" aria-label="응용 소프트웨어3" data-label="응용 소프트웨어3"></button>
+                        <div data-ps="top">
+                            <img src="../../../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
+                            <div>드래그라인 <br />텍스트입니다.</div>
+                        </div>
+                    </div>
                 </div>
-            </div>
-            <div data-line-col="2" data-line-row="1">
-                <button data-line-object="2" type="button" aria-label="line object 2"></button>
-                <div data-ps="top">
-                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                </div>
-            </div>
-            <div data-line-col="3" data-line-row="1">
-                <button data-line-object="3" type="button" aria-label="line object 3"></button>
-                <div data-ps="top">
-                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                    <p>
-                        드래그라인 <br />
-                        텍스트입니다.
-                    </p>
-                </div>
-            </div>
-
-            <div data-line-col="1" data-line-row="2">
-                <button data-line-target="1" type="button" aria-label="line target 1"></button>
-                <div data-ps="bottom">
-                    <p>
-                        드래그라인 <br />
-                        텍스트입니다.
-                    </p>
-                </div>
-            </div>
-            <div data-line-col="2" data-line-row="2">
-                <button data-line-target="2" type="button" aria-label="line target 2"></button>
-                <div data-ps="bottom">
-                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                </div>
-            </div>
-            <div data-line-col="3" data-line-row="2">
-                <button data-line-target="3" type="button" aria-label="line target 3"></button>
-                <div data-ps="bottom">
-                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                    <p>
-                        드래그라인 <br />
-                        텍스트입니다.
-                    </p>
+                <div data-line-group="target">
+                    <div data-line-item>
+                        <button data-line-target="1" type="button" aria-label="문제 키워드1" data-label="문제 키워드1" tabindex="-1"></button>
+                        <div data-ps="bottom">
+                            문제 키워드1
+                        </div>
+                    </div>
+                    <div data-line-item>
+                        <button data-line-target="2" type="button" aria-label="문제 키워드2" data-label="문제 키워드2" tabindex="-1"></button>
+                        <div data-ps="bottom">
+                            <img src="../../../assets/img/dummy/dragline_img.png" alt="문제 키워드2" />
+                        </div>
+                    </div>
+                    <div data-line-item>
+                        <button data-line-target="3" type="button" aria-label="문제 키워드3" data-label="문제 키워드3" tabindex="-1"></button>
+                        <div data-ps="bottom">
+                            <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
+                            <div>드래그라인 <br />텍스트입니다.</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -61,120 +55,56 @@
             <button type="button" class="mdl-button" onclick="UI.exe.dragline.reset()">정답 리셋</button>
         </div>
     </box>
+    <h2 data-h="2">n:n</h2>
     <box>
-        <div data-line-id="test3">
-            <div data-flex="column">
+        <div data-line-id="test2" data-line-type="multiple">
+            <div data-flex="row">
                 <div data-line-group="object">
-                    <div data-line-col="1" data-line-row="1">
-                        <button data-line-object="1" type="button" aria-label="line object 1"></button>
-                        <div data-ps="top">
-                            <p>
-                                드래그라인 <br />
-                                텍스트입니다.
-                            </p>
+                    <div data-line-item>
+                        <button 
+                        data-line-object="1,2" 
+                        type="button" 
+                        aria-label="응용 소프트웨어1" 
+                        data-label="응용 소프트웨어1"
+                        ></button>
+                        <div data-ps="left">
+                            응용 소프트웨어
                         </div>
                     </div>
-                    <div data-line-col="2" data-line-row="1">
-                        <button data-line-object="2" type="button" aria-label="line object 2"></button>
-                        <div data-ps="top">
-                            <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
+                    <div data-line-item>
+                        <button data-line-object="2,3" type="button" aria-label="응용 소프트웨어2" data-label="응용 소프트웨어2"></button>
+                        <div data-ps="left">
+                            <img src="../../../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
                         </div>
                     </div>
-                    <div data-line-col="3" data-line-row="1">
-                        <button data-line-object="3" type="button" aria-label="line object 3"></button>
-                        <div data-ps="top">
-                            <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                            <p>
-                                드래그라인 <br />
-                                텍스트입니다.
-                            </p>
+                    <div data-line-item>
+                        <button data-line-object="3" type="button" aria-label="응용 소프트웨어3" data-label="응용 소프트웨어3"></button>
+                        <div data-ps="left">
+                            <img src="../../../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
+                            <div>드래그라인 <br />텍스트입니다.</div>
                         </div>
                     </div>
                 </div>
                 <div data-line-group="target">
-                    <div data-line-col="1" data-line-row="2">
-                        <button data-line-target="1" type="button" aria-label="line target 1"></button>
-                        <div data-ps="bottom">
-                            <p>
-                                드래그라인 <br />
-                                텍스트입니다.
-                            </p>
+                    <div data-line-item>
+                        <button data-line-target="1" type="button" aria-label="문제 키워드1" data-label="문제 키워드1" tabindex="-1"></button>
+                        <div data-ps="right">
+                            문제 키워드1
                         </div>
                     </div>
-                    <div data-line-col="2" data-line-row="2">
-                        <button data-line-target="2" type="button" aria-label="line target 2"></button>
-                        <div data-ps="bottom">
+                    <div data-line-item>
+                        <button data-line-target="2" type="button" aria-label="문제 키워드2" data-label="문제 키워드2" tabindex="-1"></button>
+                        <div data-ps="right">
+                            <img src="../../../assets/img/dummy/dragline_img.png" alt="문제 키워드2" />
+                        </div>
+                    </div>
+                    <div data-line-item>
+                        <button data-line-target="3" type="button" aria-label="문제 키워드3" data-label="문제 키워드3" tabindex="-1"></button>
+                        <div data-ps="right">
                             <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
+                            <div>드래그라인 <br />텍스트입니다.</div>
                         </div>
                     </div>
-                    <div data-line-col="3" data-line-row="2">
-                        <button data-line-target="3" type="button" aria-label="line target 3"></button>
-                        <div data-ps="bottom">
-                            <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                            <p>
-                                드래그라인 <br />
-                                텍스트입니다.
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mdl-button-area">
-            <button type="button" class="mdl-button" onclick="UI.exe.dragline3.check()">정답 체크</button>
-            <button type="button" class="mdl-button" onclick="UI.exe.dragline3.complete()">정답 확인</button>
-            <button type="button" class="mdl-button" onclick="UI.exe.dragline3.reset()">정답 리셋</button>
-        </div>
-    </box>
-    <h2 data-h="2">1:n</h2>
-    <box>
-        <div data-line-id="test2" data-line-type="multiple">
-            <div data-line-col="1" data-line-row="1">
-                <button data-line-object="1,2" type="button" aria-label="line object 1"></button>
-                <div data-ps="left">
-                    <p>드래그라인 텍스트입니다.</p>
-                </div>
-            </div>
-            <div data-line-col="1" data-line-row="2">
-                <button data-line-object="2,3" type="button" aria-label="line object 2"></button>
-                <div data-ps="left">
-                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                </div>
-            </div>
-            <div data-line-col="1" data-line-row="3">
-                <button data-line-object="3,1" type="button" aria-label="line object 3"></button>
-                <div data-ps="left-s">
-                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                    <p>
-                        드래그라인 <br />
-                        텍스트입니다.
-                    </p>
-                </div>
-            </div>
-
-            <div data-line-col="2" data-line-row="1">
-                <button data-line-target="1" type="button" aria-label="line target 1"></button>
-                <div data-ps="right">
-                    <p>
-                        드래그라인 <br />
-                        텍스트입니다.
-                    </p>
-                </div>
-            </div>
-            <div data-line-col="2" data-line-row="2">
-                <button data-line-target="2" type="button" aria-label="line target 2"></button>
-                <div data-ps="right">
-                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                </div>
-            </div>
-            <div data-line-col="2" data-line-row="3">
-                <button data-line-target="3" type="button" aria-label="line target 3"></button>
-                <div data-ps="right-s">
-                    <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                    <p>
-                        드래그라인 <br />
-                        텍스트입니다.
-                    </p>
                 </div>
             </div>
         </div>
