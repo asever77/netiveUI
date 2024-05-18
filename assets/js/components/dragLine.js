@@ -115,7 +115,6 @@ export default class DragLine {
       } else {
         data_name_target = el_item.dataset.name;
       }
-console.log(3333333333333)
       const el_rect = el_item.getBoundingClientRect();
       const tag_line = `<line x1="0" x2="0" y1="0" y2="0" data-state="ing" data-name="${data_name}" data-object-name="${data_name_object}" data-target-name="${data_name_target}"></line>`;
 
@@ -134,7 +133,7 @@ console.log(3333333333333)
         }
       }
 
-      document.querySelector('body').classList.add('noScroll');
+      // if (e.type !== 'keydown') document.querySelector('body').classList.add('noScroll');
 
       //라인전체영역
       this.wrap_t = this.wrap.getBoundingClientRect().top;
@@ -152,7 +151,9 @@ console.log(3333333333333)
         let _name;
         let _dot;
 
-        const line_del = this.wrap.querySelector(`line[data-name="${data_name}"]`);
+        const line_del = this.wrap.querySelector(
+          `line[data-name="${data_name}"]`
+        );
         const object_name = line_del.dataset.objectName;
         const target_name = line_del.dataset.targetName;
         line_del.remove();
@@ -165,7 +166,7 @@ console.log(3333333333333)
         );
         if (_obj) _obj.setAttribute('aria-label', _obj.dataset.label);
         if (_trg) _trg.setAttribute('aria-label', _trg.dataset.label);
-        
+
         //target인 경우
         if (el_item.dataset.connect) {
           _name = el_item.dataset.connect;
@@ -211,10 +212,10 @@ console.log(3333333333333)
       let _x;
       let _y;
       isObject = el_item.dataset.lineObject ? true : false;
-      console.log(111111111111)
       make_line(e);
-      console.log(22222222222222)
 
+      e.preventDefault();
+      
       let is_object = el_item.dataset.lineObject ? true : false;
       let el_line = this.svg.querySelector('line[data-state="ing"]');
       let value = is_object
@@ -241,7 +242,6 @@ console.log(3333333333333)
       const y_value = rect_item.top + item_h - this.wrap_t;
 
       actEnd = () => {
-        console.log('end');
         //클릭완료이벤트에 클릭이벤트인경우 클릭완료 설정
         document.querySelector('body').classList.remove('noScroll');
         const v_x = _x - this.wrap_l;
@@ -291,7 +291,6 @@ console.log(3333333333333)
               connect_array = item.dataset.connect.split(',');
 
               for (let i = 0; i < connect_array.length; i++) {
-                console.log(data_name, connect_array[i]);
                 if (data_name === connect_array[i]) {
                   is_selected = true;
                   break;
@@ -420,7 +419,7 @@ console.log(3333333333333)
                 this.answer_last.push({
                   ['key_' + item.dataset.name]: item.dataset.lineObject,
                   ['key_' + el_item.dataset.name]: el_item.dataset.lineTarget,
-                  label: item.getAttribute('aria-label')
+                  label: item.getAttribute('aria-label'),
                 });
               }
               break;
@@ -453,12 +452,10 @@ console.log(3333333333333)
                 const _obj = this.wrap.querySelector(
                   '[data-name="' + object_name + '"]'
                 );
-                console.log(_obj);
                 if (_obj) _obj.setAttribute('aria-label', _obj.dataset.label);
                 const _trg = this.wrap.querySelector(
                   '[data-name="' + target_name + '"]'
                 );
-                console.log(_trg);
                 if (_trg) _trg.setAttribute('aria-label', _trg.dataset.label);
               }
             }
@@ -476,6 +473,8 @@ console.log(3333333333333)
         if (this.complete_n === this.n) this.completeCallback();
       };
       actMove = e => {
+        e.preventDefault();
+
         _x = e.clientX ? e.clientX : e.targetTouches[0].clientX;
         _y = e.clientY ? e.clientY : e.targetTouches[0].clientY;
         el_line.setAttribute('x2', _x - this.wrap_l);
@@ -491,7 +490,7 @@ console.log(3333333333333)
 
       if (this.isTouch) {
         if (!firstTouch.state) {
-          this.doc.addEventListener('touchmove', actMove);
+          this.doc.addEventListener('touchmove', actMove, {passive: false});
 
           firstTouch.state = true;
           firstTouch.item = el_item;
@@ -714,7 +713,7 @@ console.log(3333333333333)
     for (const item of this.items) {
       if (this.isTouch) {
         item.addEventListener('touchstart', actStart, {
-          passive: true,
+          passive: false,
         });
       } else {
         item.addEventListener('mousedown', actStart);

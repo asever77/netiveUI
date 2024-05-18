@@ -5,49 +5,89 @@ import DragDrop from '../../../assets/js/components/dragDrop.js';
 UI.exe.toggle = new Toggle({
     scope: document.querySelector('[data-id="main"]')
 });
-UI.exe.dragdrop = new DragDrop({
-    id: 'test',
-    callback: (v) => {
-        console.log('callback', v);
-    }, 
-    callbackComplete: (v) => {
-        console.log('callbackComplete', v);
-    }
-});
 
-
+const data2 = {
+    quizID: 'test2',
+    answerLen: 4,
+    isAnswer: false,
+    lastAnswer: [
+        {target: '1', object: '1'},
+    ],
+}
 UI.exe.dragdrop2 = new DragDrop({
-    id: 'test2',
+    id: data2.quizID,
+    answerLen: data2.answerLen,
+    lastAnswer: data2.lastAnswer,
     callback: (v) => {
         console.log('callback', v);
-        // const area = document.querySelector('[data-drag-id="test2"] .mdl-drag-area[data-drag-name="'+ v.name +'"]');
-        // area.classList.add('answer-on');
-    }, 
-    callbackComplete: (v) => {
-        console.log('callbackComplete', v);
     }
 });
 
+
+const data3 = {
+    quizID: 'test3',
+    answerLen: 2,
+    isAnswer: false,
+    lastAnswer: [
+        {target: '1,2', object: '1'},
+    ],
+}
 UI.exe.dragdrop3 = new DragDrop({
-    id: 'test3',
+    id: data3.quizID,
+    answerLen: data3.answerLen,
+    lastAnswer: data3.lastAnswer,
     callback: (v) => {
         console.log('callback', v);
-        // const area = document.querySelector('[data-drag-id="test2"] .mdl-drag-area[data-drag-name="'+ v.name +'"]');
-        // area.classList.add('answer-on');
-    }, 
-    callbackComplete: (v) => {
-        console.log('callbackComplete', v);
     }
 });
 
+
+
+const data4 = {
+    quizID: 'test4',
+    answerLen: 4,
+    isAnswer: false,
+    lastAnswer: [
+        {
+            "target": "4",
+            "object": "4"
+        },
+        {
+            "target": "3",
+            "object": "3"
+        },
+        {
+            "target": "2",
+            "object": "2"
+        },
+        {
+            "target": "1",
+            "object": "1"
+        }
+    ],
+}
 UI.exe.dragdrop4 = new DragDrop({
-    id: 'test4',
+    id: data4.quizID,
+    answerLen: data4.answerLen,
+    lastAnswer: data4.lastAnswer,
     callback: (v) => {
         console.log('callback', v);
-        // const area = document.querySelector('[data-drag-id="test2"] .mdl-drag-area[data-drag-name="'+ v.name +'"]');
-        // area.classList.add('answer-on');
-    }, 
-    callbackComplete: (v) => {
-        console.log('callbackComplete', v);
+    }
+});
+
+const data = {
+    quizID: 'test',
+    answerLen: null,
+    isAnswer: false,
+    lastAnswer: null
+}
+
+UI.exe.dragdrop = new DragDrop({
+    id: data.quizID,
+    answerLen: 4,
+    isAnswer: false,
+    lastAnswer: null,
+    callback: (v) => {
+        console.log('callback', v);
     }
 });

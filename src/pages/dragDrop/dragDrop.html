@@ -5,27 +5,26 @@
     <box>
         <div data-drag-id="test2">
             <div data-drag-group="target" data-col="col4">
-                <div data-drag-target="1" data-limit="1" data-sort="full"></div>  
-                <div data-drag-target="2" data-limit="1" data-sort="full"></div>  
-                <div data-drag-target="3" data-limit="1" data-sort="full"></div>  
-                <div data-drag-target="4" data-limit="1" data-sort="full"></div>  
+                <div data-drag-target="1" aria-label="컴퓨터" data-empty="true" data-limit="1" data-sort="full"></div>  
+                <div data-drag-target="2" aria-label="핸드폰" data-empty="true" data-limit="1" data-sort="full"></div>  
+                <div data-drag-target="3" aria-label="모니터" data-empty="true" data-limit="1" data-sort="full"></div>  
+                <div data-drag-target="4" aria-label="키보드" data-empty="true" data-limit="1" data-sort="full"></div>  
             </div>
             
             <div data-drag-group="object" data-col="col2">
-                <div data-drag-item="object" data-value="1">
-                    <div role="button" data-drag-object="1">입력장치</div>
+                <div data-drag-item="object" data-value="1" data-base="1">
+                    <button type="button" data-drag-object="1" data-label="입력장치">입력장치</button>
                 </div>
-                <div data-drag-item="object" data-value="2">
-                    <div role="button" data-drag-object="2">출력장치</div>
+                <div data-drag-item="object" data-value="2" data-base="2">
+                    <button type="button" data-drag-object="2" data-label="출력장치">출력장치</button>
                 </div>
-                <div data-drag-item="object" data-value="3">
-                    <div role="button" data-drag-object="3">기억장치</div>
+                <div data-drag-item="object" data-value="3" data-base="3">
+                    <button type="button" data-drag-object="3" data-label="기억장치">기억장치</button>
                 </div>
-                <div data-drag-item="object" data-value="4">
-                    <div role="button" data-drag-object="4">중앙 처리 장치</div>
+                <div data-drag-item="object" data-value="4" data-base="4">
+                    <button type="button" data-drag-object="4" data-label="중앙 처리 장치">중앙 처리 장치</button>
                 </div>
             </div>
-            
         </div>
         <div class="mdl-button-area">
             <button type="button" class="mdl-button" onclick="UI.exe.dragdrop2.check()">정답 체크</button>
@@ -38,21 +37,21 @@
     <box>
         <div data-drag-id="test3">
             <div data-drag-group="target" data-col="col1">
-                <div data-drag-target="1,2" data-limit="2" data-sort="left"></div>  
+                <div data-drag-target="1,2" aria-label="컴퓨터" data-empty="true"  data-limit="2" data-sort="left"></div>  
             </div>
             
             <div data-drag-group="object" data-col="col3">
-                <div data-drag-item="object" data-value="1">
-                    <div role="button" data-drag-object="1">입력장치</div>
+                <div data-drag-item="object" data-value="1" data-base="1">
+                    <button type="button" data-drag-object="1" data-label="입력장치">입력장치</button>
                 </div>
-                <div data-drag-item="object" data-value="2">
-                    <div role="button" data-drag-object="2">출력장치</div>
+                <div data-drag-item="object" data-value="2" data-base="2">
+                    <button type="button" data-drag-object="2" data-label="출력장치">출력장치</button>
                 </div>
-                <div data-drag-item="object" data-value="3">
-                    <div role="button" data-drag-object="3">기억장치</div>
+                <div data-drag-item="object" data-value="3" data-base="3">
+                    <button type="button" data-drag-object="3" data-label="기억장치">기억장치</button>
                 </div>
-                <div data-drag-item="object" data-value="4">
-                    <div role="button" data-drag-object="4">중앙 처리 장치</div>
+                <div data-drag-item="object" data-value="4" data-base="4">
+                    <button type="button" data-drag-object="4" data-label="중앙 처리 장치">중앙 처리 장치</button>
                 </div>
             </div>
             
@@ -68,17 +67,17 @@
         <box>
             <div data-drag-id="test4">
                 <div data-drag-group="object" data-col="col1">
-                    <div data-drag-item="object" data-value="4">
-                        <div role="button" data-drag-object="1">입력장치</div>
+                    <div data-drag-item="object" data-value="4" data-base="1">
+                        <button type="button" data-drag-object="1">입력장치</button>
                     </div>
-                    <div data-drag-item="object" data-value="3">
-                        <div role="button" data-drag-object="2">출력장치</div>
+                    <div data-drag-item="object" data-value="3" data-base="2">
+                        <button type="button" data-drag-object="2">출력장치</button>
                     </div>
-                    <div data-drag-item="object" data-value="2">
-                        <div role="button" data-drag-object="3">기억장치</div>
+                    <div data-drag-item="object" data-value="2" data-base="3">
+                        <button type="button" data-drag-object="3">기억장치</button>
                     </div>
-                    <div data-drag-item="object" data-value="1">
-                        <div role="button" data-drag-object="4">중앙 처리 장치</div>
+                    <div data-drag-item="object" data-value="1" data-base="4">
+                        <button type="button" data-drag-object="4">중앙 처리 장치</button>
                     </div>
                 </div>
             </div>
@@ -93,17 +92,17 @@
     <box>
         <div data-drag-id="test">
             <div data-drag-group="target" data-col="col1">
-                <div data-drag-target="1" data-limit="100" data-sort="free"></div>  
+                <div data-drag-target="1" data-empty="true" data-limit="100" data-sort="free"></div>  
             </div>
             <div data-drag-group="object" data-col="free">
-                <div data-drag-item="object">
-                    <div role="button" data-drag-object="1" data-copy="true">1</div>
+                <div data-drag-item="object" data-value="1" data-base="1">
+                    <button type="button" data-drag-object="1" data-drag-copy="true">1</button>
                 </div>
-                <div data-drag-item="object">
-                    <div role="button" data-drag-object="1" data-copy="true">2</div>
+                <div data-drag-item="object" data-value="2" data-base="2">
+                    <button type="button" data-drag-object="2" data-drag-copy="true">2</button>
                 </div>
-                <div data-drag-item="object">
-                    <div role="button" data-drag-object="1" data-copy="true">3</div>
+                <div data-drag-item="object" data-value="3" data-base="3">
+                    <button type="button" data-drag-object="3" data-drag-copy="true">3</button>
                 </div>
             </div>
         </div>

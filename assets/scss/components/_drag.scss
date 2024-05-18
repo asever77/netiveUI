@@ -279,8 +279,39 @@ html,body {
 
 
 
+[data-drag-id] .disabled {
+  pointer-events: none;
+}
+[data-drag-id] select {
+  position: absolute;
+  z-index: 2;
+  width: 100%;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 1px solid #ccc;
+  background-color: #fff;
+  border-radius: .4rem;
+  height: 100%;
+  padding: 0 1rem;
+  outline: 0;
+  margin: 0;
+  color: #000;
+  font-size: 1.6rem;
+  z-index: 2;
+}
 
+[data-drag-id] select:hover {
+  border: .1rem solid #000;
+}
 
+[data-drag-id] select:focus,
+[data-drag-id] select:active {
+  outline: 1px solid #000 !important;
+}
+[data-drag-id] button:focus {
+  outline: 1px solid #000;
+}
 [data-drag-id] {
   position: relative;
   width: 100%;
@@ -307,11 +338,11 @@ html,body {
     height: 4.8rem;
 
     &[data-empty="true"]::after {
-      content: "";
+      content: "이곳에 드래그해 주세요";
     }
 
     &::after {
-      content: "이곳에 드래그해 주세요";
+      content: "";
       font-size: 1.4rem;
       font-weight: 500;
       color: #6A6D73;
