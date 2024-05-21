@@ -8,7 +8,7 @@ export default class DrawDrop {
     this.drag_objects = this.wrap.querySelectorAll('[data-drag-object]');
     this.drag_targets = this.wrap.querySelectorAll('[data-drag-target]');
     this.drag_items = this.wrap.querySelectorAll('[data-drag-item="object"]');
-
+    this.a11y = opt.a11y === 'true' ? true : false;
     this.array_target = [];
     this.array_items = [];
     this.el_scroll = document.querySelector('body');
@@ -36,7 +36,7 @@ export default class DrawDrop {
     this.win_x = this.el_scroll ? this.el_scroll.scrollLeft : window.scrollX;
     this.isTouch = 'ontouchstart' in document.documentElement;
 
-    this.answer_len = opt.answerLen;
+    this.answer_len = Number(opt.answerLen);
     this.answer_last = opt.lastAnswer;
     this.answer_state = false;
 
@@ -45,7 +45,6 @@ export default class DrawDrop {
     this.isTouch = window.matchMedia(
       '(hover: none) and (pointer: coarse)'
     ).matches /*'ontouchstart' in document.documentElement*/;
-
     this.init();
   }
 
@@ -102,14 +101,54 @@ export default class DrawDrop {
       } else {
         this.answer_last = [];
       }
+
+      //event
+      for (let item of this.drag_objects) {
+        if (this.isTouch) {
+          item.addEventListener('touchstart', actStart, { passive: false });
+        } else {
+          item.addEventListener('mousedown', actStart);
+          if (this.a11y) item.addEventListener('keydown', actKey);
+        }
+      }
+
+      if (this.answer_last?.length) {
+        let objs = this.wrap.querySelectorAll(
+          '[data-drag-target] [data-drag-object]'
+        );
+        const isOrder = objs.length < 1 ? true : false;
+        if (isOrder) {
+          objs = this.wrap.querySelectorAll(
+            '[data-drag-item] [data-drag-object]'
+          );
+        }
+        for (let obj of objs) {
+          if (this.isTouch) {
+            if (isOrder) {
+              obj.addEventListener('touchstart', actStart, { passive: false });
+            } else {
+              obj.addEventListener('touchstart', actStartClone, {
+                passive: false,
+              });
+            }
+          } else {
+            if (isOrder) {
+              obj.addEventListener('mousedown', actStart);
+            } else {
+              obj.addEventListener('mousedown', actStartClone);
+            }
+            if (this.a11y) obj.addEventListener('keydown', actKey);
+          }
+        }
+      }
     };
 
-    const resizeObserver = new ResizeObserver(() => {
-      set();
-    });
-    resizeObserver.observe(this.wrap);
+    // const resizeObserver = new ResizeObserver(() => {
+    //   set();
+    // });
+    // resizeObserver.observe(this.wrap);
 
-    //key 
+    //key
     const actKey = e => {
       const el_this = e.currentTarget;
       const el_this_area = el_this.closest('[data-drag-target]');
@@ -119,10 +158,15 @@ export default class DrawDrop {
         ? el_this.dataset.dragCopy
         : false;
       const data_name = el_this.dataset.dragObject;
+      const isTarget =
+        this.wrap.querySelectorAll('[data-drag-target]').length > 0
+          ? true
+          : false;
+      const _targets = isTarget
+        ? this.wrap.querySelectorAll('[data-drag-target]')
+        : this.wrap.querySelectorAll('[data-drag-item]');
 
-      const _targets = this.wrap.querySelectorAll('[data-drag-target]');
       const _this_name = el_this.dataset.label;
-
       const isClone = el_this.dataset.dragType;
 
       //space key
@@ -130,18 +174,22 @@ export default class DrawDrop {
         //셀렉트생성
         let make_select = `<select aria-label="${_this_name} 선택">
           <option>선택하세요</option>`;
+
+        if (isClone) {
+          make_select += `<option value="base">원위치</option>`;
+        }
+        let n = 1;
         for (const item of _targets) {
-          make_select += `<option value="
-            ${item.dataset.dragTarget}">${item.getAttribute(
-            'aria-label'
-          )}</option>`;
+          const _a = isTarget ? item.dataset.dragTarget : item.dataset.value;
+          const _b = isTarget ? item.getAttribute('aria-label') : n;
+          make_select += `<option value="${_a}">${_b}</option>`;
+          n = n + 1;
         }
         make_select += `</select>`;
         el_item.insertAdjacentHTML('beforeend', make_select);
         //키아웃
         const actKeyout = () => {
           if (_select) _select.remove();
-
         };
 
         //선택시
@@ -149,102 +197,152 @@ export default class DrawDrop {
           _select.removeEventListener('change', actSelect);
           const _this_select = e.currentTarget;
           const el_clone = isClone ? el_this : el_this.cloneNode(true);
-          const sel_val = Number(_this_select.value);
-          const current_area = this.wrap.querySelector('[data-drag-target="' + sel_val + '"]');
+          const sel_val = _this_select.value;
 
-          //object를 복사타입으로 계속 사용안하는 경우 원본 disabled로 접근방지
-          if (data_copy === false || !data_copy || !data_copy === 'false') {
-            el_this.classList.add('disabled');
-            el_this.disabled = true;
-          }
-          el_clone.dataset.dragType = 'clone';
-          el_clone.classList.add('active');
+          if (sel_val === 'base') {
+            el_this.remove();
+            el_this_area.dataset.empty = el_this_area.querySelectorAll(
+              '[data-drag-object'
+            ).length
+              ? false
+              : true;
+            const obj = this.wrap.querySelector(
+              `[data-drag-group="object"] [data-drag-object="${data_name}"]`
+            );
 
-          const limit = Number(current_area.dataset.limit);
-          const current_area_drops = current_area.querySelectorAll('[data-drag-object]');
-          const n = current_area_drops.length;
-
-
-          //정답인 경우 복제된 아이템을 영역안으로 이동
-          const act = () => {
-            const _this = el_clone;
-            let is_answer = false;
-
-            //_this 영역안에 이동
-            _this.dataset.dragState = 'complete';
-            current_area.insertAdjacentElement('beforeend', _this);
-            _this.classList.remove('disabled');
-            _this.removeAttribute('style');
-            _this.disabled = false;
-            _this.focus();
-
-            //정답이 복수인 경우
-            let is_name_array = data_name.split(',');
-            for (let key in is_name_array) {
-              if (data_name === is_name_array[key]) {
-                is_answer = true;
-                break;
-              }
+            obj.classList.remove('disabled');
+            obj.disabled = false;
+            obj.focus();
+          } else {
+            let current_area;
+            if (isTarget) {
+              current_area = this.wrap.querySelector(
+                '[data-drag-target="' + sel_val + '"]'
+              );
+            } else {
+              current_area = this.wrap.querySelector(
+                `[data-drag-item="object"][data-value="${sel_val}"]`
+              );
             }
 
-            // this.answer_last 설정
-            this.answerLastSet();
-          };
+            //object를 복사타입으로 계속 사용안하는 경우 원본 disabled로 접근방지
+            if (data_copy === false || !data_copy || !data_copy === 'false') {
+              el_this.classList.add('disabled');
+              el_this.disabled = true;
+            }
+            el_clone.dataset.dragType = 'clone';
 
-          /**
-           * (limit === n) 제한된 답안 수와 같다면,
-           * 제한이 1인경우는 이전 답과 교체, 2이상인 경우는 현재 선택한 값을 취소
-           */
-          if (limit === n) {
-            if (limit === 1) {
-              if (isClone) {
-                const _el_clone = current_area.querySelector('[data-drag-object]');
-                el_this_area.insertAdjacentElement('beforeend', _el_clone);
-                act();
+            const limit = Number(current_area.dataset.limit);
+            const current_area_drops =
+              current_area.querySelectorAll('[data-drag-object]');
+            const n = current_area_drops.length;
+
+            //정답인 경우 복제된 아이템을 영역안으로 이동
+            const act = () => {
+              const _this = el_clone;
+              // let is_answer = false;
+
+              //_this 영역안에 이동
+              _this.dataset.dragState = 'complete';
+              current_area.insertAdjacentElement('beforeend', _this);
+              current_area.dataset.empty = false;
+              _this.classList.remove('disabled');
+              _this.removeAttribute('style');
+              _this.disabled = false;
+              _this.focus();
+
+              //정답이 복수인 경우
+              let is_name_array = data_name.split(',');
+              for (let key in is_name_array) {
+                if (data_name === is_name_array[key]) {
+                  // is_answer = true;
+                  break;
+                }
+              }
+
+              // this.answer_last 설정
+              this.answerLastSet();
+            };
+
+            /**
+             * (limit === n) 제한된 답안 수와 같다면,
+             * 제한이 1인경우는 이전 답과 교체, 2이상인 경우는 현재 선택한 값을 취소
+             */
+
+            if (isTarget) {
+              if (limit === n) {
+                if (limit === 1) {
+                  if (isClone) {
+                    const _el_clone =
+                      current_area.querySelector('[data-drag-object]');
+                    el_this_area.insertAdjacentElement('beforeend', _el_clone);
+                    act();
+                  } else {
+                    const __name =
+                      current_area.querySelector('[data-drag-object]').dataset
+                        .dragObject;
+                    current_area.querySelector('[data-drag-object]').remove();
+                    const __drop = el_wrap.querySelector(
+                      '[data-drag-object="' + __name + '"]'
+                    );
+
+                    __drop.classList.remove('disabled');
+                    __drop.disabled = false;
+                    act();
+                  }
+                } else {
+                  el_this.classList.remove('disabled');
+                  el_this.disabled = false;
+                }
               } else {
-                const __name = current_area.querySelector('[data-drag-object]').dataset.dragObject;
-                current_area.querySelector('[data-drag-object]').remove();
-                const __drop = el_wrap.querySelector('[data-drag-object="' + __name + '"]');
-
-                __drop.classList.remove('disabled');
-                __drop.disabled = false;
                 act();
               }
             } else {
+              const native_item = this.wrap.querySelector(
+                '[data-drag-item="object"][data-value="' + sel_val + '"]'
+              );
+              const native_obj =
+                native_item.querySelector('[data-drag-object]');
               el_this.classList.remove('disabled');
               el_this.disabled = false;
+              el_this.removeAttribute('data-acitve');
+              el_this.removeAttribute('data-complete');
+              el_item.insertAdjacentElement('beforeend', native_obj);
+              native_item.insertAdjacentElement('beforeend', el_this);
             }
-          } else {
-            act();
-          }
 
-          /**
-           * 복제된 object에 이벤트 재설정
-           */
-          const area_drops = current_area.querySelectorAll('[data-drag-object]');
-          for (let item of area_drops) {
-            if (this.isTouch) {
-              item.addEventListener('touchstart', actStartClone, { passive: false });
-            } else {
-              item.addEventListener('mousedown', actStartClone);
-              item.addEventListener('keydown', actKey);
+            /**
+             * 복제된 object에 이벤트 재설정
+             */
+            if (isTarget) {
+              const area_drops =
+                current_area.querySelectorAll('[data-drag-object]');
+              for (let item of area_drops) {
+                if (this.isTouch) {
+                  item.addEventListener('touchstart', actStartClone, {
+                    passive: false,
+                  });
+                } else {
+                  item.addEventListener('mousedown', actStartClone);
+                  if (this.a11y) item.addEventListener('keydown', actKey);
+                }
+              }
             }
-          }
 
-          if (data_name) {
-            const _current_area = this.wrap.querySelector(
-              '[data-drag-target="' + data_name + '"]'
-            );
-            if (_current_area) {
-              const n_clone =
-                _current_area.querySelectorAll('[data-drag-object]').length;
-              _current_area.dataset.empty = n_clone > 0 ? false : true;
+            if (data_name) {
+              const _current_area = this.wrap.querySelector(
+                '[data-drag-target="' + data_name + '"]'
+              );
+              if (_current_area) {
+                const n_clone =
+                  _current_area.querySelectorAll('[data-drag-object]').length;
+                _current_area.dataset.empty = n_clone > 0 ? false : true;
+              }
             }
+            el_this.dataset.active = '';
+            el_this.dataset.complete = true;
+            el_this.focus();
           }
-
-          el_this.dataset.active = '';
-          el_this.dataset.complete = true;
-          el_this.focus();
         };
 
         //이벤트
@@ -262,10 +360,9 @@ export default class DrawDrop {
       const el_this = e.currentTarget;
       const el_this_area = el_this.closest('[data-drag-target]');
       const el_wrap = el_this.closest('[data-drag-id]');
-
       const data_name = el_this.dataset.dragObject;
       const area_name = el_this_area.dataset.dragTarget;
-
+      el_this.style.width = el_this.offsetWidth + 'px';
       //x,y 위치값
       const rect_this = el_this.getBoundingClientRect();
       const rect_area = el_this_area.getBoundingClientRect();
@@ -283,7 +380,7 @@ export default class DrawDrop {
       el_this.removeAttribute('data-drag-state');
       el_this.classList.add('active');
       el_this.style.transform = 'translate(' + m_x + 'px, ' + m_y + 'px)';
-
+      
       const actEnd = () => {
         //최종위치
         const e_x = _x;
@@ -293,7 +390,7 @@ export default class DrawDrop {
         let is_name;
 
         el_this.classList.remove('active');
-
+        el_this.style.width = 'auto';
         /**
          * data-drag-target 정답 영역 안에 들어가는지 체크
          * is_range: true | false
@@ -330,7 +427,7 @@ export default class DrawDrop {
           //정답인 경우 복제된 아이템을 영역안으로 이동
           const act = () => {
             const _this = el_this;
-            let is_answer = false;
+            // let is_answer = false;
 
             //_this 영역안에 이동
             _this.dataset.dragState = 'complete';
@@ -340,7 +437,7 @@ export default class DrawDrop {
             let is_name_array = is_name.split(',');
             for (let key in is_name_array) {
               if (data_name === is_name_array[key]) {
-                is_answer = true;
+                // is_answer = true;
                 break;
               }
             }
@@ -369,17 +466,28 @@ export default class DrawDrop {
                 el_this_area.insertAdjacentElement('beforeend', _el_clone);
                 act();
               } else {
-                el_wrap.querySelector('.disabled[data-drag-object="' + data_name + '"]').disabled = false;
-                el_wrap.querySelector('.disabled[data-drag-object="' + data_name + '"]').classList.remove('disabled');
+                el_wrap.querySelector(
+                  '.disabled[data-drag-object="' + data_name + '"]'
+                ).disabled = false;
+                el_wrap
+                  .querySelector(
+                    '.disabled[data-drag-object="' + data_name + '"]'
+                  )
+                  .classList.remove('disabled');
               }
             }
           } else {
             act();
           }
+          const nn_clone =
+            current_area.querySelectorAll('[data-drag-object]').length;
+          current_area.dataset.empty = nn_clone > 0 ? false : true;
         }
         //오답인 경우
         else {
-          const _disabled_drop = el_wrap.querySelector('.disabled[data-drag-object="' + el_this.dataset.dragObject + '"]');
+          const _disabled_drop = el_wrap.querySelector(
+            '.disabled[data-drag-object="' + el_this.dataset.dragObject + '"]'
+          );
 
           //초기화
           el_this.remove();
@@ -392,7 +500,8 @@ export default class DrawDrop {
         }
 
         //영역안이 비어있는지 여부
-        const n_clone = el_this_area.querySelectorAll('[data-drag-object').length;
+        const n_clone =
+          el_this_area.querySelectorAll('[data-drag-object]').length;
         el_this_area.dataset.empty = n_clone > 0 ? false : true;
 
         //이벤트 취소
@@ -443,10 +552,12 @@ export default class DrawDrop {
       this.wrap_l = this.wrap_rect.left + this.win_x;
       let _x = this.isTouch ? e.targetTouches[0].clientX : e.clientX;
       let _y = this.isTouch ? e.targetTouches[0].clientY : e.clientY;
-      let m_y = _y + this.win_y - (rect_item.top + this.win_y) - rect_this.height / 2;
-      let m_x = _x + this.win_x - (rect_item.left + this.win_x) - rect_this.width / 2;
+      let m_y =
+        _y + this.win_y - (rect_item.top + this.win_y) - rect_this.height / 2;
+      let m_x =
+        _x + this.win_x - (rect_item.left + this.win_x) - rect_this.width / 2;
 
-      //복제설정 
+      //복제설정
       const el_clone = el_this.cloneNode(true);
       el_clone.dataset.dragType = 'clone';
       el_clone.classList.add('active');
@@ -454,10 +565,12 @@ export default class DrawDrop {
       el_clone.disabled = false;
       el_item.insertAdjacentElement('beforeend', el_clone);
       el_clone.style.transform = `translate(${m_x}px, ${m_y}px)`;
-      el_clone.style.maxWidth = rect_this.width + 'px';
-
+      el_clone.style.width = el_item.offsetWidth + 'px';
+      // el_clone.style.marginLeft = el_item.offsetWidth / 2 - (el_clone.offsetWidth / 2) + 'px'
       //object를 복사타입으로 계속 사용 안하는 경우 원본 disabled로 접근방지
-      const data_copy = el_this.dataset.dragCopy ? el_this.dataset.dragCopy : false;
+      const data_copy = el_this.dataset.dragCopy
+        ? el_this.dataset.dragCopy
+        : false;
       if (data_copy === false || !data_copy || !data_copy === 'false') {
         el_this.classList.add('disabled');
         el_this.disabled = true;
@@ -473,7 +586,7 @@ export default class DrawDrop {
         let is_name;
 
         el_clone.classList.remove('active');
-
+        el_clone.style.width = 'auto';
         /**
          * data-drag-target 정답 영역 안에 들어가는지 체크
          * is_range: true | false
@@ -502,13 +615,14 @@ export default class DrawDrop {
             '[data-drag-target="' + is_name + '"]'
           );
           const limit = Number(current_area.dataset.limit);
-          const current_area_drops = current_area.querySelectorAll('[data-drag-object]');
+          const current_area_drops =
+            current_area.querySelectorAll('[data-drag-object]');
           const n = current_area_drops.length;
 
           //정답인 경우 복제된 아이템을 영역안으로 이동
           const act = () => {
             const _this = el_clone;
-            let is_answer = false;
+            // let is_answer = false;
 
             //_this 영역안에 이동
             _this.dataset.dragState = 'complete';
@@ -518,7 +632,7 @@ export default class DrawDrop {
             let is_name_array = is_name.split(',');
             for (let key in is_name_array) {
               if (data_name === is_name_array[key]) {
-                is_answer = true;
+                // is_answer = true;
                 break;
               }
             }
@@ -568,7 +682,8 @@ export default class DrawDrop {
           /**
            * 복제된 object에 이벤트 재설정
            */
-          const area_drops = current_area.querySelectorAll('[data-drag-object]');
+          const area_drops =
+            current_area.querySelectorAll('[data-drag-object]');
           for (let item of area_drops) {
             if (this.isTouch) {
               item.addEventListener('touchstart', actStartClone, {
@@ -576,7 +691,7 @@ export default class DrawDrop {
               });
             } else {
               item.addEventListener('mousedown', actStartClone);
-              item.addEventListener('keydown', actKey);
+              if (this.a11y) item.addEventListener('keydown', actKey);
             }
           }
         }
@@ -584,7 +699,6 @@ export default class DrawDrop {
         else {
           //무한복사가 아닌 경우
           if (el_this.dataset.copy !== 'true') {
-
             /**
              * data-drag-item 영역 안에 들어가는지 체크
              * is_range_obj: true | false
@@ -612,7 +726,8 @@ export default class DrawDrop {
               const native_item = this.wrap.querySelector(
                 '[data-drag-item="object"][data-value="' + is_name + '"]'
               );
-              const native_obj = native_item.querySelector('[data-drag-object]');
+              const native_obj =
+                native_item.querySelector('[data-drag-object]');
               el_item.insertAdjacentElement('beforeend', native_obj);
               native_item.insertAdjacentElement('beforeend', el_this);
             }
@@ -632,7 +747,8 @@ export default class DrawDrop {
             '[data-drag-target="' + is_name + '"]'
           );
           if (_current_area) {
-            const n_clone = _current_area.querySelectorAll('[data-drag-object]').length;
+            const n_clone =
+              _current_area.querySelectorAll('[data-drag-object]').length;
             _current_area.dataset.empty = n_clone > 0 ? false : true;
           }
         }
@@ -650,8 +766,10 @@ export default class DrawDrop {
         //move x,y
         _x = !!e.clientX ? e.clientX : e.targetTouches[0].clientX;
         _y = !!e.clientY ? e.clientY : e.targetTouches[0].clientY;
-        m_y = _y + this.win_y - (rect_item.top + this.win_y) - rect_this.height / 2;
-        m_x = _x + this.win_x - (rect_item.left + this.win_x) - rect_this.width / 2;
+        m_y =
+          _y + this.win_y - (rect_item.top + this.win_y) - rect_this.height / 2;
+        m_x =
+          _x + this.win_x - (rect_item.left + this.win_x) - rect_this.width / 2;
 
         el_clone.style.transform = 'translate(' + m_x + 'px, ' + m_y + 'px)';
       };
@@ -666,15 +784,7 @@ export default class DrawDrop {
       }
     };
 
-    //event
-    for (let item of this.drag_objects) {
-      if (this.isTouch) {
-        item.addEventListener('touchstart', actStart, { passive: false });
-      } else {
-        item.addEventListener('mousedown', actStart);
-      }
-      item.addEventListener('keydown', actKey);
-    }
+    set();
   }
 
   //콜백: 정답체크 및 기록
@@ -682,23 +792,25 @@ export default class DrawDrop {
     this.answer_last = [];
     let n = 0;
     const isTarget = this.drag_targets.length;
-    const area = isTarget ? this.drag_targets : this.wrap.querySelectorAll('[data-drag-item="object"]');
+    const area = isTarget
+      ? this.drag_targets
+      : this.wrap.querySelectorAll('[data-drag-item="object"]');
 
     for (let i = 0; i < area.length; i++) {
-      const trg_n = isTarget ? area[i].dataset.dragTarget : area[i].dataset.value;
+      const trg_n = isTarget
+        ? area[i].dataset.dragTarget
+        : area[i].dataset.value;
       const items = area[i].querySelectorAll('[data-drag-object]');
-
-
 
       let is_name_array = trg_n.split(',');
 
       if (items) {
-        let nn = 0;
+        // let nn = 0;
         for (const item of items) {
-          let isAnswer = false;
+          // let isAnswer = false;
           for (let key in is_name_array) {
             if (item.dataset.dragObject === is_name_array[key]) {
-              isAnswer = true;
+              // isAnswer = true;
               n = n + 1;
             }
           }
@@ -724,6 +836,14 @@ export default class DrawDrop {
 
   //문제초기화
   reset() {
+    const clones = this.wrap.querySelectorAll('[data-drag-type="clone"]');
+
+    if (clones) {
+      for (let item of clones) {
+        item.remove();
+      }
+    }
+
     for (let item of this.drag_targets) {
       item.innerHTML = '';
       item.removeAttribute('data-state');
@@ -731,8 +851,9 @@ export default class DrawDrop {
     }
 
     for (let item of this.drag_objects) {
-      const wrap = this.wrap.querySelector('[data-drag-item="object"][data-base="' + item.dataset.dragObject + '"]');
-
+      const wrap = this.wrap.querySelector(
+        '[data-drag-item="object"][data-base="' + item.dataset.dragObject + '"]'
+      );
       wrap.insertAdjacentElement('beforeend', item);
       item.classList.remove('disabled');
       item.disabled = false;
@@ -826,25 +947,31 @@ export default class DrawDrop {
     for (let i = 0; i < this.answer_last.length; i++) {
       const last = this.answer_last[i];
 
-      let target = this.wrap.querySelector(`[data-drag-target="${last.target}"]`);
+      let target = this.wrap.querySelector(
+        `[data-drag-target="${last.target}"]`
+      );
+
+      const object = this.wrap.querySelector(
+        `[data-drag-object="${last.object}"]`
+      );
+      const el_clone = object.cloneNode(true);
 
       if (!target) {
-        target = this.wrap.querySelector(`[data-drag-item="object"][data-value="${last.target}"]`);
+        target = this.wrap.querySelector(
+          `[data-drag-item="object"][data-value="${last.target}"]`
+        );
+        object.disabled = false;
+        target.dataset.empty = false;
+        target.insertAdjacentElement('beforeend', object);
+      } else {
+        el_clone.dataset.dragType = 'clone';
+        el_clone.dataset.dragState = 'complete';
+        el_clone.disabled = false;
+        target.dataset.empty = false;
+        object.classList.add('disabled');
+        object.disabled = true;
+        target.insertAdjacentElement('beforeend', el_clone);
       }
-
-      const object = this.wrap.querySelector(`[data-drag-object="${last.object}"]`);
-      const rect_obj = object.getBoundingClientRect();
-      const el_clone = object.cloneNode(true);
-      el_clone.dataset.dragType = 'clone';
-      el_clone.dataset.dragState = 'complete';
-      el_clone.disabled = false;
-      target.dataset.empty = false;
-      el_clone.style.maxWidth = rect_obj.width + 'px';
-      object.classList.add('disabled');
-      object.disabled = true;
-
-      target.insertAdjacentElement('beforeend', el_clone);
-
     }
   };
 }

@@ -30,7 +30,7 @@ export default class DragLine {
 
     this.n = this.objects.length;
     this.svg = null;
-    this.answer_len = opt.answer;
+    this.answer_len = Number(opt.answer);
     this.answer_n = 0;
     this.complete_n = 0;
     this.answer_last = opt.lastAnswer;
@@ -175,10 +175,12 @@ export default class DragLine {
         }
         //object인 경우
         else {
+          
           _name = data_name;
           _dot = this.wrap.querySelector(`[data-connect="${_name}"]`);
         }
 
+        console.log(el_item,_dot, _name)  
         _dot.removeAttribute('data-connect');
         _dot.removeAttribute('data-complete');
         _nnn = _dot.dataset.lineObject
@@ -223,7 +225,13 @@ export default class DragLine {
         : el_item.dataset.lineTarget;
       const data_name = el_item.dataset.name;
 
+
+      
+
       if (this.type === 'single') {
+
+        console.log(is_object), data_name;
+
         if (is_object) {
           el_line = this.svg.querySelector(
             `line[data-object-name="${data_name}"]`
@@ -463,14 +471,10 @@ export default class DragLine {
         }
         if (this.callback) {
           this.callback({
-            /*전체정답갯수*/ answer_all_sum: this.answer_len,
-            /*현재정답갯수*/ answer_current_sum: this.answer_n,
-            /*선택한정답  */ answer_current: value,
-            /*정오답상태  */ answer_state: is_answer,
-            /*히스토리    */ answer_last: this.answer_last,
+            answer_state: this.answer_n === this.answer_len ? true : false,
+            answer_last: this.answer_last,
           });
         }
-        if (this.complete_n === this.n) this.completeCallback();
       };
       actMove = e => {
         e.preventDefault();
@@ -691,15 +695,12 @@ export default class DragLine {
             });
           }
           if (this.callback) {
+
             this.callback({
-              answer_all_sum: this.answer_len,
-              answer_current_sum: this.answer_n,
-              answer_current: value,
-              answer_state: is_answer,
+              answer_state: this.answer_n === this.answer_len ? true : false,
               answer_last: this.answer_last,
             });
           }
-          if (this.complete_n === this.n) this.completeCallback();
         };
 
         //이벤트
@@ -803,6 +804,8 @@ export default class DragLine {
         `[data-name="${keyname[1].split('_')[1]}"]`
       );
       el_object.dataset.complete = 'true';
+      el_object.dataset.connect = el_target.dataset.name;
+      el_target.dataset.connect = el_object.dataset.name;
       el_target.dataset.complete = 'true';
       el_object.setAttribute('aria-label', last.label);
 
@@ -812,7 +815,7 @@ export default class DragLine {
 
       this.svg.insertAdjacentHTML(
         'beforeend',
-        `<line x1="${el_object.dataset.x}" x2="${el_target.dataset.x}" y1="${el_object.dataset.y}" y2="${el_target.dataset.y}" data-state="complete"></line>`
+        `<line x1="${el_object.dataset.x}" x2="${el_target.dataset.x}" y1="${el_object.dataset.y}" y2="${el_target.dataset.y}" data-state="complete" data-target-name="${el_target.dataset.name}" data-object-name="${el_object.dataset.name}" data-answer="${last[keyname[0]] === last[keyname[1]] ? true : false}"></line>`
       );
     }
   };

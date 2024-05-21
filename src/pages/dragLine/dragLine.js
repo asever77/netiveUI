@@ -11,7 +11,7 @@ const data = {
     sumAnswer: 3,
     isAnswer: false,
     lastAnswer: [
-        // {key_0: '1', key_3: '1'},
+        {key_0: '1', key_3: '1', "label": "응용 소프트웨어1와 문제 키워드1, 문제 키워드2 연결됨",},
         // {key_1: '3', key_4: '2'},
         // {key_2: '2', key_5: '3'}
     ],
@@ -22,18 +22,8 @@ UI.exe.dragline = new DragLine({
     lastAnswer: data.lastAnswer,
     callback: (v) => {
         //개별 이벤트 완료 시
-        console.log('callback', v.answer_last);
-    }, 
-    callbackComplete: (v) => {
-        //전체 이벤트 완료 시
-        data.lastAnswer = v.answer_last;
-        data.isAnswer = v.answer_all_state;
-        console.log('callbackComplete', v, data);
+        console.log('callback', v);
     },
-    callbackCheck: (v) => {
-        //체크 이벤트 실행 시
-        console.log('callbackCheck', v);
-    }
 });
 
 const data2 = {
@@ -69,16 +59,6 @@ UI.exe.dragline2 = new DragLine({
     lastAnswer: data2.lastAnswer,
     callback: (v) => {
         //개별 이벤트 완료 시
-        // console.log('callback', v);
+        console.log('callback', v);
     }, 
-    callbackComplete: (v) => {
-        //전체 이벤트 완료 시
-        data.lastAnswer = v.answer_last;
-        data.isAnswer = v.answer_all_state;
-        console.log('callbackComplete', v, data);
-    },
-    callbackCheck: (v) => {
-        //체크 이벤트 실행 시
-        console.log('callbackCheck', v);
-    }
 });
