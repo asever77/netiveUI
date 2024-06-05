@@ -566,6 +566,7 @@ export default class DrawDrop {
       el_item.insertAdjacentElement('beforeend', el_clone);
       el_clone.style.transform = `translate(${m_x}px, ${m_y}px)`;
       el_clone.style.width = el_item.offsetWidth + 'px';
+      
       // el_clone.style.marginLeft = el_item.offsetWidth / 2 - (el_clone.offsetWidth / 2) + 'px'
       //object를 복사타입으로 계속 사용 안하는 경우 원본 disabled로 접근방지
       const data_copy = el_this.dataset.dragCopy
@@ -772,6 +773,7 @@ export default class DrawDrop {
           _x + this.win_x - (rect_item.left + this.win_x) - rect_this.width / 2;
 
         el_clone.style.transform = 'translate(' + m_x + 'px, ' + m_y + 'px)';
+        
       };
 
       //event
