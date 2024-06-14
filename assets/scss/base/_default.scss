@@ -28,9 +28,7 @@ box {
     flex-wrap: wrap;
     position: relative;
     width: 100%;
-    border:.1rem solid var(--gray_80);
-    padding: $x3;
-    border-radius: $x1;
+    padding: 0;
     margin: $x2 0;
     gap: $x1;
     align-items: center;
@@ -82,7 +80,7 @@ guide {
 } 
 
 code {
-    padding: $x1 $x3 $x2;
+    padding:  0 !important;
     background-color: #f7f4f3;
     color: #222;
     font-size: 1.2rem;

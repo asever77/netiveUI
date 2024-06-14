@@ -208,7 +208,7 @@ export default class DragLine {
     };
 
     const actStart = e => {
-      let el_item = e.currentTarget;
+      let el_item = e.currentTarget ? e.currentTarget : e;
       let actMove;
       let actEnd;
       let _x;
@@ -224,9 +224,6 @@ export default class DragLine {
         ? el_item.dataset.lineObject
         : el_item.dataset.lineTarget;
       const data_name = el_item.dataset.name;
-
-
-      
 
       if (this.type === 'single') {
 
@@ -538,8 +535,178 @@ export default class DragLine {
         }
       }
     };
+      //keyborad
+    const produceSelect = (item) => {
+      if (item.dataset.lineObject) {
+        console.log(item);
+       
+        const _wrap = item.parentNode;
+        const _this_name = item.dataset.label;
+        let isEnd = false;
 
-    //keyborad
+        let make_select = `<select aria-label="${_this_name} 연결 항목 선택">
+        <option>선택하세요</option>`;
+        for (const item of this.targets) {
+          if (item.dataset.complete !== 'true') {
+            make_select += `<option value="
+            ${item.dataset.lineTarget}">${item.getAttribute(
+              'aria-label'
+            )}</option>`;
+          } else if (this.type === 'multiple') {
+            make_select += `<option value="
+            ${item.dataset.lineTarget}">${item.getAttribute(
+              'aria-label'
+            )}</option>`;
+          }
+        }
+        make_select += `</select>`;
+        _wrap.insertAdjacentHTML('beforeend', make_select);
+
+        let el_line;
+        console.log(el_line);
+         //키아웃
+        const actKeyout = () => {
+          if (!isEnd) {
+            el_line.remove();
+          }
+        };
+
+        const actSelect = e => {
+          console.log(item.closest('[data-line-item').querySelector('button'))
+
+          actStart(item.closest('[data-line-item').querySelector('button'));
+          el_line = this.svg.querySelector('line[data-state="ing"]');
+          isEnd = true;
+
+          const _this_select = e.currentTarget;
+          const sel_val = Number(_this_select.value);
+          const el_target = this.wrap.querySelector(
+            '[data-line-target="' + sel_val + '"]'
+          );
+          let is_answer = false;
+
+          _select.removeEventListener('change', actSelect);
+          el_line.dataset.state = 'complete';
+          el_target.dataset.complete = true;
+          _this.dataset.active = '';
+          _this.dataset.complete = true;
+          _this.focus();
+
+          //target 연결된 정보
+          if (!el_target.dataset.connect) {
+            el_target.dataset.connect = _this.dataset.name;
+          } else {
+            el_target.dataset.connect =
+              el_target.dataset.connect + ',' + _this.dataset.name;
+          }
+
+          //object에 연결된 정보
+          if (!_this.dataset.connect) {
+            _this.dataset.connect = el_target.dataset.name;
+          } else {
+            _this.dataset.connect =
+              _this.dataset.connect + ',' + el_target.dataset.name;
+          }
+
+          //최종 라인종료 위치
+          const _rect_item = el_target.getBoundingClientRect();
+          const item_w = el_target.offsetWidth / 2;
+          const item_h = el_target.offsetHeight / 2;
+          el_line.setAttribute('x2', _rect_item.left + item_w - this.wrap_l);
+          el_line.setAttribute('y2', _rect_item.top + item_h - this.wrap_t);
+
+          //접근성 aria-label
+          let object_correct = _this.dataset.connect;
+          object_correct = object_correct.split(',');
+          let label_txt = '';
+          for (let i = 0; i < object_correct.length; i++) {
+            const el = this.wrap.querySelector(
+              '[data-line-target][data-name="' + object_correct[i] + '"]'
+            );
+            if (label_txt !== '') {
+              label_txt = label_txt + ', ' + el.getAttribute('aria-label');
+            } else {
+              label_txt = el.getAttribute('aria-label');
+            }
+          }
+          _this.setAttribute(
+            'aria-label',
+            `${_this.dataset.label}와 ${label_txt} 연결됨`
+          );
+
+          //정오답적용
+          const value = _this.dataset.lineObject;
+          const _value = el_target.dataset.lineTarget;
+          const v1 = value.split(',');
+          const v2 = _value.split(',');
+
+          if (this.type === 'multiple') {
+            //multiple인 경우 정오답
+            if (v1.filter(x => v2.includes(x)).length > 0) {
+              el_line.dataset.answer = true;
+              is_answer = true;
+              this.answer_n = this.answer_n + 1;
+            } else {
+              el_line.dataset.answer = false;
+              is_answer = false;
+              this.answer_n = this.answer_n - 1;
+            }
+          } else {
+            //single인 경우 정오답
+            if (value === _value) {
+              el_line.dataset.answer = true;
+              is_answer = true;
+              this.answer_n = this.answer_n + 1;
+            } else {
+              el_line.dataset.answer = false;
+              is_answer = false;
+            }
+          }
+
+          //콜백정보정리
+          this.complete_n = this.complete_n + 1;
+
+          //answer_last 수정일 경우
+          if (this.answer_last) {
+            for (let i = 0; i < this.answer_last.length; i++) {
+              if (
+                Object.keys(this.answer_last[i]).includes(
+                  'key_' + _this.dataset.name
+                )
+              ) {
+                this.answer_last.splice(i, 1);
+                this.complete_n = this.complete_n - 1;
+              }
+            }
+          }
+
+          if (_this.dataset.lineObject) {
+            this.answer_last.push({
+              ['key_' + _this.dataset.name]: _this.dataset.lineObject,
+              ['key_' + el_target.dataset.name]: el_target.dataset.lineTarget,
+            });
+          } else {
+            this.answer_last.push({
+              ['key_' + el_target.dataset.name]: el_target.dataset.lineObject,
+              ['key_' + _this.dataset.name]: _this.dataset.lineTarget,
+            });
+          }
+          if (this.callback) {
+
+            this.callback({
+              answer_state: this.answer_n === this.answer_len ? true : false,
+              answer_last: this.answer_last,
+            });
+          }
+        };
+
+        //이벤트
+        const _select = _wrap.querySelector('select');
+        // _select.focus();
+        _select.addEventListener('change', actSelect);
+        _select.addEventListener('focusout', actKeyout);
+      }
+    }
     const actKey = e => {
       const _this = e.currentTarget;
       const _wrap = _this.parentNode;
@@ -568,7 +735,7 @@ export default class DragLine {
         _wrap.insertAdjacentHTML('beforeend', make_select);
 
         const el_line = this.svg.querySelector('line[data-state="ing"]');
-
+        console.log(el_line)
         //키아웃
         const actKeyout = () => {
           if (_select) _select.remove();
@@ -712,6 +879,8 @@ export default class DragLine {
     };
 
     for (const item of this.items) {
+      //produceSelect(item);
+      
       if (this.isTouch) {
         item.addEventListener('touchstart', actStart, {
           passive: false,
