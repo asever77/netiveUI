@@ -963,6 +963,7 @@ export default class DragLine {
     this.completeCallback();
   };
   drawLastAnswer = () => {
+    console.log('drawLastAnswer')
     for (let i = 0; i < this.answer_last.length; i++) {
       const last = this.answer_last[i];
       const keyname = Object.keys(last);
@@ -984,7 +985,7 @@ export default class DragLine {
 
       this.svg.insertAdjacentHTML(
         'beforeend',
-        `<line x1="${el_object.dataset.x}" x2="${el_target.dataset.x}" y1="${el_object.dataset.y}" y2="${el_target.dataset.y}" data-state="complete" data-target-name="${el_target.dataset.name}" data-object-name="${el_object.dataset.name}" data-answer="${last[keyname[0]] === last[keyname[1]] ? true : false}"></line>`
+        `<line x1="${el_object.dataset.x}" x2="${el_target.dataset.x}" y1="${el_object.dataset.y}" y2="${el_target.dataset.y}" data-state="complete" data-target-name="${el_target.dataset.name}" data-object-name="${el_object.dataset.name}" data-answer="${last[keyname[0]] === last[keyname[1]] ? true : false}" data-name="${el_object.dataset.name}"></line>`
       );
     }
   };

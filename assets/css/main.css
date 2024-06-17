@@ -10790,6 +10790,10 @@ html, body {
   pointer-events: none;
 }
 
+[data-line-target] {
+  tabindex: -1;
+}
+
 [data-line-object],
 [data-line-target] {
   position: relative;
