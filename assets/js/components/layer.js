@@ -324,13 +324,13 @@ export default class Layer {
     init() {
         //focus loop
         const keyStart = (e) => {
-            if (e.shiftKey && e.keyCode == 9) {
+            if (e.shiftKey && e.key === 'Tab') {
                 e.preventDefault();
                 this.last.focus();
             }
         }
         const keyEnd = (e) => {
-            if (!e.shiftKey && e.keyCode == 9) {
+            if (!e.shiftKey && e.key === 'Tab') {
                 e.preventDefault();
                 this.btn_close.focus();
             }

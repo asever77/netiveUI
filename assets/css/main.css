@@ -9140,6 +9140,10 @@ body[data-toggle-state=true] .base-body {
   margin-left: 1.6rem;
 }
 
+[data-device=mobile] .mdl-select-btn {
+  z-index: -2 !important;
+}
+
 .mdl-layer {
   position: fixed;
   width: 100%;
@@ -11299,16 +11303,4 @@ html, body {
   font-feature-settings: "liga";
   font-weight: 600;
   font-size: 2rem;
-}
-
-.mdl-datepicker {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-.mdl-datepicker-btn {
-  position: relative;
-  width: 4rem;
-  height: 4rem;
-  background-color: #222;
 }/*# sourceMappingURL=main.css.map */
