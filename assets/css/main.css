@@ -9141,7 +9141,12 @@ body[data-toggle-state=true] .base-body {
 }
 
 [data-device=mobile] .mdl-select-btn {
-  z-index: -2 !important;
+  z-index: 0 !important;
+}
+
+[data-device=mobile] .mdl-select select {
+  z-index: 1 !important;
+  pointer-events: none;
 }
 
 .mdl-layer {
