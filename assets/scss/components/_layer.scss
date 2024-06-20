@@ -1,11 +1,13 @@
-[data-device="mobile"] .mdl-select-btn{
-    z-index: 0 !important;
+// [data-device="mobile"] .mdl-select-btn{
+//     z-index: 0 !important;
+// }
+// [data-device="mobile"] .mdl-select select{
+//     z-index: 1 !important;
+//     pointer-events: none;
+// }
+.mdl-select-btn {
+    top:1.4rem !important
 }
-[data-device="mobile"] .mdl-select select{
-    z-index: 1 !important;
-    pointer-events: none;
-}
-
 .mdl-layer {
     position: fixed;
     width: 100%;
