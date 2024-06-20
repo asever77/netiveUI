@@ -9144,10 +9144,6 @@ body[data-toggle-state=true] .base-body {
   tabindex: -1 !important;
 }
 
-.mdl-select-btn {
-  top: 1.4rem !important;
-}
-
 .mdl-layer {
   position: fixed;
   width: 100%;
