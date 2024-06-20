@@ -1,6 +1,7 @@
-// [data-device="mobile"] .mdl-select-btn{
-//     z-index: 0 !important;
-// }
+[data-device="mobile"] .mdl-select-btn{
+    tabindex:-1 !important;
+    
+}
 // [data-device="mobile"] .mdl-select select{
 //     z-index: 1 !important;
 //     pointer-events: none;

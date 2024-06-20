@@ -9140,6 +9140,10 @@ body[data-toggle-state=true] .base-body {
   margin-left: 1.6rem;
 }
 
+[data-device=mobile] .mdl-select-btn {
+  tabindex: -1 !important;
+}
+
 .mdl-select-btn {
   top: 1.4rem !important;
 }
