@@ -11,6 +11,30 @@
     transform: translate(calc(-100% + 6rem), 0);
 }
 
+.audio-player[data-size="min"] {
+    .audio-player--info {
+        width:5.2rem;
+        height:5.2rem;
+        transform: translate(-50%, 0) !important;
+    }
+    .audio-player--size {
+        background-color:silver;
+    }
+    .audio-player--subtitles {
+        height: 0;
+    }
+    .audio-player--time{
+        opacity:0;
+        height:0;
+        overflow:hidden;
+    }
+}
+
+.audio-player--size {
+    width:2rem;
+    height:2rem;
+    background-color:black;
+}
 .audio-player--btn{
     position: relative;
     width: 3rem;

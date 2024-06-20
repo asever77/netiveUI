@@ -17,7 +17,7 @@ document.querySelector('[data-code="code1"]').textContent = code1;
 const code2 = `//기본실행
 UI.exe.audioplayer = new AudioPlayer();
 //전체 정지
-UI.exe.audioplayer.allstop();`;
+UI.exe.audioplayer.reset();`;
 
 document.querySelector('[data-code="code2"]').textContent = code2;
 
