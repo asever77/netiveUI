@@ -2,14 +2,18 @@ import AudioPlayer from '../../../assets/js/components/audioPlayer.js';
 import hljs from 'https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/es/highlight.min.js';
 
 const code1 = `//data-label 값은 유니크한 값
-<div class="audio-player" data-label="제목1" data-align="{ left | right | center }">
-    <button type="button" class="audio-player--btn"></button>
+<div class="audio-player" data-label="제목1" data-align="{ left | right | center }"> //data-state, data-size
+    <button type="button" class="audio-player--btn" ></button>
     <audio>
         <source src="{ audio file }">
     </audio>
-    <div class="audio-player--subtitles">
-        <div>
+    <div class="audio-player--info">
+        <button type="button" class="audio-player--size" aria-label="최소화"></button>
+        <div class="audio-player--subtitles">
             { 자막텍스트 }
+        </div>
+        <div class="audio-player--time">
+            <b class="audio-player--time-cur"></b>/<span class="audio-player--time-dur"></span>
         </div>
     </div>
 </div>`;

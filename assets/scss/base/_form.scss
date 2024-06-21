@@ -141,6 +141,7 @@ select,
     font-size: 1.6rem;
     z-index: 1;
 
+    &:focus,
     &:hover {
         border: .1rem solid $gray-100;
     }

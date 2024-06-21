@@ -8621,7 +8621,8 @@ select,
   font-size: 1.6rem;
   z-index: 1;
 }
-select:hover,
+select:focus, select:hover,
+.mdl-select-btn:focus,
 .mdl-select-btn:hover {
   border: 0.1rem solid var(--gray_100);
 }
