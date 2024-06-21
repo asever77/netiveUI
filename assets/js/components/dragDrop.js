@@ -45,11 +45,17 @@ export default class DrawDrop {
     this.isTouch = window.matchMedia(
       '(hover: none) and (pointer: coarse)'
     ).matches /*'ontouchstart' in document.documentElement*/;
+    this.timer = 0;
+
     this.init();
   }
 
   init() {
     const set = () => {
+      if (this.wrap.dataset.exe === 'true') {
+        return false;
+      }
+      this.wrap.dataset.exe = 'true';
       this.wrap_rect = this.wrap.getBoundingClientRect();
       this.wrap_t = this.wrap_rect.top;
       this.wrap_l = this.wrap_rect.left;
@@ -60,6 +66,9 @@ export default class DrawDrop {
       if (this.drag_targets) {
         for (let item of this.drag_targets) {
           const rect = item.getBoundingClientRect();
+
+          console.log(item);
+
           this.array_target.push({
             name: item.dataset.dragTarget,
             width: rect.width,
@@ -143,10 +152,13 @@ export default class DrawDrop {
       }
     };
 
-    // const resizeObserver = new ResizeObserver(() => {
-    //   set();
-    // });
-    // resizeObserver.observe(this.wrap);
+    const resizeObserver = new ResizeObserver(() => {
+      clearTimeout(this.timer);
+      this.timer = setTimeout(() => {
+        set();
+      }, 1000);
+    });
+    resizeObserver.observe(this.wrap);
 
     //key
     const actKey = e => {
@@ -380,7 +392,7 @@ export default class DrawDrop {
       el_this.removeAttribute('data-drag-state');
       el_this.classList.add('active');
       el_this.style.transform = 'translate(' + m_x + 'px, ' + m_y + 'px)';
-      
+
       const actEnd = () => {
         //최종위치
         const e_x = _x;
@@ -390,7 +402,7 @@ export default class DrawDrop {
         let is_name;
 
         el_this.classList.remove('active');
-        el_this.style.width = 'auto';
+        // el_this.style.width = 'auto';
         /**
          * data-drag-target 정답 영역 안에 들어가는지 체크
          * is_range: true | false
@@ -565,8 +577,7 @@ export default class DrawDrop {
       el_clone.disabled = false;
       el_item.insertAdjacentElement('beforeend', el_clone);
       el_clone.style.transform = `translate(${m_x}px, ${m_y}px)`;
-      el_clone.style.width = el_item.offsetWidth + 'px';
-      
+      // el_clone.style.width = el_item.offsetWidth + 'px';
       // el_clone.style.marginLeft = el_item.offsetWidth / 2 - (el_clone.offsetWidth / 2) + 'px'
       //object를 복사타입으로 계속 사용 안하는 경우 원본 disabled로 접근방지
       const data_copy = el_this.dataset.dragCopy
@@ -587,7 +598,7 @@ export default class DrawDrop {
         let is_name;
 
         el_clone.classList.remove('active');
-        el_clone.style.width = 'auto';
+        // el_clone.style.width = 'auto';
         /**
          * data-drag-target 정답 영역 안에 들어가는지 체크
          * is_range: true | false
@@ -773,7 +784,6 @@ export default class DrawDrop {
           _x + this.win_x - (rect_item.left + this.win_x) - rect_this.width / 2;
 
         el_clone.style.transform = 'translate(' + m_x + 'px, ' + m_y + 'px)';
-        
       };
 
       //event
@@ -798,6 +808,11 @@ export default class DrawDrop {
       ? this.drag_targets
       : this.wrap.querySelectorAll('[data-drag-item="object"]');
 
+    const completeItems = this.wrap.querySelectorAll(
+      '[data-drag-state="complete"]'
+    );
+    const completeLength = completeItems.length;
+
     for (let i = 0; i < area.length; i++) {
       const trg_n = isTarget
         ? area[i].dataset.dragTarget
@@ -814,6 +829,7 @@ export default class DrawDrop {
             if (item.dataset.dragObject === is_name_array[key]) {
               // isAnswer = true;
               n = n + 1;
+              break;
             }
           }
           this.answer_last.push({
@@ -825,7 +841,10 @@ export default class DrawDrop {
         }
       }
     }
-    this.answer_state = this.answer_len === n ? true : false;
+    this.answer_state =
+      this.answer_len === n && completeLength === this.answer_len
+        ? true
+        : false;
 
     //완료콜백
     if (this.callback) {
