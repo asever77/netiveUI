@@ -44,7 +44,12 @@ export default class DragLine {
     this.init();
   }
 
+  // resizeObserver(setCall) {
+  //   setCall();
+  // }
+
   init() {
+    this.observer = 'a';
     //중복실행방지
     if (this.wrap.dataset.load === 'ok') {
       return false;
@@ -65,6 +70,10 @@ export default class DragLine {
       this.wrap_w = this.wrap.offsetWidth;
       this.wrap_h = this.wrap.offsetHeight;
 
+      for (const item of this.targets) {
+        item.setAttribute('tabindex', '-1');
+      }
+
       //object점와 target점 크기, 위치 정보 저장
       for (const [index, item] of this.items.entries()) {
         const rect_item = item.getBoundingClientRect();
@@ -75,18 +84,25 @@ export default class DragLine {
         item.dataset.x = rect_item.left + item_w - this.wrap_l;
         item.dataset.y = rect_item.top + item_h - this.wrap_t;
       }
-
+      this.wrap.style.opacity = '1';
       if (this.answer_last?.length) {
         this.drawLastAnswer();
       } else {
         this.answer_last = [];
       }
     };
-
+    this.wrap.style.opacity = '0.2';
+    this.wrap.style.transition = 'opacity .2s ease';
     //resize
+    let timer = 0;
     const resizeObserver = new ResizeObserver(() => {
-      set();
+      clearTimeout(timer);
+      this.wrap.style.opacity = '0.2';
+      timer = setTimeout(() => {
+        set();
+      }, 1000);
     });
+
     resizeObserver.observe(this.wrap);
 
     let firstTouch = {
@@ -105,7 +121,6 @@ export default class DragLine {
       let el_item = e.type === 'keydown' ? e.target : e.currentTarget;
 
       //현재 object인가 target인가
-
       let data_name_object = null;
       let data_name_target = null;
       const data_name = el_item.dataset.name;
@@ -175,12 +190,10 @@ export default class DragLine {
         }
         //object인 경우
         else {
-          
           _name = data_name;
           _dot = this.wrap.querySelector(`[data-connect="${_name}"]`);
         }
 
-        console.log(el_item,_dot, _name)  
         _dot.removeAttribute('data-connect');
         _dot.removeAttribute('data-complete');
         _nnn = _dot.dataset.lineObject
@@ -208,16 +221,35 @@ export default class DragLine {
     };
 
     const actStart = e => {
-      let el_item = e.currentTarget ? e.currentTarget : e;
+      e.preventDefault();
+
+      let el_item = e.currentTarget;
+      const _drag = el_item.closest('[data-line-id]');
+
+      if (_drag.dataset.ing === 'true') {
+        return false;
+      }
+
       let actMove;
       let actEnd;
-      let _x;
-      let _y;
+      let _x = e.clientX ? e.clientX : e.targetTouches[0].clientX;
+      let _y = e.clientY ? e.clientY : e.targetTouches[0].clientY;
       isObject = el_item.dataset.lineObject ? true : false;
-      make_line(e);
 
-      e.preventDefault();
-      
+      const _menu = _drag.querySelector('[role="menu"]');
+      const _actives = _drag.querySelectorAll('[data-active="true"]');
+      const _line = _drag.querySelector('line[data-state="ing"]');
+
+      if (_menu) _menu.remove();
+      if (_line) _line.remove();
+      for (const item of _actives) {
+        item.removeAttribute('[data-active]');
+      }
+
+      make_line(e);
+      _drag.dataset.ing = 'true';
+      _drag.dataset.ingt = el_item;
+
       let is_object = el_item.dataset.lineObject ? true : false;
       let el_line = this.svg.querySelector('line[data-state="ing"]');
       let value = is_object
@@ -226,9 +258,6 @@ export default class DragLine {
       const data_name = el_item.dataset.name;
 
       if (this.type === 'single') {
-
-        console.log(is_object), data_name;
-
         if (is_object) {
           el_line = this.svg.querySelector(
             `line[data-object-name="${data_name}"]`
@@ -248,14 +277,17 @@ export default class DragLine {
 
       actEnd = () => {
         //클릭완료이벤트에 클릭이벤트인경우 클릭완료 설정
+        _drag.dataset.ing = 'false';
+        _drag.dataset.ingt = 'false';
         document.querySelector('body').classList.remove('noScroll');
         const v_x = _x - this.wrap_l;
         const v_y = _y - this.wrap_t;
         let is_complete = false;
-        let is_answer = false;
-
         moving = false;
-        el_line.dataset.state = 'complete';
+
+        if (el_line) {
+          el_line.dataset.state = 'complete';
+        }
         el_item.dataset.active = '';
         firstTouch.state = false;
 
@@ -379,11 +411,9 @@ export default class DragLine {
               if (this.type === 'multiple') {
                 if (v1.filter(x => v2.includes(x)).length > 0) {
                   el_line.dataset.answer = true;
-                  is_answer = true;
                   this.answer_n = this.answer_n + 1;
                 } else {
                   el_line.dataset.answer = false;
-                  is_answer = false;
                   this.answer_n = this.answer_n - 1;
                 }
               }
@@ -391,11 +421,9 @@ export default class DragLine {
               else {
                 if (value === _value) {
                   el_line.dataset.answer = true;
-                  is_answer = true;
                   this.answer_n = this.answer_n + 1;
                 } else {
                   el_line.dataset.answer = false;
-                  is_answer = false;
                 }
               }
               //연결완료성공
@@ -406,7 +434,7 @@ export default class DragLine {
                 for (let i = 0; i < this.answer_last.length; i++) {
                   if (
                     Object.keys(this.answer_last[i]).includes(
-                      'key_' + el_item.dataset.name
+                      'key' + el_item.dataset.name
                     )
                   ) {
                     this.answer_last.splice(i, 1);
@@ -416,14 +444,14 @@ export default class DragLine {
               }
               if (is_object) {
                 this.answer_last.push({
-                  ['key_' + el_item.dataset.name]: el_item.dataset.lineObject,
-                  ['key_' + item.dataset.name]: item.dataset.lineTarget,
+                  ['key' + el_item.dataset.name]: el_item.dataset.lineObject,
+                  ['key' + item.dataset.name]: item.dataset.lineTarget,
                   label: el_item.getAttribute('aria-label'),
                 });
               } else {
                 this.answer_last.push({
-                  ['key_' + item.dataset.name]: item.dataset.lineObject,
-                  ['key_' + el_item.dataset.name]: el_item.dataset.lineTarget,
+                  ['key' + item.dataset.name]: item.dataset.lineObject,
+                  ['key' + el_item.dataset.name]: el_item.dataset.lineTarget,
                   label: item.getAttribute('aria-label'),
                 });
               }
@@ -449,7 +477,7 @@ export default class DragLine {
             for (let i = 0; i < this.answer_last.length; i++) {
               if (
                 Object.keys(this.answer_last[i]).includes(
-                  'key_' + el_item.dataset.name
+                  'key' + el_item.dataset.name
                 )
               ) {
                 this.answer_last.splice(i, 1);
@@ -475,23 +503,33 @@ export default class DragLine {
       };
       actMove = e => {
         e.preventDefault();
+        _drag.dataset.ingt = 'false';
 
         _x = e.clientX ? e.clientX : e.targetTouches[0].clientX;
         _y = e.clientY ? e.clientY : e.targetTouches[0].clientY;
         el_line.setAttribute('x2', _x - this.wrap_l);
         el_line.setAttribute('y2', _y - this.wrap_t);
+
         if (this.isTouch) {
           this.doc.addEventListener('touchend', actEnd);
         } else {
           this.doc.addEventListener('mouseup', actEnd);
         }
-
         moving = true;
       };
 
+      const noMoveEnd = e => {
+        console.log('33', el_line);
+        _drag.dataset.ing = 'wait';
+        this.doc.removeEventListener('touchend', noMoveEnd);
+        if (!moving) this.doc.removeEventListener('touchmove', actMove);
+      };
+
       if (this.isTouch) {
+        console.log(firstTouch);
+
         if (!firstTouch.state) {
-          this.doc.addEventListener('touchmove', actMove, {passive: false});
+          this.doc.addEventListener('touchmove', actMove, { passive: false });
 
           firstTouch.state = true;
           firstTouch.item = el_item;
@@ -505,12 +543,10 @@ export default class DragLine {
           el_line.setAttribute('x2', x_value);
           el_line.setAttribute('y2', y_value);
 
-          this.doc.addEventListener('touchend', () => {
-            if (!moving) this.doc.removeEventListener('touchmove', actMove);
-          });
+          // this.doc.addEventListener('touchend', noMoveEnd);
         } else {
           this.doc.removeEventListener('touchmove', actMove);
-
+          console.log(22222222222);
           firstTouch.state = false;
           firstTouch.item.dataset.active = '';
           el_item.dataset.active = '';
@@ -535,352 +571,235 @@ export default class DragLine {
         }
       }
     };
-      //keyborad
-    const produceSelect = (item) => {
-      if (item.dataset.lineObject) {
-        console.log(item);
-       
-        const _wrap = item.parentNode;
-        const _this_name = item.dataset.label;
-        let isEnd = false;
 
-        let make_select = `<select aria-label="${_this_name} 연결 항목 선택">
-        <option>선택하세요</option>`;
-        for (const item of this.targets) {
-          if (item.dataset.complete !== 'true') {
-            make_select += `<option value="
-            ${item.dataset.lineTarget}">${item.getAttribute(
-              'aria-label'
-            )}</option>`;
-          } else if (this.type === 'multiple') {
-            make_select += `<option value="
-            ${item.dataset.lineTarget}">${item.getAttribute(
-              'aria-label'
-            )}</option>`;
-          }
-        }
-        make_select += `</select>`;
-        _wrap.insertAdjacentHTML('beforeend', make_select);
-
-        let el_line;
-        console.log(el_line);
-         //키아웃
-        const actKeyout = () => {
-          if (!isEnd) {
-            el_line.remove();
-          }
-        };
-
-        const actSelect = e => {
-          console.log(item.closest('[data-line-item').querySelector('button'))
-
-          actStart(item.closest('[data-line-item').querySelector('button'));
-          el_line = this.svg.querySelector('line[data-state="ing"]');
-          isEnd = true;
-
-          const _this_select = e.currentTarget;
-          const sel_val = Number(_this_select.value);
-          const el_target = this.wrap.querySelector(
-            '[data-line-target="' + sel_val + '"]'
-          );
-          let is_answer = false;
-
-          _select.removeEventListener('change', actSelect);
-          el_line.dataset.state = 'complete';
-          el_target.dataset.complete = true;
-          _this.dataset.active = '';
-          _this.dataset.complete = true;
-          _this.focus();
-
-          //target 연결된 정보
-          if (!el_target.dataset.connect) {
-            el_target.dataset.connect = _this.dataset.name;
-          } else {
-            el_target.dataset.connect =
-              el_target.dataset.connect + ',' + _this.dataset.name;
-          }
-
-          //object에 연결된 정보
-          if (!_this.dataset.connect) {
-            _this.dataset.connect = el_target.dataset.name;
-          } else {
-            _this.dataset.connect =
-              _this.dataset.connect + ',' + el_target.dataset.name;
-          }
-
-          //최종 라인종료 위치
-          const _rect_item = el_target.getBoundingClientRect();
-          const item_w = el_target.offsetWidth / 2;
-          const item_h = el_target.offsetHeight / 2;
-          el_line.setAttribute('x2', _rect_item.left + item_w - this.wrap_l);
-          el_line.setAttribute('y2', _rect_item.top + item_h - this.wrap_t);
-
-          //접근성 aria-label
-          let object_correct = _this.dataset.connect;
-          object_correct = object_correct.split(',');
-          let label_txt = '';
-          for (let i = 0; i < object_correct.length; i++) {
-            const el = this.wrap.querySelector(
-              '[data-line-target][data-name="' + object_correct[i] + '"]'
-            );
-            if (label_txt !== '') {
-              label_txt = label_txt + ', ' + el.getAttribute('aria-label');
-            } else {
-              label_txt = el.getAttribute('aria-label');
-            }
-          }
-          _this.setAttribute(
-            'aria-label',
-            `${_this.dataset.label}와 ${label_txt} 연결됨`
-          );
-
-          //정오답적용
-          const value = _this.dataset.lineObject;
-          const _value = el_target.dataset.lineTarget;
-          const v1 = value.split(',');
-          const v2 = _value.split(',');
-
-          if (this.type === 'multiple') {
-            //multiple인 경우 정오답
-            if (v1.filter(x => v2.includes(x)).length > 0) {
-              el_line.dataset.answer = true;
-              is_answer = true;
-              this.answer_n = this.answer_n + 1;
-            } else {
-              el_line.dataset.answer = false;
-              is_answer = false;
-              this.answer_n = this.answer_n - 1;
-            }
-          } else {
-            //single인 경우 정오답
-            if (value === _value) {
-              el_line.dataset.answer = true;
-              is_answer = true;
-              this.answer_n = this.answer_n + 1;
-            } else {
-              el_line.dataset.answer = false;
-              is_answer = false;
-            }
-          }
-
-          //콜백정보정리
-          this.complete_n = this.complete_n + 1;
-
-          //answer_last 수정일 경우
-          if (this.answer_last) {
-            for (let i = 0; i < this.answer_last.length; i++) {
-              if (
-                Object.keys(this.answer_last[i]).includes(
-                  'key_' + _this.dataset.name
-                )
-              ) {
-                this.answer_last.splice(i, 1);
-                this.complete_n = this.complete_n - 1;
-              }
-            }
-          }
-
-          if (_this.dataset.lineObject) {
-            this.answer_last.push({
-              ['key_' + _this.dataset.name]: _this.dataset.lineObject,
-              ['key_' + el_target.dataset.name]: el_target.dataset.lineTarget,
-            });
-          } else {
-            this.answer_last.push({
-              ['key_' + el_target.dataset.name]: el_target.dataset.lineObject,
-              ['key_' + _this.dataset.name]: _this.dataset.lineTarget,
-            });
-          }
-          if (this.callback) {
-
-            this.callback({
-              answer_state: this.answer_n === this.answer_len ? true : false,
-              answer_last: this.answer_last,
-            });
-          }
-        };
-
-        //이벤트
-        const _select = _wrap.querySelector('select');
-        // _select.focus();
-        _select.addEventListener('change', actSelect);
-        _select.addEventListener('focusout', actKeyout);
-      }
-    }
+    //keyborad
     const actKey = e => {
       const _this = e.currentTarget;
       const _wrap = _this.parentNode;
-      const _this_name = _this.dataset.label;
       let isEnd = false;
+
+      isObject = _this.dataset.lineObject ? true : false;
+
       //space key
       if (e.keyCode === 32) {
         make_line(e);
         //셀렉트생성
-        let make_select = `<select aria-label="${_this_name} 연결 항목 선택">
-        <option>선택하세요</option>`;
+        let m = 1;
+        let make_menu = `<div role="menu">`;
+
         for (const item of this.targets) {
           if (item.dataset.complete !== 'true') {
-            make_select += `<option value="
-            ${item.dataset.lineTarget}">${item.getAttribute(
-              'aria-label'
-            )}</option>`;
+            make_menu += `<button value="
+              ${item.dataset.lineTarget}"
+              type="button"
+              tabindex="-1"
+              role="menuitem"
+              data-n="${m}"
+            >
+              ${item.getAttribute('aria-label')}
+            </button>`;
           } else if (this.type === 'multiple') {
-            make_select += `<option value="
-            ${item.dataset.lineTarget}">${item.getAttribute(
-              'aria-label'
-            )}</option>`;
+            make_menu += `<button
+              type="button"
+              tabindex="-1"
+              role="menuitem"
+              value="${item.dataset.lineTarget}"
+              data-n="${m}"
+            >
+              ${item.getAttribute('aria-label')}
+            </button>`;
           }
+          m = m + 1;
         }
-        make_select += `</select>`;
-        _wrap.insertAdjacentHTML('beforeend', make_select);
+        make_menu += `</div>`;
+        _wrap.insertAdjacentHTML('beforeend', make_menu);
 
+        const _menu = _wrap.querySelector('[role="menu"]');
+        const _menuItem = _menu.querySelectorAll('[role="menuitem"]');
+        const len = _menuItem.length;
         const el_line = this.svg.querySelector('line[data-state="ing"]');
-        console.log(el_line)
-        //키아웃
-        const actKeyout = () => {
-          if (_select) _select.remove();
-          if (!isEnd) {
-            el_line.remove();
-          }
-        };
 
         //선택시
         const actSelect = e => {
           isEnd = true;
 
-          const _this_select = e.currentTarget;
-          const sel_val = Number(_this_select.value);
+          const menuItem = e.currentTarget;
+          const wrap = menuItem.parentNode;
+          const sel_val = Number(menuItem.value);
           const el_target = this.wrap.querySelector(
             '[data-line-target="' + sel_val + '"]'
           );
-          let is_answer = false;
 
-          _select.removeEventListener('change', actSelect);
-          el_line.dataset.state = 'complete';
-          el_target.dataset.complete = true;
-          _this.dataset.active = '';
-          _this.dataset.complete = true;
-          _this.focus();
+          let objFocus;
+          let _m = Number(menuItem.dataset.n);
 
-          //target 연결된 정보
-          if (!el_target.dataset.connect) {
-            el_target.dataset.connect = _this.dataset.name;
-          } else {
-            el_target.dataset.connect =
-              el_target.dataset.connect + ',' + _this.dataset.name;
-          }
-
-          //object에 연결된 정보
-          if (!_this.dataset.connect) {
-            _this.dataset.connect = el_target.dataset.name;
-          } else {
-            _this.dataset.connect =
-              _this.dataset.connect + ',' + el_target.dataset.name;
-          }
-
-          //최종 라인종료 위치
-          const _rect_item = el_target.getBoundingClientRect();
-          const item_w = el_target.offsetWidth / 2;
-          const item_h = el_target.offsetHeight / 2;
-          el_line.setAttribute('x2', _rect_item.left + item_w - this.wrap_l);
-          el_line.setAttribute('y2', _rect_item.top + item_h - this.wrap_t);
-
-          //접근성 aria-label
-          let object_correct = _this.dataset.connect;
-          object_correct = object_correct.split(',');
-          let label_txt = '';
-          for (let i = 0; i < object_correct.length; i++) {
-            const el = this.wrap.querySelector(
-              '[data-line-target][data-name="' + object_correct[i] + '"]'
-            );
-            if (label_txt !== '') {
-              label_txt = label_txt + ', ' + el.getAttribute('aria-label');
-            } else {
-              label_txt = el.getAttribute('aria-label');
-            }
-          }
-          _this.setAttribute(
-            'aria-label',
-            `${_this.dataset.label}와 ${label_txt} 연결됨`
-          );
-
-          //정오답적용
-          const value = _this.dataset.lineObject;
-          const _value = el_target.dataset.lineTarget;
-          const v1 = value.split(',');
-          const v2 = _value.split(',');
-
-          if (this.type === 'multiple') {
-            //multiple인 경우 정오답
-            if (v1.filter(x => v2.includes(x)).length > 0) {
-              el_line.dataset.answer = true;
-              is_answer = true;
-              this.answer_n = this.answer_n + 1;
-            } else {
-              el_line.dataset.answer = false;
-              is_answer = false;
-              this.answer_n = this.answer_n - 1;
-            }
-          } else {
-            //single인 경우 정오답
-            if (value === _value) {
-              el_line.dataset.answer = true;
-              is_answer = true;
-              this.answer_n = this.answer_n + 1;
-            } else {
-              el_line.dataset.answer = false;
-              is_answer = false;
-            }
-          }
-
-          //콜백정보정리
-          this.complete_n = this.complete_n + 1;
-
-          //answer_last 수정일 경우
-          if (this.answer_last) {
-            for (let i = 0; i < this.answer_last.length; i++) {
-              if (
-                Object.keys(this.answer_last[i]).includes(
-                  'key_' + _this.dataset.name
-                )
-              ) {
-                this.answer_last.splice(i, 1);
-                this.complete_n = this.complete_n - 1;
+          switch (e.key) {
+            case 'Tab':
+              if (_menu) _menu.remove();
+              if (!isEnd) {
+                el_line.remove();
               }
-            }
-          }
+              break;
 
-          if (_this.dataset.lineObject) {
-            this.answer_last.push({
-              ['key_' + _this.dataset.name]: _this.dataset.lineObject,
-              ['key_' + el_target.dataset.name]: el_target.dataset.lineTarget,
-            });
-          } else {
-            this.answer_last.push({
-              ['key_' + el_target.dataset.name]: el_target.dataset.lineObject,
-              ['key_' + _this.dataset.name]: _this.dataset.lineTarget,
-            });
-          }
-          if (this.callback) {
+            case 'ArrowDown':
+            case 'ArrowRight':
+              objFocus = menuItem.nextSibling;
+              if (!objFocus) {
+                objFocus = wrap.querySelector('[role="menuitem"]:nth-child(1)');
+              }
+              objFocus.focus();
+              break;
 
-            this.callback({
-              answer_state: this.answer_n === this.answer_len ? true : false,
-              answer_last: this.answer_last,
-            });
+            case 'ArrowUp':
+            case 'ArrowLeft':
+              objFocus = menuItem.previousSibling;
+              if (!objFocus) {
+                objFocus = wrap.querySelector(
+                  '[role="menuitem"]:nth-child(' + len + ')'
+                );
+              }
+              objFocus.focus();
+              break;
+
+            case 'Enter':
+              el_line.dataset.state = 'complete';
+              el_target.dataset.complete = true;
+              _this.dataset.active = '';
+              _this.dataset.complete = true;
+              _this.focus();
+
+              //target 연결된 정보
+              if (!el_target.dataset.connect) {
+                el_target.dataset.connect = _this.dataset.name;
+              } else {
+                el_target.dataset.connect =
+                  el_target.dataset.connect + ',' + _this.dataset.name;
+              }
+
+              //object에 연결된 정보
+              if (!_this.dataset.connect) {
+                _this.dataset.connect = el_target.dataset.name;
+              } else {
+                _this.dataset.connect =
+                  _this.dataset.connect + ',' + el_target.dataset.name;
+              }
+
+              //최종 라인종료 위치
+              const _rect_item = el_target.getBoundingClientRect();
+              const item_w = el_target.offsetWidth / 2;
+              const item_h = el_target.offsetHeight / 2;
+
+              //svg line
+              el_line.setAttribute(
+                'x2',
+                _rect_item.left + item_w - this.wrap_l
+              );
+              el_line.setAttribute('y2', _rect_item.top + item_h - this.wrap_t);
+              el_line.dataset.targetName = _this.dataset.connect;
+
+              //접근성 aria-label
+              let object_correct = _this.dataset.connect;
+
+              object_correct = object_correct.split(',');
+              let label_txt = '';
+
+              for (let i = 0; i < object_correct.length; i++) {
+                const el = this.wrap.querySelector(
+                  '[data-line-target][data-name="' + object_correct[i] + '"]'
+                );
+                if (label_txt !== '') {
+                  label_txt = label_txt + ', ' + el.getAttribute('aria-label');
+                } else {
+                  label_txt = el.getAttribute('aria-label');
+                }
+              }
+              _this.setAttribute(
+                'aria-label',
+                `${_this.dataset.label}와 ${label_txt} 연결됨`
+              );
+
+              //정오답적용
+              const value = _this.dataset.lineObject;
+              const _value = el_target.dataset.lineTarget;
+              const v1 = value.split(',');
+              const v2 = _value.split(',');
+
+              if (this.type === 'multiple') {
+                //multiple인 경우 정오답
+                if (v1.filter(x => v2.includes(x)).length > 0) {
+                  el_line.dataset.answer = true;
+                  this.answer_n = this.answer_n + 1;
+                } else {
+                  el_line.dataset.answer = false;
+                  this.answer_n = this.answer_n - 1;
+                }
+              } else {
+                //single인 경우 정오답
+                if (value === _value) {
+                  el_line.dataset.answer = true;
+                  this.answer_n = this.answer_n + 1;
+                } else {
+                  el_line.dataset.answer = false;
+                }
+              }
+
+              //콜백정보정리
+              this.complete_n = this.complete_n + 1;
+
+              //answer_last 수정일 경우
+              if (this.answer_last) {
+                for (let i = 0; i < this.answer_last.length; i++) {
+                  if (
+                    Object.keys(this.answer_last[i]).includes(
+                      'key' + _this.dataset.name
+                    )
+                  ) {
+                    this.answer_last.splice(i, 1);
+                    this.complete_n = this.complete_n - 1;
+                  }
+                }
+              }
+
+              if (_this.dataset.lineObject) {
+                this.answer_last.push({
+                  ['key' + _this.dataset.name]: _this.dataset.lineObject,
+                  ['key' + el_target.dataset.name]:
+                    el_target.dataset.lineTarget,
+                });
+              } else {
+                this.answer_last.push({
+                  ['key' + el_target.dataset.name]:
+                    el_target.dataset.lineObject,
+                  ['key' + _this.dataset.name]: _this.dataset.lineTarget,
+                });
+              }
+              if (this.callback) {
+                this.callback({
+                  answer_state:
+                    this.answer_n === this.answer_len ? true : false,
+                  answer_last: this.answer_last,
+                });
+              }
+              if (_menu) _menu.remove();
+              if (!isEnd) {
+                el_line.remove();
+              }
+              break;
+
+            default:
+              break;
           }
         };
 
         //이벤트
-        const _select = _wrap.querySelector('select');
-        _select.focus();
-        _select.addEventListener('change', actSelect);
-        _select.addEventListener('focusout', actKeyout);
+        _menu.querySelector('[role="menuitem"]:nth-child(1)').focus();
+        for (const item of _menuItem) {
+          item.addEventListener('keydown', actSelect);
+        }
       }
     };
 
     for (const item of this.items) {
-      //produceSelect(item);
-      
       if (this.isTouch) {
         item.addEventListener('touchstart', actStart, {
           passive: false,
@@ -888,6 +807,18 @@ export default class DragLine {
       } else {
         item.addEventListener('mousedown', actStart);
         item.addEventListener('keydown', actKey);
+        // item.addEventListener('focus', e => {
+        //   const _current = e.currentTarget;
+        //   const _wrap = _current.closest('[data-line-group]');
+        //   const _actives = _wrap.querySelectorAll('[data-active="true"]');
+        //   const _line = document.querySelector(
+        //     '[data-line-id] svg line[data-state="ing"]'
+        //   );
+        //   if (_line) _line.remove();
+        //   for (let i = 0; i < _actives.length; i++) {
+        //     _actives[i].dataset.active = '';
+        //   }
+        // });
       }
     }
   }
@@ -963,29 +894,36 @@ export default class DragLine {
     this.completeCallback();
   };
   drawLastAnswer = () => {
-    console.log('drawLastAnswer')
     for (let i = 0; i < this.answer_last.length; i++) {
       const last = this.answer_last[i];
       const keyname = Object.keys(last);
       const el_object = this.wrap.querySelector(
-        `[data-name="${keyname[0].split('_')[1]}"]`
+        `[data-name="${keyname[0].split('key')[1]}"]`
       );
       const el_target = this.wrap.querySelector(
-        `[data-name="${keyname[1].split('_')[1]}"]`
+        `[data-name="${keyname[1].split('key')[1]}"]`
       );
       el_object.dataset.complete = 'true';
       el_object.dataset.connect = el_target.dataset.name;
       el_target.dataset.connect = el_object.dataset.name;
       el_target.dataset.complete = 'true';
       el_object.setAttribute('aria-label', last.label);
+      const is_answer = last[keyname[0]] === last[keyname[1]];
 
-      if (last[keyname[0]] === last[keyname[1]]) {
+      if (is_answer) {
         this.answer_n = this.answer_n + 1;
       }
 
       this.svg.insertAdjacentHTML(
         'beforeend',
-        `<line x1="${el_object.dataset.x}" x2="${el_target.dataset.x}" y1="${el_object.dataset.y}" y2="${el_target.dataset.y}" data-state="complete" data-target-name="${el_target.dataset.name}" data-object-name="${el_object.dataset.name}" data-answer="${last[keyname[0]] === last[keyname[1]] ? true : false}" data-name="${el_object.dataset.name}"></line>`
+        `<line x1="${el_object.dataset.x}" x2="${el_target.dataset.x}"
+          y1="${el_object.dataset.y}"
+          y2="${el_target.dataset.y}"
+          data-state="complete"
+          data-target-name="${el_target.dataset.name}"
+          data-object-name="${el_object.dataset.name}"
+          data-name="${el_object.dataset.name}"
+          data-answer="${is_answer ? true : false}"></line>`
       );
     }
   };

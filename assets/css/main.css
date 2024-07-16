@@ -10708,49 +10708,40 @@ html, body {
   width: 100%;
 }
 
-[data-line-id] select {
+[data-line-id] [role=menu] {
   position: absolute;
   z-index: 2;
-  width: auto;
-  top: -0.2rem;
+  width: 100%;
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
   border: 1px solid #ccc;
   background-color: #fff;
-  border-radius: 0.4rem;
-  height: 4rem;
-  padding: 0 1rem;
+  border-radius: 0.8rem;
+  padding: 1.4rem;
   outline: 0;
   margin: 0;
   color: #000;
   font-size: 1.6rem;
-  z-index: 1;
-  opacity: 0;
-  z-index: -1;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
-[data-line-id] select:hover {
-  opacity: 1;
-  z-index: 1;
-  border: 0.1rem solid #000;
+[data-line-id] [role=menuitem] {
+  text-align: left;
+  padding: 0.4rem;
 }
 
-[data-line-id] select:focus,
-[data-line-id] select:active {
-  opacity: 1;
-  z-index: 1;
-  outline: 1px solid #000 !important;
-}
-
-[data-line-id] [data-flex=row] select {
+[data-line-id] [data-flex=row] [role=menu] {
   left: 100%;
   top: 50%;
   transform: translate(-2rem, -2rem);
 }
 
-[data-line-group=object] select {
-  bottom: -1.2rem;
-  top: auto;
+[data-line-group=object] [role=menu] {
+  top: 100%;
 }
 
 [data-line-id] svg {
@@ -10811,8 +10802,6 @@ html, body {
 
 [data-line-object][data-active=true]::after,
 [data-line-target][data-active=true]::after,
-[data-line-object]:active::after,
-[data-line-target]:active::after,
 [data-line-object]:hover::after,
 [data-line-target]:hover::after {
   background-color: #72C559;
@@ -10820,9 +10809,7 @@ html, body {
 }
 
 [data-line-object][data-active=true] + *,
-[data-line-target][data-active=true] + *,
-[data-line-object]:active + *,
-[data-line-target]:active + * {
+[data-line-target][data-active=true] + * {
   color: #72C559;
 }
 
@@ -10935,6 +10922,7 @@ html, body {
 [data-flex] [data-line-group] {
   display: flex;
   gap: 1rem;
+  justify-content: center;
 }
 
 [data-flex] [data-line-group] > [data-line-item] {
@@ -10994,13 +10982,21 @@ html, body {
   display: flex;
   gap: 2rem;
   flex-direction: column;
+  opacity: 1;
+  filter: grayscale(0);
+  transition: all 0.2s ease;
+}
+
+[data-drag-id].loading {
+  opacity: 0.3;
+  filter: grayscale(1);
 }
 
 [data-drag-id] .disabled {
   pointer-events: none;
 }
 
-[data-drag-id] select {
+[data-drag-id] [role=menu] {
   position: absolute;
   z-index: 2;
   width: 100%;
@@ -11009,23 +11005,21 @@ html, body {
   transform: translateX(-50%);
   border: 1px solid #ccc;
   background-color: #fff;
-  border-radius: 0.4rem;
-  height: 100%;
-  padding: 0 1rem;
+  border-radius: 0.8rem;
+  padding: 1.4rem;
   outline: 0;
   margin: 0;
   color: #000;
   font-size: 1.6rem;
   z-index: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
 }
 
-[data-drag-id] select:hover {
-  border: 0.1rem solid #000;
-}
-
-[data-drag-id] select:focus,
-[data-drag-id] select:active {
-  outline: 1px solid #000 !important;
+[data-drag-id] [role=menuitem] {
+  text-align: left;
+  padding: 0.4rem;
 }
 
 [data-drag-id] button:focus {
@@ -11041,7 +11035,7 @@ html, body {
 }
 
 [data-drag-target][data-empty=true]::after {
-  content: "이곳에 드래그해 주세요.";
+  content: "이곳에 끌어 넣어 주세요.";
 }
 
 [data-drag-target]::after {
@@ -11062,10 +11056,10 @@ html, body {
   align-items: center;
   text-align: center;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg width='33' height='32' viewBox='0 0 33 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25.8333 14.6667V12C25.8333 11.2928 25.5524 10.6145 25.0523 10.1144C24.5522 9.61428 23.8739 9.33333 23.1667 9.33333H12.5C11.7928 9.33333 11.1145 9.61428 10.6144 10.1144C10.1143 10.6145 9.83333 11.2928 9.83333 12V22.6667C9.83333 23.3739 10.1143 24.0522 10.6144 24.5523C11.1145 25.0524 11.7928 25.3333 12.5 25.3333H15.1667M4.5 4V4.01333M9.83333 4V4.01333M15.1667 4V4.01333M20.5 4V4.01333M4.5 9.33333V9.34667M4.5 14.6667V14.68M4.5 20V20.0133M17.8333 17.3333L29.8333 21.3333L24.5 24L21.8333 29.3333L17.8333 17.3333Z' stroke='%23B0B6C0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
+  /* background-image: url("data:image/svg+xml,%3Csvg width='33' height='32' viewBox='0 0 33 32' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M25.8333 14.6667V12C25.8333 11.2928 25.5524 10.6145 25.0523 10.1144C24.5522 9.61428 23.8739 9.33333 23.1667 9.33333H12.5C11.7928 9.33333 11.1145 9.61428 10.6144 10.1144C10.1143 10.6145 9.83333 11.2928 9.83333 12V22.6667C9.83333 23.3739 10.1143 24.0522 10.6144 24.5523C11.1145 25.0524 11.7928 25.3333 12.5 25.3333H15.1667M4.5 4V4.01333M9.83333 4V4.01333M15.1667 4V4.01333M20.5 4V4.01333M4.5 9.33333V9.34667M4.5 14.6667V14.68M4.5 20V20.0133M17.8333 17.3333L29.8333 21.3333L24.5 24L21.8333 29.3333L17.8333 17.3333Z' stroke='%23B0B6C0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
   background-size: 3.2rem 3.2rem;
   background-position: 50% calc(50% - 4rem);
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; */
 }
 
 [data-drag-target] [data-drag-object] {
@@ -11232,6 +11226,84 @@ html, body {
   background-color: #F9F9FA;
   border-radius: 0.8rem;
   border: 0;
+}
+
+/* 서현호 추가 */
+[data-drag-id] [class^=dragTargetWrap] {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  height: 24.3rem;
+  margin: 1.5rem 0 0;
+}
+
+[data-drag-id] [class^=dragTargetWrap] .targetImage {
+  width: 100%;
+  height: 24.3rem;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 0.8rem;
+}
+
+[data-drag-id] [class^=dragTargetWrap] .targetImage img {
+  width: 100%;
+}
+
+[data-drag-id] [class^=dragTargetWrap] .dragTargetRow01,
+[data-drag-id] [class^=dragTargetWrap] .dragTargetRow03 {
+  width: 33.5rem;
+}
+
+[data-drag-id] [class^=dragTargetWrap] .dragTargetRow02 {
+  width: 17rem;
+}
+
+[data-drag-id] [class^=dragTargetWrap] [class^=targetGruop] {
+  width: 100%;
+  margin: 1.5rem 0 0;
+  padding: 0.6rem 1.5rem 1.5rem;
+  border-radius: 0.8rem;
+  background-color: #f9f9fa;
+}
+
+[data-drag-id] [class^=dragTargetWrap] [class^=targetGruop]:first-child {
+  margin: 0;
+}
+
+[data-drag-id] [class^=dragTargetWrap] [class^=targetGruop] .targetTit {
+  display: block;
+  margin: 0 0 0.4rem;
+  line-height: 2rem;
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+[data-drag-id] [class^=dragTargetWrap] [class^=targetGruop] [data-drag-target] {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  justify-content: center;
+  height: 6.9rem;
+  padding: 0 1.7rem;
+  background-color: #fff;
+}
+
+[data-drag-id] [class^=dragTargetWrap] [class^=targetGruop] [data-drag-target]:after {
+  display: block;
+  text-align: center;
+  line-height: 4.5rem;
+}
+
+[data-drag-id] [class^=dragTargetWrap] [class^=targetGruop] [data-drag-target] [data-drag-object]:not(.active) {
+  width: 100%;
+  height: 2.7rem;
+  min-height: 2.7rem;
+  padding: 0 1rem;
+  font-size: 1.2rem;
+  border-radius: 0.8rem;
+  transform: translate(0, 0) !important;
+  position: static !important;
 }
 
 /* ui file */
