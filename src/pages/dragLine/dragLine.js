@@ -10,11 +10,12 @@ const data = {
     quizID: 'test',
     sumAnswer: 3,
     isAnswer: false,
-    lastAnswer: [
-        {key_0: '1', key_3: '1', "label": "응용 소프트웨어1와 문제 키워드1, 문제 키워드2 연결됨",},
-        // {key_1: '3', key_4: '2'},
-        // {key_2: '2', key_5: '3'}
-    ],
+    lastAnswer: null
+    // lastAnswer: [
+    //     {key_0: '1', key_3: '1', "label": "응용 소프트웨어1와 문제 키워드1, 문제 키워드2 연결됨",},
+    //     {key_1: '3', key_4: '2'},
+    //     {key_2: '2', key_5: '3'}
+    // ],
 }
 UI.exe.dragline = new DragLine({
     id: data.quizID,
@@ -30,28 +31,29 @@ const data2 = {
     quizID: 'test2',
     sumAnswer: 6,
     isAnswer: false,
-    lastAnswer: [
-        {
-            "key_0": "1,2",
-            "key_3": "1",
-            "label": "응용 소프트웨어1와 문제 키워드1, 문제 키워드2 연결됨",
-        },
-        {
-            "key_0": "1,2",
-            "key_4": "2",
-            "label": "응용 소프트웨어1와 문제 키워드1, 문제 키워드2 연결됨",
-        },
-        {
-            "key_1": "2,3",
-            "key_5": "3",
-            "label": "응용 소프트웨어2와 문제 키워드2, 문제 키워드3 연결됨",
-        },
-        {
-            "key_1": "2,3",
-            "key_4": "2",
-            "label": "응용 소프트웨어2와 문제 키워드2, 문제 키워드3 연결됨",
-        }
-    ],
+    lastAnswer: null
+    // lastAnswer: [
+    //     {
+    //         "key_0": "1,2",
+    //         "key_3": "1",
+    //         "label": "응용 소프트웨어1와 문제 키워드1, 문제 키워드2 연결됨",
+    //     },
+    //     {
+    //         "key_0": "1,2",
+    //         "key_4": "2",
+    //         "label": "응용 소프트웨어1와 문제 키워드1, 문제 키워드2 연결됨",
+    //     },
+    //     {
+    //         "key_1": "2,3",
+    //         "key_5": "3",
+    //         "label": "응용 소프트웨어2와 문제 키워드2, 문제 키워드3 연결됨",
+    //     },
+    //     {
+    //         "key_1": "2,3",
+    //         "key_4": "2",
+    //         "label": "응용 소프트웨어2와 문제 키워드2, 문제 키워드3 연결됨",
+    //     }
+    // ],
 }
 UI.exe.dragline2 = new DragLine({
     id: data2.quizID,
