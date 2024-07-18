@@ -769,7 +769,7 @@ export default class DragLine {
         el_line.setAttribute('y2', _y - this.wrap_t);
 
         if (this.isTouch) {
-          this.doc.addEventListener('touchend', actEnd);
+          // this.doc.addEventListener('touchend', actEnd);
         } else {
           this.doc.addEventListener('mouseup', actEnd);
         }
@@ -780,6 +780,7 @@ export default class DragLine {
         //터치
         if (!firstTouch.state) {
           this.doc.addEventListener('touchmove', actMove, { passive: false });
+          this.doc.addEventListener('touchend', actEnd);
           console.log('firstTouch', 1111);
           firstTouch.state = true;
           firstTouch.item = el_item;
