@@ -34,23 +34,26 @@ export default class DrawDrop {
     this.reset_data = [];
     this.win_y = this.el_scroll ? this.el_scroll.scrollTop : window.scrollY;
     this.win_x = this.el_scroll ? this.el_scroll.scrollLeft : window.scrollX;
-    this.isTouch = 'ontouchstart' in document.documentElement;
-
+    this.isTouch = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    
+     
+console.log(this.isTouch)
     this.answer_len = Number(opt.answerLen);
     this.answer_last = opt.lastAnswer;
     this.answer_state = false;
 
     this.callback = opt.callback;
 
-    this.isTouch = window.matchMedia(
-      '(hover: none) and (pointer: coarse)'
-    ).matches /*'ontouchstart' in document.documentElement*/;
+    // this.isTouch = window.matchMedia(
+    //   '(hover: none) and (pointer: coarse)'
+    // ).matches /*'ontouchstart' in document.documentElement*/;
     this.timer = 0;
 
     this.init();
   }
 
   init() {
+    console.log('this.isTouch',this.isTouch)
     const set = () => {
       this.wrap.dataset.exe = 'true';
       this.wrap_rect = this.wrap.getBoundingClientRect();
@@ -839,7 +842,9 @@ export default class DrawDrop {
       };
 
       //event
+      console.log('this.isTouch',this.isTouch)
       if (this.isTouch) {
+
         this.doc.addEventListener('touchmove', actMove, { passive: false });
         this.doc.addEventListener('touchend', actEnd);
       } else {

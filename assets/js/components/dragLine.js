@@ -38,9 +38,7 @@ export default class DragLine {
     this.callback = opt.callback;
     this.callbackComplete = opt.callbackComplete;
     this.callbackCheck = opt.callbackCheck;
-    this.isTouch = window.matchMedia(
-      '(hover: none) and (pointer: coarse)'
-    ).matches /*'ontouchstart' in document.documentElement*/;
+    this.isTouch = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     this.init();
   }
 
