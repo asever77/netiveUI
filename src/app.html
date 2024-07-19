@@ -17,54 +17,56 @@
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
 
+    <style>
+        .page-scroll {
+            overflow: auto;
+            width: 100%;
+            max-width: 80rem;
+            margin:4rem auto;
+            height: calc(100dvh - 10rem);
+            outline: .2rem dashed #000;
+        }
+        .page-scroll > section {
+            position: relative;
+            width: 100%;
+            border: .4rem solid aquamarine;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 15rem;
+        }
 
+        /* psge */
+        .page-scroll > section:nth-child(2) {height: 280rem;}
+        .page-scroll > section:nth-child(3) {height: 80rem;}
+        .page-scroll > section:nth-child(4) {height: 30rem;}
+        .page-scroll > section:nth-child(5) {height: 120rem;}
+        .page-scroll > section:nth-child(6) {height: 70rem;}
+        .page-scroll > section:nth-child(7) {height: 50rem;}
+    </style>
 </head>
-<body data-id="body" data-toggle-target="nav" data-pagescroll>
+<body data-id="body">
 
-	<div class="base-wrap">
-        <header class="base-header" data-id="header"></header>
-        <div class="base-body">
-            <aside class="base-aside"></aside>
-            <main class="base-main" data-id="main">
-                <section data-page-load="selection">
-
-                </section>
-            </main>
-        </div>
-        <footer class="base-footer"></footer>
-    </div>
+	<main class="base-wrap page-scroll" data-page-id="main">
+        <section class="page-scroll--item" data-page-id="main">1</section>
+        <section class="page-scroll--item" data-page-id="main">2</section>
+        <section class="page-scroll--item" data-page-id="main">3</section>
+        <section class="page-scroll--item" data-page-id="main">4</section>
+        <section class="page-scroll--item" data-page-id="main">5</section>
+        <section class="page-scroll--item" data-page-id="main">6</section>
+        <section class="page-scroll--item" data-page-id="main">7</section>
+    </main>
 
     <!-- lib -->
     <script type="module" src="../assets/js/ui.global.js"></script>
     <script type="module">
-        import Toggle from '../assets/js/components/toggle.js';
+        import PageScroll from '../assets/js/components/pageScroll.js';
 
-        //header
-        const el_header = document.querySelector('[data-id="header"]');
-        const response_header = await fetch('./layout/header_simple.html');
-        if (response_header.ok) {
-            //공통부분 로드
-            const html_page = await response_header.text();
-            el_header.insertAdjacentHTML('afterbegin', html_page);
-        } else {
-            console.log(response_header.status);
-        }
-
-        //pages
-        const el_pages = document.querySelectorAll('[data-page-load]');
-        const pageLoad = (name) =>  {
-            const el = document.querySelector(`[data-page-load="${name}"]`);
-            fetch(`./pages/${name}/${name}.html`)
-                .then(response => {
-                    const html_page = response.text();
-                    el.insertAdjacentHTML('afterbegin', html_page);
-                })
-                .then(commits => alert(commits));
-        }
-        for (const item of el_pages) {
-            const name = item.dataset.pageLoad;
-            pageLoad(name);
-        }
+        const mainPageScroll = new PageScroll({
+            id: 'main'
+        });
+       
    </script>
 </body>
 </html>
