@@ -941,7 +941,6 @@ import Layer from './components/layer.js';
 			}
 		},
 	}
-	
 
     //common exe
     Global.parts.resizeState();
