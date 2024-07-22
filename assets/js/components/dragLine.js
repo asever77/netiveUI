@@ -827,6 +827,10 @@ export default class DragLine {
       const _wrap = _this.parentNode;
       let isEnd = false;
 
+      if (this.svg.querySelector('line[data-state="ing"]')) {
+        this.svg.querySelector('line[data-state="ing"]').remove();
+      }
+
       isObject = _this.dataset.lineObject ? true : false;
 
       //space key
