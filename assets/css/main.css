@@ -10982,9 +10982,7 @@ html, body {
   display: flex;
   gap: 2rem;
   flex-direction: column;
-  opacity: 0;
   filter: grayscale(0);
-  transition: all 0.2s ease;
 }
 
 [data-drag-id].loading {

@@ -43,11 +43,7 @@ export default class DrawDrop {
 
     this.isTouch = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     this.timer = 0;
-    this.wrap.style.opacity = 0;
-    setTimeout(() => {
-      this.wrap.style.opacity = 1;
-      this.init();
-    }, 1000);
+    this.init();
   }
 
   init() {
@@ -147,14 +143,64 @@ export default class DrawDrop {
       }
     };
     set(); 
-    // const resizeObserver = new ResizeObserver(() => {
-    //   clearTimeout(this.timer);
-    //   this.timer = setTimeout(() => {
-    //     // this.reset();
-    //     set();
-    //   }, 1000);
-    // });
-    // resizeObserver.observe(this.wrap);
+    const set2 = () => {
+      console.log('reset');
+      this.wrap_rect = this.wrap.getBoundingClientRect();
+      this.wrap_t = this.wrap_rect.top;
+      this.wrap_l = this.wrap_rect.left;
+
+      this.array_target = [];
+      this.drag_targets = this.wrap.querySelectorAll('[data-drag-target]');
+
+      if (this.drag_targets) {
+        for (let item of this.drag_targets) {
+          const rect = item.getBoundingClientRect();
+
+          this.array_target.push({
+            name: item.dataset.dragTarget,
+            width: rect.width,
+            height: rect.height,
+            top: rect.top,
+            left: rect.left,
+            x: rect.x,
+            y: rect.y,
+            rangeX: [rect.left, rect.left + rect.width],
+            rangeY: [rect.top, rect.top + rect.height],
+          });
+        }
+      }
+
+      this.array_items = [];
+      this.drag_items = this.wrap.querySelectorAll('[data-drag-item]');
+      if (this.drag_items) {
+        for (let item of this.drag_items) {
+          const rect = item.getBoundingClientRect();
+          this.array_items.push({
+            name: item.dataset.value,
+            width: rect.width,
+            height: rect.height,
+            top: rect.top,
+            left: rect.left,
+            x: rect.x,
+            y: rect.y,
+            rangeX: [rect.left, rect.left + rect.width],
+            rangeY: [rect.top, rect.top + rect.height],
+          });
+          this.reset_data.push(
+            item.querySelector('[data-drag-object').dataset.dragObject
+          );
+        }
+      }
+ 
+    };
+    const resizeObserver = new ResizeObserver(() => {
+      clearTimeout(this.timer);
+      // this.reset();
+      this.timer = setTimeout(() => {
+        set2();
+      }, 0);
+    });
+    resizeObserver.observe(this.wrap);
 
   }
   //key
