@@ -40,8 +40,7 @@ export default class DrawDrop {
     this.answer_state = false;
 
     this.callback = opt.callback;
-
-    this.isTouch = true
+    this.isTouch = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement)
     this.timer = 0;
     this.init();
   }

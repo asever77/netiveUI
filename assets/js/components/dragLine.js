@@ -38,7 +38,7 @@ export default class DragLine {
     this.callback = opt.callback;
     this.callbackComplete = opt.callbackComplete;
     this.callbackCheck = opt.callbackCheck;
-    this.isTouch = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    this.isTouch = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement);
     this.init();
   }
 
