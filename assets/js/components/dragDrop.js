@@ -41,7 +41,7 @@ export default class DrawDrop {
 
     this.callback = opt.callback;
 
-    this.isTouch = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    this.isTouch = true
     this.timer = 0;
     this.init();
   }
