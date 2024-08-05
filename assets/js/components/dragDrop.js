@@ -38,11 +38,13 @@ export default class DrawDrop {
     this.answer_len = Number(opt.answerLen);
     this.answer_last = opt.lastAnswer;
     this.answer_state = false;
-
+    console.log('isTouch', document.documentElement);
     this.callback = opt.callback;
     this.isTouch = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement)
     this.timer = 0;
     this.init();
+
+   
   }
 
   init() {

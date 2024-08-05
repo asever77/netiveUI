@@ -38,7 +38,22 @@ export default class DragLine {
     this.callback = opt.callback;
     this.callbackComplete = opt.callbackComplete;
     this.callbackCheck = opt.callbackCheck;
-    this.isTouch = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement);
+    this.isTouch =
+      navigator.maxTouchPoints || 'ontouchstart' in document.documentElement;
+
+    const varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
+
+    if (
+      !(
+        varUA.indexOf('android') > -1 ||
+        varUA.indexOf('iphone') > -1 ||
+        varUA.indexOf('ipad') > -1 ||
+        varUA.indexOf('ipod') > -1
+      )
+    ) {
+      this.isTouch = false;
+    }
+
     this.init();
   }
 
@@ -89,16 +104,16 @@ export default class DragLine {
         this.answer_last = [];
       }
     };
-    this.wrap.style.opacity = '0.2';
+    this.wrap.style.opacity = '0';
     this.wrap.style.transition = 'opacity .2s ease';
     //resize
     let timer = 0;
     const resizeObserver = new ResizeObserver(() => {
       clearTimeout(timer);
-      this.wrap.style.opacity = '0.2';
+      this.wrap.style.opacity = '0';
       timer = setTimeout(() => {
         set();
-      }, 1000);
+      }, 300);
     });
 
     resizeObserver.observe(this.wrap);
@@ -240,8 +255,6 @@ export default class DragLine {
       let x_value;
       let y_value;
 
-      
-      console.log('--------------ing', _drag.dataset.ing, this.isTouch);
       if (_drag.dataset.ing === 'true') {
         if (this.isTouch) {
           let el_line = this.svg.querySelector('line[data-state="ing"]');
@@ -256,7 +269,7 @@ export default class DragLine {
           const item_w = el_item.offsetWidth / 2;
           const item_h = el_item.offsetHeight / 2;
           let is_object = el_item.dataset.lineObject ? true : false;
-         
+
           let value = is_object
             ? el_item.dataset.lineObject
             : el_item.dataset.lineTarget;
@@ -270,49 +283,49 @@ export default class DragLine {
           const v_y = _y - this.wrap_t;
           let is_complete = false;
           moving = false;
-  
+
           if (el_line) {
             el_line.dataset.state = 'complete';
           }
           el_item.dataset.active = '';
           firstTouch.state = false;
-  
+
           for (let item of this.items) {
             const _isObject = item.dataset.lineObject ? true : false;
-  
+
             //다른그룹일때만
             if (_isObject !== isObject) {
               let is_selected = false;
               let connect_array;
-  
+
               //완료된아이템여부 확인
               const _is_complete = item.dataset.complete;
               const _value = _isObject
                 ? item.dataset.lineObject
                 : item.dataset.lineTarget;
-  
+
               const _rect_item = item.getBoundingClientRect();
               const i_x = Number(item.dataset.x);
               const i_y = Number(item.dataset.y);
-  
+
               //현재위치가 범위내에 들어와 있는지?
               const if_x =
                 v_x <= i_x + item_w && v_x + item_w * 2 >= i_x + item_w;
               const if_y =
                 v_y >= i_y - item_h && v_y <= i_y - item_h + item_h * 2;
-  
+
               //싱글 연결완료조건: 범위내, 미완료
               //멀티 연결완료조건: 범위내
               const if_true =
                 this.type === 'single'
                   ? if_x && if_y && !_is_complete
                   : if_x && if_y;
-  
+
               //멀티
               //연결된 아이템인 경우에서 서로 이미 연결이 된 경우라면 is_selected true 설정하여 연결실패로 처리
               if (this.type === 'multiple' && item.dataset.connect) {
                 connect_array = item.dataset.connect.split(',');
-  
+
                 for (let i = 0; i < connect_array.length; i++) {
                   if (data_name === connect_array[i]) {
                     is_selected = true;
@@ -320,16 +333,16 @@ export default class DragLine {
                   }
                 }
               }
-  
+
               //연결성공
               if (if_true && !is_selected) {
                 //연결된 아이템 완료상태
                 el_item.dataset.complete = true;
                 item.dataset.complete = true;
-  
+
                 //완료갯수
                 this.complete_n = this.complete_n + 1;
-  
+
                 //연결된 정보 connect 여부에 따른 값설정
                 if (!item.dataset.connect) {
                   //connect가 없다면
@@ -346,20 +359,23 @@ export default class DragLine {
                   el_item.dataset.connect =
                     el_item.dataset.connect + ',' + item.dataset.name;
                 }
-  
+
                 //최종 라인종료 위치
                 el_line.setAttribute(
                   'x2',
                   _rect_item.left + item_w - this.wrap_l
                 );
-                el_line.setAttribute('y2', _rect_item.top + item_h - this.wrap_t);
-  
+                el_line.setAttribute(
+                  'y2',
+                  _rect_item.top + item_h - this.wrap_t
+                );
+
                 if (_isObject) {
                   el_line.dataset.objectName = item.dataset.name;
                 } else {
                   el_line.dataset.targetName = item.dataset.name;
                 }
-  
+
                 //접근성 현재 연결된 상황 aria-label
                 let object_correct = el_item.dataset.connect;
                 object_correct = object_correct.split(',');
@@ -369,15 +385,14 @@ export default class DragLine {
                     '[data-line-target][data-name="' + object_correct[i] + '"]'
                   );
 
-                  console.log('is_object', !is_object, el);
-  
                   if (!is_object) {
                     el = this.wrap.querySelector(
-                      '[data-line-object][data-name="' + object_correct[i] + '"]'
+                      `[data-line-object][data-name="${object_correct[i]}"]`
                     );
                   }
                   if (label_txt !== '') {
-                    label_txt = label_txt + ', ' + el.getAttribute('aria-label');
+                    label_txt =
+                      label_txt + ', ' + el.getAttribute('aria-label');
                   } else {
                     label_txt = el.getAttribute('aria-label');
                   }
@@ -390,11 +405,11 @@ export default class DragLine {
                   'aria-label',
                   `${el_item.dataset.label}와 ${label_txt} 연결됨`
                 );
-  
+
                 //정오답적용
                 const v1 = value.split(',');
                 const v2 = _value.split(',');
-  
+
                 //multiple인 경우 정오답
                 if (this.type === 'multiple') {
                   if (v1.filter(x => v2.includes(x)).length > 0) {
@@ -416,7 +431,7 @@ export default class DragLine {
                 }
                 //연결완료성공
                 is_complete = true;
-  
+
                 //answer_last 수정일 경우
                 if (this.answer_last) {
                   for (let i = 0; i < this.answer_last.length; i++) {
@@ -447,18 +462,18 @@ export default class DragLine {
               }
             }
           }
-  
+
           //이벤트 취소
           this.doc.removeEventListener('touchmove', actMove);
           this.doc.removeEventListener('touchend', actEnd);
           this.doc.removeEventListener('mousemove', actMove);
           this.doc.removeEventListener('mouseup', actEnd);
-  
+
           //연결 실패인 경우 라인 삭제 및 이전기록 삭제
           if (!is_complete) {
             const object_name = el_line.dataset.objectName;
             const target_name = el_line.dataset.targetName;
-  
+
             el_line.remove();
             //answer_last 수정일 경우
             if (this.answer_last) {
@@ -491,9 +506,7 @@ export default class DragLine {
         }
         return false;
       }
-      console.log('--------------ing-------------------------')
-      
-      
+
       isObject = el_item.dataset.lineObject ? true : false;
 
       if (_menu) _menu.remove();
@@ -638,8 +651,6 @@ export default class DragLine {
                   '[data-line-target][data-name="' + object_correct[i] + '"]'
                 );
 
-                console.log('is_object', !is_object, el);
-  
                 if (!is_object) {
                   el = this.wrap.querySelector(
                     '[data-line-object][data-name="' + object_correct[i] + '"]'
@@ -694,7 +705,9 @@ export default class DragLine {
                       'key' + el_item.dataset.name
                     )
                   ) {
-                    this.answer_last.splice(i, 1);
+                    if (this.type === 'single') {
+                      this.answer_last.splice(i, 1);
+                    }
                     this.complete_n = this.complete_n - 1;
                   }
                 }
@@ -730,7 +743,7 @@ export default class DragLine {
 
           el_line.remove();
           //answer_last 수정일 경우
-          if (this.answer_last) {
+          if (this.answer_last && this.type === 'single') {
             for (let i = 0; i < this.answer_last.length; i++) {
               if (
                 Object.keys(this.answer_last[i]).includes(
@@ -791,7 +804,6 @@ export default class DragLine {
           el_line.setAttribute('y1', y_value);
           el_line.setAttribute('x2', x_value);
           el_line.setAttribute('y2', y_value);
-
         } else {
           this.doc.removeEventListener('touchmove', actMove);
 
@@ -826,6 +838,8 @@ export default class DragLine {
       const _this = e.currentTarget;
       const _wrap = _this.parentNode;
       let isEnd = false;
+      let innerScroll = document.querySelector('.innerContsScroll');
+      innerScroll = !innerScroll ? document.querySelector('body') : innerScroll;
 
       if (this.svg.querySelector('line[data-state="ing"]')) {
         this.svg.querySelector('line[data-state="ing"]').remove();
@@ -839,9 +853,10 @@ export default class DragLine {
         //셀렉트생성
         let m = 1;
         let make_menu = `<div role="menu">`;
-
+        let j = 0;
+        let isCnt = true;
         for (const item of this.targets) {
-          if (item.dataset.complete !== 'true') {
+          if (this.type === 'single' && item.dataset.complete !== 'true') {
             make_menu += `<button value="
               ${item.dataset.lineTarget}"
               type="button"
@@ -851,21 +866,47 @@ export default class DragLine {
             >
               ${item.getAttribute('aria-label')}
             </button>`;
-          } else if (this.type === 'multiple') {
-            make_menu += `<button
-              type="button"
-              tabindex="-1"
-              role="menuitem"
-              value="${item.dataset.lineTarget}"
-              data-n="${m}"
-            >
-              ${item.getAttribute('aria-label')}
-            </button>`;
+          }
+
+          if (this.type === 'multiple') {
+            if (_this.dataset.connect) {
+              let cnt = _this.dataset.connect.split(',');
+
+              if (!cnt.includes(item.dataset.name)) {
+                make_menu += `<button
+                  type="button"
+                  tabindex="-1"
+                  role="menuitem"
+                  value="${item.dataset.lineTarget}"
+                  data-n="${m}"
+                >
+                  ${item.getAttribute('aria-label')}
+                </button>`;
+              } else {
+                j = j + 1;
+              }
+            } else {
+              make_menu += `<button
+                type="button"
+                tabindex="-1"
+                role="menuitem"
+                value="${item.dataset.lineTarget}"
+                data-n="${m}"
+              >
+                ${item.getAttribute('aria-label')}
+              </button>`;
+            }
           }
           m = m + 1;
         }
         make_menu += `</div>`;
-        _wrap.insertAdjacentHTML('beforeend', make_menu);
+        if (j !== this.targets.length) {
+          _wrap.insertAdjacentHTML('beforeend', make_menu);
+          console.log('innerScroll', innerScroll);
+          innerScroll.dataset.oveflow = 'hidden';
+        } else {
+          return false;
+        }
 
         const _menu = _wrap.querySelector('[role="menu"]');
         const _menuItem = _menu.querySelectorAll('[role="menuitem"]');
@@ -892,6 +933,7 @@ export default class DragLine {
               if (!isEnd) {
                 el_line.remove();
               }
+              innerScroll.removeAttribute('data-overflow');
               break;
 
             case 'ArrowDown':
@@ -1007,7 +1049,9 @@ export default class DragLine {
                       'key' + _this.dataset.name
                     )
                   ) {
-                    this.answer_last.splice(i, 1);
+                    if (this.type === 'single') {
+                      this.answer_last.splice(i, 1);
+                    }
                     this.complete_n = this.complete_n - 1;
                   }
                 }
@@ -1037,6 +1081,7 @@ export default class DragLine {
               if (!isEnd) {
                 el_line.remove();
               }
+              innerScroll.removeAttribute('data-overflow');
               break;
 
             default:
@@ -1147,8 +1192,6 @@ export default class DragLine {
     this.completeCallback();
   };
   drawLastAnswer = () => {
-    console.log(this.answer_last);
-
     for (let i = 0; i < this.answer_last.length; i++) {
       const last = this.answer_last[i];
       const keyname = Object.keys(last);

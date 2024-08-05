@@ -29,7 +29,7 @@ UI.exe.dragline = new DragLine({
 
 const data2 = {
     quizID: 'test2',
-    sumAnswer: 6,
+    sumAnswer: 5,
     isAnswer: false,
     lastAnswer: null
     // lastAnswer: [
