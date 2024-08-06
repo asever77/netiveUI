@@ -10695,6 +10695,7 @@ body[data-toggle-state=true] .base-body {
   align-items: center;
 }
 
+[data-overflow=hidden],
 .noScroll {
   overflow: hidden !important;
 }
