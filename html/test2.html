@@ -29,8 +29,6 @@
 <body>
     <div class="test" style="width: 300px; margin:10px auto; border:1px solid red; padding:10px">
     </div>
-    <div class="test2" style="width: 300px; margin:10px auto; border:1px solid red; padding:10px">
-    </div>
 
     <div class="contantRoot">
         <div class="test3" style="width: 300px; margin:10px auto; border:1px solid red; padding:10px">
@@ -119,16 +117,6 @@
             wavesurfer.play()
         })
 
-        const wavesurfer2 = WaveSurfer.create({
-            container: '.test2',
-            waveColor: 'rgb(200, 0, 200)',
-            progressColor: 'rgb(100, 0, 100)',
-            url: 'modular.mp4',
-            mediaControls: true,
-        })
-        wavesurfer2.on('click', () => {
-            wavesurfer.play()
-        })
     </script>
 </body>
 
