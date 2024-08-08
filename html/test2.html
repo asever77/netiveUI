@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="format-detection" content="telephone=no, address=no, email=no">
+
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content=" black-translucent">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <title>Guide - title</title>
+    <script src="https://unpkg.com/wavesurfer.js@7"></script>
+    <style>
+        #waveform ::part(cursor):before {
+            content: '🏄';
+        }
+
+        #waveform ::part(region) {
+            font-family: fantasy;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test" style="width: 300px; margin:10px auto; border:1px solid red; padding:10px">
+    </div>
+    <div class="test2" style="width: 300px; margin:10px auto; border:1px solid red; padding:10px">
+    </div>
+    <script>
+        const wavesurfer = WaveSurfer.create({
+            container: '.test',
+            waveColor: 'rgb(200, 0, 200)',
+            progressColor: 'rgb(100, 0, 100)',
+            url: 'demo.wav',
+        })
+        wavesurfer.on('click', () => {
+            wavesurfer.play()
+        })
+
+        const wavesurfer2 = WaveSurfer.create({
+            container: '.test2',
+            waveColor: 'rgb(200, 0, 200)',
+            progressColor: 'rgb(100, 0, 100)',
+            url: 'modular.mp4',
+        })
+        wavesurfer2.on('click', () => {
+            wavesurfer.play()
+        })
+    </script>
+</body>
+
+</html>
