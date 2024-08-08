@@ -12,6 +12,9 @@
 
     <title>Guide - title</title>
     <script src="https://unpkg.com/wavesurfer.js@7"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
     <style>
         #waveform ::part(cursor):before {
             content: '🏄';
@@ -28,7 +31,28 @@
     </div>
     <div class="test2" style="width: 300px; margin:10px auto; border:1px solid red; padding:10px">
     </div>
+
+    <div class="contantRoot">
+        <div class="test3" style="width: 300px; margin:10px auto; border:1px solid red; padding:10px">
+        </div>
+    </div>
     <script>
+        new Vue({
+            el: ".contantRoot",
+            mounted: function () {
+
+                const wavesurfer3 = WaveSurfer.create({
+                    container: '.test3',
+                    waveColor: 'rgb(200, 0, 200)',
+                    progressColor: 'rgb(100, 0, 100)',
+                    url: 'demo.wav',
+                    mediaControls: true,
+                })
+                wavesurfer3.on('click', () => {
+                    wavesurfer.play()
+                })
+            }
+        });
         const options = {
             /** HTML element or CSS selector (required) */
             container: 'body',
