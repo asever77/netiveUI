@@ -12,117 +12,15 @@
 
     <title>Guide - title</title>
     <style>
-        html{wi}
-        [data-zoom] {
-            position: relative;
-            width: 200px;
-
-            img {
-                display: block;
-                object-fit:cover;
-                width: 100%;
-                height: 100%;
-                pointer-events: none;
-                -ms-user-select: none; 
-                -moz-user-select: -moz-none;
-                -khtml-user-select: none;
-                -webkit-user-select: none;
-                user-select: none;
-
-            }
-        }
-        [data-zoom-area] {
-            width: 100%;
-            height: 100%;
-            background-color: #fff;
-            border-radius: 1rem;
-            overflow: hidden;
-        }
-       
-       
-        [data-zoom="true"] {
-            position: fixed;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(0,0,0,0.6);
-            top:0; left:0;
-            z-index: 10;
-            width: 100%;
-            height: 100%;
-
-            .zoom-control {
-                .btn-zoom-init,
-                .btn-zoom-plus,
-                .btn-zoom-minus {
-                    display: flex;
-                }
-            }
-            [data-zoom-area] {
-                position: relative;
-                width: 50rem;
-                height: 30rem;
-                
-                overflow: auto;
-
-                -ms-overflow-style: none;
-                scrollbar-width: none; 
-
-                img {
-                    position: absolute;
-                    width: auto;
-                    height: auto;
-                    left:50%;
-                    top:50%;
-                    transform: translate(-50%, -50%);
-                }
-            }
-            [data-zoom-area]::-webkit-scrollbar {
-                display: none;
-            }
-        }
-        .zoom-control{
-            position: absolute;
-            bottom: 1rem;
-            right: 1rem;
-            display: flex;
-            gap:.8rem;
-
-            button {
-                width: 2rem;
-                height: 2rem;
-                border-radius: 50%;
-                background-color:#000 ;
-                border:0;
-                color: #fff;
-                display: flex;
-                align-items:center;
-                justify-content: center;
-            }
-            .btn-zoom-init,
-            .btn-zoom-plus,
-            .btn-zoom-minus {
-                display: none;
-            }
-        }
+        html{font-size: 0.52084vw; padding: 0;}
+        body{padding:0; margin: 0;}
+        .aa{width: 192rem; height: 50rem; background-color: red;}
+         
     </style>
 </head>
 
 <body>
-    <div style="width: 400px; height: 400px; overflow: auto; border: 1px dashed #ccc;">
-        <div class="img-wrap" data-zoom="false">
-            <div data-zoom-area="1">
-                <img src="./test.jpg" alt="">
-                
-            </div>
-            <div class="zoom-control">
-                <button type="button" aria-label="이미지 창열기" class="btn-zoom-open">></button>
-                <button type="button" data-zoom-state="plus" aria-label="이미지 확대" class="btn-zoom-plus">+</button>
-                <button type="button" data-zoom-state="minus" aria-label="이미지 축소" class="btn-zoom-minus">-</button>
-                <button type="button" data-zoom-state="init" aria-label="이미지 원본" class="btn-zoom-init">@</button>
-            </div>
-        </div>
-    </div>
+    <div class="aa"></div>
 
     <script>
         const zoomBtns = document.querySelectorAll('.btn-zoom-open');

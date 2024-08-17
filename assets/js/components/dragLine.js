@@ -854,11 +854,11 @@ export default class DragLine {
         let make_menu = `<div role="menu">`;
         let j = 0;
         let isCnt = true;
-        
+
         for (const item of this.targets) {
           // if (this.type === 'single' && item.dataset.complete !== 'true') {
           if (this.type === 'single') {
-           if (item.dataset.complete !== 'true') {
+            if (item.dataset.complete !== 'true') {
               make_menu += `<button value="
               ${item.dataset.lineTarget}"
               type="button"
@@ -868,7 +868,7 @@ export default class DragLine {
             >
               ${item.getAttribute('data-label')}
             </button>`;
-           }  
+            }
           }
           if (this.type === 'multiple') {
             if (_this.dataset.connect) {
@@ -885,7 +885,7 @@ export default class DragLine {
                   ${item.getAttribute('data-label')}
                 </button>`;
               } else {
-                 make_menu += `<button
+                make_menu += `<button
                   type="button"
                   tabindex="-1"
                   role="menuitem"
@@ -911,10 +911,10 @@ export default class DragLine {
           }
           m = m + 1;
         }
-        
+
         // if (j !== this.targets.length) {
-          _wrap.insertAdjacentHTML('beforeend', make_menu);
-          innerScroll.dataset.overflow = 'hidden';
+        _wrap.insertAdjacentHTML('beforeend', make_menu);
+        innerScroll.dataset.overflow = 'hidden';
         // } else {
         //   return false;
         // }
@@ -926,7 +926,6 @@ export default class DragLine {
 
         //선택시
         const actSelect = e => {
-          
           isEnd = true;
 
           const menuItem = e.currentTarget;
@@ -968,76 +967,86 @@ export default class DragLine {
               break;
 
             case 'Enter':
+              if (menuItem.dataset.cancel === 'true') {
+                _menu.remove();
 
-							if (menuItem.dataset.cancel === 'true') {
-								_menu.remove();
+                //data-connect 값 수정
+                let ary_conect = _this.dataset.connect.split(',');
+                let ary_conect2 = [];
+                ary_conect.filter(v => {
+                  if (v !== el_target.dataset.name) {
+                    ary_conect2.push(v);
+                  }
+                });
+                _this.dataset.connect = ary_conect2;
 
-								//data-connect 값 수정
-								let ary_conect = _this.dataset.connect.split(',');
-								let ary_conect2 = [];
-								ary_conect.filter((v) => {
-									if (v !== el_target.dataset.name) {
-										ary_conect2.push(v);
-									}
-								});
-								_this.dataset.connect = ary_conect2;
+                //생성된 라인삭제 및 초기화
+                el_line.remove();
+                el_target.dataset.complete = false;
+                _this.dataset.active = '';
+                _this.dataset.complete = false;
+                _this.focus();
 
-								//생성된 라인삭제 및 초기화
-								el_line.remove();
-								el_target.dataset.complete = false;
-								_this.dataset.active = '';
-								_this.dataset.complete = false;
-								_this.focus();
+                const value = _this.dataset.lineObject;
+                const _value = el_target.dataset.lineTarget;
+                const v1 = value.split(',');
+                const v2 = _value.split(',');
 
-								const value = _this.dataset.lineObject;
-								const _value = el_target.dataset.lineTarget;
-								const v1 = value.split(',');
-								const v2 = _value.split(',');
-	
-								if (this.type === 'multiple') {
-									//multiple인 경우 정오답
-									if (v1.filter(x => v2.includes(x)).length > 0) {
-										el_line.dataset.answer = true;
-									} else {
-										el_line.dataset.answer = false;
-									}
-								} 
+                if (this.type === 'multiple') {
+                  //multiple인 경우 정오답
+                  if (v1.filter(x => v2.includes(x)).length > 0) {
+                    el_line.dataset.answer = true;
+                  } else {
+                    el_line.dataset.answer = false;
+                  }
+                }
 
-								
-								// else {
-								// 	//single인 경우 정오답
-								// 	if (value === _value) {
-								// 		el_line.dataset.answer = true;
-								// 		this.answer_n = this.answer_n - 1;
-								// 	} else {
-								// 		el_line.dataset.answer = false;
-								// 	}
-								// }
+                // else {
+                // 	//single인 경우 정오답
+                // 	if (value === _value) {
+                // 		el_line.dataset.answer = true;
+                // 		this.answer_n = this.answer_n - 1;
+                // 	} else {
+                // 		el_line.dataset.answer = false;
+                // 	}
+                // }
 
-								//this.answer_last 선택삭제
-								const elements = this.answer_last.entries();
-								for (const [index, _last] of elements) {
-									_last['key' + _this.dataset.name]
-									if ((_last['key' + _this.dataset.name] === _this.dataset.lineObject) && (_last['key' + el_target.dataset.name] === el_target.dataset.lineTarget)) {
-										this.answer_last.splice(index, 1);
-										document.querySelector(`line[data-name="${_this.dataset.name}"][data-target-name="${el_target.dataset.name}"]`).remove();
-									} 
-								}
+                //this.answer_last 선택삭제
+                const elements = this.answer_last.entries();
+                for (const [index, _last] of elements) {
+                  const key1 = _last['key' + _this.dataset.name];
+                  const key2 = _last['key' + el_target.dataset.name];
+                  if (
+                    key1 === _this.dataset.lineObject &&
+                    key2 === el_target.dataset.lineTarget
+                  ) {
+                    this.answer_last.splice(index, 1);
+                    document
+                      .querySelector(
+                        `line[data-name="${_this.dataset.name}"][data-target-name="${el_target.dataset.name}"]`
+                      )
+                      .remove();
+                  }
+                }
 
-								const trueLines = this.svg.querySelectorAll('line[data-answer="true"]');
-								const falseLines = this.svg.querySelectorAll('line[data-answer="false"]');
-								this.answer_n = trueLines?.length - falseLines?.length;
-								//콜백
-								if (this.callback) {
-									this.callback({
-										answer_state:
-											this.answer_n === this.answer_len ? true : false,
-										answer_last: this.answer_last,
-									});
-								}
-							
-								return false;
-							}
+                const trueLines = this.svg.querySelectorAll(
+                  'line[data-answer="true"]'
+                );
+                const falseLines = this.svg.querySelectorAll(
+                  'line[data-answer="false"]'
+                );
+                this.answer_n = trueLines?.length - falseLines?.length;
+                //콜백
+                if (this.callback) {
+                  this.callback({
+                    answer_state:
+                      this.answer_n === this.answer_len ? true : false,
+                    answer_last: this.answer_last,
+                  });
+                }
+
+                return false;
+              }
 
               el_line.dataset.state = 'complete';
               el_target.dataset.complete = true;
@@ -1058,7 +1067,7 @@ export default class DragLine {
                 _this.dataset.connect = el_target.dataset.name;
               } else {
                 _this.dataset.connect =
-                  _this.dataset.connect + ',' +  el_target.dataset.name;
+                  _this.dataset.connect + ',' + el_target.dataset.name;
               }
 
               //최종 라인종료 위치
@@ -1094,7 +1103,6 @@ export default class DragLine {
                 'aria-label',
                 `${_this.dataset.label}와 ${label_txt} 연결됨`
               );
-             
 
               //정오답적용
               const value = _this.dataset.lineObject;
@@ -1118,9 +1126,13 @@ export default class DragLine {
                 }
               }
 
-							const trueLines = this.svg.querySelectorAll('line[data-answer="true"]');
-							const falseLines = this.svg.querySelectorAll('line[data-answer="false"]');
-							this.answer_n = trueLines?.length - falseLines?.length;
+              const trueLines = this.svg.querySelectorAll(
+                'line[data-answer="true"]'
+              );
+              const falseLines = this.svg.querySelectorAll(
+                'line[data-answer="false"]'
+              );
+              this.answer_n = trueLines?.length - falseLines?.length;
 
               //콜백정보정리
               this.complete_n = this.complete_n + 1;
@@ -1128,7 +1140,6 @@ export default class DragLine {
               //answer_last 수정일 경우
               if (this.answer_last) {
                 for (let i = 0; i < this.answer_last.length; i++) {
-							
                   if (
                     Object.keys(this.answer_last[i]).includes(
                       'key' + _this.dataset.name
@@ -1136,7 +1147,7 @@ export default class DragLine {
                   ) {
                     if (this.type === 'single') {
                       this.answer_last.splice(i, 1);
-                    } 
+                    }
                     this.complete_n = this.complete_n - 1;
                   }
                 }
