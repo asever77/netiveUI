@@ -9,7 +9,8 @@
     ],
     "liveSassCompile.settings.includeItems": [
         "/resources/scss/main.scss",
-        "/assets/scss/main.scss"
+        "/assets/scss/main.scss",
+        "/assets/scss/app.scss"
     ],
 
     "liveServer.settings.donotVerifyTags": true,
@@ -18,5 +19,5 @@
     "editor.wordWrap": "on",
     "git.autofetch": true,
     "git.ignoreRebaseWarning": true,
-    "liveServer.settings.port": 5503
+    "liveServer.settings.port": 5504
 }

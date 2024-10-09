@@ -1,31 +1,7 @@
-
-
-.n1 {
-    top: 1rem;
-    left: 1rem
+[data-line-id="test"][data-flex="column"]{
+   gap:6rem
 }
 
-.n2 {
-    top: 10rem;
-    left: 1rem
-}
-
-.n3 {
-    top: 20rem;
-    left: 1rem
-}
-
-.n4 {
-    top: 1rem;
-    right: 1rem
-}
-
-.n5 {
-    top: 10rem;
-    right: 1rem
-}
-
-.n6 {
-    top: 20rem;
-    right: 1rem;
+[data-line-id="test2"][data-flex="row"]{
+    gap:3rem;
 }

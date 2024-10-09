@@ -1,56 +1,66 @@
 import Toggle from '../../../assets/js/components/toggle.js';
 import DragLine from '../../../assets/js/components/dragLine.js';
-        
-const data = {
-    quizID: 'test',
-    quizType: 'dragline',
-    sumAnswer: 3,
-    isAnswer: false,
-    myAnswer: [
-        {key_0: '1', key_5: '1'},
-        {key_2: '3', key_4: '2'},
-        {key_1: '2', key_3: '3'}
-    ],
-}
+
 //EXE
 UI.exe.toggle = new Toggle({
     scope: document.querySelector('[data-id="main"]')
 });
+
+const data = {
+    quizID: 'test',
+    sumAnswer: 3,
+    isAnswer: false,
+    lastAnswer: null
+    // lastAnswer: [
+    //     {key_0: '1', key_3: '1', "label": "응용 소프트웨어1와 문제 키워드1, 문제 키워드2 연결됨",},
+    //     {key_1: '3', key_4: '2'},
+    //     {key_2: '2', key_5: '3'}
+    // ],
+}
 UI.exe.dragline = new DragLine({
     id: data.quizID,
     answer: data.sumAnswer,
+    lastAnswer: data.lastAnswer,
     callback: (v) => {
         //개별 이벤트 완료 시
         console.log('callback', v);
-    }, 
-    callbackComplete: (v) => {
-        //전체 이벤트 완료 시
-        data.myAnswer = v.answer_history;
-        data.isAnswer = v.answer_all_state;
-        console.log('callbackComplete', v, data);
     },
-    callbackCheck: (v) => {
-        //체크 이벤트 실행 시
-        console.log('callbackCheck', v);
-    }
 });
+
+const data2 = {
+    quizID: 'test2',
+    sumAnswer: 5,
+    isAnswer: false,
+    lastAnswer: null
+    // lastAnswer: [
+    //     {
+    //         "key_0": "1,2",
+    //         "key_3": "1",
+    //         "label": "응용 소프트웨어1와 문제 키워드1, 문제 키워드2 연결됨",
+    //     },
+    //     {
+    //         "key_0": "1,2",
+    //         "key_4": "2",
+    //         "label": "응용 소프트웨어1와 문제 키워드1, 문제 키워드2 연결됨",
+    //     },
+    //     {
+    //         "key_1": "2,3",
+    //         "key_5": "3",
+    //         "label": "응용 소프트웨어2와 문제 키워드2, 문제 키워드3 연결됨",
+    //     },
+    //     {
+    //         "key_1": "2,3",
+    //         "key_4": "2",
+    //         "label": "응용 소프트웨어2와 문제 키워드2, 문제 키워드3 연결됨",
+    //     }
+    // ],
+}
 UI.exe.dragline2 = new DragLine({
-    id: 'test2',
-    answer: 4,
+    id: data2.quizID,
+    answer: data2.sumAnswer,
+    lastAnswer: data2.lastAnswer,
     callback: (v) => {
         //개별 이벤트 완료 시
         console.log('callback', v);
     }, 
-    callbackComplete: (v) => {
-        //전체 이벤트 완료 시
-        console.log('callbackComplete', v);
-    },
-    callbackCheck: (v) => {
-        //체크 이벤트 실행 시
-        console.log('callbackCheck', v);
-    }
 });
-setTimeout(() => {
-    UI.exe.dragline.init();
-    UI.exe.dragline2.init()
-}, 100)

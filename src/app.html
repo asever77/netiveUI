@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no, user-scalable=no">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta name="mobile-web-app-capable" content="yes">
+	<meta name="google" content="notranslate">
+
+	<title>Netive UI Development Group</title>
+
+	<link rel="apple-touch-icon" href="../resources/img/common/ico_app.png" >
+	<link rel="shortcut icon" href="../resources/img/common/ico_favicon.ico"> 
+	<link rel="canonical" href="https://asever77.github.io/netiveUI/html/">
+
+    <link rel="stylesheet" href="../assets/css/app.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+    <style>
+        
+    </style>
+</head>
+<body data-id="body">
+    <header>
+        <h1>네티브 접근성 가이드</h1>
+    </header>
+	<main>
+       <article>
+            <h2>입력 글자 수 제한</h2>
+            <div>
+                <label for="textMsg">문자메시지(30자 이내)</label>
+                <textarea aria-describedby="textMsgCalc" id="textMsg" minlength="2" maxlength="30"></textarea>
+                <div>
+                    <span aria-hidden="true"><em data-entered-sum="textMsg">0</em>/30</span>
+                    <div aria-atomic="true" aria-live="off" id="textMsgCalc">
+                        <span>총 30자 중 <span data-entered-sum="textMsg">0</span>자 입력</span>
+                    </div>
+                </div>
+                <button type="button" data-entered-btn="textMsg" disabled onclick="alert('test')">확인</button>
+            </div>
+
+            <div class="guide-desc">
+                입력한 굴자 수를 10자 단위로 aria-live="polite"로 변경하여 방해되지 않는 선에서 실시간 전달.
+            </div>
+       </article>
+       <article>
+        <h2>오류메시지</h2>
+        <h3>폼 입력 오류</h3>
+        <label for="pnr">예약번호</label>
+        <input type="tel" id="pnr" aria-invalid="true" aria-describedby="errorMsg">
+        <div id="erroMsg">예약 번호가 올바르지 않습니다.</div>
+        <h3>상황오류</h3>
+        <div role="alert">오류메시지 입니다.</div>
+        <div aria-live="assertive">오류메시지 입니다.</div>
+   </article>
+    </main>
+
+    <!-- lib -->
+    <script type="module" src="../assets/js/ui.global.js"></script>
+    <script type="module">
+        //글자수제한
+        import TextLimit from '../assets/js/components/textLimit.js';
+        const textMsg = new TextLimit({
+            id: 'textMsg'
+        })
+       
+   </script>
+</body>
+</html>
