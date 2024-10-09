@@ -19,10 +19,14 @@ export default class Layer {
             auto: true,
 		};
 
-        this.opt = Object.assign({}, defaults, opt);
+        // this.opt = Object.assign({}, defaults, opt);
+        this.opt = { ...defaults, ...opt };
         this.el = {
             html: document.querySelector('html'),
             body: document.querySelector('body'),
+
+            // ||와 ??의 차이점
+            // 자바스크립트에서 ||(OR 연산자)는 값이 falsy(거짓같이 평가되는 값: 0, false, '', null, undefined, NaN)일 경우 오른쪽 값을 반환합니다. 하지만 ??는 null 또는 undefined만 처리합니다.
             pageScroll: document.querySelector('[data-pagescroll]') ?? document.querySelector('html'),
             modal: null,
             modal_wrap: null,
@@ -119,6 +123,54 @@ export default class Layer {
                 break;
         }
     }
+    // initializeLayer() {
+    //     switch (this.opt.type) {
+    //         case 'system':
+    //             this.createSystemLayer();
+    //             break;
+    //         case 'toast':
+    //             this.createToastLayer();
+    //             break;
+    //         case 'select':
+    //             this.createSelectLayer();
+    //             break;
+    //         case 'tooltop':
+    //             this.createTooltipLayer();
+    //             break;
+    //         default:
+    //             this.createModalLayer();
+    //             break;
+    //     }
+    // }
+    // createSystemLayer() {
+    //     const html_system = `
+    //         <section class="mdl-layer" data-id="${this.id}" data-type="alert">
+    //             <div class="mdl-layer-wrap">
+    //                 <div class="mdl-layer-body">
+    //                     ${this.title ? `<h1 class="mdl-layer-tit">${this.title}</h1>` : ''}
+    //                     <div>${this.content}</div>
+    //                     <div class="mdl-button-wrap">
+    //                         ${this.btn.length === 2 ? `<button type="button" class="mdl-button" data-state="cancel" data-style="primary-gray"><span>${this.btn[1].text}</span></button>` : ''}
+    //                         <button type="button" class="mdl-button" data-state="ok" data-style="primary">
+    //                             <span>${this.btn[0].text}</span>
+    //                         </button>
+    //                     </div>
+    //                 </div>
+    //             </div>
+    //             <div class="mdl-layer-dim"></div>
+    //         </section>`;
+    //     this.appendToBody(html_system);
+
+    //     this.modal = document.querySelector(`.mdl-layer[data-id="${this.id}"]`);
+    //     this.modal_wrap = this.modal.querySelector('.mdl-layer-wrap');
+    //     this.ok = this.modal.querySelector('.mdl-button[data-state="ok"]');
+    //     this.cancel = this.modal.querySelector('.mdl-button[data-state="cancel"]');
+
+    //     this.ok?.addEventListener('click', this.btn[0].callback);
+    //     this.cancel?.addEventListener('click', this.btn[1].callback);
+
+    //     this.init();
+    // }
     removeSelect() {
         this.selectBtn = document.querySelector('.mdl-select-btn[data-select-id="'+ this.id +'"]');
         this.selectLayer = document.querySelector('.mdl-layer[data-type="select"][data-id="'+ this.id +'_select"]');
