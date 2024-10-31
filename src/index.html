@@ -34,52 +34,161 @@
     <script type="module" src="../assets/js/ui.global.js"></script>
     <script type="module">
         import Toggle from '../assets/js/components/toggle.js';
-        
+
+        const loadHeader = async () => {
+            try {
+                const el_header = document.querySelector('[data-id="header"]');
+                const response_header = await fetch('./layout/header.html');
+
+                if (!response_header.ok) throw new Error('Header load failed: ${response_header.status}');
+
+                const html_page = await response_header.text();
+                el_header.insertAdjacentHTML('afterbegin', html_page);
+
+                UI.exe.toggleHeader = new Toggle({ scope: el_header });
+                attachNavEventListeners();
+            } catch (error) {
+                console.error(error);
+            }
+        };
+
+        // 네비게이션 이벤트 리스너 추가
+        const attachNavEventListeners = () => {
+            const el_nav_btns = document.querySelectorAll('.base-nav button');
+
+            el_nav_btns.forEach(btn => btn.addEventListener('click', (e) => loadPage(e.currentTarget.dataset.href)));
+        }
+
+        // 페이지 로드 함수
+        const loadPage = async (pageName = './pages/introduction/introduction') => {
+            try {
+                clearPreviousPage(); //이전 페이지 요소 제거
+
+                UI.parts.include({
+                    id: 'main',
+                    src: `${pageName}.html`,
+                    type: 'HTML',
+                    insert: false,
+                    callback: async () => {
+                        await loadPageAssets(pageName); // JS와 CSS 파일 로드 함수
+                        UI.exe.toggleMain = new Toggle({ scope: document.querySelector('[data-id="main"]') });
+                    }
+                });
+            } catch (error) {
+                console.error(`Failed to load page: ${error}`);
+            }
+        }
+
+        //이전 페이지 요소 제거
+        const clearPreviousPage = () => {
+            document.querySelectorAll('[data-usage]').forEach(item => item.remove());
+            document.querySelectorAll('.mdl-modal, .mdl-layer').forEach(item => item.remove());
+        }
+
+        // JS와 CSS 파일 로드 함수
+        const loadPageAssets = async (pageName) => {
+            try {
+                const script = createAssetElement('script', `${pageName}.js`);
+                const link = createAssetElement('link', `${pageName}.css`);
+
+                const [scriptExists, linkExists] = await Promise.all([doesFileExist(script), doesFileExist(link)]);
+
+                // 파일이 존재하는 경우에만 추가
+                if (scriptExists) {
+                    document.body.appendChild(script);
+                    console.log('Script added:', script.src);
+                } else {
+                    console.warn(`Script file not found`);
+                }
+
+                if (linkExists) {
+                    document.head.appendChild(link);
+                    console.log('CSS added:', link.href);
+                } else {
+                    console.warn(`CSS file not found`);
+                }
+            } catch (error) {
+                console.error(`Error loading assets: ${error}`);
+            }
+        }
+
+        // 자산 파일 체크 및 생성
+        const createAssetElement = (type, src) => {
+            let element;
+            if (type === 'script') {
+                element = document.createElement('script');
+                element.dataset.usage = 'page';
+                element.type = 'module';
+                element.src = `${src}?v=${Date.now()}`;
+            } else if (type === 'link') {
+                element = document.createElement('link');
+                element.dataset.usage = 'page';
+                element.rel = 'stylesheet';
+                element.href  = `${src}?v=${Date.now()}`;
+            }
+            return element;
+        }
+
+        // 파일 존재 여부 확인
+        const doesFileExist = async (element) => {
+            const url = element.src || element.href;
+
+            try {
+                const response = await fetch(url, { method: 'HEAD' });
+                if (response.ok) {
+                    return true;  // 파일이 존재함
+                } else {
+                    // console.error(`File not found`);
+                    return false;  // 파일이 존재하지 않음
+                }
+            } catch (error) {
+                console.error(`Error fetching file: ${error}`);
+                throw error;  // 에러를 다시 던져서 상위 catch에서 처리되도록 함
+            }
+        }
+
+        await loadHeader();
+        await loadPage();
+
+        /**
+         * chatgpt 리펙토리 전 소스
+         
         const el_header = document.querySelector('[data-id="header"]');
         const response_header = await fetch('./layout/header.html');
-
         //page 설정
         console.log(UI)
         let pageName = UI.parts.paraGet('page');
         pageName = (!pageName) ?  './pages/introduction/introduction' : './pages/' + pageName ;
-        
         //header
         if (response_header.ok) {
             //공통부분 로드
             const html_page = await response_header.text();
             el_header.insertAdjacentHTML('afterbegin', html_page);
-            
             //공통부분 실행
             UI.exe.toggleHeader = new Toggle({
                 scope: document.querySelector('[data-id="header"]')
             });
-
             const el_nav = document.querySelector('.base-nav');
             const el_nav_btns = el_nav.querySelectorAll('button');
             const paraPageName = UI.parts.paraGet('page');
-            
             //싱글페이지 로드
             const act_page = (e) => {
                 //초기화
                 const js_usages = document.querySelectorAll('[data-usage]');
                 const el_modals = document.querySelectorAll('.mdl-modal');
                 const el_layers = document.querySelectorAll('.mdl-layer');
-                
                 if (js_usages) for (let item of js_usages) item.remove();
                 if (el_modals) for (let item of el_modals) item.remove();
                 if (el_layers) for (let item of el_layers) item.remove();
-
                 //페이지로드
                 let _this;
                 let _href;
-
                 if (e.currentTarget) {
                     _this = e.currentTarget;
                     _href = _this.dataset.href;
                 } else {
                     _href = e;
                 }
-
                 UI.parts.include({
                     id: 'main',
                     src: _href + '.html',
@@ -90,15 +199,12 @@
                         _script.dataset.usage = 'page';
                         _script.type = 'module';
                         _script.src = _href + '.js?v=' + Date.now();
-
                         let _link = document.createElement('link');
                         _link.dataset.usage = 'page';
                         _link.rel = 'stylesheet';
                         _link.href = _href + '.css?v=' + Date.now();
-
                         const doesFileExist = (urlToFile, v) => {
                             const xhr = new XMLHttpRequest();
-
                             xhr.open('HEAD', urlToFile, false);
                             xhr.send();
                             if (xhr.status === 200) {
@@ -108,31 +214,25 @@
                                 } else {
                                     document.body.appendChild(v);
                                 }
-                               
                             } 
                         }
-                        
                         doesFileExist(_href + '.js', _script);
                         doesFileExist(_href + '.css', _link);
-
                         let pageName = _href.split('/');
                         pageName = pageName[pageName.length - 1];
-
                         UI.parts.paraSet('page', pageName +'/'+ pageName);
-
                         UI.exe.toggleMain = new Toggle({
                             scope: document.querySelector('[data-id="main"]')
                         });
                     }
                 });
             }
-
             for (let item of el_nav_btns) item.addEventListener('click', act_page);
-
             act_page(pageName);
         } else {
             console.log(response_header.status);
         }
+        */
    </script>
 </body>
 </html>
