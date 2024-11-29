@@ -1,145 +1,200 @@
 <div class="base-main-wrap">
-    <h1 data-h="1">Drag Line</h1>
-    <h2 data-h="2">1:1</h2>
-   
-    <box>
-        <div data-line-id="test">
-            <div data-flex="column">
-                <div data-line-group="object">
-                    <div data-line-item>
-                        <button data-line-object="1" type="button" aria-label="응용 소프트웨어1" data-label="응용 소프트웨어1"></button>
-                        <div data-ps="top">
-                            응용 소프트웨어
-                        </div>
-                    </div>
-                    <div data-line-item>
-                        <button data-line-object="2" type="button" aria-label="응용 소프트웨어2" data-label="응용 소프트웨어2"></button>
-                        <div data-ps="top">
-                            <img src="../../../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
-                        </div>
-                    </div>
-                    <div data-line-item>
-                        <button data-line-object="3" type="button" aria-label="응용 소프트웨어3" data-label="응용 소프트웨어3"></button>
-                        <div data-ps="top">
-                            <img src="../../../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
-                            <div>드래그라인 <br />텍스트입니다.</div>
-                        </div>
-                    </div>
-                </div>
-                <div data-line-group="target">
-                    <div data-line-item>
-                        <button data-line-target="1" type="button" aria-label="문제 키워드1" data-label="문제 키워드1" tabindex="-1"></button>
-                        <div data-ps="bottom">
-                            문제 키워드1
-                        </div>
-                    </div>
-                    <div data-line-item>
-                        <button data-line-target="2" type="button" aria-label="문제 키워드2" data-label="문제 키워드2" tabindex="-1"></button>
-                        <div data-ps="bottom">
-                            <img src="../../../assets/img/dummy/dragline_img.png" alt="문제 키워드2" />
-                        </div>
-                    </div>
-                    <div data-line-item>
-                        <button data-line-target="3" type="button" aria-label="문제 키워드3" data-label="문제 키워드3" tabindex="-1"></button>
-                        <div data-ps="bottom">
-                            <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                            <div>드래그라인 <br />텍스트입니다.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mdl-button-area">
-            <button type="button" class="mdl-button" onclick="UI.exe.dragline.check()">정답 체크</button>
-            <button type="button" class="mdl-button" onclick="UI.exe.dragline.complete()">정답 확인</button>
-            <button type="button" class="mdl-button" onclick="UI.exe.dragline.reset()">정답 리셋</button>
-        </div>
-    </box>
-    <h2 data-h="2">n:n</h2>
-    <box>
-        <div data-line-id="test2" data-line-type="multiple">
-            <div data-flex="row">
-                <div data-line-group="object">
-                    <div data-line-item>
-                        <button 
-                        data-line-object="1,2" 
-                        type="button" 
-                        aria-label="응용 소프트웨어1" 
-                        data-label="응용 소프트웨어1"
-                        ></button>
-                        <div data-ps="left">
-                            응용 소프트웨어
-                        </div>
-                    </div>
-                    <div data-line-item>
-                        <button data-line-object="2,3" type="button" aria-label="응용 소프트웨어2" data-label="응용 소프트웨어2"></button>
-                        <div data-ps="left">
-                            <img src="../../../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
-                        </div>
-                    </div>
-                    <div data-line-item>
-                        <button data-line-object="3" type="button" aria-label="응용 소프트웨어3" data-label="응용 소프트웨어3"></button>
-                        <div data-ps="left">
-                            <img src="../../../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
-                            <div>드래그라인 <br />텍스트입니다.</div>
-                        </div>
-                    </div>
-                </div>
-                <div data-line-group="target">
-                    <div data-line-item>
-                        <button data-line-target="1" type="button" aria-label="문제 키워드1" data-label="문제 키워드1" tabindex="-1"></button>
-                        <div data-ps="right">
-                            문제 키워드1
-                        </div>
-                    </div>
-                    <div data-line-item>
-                        <button data-line-target="2" type="button" aria-label="문제 키워드2" data-label="문제 키워드2" tabindex="-1"></button>
-                        <div data-ps="right">
-                            <img src="../../../assets/img/dummy/dragline_img.png" alt="문제 키워드2" />
-                        </div>
-                    </div>
-                    <div data-line-item>
-                        <button data-line-target="3" type="button" aria-label="문제 키워드3" data-label="문제 키워드3" tabindex="-1"></button>
-                        <div data-ps="right">
-                            <img src="../../../assets/img/dummy/dragline_img.png" alt="" />
-                            <div>드래그라인 <br />텍스트입니다.</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="mdl-button-area">
-            <button type="button" class="mdl-button" onclick="UI.exe.dragline2.check()">정답 체크</button>
-            <button type="button" class="mdl-button" onclick="UI.exe.dragline2.complete()">정답 확인</button>
-            <button type="button" class="mdl-button" onclick="UI.exe.dragline2.reset()">정답 리셋</button>
-        </div>
-    </box>
-    <pre>
-<code>
-&lt;div data-line-id="{{ id name }}" data-line-type="{{ 'multiple' | 'single' }}"&gt;
-    &lt;button type="button" data-line-object="1"&gt;1&lt;/button&gt;
-    &lt;button type="button" data-line-target="1"&gt;1&lt;/button&gt;
+	<h1 data-h="1">Drag Line</h1>
+	<h2 data-h="2">1:1</h2>
+
+	<box>
+		<div data-line-id="test001" data-line-type="single" data-line-direction="column">
+			<guide></guide>
+			<div data-line-group="object">
+				<guide></guide>
+				<div data-line-item>
+					<guide></guide>
+					<button data-line-object="1" type="button" aria-label="응용 소프트웨어1" data-label="응용 소프트웨어1">
+						<guide></guide>
+					</button>
+					<div data-line-content>
+						<guide></guide>
+						<math display="block">
+							<mrow>
+								<mi>x</mi>
+								<mo>=</mo>
+								<mfrac>
+									<mrow>
+										<mrow>
+											<mo>−</mo>
+											<mi>b</mi>
+										</mrow>
+										<mo>±</mo>
+										<msqrt>
+											<mrow>
+												<msup>
+													<mi>b</mi>
+													<mn>2</mn>
+												</msup>
+												<mo>−</mo>
+												<mrow>
+													<mn>4</mn>
+													<mo>⁢</mo>
+													<mi>a</mi>
+													<mo>⁢</mo>
+													<mi>c</mi>
+												</mrow>
+											</mrow>
+										</msqrt>
+									</mrow>
+									<mrow>
+										<mn>2</mn>
+										<mo>⁢</mo>
+										<mi>a</mi>
+									</mrow>
+								</mfrac>
+							</mrow>
+						</math>
+					</div>
+				</div>
+				<div data-line-item>
+					<guide></guide>
+					<button data-line-object="2" type="button" aria-label="응용 소프트웨어2" data-label="응용 소프트웨어2">
+						<guide></guide>
+					</button>
+					<div data-line-content>
+						<guide></guide>
+						<img src="../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
+					</div>
+				</div>
+				<div data-line-item>
+					<guide></guide>
+					<button data-line-object="3" type="button" aria-label="응용 소프트웨어3" data-label="응용 소프트웨어3">
+						<guide></guide>
+					</button>
+					<div data-line-content>
+						<guide></guide>
+						<img src="../assets/img/dummy/dragline_img.png" alt="" />
+						<div>
+							<guide></guide>드래그라인 <br />텍스트입니다.
+						</div>
+					</div>
+				</div>
+			</div>
+			<div data-line-group="target">
+				<div data-line-item>
+					<button data-line-target="1" type="button" aria-label="문제 키워드1" data-label="문제 키워드1" tabindex="-1"></button>
+					<div data-line-content>
+						문제 키워드1
+					</div>
+				</div>
+				<div data-line-item>
+					<button data-line-target="2" type="button" aria-label="문제 키워드2" data-label="문제 키워드2" tabindex="-1"></button>
+					<div data-line-content>
+						<img src="../assets/img/dummy/dragline_img.png" alt="문제 키워드2" />
+					</div>
+				</div>
+				<div data-line-item>
+					<button data-line-target="3" type="button" aria-label="문제 키워드3" data-label="문제 키워드3" tabindex="-1"></button>
+					<div data-line-content>
+						<img src="../assets/img/dummy/dragline_img.png" alt="" />
+						<div>드래그라인 <br />텍스트입니다.</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mdl-button-area">
+			<button type="button" class="mdl-button" onclick="UI.exe.test001.check()">정답 체크</button>
+			<button type="button" class="mdl-button" onclick="UI.exe.test001.complete()">정답 확인</button>
+			<button type="button" class="mdl-button" onclick="UI.exe.test001.reset()">정답 리셋</button>
+			<button type="button" class="mdl-button" onclick="UI.exe.test001.drawLastAnswer(UI.answer.test001)">데이타 적용</button>
+		</div>
+	</box>
+
+
+	<h2 data-h="2">n:n</h2>
+	<box>
+		<div data-line-id="test002" data-line-type="multiple" data-line-direction="row">
+			<div data-line-group="object">
+				<div data-line-item>
+					<button data-line-object="1,2" type="button" aria-label="응용 소프트웨어1" data-label="응용 소프트웨어1"></button>
+					<div data-line-content>
+						응용 소프트웨어
+					</div>
+				</div>
+				<div data-line-item>
+					<button data-line-object="2,3" type="button" aria-label="응용 소프트웨어2" data-label="응용 소프트웨어2"></button>
+					<div data-line-content>
+						<img src="../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
+					</div>
+				</div>
+				<div data-line-item>
+					<button data-line-object="3" type="button" aria-label="응용 소프트웨어3" data-label="응용 소프트웨어3"></button>
+					<div data-line-content>
+						<img src="../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
+						<div>드래그라인 <br />텍스트입니다.</div>
+					</div>
+				</div>
+			</div>
+			<div data-line-group="target">
+				<div data-line-item>
+					<button data-line-target="1" type="button" aria-label="문제 키워드1" data-label="문제 키워드1" tabindex="-1"></button>
+					<div data-line-content>
+						문제 키워드1
+					</div>
+				</div>
+				<div data-line-item>
+					<button data-line-target="2" type="button" aria-label="문제 키워드2" data-label="문제 키워드2" tabindex="-1"></button>
+					<div data-line-content>
+						<img src="../assets/img/dummy/dragline_img.png" alt="문제 키워드2" />
+					</div>
+				</div>
+				<div data-line-item>
+					<button data-line-target="3" type="button" aria-label="문제 키워드3" data-label="문제 키워드3" tabindex="-1"></button>
+					<div data-line-content>
+						<img src="../assets/img/dummy/dragline_img.png" alt="" />
+						<div>드래그라인 <br />텍스트입니다.</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="mdl-button-area">
+			<button type="button" class="mdl-button" onclick="UI.exe.test002.check()">정답 체크</button>
+			<button type="button" class="mdl-button" onclick="UI.exe.test002.complete()">정답 확인</button>
+			<button type="button" class="mdl-button" onclick="UI.exe.test002.reset()">정답 리셋</button>
+			<button type="button" class="mdl-button" onclick="UI.exe.test002.drawLastAnswer(UI.answer.test002)">데이타 적용</button>
+		</div>
+	</box>
+<pre>
+<code>&lt;div data-line-id="{{ id name }}" data-line-type="{{ 'multiple' | 'single' }}"&gt;
+	&lt;button type="button" data-line-object="1"&gt;1&lt;/button&gt;
+	&lt;button type="button" data-line-target="1"&gt;1&lt;/button&gt;
 &lt;/div&gt;
 
 &lt;script type="module"&gt;
-    import DragLine from '../../assets/js/components/dragLine.js';
+import DragLine from '../../assets/js/components/dragLine.js';
 
-    UI.exe.dragline = new DragLine({
-        id: 'test', //data-line-id
-        answer: 3,  //정답갯수
-        callback: (v) => {
-            console.log('callback', v);
-        }, 
-        callbackComplete: (v) => {
-            console.log('callbackComplete', v);
-        },
-        callbackCheck: (v) => {
-            console.log('callbackCheck', v);
-        }
-    });
-    UI.exe.dragline.check();    <comment>// 정답 체크 data-state={{ true / false }}</comment>
-    UI.exe.dragline.complete(); <comment>// 정해진 정답 확인</comment>
-    UI.exe.dragline.reset();    <comment>// 초기화</comment>
+UI.answer.test001 = {
+	id: 'test001',
+	answer: 3,
+	lastAnswer: null,
+	isAnswer: false,
+}
+UI.exe.test001 = new DragLine({
+	id: UI.answer.test001.id,
+	answer: UI.answer.test001.answer,
+	lastAnswer: UI.answer.test001.lastAnswer,
+	callback: (v) => {
+		/**
+		* 개별 이벤트 완료 시 콜백
+		* answer_last: {{array}} 정답 선택 정보
+		* answer_state: {{true | false}} 전체 정답
+		*/
+		UI.answer.test001.isAnswer = v.answer_state;
+		UI.answer.test001.lastAnswer = v.answer_last;
+		console.log('callback', UI.answer.test001);
+	},
+});
+
+UI.exe.test001.check();    <comment>// 정답 체크 data-state={{ true / false }}</comment>
+UI.exe.test001.complete(); <comment>// 정해진 정답 확인</comment>
+UI.exe.test001.reset();    <comment>// 초기화</comment>
+UI.exe.test001.drawLastAnswer(UI.answer.test001);    <comment>// 저장된 데이터 값 적용</comment>
 &lt;/script"&gt;
 </code>
 </pre>

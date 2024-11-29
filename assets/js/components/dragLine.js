@@ -41,18 +41,11 @@ export default class DragLine {
     this.isTouch =
       navigator.maxTouchPoints || 'ontouchstart' in document.documentElement;
 
-    const varUA = navigator.userAgent.toLowerCase(); //userAgent 값 얻기
+    //userAgent 값 얻기
+    const varUA = navigator.userAgent.toLowerCase();
+    const isMobile = varUA.indexOf('android') > -1 || varUA.indexOf('iphone') > -1 || varUA.indexOf('ipad') > -1 || varUA.indexOf('ipod') > -1;
 
-    if (
-      !(
-        varUA.indexOf('android') > -1 ||
-        varUA.indexOf('iphone') > -1 ||
-        varUA.indexOf('ipad') > -1 ||
-        varUA.indexOf('ipod') > -1
-      )
-    ) {
-      this.isTouch = false;
-    }
+    if (!isMobile) this.isTouch = false;
 
     this.init();
   }
@@ -62,7 +55,7 @@ export default class DragLine {
   // }
 
   init() {
-    this.observer = 'a';
+    // this.observer = 'a';
     //중복실행방지
     if (this.wrap.dataset.load === 'ok') {
       return false;
@@ -75,7 +68,7 @@ export default class DragLine {
 
     //setup
     const set = () => {
-      this.reset(true);
+      this.reset();
 
       const rect = this.wrap.getBoundingClientRect();
       this.wrap_t = rect.top;
@@ -83,11 +76,12 @@ export default class DragLine {
       this.wrap_w = this.wrap.offsetWidth;
       this.wrap_h = this.wrap.offsetHeight;
 
+      //접근성: 키보드 접근 제한
       for (const item of this.targets) {
         item.setAttribute('tabindex', '-1');
       }
 
-      //object점와 target점 크기, 위치 정보 저장
+      //object & target 크기, 위치 정보 저장
       for (const [index, item] of this.items.entries()) {
         const rect_item = item.getBoundingClientRect();
         const item_w = item.offsetWidth / 2;
@@ -97,7 +91,10 @@ export default class DragLine {
         item.dataset.x = rect_item.left + item_w - this.wrap_l;
         item.dataset.y = rect_item.top + item_h - this.wrap_t;
       }
+
       this.wrap.style.opacity = '1';
+
+      //선택한 정답 존재 여부에 따라 
       if (this.answer_last?.length) {
         this.drawLastAnswer();
       } else {
@@ -105,8 +102,9 @@ export default class DragLine {
       }
     };
     this.wrap.style.opacity = '0';
-    this.wrap.style.transition = 'opacity .2s ease';
-    //resize
+    this.wrap.style.transition = 'opacity 0.2s ease';
+    
+    //resize 재설정
     let timer = 0;
     const resizeObserver = new ResizeObserver(() => {
       clearTimeout(timer);
@@ -115,9 +113,10 @@ export default class DragLine {
         set();
       }, 300);
     });
-
+    //this.wrap의 크기가 변경될 때 재설정
     resizeObserver.observe(this.wrap);
 
+    //첫터치 체크
     let firstTouch = {
       state: false,
       item: null,
@@ -129,8 +128,8 @@ export default class DragLine {
     let moving = false;
     let isObject;
 
-    //선 만들기 시작
-    const make_line = e => {
+    //선 만들기 시작 actStart에서 실행
+    const createLine = e => {
       let el_item = e.type === 'keydown' ? e.target : e.currentTarget;
 
       //현재 object인가 target인가
@@ -147,18 +146,23 @@ export default class DragLine {
       const tag_line = `<line x1="0" x2="0" y1="0" y2="0" data-state="ing" data-name="${data_name}" data-object-name="${data_name_object}" data-target-name="${data_name_target}"></line>`;
 
       //라인 생성
-      if (this.isTouch) {
-        if (!firstTouch.state) {
-          this.wrap
-            .querySelector('svg')
-            .insertAdjacentHTML('beforeend', tag_line);
-        }
-      } else {
-        if (!moving) {
-          this.wrap
-            .querySelector('svg')
-            .insertAdjacentHTML('beforeend', tag_line);
-        }
+      // if (this.isTouch) {
+      //   if (!firstTouch.state) {
+      //     this.wrap
+      //       .querySelector('svg')
+      //       .insertAdjacentHTML('beforeend', tag_line);
+      //   }
+      // } else {
+      //   if (!moving) {
+      //     this.wrap
+      //       .querySelector('svg')
+      //       .insertAdjacentHTML('beforeend', tag_line);
+      //   }
+      // }
+      if ((this.isTouch && !firstTouch.state) || !moving) {
+        this.wrap
+          .querySelector('svg')
+          .insertAdjacentHTML('beforeend', tag_line);
       }
 
       // if (e.type !== 'keydown') document.querySelector('body').classList.add('noScroll');
@@ -399,11 +403,11 @@ export default class DragLine {
                 }
                 el_item.setAttribute(
                   'aria-label',
-                  `${el_item.dataset.label}와 ${label_txt} 연결됨`
+                  `${el_item.dataset.label}, ${label_txt} 연결됨`
                 );
                 item.setAttribute(
                   'aria-label',
-                  `${el_item.dataset.label}와 ${label_txt} 연결됨`
+                  `${el_item.dataset.label}, ${label_txt} 연결됨`
                 );
 
                 //정오답적용
@@ -514,7 +518,7 @@ export default class DragLine {
       for (const item of _actives) {
         item.removeAttribute('[data-active]');
       }
-      make_line(e);
+      createLine(e);
       _drag.dataset.ing = 'true';
       _drag.dataset.ingt = el_item;
 
@@ -848,7 +852,7 @@ export default class DragLine {
 
       //space key
       if (e.keyCode === 32) {
-        make_line(e);
+        createLine(e);
         //셀렉트생성
         let m = 1;
         let make_menu = `<div role="menu">`;
@@ -1244,13 +1248,17 @@ export default class DragLine {
         this.svg.removeChild(this.svg.lastChild);
       }
     }
-    if (!isDeep) {
+
+    if (isDeep) {
       this.answer_last = [];
     }
     this.wrap.dataset.state = '';
     this.complete_n = 0;
     this.answer_n = 0;
+
+    console.log('isDeep', isDeep, this.answer_last);
   };
+
   //정오답체크
   check = () => {
     this.wrap.dataset.state = 'check';
@@ -1263,7 +1271,8 @@ export default class DragLine {
       });
     }
   };
-  //정답확인
+
+  //정답확인 그리기
   complete = () => {
     this.reset();
     for (let i = 0; i < this.n; i++) {
@@ -1287,27 +1296,41 @@ export default class DragLine {
     this.wrap.dataset.state = 'complete';
     this.completeCallback();
   };
-  drawLastAnswer = () => {
+
+  //마지막 답선택 그리기
+  drawLastAnswer = (v) => {
+    //새로운 정답정보가 있다면 교체
+    if (v) {
+      this.reset();
+      this.answer_last = v.lastAnswer;
+    } else if (!this.answer_last.length){
+      return false;
+    }
+
     for (let i = 0; i < this.answer_last.length; i++) {
-      const last = this.answer_last[i];
-      const keyname = Object.keys(last);
+      const item = this.answer_last[i];
+      const keyname = Object.keys(item);
       const el_object = this.wrap.querySelector(
         `[data-name="${keyname[0].split('key')[1]}"]`
       );
       const el_target = this.wrap.querySelector(
         `[data-name="${keyname[1].split('key')[1]}"]`
       );
+
+      //해당 object,target 상태 설정
       el_object.dataset.complete = 'true';
       el_object.dataset.connect = el_target.dataset.name;
-      el_target.dataset.connect = el_object.dataset.name;
+      el_object.setAttribute('aria-label', item.label);
       el_target.dataset.complete = 'true';
-      el_object.setAttribute('aria-label', last.label);
-      const is_answer = last[keyname[0]] === last[keyname[1]];
+      el_target.dataset.connect = el_object.dataset.name;
 
+      //정답여부 체크하여 정답인 경우 정답갯수(this.answer_n)증가
+      const is_answer = item[keyname[0]] === item[keyname[1]];
       if (is_answer) {
         this.answer_n = this.answer_n + 1;
       }
 
+      //선라인 그리기
       this.svg.insertAdjacentHTML(
         'beforeend',
         `<line x1="${el_object.dataset.x}" x2="${el_target.dataset.x}"

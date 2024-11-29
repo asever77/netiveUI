@@ -18,7 +18,8 @@ import Layer from './components/layer.js';
     Global.data = {};
     Global.exe = {};
     Global.callback = {};
-
+	Global.answer = {};
+	
     Global.state = {
         isSystemModal: false,
         device: {

@@ -333,7 +333,7 @@ guide::before {
 }
 
 code {
-  padding: 0 !important;
+  padding: 1.6rem !important;
   background-color: #f7f4f3;
   color: #222;
   font-size: 1.2rem;
