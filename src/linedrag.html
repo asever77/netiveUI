@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<link rel="stylesheet" href="../assets/css/main.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
+
+	<style>
+		html {overflow: auto;}
+		.base-main{padding-top: 4rem;}
+	</style>
+</head>
+
+<body>
+	<div class="base-wrap">
+		<div class="base-body">
+			<main class="base-main" data-id="main">
+
+				<div class="base-main-wrap">
+					<h1 data-h="1">Drag Line</h1>
+					<h2 data-h="2">1:1</h2>
+
+					<box>
+						<div data-line-id="test001" data-line-type="single" data-line-direction="column">
+							<guide></guide>
+							<div data-line-group="object">
+								<guide></guide>
+								<div data-line-item>
+									<guide></guide>
+									<button data-line-object="1" type="button" aria-label="응용 소프트웨어1" data-label="응용 소프트웨어1">
+										<guide></guide>
+									</button>
+									<div data-line-content>
+										<guide></guide>
+										<math display="block">
+											<mrow>
+												<mi>x</mi>
+												<mo>=</mo>
+												<mfrac>
+													<mrow>
+														<mrow>
+															<mo>−</mo>
+															<mi>b</mi>
+														</mrow>
+														<mo>±</mo>
+														<msqrt>
+															<mrow>
+																<msup>
+																	<mi>b</mi>
+																	<mn>2</mn>
+																</msup>
+																<mo>−</mo>
+																<mrow>
+																	<mn>4</mn>
+																	<mo>⁢</mo>
+																	<mi>a</mi>
+																	<mo>⁢</mo>
+																	<mi>c</mi>
+																</mrow>
+															</mrow>
+														</msqrt>
+													</mrow>
+													<mrow>
+														<mn>2</mn>
+														<mo>⁢</mo>
+														<mi>a</mi>
+													</mrow>
+												</mfrac>
+											</mrow>
+										</math>
+									</div>
+								</div>
+								<div data-line-item>
+									<guide></guide>
+									<button data-line-object="2" type="button" aria-label="응용 소프트웨어2" data-label="응용 소프트웨어2">
+										<guide></guide>
+									</button>
+									<div data-line-content>
+										<guide></guide>
+										<img src="../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
+									</div>
+								</div>
+								<div data-line-item>
+									<guide></guide>
+									<button data-line-object="3" type="button" aria-label="응용 소프트웨어3" data-label="응용 소프트웨어3">
+										<guide></guide>
+									</button>
+									<div data-line-content>
+										<guide></guide>
+										<img src="../assets/img/dummy/dragline_img.png" alt="" />
+										<div>
+											<guide></guide>드래그라인 <br />텍스트입니다.
+										</div>
+									</div>
+								</div>
+							</div>
+							<div data-line-group="target">
+								<div data-line-item>
+									<button data-line-target="1" type="button" aria-label="문제 키워드1" data-label="문제 키워드1" tabindex="-1"></button>
+									<div data-line-content>
+										문제 키워드1
+									</div>
+								</div>
+								<div data-line-item>
+									<button data-line-target="2" type="button" aria-label="문제 키워드2" data-label="문제 키워드2" tabindex="-1"></button>
+									<div data-line-content>
+										<img src="../assets/img/dummy/dragline_img.png" alt="문제 키워드2" />
+									</div>
+								</div>
+								<div data-line-item>
+									<button data-line-target="3" type="button" aria-label="문제 키워드3" data-label="문제 키워드3" tabindex="-1"></button>
+									<div data-line-content>
+										<img src="../assets/img/dummy/dragline_img.png" alt="" />
+										<div>드래그라인 <br />텍스트입니다.</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mdl-button-area">
+							<button type="button" class="mdl-button" onclick="UI.exe.test001.check()">정답 체크</button>
+							<button type="button" class="mdl-button" onclick="UI.exe.test001.complete()">정답 확인</button>
+							<button type="button" class="mdl-button" onclick="UI.exe.test001.reset()">정답 리셋</button>
+							<button type="button" class="mdl-button" onclick="UI.exe.test001.drawLastAnswer(UI.answer.test001)">데이타
+								적용</button>
+						</div>
+					</box>
+
+
+					<h2 data-h="2">n:n</h2>
+					<box>
+						<div data-line-id="test002" data-line-type="multiple" data-line-direction="row">
+							<div data-line-group="object">
+								<div data-line-item>
+									<button data-line-object="1,2" type="button" aria-label="응용 소프트웨어1" data-label="응용 소프트웨어1"></button>
+									<div data-line-content>
+										응용 소프트웨어
+									</div>
+								</div>
+								<div data-line-item>
+									<button data-line-object="2,3" type="button" aria-label="응용 소프트웨어2" data-label="응용 소프트웨어2"></button>
+									<div data-line-content>
+										<img src="../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
+									</div>
+								</div>
+								<div data-line-item>
+									<button data-line-object="3" type="button" aria-label="응용 소프트웨어3" data-label="응용 소프트웨어3"></button>
+									<div data-line-content>
+										<img src="../assets/img/dummy/dragline_img.png" alt="소프트웨어" />
+										<div>드래그라인 <br />텍스트입니다.</div>
+									</div>
+								</div>
+							</div>
+							<div data-line-group="target">
+								<div data-line-item>
+									<button data-line-target="1" type="button" aria-label="문제 키워드1" data-label="문제 키워드1" tabindex="-1"></button>
+									<div data-line-content>
+										문제 키워드1
+									</div>
+								</div>
+								<div data-line-item>
+									<button data-line-target="2" type="button" aria-label="문제 키워드2" data-label="문제 키워드2" tabindex="-1"></button>
+									<div data-line-content>
+										<img src="../assets/img/dummy/dragline_img.png" alt="문제 키워드2" />
+									</div>
+								</div>
+								<div data-line-item>
+									<button data-line-target="3" type="button" aria-label="문제 키워드3" data-label="문제 키워드3" tabindex="-1"></button>
+									<div data-line-content>
+										<img src="../assets/img/dummy/dragline_img.png" alt="" />
+										<div>드래그라인 <br />텍스트입니다.</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="mdl-button-area">
+							<button type="button" class="mdl-button" onclick="UI.exe.test002.check()">정답 체크</button>
+							<button type="button" class="mdl-button" onclick="UI.exe.test002.complete()">정답 확인</button>
+							<button type="button" class="mdl-button" onclick="UI.exe.test002.reset()">정답 리셋</button>
+							<button type="button" class="mdl-button" onclick="UI.exe.test002.drawLastAnswer(UI.answer.test002)">데이타
+								적용</button>
+						</div>
+					</box>
+					<pre>
+    <code>&lt;div data-line-id="{{ id name }}" data-line-type="{{ 'multiple' | 'single' }}"&gt;
+        &lt;button type="button" data-line-object="1"&gt;1&lt;/button&gt;
+        &lt;button type="button" data-line-target="1"&gt;1&lt;/button&gt;
+    &lt;/div&gt;
+
+    &lt;script type="module"&gt;
+    import DragLine from '../../assets/js/components/dragLine.js';
+
+    UI.answer.test001 = {
+        id: 'test001',
+        answer: 3,
+        lastAnswer: null,
+        isAnswer: false,
+    }
+    UI.exe.test001 = new DragLine({
+        id: UI.answer.test001.id,
+        answer: UI.answer.test001.answer,
+        lastAnswer: UI.answer.test001.lastAnswer,
+        callback: (v) => {
+            /**
+            * 개별 이벤트 완료 시 콜백
+            * answer_last: {{array}} 정답 선택 정보
+            * answer_state: {{true | false}} 전체 정답
+            */
+            UI.answer.test001.isAnswer = v.answer_state;
+            UI.answer.test001.lastAnswer = v.answer_last;
+            console.log('callback', UI.answer.test001);
+        },
+    });
+
+    UI.exe.test001.check();    <comment>// 정답 체크 data-state={{ true / false }}</comment>
+    UI.exe.test001.complete(); <comment>// 정해진 정답 확인</comment>
+    UI.exe.test001.reset();    <comment>// 초기화</comment>
+    UI.exe.test001.drawLastAnswer(UI.answer.test001);    <comment>// 저장된 데이터 값 적용</comment>
+    &lt;/script"&gt;
+    </code>
+    </pre>
+
+				</div>
+
+			</main>
+		</div>
+	</div>
+
+
+
+	<script type="module" src="../assets/js/ui.global.js"></script>
+	<script type="module">
+		import Toggle from '../../../assets/js/components/toggle.js';
+		import DragLine from '../../../assets/js/components/dragLine.js';
+
+		//EXE
+		UI.exe.toggle = new Toggle({
+			scope: document.querySelector('[data-id="main"]')
+		});
+
+		//UI.answer[화면아이디_문제아이디]
+		/**
+		 * @param {string} 	id: {{data-line-id}}
+		 * @param {number} 	answer: 전체 정답갯수 
+		 * @param {boolean} isAnswer: 전체 정답여부 {{ true(정답) | false(오답) }}
+		 * @param {array(object)} lastAnswer: 마지막 입력 정보 null | 
+		 * 	[{ 
+		 * 		key{{data-line-object의 data-name}}: '{{data-line-object 값}}',
+		 * 		key{{data-line-target의 data-name}}: '{{data-line-target 값}}',
+		 * 		label : '{{접근성용 라벨내용}}',
+		 * 	},]
+		 */
+		UI.answer.test001 = {
+			id: 'test001',
+			answer: 3,
+			lastAnswer: null,
+			isAnswer: false,
+		}
+		UI.exe.test001 = new DragLine({
+			id: UI.answer.test001.id,
+			answer: UI.answer.test001.answer,
+			lastAnswer: UI.answer.test001.lastAnswer,
+			callback: (v) => {
+				/**
+				 * 개별 이벤트 완료 시 콜백
+				 * answer_last: {{array}} 정답 선택 정보
+				 * answer_state: {{true | false}} 전체 정답
+				 */
+				UI.answer.test001.isAnswer = v.answer_state;
+				UI.answer.test001.lastAnswer = v.answer_last;
+				console.log('callback', UI.answer.test001);
+			},
+		});
+
+
+		UI.answer.test002 = {
+			id: 'test002',
+			answer: 5,
+			lastAnswer: null,
+			isAnswer: false,
+		}
+		UI.exe.test002 = new DragLine({
+			id: UI.answer.test002.id,
+			answer: UI.answer.test002.answer,
+			lastAnswer: UI.answer.test002.lastAnswer,
+			callback: (v) => {
+				/**
+				 * 개별 이벤트 완료 시 콜백
+				 * answer_last: {{array}} 정답 선택 정보
+				 * answer_state: {{true | false}} 전체 정답
+				 */
+				UI.answer.test002.isAnswer = v.answer_state;
+				UI.answer.test002.lastAnswer = v.answer_last;
+				console.log('callback', UI.answer.test002);
+			},
+		});
+
+	</script>
+</body>
+
+</html>

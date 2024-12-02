@@ -55,11 +55,8 @@ export default class DragLine {
   // }
 
   init() {
-    // this.observer = 'a';
     //중복실행방지
-    if (this.wrap.dataset.load === 'ok') {
-      return false;
-    }
+    if (this.wrap.dataset.load === 'ok')  return false;
     this.wrap.dataset.load = 'ok';
 
     //svg생성
@@ -146,19 +143,6 @@ export default class DragLine {
       const tag_line = `<line x1="0" x2="0" y1="0" y2="0" data-state="ing" data-name="${data_name}" data-object-name="${data_name_object}" data-target-name="${data_name_target}"></line>`;
 
       //라인 생성
-      // if (this.isTouch) {
-      //   if (!firstTouch.state) {
-      //     this.wrap
-      //       .querySelector('svg')
-      //       .insertAdjacentHTML('beforeend', tag_line);
-      //   }
-      // } else {
-      //   if (!moving) {
-      //     this.wrap
-      //       .querySelector('svg')
-      //       .insertAdjacentHTML('beforeend', tag_line);
-      //   }
-      // }
       if ((this.isTouch && !firstTouch.state) || !moving) {
         this.wrap
           .querySelector('svg')
@@ -183,19 +167,14 @@ export default class DragLine {
         let _name;
         let _dot;
 
-        const line_del = this.wrap.querySelector(
-          `line[data-name="${data_name}"]`
-        );
+        const line_del = this.wrap.querySelector(`line[data-name="${data_name}"]`);
         const object_name = line_del.dataset.objectName;
         const target_name = line_del.dataset.targetName;
         line_del.remove();
 
-        const _obj = this.wrap.querySelector(
-          '[data-name="' + object_name + '"]'
-        );
-        const _trg = this.wrap.querySelector(
-          '[data-name="' + target_name + '"]'
-        );
+        const _obj = this.wrap.querySelector('[data-name="' + object_name + '"]');
+        const _trg = this.wrap.querySelector('[data-name="' + target_name + '"]');
+
         if (_obj) _obj.setAttribute('aria-label', _obj.dataset.label);
         if (_trg) _trg.setAttribute('aria-label', _trg.dataset.label);
 
@@ -246,9 +225,11 @@ export default class DragLine {
       let actEnd;
       let _x = e.clientX ? e.clientX : e.targetTouches[0].clientX;
       let _y = e.clientY ? e.clientY : e.targetTouches[0].clientY;
+
       let _menu = _drag.querySelector('[role="menu"]');
       let _actives = _drag.querySelectorAll('[data-active="true"]');
       let _line = _drag.querySelector('line[data-state="ing"]');
+
       let is_object;
       let el_line;
       let value;
@@ -401,6 +382,8 @@ export default class DragLine {
                     label_txt = el.getAttribute('aria-label');
                   }
                 }
+              
+                console.log('연결', el_item.dataset.label,label_txt)
                 el_item.setAttribute(
                   'aria-label',
                   `${el_item.dataset.label}, ${label_txt} 연결됨`
@@ -449,7 +432,9 @@ export default class DragLine {
                     }
                   }
                 }
+
                 if (is_object) {
+                  //this.answer_last 선택값 정보 넣기
                   this.answer_last.push({
                     ['key' + el_item.dataset.name]: el_item.dataset.lineObject,
                     ['key' + item.dataset.name]: item.dataset.lineTarget,
@@ -457,8 +442,8 @@ export default class DragLine {
                   });
                 } else {
                   this.answer_last.push({
-                    ['key' + item.dataset.name]: item.dataset.lineObject,
                     ['key' + el_item.dataset.name]: el_item.dataset.lineTarget,
+                    ['key' + item.dataset.name]: item.dataset.lineObject,
                     label: item.getAttribute('aria-label'),
                   });
                 }
@@ -511,13 +496,16 @@ export default class DragLine {
         return false;
       }
 
+      //이벤트주체가 object인지
       isObject = el_item.dataset.lineObject ? true : false;
 
+      //초기화
       if (_menu) _menu.remove();
       if (_line) _line.remove();
       for (const item of _actives) {
         item.removeAttribute('[data-active]');
       }
+      //선그리기 
       createLine(e);
       _drag.dataset.ing = 'true';
       _drag.dataset.ingt = el_item;
@@ -531,13 +519,9 @@ export default class DragLine {
 
       if (this.type === 'single') {
         if (is_object) {
-          el_line = this.svg.querySelector(
-            `line[data-object-name="${data_name}"]`
-          );
+          el_line = this.svg.querySelector(`line[data-object-name="${data_name}"]`);
         } else {
-          el_line = this.svg.querySelector(
-            `line[data-target-name="${data_name}"]`
-          );
+          el_line = this.svg.querySelector(`line[data-target-name="${data_name}"]`);
         }
       }
 
@@ -666,14 +650,16 @@ export default class DragLine {
                   label_txt = el.getAttribute('aria-label');
                 }
               }
+
+              console.log('연결', el_item.dataset.label, '-', label_txt)
               el_item.setAttribute(
                 'aria-label',
-                `${el_item.dataset.label}와 ${label_txt} 연결됨`
+                `${el_item.dataset.label}, ${label_txt} 연결됨`
               );
-              item.setAttribute(
-                'aria-label',
-                `${el_item.dataset.label}와 ${label_txt} 연결됨`
-              );
+              // item.setAttribute(
+              //   'aria-label',
+              //   `${el_item.dataset.label}, ${label_txt} 연결됨`
+              // );
 
               //정오답적용
               const v1 = value.split(',');
@@ -1105,7 +1091,7 @@ export default class DragLine {
               }
               _this.setAttribute(
                 'aria-label',
-                `${_this.dataset.label}와 ${label_txt} 연결됨`
+                `${_this.dataset.label}, ${label_txt} 연결됨`
               );
 
               //정오답적용
@@ -1197,26 +1183,16 @@ export default class DragLine {
       }
     };
 
+    //event
     for (const item of this.items) {
       if (this.isTouch) {
+        //touch mode
         item.addEventListener('touchstart', actStart, {
           passive: false,
         });
       } else {
         item.addEventListener('mousedown', actStart);
         item.addEventListener('keydown', actKey);
-        // item.addEventListener('focus', e => {
-        //   const _current = e.currentTarget;
-        //   const _wrap = _current.closest('[data-line-group]');
-        //   const _actives = _wrap.querySelectorAll('[data-active="true"]');
-        //   const _line = document.querySelector(
-        //     '[data-line-id] svg line[data-state="ing"]'
-        //   );
-        //   if (_line) _line.remove();
-        //   for (let i = 0; i < _actives.length; i++) {
-        //     _actives[i].dataset.active = '';
-        //   }
-        // });
       }
     }
   }
