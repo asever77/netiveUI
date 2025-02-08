@@ -5584,53 +5584,54 @@
 		 * remove: false | true
 		 * scroll: inner | outer
 		 */
-		options : {
-			type: 'normal', 
+		options: {
+			type: 'normal',
 			ps: 'center',
-			full: false, 
+			whole: false,
 			src: false,
 			remove: false,
 			width: false,
 			height: false,
-			callback:false,
-			closeCallback:false,
-			endfocus:false,
+			callback: false,
+			closeCallback: false,
+			endfocus: false,
+			drag: false,
 			gap: 20,
 			scroll: 'inner',
-
+			dim: true,
 			sMessage: '',
-			sBtnConfirmTxt: 'Ok',
-			sBtnCancelTxt: 'Cancel',
+			sBtnConfirmTxt: null,
+			sBtnCancelTxt: null,
 			sClass: 'type-system',
 			sZindex: false,
 			sConfirmCallback: false,
 			sCancelCallback: false
 		},
-		optionsClose : {
+		optionsClose: {
 			remove: false,
 			callback: false,
 			endfocus: false
 		},
-		show (option){
+		show(option) {
 			const opt = Object.assign({}, Global.modal.options, option);
-			const elBody = document.querySelector('body');
+			const el_body = document.querySelector('body');
 			const type = opt.type;
 			const src = opt.src;
-			const full = opt.full;
+			const whole = opt.whole;
 			const ps = opt.ps;
+			const dim = opt.dim;
+			const drag = opt.drag;
 			const width = Number(opt.width);
-			const height = Number(opt.height);
+			let height = Number(opt.height);
 			const callback = opt.callback;
 			const callbackClose = opt.callbackClose;
 			const _scroll = opt.scroll;
-
 			let gap = opt.gap;
 			let id = opt.id;
 			let remove = opt.remove;
 			let endfocus = opt.endfocus === false ? document.activeElement : opt.endfocus;
 			const scr_t = document.documentElement.scrollTop;
 			let timer;
-
 			//system
 			const sMessage = opt.sMessage;
 			const sBtnConfirmTxt = opt.sBtnConfirmTxt;
@@ -5640,23 +5641,23 @@
 			const sConfirmCallback = opt.sConfirmCallback;
 			const sCancelCallback = opt.sCancelCallback;
 			const focusID = id + Math.random().toString(36).substr(2, 16);
-
+			const isTouch = (navigator.maxTouchPoints || 'ontouchstart' in document.documentElement)
+			!document.querySelector('.area-modal') && el_body.insertAdjacentHTML('beforeend', `<div class="area-modal"></div>`);
+			const el_area_modal = document.querySelector('.area-modal');
 			const act = () => {
 				const elModal = document.querySelector('#' + id);
 				const elModals = document.querySelectorAll('.ui-modal');
-
 				if (!elModal) return false;
 				for (let i = 0, len = elModals.length; i < len; i++) {
 					const that = elModals[i];
 					that.classList.remove('current');
 					if (window.innerWidth !== document.documentElement.clientWidth) {
-						elBody.classList.add('scroll-no');
+						el_body.classList.add('scroll-no');
 					}
-					
 				}
-				
-				(!elModal.querySelector('.ui-modal-dim')) && elModal.insertAdjacentHTML('beforeend','<div class="ui-modal-dim"></div>');
-
+				if (dim) {
+					(!elModal.querySelector('.ui-modal-dim')) && elModal.insertAdjacentHTML('beforeend', '<div class="ui-modal-dim"></div>');
+				}
 				const elModalWrap = elModal.querySelector('.ui-modal-wrap');
 				const elModalBody = elModalWrap.querySelector('.ui-modal-body');
 				const elModalHeader = elModalWrap.querySelector('.ui-modal-header');
@@ -5668,190 +5669,218 @@
 				const elModalClose = elModal.querySelector('.ui-modal-close');
 				const elModalOpen = document.querySelectorAll('.ui-modal.open');
 				const openLen = !!elModalOpen ? elModalOpen.length : 0;
-
 				document.querySelector('html').classList.add('is-modal');
-				
 				elModal.classList.remove('close');
-				elModal.classList.remove('type-full');
+				elModal.classList.remove('type-whole');
 				elModal.classList.remove('ps-center');
 				elModal.classList.remove('ps-top');
 				elModal.classList.remove('ps-bottom');
-				elModal.classList.remove('type-full');
-				elModal.classList.remove('type-full-mobile');
-				elModal.classList.remove('type-full-desktop');
-				elModal.classList.add('n' + openLen);
-				elModal.classList.add('current');
-				elModal.classList.add('ready');
-
+				elModal.classList.remove('type-whole');
+				elModal.classList.remove('type-whole-mobile');
+				elModal.classList.remove('type-whole-desktop');
+				setTimeout(() => {
+					elModal.classList.add('n' + openLen);
+					elModal.classList.add('current');
+					elModal.classList.add('ready');
+				}, 0)
 				elModal.dataset.remove = remove;
 				elModal.dataset.n = openLen;
 				elModal.dataset.scrolltop = scr_t;
-
 				elModal.setAttribute('aria-labelledby', id + '_label');
 				elModal.setAttribute('aria-describedby', id + '_desc');
 				elModal.setAttribute('role', 'dialog');
-
+				elModal.dataset.drag = drag ? true : false;
 				(!!elModalTit) ? elModalTit.id = id + '_label' : '';
-
 				elModalBody.style.overflowY = 'auto';
 				elModalBody.id = id + '_desc';
 				elModal.dataset.focusid = focusID;
-				// let space = gap;
-
 				//[set] position
 				switch (ps) {
-					case 'center' :
+					case 'center':
 						elModal.classList.add('ps-center');
 						elModal.dataset.ps = 'center';
 						break;
-					case 'top' :
+					case 'top':
 						elModal.classList.add('ps-top');
 						elModal.dataset.ps = 'top';
 						break;
-					case 'bottom' :
+					case 'right':
+						elModal.classList.add('ps-right');
+						elModal.dataset.ps = 'right';
+						break;
+					case 'left':
+						elModal.classList.add('ps-left');
+						elModal.dataset.ps = 'left';
+						break;
+					case 'bottom':
 						elModal.classList.add('ps-bottom');
 						elModal.dataset.ps = 'bottom';
 						break;
-					default :
+					default:
 						elModal.classList.add('ps-center');
 						elModal.dataset.ps = 'center';
 						break;
 				}
-				
-				//[set] full type / width & height
-				switch (full) {
-					case 'true' : 
-						elModal.classList.add('type-full');
+				//[set] whole type / width & height
+				switch (whole) {
+					case true:
+						elModal.classList.add('type-whole');
 						gap = 0;
 						break;
-					case 'mobile' : 
-						elModal.classList.add('type-full-mobile');
+					case 'mobile':
+						elModal.classList.add('type-whole-mobile');
 						gap = !!Global.state.device.mobile ? 0 : gap;
 						break;
-					case 'desktop' : 
-						elModal.classList.add('type-full-desktop');
+					case 'desktop':
+						elModal.classList.add('type-whole-desktop');
 						break;
 				}
-				 
-				(!!width) ? elModalWrap.style.width = width + 'px' : '';
-
-				const headerH = !!elModalHeader ? elModalHeader.offsetHeight : 0;
-				const footerH = !!elModalFooter ? elModalFooter.offsetHeight : 0;
-
-				//scrollbar set
-				const sid = elModalBody.dataset.scrollId;
-				
-				if (_scroll === 'inner') {
-					elModal.setAttribute('data-scroll','inner');
-					
-					elModalBody.style.height = (!height) ? '100%' : (height - (headerH + footerH)) + 'px';
-					elModalBody.style.maxHeight = window.innerHeight - (headerH + footerH + (gap * 2))  + 'px';
-
-					if (full === 'true' || full === 'mobile') {
-						elModalBody.style.height =  (Global.state.device.height - (headerH + footerH)) + 'px'
-					}
-
-					!!sid && Global.scrollBar.destroy(sid);
-					Global.scrollBar.init({
-						scope: elModal
-					});
-				} else {
-					elModal.setAttribute('data-scroll','outer');
-					!!sid && Global.scrollBar.destroy(sid);
-				}
-				
-				//clearTimeout(timer);
-				//timer = setTimeout(function(){
-				elModal.setAttribute('tabindex', 0);
-				Global.focus.loop({ selector: elModal });
-				elModal.classList.add('open');
-				(!!sZindex) ? elModal.style.zIndex = sZindex : '';
-				(window.innerHeight < elModalWrap.offsetHeight) ? 
-					elModal.classList.add('is-over'):
-					elModal.classList.remove('is-over');
-
+				(!!width) ? elModalWrap.style.width = width / 10 + 'rem' : '';
+				elModal.setAttribute('data-scroll', (_scroll === 'inner') ? 'inner' : 'outer');
+				clearTimeout(timer);
+				timer = setTimeout(() => {
+					elModal.setAttribute('tabindex', 0);
+					Global.focus.loop({ selector: elModal });
+					elModal.classList.add('open');
+					(!!sZindex) ? elModal.style.zIndex = sZindex : '';
+					(window.innerHeight < elModalWrap.offsetHeight) ?
+						elModal.classList.add('is-over') :
+						elModal.classList.remove('is-over');
+				},0);
 				//dim event
-				elModalDim.addEventListener('click', Global.modal.dimAct);
+				// elModalDim && elModalDim.addEventListener('click', Global.modal.dimAct);
+				//drag event
+				let isDragState = false;
+				const dragStart = (e) => {
+					const el_this = e.currentTarget;
+					const y = isTouch ? e.targetTouches[0].clientY : e.clientY;
+					const x = isTouch ? e.targetTouches[0].clientX : e.clientX;
+					const rect = elModalWrap.getBoundingClientRect();
+					const h = rect.height;
+					let isMove = false;
+					let y_m;
+					let x_m;
+					const dragMove = (e) => {
+    					y_m = isTouch ? e.targetTouches[0].clientY : e.clientY;
+    					x_m = isTouch ? e.targetTouches[0].clientX : e.clientX;
+						if (isDragState) {
+							if (Math.abs(y - y_m) > 10 && Math.abs(x - x_m) < Math.abs(y - y_m) && (y - y_m) < 0) {
+								elModalWrap.setAttribute(
+									'style',
+									`max-height: ${(h + (y - y_m)) / 10}rem !important; height: ${(h + (y - y_m)) / 10}rem !important;`
+								);
+								isMove = true;
+							} else {
+								isMove = false;
+							}
+						} else {
+							if (Math.abs(y - y_m) > 10 && Math.abs(x - x_m) < Math.abs(y - y_m) && (y - y_m) > 0) {
+								elModalWrap.setAttribute(
+									'style',
+									`max-height: ${(h + (y - y_m)) / 10}rem !important; height: ${(h + (y - y_m)) / 10}rem !important;`
+								);
+								isMove = true;
+							} else {
+								isMove = false;
+							}
+						}
+					}
+					const dragEnd = () => {
+						document.removeEventListener('touchmove', dragMove);
+						document.removeEventListener('touchend', dragEnd);
+						//확장에서 축소를 위한 드래그체크
+						const reDrag = (e) => {
+    						const _y = isTouch ? e.targetTouches[0].clientY : e.clientY;
+							const _x = isTouch ? e.targetTouches[0].clientX : e.clientX;
+							const _t = elModalBody.scrollTop;
+							let _y_m;
+							let _x_m;
+							const reDragMove = (e) => {
+								_y_m = isTouch ? e.targetTouches[0].clientY : e.clientY;
+								_x_m = isTouch ? e.targetTouches[0].clientX : e.clientX;
+							}
+							const reDragEnd = () => {
+								document.removeEventListener('touchmove', reDragMove);
+								document.removeEventListener('touchend', reDragEnd);
 
+								if (_t < 1 && (_y - _y_m) < 0 && Math.abs(_x - _x_m) < Math.abs(_y - _y_m)) {
+									elModalWrap.removeEventListener('touchstart', reDrag);
+									elModalWrap.addEventListener('touchstart', dragStart);
+								} else {
+									elModalWrap.addEventListener('touchstart', reDrag);
+								}
+							}
+							document.addEventListener('touchmove', reDragMove, { passive: false });
+							document.addEventListener('touchend', reDragEnd);
+						}
+						const restoration = () => {
+							elModal.dataset.state = '';
+							elModalWrap.setAttribute(
+								'style',
+								`max-height: 32rem !important; overflow-y: hidden !important;`
+							);
+							elModalWrap.addEventListener('touchstart', dragStart);
+							isDragState = false;
+						}
+						const reDragClose = (e) => {
+							restoration();
+							elModalWrap.removeEventListener('touchstart', reDrag);
+						}
+						//성공 확장
+						if (y - 100 > y_m && isMove) {
+							elModal.dataset.state = 'drag-full';
+							elModalWrap.classList.add('motion');
+							const dragCloseBtn = elModal.querySelector('[data-modal-drag="close"]');
+							isDragState = true;
+							dragCloseBtn && dragCloseBtn.addEventListener('click', reDragClose);
+							elModalWrap.setAttribute(
+								'style', 'max-height:100dvh !important; overflow-y: hidden !important; height: 100dvh !important;'
+							);
+							elModalWrap.addEventListener('transitionend', () => {
+								elModalWrap.classList.remove('motion');
+								const _list = elModalBody.querySelector('.search-result-list');
+								const hasScroll = _list.scrollHeight > _list.clientHeight;
+
+								if (hasScroll) {
+									elModalWrap.removeEventListener('touchstart', dragStart);
+									elModalWrap.addEventListener('touchstart', reDrag);
+								}
+							});
+						} 
+						//성공 원복
+						else if(y_m - y > 100) {
+							restoration();
+						} 
+						//취소 풀원복
+						else if (isDragState) {
+							elModalWrap.setAttribute(
+								'style', 'max-height:100dvh !important; overflow-y: hidden !important; height: 100dvh !important;'
+							);
+						} 
+						//취소 원복
+						else {
+							restoration();
+						}
+					}
+					document.addEventListener('touchmove', dragMove, { passive: false });
+					document.addEventListener('touchend', dragEnd);
+				}
+				if (drag) {
+					elModalWrap.addEventListener('touchstart', dragStart);
+				}
 				//close button event
 				const closeAct = (e) => {
 					const elThis = e.currentTarget;
 					const elThisModal = elThis.closest('.ui-modal');
-
 					!!elModalClose && elModalClose.removeEventListener('click', closeAct);
-					Global.modal.hide({ 
-						id: elThisModal.id, 
+					Global.modal.hide({
+						id: elThisModal.id,
 						remove: remove,
 						callbackClose: callbackClose
 					});
 				}
 
-				// 드래그 닫기 추가 --
-				const elDrag = elModal.querySelector('.ui-modal-drag');
-				if (!!elDrag) {
-					const elDragWrap = elDrag.closest('.ui-modal');
-					const elDragPs = elDragWrap.dataset.ps;
-
-					if (!!elDrag) {
-						let sX = 0;
-						let sY = 0;
-						let mX = 0;
-						let mY = 0;
-						let el_draghead = null;
-						let m_n = 0;
-						let m_wrap = null;
-						let el_ThisModal = null;
-
-						const eventEnd = (e) => {
-							if (Math.abs(m_n) > 40) {
-								Global.modal.hide({ 
-									id: el_ThisModal.id, 
-									remove: remove,
-									callbackClose: callbackClose
-								});
-								elDrag.removeEventListener('touchstart', eventStart);
-							} else {
-								if(m_wrap) {
-									elDragPs === 'bottom' || elDragPs === 'top' ?
-									m_wrap.style.transform = 'translateY(0px)' : 
-									m_wrap.style.marginTop = '0';
-								}
-							}
-							
-							document.removeEventListener('touchmove', eventMove);
-							document.removeEventListener('touchend', eventEnd);
-						}
-						const eventMove = (e) => {
-							m_wrap = el_draghead.closest('.ui-modal-wrap');
-							mX = e.changedTouches[0].clientX;
-							mY = e.changedTouches[0].clientY;
-							m_n = (sY - mY) > 0 ? 0 : (sY - mY);
-							m_n = (m_n * -1);
-							
-							if (elDragPs === 'top') {
-								m_n = (sY - mY) < 0 ? 0 : (sY - mY);
-								m_n = (m_n * -1);
-								m_wrap.style.transform = 'translateY('+ m_n +'px)'; 
-							} else {
-								elDragPs === 'bottom' ?
-								m_wrap.style.transform = 'translateY('+ m_n +'px)' : 
-								m_wrap.style.marginTop = m_n +'px';
-							}
-						}
-						const eventStart = (e) => {
-							el_draghead = e.currentTarget;
-							el_ThisModal = el_draghead.closest('.ui-modal');
-							sX = e.changedTouches[0].clientX;
-							sY = e.changedTouches[0].clientY;
-
-							document.addEventListener('touchmove', eventMove);
-							document.addEventListener('touchend', eventEnd);
-						}
-						elDrag.addEventListener('touchstart', eventStart);
-					}
-				}
-				//-- 드래그 닫기 추가
-				const lastClose =  elModal.querySelector('.ui-modal-last');
+				const lastClose = elModal.querySelector('.ui-modal-last');
 				if (!!elModalClose) {
 					elModalClose.addEventListener('click', closeAct);
 				}
@@ -5862,15 +5891,15 @@
 				//systyem modal confirm & cancel callback
 				elModalConfirm && elModalConfirm.addEventListener('click', sConfirmCallback);
 				elModalCancel && elModalCancel.addEventListener('click', sCancelCallback);
-			
+
 				//transition end event
-				const modalTrEnd = () => {
-					if (!!full) {
-						elModal.classList.add('fix-header');
-						elModalBody.style.paddingTop = (headerH + 10)  + 'px';
-					}
-				}
-				elModalWrap.addEventListener('transitionend', modalTrEnd);
+				// const modalTrEnd = () => {
+				// 	if (!!whole) {
+				// 		elModal.classList.add('fix-header');
+				// 		elModalBody.style.paddingTop = (headerH + 10) / 10 + 'rem';
+				// 	}
+				// }
+				// elModalWrap.addEventListener('transitionend', modalTrEnd);
 
 				//resize event
 				let timerResize;
@@ -5884,32 +5913,33 @@
 
 				setTimeout(() => {
 					!!callback && callback(id);
-				},100);
+				}, 100);
 			}
 
 			//system modal 
 			const makeSystemModal = () => {
 				let htmlSystem = '';
-				
-				htmlSystem += '<div class="ui-modal type-system '+ sClass +'" id="uiSystemModal" role="alertdialog" aria-modal="true" aria-live="polite">';
+				htmlSystem += '<div class="ui-modal type-system ' + sClass + '" id="' + id + '" role="alertdialog" aria-modal="true" aria-live="polite">';
 				htmlSystem += '<div class="ui-modal-wrap">';
 				htmlSystem += '<div class="ui-modal-body">';
 				htmlSystem += sMessage;
 				htmlSystem += '</div>';
 				htmlSystem += '<div class="ui-modal-footer">';
-				htmlSystem += '<div class="wrap-group">';
+				htmlSystem += '<div class="modal-footer-btn-group">';
 
-				if (type === 'confirm') {
-					htmlSystem += '<button type="button" class="btn-base no-line ui-modal-cancel"><span>'+ sBtnCancelTxt +'</span></button>';
+				if (sBtnCancelTxt) {
+					htmlSystem += '<button type="button" class="btn-base ui-modal-cancel" data-color="tertiary" data-size="48"><span class="btn-text">' + sBtnCancelTxt + '</span></button>';
+				}
+				if (sBtnConfirmTxt) {
+					htmlSystem += '<button type="button" class="btn-base ui-modal-confirm" data-color="secondary" data-size="48"><span class="btn-text">' + sBtnConfirmTxt + '</span></button>';
 				}
 
-				htmlSystem += '<button type="button" class="btn-base no-line gray ui-modal-confirm"><span>'+ sBtnConfirmTxt +'</span></button>';	
 				htmlSystem += '</div>';
 				htmlSystem += '</div>';
 				htmlSystem += '</div>';
 				htmlSystem += '</div>';
 
-				elBody.insertAdjacentHTML('beforeend', htmlSystem);
+				el_area_modal.insertAdjacentHTML('beforeend', htmlSystem);
 
 				htmlSystem = '';
 				act();
@@ -5920,7 +5950,7 @@
 				//modal
 				if (!!src && !document.querySelector('#' + opt.id)) {
 					Global.ajax.init({
-						area: elBody,
+						area: el_area_modal,
 						url: src,
 						add: true,
 						callback: () => {
@@ -5930,19 +5960,17 @@
 				} else {
 					act();
 				}
-				
+
 				endfocus.dataset.focus = focusID;
 
 			} else {
 				//system modal
 				endfocus = null;
 				remove = true;
-				id = 'uiSystemModal';
+				id = id;
 				makeSystemModal();
 				Global.state.isSystemModal = true;
 			}
-
-			
 		},
 		dimAct() {
 			const elOpens = document.querySelectorAll('.ui-modal.open');
@@ -5953,13 +5981,13 @@
 				that.dataset.n && openN.push(that.dataset.n);
 			}
 
-			const elCurrent = document.querySelector('.ui-modal.open[data-n="'+ Math.max.apply(null, openN) +'"]');
+			const elCurrent = document.querySelector('.ui-modal.open[data-n="' + Math.max.apply(null, openN) + '"]');
 			const currentID = elCurrent.id;
 
 			//system modal 제외
 			if (currentID !== 'uiSystemModal') {
-				Global.modal.hide({ 
-					id: currentID, 
+				Global.modal.hide({
+					id: currentID,
 					remove: elCurrent.dataset.remove
 				});
 			}
@@ -5968,7 +5996,6 @@
 			const elModals = document.querySelectorAll('.ui-modal.open.ps-center');
 
 			for (let i = 0, len = elModals.length; i < len; i++) {
-				
 				const that = elModals[i];
 				const elModalHead = that.querySelector('.ui-modal-header');
 				const elModalBody = that.querySelector('.ui-modal-body');
@@ -5979,8 +6006,8 @@
 				const h = h_win - (h_head + h_foot);
 
 				if (Global.state.browser.size !== 'desktop') {
-					elModalBody.style.minHeight = h + 'px';
-					elModalBody.style.maxHeight = h + 'px';
+					elModalBody.style.minHeight = h / 10 + 'rem';
+					elModalBody.style.maxHeight = h / 10 + 'rem';
 				} else {
 					elModalBody.style.minHeight = '';
 					elModalBody.style.maxHeight = '';
@@ -5994,14 +6021,14 @@
 			const remove = opt.remove;
 			const callback = opt.callback;
 			const elModal = document.querySelector('#' + id);
-			const elBody = document.querySelector('body');
+			const el_body = document.querySelector('body');
 			const elHtml = document.querySelector('html');
 			const elModals = document.querySelectorAll('.ui-modal');
 
 			elModal.classList.add('close');
 			elModal.classList.remove('open')
 			elModal.classList.remove('fix-header');
-			
+
 			const elOpen = document.querySelectorAll('.ui-modal.open');
 			const len = (elOpen.length > 0) ? elOpen.length : false;
 
@@ -6023,61 +6050,58 @@
 
 			//시스템팝업이 아닌 경우
 			if (type !== 'system') {
-				endfocus = endfocus === false ? 
-					document.querySelector('[data-focus="'+ focusID +'"]') : 
+				endfocus = endfocus === false ?
+					document.querySelector('[data-focus="' + focusID + '"]') :
 					opt.endfocus;
 
 				//단일
 				if (!len) {
 					elHtml.classList.remove('is-modal');
-				} 
+				}
 			}
 
 			Global.scroll.move({
 				top: Number(elModal.dataset.scrolltop)
 			});
-			
+
 			const closeEnd = () => {
 				const elWrap = elModal.querySelector('.ui-modal-wrap');
 				const elOpen = document.querySelectorAll('.ui-modal.open');
 				const len = !!elOpen ? elOpen.length : false;
-	
+
 				elWrap.removeAttribute('style');
-				elBody.removeAttribute('style');
+				el_body.removeAttribute('style');
 				elModal.dataset.n = null;
-				
+
 				if (!len) {
 					elHtml.classList.remove('scroll-no');
-					elBody.classList.remove('scroll-no');
+					el_body.classList.remove('scroll-no');
 				}
 
 				(remove === 'true') ? elModal.remove() : elModal.classList.remove('ready');
 				!!callback && callback(id);
 				!!endfocus && endfocus.focus();
 
-				const sid = elModal.querySelector('.ui-modal-body').dataset.scrollId;
-				!!sid && Global.scrollBar.destroy(sid);
-
 				elModal.removeEventListener('animationend', closeEnd);
 			}
 
 			elModal.addEventListener('animationend', closeEnd);
 
-			callbackClose && callbackClose();
+			// callbackClose && callbackClose();
 
 			// clearTimeout(timer);
 			// timer = setTimeout(function(){
 			// 	const elWrap = elModal.querySelector('.ui-modal-wrap');
 			// 	const elOpen = document.querySelectorAll('.ui-modal.open');
 			// 	const len = !!elOpen ? elOpen.length : false;
-	
+
 			// 	elWrap.removeAttribute('style');
-			// 	elBody.removeAttribute('style');
+			// 	el_body.removeAttribute('style');
 			// 	elModal.dataset.n = null;
-				
+
 			// 	if (!len) {
 			// 		elHtml.classList.remove('scroll-no');
-			// 		elBody.classList.remove('scroll-no');
+			// 		el_body.classList.remove('scroll-no');
 			// 	}
 
 			// 	(remove === 'true') ? elModal.remove() : elModal.classList.remove('ready');
@@ -6087,17 +6111,18 @@
 			// 	const sid = elModal.querySelector('.ui-modal-body').dataset.scrollId;
 			// 	!!sid && Global.scrollBar.destroy(sid);
 			// },210);
-		}, 
-		hideSystem () {
+		},
+		hideSystem(opt) {
 			Global.state.isSystemModal = false;
-			Global.modal.hide({ 
-				id: 'uiSystemModal', 
-				type: 'system', 
+			Global.modal.hide({
+				id: opt.id,
+				type: 'system',
 				remove: 'true'
 			});
 		}
-	}
 
+	}
+	
 	/**
 	 * TOAST POPUP
 	 */
