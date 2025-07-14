@@ -1,22 +1,178 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body style="background-color: antiquewhite;">
-    <video id="welcome-video" preload="none" default="" role="img" muted="" playsinline="" data-inline-media="" data-inline-media-basepath="https://www.apple.com/105/media/us/ipad-air/2024/df9239d9-b05f-4fc6-9f57-8ce5c168833f/anim/hero/" data-inline-media-plugins="AnimLoad,AnimPlayOnce,ViewportSourceOnce,LoadTimeout,ObjectFitFix,UnloadVideo" data-retina-enabled="true" data-inline-media-mime-types="quicktime, webm, mp4, mov" data-inline-media-load-keyframe="{ &quot;start&quot;: &quot;t - 200vh&quot;, &quot;end&quot;: &quot;b + 100vh&quot;, &quot;disabledWhen&quot;: &quot;no-enhanced&quot; }" data-inline-media-play-keyframe="{ &quot;start&quot;: &quot;t - 200vh&quot;, &quot;end&quot;: &quot;t + 100px&quot;, &quot;disabledWhen&quot;: &quot;no-enhanced&quot;}" data-load-timeout="3000" aria-label="iPad Air의 얇은 두께와 함께 앞면과 뒷면을 보여주는 애니메이션" src="https://www.apple.com/105/media/us/ipad-air/2024/df9239d9-b05f-4fc6-9f57-8ce5c168833f/anim/hero/large.webm"></video>
 
-    <video controls width="250">
-      
-        <source src="../assets/HI0-101-01-03_1P.mp4" type="video/mp4" />
-      
-        Download the
-        <a href="/media/cc0-videos/flower.webm">WEBM</a>
-        or
-        <a href="/media/cc0-videos/flower.mp4">MP4</a>
-        video.
-      </video>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+	<style>
+		.flex {
+			display: flex;
+			width: auto;
+			justify-content: center;
+			align-items: center;
+			gap:4px;
+		}
+		.swiper.year{width:50px;}
+		.swiper {
+			width: 30px;
+			height: 14rem;
+			margin:0;
+			position: relative;
+		}
+		.swiper::before{
+			content: "";
+			width: 100%;
+			position: absolute;
+			top:0;
+			height:	60px;
+			background: linear-gradient(rgba(255,255,255,1), rgba(255,255,255,0));
+			z-index: 2;
+			pointer-events: none;
+		}
+		.swiper::after{
+			content: "";
+			width: 100%;
+			position: absolute;
+			bottom:0;
+			height:	60px;
+			background: linear-gradient(rgba(255,255,255,0), rgba(255,255,255,1));
+			z-index: 2;
+			pointer-events: none;
+		}
+		.swiper .swiper-slide {
+			height: 30px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+		}
+		.swiper .swiper-slide.swiper-slide-active {
+			color: #000
+		}
+	</style>
+</head>
+
+<body>
+	<div class="flex" id="aa">
+		<div class="swiper day">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">01</div>
+				<div class="swiper-slide">02</div>
+				<div class="swiper-slide">03</div>
+				<div class="swiper-slide">04</div>
+				<div class="swiper-slide">05</div>
+				<div class="swiper-slide">06</div>
+				<div class="swiper-slide">07</div>
+				<div class="swiper-slide">08</div>
+				<div class="swiper-slide">09</div>
+				<div class="swiper-slide">10</div>
+				<div class="swiper-slide">11</div>
+				<div class="swiper-slide">12</div>
+				<div class="swiper-slide">13</div>
+				<div class="swiper-slide">14</div>
+				<div class="swiper-slide">15</div>
+				<div class="swiper-slide">16</div>
+				<div class="swiper-slide">17</div>
+				<div class="swiper-slide">18</div>
+				<div class="swiper-slide">19</div>
+				<div class="swiper-slide">20</div>
+				<div class="swiper-slide">21</div>
+				<div class="swiper-slide">22</div>
+				<div class="swiper-slide">23</div>
+				<div class="swiper-slide">24</div>
+				<div class="swiper-slide">25</div>
+				<div class="swiper-slide">26</div>
+				<div class="swiper-slide">27</div>
+				<div class="swiper-slide">28</div>
+				<div class="swiper-slide">29</div>
+				<div class="swiper-slide">30</div>
+			</div>
+		</div>
+		<div class="swiper month">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">01</div>
+				<div class="swiper-slide">02</div>
+				<div class="swiper-slide">03</div>
+				<div class="swiper-slide">04</div>
+				<div class="swiper-slide">05</div>
+				<div class="swiper-slide">06</div>
+				<div class="swiper-slide">07</div>
+				<div class="swiper-slide">08</div>
+				<div class="swiper-slide">09</div>
+				<div class="swiper-slide">10</div>
+				<div class="swiper-slide">11</div>
+				<div class="swiper-slide">12</div>
+			</div>
+		</div>
+		<div class="swiper year">
+			<div class="swiper-wrapper">
+				<div class="swiper-slide">2001</div>
+				<div class="swiper-slide">2002</div>
+				<div class="swiper-slide">2003</div>
+				<div class="swiper-slide">2004</div>
+				<div class="swiper-slide">2005</div>
+				<div class="swiper-slide">2006</div>
+				<div class="swiper-slide">2007</div>
+				<div class="swiper-slide">2008</div>
+				<div class="swiper-slide">2009</div>
+				<div class="swiper-slide">2010</div>
+				<div class="swiper-slide">2011</div>
+				<div class="swiper-slide">2012</div>
+				<div class="swiper-slide">2013</div>
+				<div class="swiper-slide">2014</div>
+				<div class="swiper-slide">2015</div>
+				<div class="swiper-slide">2016</div>
+				<div class="swiper-slide">2017</div>
+				<div class="swiper-slide">2018</div>
+				<div class="swiper-slide">2019</div>
+				<div class="swiper-slide">2020</div>
+				<div class="swiper-slide">2021</div>
+				<div class="swiper-slide">2022</div>
+				<div class="swiper-slide">2023</div>
+				<div class="swiper-slide">2024</div>
+				<div class="swiper-slide">2025</div>
+				<div class="swiper-slide">2026</div>
+				<div class="swiper-slide">2027</div>
+				<div class="swiper-slide">2028</div>
+				<div class="swiper-slide">2029</div>
+				<div class="swiper-slide">2030</div>
+			</div>
+		</div>
+	</div>
+
+	<script type="module">
+		import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs'
+
+		const swiperMonth = new Swiper('.swiper.month', {
+			// Optional parameters
+			direction: 'vertical',
+			slidesPerView: 'auto',
+			spaceBetween: 0,
+			autoHeight: false,
+			centeredSlides: true,
+			grabCursor: true,
+		});
+		const swiperDay = new Swiper('.swiper.day', {
+			// Optional parameters
+			direction: 'vertical',
+			slidesPerView: 'auto',
+			spaceBetween: 0,
+			autoHeight: false,
+			centeredSlides: true,
+			grabCursor: true,
+		});
+		const swiperYear = new Swiper('.swiper.year', {
+			// Optional parameters
+			direction: 'vertical',
+			slidesPerView: 'auto',
+			spaceBetween: 0,
+			autoHeight: false,
+			centeredSlides: true,
+			grabCursor: true,
+		});
+	</script>
 </body>
+
 </html>
