@@ -9,6 +9,9 @@
 	<link rel="stylesheet" href="../assets/css/main.css">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github.min.css">
 
+	<link href="//vjs.zencdn.net/8.20.0/video-js.min.css" rel="stylesheet">
+	<script src="//vjs.zencdn.net/8.20.0/video.min.js"></script>
+
 	<style>
 		html {overflow: auto;}
 		.base-main{padding-top: 4rem;}
@@ -19,13 +22,106 @@
 	<div class="base-wrap">
 		<div class="base-body">
 			<main class="base-main" data-id="main">
+				<math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
+					<mrow>
+						<mfrac>
+						<mn>4</mn>
+						<mn>5</mn>
+						</mfrac>
+						<mo>=</mo>
+						<mfrac>
+						<mrow>
+							<mn>4</mn>
+							<mo>&#xD7;</mo>
+							<mn>2</mn>
+						</mrow>
+						<mrow>
+							<mn>5</mn>
+							<mo>&#xD7;</mo>
+							<mn>2</mn>
+						</mrow>
+						</mfrac>
+						<mo>=</mo>
+						<mfrac>
+						<mn>8</mn>
+						<mn>10</mn>
+						</mfrac>
+						<mo>=</mo>
+						<mn>0.8</mn>
+					</mrow>
+					<mspace linebreak="newline"/>
+					<mrow>
+						<mfrac>
+						<mn>17</mn>
+						<mn>20</mn>
+						</mfrac>
+						<mo>=</mo>
+						<mfrac>
+						<mn>17</mn>
+						<mrow>
+							<msup>
+							<mn>2</mn>
+							<mn>2</mn>
+							</msup>
+							<mo>&#xD7;</mo>
+							<mn>5</mn>
+						</mrow>
+						</mfrac>
+						<mo>=</mo>
+						<mfrac>
+						<mrow>
+							<mn>17</mn>
+							<mo>&#xD7;</mo>
+							<mn>5</mn>
+						</mrow>
+						<mrow>
+							<msup>
+							<mn>2</mn>
+							<mn>2</mn>
+							</msup>
+							<mo>&#xD7;</mo>
+							<mn>5</mn>
+							<mo>&#xD7;</mo>
+							<mn>5</mn>
+						</mrow>
+						</mfrac>
+						<mo>=</mo>
+						<mfrac>
+						<mn>85</mn>
+						<mn>100</mn>
+						</mfrac>
+						<mo>=</mo>
+						<mn>0.85</mn>
+					</mrow>
+				</math>
 
 				<div class="base-main-wrap">
 					<h1 data-h="1">Drag Line</h1>
 					<h2 data-h="2">1:1</h2>
 
+					<video
+						id="my-player"
+						class="video-js"
+						controls
+						preload="auto"
+						poster="//vjs.zencdn.net/v/oceans.png"
+						data-setup='{}'>
+						<source src="//vjs.zencdn.net/v/oceans.mp4" type="video/mp4"></source>
+						<source src="//vjs.zencdn.net/v/oceans.webm" type="video/webm"></source>
+						<source src="//vjs.zencdn.net/v/oceans.ogv" type="video/ogg"></source>
+						<p class="vjs-no-js">
+							To view this video please enable JavaScript, and consider upgrading to a
+							web browser that
+							<a href="https://videojs.com/html5-video-support/" target="_blank">
+							supports HTML5 video
+							</a>
+						</p>
+					</video>
 					<box>
-						<div data-line-id="test001" data-line-type="single" data-line-direction="column">
+						<div 
+						data-line-id="test001" 
+						data-line-type="single" 
+						data-line-direction="column">
 							<guide></guide>
 							<div data-line-group="object">
 								<guide></guide>
